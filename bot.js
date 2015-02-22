@@ -18,13 +18,21 @@ var read = function(message, username, chatid, otherUsernames) {
     currentChat = chat;
     currentUsername = username.toLowerCase();
     currentOtherUsernames = otherUsernames;
-    var response = "";
-    var textFunctions = [salute, weekendText, addScore, score, runScript, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, hello];
+    var textFunctions = [salute, weekendText, addScore, score, runScript, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, hello, sendSticker];
     for (var i = 0; i < textFunctions.length; i++) {
-        var res = (textFunctions[i])(message);
-        if (res && res.length > 0) response += res;
+        var res = textFunctions[i](message);
+        if (res) return res;
     }
-    return response;
+    return {};
+};
+
+var sendSticker = function(msg) {
+    var myRegexp = /(small|big)/i;
+    var match = myRegexp.exec(msg);
+    if (!match || match.length < 1) return;
+
+    var possibilities = [767334526626290, 767334556626287, 767334506626292]
+    return {sticker_id:possibilities[~~(possibilities.length * Math.random())]};
 };
 
 var slap = function(msg) {
@@ -39,7 +47,7 @@ var slap = function(msg) {
     var name = list[1];
     var exists = currentOtherUsernames.filter(function(v) {return v === name;}).length === 1;
 
-    return name + " just got slapped." + (Math.random() > 0.5 ? " Hard.": "");
+    return {text: name + " just got slapped." + (Math.random() > 0.5 ? " Hard.": "")};
 };
 
 var weekendText = function(msg) {
@@ -47,7 +55,7 @@ var weekendText = function(msg) {
     var match = myRegexp.exec(msg);
     if (!match || match.length < 1) return;
     var today = new Date();
-    return (today.getDay() === 0 || today.getDay() === 6 ? "YES" : "NO");
+    return {text: (today.getDay() === 0 || today.getDay() === 6 ? "YES" : "NO")};
 };
 
 var addScore = function(msg) {
@@ -73,7 +81,7 @@ var salute = function(msg) {
 
     var general = match[1].trim().toLowerCase();
     general = general.charAt(0).toUpperCase() + general.slice(1);
-    return ("*salute* General " + general);
+    return {text: ("*salute* General " + general)};
 };
 
 var score = function(msg) {
@@ -84,7 +92,7 @@ var score = function(msg) {
     if (name.length < 1) {name = currentUsername;}
     if (!contains(currentOtherUsernames, name)) {return "who?";}
     var pts = currentChat.scores[name] ? currentChat.scores[name] : 0;
-    return ("" + name + " has " + pts + " points");
+    return {text: ("" + name + " has " + pts + " points")};
 };
 
 var albert = function(msg) {
@@ -92,7 +100,7 @@ var albert = function(msg) {
     var match = myRegexp.exec(msg);
     if (!match || match.length < 1) return;
     var k =  "\n         ,---,_          ,\n          _>   `'-.  .--'/\n     .--'` ._      `/   <_\n      >,-' ._'.. ..__ . ' '-.\n   .-'   .'`         `'.     '.\n    >   / >`-.     .-'< \\ , '._\\\n   /    ; '-._>   <_.-' ;  '._>\n   `>  ,/  /___\\ /___\\  \\_  /\n   `.-|(|  \\o_/  \\o_/   |)|`\n       \\;        \\      ;/\n         \\  .-,   )-.  /\n          /`  .'-'.  `\\\n         ;_.-`.___.'-.;\n";
-return k;
+return {text: k};
 };
 
 var runScript = function(msg) {
@@ -112,28 +120,26 @@ var runScript = function(msg) {
     } catch (e) {
         return ("Learn to code already, " + e.message.split('\n')[0]);
     }
-    return (response);
+    return {text: response};
 };
 
 var bees = function(msg) {
     if (msg.indexOf("bees") > -1) {
-        return "http://cdn.gifstache.com/2012/7/19/gifstache.com_893_1342731571.gif";
+        return {text: "http://cdn.gifstache.com/2012/7/19/gifstache.com_893_1342731571.gif"};
     }
-    return "";
 };
 
 var sexxiBatman = function(msg) {
     if (msg.match(/[Ww]anna make some trouble[\s\t]*\?/)) {
-        return "http://99gifs.com/-img/514e8830afa96f09940128f8.gif";
+        return {text: "http://99gifs.com/-img/514e8830afa96f09940128f8.gif"};
     }
-    return "";
 };
 
 var ping = function(msg) {
     var myRegexp = /^\/ping$/i;
     var match = myRegexp.exec(msg);
     if (!match || match.length < 1) return;
-    return "pong";
+    return {text: "pong"};
 };
 
 var xkcdSearch = function(msg) {
@@ -142,38 +148,38 @@ var xkcdSearch = function(msg) {
     if (!match || match.length < 1) return;
     var search = match[1].trim().toLowerCase().replace(/ /g, "+");
     var searchUrl = "http://www.ohnorobot.com/index.pl?s=" + search + "&lucky=Let+the+Robot+Decide%21&comic=56";
-    return searchUrl;
+    return {text: searchUrl};
     //http://www.ohnorobot.com/index.pl?s=exploits+of+a+mom&lucky=Let+the+Robot+Decide%21&comic=56
 };
 
-var giphySearch = function(msg) {
-    var data = "";
-    if(msg.indexOf("giphy") > -1) {
-        var strippedString = msg.replace(/^\s+|\s+$/g, '');
-        strippedString = strippedString.replace("giphy", '');
+// var giphySearch = function(msg) {
+//     var data = "";
+//     if(msg.indexOf("giphy") > -1) {
+//         var strippedString = msg.replace(/^\s+|\s+$/g, '');
+//         strippedString = strippedString.replace("giphy", '');
 
-        var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-        var request = new XMLHttpRequest();
-        request.open('GET', 'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag='+strippedString, false);
+//         var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+//         var request = new XMLHttpRequest();
+//         request.open('GET', 'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag='+strippedString, false);
 
-        request.onload = function() {
-            if (request.status >= 200 && request.status < 400){
-                data = JSON.parse(request.responseText).data.image_url;
-                return data;
-            } else {
-                return "No gif for this search result.";
-            }
-        };
+//         request.onload = function() {
+//             if (request.status >= 200 && request.status < 400){
+//                 data = JSON.parse(request.responseText).data.image_url;
+//                 return data;
+//             } else {
+//                 return "No gif for this search result.";
+//             }
+//         };
 
-        request.onerror = function() {
-            console.log('Connection error');
-        };
+//         request.onerror = function() {
+//             console.log('Connection error');
+//         };
 
-        request.send(null);
-        console.log("request sent");
-    }
-    return data;
-};
+//         request.send(null);
+//         console.log("request sent");
+//     }
+//     return {text: data};
+// };
 
 var arbitraryLists = function (msg) {
   var myRegexp = /^\/(list\s*.*)/i;
@@ -182,33 +188,33 @@ var arbitraryLists = function (msg) {
 
   var list = match[1].trim().toLowerCase();
   var arr = list.split(/\s+/);
-  if(arr.length === 1) return "Existing Lists: \n" + Object.keys(currentChat.lists).join("\n");
+  if(arr.length === 1) return {text: "Existing Lists: \n" + Object.keys(currentChat.lists).join("\n")};
 
   var keyword = arr[1];
   var listName = arr.length > 2 ? arr[2] : "";
   if(keyword === 'new') {
     if(listName.length > 0) {
       currentChat.lists[listName] = [];
-      return listName + " created.";
+      return {text: listName + " created."};
     }
   } else if (keyword === 'delete') {
     if(listName.length > 0) {
       delete currentChat.lists[listName];
-      return listName + " deleted.";
+      return {text: listName + " deleted."};
     }
   } else if (keyword === 'add') {
     if(listName.length > 0 && arr.length > 3) {
       if (!currentChat.lists[listName]) {
-        return "No list of name '"+listName+"' exists.";
+        return {text: "No list of name '"+listName+"' exists."};
       }
       currentChat.lists[listName].push(arr.slice(3).join(' '));
-      return "Added element to " + listName + ".";
+      return {text: "Added element to " + listName + "."};
     }
   } else if (currentChat.lists[keyword]) {
-    return keyword + ": \n" + currentChat.lists[keyword].join("\n");
+    return {text: keyword + ": \n" + currentChat.lists[keyword].join("\n")};
   }
 
-  return "Usage:\n /list \n /list list-name\n /list new list-name \n /list delete list-name \n /list add list-name new-element";
+  return {text: "Usage:\n /list \n /list list-name\n /list new list-name \n /list delete list-name \n /list add list-name new-element"};
 };
 
 var topScore = function(msg) {
@@ -224,7 +230,7 @@ var topScore = function(msg) {
       maxName = currentOtherUsernames[i];
     }
   }
-  return "Top Score: " + maxName+ ", with "+max+" points.";
+  return {text: "Top Score: " + maxName+ ", with "+max+" points."};
 };
 
 var hello = function(msg) {
@@ -232,7 +238,7 @@ var hello = function(msg) {
   var match = myRegexp.exec(msg);
   if (!match || match.length < 1) return;
   var arr = ["Sup", "Hey :D", "hey", "Me?", "yes?"];
-  return arr[~~(arr.length * Math.random())];
+  return {text: arr[~~(arr.length * Math.random())]};
 };
 
 var chatbot = function(msg) {
@@ -240,7 +246,7 @@ var chatbot = function(msg) {
   var match = myRegexp.exec(msg);
   if (!match || match.length < 1) return;
   var items = ["Are you talking about me?", "I am a chat bot.", "Pick me, pick me!"];
-  return items[Math.floor(Math.random()*items.length)];
+  return {text: items[Math.floor(Math.random()*items.length)]};
 };
 
 function replaceAll(find, replace, str) {

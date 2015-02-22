@@ -120,7 +120,7 @@ function login(email, password, callback) {
         };
 
         var prev = Date.now();
-        var tmpPrev = Date.now();
+        var tmpPrev = [];
         var lastSync = Date.now();
         var reqCounter = 1;
         var currentlyRunning = [];
@@ -132,6 +132,7 @@ function login(email, password, callback) {
             console.log("Currentl running requests -->", currentlyRunning.length);
             for (var i = currentlyRunning.length; i < 9; i++) {
               currentlyRunning.push(setTimeout(api.listen, 5000 * i, cb, i));
+              tmpPrev.push(Date.now());
             }
           }
           form.wtc = time.doSerialize();
@@ -148,11 +149,12 @@ function login(email, password, callback) {
             try {
               console.log("parsing....");
               info = strData.map(JSON.parse);
-              if(Date.now() - tmpPrev < 400) {
+              if(Date.now() - tmpPrev[index] < 1000) {
                 console.log('Going too fast ------------> ', info);
                 clearTimeout(currentlyRunning[index]);
+                currentlyRunning[index] = setTimeout(api.listen, 1000, cb, index);
               }
-              if(Date.now() - tmpPrev > 10000) {
+              if(Date.now() - tmpPrev[index] > 10000) {
                 var form10 = {
                   channel:userChannel,
                   partition:"-2",
@@ -170,7 +172,7 @@ function login(email, password, callback) {
                   console.log("Reply for active ping:", html);
                 });
               }
-              tmpPrev = Date.now();
+              tmpPrev[index] = Date.now();
               if(info.length > 0 && info[0].t === 'fullReload') {
                 var form4 = {
                   'lastSync':~~(lastSync/1000),
@@ -218,7 +220,6 @@ function login(email, password, callback) {
                   cookies.map(function (c) {
                     jar.setCookie(c, "https://www.facebook.com");
                   });
-
                 });
               }
 
@@ -282,7 +283,11 @@ function login(email, password, callback) {
         };
 
 
-        api.sendMessage = function(msg, thread_id, cb) {
+        api.sendMessage = function(msg, thread_id, sticker_id, cb) {
+          if(typeof sticker_id === 'function') {
+            cb = sticker_id;
+            sticker_id = null;
+          }
           if(!cb) cb = function() {};
 
           var tmp = {};
@@ -311,13 +316,14 @@ function login(email, password, callback) {
             'message_batch[0][source]':'source:chat:web',
             'message_batch[0][source_tags][0]':'source:chat',
             'message_batch[0][body]':msg,
-            'message_batch[0][has_attachment]':'false',
             'message_batch[0][html_body]':'false',
             'message_batch[0][ui_push_phase]':'V3',
             'message_batch[0][status]':'0',
             'message_batch[0][message_id]':tmp.message_id,
             'message_batch[0][manual_retry_cnt]':'0',
-            'message_batch[0][thread_fbid]':thread_id
+            'message_batch[0][thread_fbid]':thread_id,
+            'message_batch[0][sticker_id]':sticker_id,
+            'message_batch[0][has_attachment]':!!sticker_id
           };
           _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
             var strData = makeParsable(html);
@@ -472,9 +478,11 @@ login(credentials.email, credentials.password, function(api) {
     if (message.group_thread_info)
       part_names = (message.group_thread_info.participant_names);
     else part_names = message.sender_name.split(' ')[0];
+
     var msg = bot(message.body, message.sender_name.split(' ')[0], message.tid, part_names);
-    //console.log('BOT GONNA SEND -------> ',typeof msg, msg, message.body, message.sender_name.split(' ')[0], message.tid, message.group_thread_info.participant_names);
-    if(msg && msg.length > 0) api.sendMessage(msg, thread_id);
+    console.log(msg);
+    if(msg.text && msg.text.length > 0) api.sendMessage(msg.text, thread_id);
+    if(msg.sticker_id) api.sendMessage('', thread_id, msg.sticker_id);
   });
 });
 
