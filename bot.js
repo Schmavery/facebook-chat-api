@@ -74,7 +74,7 @@ var salute = function(msg) {
     if (!match || match.length < 1) return;
 
     var general = match[1].trim().toLowerCase();
-    general = general.charAt(0).toUpperCase() + general.slice(1)
+    general = general.charAt(0).toUpperCase() + general.slice(1);
     return ("*salute* General " + general);
 };
 
@@ -93,7 +93,7 @@ var albert = function(msg) {
     var myRegexp = /^\/albert$/i;
     var match = myRegexp.exec(msg);
     if (!match || match.length < 1) return;
-    var k =  "\n         ,---,_          ,\n          _>   \`'-.  .--'/\n     .--'\` ._      \`/   <_\n      >,-' ._'.. ..__ . ' '-.\n   .-'   .'\`         \`'.     '.\n    >   / >\`-.     .-'< \\ , '._\\\n   /    ; '-._>   <_.-' ;  '._>\n   \`>  ,/  /___\\ /___\\  \\_  /\n   \`.-|(|  \\o_/  \\o_/   |)|\`\n       \\;        \\      ;/\n         \\  .-,   )-.  /\n          /\`  .'-'.  \`\\\n         ;_.-\`.___.'-.;\n";
+    var k =  "\n         ,---,_          ,\n          _>   `'-.  .--'/\n     .--'` ._      `/   <_\n      >,-' ._'.. ..__ . ' '-.\n   .-'   .'`         `'.     '.\n    >   / >`-.     .-'< \\ , '._\\\n   /    ; '-._>   <_.-' ;  '._>\n   `>  ,/  /___\\ /___\\  \\_  /\n   `.-|(|  \\o_/  \\o_/   |)|`\n       \\;        \\      ;/\n         \\  .-,   )-.  /\n          /`  .'-'.  `\\\n         ;_.-`.___.'-.;\n";
 return k;
 };
 
@@ -125,7 +125,7 @@ var bees = function(msg) {
 };
 
 var sexxiBatman = function(msg) {
-    if (msg.match("[Ww]anna make some trouble[\s\t]*\?")) {
+    if (msg.match(/[Ww]anna make some trouble[\s\t]*\?/)) {
         return "http://99gifs.com/-img/514e8830afa96f09940128f8.gif";
     }
     return "";
@@ -186,7 +186,7 @@ var arbitraryLists = function (msg) {
     var list = match[1].trim().toLowerCase();
     console.log(list);
     var arr = list.split(/\s+/);
-    if(arr.length === 1 && arr[0].length === 0) return "Existing Lists: \n" + Object.keys(currentChat.lists).join("\n");
+    if(arr.length === 1) return "Existing Lists: \n" + Object.keys(currentChat.lists).join("\n");
 
     var keyword = arr[1];
     var listName = arr.length > 2 ? arr[2] : "";
@@ -203,6 +203,9 @@ var arbitraryLists = function (msg) {
         }
     } else if (keyword === 'add') {
         if(listName.length > 0 && arr.length > 3) {
+            if (!currentChat.lists[listName]) {
+              return "No list of name '"+listName+"' exists.";
+            }
             currentChat.lists[listName].push(arr.slice(3).join(' '));
             return "Added element to " + listName + ".";
         }
@@ -226,7 +229,7 @@ var topScore = function(msg) {
             maxName = currentOtherUsernames[i];
         }
     }
-    return maxName;
+    return "Top Score: " + maxName+ ", with "+max+" points.";
 };
 
 

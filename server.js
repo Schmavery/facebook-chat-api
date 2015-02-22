@@ -36,7 +36,7 @@ function _post(url, jar, form, callback) {
       'Referer': 'https://www.facebook.com/',
       'Origin': 'https://www.facebook.com',
       'Host': url.replace('https://', '').split("/")[0],
-      "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36"
+      "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36"
     },
     url: url,
     method: "POST",
@@ -170,7 +170,7 @@ function login(email, password, callback) {
               if(max !== -1) form.seq = max;
 
               if(info.length > 0){
-                for (var i = 0; i < info.length; i++) {
+                for (i = 0; i < info.length; i++) {
                   if(info[i].tr) {
                     form.traceid = info[i].tr;
                     break;
