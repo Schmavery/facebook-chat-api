@@ -36,7 +36,7 @@ function _post(url, jar, form, callback) {
       'Referer': 'https://www.facebook.com/',
       'Origin': 'https://www.facebook.com',
       'Host': url.replace('https://', '').split("/")[0],
-      "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36"
+      "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36"
     },
     url: url,
     method: "POST",
@@ -170,7 +170,7 @@ function login(email, password, callback) {
               if(max !== -1) form.seq = max;
 
               if(info.length > 0){
-                for (var i = 0; i < info.length; i++) {
+                for (i = 0; i < info.length; i++) {
                   if(info[i].tr) {
                     form.traceid = info[i].tr;
                     break;
@@ -190,9 +190,9 @@ function login(email, password, callback) {
             });
 
             // Send all messages to the callback
-            info.map(function(s) {
-              cb(s, stop);
-            });
+            for (var index = 0; index < info.length; index++){
+              cb(info[index], stop);
+            }
           }.bind(this));
   }.bind(api);
 
@@ -374,12 +374,14 @@ var credentials = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 login(credentials.email, credentials.password, function(api) {
   api.listen(function(message, closeConnection) {
     console.log(message);
-    if(message.tid) {
-      var thread_id = getThreadIdFromMessage(message);
-      var msg = bot(message.body, message.sender_name.split(' ')[0], message.tid, message.group_thread_info.participant_names);
-      console.log('BOT GONNA SEND -------> ',typeof msg, msg, message.body, message.sender_name.split(' ')[0], message.tid, message.group_thread_info.participant_names);
-      if(msg && msg.length > 0) api.sendMessage(msg, thread_id);
-    }
+    var thread_id = getThreadIdFromMessage(message);
+    var part_names;
+    if (message.group_thread_info)
+      part_names = (message.group_thread_info.participant_names);
+    else part_names = message.sender_name.split(' ')[0];
+    var msg = bot(message.body, message.sender_name.split(' ')[0], message.tid, part_names);
+    //console.log('BOT GONNA SEND -------> ',typeof msg, msg, message.body, message.sender_name.split(' ')[0], message.tid, message.group_thread_info.participant_names);
+    if(msg && msg.length > 0) api.sendMessage(msg, thread_id);
   });
 });
 
@@ -388,7 +390,8 @@ function getCB() {
 }
 
 function getThreadIdFromMessage(message) {
-  return message.tid.split(".")[1];
+  if (message.tid) return message.tid.split(".")[1];
+  else return message.other_user_fbid;
 }
 
 function normalizeMessage(m) {
