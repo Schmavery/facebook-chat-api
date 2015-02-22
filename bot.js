@@ -19,7 +19,7 @@ var read = function(message, username, chatid, otherUsernames) {
     currentUsername = username.toLowerCase();
     currentOtherUsernames = otherUsernames;
     var response = "";
-    var textFunctions = [salute, weekendText, addScore, score, runScript, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore];
+    var textFunctions = [salute, weekendText, addScore, score, runScript, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot];
     for (var i = 0; i < textFunctions.length; i++) {
         var res = (textFunctions[i])(message);
         if (res && res.length > 0) response += res;
@@ -179,59 +179,66 @@ var giphySearch = function(msg) {
 };
 
 var arbitraryLists = function (msg) {
-    var myRegexp = /^\/(list\s*.*)/i;
-    var match = myRegexp.exec(msg);
-    if (!match || match.length < 1) return;
+  var myRegexp = /^\/(list\s*.*)/i;
+  var match = myRegexp.exec(msg);
+  if (!match || match.length < 1) return;
 
-    var list = match[1].trim().toLowerCase();
-    console.log(list);
-    var arr = list.split(/\s+/);
-    if(arr.length === 1) return "Existing Lists: \n" + Object.keys(currentChat.lists).join("\n");
+  var list = match[1].trim().toLowerCase();
+  console.log(list);
+  var arr = list.split(/\s+/);
+  if(arr.length === 1) return "Existing Lists: \n" + Object.keys(currentChat.lists).join("\n");
 
-    var keyword = arr[1];
-    var listName = arr.length > 2 ? arr[2] : "";
-    console.log('1--->', keyword === 'new', listName, listName.length);
-    if(keyword === 'new') {
-        if(listName.length > 0) {
-            currentChat.lists[listName] = [];
-            return listName + " created.";
-        }
-    } else if (keyword === 'delete') {
-        if(listName.length > 0) {
-            delete currentChat.lists[listName];
-            return listName + " deleted.";
-        }
-    } else if (keyword === 'add') {
-        if(listName.length > 0 && arr.length > 3) {
-            if (!currentChat.lists[listName]) {
-              return "No list of name '"+listName+"' exists.";
-            }
-            currentChat.lists[listName].push(arr.slice(3).join(' '));
-            return "Added element to " + listName + ".";
-        }
-    } else if (currentChat.lists[keyword]) {
-        return keyword + ": \n" + currentChat.lists[keyword].join("\n");
+  var keyword = arr[1];
+  var listName = arr.length > 2 ? arr[2] : "";
+  console.log('1--->', keyword === 'new', listName, listName.length);
+  if(keyword === 'new') {
+    if(listName.length > 0) {
+      currentChat.lists[listName] = [];
+      return listName + " created.";
     }
+  } else if (keyword === 'delete') {
+    if(listName.length > 0) {
+      delete currentChat.lists[listName];
+      return listName + " deleted.";
+    }
+  } else if (keyword === 'add') {
+    if(listName.length > 0 && arr.length > 3) {
+      if (!currentChat.lists[listName]) {
+        return "No list of name '"+listName+"' exists.";
+      }
+      currentChat.lists[listName].push(arr.slice(3).join(' '));
+      return "Added element to " + listName + ".";
+    }
+  } else if (currentChat.lists[keyword]) {
+    return keyword + ": \n" + currentChat.lists[keyword].join("\n");
+  }
 
-    return "Usage:\n /list \n /list list-name\n /list new list-name \n /list delete list-name \n /list add list-name new-element";
+  return "Usage:\n /list \n /list list-name\n /list new list-name \n /list delete list-name \n /list add list-name new-element";
 };
 
 var topScore = function(msg) {
-    var myRegexp = /^\/(topscore)$/i;
-    var match = myRegexp.exec(msg);
-    if (!match || match.length < 1) return;
-    var max = -1;
-    var maxName = "";
-    for (var i = 0; i < currentOtherUsernames.length; i++) {
-        var score = currentChat.scores[currentOtherUsernames[i]] ? currentChat.scores[currentOtherUsernames[i]] : 0;
-        if (score > max) {
-            max = score;
-            maxName = currentOtherUsernames[i];
-        }
+  var myRegexp = /^\/(topscore)$/i;
+  var match = myRegexp.exec(msg);
+  if (!match || match.length < 1) return;
+  var max = -1;
+  var maxName = "";
+  for (var i = 0; i < currentOtherUsernames.length; i++) {
+    var score = currentChat.scores[currentOtherUsernames[i]] ? currentChat.scores[currentOtherUsernames[i]] : 0;
+    if (score > max) {
+      max = score;
+      maxName = currentOtherUsernames[i];
     }
-    return "Top Score: " + maxName+ ", with "+max+" points.";
+  }
+  return "Top Score: " + maxName+ ", with "+max+" points.";
 };
 
+var chatbot = function(msg) {
+  var myRegexp = /(chat ?bot)/i;
+  var match = myRegexp.exec(msg);
+  if (!match || match.length < 1) return;
+  var items = ["Are you talking about me?", "I am a chat bot.", "Pick me, pick me!"];
+  return items[Math.floor(Math.random()*items.length)]; 
+};
 
 function replaceAll(find, replace, str) {
   return str.replace(new RegExp(find, 'g'), replace);
