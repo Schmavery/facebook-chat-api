@@ -1,0 +1,17 @@
+{
+  "name": "hype",
+  "version": "1.0.0",
+  "description": "",
+  "main": "partial.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^0.9.0",
+    "cheerio": "^0.18.0",
+    "request": "^2.53.0"
+  }
+}
