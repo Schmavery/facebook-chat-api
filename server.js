@@ -370,7 +370,8 @@ function login(email, password, callback) {
   });
 }
 
-login("mark.zuckerbot@gmail.com", "averybendavidmaude", function(api) {
+var credentials = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+login(credentials.email, credentials.password, function(api) {
   api.listen(function(message, closeConnection) {
     console.log(message);
     if(message.tid) {
