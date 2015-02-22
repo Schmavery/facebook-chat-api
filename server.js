@@ -128,10 +128,10 @@ function login(email, password, callback) {
         api.listen = function(cb, index) {
           i = i || 0;
           if(shouldStop) return;
-          if(currentlyRunning.length < 9) {
+          if(currentlyRunning.length < 19) {
             console.log("Currentl running requests -->", currentlyRunning.length);
-            for (var i = currentlyRunning.length; i < 9; i++) {
-              currentlyRunning.push(setTimeout(api.listen, 5000 * i, cb, i));
+            for (var i = currentlyRunning.length; i < 19; i++) {
+              currentlyRunning.push(setTimeout(api.listen, 2500 * i, cb, i));
               tmpPrev.push(Date.now());
             }
           }
@@ -152,7 +152,7 @@ function login(email, password, callback) {
               if(Date.now() - tmpPrev[index] < 1000) {
                 console.log('Going too fast ------------> ', info);
                 clearTimeout(currentlyRunning[index]);
-                currentlyRunning[index] = setTimeout(api.listen, 1000, cb, index);
+                // currentlyRunning[index] = setTimeout(api.listen, 5000, cb, index);
               }
               if(Date.now() - tmpPrev[index] > 10000) {
                 var form10 = {
@@ -190,7 +190,7 @@ function login(email, password, callback) {
                   });
                   lastSync = Date.now();
                   console.log("fullReload --->", html);
-                  currentlyRunning[index] = setTimeout(api.listen, 1000, cb, index);
+                  // currentlyRunning[index] = setTimeout(api.listen, 1000, cb, index);
                 });
                 return;
               }
@@ -327,16 +327,20 @@ function login(email, password, callback) {
           };
           _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
             var strData = makeParsable(html);
+            console.log("mark1");
             try{
               var ret = strData.map(JSON.parse);
+              console.log("mark2");
               form.cb = getCB();
-              console.log("Request to active_ping");
-              _get("https://0-edge-chat.facebook.com/active_ping", jar, form, function(err, res, html) {
-                console.log("active ping back --->", html);
-              });
+              console.log("mark3");
+              // console.log("Request to active_ping");
+              // _get("https://0-edge-chat.facebook.com/active_ping", jar, form, function(err, res, html) {
+              //   console.log("active ping back --->", html);
+              // });
               cb({
                 thread_id: ret.thread_fbid, // LOL
               });
+              console.log("mark4");
             } catch (e) {
               console.log("ERROR", e, html);
             }

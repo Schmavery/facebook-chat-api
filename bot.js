@@ -18,12 +18,29 @@ var read = function(message, username, chatid, otherUsernames) {
     currentChat = chat;
     currentUsername = username.toLowerCase();
     currentOtherUsernames = otherUsernames;
-    var textFunctions = [salute, weekendText, addScore, score, runScript, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, hello, sendSticker];
+    var textFunctions = [salute, weekendText, addScore, score, runScript, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendSticker, staticText];
     for (var i = 0; i < textFunctions.length; i++) {
         var res = textFunctions[i](message);
         if (res) return res;
     }
     return {};
+};
+
+var staticText = function(msg) {
+    var possibilities = [
+        [[/(hey marc)/i],["Sup", "Hey :D", "hey", "Me?", "yes?"]],
+        [[/(sup|wassup|what's up|how are you)/i], ["I'm tired", "Not much, you?", "Meh...", "I'm great, how about you?", "What's up with you?", "Up?"]],
+        [[/(who made you|who's your creator|where do you come from)/i], ["I'm a long story... About 24h long.", "I'm not too sure", "I never really asked myself this question."]]
+    ];
+    for (var i = 0; i < possibilities.length; i++) {
+        var possibleMatches = possibilities[i][0];
+        for (var j = 0; j < possibleMatches.length; j++) {
+            var match = possibleMatches[j].exec(msg);
+            if(match && match.length > 0) {
+                return {text: randFrom(possibilities[i][1])};
+            }
+        }
+    }
 };
 
 var sendSticker = function(msg) {
@@ -107,11 +124,11 @@ var runScript = function(msg) {
     var myRegexp = /^\/run\s+((.|\n)+)$/i;
     var match = myRegexp.exec(msg);
     if (!match || match.length < 1) return;
-    var script = match[1].trim().toLowerCase();
+    var script = match[1].trim();
     script = replaceAll("&nbsp;", " ", script);
     script = replaceAll("&lt;", "<", script);
     script = replaceAll("&gt;", ">", script);
-
+    console.log(script);
     var response = "";
     var say = function(msg) { response += msg; };
 
@@ -248,7 +265,9 @@ var chatbot = function(msg) {
   var items = ["Are you talking about me?", "I am a chat bot.", "Pick me, pick me!"];
   return {text: items[Math.floor(Math.random()*items.length)]};
 };
-
+function randFrom(arr) {
+    return arr[~~(arr.length * Math.random())];
+}
 function replaceAll(find, replace, str) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
