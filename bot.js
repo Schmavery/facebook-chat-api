@@ -19,7 +19,7 @@ var read = function(message, username, chatid, otherUsernames) {
     currentUsername = username.toLowerCase();
     currentOtherUsernames = otherUsernames;
     var response = "";
-    var textFunctions = [salute, weekendText, addScore, score, runScript, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, topScore];
+    var textFunctions = [salute, weekendText, addScore, score, runScript, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore];
     for (var i = 0; i < textFunctions.length; i++) {
         var res = (textFunctions[i])(message);
         if (res && res.length > 0) response += res;
@@ -30,10 +30,12 @@ var read = function(message, username, chatid, otherUsernames) {
 var slap = function(msg) {
     var myRegexp = /^\/(slap\s*.*)/i;
     var match = myRegexp.exec(msg);
+    console.log(match);
     if (!match || match.length < 1) return;
 
     var arr = match[1].trim().toLowerCase();
-    var list = arr.split(/\s*/);
+    var list = arr.split(/\s+/);
+    console.log(list);
     if(list.length === 1) return currentOtherUsernames[~~(currentOtherUsernames.length * Math.random())] + " just got slapped.";
 
     var name = list[1];
@@ -183,7 +185,7 @@ var arbitraryLists = function (msg) {
 
     var list = match[1].trim().toLowerCase();
     console.log(list);
-    var arr = list.split(/\s*/);
+    var arr = list.split(/\s+/);
     if(arr.length === 1 && arr[0].length === 0) return "Existing Lists: \n" + Object.keys(currentChat.lists).join("\n");
 
     var keyword = arr[1];

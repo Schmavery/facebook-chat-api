@@ -34,6 +34,7 @@ function _post(url, jar, form, callback) {
     headers: {
       'Content-Type' : 'application/x-www-form-urlencoded',
       'Referer': 'https://www.facebook.com/',
+      'Origin': 'https://www.facebook.com',
       'Host': url.replace('https://', '').split("/")[0],
       "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36"
     },
@@ -193,10 +194,10 @@ function login(email, password, callback) {
               cb(s, stop);
             });
           }.bind(this));
-}.bind(api);
+  }.bind(api);
 
-var reqCounter = 1;
-api.sendMessage = function(msg, thread_id, cb) {
+  var reqCounter = 1;
+  api.sendMessage = function(msg, thread_id, cb) {
   if(!cb) cb = function() {};
 
   var tmp = {};
