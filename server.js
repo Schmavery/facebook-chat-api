@@ -10,14 +10,21 @@ function _get(url, jar, qs, callback) {
     callback = qs;
     qs = {};
   }
+  for(var prop in qs) {
+    if(typeof qs[prop] === "object") {
+      console.log("You probably shouldn't pass an object inside the form at property", prop, form);
+      continue;
+    }
+    qs[prop] = qs[prop].toString();
+  }
   var op = {
     headers: {
       'Content-Type' : 'application/x-www-form-urlencoded',
       'Referer': 'https://www.facebook.com/',
       'Host': url.replace('https://', '').split("/")[0],
       'Origin': 'https://www.facebook.com',
-      "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36",
-      'Connection': 'keep-alive'
+      "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18",
+      'Connection': 'keep-alive',
     },
     qs: qs,
     url: url,
@@ -36,7 +43,8 @@ function _post(url, jar, form, callback) {
       'Referer': 'https://www.facebook.com/',
       'Origin': 'https://www.facebook.com',
       'Host': url.replace('https://', '').split("/")[0],
-      "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36"
+      "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18",
+      'Connection': 'keep-alive',
     },
     url: url,
     method: "POST",
@@ -77,7 +85,7 @@ function login(email, password, callback) {
       });
       _get("https://www.facebook.com/?sk=welcome", jar, function(err, res, html) {
         var clientid = (Math.random()*2147483648|0).toString(16);
-
+        var starTime = Date.now();
         var userId = jar.getCookies("https://www.facebook.com").filter(function(val) {
           return val.cookieString().split("=")[0] === "c_user";
         })[0].cookieString().split("=")[1];
@@ -112,11 +120,25 @@ function login(email, password, callback) {
         };
 
         var prev = Date.now();
-        api.listen = function(cb) {
+        var tmpPrev = Date.now();
+        var lastSync = Date.now();
+        var reqCounter = 1;
+        var currentlyRunning = [];
+        var alreadySeenMessages = {};
+        api.listen = function(cb, index) {
+          i = i || 0;
           if(shouldStop) return;
-
+          if(currentlyRunning.length < 9) {
+            console.log("Currentl running requests -->", currentlyRunning.length);
+            for (var i = currentlyRunning.length; i < 9; i++) {
+              currentlyRunning.push(setTimeout(api.listen, 5000 * i, cb, i));
+            }
+          }
           form.wtc = time.doSerialize();
           form.cb = getCB();
+          form.idle = ~~((Date.now() - prev)/1000);
+          prev = Date.now();
+          console.log(form);
           time.reportPullSent();
           _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
 
@@ -124,35 +146,94 @@ function login(email, password, callback) {
             var strData = makeParsable(html);
             var info = [];
             try {
-              // console.log(Date.now() - prev,"--->", strData, form.seq);
-              prev = Date.now();
+              console.log("parsing....");
               info = strData.map(JSON.parse);
-              if(info[0].t === 'fullReload') {
-                console.log("Request to sync");
+              if(Date.now() - tmpPrev < 400) {
+                console.log('Going too fast ------------> ', info);
+                clearTimeout(currentlyRunning[index]);
+              }
+              if(Date.now() - tmpPrev > 10000) {
+                var form10 = {
+                  channel:userChannel,
+                  partition:"-2",
+                  clientid:clientid,
+                  cb:getCB(),
+                  cap:"8",
+                  uid:userId,
+                  viewer_uid:userId,
+                  sticky_token:form.sticky_token,
+                  sticky_pool:form.sticky_pool,
+                  state:"active"
+                };
+                console.log("Active ping sent");
+                _get("https://0-edge-chat.facebook.com/active_ping", jar, form, function(err, res, html) {
+                  console.log("Reply for active ping:", html);
+                });
+              }
+              tmpPrev = Date.now();
+              if(info.length > 0 && info[0].t === 'fullReload') {
                 var form4 = {
-                  'lastSync':~~(Date.now()/1000 - 60000),
+                  'lastSync':~~(lastSync/1000),
                   '__user': userId,
                   '__a': '1',
                   '__rev': '1609713',
                   '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
+                  '__req': (reqCounter++).toString(36)
                 };
+                console.log("Request to sync -->", form4);
                 _get("https://www.facebook.com/notifications/sync", jar, form4, function(err, res, html) {
                   var cookies = res.headers['set-cookie'] || [];
                   cookies.map(function (c) {
                     jar.setCookie(c, "https://www.facebook.com");
                   });
-
+                  lastSync = Date.now();
                   console.log("fullReload --->", html);
-                  setTimeout(api.listen, 1000, cb);
+                  currentlyRunning[index] = setTimeout(api.listen, 1000, cb, index);
                 });
                 return;
               }
+
+              if(info.length > 3) {
+                var lastTimestamp = starTime;
+                for (var i = 0; i < info.length; i++) {
+                  if(info[i].t === 'msg' && info[i].ms[0].time > lastTimestamp) {
+                    lastTimestamp = info[i].ms[0].time;
+                  }
+                }
+                var form7 = {
+                  'last_action_timestamp': lastTimestamp,
+                  '__user': userId,
+                  '__a': '1',
+                  '__rev': '1609713',
+                  '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
+                  '__req': (reqCounter++).toString(36),
+                  fb_dtsg: fb_dtsg,
+                  ttstamp: ttstamp,
+                  'client': 'mercury',
+                  'folders[0]': 'inbox',
+                };
+                console.log("Request to thread_sync");
+                _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form7, function(err, res, html) {
+                  var cookies = res.headers['set-cookie'] || [];
+                  cookies.map(function (c) {
+                    jar.setCookie(c, "https://www.facebook.com");
+                  });
+
+                });
+              }
+
               info = info.filter(function(v) {
                 return v.t !== "heartbeat" &&
                 v.ms &&
                 v.ms[0].type === 'messaging' &&
                 v.ms[0].event === 'deliver' &&
                 v.ms[0].message.sender_fbid.toString() !== userId;
+              });
+
+              info = info.filter(function(v) {
+                if(alreadySeenMessages[v.ms[0].message.timestamp]) return false;
+                alreadySeenMessages[v.ms[0].message.timestamp] = true;
+                return true;
               });
 
               // First packet received is a little different
@@ -180,123 +261,130 @@ function login(email, password, callback) {
 
             } catch (e) {
               console.log("ERROR --> ",e, strData);
+              currentlyRunning[index] = setTimeout(api.listen, 1000, cb, index);
+              return;
             }
-            this.listen(cb);
+            console.log("next call in 100ms");
+            currentlyRunning[index] = setTimeout(api.listen, 100, cb, index);
 
             info = info.map(normalizeMessage);
+            console.log(info);
             info.sort(function(a, b) {
-              console.log(a, b);
+              console.log("comparing", a.timestamp, b.timestamp);
               return a.timestamp - b.timestamp;
             });
 
             // Send all messages to the callback
-            for (var index = 0; index < info.length; index++){
-              cb(info[index], stop);
+            for (var i = 0; i < info.length; i++){
+              cb(info[i], stop);
             }
-          }.bind(this));
-  }.bind(api);
+          });
+        };
 
-  var reqCounter = 1;
-  api.sendMessage = function(msg, thread_id, cb) {
-  if(!cb) cb = function() {};
 
-  var tmp = {};
-  helperFunctions.normalizeNewMessage(tmp, userId, clientid);
-  var timestamp = Date.now();
-  // var s = {
-    // __dyn: l.getLoadedModuleHash(),
+        api.sendMessage = function(msg, thread_id, cb) {
+          if(!cb) cb = function() {};
 
-  // },
-  var form = {
-    'client': "mercury",
-    '__user': userId,
-    '__a': 1,
-    'fb_dtsg': fb_dtsg,
-    'ttstamp': ttstamp,
-    '__req': (reqCounter++).toString(36),
-    'message_batch[0][action_type]':'ma-type:user-generated-message',
-    'message_batch[0][author]':tmp.author,
-    'message_batch[0][timestamp]':timestamp,
-    'message_batch[0][timestamp_absolute]':tmp.timestamp_absolute,
-    'message_batch[0][timestamp_relative]':'18:17',
-    'message_batch[0][timestamp_time_passed]':'0',
-    'message_batch[0][is_unread]':'false',
-    'message_batch[0][is_cleared]':'false',
-    'message_batch[0][is_forward]':'false',
-    'message_batch[0][is_filtered_content]':'false',
-    'message_batch[0][is_spoof_warning]':'false',
-    'message_batch[0][source]':'source:chat:web',
-    'message_batch[0][source_tags][0]':'source:chat',
-    'message_batch[0][body]':msg,
-    'message_batch[0][has_attachment]':'false',
-    'message_batch[0][html_body]':'false',
-    'message_batch[0][ui_push_phase]':'V3',
-    'message_batch[0][status]':'0',
-    'message_batch[0][message_id]':tmp.message_id,
-    'message_batch[0][manual_retry_cnt]':'0',
-    'message_batch[0][thread_fbid]':thread_id
-  };
-  _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
-      var strData = makeParsable(html);
-      try{
-        var ret = strData.map(JSON.parse);
+          var tmp = {};
+          helperFunctions.normalizeNewMessage(tmp, userId, clientid);
+          var timestamp = Date.now();
 
-        cb({
-          thread_id: ret.thread_fbid, // LOL
-        });
-      } catch (e) {
-        console.log("ERROR", e, html);
-      }
-    }.bind(this));
-  }.bind(api);
+          var form = {
+            'client': "mercury",
+            '__user': userId,
+            '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
+            '__a': 1,
+            'fb_dtsg': fb_dtsg,
+            'ttstamp': ttstamp,
+            '__req': (reqCounter++).toString(36),
+            'message_batch[0][action_type]':'ma-type:user-generated-message',
+            'message_batch[0][author]':tmp.author,
+            'message_batch[0][timestamp]':timestamp,
+            'message_batch[0][timestamp_absolute]':tmp.timestamp_absolute,
+            'message_batch[0][timestamp_relative]':'18:17',
+            'message_batch[0][timestamp_time_passed]':'0',
+            'message_batch[0][is_unread]':'false',
+            'message_batch[0][is_cleared]':'false',
+            'message_batch[0][is_forward]':'false',
+            'message_batch[0][is_filtered_content]':'false',
+            'message_batch[0][is_spoof_warning]':'false',
+            'message_batch[0][source]':'source:chat:web',
+            'message_batch[0][source_tags][0]':'source:chat',
+            'message_batch[0][body]':msg,
+            'message_batch[0][has_attachment]':'false',
+            'message_batch[0][html_body]':'false',
+            'message_batch[0][ui_push_phase]':'V3',
+            'message_batch[0][status]':'0',
+            'message_batch[0][message_id]':tmp.message_id,
+            'message_batch[0][manual_retry_cnt]':'0',
+            'message_batch[0][thread_fbid]':thread_id
+          };
+          _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
+            var strData = makeParsable(html);
+            try{
+              var ret = strData.map(JSON.parse);
+              form.cb = getCB();
+              console.log("Request to active_ping");
+              _get("https://0-edge-chat.facebook.com/active_ping", jar, form, function(err, res, html) {
+                console.log("active ping back --->", html);
+              });
+              cb({
+                thread_id: ret.thread_fbid, // LOL
+              });
+            } catch (e) {
+              console.log("ERROR", e, html);
+            }
+          });
+        };
 
-  time.initialize();
+        time.initialize();
 
-  var form2 = {
-    'grammar_version':'94ad0a5516d7a8d7a8aefb2f83aaf2e8e424b256',
-    '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
-    '__user':userId,
-    '__a':'1',
-    '__req':'1',
-    '__rev':'1609713'
-  };
-  console.log("Request to null_state");
-  _get("https://www.facebook.com/ajax/browse/null_state.php", jar, form2, function(err, res, html) {
-    // console.log("--->", html);
-    console.log("Request to reconnect");
-    var form3 = {
-      '__user': userId,
-      '__a': '1',
-      '__rev': '1609713',
-      '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
-      'reason': '6',
-      'fb_dtsg': fb_dtsg
-    };
-    _get("https://www.facebook.com/ajax/presence/reconnect.php", jar, form3, function(err, res, html) {
-      var cookies = res.headers['set-cookie'] || [];
-      cookies.map(function (c) {
-        jar.setCookie(c, "https://www.facebook.com");
-      });
-
-      // console.log("--->", html);
-      console.log("Request to imps_logging");
-      form3.source = "periodical_imps";
-      form3.sorted_list = "1216678154,1086418163,100001056938824,1341803147";
-      form3.list_availability = "2,2,3,3";
-      form3.ttstamp = ttstamp;
-      _get("https://www.facebook.com/ajax/chat/imps_logging.php", jar, form3, function(err, res, html) {
-        // console.log("--->", html);
-        time.reportPullSent();
-        console.log("Request to pull 1");
-        _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
+        var form2 = {
+          'grammar_version':'94ad0a5516d7a8d7a8aefb2f83aaf2e8e424b256',
+          '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
+          '__user':userId,
+          '__a':'1',
+          '__req':(reqCounter++).toString(36),
+          '__rev':'1609713'
+        };
+        console.log("Request to null_state");
+        _get("https://www.facebook.com/ajax/browse/null_state.php", jar, form2, function(err, res, html) {
           // console.log("--->", html);
-          time.reportPullReturned();
-          form.wtc = time.doSerialize();
-          var strData = makeParsable(html);
-          try {
-            var info = strData.map(JSON.parse).filter(function(v) {
-              return v.t !== "heartbeat";
+          console.log("Request to reconnect");
+          var form3 = {
+            '__user': userId,
+            '__a': '1',
+            '__rev': '1609713',
+            '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
+            '__req': (reqCounter++).toString(36),
+            'reason': '6',
+            'fb_dtsg': fb_dtsg
+          };
+          _get("https://www.facebook.com/ajax/presence/reconnect.php", jar, form3, function(err, res, html) {
+            var cookies = res.headers['set-cookie'] || [];
+            cookies.map(function (c) {
+              jar.setCookie(c, "https://www.facebook.com");
             });
+
+            // console.log("--->", html);
+            console.log("Request to imps_logging");
+            form3.source = "periodical_imps";
+            form3.sorted_list = "1216678154,1086418163,100001056938824,1341803147";
+            form3.list_availability = "2,2,3,3";
+            form3.ttstamp = ttstamp;
+            _get("https://www.facebook.com/ajax/chat/imps_logging.php", jar, form3, function(err, res, html) {
+              // console.log("--->", html);
+              time.reportPullSent();
+              console.log("Request to pull 1");
+              _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
+                // console.log("--->", html);
+                time.reportPullReturned();
+                form.wtc = time.doSerialize();
+                var strData = makeParsable(html);
+                try {
+                  var info = strData.map(JSON.parse).filter(function(v) {
+                    return v.t !== "heartbeat";
+                  });
 
                   // First packet received is a little different
                   if(info.length === 1 && info[0].lb_info) {
@@ -312,10 +400,11 @@ function login(email, password, callback) {
                   time.reportPullReturned();
                   form.wtc = time.doSerialize();
                   var form4 = {
-                    'lastSync':~~(Date.now()/1000 - 60000),
+                    'lastSync':~~(Date.now()/1000 - 6),
                     '__user': userId,
                     '__a': '1',
                     '__rev': '1609713',
+                    '__req': (reqCounter++).toString(36),
                     '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
                   };
                   console.log("Request to sync");
@@ -330,6 +419,7 @@ function login(email, password, callback) {
                       '__user': userId,
                       '__a': '1',
                       '__rev': '1609713',
+                      '__req': (reqCounter++).toString(36),
                       '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
                       'fb_dtsg': fb_dtsg,
                       'ttstamp': ttstamp,
@@ -345,15 +435,18 @@ function login(email, password, callback) {
                           '__user': userId,
                           '__a': '1',
                           '__rev': '1609713',
+                          '__req': (reqCounter++).toString(36),
                           '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
                           'fb_dtsg': fb_dtsg,
                           'ttstamp': ttstamp,
                           'client': 'mercury',
                           'folders[0]': 'inbox',
-                          'last_action_timestamp': ~~(Date.now() - 60000)
+                          'last_action_timestamp': ~~(Date.now() - 60)
                         };
-                        _get("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
-                          // console.log("--->", html);
+                        console.log("Request to thread_sync");
+                        _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
+                          console.log("thread sync --->");
+                          console.log(err, res.statusCode, html);
                           console.log("Ready!");
                           callback(api);
                         });
@@ -401,7 +494,6 @@ function normalizeMessage(m) {
   // obj.type = originalMessage.type;
   // obj.event = originalMessage.event;
   if(originalMessage.message) return originalMessage.message;
-  console.log(originalMessage);
   return originalMessage;
 }
 

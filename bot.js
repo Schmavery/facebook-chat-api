@@ -19,7 +19,7 @@ var read = function(message, username, chatid, otherUsernames) {
     currentUsername = username.toLowerCase();
     currentOtherUsernames = otherUsernames;
     var response = "";
-    var textFunctions = [salute, weekendText, addScore, score, runScript, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot];
+    var textFunctions = [salute, weekendText, addScore, score, runScript, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, hello];
     for (var i = 0; i < textFunctions.length; i++) {
         var res = (textFunctions[i])(message);
         if (res && res.length > 0) response += res;
@@ -30,12 +30,10 @@ var read = function(message, username, chatid, otherUsernames) {
 var slap = function(msg) {
     var myRegexp = /^\/(slap\s*.*)/i;
     var match = myRegexp.exec(msg);
-    console.log(match);
     if (!match || match.length < 1) return;
 
     var arr = match[1].trim().toLowerCase();
     var list = arr.split(/\s+/);
-    console.log(list);
     if(list.length === 1) return currentOtherUsernames[~~(currentOtherUsernames.length * Math.random())] + " just got slapped.";
 
     var name = list[1];
@@ -85,7 +83,7 @@ var score = function(msg) {
     var name = match[1].trim().toLowerCase();
     if (name.length < 1) {name = currentUsername;}
     if (!contains(currentOtherUsernames, name)) {return "who?";}
-    var pts = currentChat[name] ? currentChat[name] : 0;
+    var pts = currentChat.scores[name] ? currentChat.scores[name] : 0;
     return ("" + name + " has " + pts + " points");
 };
 
@@ -161,7 +159,6 @@ var giphySearch = function(msg) {
         request.onload = function() {
             if (request.status >= 200 && request.status < 400){
                 data = JSON.parse(request.responseText).data.image_url;
-                console.log(data);
                 return data;
             } else {
                 return "No gif for this search result.";
@@ -184,13 +181,11 @@ var arbitraryLists = function (msg) {
   if (!match || match.length < 1) return;
 
   var list = match[1].trim().toLowerCase();
-  console.log(list);
   var arr = list.split(/\s+/);
   if(arr.length === 1) return "Existing Lists: \n" + Object.keys(currentChat.lists).join("\n");
 
   var keyword = arr[1];
   var listName = arr.length > 2 ? arr[2] : "";
-  console.log('1--->', keyword === 'new', listName, listName.length);
   if(keyword === 'new') {
     if(listName.length > 0) {
       currentChat.lists[listName] = [];
@@ -232,12 +227,20 @@ var topScore = function(msg) {
   return "Top Score: " + maxName+ ", with "+max+" points.";
 };
 
+var hello = function(msg) {
+    var myRegexp = /^([Hh]ey\s+[Mm]arc)$/i;
+  var match = myRegexp.exec(msg);
+  if (!match || match.length < 1) return;
+  var arr = ["Sup", "Hey :D", "hey", "Me?", "yes?"];
+  return arr[~~(arr.length * Math.random())];
+};
+
 var chatbot = function(msg) {
   var myRegexp = /(chat ?bot)/i;
   var match = myRegexp.exec(msg);
   if (!match || match.length < 1) return;
   var items = ["Are you talking about me?", "I am a chat bot.", "Pick me, pick me!"];
-  return items[Math.floor(Math.random()*items.length)]; 
+  return items[Math.floor(Math.random()*items.length)];
 };
 
 function replaceAll(find, replace, str) {
