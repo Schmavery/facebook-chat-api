@@ -190,9 +190,9 @@ function login(email, password, callback) {
             });
 
             // Send all messages to the callback
-            info.map(function(s) {
-              cb(s, stop);
-            });
+            for (var index = 0; index < info.length; index++){
+              cb(info[index], stop);
+            }
           }.bind(this));
   }.bind(api);
 
@@ -373,12 +373,14 @@ function login(email, password, callback) {
 login("mark.zuckerbot@gmail.com", "averybendavidmaude", function(api) {
   api.listen(function(message, closeConnection) {
     console.log(message);
-    if(message.tid) {
-      var thread_id = getThreadIdFromMessage(message);
-      var msg = bot(message.body, message.sender_name.split(' ')[0], message.tid, message.group_thread_info.participant_names);
-      console.log('BOT GONNA SEND -------> ',typeof msg, msg, message.body, message.sender_name.split(' ')[0], message.tid, message.group_thread_info.participant_names);
-      if(msg && msg.length > 0) api.sendMessage(msg, thread_id);
-    }
+    var thread_id = getThreadIdFromMessage(message);
+    var part_names;
+    if (message.group_thread_info)
+      part_names = (message.group_thread_info.participant_names);
+    else part_names = message.sender_name.split(' ')[0];
+    var msg = bot(message.body, message.sender_name.split(' ')[0], message.tid, part_names);
+    //console.log('BOT GONNA SEND -------> ',typeof msg, msg, message.body, message.sender_name.split(' ')[0], message.tid, message.group_thread_info.participant_names);
+    if(msg && msg.length > 0) api.sendMessage(msg, thread_id);
   });
 });
 
@@ -387,7 +389,8 @@ function getCB() {
 }
 
 function getThreadIdFromMessage(message) {
-  return message.tid.split(".")[1];
+  if (message.tid) return message.tid.split(".")[1];
+  else return message.other_user_fbid;
 }
 
 function normalizeMessage(m) {
