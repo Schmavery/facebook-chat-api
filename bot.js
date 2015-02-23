@@ -18,7 +18,7 @@ var read = function(message, username, chatid, otherUsernames) {
     currentChat = chat;
     currentUsername = username.toLowerCase();
     currentOtherUsernames = otherUsernames;
-    var textFunctions = [salute, weekendText, addScore, score, runScript, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendSticker, staticText];
+    var textFunctions = [salute, weekendText, addScore, score, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendSticker, staticText];
     for (var i = 0; i < textFunctions.length; i++) {
         var res = textFunctions[i](message);
         if (res) return res;
@@ -119,26 +119,6 @@ var albert = function(msg) {
     if (!match || match.length < 1) return;
     var k =  "\n         ,---,_          ,\n          _>   `'-.  .--'/\n     .--'` ._      `/   <_\n      >,-' ._'.. ..__ . ' '-.\n   .-'   .'`         `'.     '.\n    >   / >`-.     .-'< \\ , '._\\\n   /    ; '-._>   <_.-' ;  '._>\n   `>  ,/  /___\\ /___\\  \\_  /\n   `.-|(|  \\o_/  \\o_/   |)|`\n       \\;        \\      ;/\n         \\  .-,   )-.  /\n          /`  .'-'.  `\\\n         ;_.-`.___.'-.;\n";
 return {text: k};
-};
-
-var runScript = function(msg) {
-    var myRegexp = /^\/run\s+((.|\n)+)$/i;
-    var match = myRegexp.exec(msg);
-    if (!match || match.length < 1) return;
-    var script = match[1].trim();
-    script = replaceAll("&nbsp;", " ", script);
-    script = replaceAll("&lt;", "<", script);
-    script = replaceAll("&gt;", ">", script);
-    console.log(script);
-    var response = "";
-    var say = function(msg) { response += msg; };
-
-    try {
-        eval(script);
-    } catch (e) {
-        return ("Learn to code already, " + e.message.split('\n')[0]);
-    }
-    return {text: response};
 };
 
 var bees = function(msg) {
