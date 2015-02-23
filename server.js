@@ -83,7 +83,9 @@ function login(email, password, callback) {
       cookies.map(function (c) {
         jar.setCookie(c, "https://www.facebook.com");
       });
-      _get("https://www.facebook.com/?sk=welcome", jar, function(err, res, html) {
+      _get(res.headers.location, jar, function(err, res, html) {
+        var grammar_version = getFrom(html, "grammar_version\":\"", "\"");
+
         var clientid = (Math.random()*2147483648|0).toString(16);
         var starTime = Date.now();
         var userId = jar.getCookies("https://www.facebook.com").filter(function(val) {
@@ -119,14 +121,14 @@ function login(email, password, callback) {
           shouldStop = true;
         };
 
-        var prev = Date.now();
+        // var prev = Date.now();
         var tmpPrev = [];
         var lastSync = Date.now();
         var reqCounter = 1;
         var currentlyRunning = [];
         var alreadySeenMessages = {};
         api.listen = function(cb, index) {
-          i = i || 0;
+          index = index || 0;
           if(shouldStop) return;
           if(currentlyRunning.length < 19) {
             console.log("Currentl running requests -->", currentlyRunning.length);
@@ -137,8 +139,8 @@ function login(email, password, callback) {
           }
           form.wtc = time.doSerialize();
           form.cb = getCB();
-          form.idle = ~~((Date.now() - prev)/1000);
-          prev = Date.now();
+          // form.idle = ~~((Date.now() - prev)/1000);
+          // prev = Date.now();
           console.log(form);
           time.reportPullSent();
           _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
@@ -148,38 +150,20 @@ function login(email, password, callback) {
             var info = [];
             try {
               console.log("parsing....");
+
               info = strData.map(JSON.parse);
+
               if(Date.now() - tmpPrev[index] < 1000) {
                 console.log('Going too fast ------------> ', info);
                 clearTimeout(currentlyRunning[index]);
+
                 // currentlyRunning[index] = setTimeout(api.listen, 5000, cb, index);
-              }
-              if(Date.now() - tmpPrev[index] > 10000) {
-                var form10 = {
-                  channel:userChannel,
-                  partition:"-2",
-                  clientid:clientid,
-                  cb:getCB(),
-                  cap:"8",
-                  uid:userId,
-                  viewer_uid:userId,
-                  sticky_token:form.sticky_token,
-                  sticky_pool:form.sticky_pool,
-                  state:"active"
-                };
-                console.log("Active ping sent");
-                _get("https://0-edge-chat.facebook.com/active_ping", jar, form, function(err, res, html) {
-                  console.log("Reply for active ping:", html);
-                });
               }
               tmpPrev[index] = Date.now();
               if(info.length > 0 && info[0].t === 'fullReload') {
                 var form4 = {
                   'lastSync':~~(lastSync/1000),
                   '__user': userId,
-                  '__a': '1',
-                  '__rev': '1609713',
-                  '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
                   '__req': (reqCounter++).toString(36)
                 };
                 console.log("Request to sync -->", form4);
@@ -190,37 +174,9 @@ function login(email, password, callback) {
                   });
                   lastSync = Date.now();
                   console.log("fullReload --->", html);
-                  // currentlyRunning[index] = setTimeout(api.listen, 1000, cb, index);
+                  currentlyRunning[index] = setTimeout(api.listen, 5000, cb, index);
                 });
                 return;
-              }
-
-              if(info.length > 3) {
-                var lastTimestamp = starTime;
-                for (var i = 0; i < info.length; i++) {
-                  if(info[i].t === 'msg' && info[i].ms[0].time > lastTimestamp) {
-                    lastTimestamp = info[i].ms[0].time;
-                  }
-                }
-                var form7 = {
-                  'last_action_timestamp': lastTimestamp,
-                  '__user': userId,
-                  '__a': '1',
-                  '__rev': '1609713',
-                  '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
-                  '__req': (reqCounter++).toString(36),
-                  fb_dtsg: fb_dtsg,
-                  ttstamp: ttstamp,
-                  'client': 'mercury',
-                  'folders[0]': 'inbox',
-                };
-                console.log("Request to thread_sync");
-                _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form7, function(err, res, html) {
-                  var cookies = res.headers['set-cookie'] || [];
-                  cookies.map(function (c) {
-                    jar.setCookie(c, "https://www.facebook.com");
-                  });
-                });
               }
 
               info = info.filter(function(v) {
@@ -268,10 +224,8 @@ function login(email, password, callback) {
             console.log("next call in 100ms");
             currentlyRunning[index] = setTimeout(api.listen, 100, cb, index);
 
-            info = info.map(normalizeMessage);
-            console.log(info);
+            info = info.map(formatMessage);
             info.sort(function(a, b) {
-              console.log("comparing", a.timestamp, b.timestamp);
               return a.timestamp - b.timestamp;
             });
 
@@ -297,8 +251,6 @@ function login(email, password, callback) {
           var form = {
             'client': "mercury",
             '__user': userId,
-            '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
-            '__a': 1,
             'fb_dtsg': fb_dtsg,
             'ttstamp': ttstamp,
             '__req': (reqCounter++).toString(36),
@@ -327,12 +279,9 @@ function login(email, password, callback) {
           };
           _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
             var strData = makeParsable(html);
-            console.log("mark1");
             try{
               var ret = strData.map(JSON.parse);
-              console.log("mark2");
               form.cb = getCB();
-              console.log("mark3");
               // console.log("Request to active_ping");
               // _get("https://0-edge-chat.facebook.com/active_ping", jar, form, function(err, res, html) {
               //   console.log("active ping back --->", html);
@@ -340,7 +289,6 @@ function login(email, password, callback) {
               cb({
                 thread_id: ret.thread_fbid, // LOL
               });
-              console.log("mark4");
             } catch (e) {
               console.log("ERROR", e, html);
             }
@@ -350,12 +298,9 @@ function login(email, password, callback) {
         time.initialize();
 
         var form2 = {
-          'grammar_version':'94ad0a5516d7a8d7a8aefb2f83aaf2e8e424b256',
-          '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
+          'grammar_version':grammar_version,
           '__user':userId,
-          '__a':'1',
           '__req':(reqCounter++).toString(36),
-          '__rev':'1609713'
         };
         console.log("Request to null_state");
         _get("https://www.facebook.com/ajax/browse/null_state.php", jar, form2, function(err, res, html) {
@@ -363,9 +308,6 @@ function login(email, password, callback) {
           console.log("Request to reconnect");
           var form3 = {
             '__user': userId,
-            '__a': '1',
-            '__rev': '1609713',
-            '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
             '__req': (reqCounter++).toString(36),
             'reason': '6',
             'fb_dtsg': fb_dtsg
@@ -378,11 +320,11 @@ function login(email, password, callback) {
 
             // console.log("--->", html);
             console.log("Request to imps_logging");
-            form3.source = "periodical_imps";
-            form3.sorted_list = "1216678154,1086418163,100001056938824,1341803147";
-            form3.list_availability = "2,2,3,3";
-            form3.ttstamp = ttstamp;
-            _get("https://www.facebook.com/ajax/chat/imps_logging.php", jar, form3, function(err, res, html) {
+            // form3.source = "periodical_imps";
+            // form3.sorted_list = "1216678154,1086418163,100001056938824,1341803147";
+            // form3.list_availability = "2,2,3,3";
+            // form3.ttstamp = ttstamp;
+            // _get("https://www.facebook.com/ajax/chat/imps_logging.php", jar, form3, function(err, res, html) {
               // console.log("--->", html);
               time.reportPullSent();
               console.log("Request to pull 1");
@@ -412,10 +354,7 @@ function login(email, password, callback) {
                   var form4 = {
                     'lastSync':~~(Date.now()/1000 - 6),
                     '__user': userId,
-                    '__a': '1',
-                    '__rev': '1609713',
                     '__req': (reqCounter++).toString(36),
-                    '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
                   };
                   console.log("Request to sync");
                   _get("https://www.facebook.com/notifications/sync", jar, form4, function(err, res, html) {
@@ -427,10 +366,7 @@ function login(email, password, callback) {
                     });
                     var form5 = {
                       '__user': userId,
-                      '__a': '1',
-                      '__rev': '1609713',
                       '__req': (reqCounter++).toString(36),
-                      '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
                       'fb_dtsg': fb_dtsg,
                       'ttstamp': ttstamp,
                       'ph': "V3",
@@ -443,10 +379,7 @@ function login(email, password, callback) {
                       _get("https://0-edge-chat.facebook.com/active_ping", jar, form, function(err, res, html) {
                         var form6 = {
                           '__user': userId,
-                          '__a': '1',
-                          '__rev': '1609713',
                           '__req': (reqCounter++).toString(36),
-                          '__dyn': '7nmajEyl35zoSt2u6aOGeFxq9ACxO4oKAdBGeqrWo8popyUW5ogxd6xymmey8szoyfwgp98O',
                           'fb_dtsg': fb_dtsg,
                           'ttstamp': ttstamp,
                           'client': 'mercury',
@@ -465,7 +398,7 @@ function login(email, password, callback) {
                   });
                 });
               });
-            });
+            // });
           });
         });
       });
@@ -477,16 +410,12 @@ var credentials = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 login(credentials.email, credentials.password, function(api) {
   api.listen(function(message, closeConnection) {
     console.log(message);
-    var thread_id = getThreadIdFromMessage(message);
-    var part_names;
-    if (message.group_thread_info)
-      part_names = (message.group_thread_info.participant_names);
-    else part_names = message.sender_name.split(' ')[0];
 
-    var msg = bot(message.body, message.sender_name.split(' ')[0], message.tid, part_names);
+    var msg = bot(message.body, message.sender_name.split(' ')[0], message.thread_id, message.participant_names);
     console.log(msg);
-    if(msg.text && msg.text.length > 0) api.sendMessage(msg.text, thread_id);
-    if(msg.sticker_id) api.sendMessage('', thread_id, msg.sticker_id);
+
+    if(msg.text && msg.text.length > 0) api.sendMessage(msg.text, message.thread_id);
+    if(msg.sticker_id) api.sendMessage('', message.thread_id, msg.sticker_id);
   });
 });
 
@@ -499,14 +428,15 @@ function getThreadIdFromMessage(message) {
   else return message.other_user_fbid;
 }
 
-function normalizeMessage(m) {
-  // var obj = {};
-  var originalMessage = m.ms[0];
-  // obj = ;
-  // obj.type = originalMessage.type;
-  // obj.event = originalMessage.event;
-  if(originalMessage.message) return originalMessage.message;
-  return originalMessage;
+function formatMessage(m) {
+  var originalMessage = m.ms[0].message ? m.ms[0].message : m.ms[0];
+
+  return {
+    sender_name: originalMessage.sender_name,
+    participant_names: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
+    body: originalMessage.body,
+    thread_id: originalMessage.tid ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid
+  };
 }
 
 function getFrom(str, startToken, endToken) {

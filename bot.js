@@ -88,6 +88,7 @@ var addScore = function(msg) {
     if (contains(currentOtherUsernames, name)) {
         var score = (currentChat.scores[name] ? currentChat.scores[name] : 0) + 1;
         currentChat.scores[name] = score;
+        return name + "'s score is now " + score;
     }
 };
 
@@ -235,13 +236,13 @@ var arbitraryLists = function (msg) {
 };
 
 var topScore = function(msg) {
-  var myRegexp = /^\/(topscore)$/i;
+  var myRegexp = /^\/(topscores?)$/i;
   var match = myRegexp.exec(msg);
   if (!match || match.length < 1) return;
   var max = -1;
   var maxName = "";
   for (var i = 0; i < currentOtherUsernames.length; i++) {
-    var score = currentChat.scores[currentOtherUsernames[i]] ? currentChat.scores[currentOtherUsernames[i]] : 0;
+    var score = currentChat.scores[currentOtherUsernames[i].toLowerCase()] ? currentChat.scores[currentOtherUsernames[i].toLowerCase()] : 0;
     if (score > max) {
       max = score;
       maxName = currentOtherUsernames[i];
@@ -250,16 +251,8 @@ var topScore = function(msg) {
   return {text: "Top Score: " + maxName+ ", with "+max+" points."};
 };
 
-var hello = function(msg) {
-    var myRegexp = /^([Hh]ey\s+[Mm]arc)$/i;
-  var match = myRegexp.exec(msg);
-  if (!match || match.length < 1) return;
-  var arr = ["Sup", "Hey :D", "hey", "Me?", "yes?"];
-  return {text: arr[~~(arr.length * Math.random())]};
-};
-
 var chatbot = function(msg) {
-  var myRegexp = /(chat ?bot)/i;
+  var myRegexp = /((chat)? ?bots?)/i;
   var match = myRegexp.exec(msg);
   if (!match || match.length < 1) return;
   var items = ["Are you talking about me?", "I am a chat bot.", "Pick me, pick me!"];
