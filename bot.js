@@ -352,6 +352,20 @@ function contains(array, obj) {
 module.exports = function(cb) {
   db.once('value', function(snapshot) {
     chats = snapshot.val() || {};
+    removeSaves(chats);
     cb(read);
   });
 };
+
+function removeSaves(obj) {
+  if(typeof obj !== 'object') return obj;
+
+  for(var prop in obj) {
+    if(obj.hasOwnProperty(prop)) {
+      if(prop === "__save") delete obj[prop];
+      if(typeof obj[prop] === 'object' && !(obj[prop] instanceof Array))  removeSaves(obj[prop]);
+    }
+  }
+
+  return obj;
+}
