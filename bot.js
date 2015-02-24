@@ -6,6 +6,7 @@ var db = connection.database('bot');
 if (!db.existsSync()) {
   db.createSync();
 }
+
 var chats = db.getSync('bot') || {_id: 'bot'};
 var currentUsername;
 var currentChat;
