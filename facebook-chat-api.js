@@ -136,7 +136,7 @@ function _login(email, password, callback) {
           form.idle = ~~(Date.now()/1000) - prev;
           prev = ~~(Date.now()/1000);
 
-          console.log(form);
+          // console.log(form);
           time.reportPullSent();
           _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
             if(err) throw err;
@@ -146,7 +146,7 @@ function _login(email, password, callback) {
             var strData = makeParsable(html);
             var info = [];
             try {
-              console.log("parsing....");
+              // console.log("parsing....");
 
               info = strData.map(JSON.parse)[0];
 
@@ -165,14 +165,14 @@ function _login(email, password, callback) {
                   __a: 1,
                   __dyn: __dyn
                 };
-                console.log("Request to sync -->", form4);
+                // console.log("Request to sync -->", form4);
                 _get("https://www.facebook.com/notifications/sync/", jar, form4, function(err, res, html) {
                   var cookies = res.headers['set-cookie'] || [];
                   cookies.map(function (c) {
                     jar.setCookie(c, "https://www.facebook.com");
                   });
                   lastSync = Date.now();
-                  console.log("sync --->", html);
+                  // console.log("sync --->", html);
                   var form6 = {
                     __a: 1,
                     __dyn: __dyn,
@@ -185,7 +185,7 @@ function _login(email, password, callback) {
                     'folders[0]': 'inbox',
                     last_action_timestamp: ~~(Date.now() - 60)
                   };
-                  console.log("Request to thread_sync");
+                  // console.log("Request to thread_sync");
                   _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
                     console.log("thread sync --->", html);
                     currentlyRunning = setTimeout(api.listen, 5000, cb);
@@ -214,7 +214,7 @@ function _login(email, password, callback) {
               currentlyRunning = setTimeout(api.listen, 1000, cb);
               return;
             }
-            console.log("next call in 1000ms");
+            // console.log("next call in 1000ms");
             currentlyRunning = setTimeout(api.listen, 1000, cb);
 
             if(info.ms) {

@@ -107,7 +107,7 @@ var slap = function(msg) {
 
     var exists = currentOtherUsernames.filter(function(v) {return v === name;}).length === 1;
 
-    return {text: name + " just got slapped." + (Math.random() > 0.5 ? " Hard.": "")};
+    return {text: capitalize(name) + " just got slapped." + (Math.random() > 0.5 ? " Hard.": "")};
 };
 
 var weekendText = function(msg) {
@@ -124,14 +124,14 @@ var addScore = function(msg) {
     if (!match || match.length < 1) return;
     var name = match[1].trim().toLowerCase();
 
+    name = capitalize(name);
     if (name === currentUsername) {
-      name = name.charAt(0).toUpperCase() + name.slice(1);
-        return {text: name + ", you can't upvote yourself -_- "};
+      return {text: name + ", you can't upvote yourself -_- "};
     }
     if (contains(currentOtherUsernames, name)) {
-        var score = (currentChat.scores[name] ? currentChat.scores[name] : 0) + 1;
-        currentChat.scores[name] = score;
-        return {text: name + "'s score is now " + score};
+      var score = (currentChat.scores[name] ? currentChat.scores[name] : 0) + 1;
+      currentChat.scores[name] = score;
+      return {text: name + "'s score is now " + score};
     }
 };
 
@@ -140,8 +140,7 @@ var salute = function(msg) {
     var match = myRegexp.exec(msg);
     if (!match || match.length < 1) return;
 
-    var general = match[1].trim().toLowerCase();
-    general = general.charAt(0).toUpperCase() + general.slice(1);
+    var general = match[1].trim();
     return {text: ("*salute* General " + general)};
 };
 
@@ -152,6 +151,7 @@ var score = function(msg) {
     var name = match[1].trim().toLowerCase();
     if (name.length < 1 || name === "me") name = currentUsername;
 
+    name = capitalize(name);
     if (!contains(currentOtherUsernames, name)) return {text: "who?"};
 
     var pts = currentChat.scores[name] ? currentChat.scores[name] : 0;
@@ -304,7 +304,7 @@ var arbitraryLists = function (msg) {
       return {text: "Added element to " + listName + "."};
     }
   } else if (currentChat.lists[keyword]) {
-    return {text: keyword + ": \n" + currentChat.lists[keyword].join("\n")};
+    return {text: keyword + ": \n- " + currentChat.lists[keyword].join("\n-")};
   }
 
   return {text: "Usage:\n /list \n /list list-name\n /list new list-name \n /list delete list-name \n /list add list-name new-element"};
@@ -317,7 +317,7 @@ var topScore = function(msg) {
   var max = -1;
   var maxName = "";
   for (var i = 0; i < currentOtherUsernames.length; i++) {
-    var score = currentChat.scores[currentOtherUsernames[i].toLowerCase()] ? currentChat.scores[currentOtherUsernames[i].toLowerCase()] : 0;
+    var score = currentChat.scores[currentOtherUsernames[i]] ? currentChat.scores[currentOtherUsernames[i]] : 0;
     if (score > max) {
       max = score;
       maxName = currentOtherUsernames[i];
@@ -333,15 +333,22 @@ var chatbot = function(msg) {
   var items = ["Are you talking about me?", "I am a chat bot.", "Pick me, pick me!"];
   return {text: items[Math.floor(Math.random()*items.length)]};
 };
+
+function capitalize(name) {
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
 function randFrom(arr) {
     return arr[~~(arr.length * Math.random())];
 }
+
 function replaceAll(find, replace, str) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
+
 function contains(array, obj) {
     for (var i = array.length - 1; i >= 0; i--) {
-        if (array[i].toLowerCase() === obj) return true;
+        if (array[i] === obj) return true;
     }
     return false;
 }
