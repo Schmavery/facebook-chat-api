@@ -258,7 +258,6 @@ var giphySearch = function(msg) {
         console.log("request sent");
     }
 };
->>>>>>> Stashed changes
 
 var arbitraryLists = function (msg) {
   var myRegexp = /^\/(list\s*.*)/i;
