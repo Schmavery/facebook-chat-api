@@ -16,11 +16,11 @@ var read = function(message, username, chatid, otherUsernames) {
   // Default chat object or existing one
   // And set the global object
   currentChat = chats[chatid] = chats[chatid] || {
-    lists: {},
-    scores: {}
+    lists: {__save: true},
+    scores: {__save: true}
   };
 
-  currentUsername = username.toLowerCase();
+  currentUsername = username;
   currentOtherUsernames = otherUsernames;
   var textFunctions = [salute, weekendText, addScore, score, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendStickerBigSmall, staticText, reminders];
   for (var i = 0; i < textFunctions.length; i++) {
@@ -350,7 +350,7 @@ function contains(array, obj) {
 }
 
 module.exports = function(cb) {
-  db.on('value', function(snapshot) {
+  db.once('value', function(snapshot) {
     chats = snapshot.val() || {};
     cb(read);
   });
