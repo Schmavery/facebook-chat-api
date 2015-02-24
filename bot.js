@@ -1,6 +1,7 @@
 // hashmap: chatid -> hashmap: username -> score
-var chats = {};
+var chrono = require('chrono-node');
 
+var chats = {};
 var currentUsername;
 var currentChat;
 var currentOtherUsernames;
@@ -18,7 +19,7 @@ var read = function(message, username, chatid, otherUsernames) {
     currentChat = chat;
     currentUsername = username.toLowerCase();
     currentOtherUsernames = otherUsernames;
-    var textFunctions = [salute, weekendText, addScore, score, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendSticker, staticText];
+    var textFunctions = [salute, weekendText, addScore, score, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendStickerBigSmall, staticText, reminders];
     for (var i = 0; i < textFunctions.length; i++) {
         var res = textFunctions[i](message);
         if (res) return res;
@@ -26,11 +27,31 @@ var read = function(message, username, chatid, otherUsernames) {
     return {};
 };
 
+var goodnight = function(msg) {
+  var myRegexp = /(goodnight marc)/i;
+  var match = myRegexp.exec(msg);
+  if(!match || match.length === 0) return;
+
+  process.exit(1);
+};
+
+var reminders = function(msg) {
+  var myRegexp = /hey marc,? (.*)/i;
+  var match = myRegexp.exec(msg);
+  if(!match || match.length === 0) return;
+  var rest = match[1].trim();
+  console.log(rest);
+  var ret = chrono.parse(rest);
+  console.log(ret);
+  return {text: JSON.stringify(ret[0].start.date())};
+};
+
 var staticText = function(msg) {
     var possibilities = [
-        [[/(hey marc)/i],["Sup", "Hey :D", "hey", "Me?", "yes?"]],
-        [[/(sup|wassup|what's up|how are you)/i], ["I'm tired", "Not much, you?", "Meh...", "I'm great, how about you?", "What's up with you?", "Up?"]],
-        [[/(who made you|who's your creator|where do you come from)/i], ["I'm a long story... About 24h long.", "I'm not too sure", "I never really asked myself this question."]]
+        [[/(hey marc$|marc\?)/i],["Sup", "Hey :D", "hey", "Me?", "yes?"]],
+        [[/(sup|wassup|what's up|how are you)/i], ["I'm tired", "Not much, you?", "Meh...", "I'm great, how about you?", "What's up with you?", "Nothing much, you?"]],
+        [[/(who made you|who's your creator|where do you come from)/i], ["I'm a long story... About 24h long.", "I'm not too sure", "I never really asked myself this question."]],
+        [[/(\/sayit)/i], ["David's an idiot", "Ben's an idiot", "Maude's an idiot", "Avery's an idiot"]]
     ];
     for (var i = 0; i < possibilities.length; i++) {
         var possibleMatches = possibilities[i][0];
@@ -43,14 +64,29 @@ var staticText = function(msg) {
     }
 };
 
-var sendSticker = function(msg) {
-    var myRegexp = /(small|big)/i;
-    var match = myRegexp.exec(msg);
-    if (!match || match.length < 1) return;
-
-    var possibilities = [767334526626290, 767334556626287, 767334506626292]
-    return {sticker_id:possibilities[~~(possibilities.length * Math.random())]};
+var sendStickerBigSmall = function(msg) {
+    var possibilities = [
+        [[/(small|big)/i], [767334526626290, 767334556626287, 767334506626292]]
+    ];
+    for (var i = 0; i < possibilities.length; i++) {
+        var possibleMatches = possibilities[i][0];
+        for (var j = 0; j < possibleMatches.length; j++) {
+            var match = possibleMatches[j].exec(msg);
+            if(match && match.length > 0) {
+                return {sticker_id: randFrom(possibilities[i][1])};
+            }
+        }
+    }
 };
+
+// var sendStickerHappy = function(msg) {
+//     var myRegexp = /(happy|big)/i;
+//     var match = myRegexp.exec(msg);
+//     if (!match || match.length < 1) return;
+
+//     var possibilities = [767334526626290, 767334556626287, 767334506626292]
+//     return {sticker_id:possibilities[~~(possibilities.length * Math.random())]};
+// };
 
 var slap = function(msg) {
     var myRegexp = /^\/(slap\s*.*)/i;
@@ -62,6 +98,8 @@ var slap = function(msg) {
     if(list.length === 1) return currentOtherUsernames[~~(currentOtherUsernames.length * Math.random())] + " just got slapped.";
 
     var name = list[1];
+    if(name === "me") return {text: currentUsername + " just go slapped." + (Math.random() > 0.5 ? " Hard.": "")};
+
     var exists = currentOtherUsernames.filter(function(v) {return v === name;}).length === 1;
 
     return {text: name + " just got slapped." + (Math.random() > 0.5 ? " Hard.": "")};

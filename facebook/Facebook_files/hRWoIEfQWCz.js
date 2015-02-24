@@ -1,975 +1,1438 @@
-/*!CK:2712803207!*/
-/*1424144211,*/
 if (self.CavalryLogger) {
   CavalryLogger.start_js(["JYG2+"]);
 }
-
-__d("MercuryActionStatus", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    UNSENT: 0,
-    SUCCESS: 1,
-    UNCONFIRMED: 3,
-    FAILED_UNKNOWN_REASON: 4,
-    UNABLE_TO_CONFIRM: 5,
-    RESENT: 6,
-    RESENDING: 7,
-    ERROR: 10
+__d("MercuryActionStatus", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    UNSENT : 0,
+    SUCCESS : 1,
+    UNCONFIRMED : 3,
+    FAILED_UNKNOWN_REASON : 4,
+    UNABLE_TO_CONFIRM : 5,
+    RESENT : 6,
+    RESENDING : 7,
+    ERROR : 10
   };
 }, null);
-__d("MercuryActionType", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    LOG_MESSAGE: "ma-type:log-message",
-    USER_GENERATED_MESSAGE: "ma-type:user-generated-message",
-    CHANGE_READ_STATUS: "ma-type:change_read_status",
-    MARK_THREAD_SEEN: "ma-type:mark_thread_seen",
-    CHANGE_MUTE_SETTINGS: "ma-type:change-mute-settings",
-    CLEAR_CHAT: "ma-type:clear_chat",
-    SEND_MESSAGE: "ma-type:send-message",
-    UPDATE_ACTION_ID: "ma-type:update-action-id",
-    DELETE_MESSAGES: "ma-type:delete-messages",
-    MARK_MESSAGES_SPAM: "ma-type:mark-messages-spam",
-    DELETE_THREAD: "ma-type:delete-thread",
-    CHANGE_ARCHIVED_STATUS: "ma-type:change-archived-status",
-    CHANGE_FOLDER: "ma-type:change-folder",
-    ADD_PARTICIPANTS: "ma-type:add-participants",
-    CANCEL_ATTACHMENT_PLACEHOLDER: "ma-type:cancel-attachment-placeholder",
-    CONFIRM_ATTACHMENT_PLACEHOLDER: "ma-type:confirm-attachment-placeholder",
-    ADD_SHARE_DATA_TO_EXISTING_MESSAGE: "ma-type:add-share-data-to-existing-message",
-    UNPIN_THREAD: "ma-type:unpin-thread"
+__d("MercuryActionType", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    LOG_MESSAGE : "ma-type:log-message",
+    USER_GENERATED_MESSAGE : "ma-type:user-generated-message",
+    CHANGE_READ_STATUS : "ma-type:change_read_status",
+    MARK_THREAD_SEEN : "ma-type:mark_thread_seen",
+    CHANGE_MUTE_SETTINGS : "ma-type:change-mute-settings",
+    CLEAR_CHAT : "ma-type:clear_chat",
+    SEND_MESSAGE : "ma-type:send-message",
+    UPDATE_ACTION_ID : "ma-type:update-action-id",
+    DELETE_MESSAGES : "ma-type:delete-messages",
+    MARK_MESSAGES_SPAM : "ma-type:mark-messages-spam",
+    DELETE_THREAD : "ma-type:delete-thread",
+    CHANGE_ARCHIVED_STATUS : "ma-type:change-archived-status",
+    CHANGE_FOLDER : "ma-type:change-folder",
+    ADD_PARTICIPANTS : "ma-type:add-participants",
+    CANCEL_ATTACHMENT_PLACEHOLDER : "ma-type:cancel-attachment-placeholder",
+    CONFIRM_ATTACHMENT_PLACEHOLDER : "ma-type:confirm-attachment-placeholder",
+    ADD_SHARE_DATA_TO_EXISTING_MESSAGE : "ma-type:add-share-data-to-existing-message",
+    UNPIN_THREAD : "ma-type:unpin-thread"
   };
 }, null);
-__d("MercuryAPIArgsSource", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    CHAT: "chat",
-    JEWEL: "jewel",
-    MERCURY: "mercury",
-    WEBMESSENGER: "web_messenger"
+__d("MercuryAPIArgsSource", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    CHAT : "chat",
+    JEWEL : "jewel",
+    MERCURY : "mercury",
+    WEBMESSENGER : "web_messenger"
   };
 }, null);
-__d("MercuryAttachmentContentType", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    PHOTO: "attach:image",
-    VIDEO: "attach:video",
-    MUSIC: "attach:music",
-    VOICE: "attach:voice",
-    TEXT: "attach:text",
-    MSWORD: "attach:ms:word",
-    MSXLS: "attach:ms:xls",
-    MSPPT: "attach:ms:ppt",
-    ORION: "attach:orion",
-    SHOERACK_INVITATION: "attach:shoerackinvite",
-    UNKNOWN: "attach:unknown"
+__d("MercuryAttachmentContentType", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    PHOTO : "attach:image",
+    VIDEO : "attach:video",
+    MUSIC : "attach:music",
+    VOICE : "attach:voice",
+    TEXT : "attach:text",
+    MSWORD : "attach:ms:word",
+    MSXLS : "attach:ms:xls",
+    MSPPT : "attach:ms:ppt",
+    ORION : "attach:orion",
+    SHOERACK_INVITATION : "attach:shoerackinvite",
+    UNKNOWN : "attach:unknown"
   };
 }, null);
-__d("MercuryAttachmentType", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    ERROR: "error",
-    FILE: "file",
-    PHOTO: "photo",
-    STICKER: "sticker",
-    SHARE: "share",
-    UNKNOWN: "unknown",
-    VIDEO: "video",
-    GIF: "gif"
+__d("MercuryAttachmentType", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    ERROR : "error",
+    FILE : "file",
+    PHOTO : "photo",
+    STICKER : "sticker",
+    SHARE : "share",
+    UNKNOWN : "unknown",
+    VIDEO : "video",
+    GIF : "gif"
   };
 }, null);
-__d("MercuryAudioType", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    AudioClip: "fb_voice_message",
-    VoiceMessageWithTranscript: "fb_voice_message_with_transcript"
+__d("MercuryAudioType", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    AudioClip : "fb_voice_message",
+    VoiceMessageWithTranscript : "fb_voice_message_with_transcript"
   };
 }, null);
-__d("MercuryErrorType", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    SERVER: 1,
-    TRANSPORT: 2,
-    TIMEOUT: 3
+__d("MercuryErrorType", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    SERVER : 1,
+    TRANSPORT : 2,
+    TIMEOUT : 3
   };
 }, null);
-__d("MercuryGlobalActionType", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    MARK_ALL_READ: "mga-type:mark-all-read"
+__d("MercuryGlobalActionType", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    MARK_ALL_READ : "mga-type:mark-all-read"
   };
 }, null);
-__d("MercuryLogMessageType", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    SUBSCRIBE: "log:subscribe",
-    UNSUBSCRIBE: "log:unsubscribe",
-    VIDEO_CALL: "log:video-call",
-    PHONE_CALL: "log:phone-call",
-    THREAD_NAME: "log:thread-name",
-    THREAD_IMAGE: "log:thread-image",
-    SERVER_ERROR: "log:error-msg",
-    LIVE_LISTEN: "log:live-listen",
-    WALLPAPER: "log:wallpaper",
-    ORION: "log:orion",
-    SWITCH_TO_WORK: "log:switch",
-    PAGE_REPLY: "log:page-reply"
+__d("MercuryLogMessageType", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    SUBSCRIBE : "log:subscribe",
+    UNSUBSCRIBE : "log:unsubscribe",
+    VIDEO_CALL : "log:video-call",
+    PHONE_CALL : "log:phone-call",
+    THREAD_NAME : "log:thread-name",
+    THREAD_IMAGE : "log:thread-image",
+    SERVER_ERROR : "log:error-msg",
+    LIVE_LISTEN : "log:live-listen",
+    WALLPAPER : "log:wallpaper",
+    ORION : "log:orion",
+    SWITCH_TO_WORK : "log:switch",
+    PAGE_REPLY : "log:page-reply"
   };
 }, null);
-__d("MercuryMessageSourceTags", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    CHAT: "source:chat",
-    EMAIL: "source:email",
-    MESSENGER: "source:messenger",
-    MOBILE: "source:mobile"
+__d("MercuryMessageSourceTags", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    CHAT : "source:chat",
+    EMAIL : "source:email",
+    MESSENGER : "source:messenger",
+    MOBILE : "source:mobile"
   };
 }, null);
-__d("MercuryParticipantTypes", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    USER: "user",
-    THREAD: "thread",
-    EVENT: "event",
-    PAGE: "page",
-    FRIEND: "friend"
+__d("MercuryParticipantTypes", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    USER : "user",
+    THREAD : "thread",
+    EVENT : "event",
+    PAGE : "page",
+    FRIEND : "friend"
   };
 }, null);
-__d("MercuryPayloadSource", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    UNKNOWN: "unknown",
-    CLIENT_CHANNEL_MESSAGE: "client_channel_message",
-    CLIENT_SEND_MESSAGE: "client_send_message",
-    CLIENT_CHANGE_ARCHIVED_STATUS: "client_change-archived_status",
-    CLIENT_CHANGE_FOLDER: "client_change_folder",
-    CLIENT_CHANGE_MUTE_SETTINGS: "client_change_mute_settings",
-    CLIENT_CHANGE_READ_STATUS: "client_change_read_status",
-    CLIENT_MARK_THREAD_SEEN: "client_mark_thread_seen",
-    CLIENT_ADD_PARTICIPANTS: "client_add_participants",
-    CLIENT_FETCH_PARTICIPANTS: "client_fetch_participants",
-    CLIENT_CLEAR_CHAT: "client_clear_chat",
-    CLIENT_DELETE_MESSAGES: "client_delete_messages",
-    CLIENT_MARK_MESSAGES_SPAM: "client_mark_messages_spam",
-    CLIENT_DELETE_THREAD: "client_delete_thread",
-    CLIENT_HANDLE_ERROR: "client_handle_error",
-    CLIENT_UNPIN_THREAD: "client_unpin_thread",
-    SERVER_INITIAL_DATA: "server_initial_data",
-    SERVER_SEND_MESSAGE: "server_send_message",
-    SERVER_CONFIRM_MESSAGES: "server_confirm_messages",
-    SERVER_CHANGE_ARCHIVED_STATUS: "server_change_archived_status",
-    SERVER_CHANGE_READ_STATUS: "server_change_read_status",
-    SERVER_MARK_FOLDER_READ: "server_mark_folder_read",
-    SERVER_MARK_SEEN: "server_mark_seen",
-    SERVER_FETCH_PARTICIPANTS: "server_fetch_participants",
-    SERVER_FETCH_THREAD_INFO: "server_fetch_thread_info",
-    SERVER_FETCH_THREADLIST_INFO: "server_fetch_threadlist_info",
-    SERVER_STANDALONE_NOTIFICATIONS: "server_standalone_notifications",
-    SERVER_THREAD_SYNC: "server_thread_sync",
-    SERVER_TAB_PRESENCE: "server_tab_presence",
-    SERVER_UNREAD_THREADS: "server_unread_threads",
-    SERVER_SEARCH: "server_search",
-    SERVER_ADD_SHARE_DATA_TO_EXISTING_MESSAGE: "server_add_share_data_to_existing_message"
+__d("MercuryPayloadSource", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    UNKNOWN : "unknown",
+    CLIENT_CHANNEL_MESSAGE : "client_channel_message",
+    CLIENT_SEND_MESSAGE : "client_send_message",
+    CLIENT_CHANGE_ARCHIVED_STATUS : "client_change-archived_status",
+    CLIENT_CHANGE_FOLDER : "client_change_folder",
+    CLIENT_CHANGE_MUTE_SETTINGS : "client_change_mute_settings",
+    CLIENT_CHANGE_READ_STATUS : "client_change_read_status",
+    CLIENT_MARK_THREAD_SEEN : "client_mark_thread_seen",
+    CLIENT_ADD_PARTICIPANTS : "client_add_participants",
+    CLIENT_FETCH_PARTICIPANTS : "client_fetch_participants",
+    CLIENT_CLEAR_CHAT : "client_clear_chat",
+    CLIENT_DELETE_MESSAGES : "client_delete_messages",
+    CLIENT_MARK_MESSAGES_SPAM : "client_mark_messages_spam",
+    CLIENT_DELETE_THREAD : "client_delete_thread",
+    CLIENT_HANDLE_ERROR : "client_handle_error",
+    CLIENT_UNPIN_THREAD : "client_unpin_thread",
+    SERVER_INITIAL_DATA : "server_initial_data",
+    SERVER_SEND_MESSAGE : "server_send_message",
+    SERVER_CONFIRM_MESSAGES : "server_confirm_messages",
+    SERVER_CHANGE_ARCHIVED_STATUS : "server_change_archived_status",
+    SERVER_CHANGE_READ_STATUS : "server_change_read_status",
+    SERVER_MARK_FOLDER_READ : "server_mark_folder_read",
+    SERVER_MARK_SEEN : "server_mark_seen",
+    SERVER_FETCH_PARTICIPANTS : "server_fetch_participants",
+    SERVER_FETCH_THREAD_INFO : "server_fetch_thread_info",
+    SERVER_FETCH_THREADLIST_INFO : "server_fetch_threadlist_info",
+    SERVER_STANDALONE_NOTIFICATIONS : "server_standalone_notifications",
+    SERVER_THREAD_SYNC : "server_thread_sync",
+    SERVER_TAB_PRESENCE : "server_tab_presence",
+    SERVER_UNREAD_THREADS : "server_unread_threads",
+    SERVER_SEARCH : "server_search",
+    SERVER_ADD_SHARE_DATA_TO_EXISTING_MESSAGE : "server_add_share_data_to_existing_message"
   };
 }, null);
-__d("MercurySendMessageFields", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    AUTO_RETRY_CNT: "auto_retry_cnt",
-    MANUAL_RETRY_CNT: "manual_retry_cnt"
+__d("MercurySendMessageFields", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    AUTO_RETRY_CNT : "auto_retry_cnt",
+    MANUAL_RETRY_CNT : "manual_retry_cnt"
   };
 }, null);
-__d("MercurySourceType", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    CHAT_ORCA: "source:chat:orca",
-    CHAT_IPHONE: "source:chat:iphone",
-    CHAT_JABBER: "source:chat:jabber",
-    CHAT_MEEBO: "source:chat:meebo",
-    CHAT_WEB: "source:chat:web",
-    CHAT_TEST: "source:chat:test",
-    CHAT: "source:chat",
-    EMAIL: "source:email",
-    GIGABOXX_API: "source:gigaboxx:api",
-    GIGABOXX_BLAST: "source:gigaboxx:blast",
-    GIGABOXX_EMAIL_REPLY: "source:gigaboxx:emailreply",
-    GIGABOXX_MOBILE: "source:gigaboxx:mobile",
-    GIGABOXX_WAP: "source:gigaboxx:wap",
-    GIGABOXX_WEB: "source:gigaboxx:web",
-    LEIA: "source:leia",
-    MESSENGER_WEB: "source:messenger:web",
-    SAM_UFI: "source:sam:ufi",
-    SHARE_DIALOG: "source:share:dialog",
-    SEND_PLUGIN: "source:sendplugin",
-    SMS: "source:sms",
-    TEST: "source:test",
-    TITAN_WAP: "source:titan:wap",
-    TITAN_M_BASIC: "source:titan:m_basic",
-    TITAN_M_FREE: "source:titan:m_free_basic",
-    TITAN_M_JAPAN: "source:titan:m_japan",
-    TITAN_M_MINI: "source:titan:m_mini",
-    TITAN_M_TOUCH: "source:titan:m_touch",
-    TITAN_M_APP: "source:titan:m_app",
-    TITAN_M_TABLET: "source:titan:m_tablet",
-    TITAN_M_ZERO: "source:titan:m_zero",
-    TITAN_M_TALK: "source:titan:m_talk",
-    TITAN_WEB: "source:titan:web",
-    TITAN_FACEWEB_ANDROID: "source:titan:faceweb_android",
-    TITAN_FACEWEB_BUFFY: "source:titan:faceweb_buffy",
-    TITAN_FACEWEB_IPAD: "source:titan:faceweb_ipad",
-    TITAN_FACEWEB_IPHONE: "source:titan:faceweb_iphone",
-    TITAN_FACEWEB_UNKNOWN: "source:titan:faceweb_unknown",
-    TITAN_API: "source:titan:api",
-    TITAN_API_MOBILE: "source:titan:api_mobile",
-    TITAN_ORCA: "source:titan:orca",
-    TITAN_EMAIL_REPLY: "source:titan:emailreply",
-    MOBILE: "source:mobile",
-    PAGE_PLATFORM_API: "source:page_platform_api",
-    UNKNOWN: "source:unknown",
-    WEB: "source:web",
-    HELPCENTER: "source:helpcenter",
-    NEW_SHARE_DIALOG: "source:share:dialog:new",
-    PAID_PROMOTION: "source:paid_promotion",
-    BUFFY_SMS: "source:buffy:sms",
-    WEBRTC_MOBILE: "source:webrtc:mobile",
-    MESSENGER_COMMERCE: "source:messenger:commerce"
+__d("MercurySourceType", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    CHAT_ORCA : "source:chat:orca",
+    CHAT_IPHONE : "source:chat:iphone",
+    CHAT_JABBER : "source:chat:jabber",
+    CHAT_MEEBO : "source:chat:meebo",
+    CHAT_WEB : "source:chat:web",
+    CHAT_TEST : "source:chat:test",
+    CHAT : "source:chat",
+    EMAIL : "source:email",
+    GIGABOXX_API : "source:gigaboxx:api",
+    GIGABOXX_BLAST : "source:gigaboxx:blast",
+    GIGABOXX_EMAIL_REPLY : "source:gigaboxx:emailreply",
+    GIGABOXX_MOBILE : "source:gigaboxx:mobile",
+    GIGABOXX_WAP : "source:gigaboxx:wap",
+    GIGABOXX_WEB : "source:gigaboxx:web",
+    LEIA : "source:leia",
+    MESSENGER_WEB : "source:messenger:web",
+    SAM_UFI : "source:sam:ufi",
+    SHARE_DIALOG : "source:share:dialog",
+    SEND_PLUGIN : "source:sendplugin",
+    SMS : "source:sms",
+    TEST : "source:test",
+    TITAN_WAP : "source:titan:wap",
+    TITAN_M_BASIC : "source:titan:m_basic",
+    TITAN_M_FREE : "source:titan:m_free_basic",
+    TITAN_M_JAPAN : "source:titan:m_japan",
+    TITAN_M_MINI : "source:titan:m_mini",
+    TITAN_M_TOUCH : "source:titan:m_touch",
+    TITAN_M_APP : "source:titan:m_app",
+    TITAN_M_TABLET : "source:titan:m_tablet",
+    TITAN_M_ZERO : "source:titan:m_zero",
+    TITAN_M_TALK : "source:titan:m_talk",
+    TITAN_WEB : "source:titan:web",
+    TITAN_FACEWEB_ANDROID : "source:titan:faceweb_android",
+    TITAN_FACEWEB_BUFFY : "source:titan:faceweb_buffy",
+    TITAN_FACEWEB_IPAD : "source:titan:faceweb_ipad",
+    TITAN_FACEWEB_IPHONE : "source:titan:faceweb_iphone",
+    TITAN_FACEWEB_UNKNOWN : "source:titan:faceweb_unknown",
+    TITAN_API : "source:titan:api",
+    TITAN_API_MOBILE : "source:titan:api_mobile",
+    TITAN_ORCA : "source:titan:orca",
+    TITAN_EMAIL_REPLY : "source:titan:emailreply",
+    MOBILE : "source:mobile",
+    PAGE_PLATFORM_API : "source:page_platform_api",
+    UNKNOWN : "source:unknown",
+    WEB : "source:web",
+    HELPCENTER : "source:helpcenter",
+    NEW_SHARE_DIALOG : "source:share:dialog:new",
+    PAID_PROMOTION : "source:paid_promotion",
+    BUFFY_SMS : "source:buffy:sms",
+    WEBRTC_MOBILE : "source:webrtc:mobile",
+    MESSENGER_COMMERCE : "source:messenger:commerce"
   };
 }, null);
-__d("MercuryThreadMode", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    EMAIL_ORIGINATED: 1,
-    TITAN_ORIGINATED: 2,
-    OBJECT_ORIGINATED: 3
+__d("MercuryThreadMode", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    EMAIL_ORIGINATED : 1,
+    TITAN_ORIGINATED : 2,
+    OBJECT_ORIGINATED : 3
   };
 }, null);
-__d("MercuryTimePassed", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    TODAY: 0,
-    WEEK_AGO: 1,
-    MONTH_AGO: 2,
-    CURRENT_YEAR: 3,
-    OTHER_YEAR: 4
+__d("MercuryTimePassed", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    TODAY : 0,
+    WEEK_AGO : 1,
+    MONTH_AGO : 2,
+    CURRENT_YEAR : 3,
+    OTHER_YEAR : 4
   };
 }, null);
-__d("MessagingEvent", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    DELETE: "delete",
-    DELETE_MESSAGES: "delete_messages",
-    DELIVER: "deliver",
-    ERROR: "error",
-    READ: "read",
-    REPORT_SPAM: "report_spam",
-    REPORT_SPAM_MESSAGES: "report_spam_messages",
-    UNMARK_SPAM: "unmark_spam",
-    SUBSCRIBE: "subscribe",
-    CHANGE_MUTE_SETTINGS: "change_mute_settings",
-    TAG: "tag",
-    UNREAD: "unread",
-    UNSUBSCRIBE: "unsubscribe",
-    DELIVER_LOG: "deliver_log",
-    MORE_THREADS: "more_threads",
-    READ_ALL: "read_all",
-    READ_RECEIPT: "read_receipt",
-    DELIVERY_RECEIPT: "delivery_receipt",
-    SENT_PUSH: "sent_push",
-    DELIVER_FAST_PAST: "deliver_fast_path",
-    MESSENGER_STATUS: "messenger_status",
-    UPDATE_PINNED_THREADS: "update_pinned_threads"
+__d("MessagingEvent", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    DELETE : "delete",
+    DELETE_MESSAGES : "delete_messages",
+    DELIVER : "deliver",
+    ERROR : "error",
+    READ : "read",
+    REPORT_SPAM : "report_spam",
+    REPORT_SPAM_MESSAGES : "report_spam_messages",
+    UNMARK_SPAM : "unmark_spam",
+    SUBSCRIBE : "subscribe",
+    CHANGE_MUTE_SETTINGS : "change_mute_settings",
+    TAG : "tag",
+    UNREAD : "unread",
+    UNSUBSCRIBE : "unsubscribe",
+    DELIVER_LOG : "deliver_log",
+    MORE_THREADS : "more_threads",
+    READ_ALL : "read_all",
+    READ_RECEIPT : "read_receipt",
+    DELIVERY_RECEIPT : "delivery_receipt",
+    SENT_PUSH : "sent_push",
+    DELIVER_FAST_PAST : "deliver_fast_path",
+    MESSENGER_STATUS : "messenger_status",
+    UPDATE_PINNED_THREADS : "update_pinned_threads"
   };
 }, null);
-__d("MessagingTag", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    GROUPS: "groups",
-    UNREAD: "unread",
-    ACTION_ARCHIVED: "action:archived",
-    INBOX: "inbox",
-    OTHER: "other",
-    EVENT: "event",
-    SENT: "sent",
-    SMS_MUTE: "sms_mute",
-    SPAM: "spam",
-    UPDATES: "broadcasts_inbox",
-    BCC: "header:bcc",
-    FILTERED_CONTENT: "filtered_content",
-    UNAVAILABLE_ATTACHMENT: "unavailable_attachment",
-    ARCHIVED: "archived",
-    EMAIL: "email",
-    VOICEMAIL: "voicemail",
-    SPAM_SPOOFING: "spam:spoofing",
-    SPOOF_WARNING: "MTA:spoof_warning",
-    SMS_TAG_ROOT: "SMSShortcode:",
-    APP_ID_ROOT: "app_id:",
-    DOMAIN_AUTH_PASS: "MTA:dmarc:pass",
-    DOMAIN_AUTH_FAIL: "MTA:dmarc:fail",
-    MTA_SYSTEM_MESSAGE: "MTA:system_message",
-    EMAIL_MESSAGE: "source:email"
+__d("MessagingTag", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    GROUPS : "groups",
+    UNREAD : "unread",
+    ACTION_ARCHIVED : "action:archived",
+    INBOX : "inbox",
+    OTHER : "other",
+    EVENT : "event",
+    SENT : "sent",
+    SMS_MUTE : "sms_mute",
+    SPAM : "spam",
+    UPDATES : "broadcasts_inbox",
+    BCC : "header:bcc",
+    FILTERED_CONTENT : "filtered_content",
+    UNAVAILABLE_ATTACHMENT : "unavailable_attachment",
+    ARCHIVED : "archived",
+    EMAIL : "email",
+    VOICEMAIL : "voicemail",
+    SPAM_SPOOFING : "spam:spoofing",
+    SPOOF_WARNING : "MTA:spoof_warning",
+    SMS_TAG_ROOT : "SMSShortcode:",
+    APP_ID_ROOT : "app_id:",
+    DOMAIN_AUTH_PASS : "MTA:dmarc:pass",
+    DOMAIN_AUTH_FAIL : "MTA:dmarc:fail",
+    MTA_SYSTEM_MESSAGE : "MTA:system_message",
+    EMAIL_MESSAGE : "source:email"
   };
 }, null);
-__d("PagesMessagingConst", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    LOAD_MESSAGE_THREAD_URI: "\/ajax\/pages\/messages\/load_message_thread.php",
-    ASYNC_ENDPOINT: "\/ajax\/messaging\/async.php"
+__d("PagesMessagingConst", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    LOAD_MESSAGE_THREAD_URI : "/ajax/pages/messages/load_message_thread.php",
+    ASYNC_ENDPOINT : "/ajax/messaging/async.php"
   };
 }, null);
-__d("PhotoResizeModeConst", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    CONTAIN: "s",
-    COVER: "p"
+__d("PhotoResizeModeConst", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    CONTAIN : "s",
+    COVER : "p"
   };
 }, null);
-__d("ChatImpressionLogger", ["AsyncSignal", "requireWeak", "ChatConfig", "ChatVisibility", "Poller", "PresencePrivacy", "PresenceStatus", "debounceAcrossTransitions", "copyProperties"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
-  var p = null;
-  h(['AvailableList'], function(v) {
-    return p = v;
-  });
-  var q = null;
-
-  function r() {
-    if (!q) return '';
-    return q.getCachedSortedList().toString();
+__d("ChatImpressionLogger", ["AsyncSignal", "requireWeak", "ChatConfig", "ChatVisibility", "Poller", "PresencePrivacy", "PresenceStatus", "debounceAcrossTransitions", "copyProperties"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, JSONRequest, $sanitize, $templateCache, AngularForce, Model, left, accessor, subscribe, getter) {
+  /**
+   * @return {?}
+   */
+  function typeToString() {
+    if (!bulk) {
+      return "";
+    }
+    return bulk.getCachedSortedList().toString();
   }
-
-  function s() {
-    if (!q || !p) return '';
-    var v = [],
-      w = q.getCachedSortedList();
-    for (var x = 0; x < w.length; x++) v[x] = p.get(w[x]);
-    return v.toString();
+  /**
+   * @return {?}
+   */
+  function format() {
+    if (!bulk || !text) {
+      return "";
+    }
+    /** @type {Array} */
+    var safe = [];
+    var codeSegments = bulk.getCachedSortedList();
+    /** @type {number} */
+    var i = 0;
+    for (;i < codeSegments.length;i++) {
+      safe[i] = text.get(codeSegments[i]);
+    }
+    return safe.toString();
   }
-
-  function t(v) {
-    v.setURI('/ajax/chat/imps_logging.php').setData({
-      list_availability: s(),
-      sorted_list: r(),
-      source: 'periodical_imps'
+  /**
+   * @param {?} pool
+   * @return {undefined}
+   */
+  function fetch(pool) {
+    pool.setURI("/ajax/chat/imps_logging.php").setData({
+      list_availability : format(),
+      sorted_list : typeToString(),
+      source : "periodical_imps"
     });
   }
-  var u = {
-    init: function(v) {
-      q = v;
-      var w = i.get('chat_impression_logging_periodical', 0);
-      if (w) {
-        var x = i.get('periodical_impression_logging_config.interval'),
-          y = new k({
-            interval: x,
-            setupRequest: t,
-            clearOnQuicklingEvents: false,
-            dontStart: true
-          });
-        l.subscribe('privacy-user-presence-changed', n(function() {
-          if (j.isOnline()) {
-            y.start();
-          } else y.stop();
+  /** @type {null} */
+  var text = null;
+  $sanitize(["AvailableList"], function(textAlt) {
+    return text = textAlt;
+  });
+  /** @type {null} */
+  var bulk = null;
+  var Users = {
+    /**
+     * @param {?} fn
+     * @return {undefined}
+     */
+    init : function(fn) {
+      bulk = fn;
+      var chat_impression_logging_periodical = $templateCache.get("chat_impression_logging_periodical", 0);
+      if (chat_impression_logging_periodical) {
+        var timerInterval = $templateCache.get("periodical_impression_logging_config.interval");
+        var model = new Model({
+          interval : timerInterval,
+          /** @type {function (?): undefined} */
+          setupRequest : fetch,
+          clearOnQuicklingEvents : false,
+          dontStart : true
+        });
+        left.subscribe("privacy-user-presence-changed", subscribe(function() {
+          if (AngularForce.isOnline()) {
+            model.start();
+          } else {
+            model.stop();
+          }
         }));
       }
-      this.init = function() {};
+      /**
+       * @return {undefined}
+       */
+      this.init = function() {
+      };
     },
-    logImpression: function(v, w, x) {
-      var y = i.get('chat_impression_logging_with_click'),
-        z = {
-          list_availability: y ? s() : '',
-          sorted_list: y ? r() : '',
-          source: v,
-          target: w,
-          target_presence: m.get(w),
-          viewport_width: document.body.clientWidth
-        };
-      new g('/ajax/chat/ct.php', o(z, x)).send();
+    /**
+     * @param {string} deepDataAndEvents
+     * @param {Object} item
+     * @param {?} name
+     * @return {undefined}
+     */
+    logImpression : function(deepDataAndEvents, item, name) {
+      var n = $templateCache.get("chat_impression_logging_with_click");
+      var data = {
+        list_availability : n ? format() : "",
+        sorted_list : n ? typeToString() : "",
+        source : deepDataAndEvents,
+        target : item,
+        target_presence : accessor.get(item),
+        viewport_width : document.body.clientWidth
+      };
+      (new JSONRequest("/ajax/chat/ct.php", getter(data, name))).send();
     }
   };
-  e.exports = u;
+  module.exports = Users;
 }, null);
-__d("ChatWelcomeMessage", ["ImmutableObject"], function(a, b, c, d, e, f, g) {
-  'use strict';
-
-  function h() {
+__d("ChatWelcomeMessage", ["ImmutableObject"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, Language) {
+  /**
+   * @return {undefined}
+   */
+  function Collection() {
     this.$ChatWelcomeMessage0 = {};
   }
-  h.prototype.setWelcomeMessage = function(j, k, l) {
-    this.$ChatWelcomeMessage0[j] = new g({
-      timestamp: Date.now(),
-      thread_id: j,
-      author: k,
-      body: l
+  /**
+   * @param {?} key
+   * @param {string} author
+   * @param {string} millis
+   * @return {undefined}
+   */
+  Collection.prototype.setWelcomeMessage = function(key, author, millis) {
+    this.$ChatWelcomeMessage0[key] = new Language({
+      timestamp : Date.now(),
+      thread_id : key,
+      author : author,
+      body : millis
     });
   };
-  h.prototype.getWelcomeMessage = function(j) {
-    return this.$ChatWelcomeMessage0[j];
+  /**
+   * @param {?} timeoutKey
+   * @return {?}
+   */
+  Collection.prototype.getWelcomeMessage = function(timeoutKey) {
+    return this.$ChatWelcomeMessage0[timeoutKey];
   };
-  var i = new h();
-  e.exports = i;
+  var ret = new Collection;
+  module.exports = ret;
 }, null);
-__d("MercuryIDs", [], function(a, b, c, d, e, f) {
-  var g = {
-    isValid: function(h) {
-      if (!h || typeof h !== 'string') return false;
-      return (/^\w{3,12}:/.test(h));
+__d("MercuryIDs", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  var state = {
+    /**
+     * @param {string} type
+     * @return {?}
+     */
+    isValid : function(type) {
+      if (!type || typeof type !== "string") {
+        return false;
+      }
+      return/^\w{3,12}:/.test(type);
     },
-    isValidThreadID: function(h) {
-      if (!g.isValid(h)) return false;
-      var i = g.tokenize(h);
-      switch (i.type) {
-        case 'user':
-        case 'group':
-        case 'thread':
-        case 'root':
-        case 'pending':
+    /**
+     * @param {string} input
+     * @return {?}
+     */
+    isValidThreadID : function(input) {
+      if (!state.isValid(input)) {
+        return false;
+      }
+      var node = state.tokenize(input);
+      switch(node.type) {
+        case "user":
+        ;
+        case "group":
+        ;
+        case "thread":
+        ;
+        case "root":
+        ;
+        case "pending":
           return true;
         default:
           return false;
       }
     },
-    tokenize: function(h) {
-      if (!this.isValid(h)) throw ("bad_id_format " + h);
-      var i = h.indexOf(':');
-      return {
-        type: h.substr(0, i),
-        value: h.substr(i + 1)
+    /**
+     * @param {string} selector
+     * @return {?}
+     */
+    tokenize : function(selector) {
+      if (!this.isValid(selector)) {
+        throw "bad_id_format " + selector;
+      }
+      var selectorBreak = selector.indexOf(":");
+      return{
+        type : selector.substr(0, selectorBreak),
+        value : selector.substr(selectorBreak + 1)
       };
     },
-    getUserIDFromParticipantID: function(h) {
-      if (!this.isValid(h)) throw ("bad_id_format " + h);
-      var i = g.tokenize(h),
-        j = i.type,
-        k = i.value;
-      if (j != 'fbid') return null;
-      return k;
-    },
-    getParticipantIDFromUserID: function(h) {
-      if (isNaN(h)) throw ("Not a user ID: " + h);
-      return 'fbid:' + h;
-    },
-    getUserIDFromThreadID: function(h) {
-      if (!this.isCanonical(h)) return null;
-      return this.tokenize(h).value;
-    },
-    getThreadIDFromUserID: function(h) {
-      return 'user:' + h;
-    },
-    getThreadIDFromParticipantID: function(h) {
-      var i = this.getUserIDFromParticipantID(h);
-      return i ? this.getThreadIDFromUserID(i) : null;
-    },
-    isCanonical: function(h) {
-      return this.isValid(h) && this.tokenize(h).type === 'user';
-    },
-    isMultichat: function(h) {
-      return this.isValid(h) && this.tokenize(h).type !== 'user';
-    }
-  };
-  e.exports = g;
-}, null);
-__d("MercuryAssert", ["MercuryIDs"], function(a, b, c, d, e, f, g) {
-  e.exports = {
-    isParticipantID: function(h) {
-      if (!g.isValid(h)) throw ("bad_participant_id " + h);
-    },
-    allParticipantIDs: function(h) {
-      h.forEach(this.isParticipantID);
-    },
-    isUserParticipantID: function(h) {
-      var i = g.tokenize(h);
-      if (i.type != 'fbid') throw ("bad_user_id " + h);
-    },
-    isEmailParticipantID: function(h) {
-      var i = g.tokenize(h);
-      if (i.type != 'email') throw ("bad_email_id " + h);
-    },
-    allThreadID: function(h) {
-      h.forEach(this.isThreadID);
-    },
-    isThreadID: function(h) {
-      if (!g.isValid(h)) throw ("bad_thread_id " + h);
-    }
-  };
-}, null);
-__d("MercuryAttachment", ["MercuryAttachmentContentType", "MercuryAttachmentType", "MercuryAudioType"], function(a, b, c, d, e, f, g, h, i) {
-  var j = {
-    getAttachIconClass: function(k) {
-      switch (k) {
-        case g.PHOTO:
-          return 'MercuryPhotoIcon';
-        case g.VIDEO:
-          return 'MercuryVideoIcon';
-        case g.MUSIC:
-          return 'MercuryMusicIcon';
-        case g.VOICE:
-          return 'MercuryVoiceIcon';
-        case g.TEXT:
-          return 'MercuryTextIcon';
-        case g.MSWORD:
-          return 'MercuryMSWordIcon';
-        case g.MSXLS:
-          return 'MercuryMSXLSIcon';
-        case g.MSPPT:
-          return 'MercuryMSPPTIcon';
+    /**
+     * @param {string} name
+     * @return {?}
+     */
+    getUserIDFromParticipantID : function(name) {
+      if (!this.isValid(name)) {
+        throw "bad_id_format " + name;
       }
-      return 'MercuryDefaultIcon';
+      var event = state.tokenize(name);
+      var type = event.type;
+      var image = event.value;
+      if (type != "fbid") {
+        return null;
+      }
+      return image;
     },
-    getAttachIconClassByMime: function(k) {
-      if (k.startsWith('image')) {
-        return 'MercuryPhotoIcon';
-      } else if (k.startsWith('video')) {
-        return 'MercuryVideoIcon';
-      } else if (k.startsWith('audio')) {
-        return 'MercuryMusicIcon';
-      } else if (k.startsWith('text/plain')) {
-        return 'MercuryTextIcon';
-      } else return 'MercuryDefaultIcon';
+    /**
+     * @param {string} val
+     * @return {?}
+     */
+    getParticipantIDFromUserID : function(val) {
+      if (isNaN(val)) {
+        throw "Not a user ID: " + val;
+      }
+      return "fbid:" + val;
     },
-    getAttachTypeByMime: function(k) {
-      if (k.startsWith('image')) {
-        return g.PHOTO;
-      } else if (k.startsWith('video')) {
-        return g.VIDEO;
-      } else if (k.startsWith('audio')) {
-        return g.MUSIC;
-      } else if (k.startsWith('text/plain')) {
-        return g.TEXT;
-      } else return g.UNKNOWN;
+    /**
+     * @param {string} qualifier
+     * @return {?}
+     */
+    getUserIDFromThreadID : function(qualifier) {
+      if (!this.isCanonical(qualifier)) {
+        return null;
+      }
+      return this.tokenize(qualifier).value;
     },
-    convertRaw: function(k) {
+    /**
+     * @param {string} recurring
+     * @return {?}
+     */
+    getThreadIDFromUserID : function(recurring) {
+      return "user:" + recurring;
+    },
+    /**
+     * @param {string} tag
+     * @return {?}
+     */
+    getThreadIDFromParticipantID : function(tag) {
+      var elements = this.getUserIDFromParticipantID(tag);
+      return elements ? this.getThreadIDFromUserID(elements) : null;
+    },
+    /**
+     * @param {string} event
+     * @return {?}
+     */
+    isCanonical : function(event) {
+      return this.isValid(event) && this.tokenize(event).type === "user";
+    },
+    /**
+     * @param {string} id
+     * @return {?}
+     */
+    isMultichat : function(id) {
+      return this.isValid(id) && this.tokenize(id).type !== "user";
+    }
+  };
+  module.exports = state;
+}, null);
+__d("MercuryAssert", ["MercuryIDs"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, child) {
+  module.exports = {
+    /**
+     * @param {string} attr
+     * @return {undefined}
+     */
+    isParticipantID : function(attr) {
+      if (!child.isValid(attr)) {
+        throw "bad_participant_id " + attr;
+      }
+    },
+    /**
+     * @param {Array} elem
+     * @return {undefined}
+     */
+    allParticipantIDs : function(elem) {
+      elem.forEach(this.isParticipantID);
+    },
+    /**
+     * @param {string} selector
+     * @return {undefined}
+     */
+    isUserParticipantID : function(selector) {
+      var elem = child.tokenize(selector);
+      if (elem.type != "fbid") {
+        throw "bad_user_id " + selector;
+      }
+    },
+    /**
+     * @param {string} selector
+     * @return {undefined}
+     */
+    isEmailParticipantID : function(selector) {
+      var elem = child.tokenize(selector);
+      if (elem.type != "email") {
+        throw "bad_email_id " + selector;
+      }
+    },
+    /**
+     * @param {Array} event
+     * @return {undefined}
+     */
+    allThreadID : function(event) {
+      event.forEach(this.isThreadID);
+    },
+    /**
+     * @param {string} attr
+     * @return {undefined}
+     */
+    isThreadID : function(attr) {
+      if (!child.isValid(attr)) {
+        throw "bad_thread_id " + attr;
+      }
+    }
+  };
+}, null);
+__d("MercuryAttachment", ["MercuryAttachmentContentType", "MercuryAttachmentType", "MercuryAudioType"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, DataTypes, file, pkg) {
+  var collection = {
+    /**
+     * @param {?} dataAndEvents
+     * @return {?}
+     */
+    getAttachIconClass : function(dataAndEvents) {
+      switch(dataAndEvents) {
+        case DataTypes.PHOTO:
+          return "MercuryPhotoIcon";
+        case DataTypes.VIDEO:
+          return "MercuryVideoIcon";
+        case DataTypes.MUSIC:
+          return "MercuryMusicIcon";
+        case DataTypes.VOICE:
+          return "MercuryVoiceIcon";
+        case DataTypes.TEXT:
+          return "MercuryTextIcon";
+        case DataTypes.MSWORD:
+          return "MercuryMSWordIcon";
+        case DataTypes.MSXLS:
+          return "MercuryMSXLSIcon";
+        case DataTypes.MSPPT:
+          return "MercuryMSPPTIcon";
+      }
+      return "MercuryDefaultIcon";
+    },
+    /**
+     * @param {string} assert
+     * @return {?}
+     */
+    getAttachIconClassByMime : function(assert) {
+      if (assert.startsWith("image")) {
+        return "MercuryPhotoIcon";
+      } else {
+        if (assert.startsWith("video")) {
+          return "MercuryVideoIcon";
+        } else {
+          if (assert.startsWith("audio")) {
+            return "MercuryMusicIcon";
+          } else {
+            if (assert.startsWith("text/plain")) {
+              return "MercuryTextIcon";
+            } else {
+              return "MercuryDefaultIcon";
+            }
+          }
+        }
+      }
+    },
+    /**
+     * @param {string} assert
+     * @return {?}
+     */
+    getAttachTypeByMime : function(assert) {
+      if (assert.startsWith("image")) {
+        return DataTypes.PHOTO;
+      } else {
+        if (assert.startsWith("video")) {
+          return DataTypes.VIDEO;
+        } else {
+          if (assert.startsWith("audio")) {
+            return DataTypes.MUSIC;
+          } else {
+            if (assert.startsWith("text/plain")) {
+              return DataTypes.TEXT;
+            } else {
+              return DataTypes.UNKNOWN;
+            }
+          }
+        }
+      }
+    },
+    /**
+     * @param {Array} codeSegments
+     * @return {?}
+     */
+    convertRaw : function(codeSegments) {
+      /** @type {Array} */
+      var History = [];
+      /** @type {number} */
+      var i = 0;
+      for (;i < codeSegments.length;i++) {
+        var item = codeSegments[i];
+        if (item.attach_type === file.PHOTO) {
+          History.push(item);
+        } else {
+          if (item.filename) {
+            var key = collection.getAttachTypeByMime(item.filetype);
+            var data = {};
+            data.attach_type = file.FILE;
+            data.name = item.filename;
+            data.icon_type = key;
+            /** @type {string} */
+            data.url = "";
+            History.push(data);
+          }
+        }
+      }
+      return History;
+    },
+    /**
+     * @param {string} obj
+     * @return {?}
+     */
+    get : function(obj) {
+      /** @type {Array} */
       var l = [];
-      for (var m = 0; m < k.length; m++) {
-        var n = k[m];
-        if (n.attach_type === h.PHOTO) {
-          l.push(n);
-        } else if (n.filename) {
-          var o = j.getAttachTypeByMime(n.filetype),
-            p = {};
-          p.attach_type = h.FILE;
-          p.name = n.filename;
-          p.icon_type = o;
-          p.url = '';
-          l.push(p);
+      if (obj.attachments) {
+        l = obj.attachments;
+      } else {
+        if (obj.raw_attachments) {
+          l = this.convertRaw(obj.raw_attachments);
+        }
+      }
+      if (!(obj.attachments && obj.attachments.length > 0)) {
+        if (obj.sticker_id) {
+          return l.concat([{
+            attach_type : file.STICKER
+          }]);
+        }
+        if (obj.preview_attachments && obj.preview_attachments.length > 0) {
+          return l.concat(obj.preview_attachments);
         }
       }
       return l;
     },
-    get: function(k) {
-      var l = [];
-      if (k.attachments) {
-        l = k.attachments;
-      } else if (k.raw_attachments) l = this.convertRaw(k.raw_attachments);
-      if (!(k.attachments && k.attachments.length > 0)) {
-        if (k.sticker_id) return l.concat([{
-          attach_type: h.STICKER
-        }]);
-        if (k.preview_attachments && k.preview_attachments.length > 0) return l.concat(k.preview_attachments);
-      }
-      return l;
-    },
-    isVoiceMessage: function(k) {
-      return (k === i.AudioClip || k === i.VoiceMessageWithTranscript);
+    /**
+     * @param {?} moduleName
+     * @return {?}
+     */
+    isVoiceMessage : function(moduleName) {
+      return moduleName === pkg.AudioClip || moduleName === pkg.VoiceMessageWithTranscript;
     }
   };
-  e.exports = j;
+  module.exports = collection;
 }, null);
-__d("MercurySingletonMixin", ["CurrentUser"], function(a, b, c, d, e, f, g) {
-  var h = {
-    _getInstances: function() {
-      if (!this._instances) this._instances = {};
+__d("MercurySingletonMixin", ["CurrentUser"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, a) {
+  var Time = {
+    /**
+     * @return {?}
+     */
+    _getInstances : function() {
+      if (!this._instances) {
+        this._instances = {};
+      }
       return this._instances;
     },
-    get: function() {
-      return this.getForFBID(g.getID());
+    /**
+     * @return {?}
+     */
+    get : function() {
+      return this.getForFBID(a.getID());
     },
-    getForFBID: function(i) {
-      var j = this._getInstances();
-      if (!j[i]) j[i] = new this(i);
-      return j[i];
+    /**
+     * @param {?} timeoutKey
+     * @return {?}
+     */
+    getForFBID : function(timeoutKey) {
+      var scheduledFunctions = this._getInstances();
+      if (!scheduledFunctions[timeoutKey]) {
+        scheduledFunctions[timeoutKey] = new this(timeoutKey);
+      }
+      return scheduledFunctions[timeoutKey];
     }
   };
-  e.exports = h;
+  module.exports = Time;
 }, null);
-__d("ReportState", ["ErrorUtils", "invariant"], function(a, b, c, d, e, f, g, h) {
-  var i = {};
-
-  function j(l, m) {
-    h(!i[l]);
-    i[l] = m;
+__d("ReportState", ["ErrorUtils", "invariant"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, testUtils, fix) {
+  /**
+   * @param {string} event
+   * @param {Function} listener
+   * @return {undefined}
+   */
+  function handler(event, listener) {
+    fix(!io[event]);
+    /** @type {Function} */
+    io[event] = listener;
   }
-
-  function k() {
-    var l = {};
-    Object.keys(i).forEach(function(m) {
+  /**
+   * @return {?}
+   */
+  function find() {
+    var handlers = {};
+    Object.keys(io).forEach(function(event) {
       try {
-        l[m] = i[m]();
+        handlers[event] = io[event]();
       } catch (n) {
-        g.reportError('ReportState: callback threw an error.');
+        testUtils.reportError("ReportState: callback threw an error.");
       }
     });
-    return l;
+    return handlers;
   }
-  e.exports = {
-    registerCallback: j,
-    getState: k
+  var io = {};
+  module.exports = {
+    /** @type {function (string, Function): undefined} */
+    registerCallback : handler,
+    /** @type {function (): ?} */
+    getState : find
   };
 }, null);
-__d("MercuryMessageClientState", [], function(a, b, c, d, e, f) {
-  var g = {
-    DO_NOT_SEND_TO_SERVER: 'do_not_send_to_server',
-    SEND_TO_SERVER: 'send_to_server'
+__d("MercuryMessageClientState", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  var JsDiff = {
+    DO_NOT_SEND_TO_SERVER : "do_not_send_to_server",
+    SEND_TO_SERVER : "send_to_server"
   };
-  e.exports = g;
+  module.exports = JsDiff;
 }, null);
-__d("MercurySendAttemptLogger", ["Banzai", "BanzaiLogger", "MercuryAttachmentType", "MercurySendMessageFields"], function(a, b, c, d, e, f, g, h, i, j) {
-  var k = h.create({
-      retry: true
-    }),
-    l = g.isEnabled('mercury_send_attempt_logging'),
-    m = function(o) {
-      if (!o.has_attachment) return null;
-      if (o.sticker_id) return i.STICKER;
-      if ((o.image_ids && o.image_ids.length) || (o.photo_fbids && o.photo_fbids.length)) return i.PHOTO;
-      if (o.raw_attachments && o.raw_attachments.length) return i.FILE;
-      if (o.content_attachment) return i.SHARE;
-      return i.UNKNOWN;
-    },
-    n = {
-      log: function(o) {
-        if (!l) return;
-        var p = {
-          message_id: o.message_id,
-          timestamp_client: Date.now(),
-          attempt_num: o[j.MANUAL_RETRY_CNT],
-          first_attachment_type: m(o),
-          source: o.source,
-          auto_retry_cnt: o[j.AUTO_RETRY_CNT]
-        };
-        k.log('MercurySendAttemptLoggerConfig', p);
+__d("MercurySendAttemptLogger", ["Banzai", "BanzaiLogger", "MercuryAttachmentType", "MercurySendMessageFields"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, item, client, Browser, dataAndEvents) {
+  var console = client.create({
+    retry : true
+  });
+  var mercury_send_attempt_logging = item.isEnabled("mercury_send_attempt_logging");
+  /**
+   * @param {string} method
+   * @return {?}
+   */
+  var some = function(method) {
+    if (!method.has_attachment) {
+      return null;
+    }
+    if (method.sticker_id) {
+      return Browser.STICKER;
+    }
+    if (method.image_ids && method.image_ids.length || method.photo_fbids && method.photo_fbids.length) {
+      return Browser.PHOTO;
+    }
+    if (method.raw_attachments && method.raw_attachments.length) {
+      return Browser.FILE;
+    }
+    if (method.content_attachment) {
+      return Browser.SHARE;
+    }
+    return Browser.UNKNOWN;
+  };
+  var JsDiff = {
+    /**
+     * @param {string} details
+     * @return {undefined}
+     */
+    log : function(details) {
+      if (!mercury_send_attempt_logging) {
+        return;
       }
-    };
-  e.exports = n;
+      var m = {
+        message_id : details.message_id,
+        timestamp_client : Date.now(),
+        attempt_num : details[dataAndEvents.MANUAL_RETRY_CNT],
+        first_attachment_type : some(details),
+        source : details.source,
+        auto_retry_cnt : details[dataAndEvents.AUTO_RETRY_CNT]
+      };
+      console.log("MercurySendAttemptLoggerConfig", m);
+    }
+  };
+  module.exports = JsDiff;
 }, null);
-__d("MercurySendErrorLogger", ["Banzai", "BanzaiLogger"], function(a, b, c, d, e, f, g, h) {
-  var i = h.create({
-      retry: true
-    }),
-    j = g.isEnabled('mercury_send_error_logging'),
-    k = {
-      log: function(l) {
-        if (!j) return;
-        var m = {
-          message_id: l.message_id,
-          timestamp_client: Date.now(),
-          error_type: l.error_data.type,
-          error_code: l.error_data.code,
-          error_description: l.error_data.description,
-          is_transient: l.error_data.is_transient
-        };
-        i.log('MercurySendErrorLoggerConfig', m);
+__d("MercurySendErrorLogger", ["Banzai", "BanzaiLogger"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, item, client) {
+  var Handlebars = client.create({
+    retry : true
+  });
+  var mercury_send_error_logging = item.isEnabled("mercury_send_error_logging");
+  var JsDiff = {
+    /**
+     * @param {string} result
+     * @return {undefined}
+     */
+    log : function(result) {
+      if (!mercury_send_error_logging) {
+        return;
       }
-    };
-  e.exports = k;
+      var context = {
+        message_id : result.message_id,
+        timestamp_client : Date.now(),
+        error_type : result.error_data.type,
+        error_code : result.error_data.code,
+        error_description : result.error_data.description,
+        is_transient : result.error_data.is_transient
+      };
+      Handlebars.log("MercurySendErrorLoggerConfig", context);
+    }
+  };
+  module.exports = JsDiff;
 }, null);
-__d("MercuryServerSendMessageQueueSimulatedError", ["AsyncRequest", "AsyncResponse", "copyProperties"], function(a, b, c, d, e, f, g, h, i) {
-  var j = 9999,
-    k = {
-      create: function(l) {
-        var m = new g(this.endpoint_uri).setData({
-            message_batch: [l],
-            client: this.client
-          }),
-          n = new h(m, {});
-        i(n, {
-          error: j,
-          silentError: false,
-          transientError: true,
-          request: m
-        });
-        return n;
-      }
-    };
-  e.exports = k;
+__d("MercuryServerSendMessageQueueSimulatedError", ["AsyncRequest", "AsyncResponse", "copyProperties"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, Contact, Model, callback) {
+  /** @type {number} */
+  var err = 9999;
+  var Class = {
+    /**
+     * @param {?} target
+     * @return {?}
+     */
+    create : function(target) {
+      var data = (new Contact(this.endpoint_uri)).setData({
+        message_batch : [target],
+        client : this.client
+      });
+      var model = new Model(data, {});
+      callback(model, {
+        error : err,
+        silentError : false,
+        transientError : true,
+        request : data
+      });
+      return model;
+    }
+  };
+  module.exports = Class;
 }, null);
-__d("MercuryServerSendMessageQueue", ["BanzaiODS", "LogHistory", "MercuryLoggingHelper", "MercuryServerDispatcher", "MercuryServerSendMessageQueueSimulatedError"], function(a, b, c, d, e, f, g, h, i, j, k) {
-  var l = '/ajax/mercury/send_messages.php',
-    m = h.getInstance('mercury_server_send_message_queue');
-
-  function n(o, p, q, r) {
-    "use strict";
-    this.sender_id = o;
-    this.queue_id = p;
-    this.$MercuryServerSendMessageQueue0 = q.success_handler;
-    this.$MercuryServerSendMessageQueue1 = q.error_handler;
-    this.$MercuryServerSendMessageQueue2 = q.transport_error_handler;
-    this.$MercuryServerSendMessageQueue3 = q.timeout_handler;
-    this.client = r;
-    var s = {};
-    s[l] = {
-      request_user_id: this.sender_id,
-      endpoint_id: this.queue_id,
-      mode: j.IMMEDIATE,
-      handler: this.handleSuccess.bind(this),
-      error_handler: this.handleError.bind(this),
-      transport_error_handler: this.handleTransportError.bind(this),
-      timeout: q.timeout,
-      timeout_handler: this.handleTimeout.bind(this),
-      connection_retries: q.connection_retries,
-      send_attempt_logging_handler: q.send_attempt_logging_handler,
-      auto_retries: q.auto_retries
+__d("MercuryServerSendMessageQueue", ["BanzaiODS", "LogHistory", "MercuryLoggingHelper", "MercuryServerDispatcher", "MercuryServerSendMessageQueueSimulatedError"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, data_user, ProgressIndicator, errors, args, layer) {
+  /**
+   * @param {?} selector
+   * @param {?} a
+   * @param {?} context
+   * @param {?} client
+   * @return {undefined}
+   */
+  function jQuery(selector, a, context, client) {
+    this.sender_id = selector;
+    this.queue_id = a;
+    this.$MercuryServerSendMessageQueue0 = context.success_handler;
+    this.$MercuryServerSendMessageQueue1 = context.error_handler;
+    this.$MercuryServerSendMessageQueue2 = context.transport_error_handler;
+    this.$MercuryServerSendMessageQueue3 = context.timeout_handler;
+    this.client = client;
+    var called = {};
+    called[handler] = {
+      request_user_id : this.sender_id,
+      endpoint_id : this.queue_id,
+      mode : args.IMMEDIATE,
+      handler : this.handleSuccess.bind(this),
+      error_handler : this.handleError.bind(this),
+      transport_error_handler : this.handleTransportError.bind(this),
+      timeout : context.timeout,
+      timeout_handler : this.handleTimeout.bind(this),
+      connection_retries : context.connection_retries,
+      send_attempt_logging_handler : context.send_attempt_logging_handler,
+      auto_retries : context.auto_retries
     };
-    j.registerEndpoints(s);
+    args.registerEndpoints(called);
+    /** @type {null} */
     this.pending_message = null;
+    /** @type {Array} */
     this.queue = [];
   }
-  n.prototype.enqueue = function(o) {
-    "use strict";
-    this.queue.push(o);
+  /** @type {string} */
+  var handler = "/ajax/mercury/send_messages.php";
+  var utils = ProgressIndicator.getInstance("mercury_server_send_message_queue");
+  /**
+   * @param {?} task
+   * @return {undefined}
+   */
+  jQuery.prototype.enqueue = function(task) {
+    this.queue.push(task);
     this.$MercuryServerSendMessageQueue4();
   };
-  n.prototype.$MercuryServerSendMessageQueue4 = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  jQuery.prototype.$MercuryServerSendMessageQueue4 = function() {
     if (this.pending_message || !this.queue.length) {
-      if (this.pending_message) this.$MercuryServerSendMessageQueue5();
+      if (this.pending_message) {
+        this.$MercuryServerSendMessageQueue5();
+      }
       return;
     }
     this.pending_message = this.queue.shift();
-    j.trySend(l, {
-      message_batch: [this.pending_message],
-      client: this.client
+    args.trySend(handler, {
+      message_batch : [this.pending_message],
+      client : this.client
     }, null, this.sender_id, this.queue_id);
   };
-  n.prototype.$MercuryServerSendMessageQueue6 = function() {
-    "use strict";
-    while (this.queue.length) this.$MercuryServerSendMessageQueue7(this.queue.shift());
+  /**
+   * @return {undefined}
+   */
+  jQuery.prototype.$MercuryServerSendMessageQueue6 = function() {
+    for (;this.queue.length;) {
+      this.$MercuryServerSendMessageQueue7(this.queue.shift());
+    }
   };
-  n.prototype.$MercuryServerSendMessageQueue7 = function(o) {
-    "use strict";
-    this.$MercuryServerSendMessageQueue1(k.create(o));
-    m.error('mark_as_failed', {
-      fbid: this.sender_id,
-      queue_id: this.queue_id,
-      message: i.obfuscateMessage(o)
+  /**
+   * @param {?} err
+   * @return {undefined}
+   */
+  jQuery.prototype.$MercuryServerSendMessageQueue7 = function(err) {
+    this.$MercuryServerSendMessageQueue1(layer.create(err));
+    utils.error("mark_as_failed", {
+      fbid : this.sender_id,
+      queue_id : this.queue_id,
+      message : errors.obfuscateMessage(err)
     });
   };
-  n.prototype.handleSuccess = function(o, p) {
-    "use strict";
-    this.$MercuryServerSendMessageQueue0(o, p);
+  /**
+   * @param {?} errorFn
+   * @param {?} tx
+   * @return {undefined}
+   */
+  jQuery.prototype.handleSuccess = function(errorFn, tx) {
+    this.$MercuryServerSendMessageQueue0(errorFn, tx);
+    /** @type {null} */
     this.pending_message = null;
     this.$MercuryServerSendMessageQueue4();
   };
-  n.prototype.handleError = function(o) {
-    "use strict";
-    this.$MercuryServerSendMessageQueue1(o);
+  /**
+   * @param {?} event
+   * @return {undefined}
+   */
+  jQuery.prototype.handleError = function(event) {
+    this.$MercuryServerSendMessageQueue1(event);
     this.$MercuryServerSendMessageQueue6();
+    /** @type {null} */
     this.pending_message = null;
   };
-  n.prototype.handleTransportError = function(o) {
-    "use strict";
-    this.$MercuryServerSendMessageQueue2(o);
+  /**
+   * @param {?} deepDataAndEvents
+   * @return {undefined}
+   */
+  jQuery.prototype.handleTransportError = function(deepDataAndEvents) {
+    this.$MercuryServerSendMessageQueue2(deepDataAndEvents);
     this.$MercuryServerSendMessageQueue6();
+    /** @type {null} */
     this.pending_message = null;
   };
-  n.prototype.handleTimeout = function(o) {
-    "use strict";
-    this.$MercuryServerSendMessageQueue3(o);
+  /**
+   * @param {?} e
+   * @return {undefined}
+   */
+  jQuery.prototype.handleTimeout = function(e) {
+    this.$MercuryServerSendMessageQueue3(e);
     this.$MercuryServerSendMessageQueue6();
+    /** @type {null} */
     this.pending_message = null;
   };
-  n.prototype.$MercuryServerSendMessageQueue5 = function() {
-    "use strict";
-    m.debug('maybe_send_next_pending_message', {
-      fbid: this.sender_id,
-      queue_id: this.queue_id,
-      pending_message: i.obfuscateMessage(this.pending_message),
-      queue: this.queue.map(function(p) {
-        return i.obfuscateMessage(p);
+  /**
+   * @return {undefined}
+   */
+  jQuery.prototype.$MercuryServerSendMessageQueue5 = function() {
+    utils.debug("maybe_send_next_pending_message", {
+      fbid : this.sender_id,
+      queue_id : this.queue_id,
+      pending_message : errors.obfuscateMessage(this.pending_message),
+      queue : this.queue.map(function(err) {
+        return errors.obfuscateMessage(err);
       })
     });
-    var o = 'send_queue.delayed.queue_length.' + this.queue.length.toString();
-    g.bumpEntityKey('chat.web', o);
+    var udataCur = "send_queue.delayed.queue_length." + this.queue.length.toString();
+    data_user.bumpEntityKey("chat.web", udataCur);
   };
-  e.exports = n;
+  /** @type {function (?, ?, ?, ?): undefined} */
+  module.exports = jQuery;
 }, null);
-__d("MercuryServerSendMessageQueueRouter", ["BanzaiODS", "LogHistory", "Map", "MercuryServerSendMessageQueue", "MercurySingletonMixin"], function(a, b, c, d, e, f, g, h, i, j, k) {
-  var l = h.getInstance('mercury_server_send_message_queue_router'),
-    m = 'chat.web.send_queue_router';
-  g.setEntitySample(m, .1);
-
-  function n(o) {
-    "use strict";
-    this.fbid = o;
-    this.queues = new i();
+__d("MercuryServerSendMessageQueueRouter", ["BanzaiODS", "LogHistory", "Map", "MercuryServerSendMessageQueue", "MercurySingletonMixin"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, ret, ProgressIndicator, RootView, One, map) {
+  /**
+   * @param {?} cur
+   * @return {undefined}
+   */
+  function root(cur) {
+    this.fbid = cur;
+    this.queues = new RootView;
   }
-  n.prototype.enqueue = function(o, p, q, r) {
-    "use strict";
-    if (!this.queues.has(o)) {
-      this.queues.set(o, new j(this.fbid, o, p, q));
-      l.debug('added queue', {
-        fbid: this.fbid,
-        queue_id: o
+  var $ = ProgressIndicator.getInstance("mercury_server_send_message_queue_router");
+  /** @type {string} */
+  var rreturn = "chat.web.send_queue_router";
+  ret.setEntitySample(rreturn, 0.1);
+  /**
+   * @param {string} key
+   * @param {string} options
+   * @param {boolean} value
+   * @param {?} name
+   * @return {undefined}
+   */
+  root.prototype.enqueue = function(key, options, value, name) {
+    if (!this.queues.has(key)) {
+      this.queues.set(key, new One(this.fbid, key, options, value));
+      $.debug("added queue", {
+        fbid : this.fbid,
+        queue_id : key
       });
-      g.bumpEntityKey(m, 'new_queue');
+      ret.bumpEntityKey(rreturn, "new_queue");
     }
-    this.queues.get(o).enqueue(r);
+    this.queues.get(key).enqueue(name);
   };
-  Object.assign(n, k);
-  e.exports = n;
+  Object.assign(root, map);
+  /** @type {function (?): undefined} */
+  module.exports = root;
 }, null);
-__d("MercuryMessageIDs", ["KeyedCallbackManager"], function(a, b, c, d, e, f, g) {
-  var h = new g(),
-    i = {
-      getServerIDs: function(j, k) {
-        var l = j.filter(function(n) {
-            return n.indexOf('mail.projektitan.com') !== -1;
-          }),
-          m = function(n) {
-            var o = j.map(function(p) {
-              return n[p] ? n[p] : p;
-            });
-            k(o);
-          };
-        return h.executeOrEnqueue(l, m);
-      },
-      addServerID: function(j, k) {
-        h.setResource(j, k);
-      }
-    };
-  e.exports = i;
+__d("MercuryMessageIDs", ["KeyedCallbackManager"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, dataAndEvents) {
+  var element = new dataAndEvents;
+  var JsDiff = {
+    /**
+     * @param {Array} mod
+     * @param {Function} indexOf
+     * @return {?}
+     */
+    getServerIDs : function(mod, indexOf) {
+      var suiteView = mod.filter(function(whitespace) {
+        return whitespace.indexOf("mail.projektitan.com") !== -1;
+      });
+      /**
+       * @param {Array} arr
+       * @return {undefined}
+       */
+      var first = function(arr) {
+        var dontCloseTags = mod.map(function(i) {
+          return arr[i] ? arr[i] : i;
+        });
+        indexOf(dontCloseTags);
+      };
+      return element.executeOrEnqueue(suiteView, first);
+    },
+    /**
+     * @param {?} clone
+     * @param {?} v23
+     * @return {undefined}
+     */
+    addServerID : function(clone, v23) {
+      element.setResource(clone, v23);
+    }
+  };
+  module.exports = JsDiff;
 }, null);
-__d("MessagingReliabilityLogger", ["PresenceUtil", "MercuryServerDispatcher", "MessagingReliabilityLoggerInitialData", "isEmpty", "setTimeoutAcrossTransitions"], function(a, b, c, d, e, f, g, h, i, j, k) {
-  var l = '/ajax/mercury/client_reliability.php',
-    m = 60000;
-
-  function n(t, u) {
-    var v = {
-      app: i.app,
-      categories: JSON.stringify(t)
+__d("MessagingReliabilityLogger", ["PresenceUtil", "MercuryServerDispatcher", "MessagingReliabilityLoggerInitialData", "isEmpty", "setTimeoutAcrossTransitions"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, dataAndEvents, self, options, add, bind) {
+  /**
+   * @param {?} err
+   * @param {?} arg
+   * @return {?}
+   */
+  function done(err, arg) {
+    var opts = {
+      app : options.app,
+      categories : JSON.stringify(err)
     };
-    if (!j(u)) v.extra = JSON.stringify(u);
-    return v;
+    if (!add(arg)) {
+      /** @type {string} */
+      opts.extra = JSON.stringify(arg);
+    }
+    return opts;
   }
-
-  function o(t, u, v, w) {
-    if (t[u] === (void 0)) t[u] = {};
-    if (t[u][v] === (void 0)) t[u][v] = 0;
-    t[u][v] += w;
+  /**
+   * @param {Object} message
+   * @param {string} key
+   * @param {string} type
+   * @param {number} dataAndEvents
+   * @return {undefined}
+   */
+  function callback(message, key, type, dataAndEvents) {
+    if (message[key] === void 0) {
+      message[key] = {};
+    }
+    if (message[key][type] === void 0) {
+      /** @type {number} */
+      message[key][type] = 0;
+    }
+    message[key][type] += dataAndEvents;
   }
-
-  function p(t, u, v, w) {
-    if (t[u] === (void 0)) t[u] = {};
-    if (t[u][v] === (void 0)) t[u][v] = [];
-    for (var x = 0; x < w.length; ++x) t[u][v].push(w[x]);
+  /**
+   * @param {Object} elem
+   * @param {string} event
+   * @param {string} name
+   * @param {Array} suite
+   * @return {undefined}
+   */
+  function next(elem, event, name, suite) {
+    if (elem[event] === void 0) {
+      elem[event] = {};
+    }
+    if (elem[event][name] === void 0) {
+      /** @type {Array} */
+      elem[event][name] = [];
+    }
+    /** @type {number} */
+    var i = 0;
+    for (;i < suite.length;++i) {
+      elem[event][name].push(suite[i]);
+    }
   }
-
-  function q(t, u) {
-    if ((t && !t.categories) || (u && !u.categories)) return;
-    var v = t ? JSON.parse(t.categories) : {},
-      w = t && t.extra ? JSON.parse(t.extra) : {},
-      x = JSON.parse(u.categories),
-      y = u.extra ? JSON.parse(u.extra) : {};
-    for (var z in x) {
-      var aa = x[z],
-        ba = y[z];
-      for (var ca in aa) {
-        o(v, z, ca, aa[ca]);
-        if (ba !== (void 0)) {
-          var da = ba[ca];
-          if (da !== (void 0)) p(w, z, ca, da);
+  /**
+   * @param {Object} options
+   * @param {Object} data
+   * @return {?}
+   */
+  function finish(options, data) {
+    if (options && !options.categories || data && !data.categories) {
+      return;
+    }
+    /** @type {*} */
+    var err = options ? JSON.parse(options.categories) : {};
+    /** @type {*} */
+    var e = options && options.extra ? JSON.parse(options.extra) : {};
+    /** @type {*} */
+    var iterable = JSON.parse(data.categories);
+    /** @type {*} */
+    var vals = data.extra ? JSON.parse(data.extra) : {};
+    var key;
+    for (key in iterable) {
+      var types = iterable[key];
+      var val = vals[key];
+      var type;
+      for (type in types) {
+        callback(err, key, type, types[type]);
+        if (val !== void 0) {
+          var name = val[type];
+          if (name !== void 0) {
+            next(e, key, type, name);
+          }
         }
       }
     }
-    return n(v, w);
+    return done(err, e);
   }
-  var r = {};
-  r[l] = {
-    mode: h.BATCH_SUCCESSIVE_PIGGYBACK_ON_ERROR,
-    batch_function: q
+  /** @type {string} */
+  var name = "/ajax/mercury/client_reliability.php";
+  /** @type {number} */
+  var fn_name = 6E4;
+  var tree = {};
+  tree[name] = {
+    mode : self.BATCH_SUCCESSIVE_PIGGYBACK_ON_ERROR,
+    /** @type {function (Object, Object): ?} */
+    batch_function : finish
   };
-  h.registerEndpoints(r);
-  var s = {
-    addEntry: function(t, u, v) {
-      if (!i.enabled) return;
-      var w = {};
-      o(w, t, u, 1);
-      var x = {};
-      if (v !== (void 0)) p(x, t, u, [v]);
-      h.trySend(l, n(w, x));
+  self.registerEndpoints(tree);
+  var element = {
+    /**
+     * @param {string} key
+     * @param {string} type
+     * @param {?} symbolPath
+     * @return {undefined}
+     */
+    addEntry : function(key, type, symbolPath) {
+      if (!options.enabled) {
+        return;
+      }
+      var err = {};
+      callback(err, key, type, 1);
+      var e = {};
+      if (symbolPath !== void 0) {
+        next(e, key, type, [symbolPath]);
+      }
+      self.trySend(name, done(err, e));
     }
   };
-  (function t() {
-    s.addEntry('page_event', 'active', g.getSessionID());
-    k(t, m);
+  (function touchstart() {
+    element.addEntry("page_event", "active", dataAndEvents.getSessionID());
+    bind(touchstart, fn_name);
   })();
-  e.exports = s;
+  module.exports = element;
 }, null);
-__d("MercuryServerSendMessageQueueOptions", [], function(a, b, c, d, e, f) {
-  function g(h, i, j, k, l, m, n, o) {
-    "use strict";
-    this.success_handler = h;
-    this.error_handler = i;
-    this.transport_error_handler = j;
-    this.timeout_handler = k;
-    this.send_attempt_logging_handler = l;
-    this.timeout = m;
-    this.connection_retries = n;
-    this.auto_retries = o;
+__d("MercuryServerSendMessageQueueOptions", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  /**
+   * @param {?} specDefinitions
+   * @param {?} parentSuite
+   * @param {?} description
+   * @param {?} ctx
+   * @param {?} isShared
+   * @param {number} $timeout
+   * @param {?} name
+   * @param {?} opts
+   * @return {undefined}
+   */
+  function Suite(specDefinitions, parentSuite, description, ctx, isShared, $timeout, name, opts) {
+    this.success_handler = specDefinitions;
+    this.error_handler = parentSuite;
+    this.transport_error_handler = description;
+    this.timeout_handler = ctx;
+    this.send_attempt_logging_handler = isShared;
+    /** @type {number} */
+    this.timeout = $timeout;
+    this.connection_retries = name;
+    this.auto_retries = opts;
   }
-  e.exports = g;
+  /** @type {function (?, ?, ?, ?, ?, number, ?, ?): undefined} */
+  module.exports = Suite;
 }, null);
-__d("MercuryThreadInformer", ["ArbiterMixin", "LogHistory", "MercuryAssert", "MercuryLoggingHelper", "MercurySingletonMixin", "copyProperties", "mapObject", "mixin"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n) {
-  'use strict';
-  var o = h.getInstance('mercury_informer'),
-    p = n(g);
-  for (var q in p)
-    if (p.hasOwnProperty(q)) s[q] = p[q];
-  var r = p === null ? null : p.prototype;
-  s.prototype = Object.create(r);
-  s.prototype.constructor = s;
-  s.__superConstructor__ = p;
-
-  function s(u) {
-    this.$MercuryThreadInformer0 = u;
+__d("MercuryThreadInformer", ["ArbiterMixin", "LogHistory", "MercuryAssert", "MercuryLoggingHelper", "MercurySingletonMixin", "copyProperties", "mapObject", "mixin"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, context, keepData, element, ProgressIndicator, entity, nv, part, checkFn, toString, proceed) {
+  /**
+   * @param {?} elem
+   * @return {undefined}
+   */
+  function parent(elem) {
+    this.$MercuryThreadInformer0 = elem;
     this.$MercuryThreadInformer1 = {};
     this.$MercuryThreadInformer2 = {};
     this.$MercuryThreadInformer3 = {};
+    /** @type {boolean} */
     this.$MercuryThreadInformer4 = false;
+    /** @type {boolean} */
     this.$MercuryThreadInformer5 = false;
+    /** @type {boolean} */
     this.$MercuryThreadInformer6 = false;
     this.$MercuryThreadInformer7 = {};
     this.$MercuryThreadInformer8 = {};
     this.$MercuryThreadInformer9 = {};
+    /** @type {number} */
     this.$MercuryThreadInformera = 0;
   }
-  s.prototype.updatedThread = function(u) {
-    this.$MercuryThreadInformer2[u] = true;
+  /**
+   * @param {string} deepDataAndEvents
+   * @param {Function} object
+   * @return {undefined}
+   */
+  function clone(deepDataAndEvents, object) {
+    /** @type {Function} */
+    var str = object;
+    if (deepDataAndEvents == "messages-received") {
+      str = toString(str, function(mod) {
+        return mod.map(function(v) {
+          return nv.obfuscateMessage(v);
+        });
+      });
+    }
+    utils.debug(deepDataAndEvents, str);
+  }
+  var utils = ProgressIndicator.getInstance("mercury_informer");
+  var data = proceed(element);
+  var k;
+  for (k in data) {
+    if (data.hasOwnProperty(k)) {
+      parent[k] = data[k];
+    }
+  }
+  var basePrototype = data === null ? null : data.prototype;
+  /** @type {Object} */
+  parent.prototype = Object.create(basePrototype);
+  /** @type {function (?): undefined} */
+  parent.prototype.constructor = parent;
+  parent.__superConstructor__ = data;
+  /**
+   * @param {?} keepData
+   * @return {undefined}
+   */
+  parent.prototype.updatedThread = function(keepData) {
+    /** @type {boolean} */
+    this.$MercuryThreadInformer2[keepData] = true;
     this.$MercuryThreadInformerb();
   };
-  s.prototype.deletedThread = function(u) {
-    this.$MercuryThreadInformer1[u] = true;
+  /**
+   * @param {?} arg
+   * @return {undefined}
+   */
+  parent.prototype.deletedThread = function(arg) {
+    /** @type {boolean} */
+    this.$MercuryThreadInformer1[arg] = true;
     this.$MercuryThreadInformerb();
   };
-  s.prototype.updatedThreadlist = function() {
+  /**
+   * @return {undefined}
+   */
+  parent.prototype.updatedThreadlist = function() {
+    /** @type {boolean} */
     this.$MercuryThreadInformer4 = true;
     this.$MercuryThreadInformerb();
   };
-  s.prototype.updatedUnseenState = function() {
+  /**
+   * @return {undefined}
+   */
+  parent.prototype.updatedUnseenState = function() {
+    /** @type {boolean} */
     this.$MercuryThreadInformer5 = true;
     this.$MercuryThreadInformerb();
   };
-  s.prototype.updatedUnreadState = function() {
+  /**
+   * @return {undefined}
+   */
+  parent.prototype.updatedUnreadState = function() {
+    /** @type {boolean} */
     this.$MercuryThreadInformer6 = true;
     this.$MercuryThreadInformerb();
   };
-  s.prototype.changedThreadReadState = function(u, v, w) {
-    if (!this.$MercuryThreadInformer3[u] || this.$MercuryThreadInformer3[u].timestamp < w) this.$MercuryThreadInformer3[u] = {
-      mark_as_read: v,
-      timestamp: w
+  /**
+   * @param {?} i
+   * @param {boolean} deepDataAndEvents
+   * @param {boolean} timestamp
+   * @return {undefined}
+   */
+  parent.prototype.changedThreadReadState = function(i, deepDataAndEvents, timestamp) {
+    if (!this.$MercuryThreadInformer3[i] || this.$MercuryThreadInformer3[i].timestamp < timestamp) {
+      this.$MercuryThreadInformer3[i] = {
+        mark_as_read : deepDataAndEvents,
+        timestamp : timestamp
+      };
+    }
+    this.$MercuryThreadInformerb();
+  };
+  /**
+   * @param {?} message
+   * @return {undefined}
+   */
+  parent.prototype.receivedMessage = function(message) {
+    entity.isThreadID(message.thread_id);
+    var type = message.thread_id;
+    if (!this.$MercuryThreadInformer7[type]) {
+      /** @type {Array} */
+      this.$MercuryThreadInformer7[type] = [];
+    }
+    this.$MercuryThreadInformer7[type].push(message);
+    this.updatedThread(type);
+  };
+  /**
+   * @param {string} eventName
+   * @param {Object} key
+   * @return {undefined}
+   */
+  parent.prototype.reorderedMessages = function(eventName, key) {
+    this.$MercuryThreadInformer8[eventName] = {
+      source : key
     };
     this.$MercuryThreadInformerb();
   };
-  s.prototype.receivedMessage = function(u) {
-    i.isThreadID(u.thread_id);
-    var v = u.thread_id;
-    if (!this.$MercuryThreadInformer7[v]) this.$MercuryThreadInformer7[v] = [];
-    this.$MercuryThreadInformer7[v].push(u);
-    this.updatedThread(v);
-  };
-  s.prototype.reorderedMessages = function(u, v) {
-    this.$MercuryThreadInformer8[u] = {
-      source: v
+  /**
+   * @param {?} key
+   * @param {?} num
+   * @param {string} name
+   * @return {undefined}
+   */
+  parent.prototype.updatedMessage = function(key, num, name) {
+    if (!this.$MercuryThreadInformer9[key]) {
+      this.$MercuryThreadInformer9[key] = {};
+    }
+    this.$MercuryThreadInformer9[key][num] = {
+      source : name
     };
-    this.$MercuryThreadInformerb();
+    this.updatedThread(key);
   };
-  s.prototype.updatedMessage = function(u, v, w) {
-    if (!this.$MercuryThreadInformer9[u]) this.$MercuryThreadInformer9[u] = {};
-    this.$MercuryThreadInformer9[u][v] = {
-      source: w
-    };
-    this.updatedThread(u);
-  };
-  s.prototype.synchronizeInforms = function(u) {
+  /**
+   * @param {Function} $sanitize
+   * @return {undefined}
+   */
+  parent.prototype.synchronizeInforms = function($sanitize) {
     this.$MercuryThreadInformera++;
     try {
-      u();
+      $sanitize();
     } catch (v) {
       throw v;
     } finally {
@@ -977,3595 +1440,5851 @@ __d("MercuryThreadInformer", ["ArbiterMixin", "LogHistory", "MercuryAssert", "Me
       this.$MercuryThreadInformerb();
     }
   };
-  s.prototype.listen = function(u, v) {
-    return this.subscribe('threads-updated', function(w, x) {
-      if (x[u]) v(u);
+  /**
+   * @param {?} key
+   * @param {string} callback
+   * @return {?}
+   */
+  parent.prototype.listen = function(key, callback) {
+    return this.subscribe("threads-updated", function(dataAndEvents, $cookies) {
+      if ($cookies[key]) {
+        callback(key);
+      }
     });
   };
-  s.prototype.$MercuryThreadInformerb = function() {
+  /**
+   * @return {undefined}
+   */
+  parent.prototype.$MercuryThreadInformerb = function() {
     if (!this.$MercuryThreadInformera) {
-      var u = this.$MercuryThreadInformer1,
-        v = this.$MercuryThreadInformer2,
-        w = this.$MercuryThreadInformer3,
-        x = this.$MercuryThreadInformer4,
-        y = this.$MercuryThreadInformer5,
-        z = this.$MercuryThreadInformer6,
-        aa = this.$MercuryThreadInformer7,
-        ba = this.$MercuryThreadInformer8,
-        ca = this.$MercuryThreadInformer9;
+      var camelKey = this.$MercuryThreadInformer1;
+      var scrubbed = this.$MercuryThreadInformer2;
+      var expectation = this.$MercuryThreadInformer3;
+      var naiveLength = this.$MercuryThreadInformer4;
+      var $MercuryThreadInformer5 = this.$MercuryThreadInformer5;
+      var $MercuryThreadInformer6 = this.$MercuryThreadInformer6;
+      var defaultConfig = this.$MercuryThreadInformer7;
+      var udataCur = this.$MercuryThreadInformer8;
+      var pdataOld = this.$MercuryThreadInformer9;
       this.$MercuryThreadInformer1 = {};
       this.$MercuryThreadInformer2 = {};
       this.$MercuryThreadInformer3 = {};
+      /** @type {boolean} */
       this.$MercuryThreadInformer4 = false;
+      /** @type {boolean} */
       this.$MercuryThreadInformer5 = false;
+      /** @type {boolean} */
       this.$MercuryThreadInformer6 = false;
       this.$MercuryThreadInformer7 = {};
       this.$MercuryThreadInformer8 = {};
       this.$MercuryThreadInformer9 = {};
-      var da = Object.keys(v);
-      if (da.length || x) this.$MercuryThreadInformerc('threadlist-updated', da);
-      if (da.length) this.$MercuryThreadInformerc('threads-updated', v);
-      for (var ea in w) {
-        this.$MercuryThreadInformerc('thread-read-changed', w);
+      /** @type {Array.<string>} */
+      var pdataCur = Object.keys(scrubbed);
+      if (pdataCur.length || naiveLength) {
+        this.$MercuryThreadInformerc("threadlist-updated", pdataCur);
+      }
+      if (pdataCur.length) {
+        this.$MercuryThreadInformerc("threads-updated", scrubbed);
+      }
+      var key;
+      for (key in expectation) {
+        this.$MercuryThreadInformerc("thread-read-changed", expectation);
         break;
       }
-      for (ea in u) {
-        this.$MercuryThreadInformerc('threads-deleted', u);
+      for (key in camelKey) {
+        this.$MercuryThreadInformerc("threads-deleted", camelKey);
         break;
       }
-      if (y) this.$MercuryThreadInformerc('unseen-updated', null);
-      if (z) this.$MercuryThreadInformerc('unread-updated', null);
-      for (ea in aa) {
-        this.$MercuryThreadInformerc('messages-received', aa);
+      if ($MercuryThreadInformer5) {
+        this.$MercuryThreadInformerc("unseen-updated", null);
+      }
+      if ($MercuryThreadInformer6) {
+        this.$MercuryThreadInformerc("unread-updated", null);
+      }
+      for (key in defaultConfig) {
+        this.$MercuryThreadInformerc("messages-received", defaultConfig);
         break;
       }
-      for (ea in ba) {
-        this.$MercuryThreadInformerc('messages-reordered', ba);
+      for (key in udataCur) {
+        this.$MercuryThreadInformerc("messages-reordered", udataCur);
         break;
       }
-      for (ea in ca) {
-        this.$MercuryThreadInformerc('messages-updated', ca);
+      for (key in pdataOld) {
+        this.$MercuryThreadInformerc("messages-updated", pdataOld);
         break;
       }
     }
   };
-  s.prototype.$MercuryThreadInformerc = function(u, v) {
-    t(u, v);
-    this.inform(u, v);
+  /**
+   * @param {string} deepDataAndEvents
+   * @param {Function} value
+   * @return {undefined}
+   */
+  parent.prototype.$MercuryThreadInformerc = function(deepDataAndEvents, value) {
+    clone(deepDataAndEvents, value);
+    this.inform(deepDataAndEvents, value);
   };
-
-  function t(u, v) {
-    var w = v;
-    if (u == 'messages-received') w = m(w, function(x) {
-      return x.map(function(y) {
-        return j.obfuscateMessage(y);
-      });
-    });
-    o.debug(u, w);
-  }
-  l(s, k);
-  e.exports = s;
+  checkFn(parent, part);
+  /** @type {function (?): undefined} */
+  context.exports = parent;
 }, null);
-__d("MercuryServerRequests", ["Arbiter", "ArbiterMixin", "AsyncResponse", "BanzaiLogger", "BanzaiODS", "ChannelConstants", "CurrentUser", "KeyedCallbackManager", "LogHistory", "MercuryActionStatus", "MercuryActionType", "MercuryAPIArgsSource", "MercuryAssert", "MercuryErrorType", "MercuryGlobalActionType", "MercuryIDs", "MercuryLoggingHelper", "MercuryLogMessageType", "MercuryMessageClientState", "MercuryPayloadSource", "MercurySendAttemptLogger", "MercurySendErrorLogger", "MercuryServerRequestsConfig", "MercuryServerSendMessageQueueRouter", "MercurySingletonMixin", "MercurySourceType", "MercuryThreadlistConstants", "MercuryMessageIDs", "MessagingConfig", "MessagingReliabilityLogger", "MessagingTag", "MercuryServerDispatcher", "MercuryServerSendMessageQueueOptions", "MercuryThreadInformer", "copyProperties", "createObjectFrom", "setTimeoutAcrossTransitions"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ba, ca, da, ea, fa, ga, ha, ia, ja, ka, la, ma, na, oa, pa, qa) {
-  "use strict";
-  var ra = o.getInstance('mercury_server'),
-    sa = r.MERCURY;
-
-  function ta(ec, fc) {
-    if (fc) ec._lastActionTimestamp = Math.max(ec._lastActionTimestamp, fc);
-  }
-
-  function ua(ec, fc) {
-    var gc = fc.thread_fbid;
-    if (fc.canonical_fbid) gc = fc.canonical_fbid;
-    var hc = ec._FBIDToClientIDs.getResource(gc);
-    if (!hc) {
-      if (fc.canonical_fbid) {
-        hc = 'user:' + fc.canonical_fbid;
-      } else if (fc.root_message_threading_id) hc = 'root:' + fc.root_message_threading_id;
-      hc = hc || 'thread:' + gc;
-      if (gc) gc = gc.toString();
-      wa(ec, gc, hc);
-      if (fc.thread_id) va(ec, fc.thread_id, hc);
+__d("MercuryServerRequests", ["Arbiter", "ArbiterMixin", "AsyncResponse", "BanzaiLogger", "BanzaiODS", "ChannelConstants", "CurrentUser", "KeyedCallbackManager", "LogHistory", "MercuryActionStatus", "MercuryActionType", "MercuryAPIArgsSource", "MercuryAssert", "MercuryErrorType", "MercuryGlobalActionType", "MercuryIDs", "MercuryLoggingHelper", "MercuryLogMessageType", "MercuryMessageClientState", "MercuryPayloadSource", "MercurySendAttemptLogger", "MercurySendErrorLogger", "MercuryServerRequestsConfig",
+"MercuryServerSendMessageQueueRouter", "MercurySingletonMixin", "MercurySourceType", "MercuryThreadlistConstants", "MercuryMessageIDs", "MessagingConfig", "MessagingReliabilityLogger", "MessagingTag", "MercuryServerDispatcher", "MercuryServerSendMessageQueueOptions", "MercuryThreadInformer", "copyProperties", "createObjectFrom", "setTimeoutAcrossTransitions"], function(dataAndEvents, ignoreMethodDoesntExist, execResult, failing_message, module, nextStack, m, profile, element, $log, keepData, lt,
+a, Dialog, ProgressIndicator, status, buf, opt_attributes, fixHook, message, matcherFunction, that, nv, opt_keys, Socket, deepDataAndEvents, system, console, item, positionError, array, err, textAlt, task, oFunctionBody, arr, cont, entry, PackageInformation, _$timeout_, done, equal, updateFunc) {
+  /**
+   * @param {?} data
+   * @param {?} val
+   * @return {undefined}
+   */
+  function update(data, val) {
+    if (val) {
+      /** @type {number} */
+      data._lastActionTimestamp = Math.max(data._lastActionTimestamp, val);
     }
-    fc.thread_id = hc;
   }
-
-  function va(ec, fc, gc) {
-    ec._serverToClientIDs.setResource(fc, gc);
-    ec._clientToServerIDs.setResource(gc, fc);
-    ec._newlyAddedClientIDs[fc] = gc;
+  /**
+   * @param {?} value
+   * @param {?} message
+   * @return {undefined}
+   */
+  function isArray(value, message) {
+    var data = message.thread_fbid;
+    if (message.canonical_fbid) {
+      data = message.canonical_fbid;
+    }
+    var result = value._FBIDToClientIDs.getResource(data);
+    if (!result) {
+      if (message.canonical_fbid) {
+        /** @type {string} */
+        result = "user:" + message.canonical_fbid;
+      } else {
+        if (message.root_message_threading_id) {
+          /** @type {string} */
+          result = "root:" + message.root_message_threading_id;
+        }
+      }
+      result = result || "thread:" + data;
+      if (data) {
+        data = data.toString();
+      }
+      call(value, data, result);
+      if (message.thread_id) {
+        access(value, message.thread_id, result);
+      }
+    }
+    message.thread_id = result;
   }
-
-  function wa(ec, fc, gc) {
-    ec._clientIDToFBIDs.setResource(gc, fc);
-    ec._FBIDToClientIDs.setResource(fc, gc);
-    ec._newlyAddedClientIDs[fc] = gc;
+  /**
+   * @param {?} fn
+   * @param {?} key
+   * @param {?} value
+   * @return {undefined}
+   */
+  function access(fn, key, value) {
+    fn._serverToClientIDs.setResource(key, value);
+    fn._clientToServerIDs.setResource(value, key);
+    fn._newlyAddedClientIDs[key] = value;
   }
-
-  function xa(ec, fc, gc) {
-    var hc = ec._clientIDToFBIDs.executeOrEnqueue(fc, gc),
-      ic = ec._clientIDToFBIDs.getUnavailableResources(hc),
-      jc = v.tokenize(fc);
-    if (ic.length && jc.type != 'root') ec.fetchThreadData(ic);
+  /**
+   * @param {?} callback
+   * @param {?} namespace
+   * @param {?} number
+   * @return {undefined}
+   */
+  function call(callback, namespace, number) {
+    callback._clientIDToFBIDs.setResource(number, namespace);
+    callback._FBIDToClientIDs.setResource(namespace, number);
+    callback._newlyAddedClientIDs[namespace] = number;
   }
-
-  function ya(ec, fc) {
-    return ec._clientIDToFBIDs.getResource(fc);
+  /**
+   * @param {?} node
+   * @param {string} selector
+   * @param {Function} deepDataAndEvents
+   * @return {undefined}
+   */
+  function add(node, selector, deepDataAndEvents) {
+    var r20 = node._clientIDToFBIDs.executeOrEnqueue(selector, deepDataAndEvents);
+    var prev = node._clientIDToFBIDs.getUnavailableResources(r20);
+    var elem = that.tokenize(selector);
+    if (prev.length && elem.type != "root") {
+      node.fetchThreadData(prev);
+    }
   }
-
-  function za(ec, fc) {
-    return !!ec._FBIDToClientIDs.getResource(fc);
+  /**
+   * @param {?} emitter
+   * @param {string} selector
+   * @return {?}
+   */
+  function remove(emitter, selector) {
+    return emitter._clientIDToFBIDs.getResource(selector);
   }
-
-  function ab(ec, fc) {
-    var gc = ec._serverToClientIDs.getResource(fc);
-    if (typeof gc == 'undefined') ra.warn('no_client_thread_id', {
-      server_id: fc
-    });
-    return gc;
+  /**
+   * @param {?} context
+   * @param {?} path
+   * @return {?}
+   */
+  function cb(context, path) {
+    return!!context._FBIDToClientIDs.getResource(path);
   }
-
-  function bb(ec, fc) {
-    var gc = ec._FBIDToClientIDs.getResource(fc);
-    if (typeof gc == 'undefined') ra.warn('no_client_thread_id', {
-      thread_fbid: fc
-    });
-    return gc;
+  /**
+   * @param {?} context
+   * @param {?} $scope
+   * @return {?}
+   */
+  function init(context, $scope) {
+    var ret = context._serverToClientIDs.getResource($scope);
+    if (typeof ret == "undefined") {
+      logger.warn("no_client_thread_id", {
+        server_id : $scope
+      });
+    }
+    return ret;
   }
-
-  function cb(ec, fc, gc) {
-    ec._FBIDToClientIDs.executeOrEnqueue(fc, gc);
-    ec.ensureThreadIsFetched(fc);
+  /**
+   * @param {?} xhr
+   * @param {?} key
+   * @return {?}
+   */
+  function success(xhr, key) {
+    var value = xhr._FBIDToClientIDs.getResource(key);
+    if (typeof value == "undefined") {
+      logger.warn("no_client_thread_id", {
+        thread_fbid : key
+      });
+    }
+    return value;
   }
-
-  function db(ec) {
-    return ec.thread_fbid || ec.thread_id || ec.client_thread_id;
+  /**
+   * @param {?} dataAndEvents
+   * @param {?} events
+   * @param {Function} deepDataAndEvents
+   * @return {undefined}
+   */
+  function clone(dataAndEvents, events, deepDataAndEvents) {
+    dataAndEvents._FBIDToClientIDs.executeOrEnqueue(events, deepDataAndEvents);
+    dataAndEvents.ensureThreadIsFetched(events);
   }
-
-  function eb(ec, fc, gc) {
-    if (fc.action_type != q.SEND_MESSAGE) return;
-    var hc = fc.thread_fbid;
-    if (fc.other_user_fbid) hc = fc.other_user_fbid;
-    var ic = fc.client_thread_id;
-    if (!ic) ic = bb(ec, hc);
-    var jc = null;
-    if (ic) jc = v.tokenize(ic).type;
-    gb(ec, fc, gc === 'success');
-    if (fc.status === p.ERROR) {
-      ba.log(fc);
-    } else ja.addEntry('send_' + jc, gc, hc + ',' + fc.message_id);
+  /**
+   * @param {?} message
+   * @return {?}
+   */
+  function processMessage(message) {
+    return message.thread_fbid || (message.thread_id || message.client_thread_id);
   }
-
-  function fb(ec) {
-    return ec.getError() ? '_' + ec.getError() : '';
+  /**
+   * @param {?} xhr
+   * @param {Object} result
+   * @param {string} errback
+   * @return {undefined}
+   */
+  function handleResponse(xhr, result, errback) {
+    if (result.action_type != buf.SEND_MESSAGE) {
+      return;
+    }
+    var camelKey = result.thread_fbid;
+    if (result.other_user_fbid) {
+      camelKey = result.other_user_fbid;
+    }
+    var data = result.client_thread_id;
+    if (!data) {
+      data = success(xhr, camelKey);
+    }
+    /** @type {null} */
+    var inner = null;
+    if (data) {
+      inner = that.tokenize(data).type;
+    }
+    next(xhr, result, errback === "success");
+    if (result.status === status.ERROR) {
+      console.log(result);
+    } else {
+      arr.addEntry("send_" + inner, errback, camelKey + "," + result.message_id);
+    }
   }
-
-  function gb(ec, fc, gc) {
-    if (Math.floor(Math.random() * 20) === 0)
-      if (fc.client_message_id in ec._sentMessagesTimestamp) {
-        var hc = ec._sentMessagesTimestamp[fc.client_message_id],
-          ic = Date.now() - hc,
-          jc = fc.client_thread_id;
-        if (!jc) jc = bb(ec, fc.thread_fbid);
-        j.log('WebMessagingLatencyLoggerConfig', {
-          has_attachment: fc.attachments && fc.attachments.length > 0,
-          latency: ic,
-          is_canonical: !v.isMultichat(jc),
-          send_successful: gc,
-          source: 'client'
+  /**
+   * @param {?} ctx
+   * @return {?}
+   */
+  function template(ctx) {
+    return ctx.getError() ? "_" + ctx.getError() : "";
+  }
+  /**
+   * @param {?} xhr
+   * @param {Object} result
+   * @param {boolean} signal_eof
+   * @return {undefined}
+   */
+  function next(xhr, result, signal_eof) {
+    if (Math.floor(Math.random() * 20) === 0) {
+      if (result.client_message_id in xhr._sentMessagesTimestamp) {
+        var startTimestamp = xhr._sentMessagesTimestamp[result.client_message_id];
+        /** @type {number} */
+        var latency = Date.now() - startTimestamp;
+        var data = result.client_thread_id;
+        if (!data) {
+          data = success(xhr, result.thread_fbid);
+        }
+        $log.log("WebMessagingLatencyLoggerConfig", {
+          has_attachment : result.attachments && result.attachments.length > 0,
+          latency : latency,
+          is_canonical : !that.isMultichat(data),
+          send_successful : signal_eof,
+          source : "client"
         });
       }
+    }
   }
-
-  function hb(ec, fc) {
-    var gc = null;
-    switch (fc.status) {
-      case p.SUCCESS:
-        gc = 'success';
+  /**
+   * @param {?} xhr
+   * @param {Object} parts
+   * @return {undefined}
+   */
+  function parse(xhr, parts) {
+    /** @type {null} */
+    var errback = null;
+    switch(parts.status) {
+      case status.SUCCESS:
+        /** @type {string} */
+        errback = "success";
         break;
-      case p.FAILED_UNKNOWN_REASON:
-        gc = 'confirmed_error';
+      case status.FAILED_UNKNOWN_REASON:
+        /** @type {string} */
+        errback = "confirmed_error";
         break;
-      case p.UNABLE_TO_CONFIRM:
-        gc = 'confirm_error';
+      case status.UNABLE_TO_CONFIRM:
+        /** @type {string} */
+        errback = "confirm_error";
         break;
       default:
         return;
     }
-    eb(ec, fc, gc);
+    handleResponse(xhr, parts, errback);
   }
-
-  function ib(ec, fc) {
-    (fc.threads || []).forEach(function(pc) {
-      ua(ec, pc);
-      delete ec._fetchingThreads[pc.thread_id];
-      var qc = ya(ec, pc.thread_id);
-      delete ec._fetchingThreads[qc];
-      ta(ec, pc.timestamp);
+  /**
+   * @param {?} model
+   * @param {Object} options
+   * @return {undefined}
+   */
+  function create(model, options) {
+    (options.threads || []).forEach(function(v) {
+      isArray(model, v);
+      delete model._fetchingThreads[v.thread_id];
+      var next = remove(model, v.thread_id);
+      delete model._fetchingThreads[next];
+      update(model, v.timestamp);
     });
-    (fc.ordered_threadlists || []).forEach(function(pc) {
-      var qc = pc.thread_fbids || [];
-      qc = qc.concat(pc.other_user_fbids || []);
-      pc.thread_ids = qc.map(bb.bind(null, ec));
+    (options.ordered_threadlists || []).forEach(function(dataAndEvents) {
+      var key = dataAndEvents.thread_fbids || [];
+      key = key.concat(dataAndEvents.other_user_fbids || []);
+      dataAndEvents.thread_ids = key.map(success.bind(null, model));
     });
-    if (fc.pinned_threads && fc.pinned_threads.thread_fbids) fc.pinned_threads.thread_fbids = fc.pinned_threads.thread_fbids.map(bb.bind(null, ec));
-    fc.actions = fc.actions || [];
-    fc.actions.forEach(function(pc) {
-      hb(ec, pc);
-      var qc = pc.thread_fbid;
-      if (pc.other_user_fbid) qc = pc.other_user_fbid;
-      if (pc.status && pc.status != p.SUCCESS && !qc) {
-        pc.thread_id = pc.client_thread_id;
+    if (options.pinned_threads && options.pinned_threads.thread_fbids) {
+      options.pinned_threads.thread_fbids = options.pinned_threads.thread_fbids.map(success.bind(null, model));
+    }
+    options.actions = options.actions || [];
+    options.actions.forEach(function(data) {
+      parse(model, data);
+      var res = data.thread_fbid;
+      if (data.other_user_fbid) {
+        res = data.other_user_fbid;
+      }
+      if (data.status && (data.status != status.SUCCESS && !res)) {
+        data.thread_id = data.client_thread_id;
         return;
       }
-      if (pc.action_type == q.SEND_MESSAGE && pc.client_thread_id && qc) wa(ec, qc.toString(), pc.client_thread_id);
-      var rc = pc.thread_id;
-      if (qc) {
-        pc.thread_id = za(ec, qc) ? bb(ec, qc) : null;
-      } else if (pc.client_thread_id) pc.thread_id = pc.client_thread_id;
-      if (!pc.thread_id) pc.server_thread_id = rc;
-      if (!fc.payload_source || !fc.payload_source.startsWith('server')) ta(ec, pc.timestamp);
-    });
-    if (fc.end_of_history) {
-      var gc = [];
-      for (var hc = 0; hc < fc.end_of_history.length; hc++) {
-        var ic = fc.end_of_history[hc];
-        if (ic.type == 'user') {
-          gc.push('user:' + ic.fbid);
-        } else if (ic.type == 'thread' && za(ec, ic.fbid)) gc.push(bb(ec, ic.fbid));
+      if (data.action_type == buf.SEND_MESSAGE && (data.client_thread_id && res)) {
+        call(model, res.toString(), data.client_thread_id);
       }
-      fc.end_of_history = gc;
-    }
-    if (fc.roger) {
-      var jc = {};
-      for (var kc in fc.roger) {
-        var lc = ec._FBIDToClientIDs.getResource(kc);
-        if (lc) {
-          var mc = fc.roger[kc];
-          jc[lc] = {};
-          for (var nc in mc)
-            if (mc.hasOwnProperty(nc)) {
-              var oc = v.getParticipantIDFromUserID(nc);
-              jc[lc][oc] = mc[nc];
-            }
+      var type = data.thread_id;
+      if (res) {
+        data.thread_id = cb(model, res) ? success(model, res) : null;
+      } else {
+        if (data.client_thread_id) {
+          data.thread_id = data.client_thread_id;
         }
       }
-      fc.roger = jc;
+      if (!data.thread_id) {
+        data.server_thread_id = type;
+      }
+      if (!options.payload_source || !options.payload_source.startsWith("server")) {
+        update(model, data.timestamp);
+      }
+    });
+    if (options.end_of_history) {
+      /** @type {Array} */
+      var arr = [];
+      /** @type {number} */
+      var idx = 0;
+      for (;idx < options.end_of_history.length;idx++) {
+        var doc = options.end_of_history[idx];
+        if (doc.type == "user") {
+          arr.push("user:" + doc.fbid);
+        } else {
+          if (doc.type == "thread" && cb(model, doc.fbid)) {
+            arr.push(success(model, doc.fbid));
+          }
+        }
+      }
+      /** @type {Array} */
+      options.end_of_history = arr;
+    }
+    if (options.roger) {
+      var done = {};
+      var key;
+      for (key in options.roger) {
+        var id = model._FBIDToClientIDs.getResource(key);
+        if (id) {
+          var info = options.roger[key];
+          done[id] = {};
+          var prop;
+          for (prop in info) {
+            if (info.hasOwnProperty(prop)) {
+              var name = that.getParticipantIDFromUserID(prop);
+              done[id][name] = info[prop];
+            }
+          }
+        }
+      }
+      options.roger = done;
     }
   }
-
-  function jb(ec) {
-    if (ec._pendingUpdates && ec._pendingUpdates.length) {
-      var fc = ec._pendingUpdates[0];
-      ec._pendingUpdates = ec._pendingUpdates.slice(1);
-      ec.handleUpdate(fc);
+  /**
+   * @param {?} object
+   * @return {undefined}
+   */
+  function freeze(object) {
+    if (object._pendingUpdates && object._pendingUpdates.length) {
+      var attributes = object._pendingUpdates[0];
+      object._pendingUpdates = object._pendingUpdates.slice(1);
+      object.handleUpdate(attributes);
     }
   }
-
-  function kb(ec, fc) {
-    var gc = oa({}, ec),
-      hc;
-    if (fc.threads) {
-      if (!gc.threads) gc.threads = {};
-      for (hc in fc.threads) gc.threads[hc] = Object.keys(pa((gc.threads[hc] || []).concat(fc.threads[hc])));
-    }
-    if (fc.messages) {
-      if (!gc.messages) gc.messages = {};
-      for (hc in fc.messages) {
-        if (!gc.messages[hc]) gc.messages[hc] = {};
-        for (var ic in fc.messages[hc])
-          if (gc.messages[hc][ic]) {
-            gc.messages[hc][ic] = nb(gc.messages[hc][ic], fc.messages[hc][ic]);
-          } else gc.messages[hc][ic] = fc.messages[hc][ic];
+  /**
+   * @param {Object} data
+   * @param {Object} options
+   * @return {?}
+   */
+  function finish(data, options) {
+    var self = done({}, data);
+    var key;
+    if (options.threads) {
+      if (!self.threads) {
+        self.threads = {};
+      }
+      for (key in options.threads) {
+        /** @type {Array.<string>} */
+        self.threads[key] = Object.keys(equal((self.threads[key] || []).concat(options.threads[key])));
       }
     }
-    gc.client = ec.client || fc.client;
-    return gc;
-  }
-
-  function lb(ec, fc) {
-    var gc = oa(pa(ec.folders, true), pa(fc.folders, true)),
-      hc = ec.client || fc.client;
-    return {
-      folders: Object.keys(gc),
-      client: hc
-    };
-  }
-
-  function mb(ec, fc) {
-    for (var gc in fc)
-      if (ec[gc] && typeof ec[gc] === 'object') {
-        ec[gc] = nb(ec[gc], fc[gc]);
-      } else if (fc[gc] && typeof fc[gc] === 'object') {
-      var hc = {};
-      oa(hc, fc[gc]);
-      ec[gc] = hc;
+    if (options.messages) {
+      if (!self.messages) {
+        self.messages = {};
+      }
+      for (key in options.messages) {
+        if (!self.messages[key]) {
+          self.messages[key] = {};
+        }
+        var i;
+        for (i in options.messages[key]) {
+          if (self.messages[key][i]) {
+            self.messages[key][i] = fn(self.messages[key][i], options.messages[key][i]);
+          } else {
+            self.messages[key][i] = options.messages[key][i];
+          }
+        }
+      }
     }
-    return ec;
+    self.client = data.client || options.client;
+    return self;
   }
-
-  function nb(ec, fc) {
-    var gc = ec.offset < fc.offset ? ec.offset : fc.offset,
-      hc = ec.offset + ec.limit,
-      ic = fc.offset + fc.limit,
-      jc = (hc > ic) ? hc : ic,
-      kc = jc - gc;
-    return {
-      offset: gc,
-      limit: kc
+  /**
+   * @param {Object} options
+   * @param {Object} o
+   * @return {?}
+   */
+  function run(options, o) {
+    var scrubbed = done(equal(options.folders, true), equal(o.folders, true));
+    var client = options.client || o.client;
+    return{
+      folders : Object.keys(scrubbed),
+      client : client
     };
   }
-
-  function ob(ec, fc) {
-    var gc = ec.client || fc.client,
-      hc = {
-        ids: {},
-        client: gc
-      };
-    oa(hc.ids, ec.ids);
-    oa(hc.ids, fc.ids);
-    return hc;
-  }
-
-  function pb(ec, fc) {
-    var gc = {},
-      hc, ic = ec.client || fc.client;
-    delete ec.client;
-    delete fc.client;
-    for (hc in ec) oa(gc, pa(ec[hc], hc));
-    for (hc in fc) oa(gc, pa(fc[hc], hc));
-    var jc = {
-      client: ic
-    };
-    for (var kc in gc) {
-      hc = gc[kc];
-      if (!jc[hc]) jc[hc] = [];
-      jc[hc].push(kc);
+  /**
+   * @param {Object} array
+   * @param {Object} obj
+   * @return {?}
+   */
+  function clean(array, obj) {
+    var i;
+    for (i in obj) {
+      if (array[i] && typeof array[i] === "object") {
+        array[i] = fn(array[i], obj[i]);
+      } else {
+        if (obj[i] && typeof obj[i] === "object") {
+          var e = {};
+          done(e, obj[i]);
+          array[i] = e;
+        }
+      }
     }
-    return jc;
+    return array;
   }
-
-  function qb(ec, fc) {
-    var gc = ec.client || fc.client,
-      hc = pa(ec.ids, true),
-      ic = pa(fc.ids, true),
-      jc = oa(hc, ic);
-    return {
-      ids: Object.keys(jc),
-      client: gc
+  /**
+   * @param {Object} data
+   * @param {Object} options
+   * @return {?}
+   */
+  function fn(data, options) {
+    var start = data.offset < options.offset ? data.offset : options.offset;
+    var date1 = data.offset + data.limit;
+    var date2 = options.offset + options.limit;
+    var end = date1 > date2 ? date1 : date2;
+    /** @type {number} */
+    var duration = end - start;
+    return{
+      offset : start,
+      limit : duration
     };
   }
-
-  function rb(ec) {
-    this._fbid = ec;
+  /**
+   * @param {Object} user
+   * @param {Object} results
+   * @return {?}
+   */
+  function exports(user, results) {
+    var client = user.client || results.client;
+    var options = {
+      ids : {},
+      client : client
+    };
+    done(options.ids, user.ids);
+    done(options.ids, results.ids);
+    return options;
+  }
+  /**
+   * @param {Object} event
+   * @param {Object} params
+   * @return {?}
+   */
+  function onComplete(event, params) {
+    var testSource = {};
+    var key;
+    var client = event.client || params.client;
+    delete event.client;
+    delete params.client;
+    for (key in event) {
+      done(testSource, equal(event[key], key));
+    }
+    for (key in params) {
+      done(testSource, equal(params[key], key));
+    }
+    var properties = {
+      client : client
+    };
+    var name;
+    for (name in testSource) {
+      key = testSource[name];
+      if (!properties[key]) {
+        /** @type {Array} */
+        properties[key] = [];
+      }
+      properties[key].push(name);
+    }
+    return properties;
+  }
+  /**
+   * @param {Object} data
+   * @param {Object} options
+   * @return {?}
+   */
+  function setup(data, options) {
+    var client = data.client || options.client;
+    var err = equal(data.ids, true);
+    var profile = equal(options.ids, true);
+    var scrubbed = done(err, profile);
+    return{
+      ids : Object.keys(scrubbed),
+      client : client
+    };
+  }
+  /**
+   * @param {?} textStatus
+   * @return {undefined}
+   */
+  function error(textStatus) {
+    this._fbid = textStatus;
+    /** @type {number} */
     this._lastActionTimestamp = 0;
-    this._serverToClientIDs = new n();
-    this._clientToServerIDs = new n();
-    this._FBIDToClientIDs = new n();
-    this._clientIDToFBIDs = new n();
+    this._serverToClientIDs = new Dialog;
+    this._clientToServerIDs = new Dialog;
+    this._FBIDToClientIDs = new Dialog;
+    this._clientIDToFBIDs = new Dialog;
+    /** @type {Array} */
     this._pendingUpdates = [];
     this._fetchingThreads = {};
     this._newlyAddedClientIDs = {};
     this._sentMessagesTimestamp = {};
-    this._sendMessageQueueOptions = new ma(ub, yb, zb, ac, aa.log, ca.sendMessageTimeout, ia.SEND_CONNECTION_RETRIES, ca.maxAutoRetries);
-    cc(this);
+    this._sendMessageQueueOptions = new PackageInformation(with_walkers, position, get, setOffset, system.log, item.sendMessageTimeout, oFunctionBody.SEND_CONNECTION_RETRIES, item.maxAutoRetries);
+    _error(this);
   }
-  oa(rb.prototype, h, {
-    getServerThreadID: function(ec, fc) {
-      s.isThreadID(ec);
-      xa(this, ec, fc);
+  /**
+   * @param {string} i
+   * @return {?}
+   */
+  function test(i) {
+    return{
+      action_type : buf.LOG_MESSAGE,
+      thread_id : i,
+      message_id : i,
+      timestamp : Date.now(),
+      timestamp_absolute : "",
+      timestamp_relative : "",
+      is_unread : false,
+      source : err.UNKNOWN,
+      log_message_type : opt_keys.SERVER_ERROR,
+      log_message_data : {}
+    };
+  }
+  /**
+   * @param {Object} obj
+   * @return {?}
+   */
+  function getter(obj) {
+    var request_user_id = obj.getData();
+    var timeoutKey = request_user_id.request_user_id ? request_user_id.request_user_id : a.getID();
+    return error.getForFBID(timeoutKey);
+  }
+  /**
+   * @param {?} opt_attributes
+   * @param {Object} walkers
+   * @return {undefined}
+   */
+  function with_walkers(opt_attributes, walkers) {
+    getter(walkers).handleUpdate(opt_attributes);
+  }
+  /**
+   * @param {Object} user
+   * @param {Object} results
+   * @return {?}
+   */
+  function log(user, results) {
+    var err = {};
+    done(err, user.ids);
+    done(err, results.ids);
+    var client = user.client || results.client;
+    return{
+      ids : err,
+      client : client
+    };
+  }
+  /**
+   * @param {?} obj
+   * @param {?} object
+   * @return {?}
+   */
+  function seal(obj, object) {
+    return object;
+  }
+  /**
+   * @param {?} name
+   * @return {undefined}
+   */
+  function load(name) {
+    var result = getter(name.getRequest());
+    result.handleThreadInfoError(name);
+  }
+  /**
+   * @param {Object} ctx
+   * @return {undefined}
+   */
+  function position(ctx) {
+    var current = getter(ctx.getRequest());
+    current.handleSendMessageError(ctx);
+  }
+  /**
+   * @param {?} elem
+   * @return {undefined}
+   */
+  function get(elem) {
+    var result = getter(elem.getRequest());
+    result.handleSendMessageTransportError(elem);
+  }
+  /**
+   * @param {Object} elem
+   * @return {undefined}
+   */
+  function setOffset(elem) {
+    var result = getter(elem);
+    result.handleSendMessageTimeout(elem);
+  }
+  /**
+   * @param {?} event
+   * @return {undefined}
+   */
+  function f2(event) {
+    var value = getter(event.getRequest());
+    value.handleMessageConfirmError(event);
+  }
+  /**
+   * @param {?} dataAndEvents
+   * @return {undefined}
+   */
+  function _error(dataAndEvents) {
+    var h2 = {
+      "/ajax/mercury/thread_sync.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.IDEMPOTENT,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/thread_info.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.BATCH_DEFERRED_MULTI,
+        /** @type {function (Object, Object): ?} */
+        batch_function : finish,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers,
+        /** @type {function (?): undefined} */
+        error_handler : load
+      },
+      "/ajax/mercury/mark_folder_as_read.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.IMMEDIATE,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/change_read_status.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.BATCH_SUCCESSIVE,
+        /** @type {function (Object, Object): ?} */
+        batch_function : log,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/mark_seen.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.BATCH_SUCCESSIVE,
+        /** @type {function (?, ?): ?} */
+        batch_function : seal,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/confirm_messages.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.IMMEDIATE,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers,
+        /** @type {function (?): undefined} */
+        error_handler : f2
+      },
+      "/ajax/mercury/threadlist_info.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.BATCH_SUCCESSIVE_UNIQUE,
+        /** @type {function (Object, Object): ?} */
+        batch_function : clean,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/mark_spam.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.IMMEDIATE,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/mark_spam_messages.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.IMMEDIATE,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/unmark_spam.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.IMMEDIATE,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/unread_threads.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.BATCH_SUCCESSIVE_UNIQUE,
+        /** @type {function (Object, Object): ?} */
+        batch_function : run,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/chat/settings.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.IMMEDIATE
+      },
+      "/ajax/mercury/change_archived_status.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.BATCH_SUCCESSIVE,
+        /** @type {function (Object, Object): ?} */
+        batch_function : exports,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/delete_thread.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.BATCH_SUCCESSIVE,
+        /** @type {function (Object, Object): ?} */
+        batch_function : setup,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/delete_messages.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.IMMEDIATE,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/delivery_receipts.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.IMMEDIATE,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/move_thread.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.BATCH_SUCCESSIVE,
+        /** @type {function (Object, Object): ?} */
+        batch_function : onComplete,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/ajax/mercury/change_mute_thread.php" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.IMMEDIATE,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/mercury/pinned_threads/" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.BATCH_SUCCESSIVE_UNIQUE,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      },
+      "/mercury/unpin_thread/" : {
+        request_user_id : dataAndEvents._fbid,
+        mode : entry.IMMEDIATE,
+        /** @type {function (?, Object): undefined} */
+        handler : with_walkers
+      }
+    };
+    entry.registerEndpoints(h2);
+  }
+  /**
+   * @param {?} dataAndEvents
+   * @param {string} success
+   * @param {?} opt_attributes
+   * @param {?} message
+   * @return {undefined}
+   */
+  function callback(dataAndEvents, success, opt_attributes, message) {
+    entry.trySend(success, opt_attributes, message, dataAndEvents._fbid);
+  }
+  var logger = ProgressIndicator.getInstance("mercury_server");
+  var normalClient = opt_attributes.MERCURY;
+  done(error.prototype, profile, {
+    /**
+     * @param {string} event
+     * @param {Function} deepDataAndEvents
+     * @return {undefined}
+     */
+    getServerThreadID : function(event, deepDataAndEvents) {
+      fixHook.isThreadID(event);
+      add(this, event, deepDataAndEvents);
     },
-    getThreadFBID: function(ec, fc) {
-      s.isThreadID(ec);
-      xa(this, ec, fc);
+    /**
+     * @param {string} event
+     * @param {Function} deepDataAndEvents
+     * @return {undefined}
+     */
+    getThreadFBID : function(event, deepDataAndEvents) {
+      fixHook.isThreadID(event);
+      add(this, event, deepDataAndEvents);
     },
-    getClientThreadID: function(ec, fc) {
-      cb(this, ec, fc);
+    /**
+     * @param {string} type
+     * @param {Function} deepDataAndEvents
+     * @return {undefined}
+     */
+    getClientThreadID : function(type, deepDataAndEvents) {
+      clone(this, type, deepDataAndEvents);
     },
-    getClientThreadIDNow: function(ec) {
-      return bb(this, ec);
+    /**
+     * @param {?} subKey
+     * @return {?}
+     */
+    getClientThreadIDNow : function(subKey) {
+      return success(this, subKey);
     },
-    getServerThreadIDNow: function(ec) {
-      return ya(this, ec);
+    /**
+     * @param {string} until
+     * @return {?}
+     */
+    getServerThreadIDNow : function(until) {
+      return remove(this, until);
     },
-    getClientThreadIDForPermalinks: function(ec) {
-      return ab(this, ec);
+    /**
+     * @param {?} $rootScope
+     * @return {?}
+     */
+    getClientThreadIDForPermalinks : function($rootScope) {
+      return init(this, $rootScope);
     },
-    convertThreadIDIfAvailable: function(ec) {
-      var fc = this._FBIDToClientIDs.getResource(ec);
-      if (fc === (void 0)) {
-        return ec;
-      } else return fc;
+    /**
+     * @param {?} key
+     * @return {?}
+     */
+    convertThreadIDIfAvailable : function(key) {
+      var camelKey = this._FBIDToClientIDs.getResource(key);
+      if (camelKey === void 0) {
+        return key;
+      } else {
+        return camelKey;
+      }
     },
-    isUser: function(ec) {
-      return ec < 2.2e+09 || (ec >= 1e+14 && ec <= 100099999989999) || (ec >= 8.9e+13 && ec <= 89999999999999) || (ec >= 6.000001e+13 && ec <= 60000019999999);
+    /**
+     * @param {number} style
+     * @return {?}
+     */
+    isUser : function(style) {
+      return style < 22E8 || (style >= 1E14 && style <= 0x5b0a58f100ef || (style >= 89E12 && style <= 89999999999999 || style >= 6000001E7 && style <= 60000019999999));
     },
-    canLinkExternally: function(ec) {
-      s.isThreadID(ec);
-      var fc = v.tokenize(ec);
-      return (fc.type == 'user') || !!ya(this, ec);
+    /**
+     * @param {string} event
+     * @return {?}
+     */
+    canLinkExternally : function(event) {
+      fixHook.isThreadID(event);
+      var options = that.tokenize(event);
+      return options.type == "user" || !!remove(this, event);
     },
-    fetchThreadlistInfo: function(ec, fc, gc, hc, ic) {
-      gc = gc || ka.INBOX;
-      ic = ic || sa;
-      var jc = hc ? la.IMMEDIATE : null,
-        kc = {
-          client: ic
-        };
-      kc[gc] = {
-        offset: ec,
-        limit: fc,
-        filter: hc
+    /**
+     * @param {?} indentUnit
+     * @param {?} limit
+     * @param {?} key
+     * @param {string} showMessage
+     * @param {?} client
+     * @return {undefined}
+     */
+    fetchThreadlistInfo : function(indentUnit, limit, key, showMessage, client) {
+      key = key || cont.INBOX;
+      client = client || normalClient;
+      var body = showMessage ? entry.IMMEDIATE : null;
+      var conn = {
+        client : client
       };
-      dc(this, '/ajax/mercury/threadlist_info.php', kc, jc);
+      conn[key] = {
+        offset : indentUnit,
+        limit : limit,
+        filter : showMessage
+      };
+      callback(this, "/ajax/mercury/threadlist_info.php", conn, body);
     },
-    fetchPinnedThreads: function() {
-      dc(this, '/mercury/pinned_threads/', {});
+    /**
+     * @return {undefined}
+     */
+    fetchPinnedThreads : function() {
+      callback(this, "/mercury/pinned_threads/", {});
     },
-    fetchUnseenThreadIDs: function(ec, fc) {
-      fc = fc || sa;
-      this.fetchThreadlistInfo(ga.RECENT_THREAD_OFFSET, ga.JEWEL_THREAD_COUNT, ec, null, fc);
+    /**
+     * @param {?} subKey
+     * @param {?} client
+     * @return {undefined}
+     */
+    fetchUnseenThreadIDs : function(subKey, client) {
+      client = client || normalClient;
+      this.fetchThreadlistInfo(textAlt.RECENT_THREAD_OFFSET, textAlt.JEWEL_THREAD_COUNT, subKey, null, client);
     },
-    fetchUnreadThreadIDs: function(ec, fc) {
-      fc = fc || sa;
-      dc(this, '/ajax/mercury/unread_threads.php', {
-        folders: [ec],
-        client: fc
+    /**
+     * @param {?} keepData
+     * @param {?} client
+     * @return {undefined}
+     */
+    fetchUnreadThreadIDs : function(keepData, client) {
+      client = client || normalClient;
+      callback(this, "/ajax/mercury/unread_threads.php", {
+        folders : [keepData],
+        client : client
       });
     },
-    fetchMissedMessages: function(ec, fc) {
-      fc = fc || sa;
-      var gc = {
-        last_action_timestamp: this._lastActionTimestamp,
-        folders: ec,
-        client: fc
+    /**
+     * @param {?} folders
+     * @param {?} client
+     * @return {undefined}
+     */
+    fetchMissedMessages : function(folders, client) {
+      client = client || normalClient;
+      var message = {
+        last_action_timestamp : this._lastActionTimestamp,
+        folders : folders,
+        client : client
       };
-      gc.last_action_timestamp = this._lastActionTimestamp;
-      dc(this, '/ajax/mercury/thread_sync.php', gc);
+      message.last_action_timestamp = this._lastActionTimestamp;
+      callback(this, "/ajax/mercury/thread_sync.php", message);
     },
-    fetchThreadData: function(ec, fc) {
-      fc = fc || sa;
-      s.allThreadID(ec);
-      var gc = {
-          threads: {},
-          client: fc
-        },
-        hc = [],
-        ic = [];
-      ec.forEach(function(kc) {
-        if (this._fetchingThreads[kc]) return;
-        this._fetchingThreads[kc] = true;
-        var lc = ya(this, kc),
-          mc = v.tokenize(kc);
-        if (mc.type == 'user') {
-          hc.push(mc.value);
-          gc.threads.user_ids = hc;
-        } else if (mc.type == 'thread') {
-          if (lc) {
-            ic.push(lc);
-          } else ic.push(mc.value);
-          gc.threads.thread_fbids = ic;
-        } else if (mc.type != 'root' && mc.type != 'pending') throw new Error('Unknown thread type', mc);
+    /**
+     * @param {Array} event
+     * @param {?} client
+     * @return {undefined}
+     */
+    fetchThreadData : function(event, client) {
+      client = client || normalClient;
+      fixHook.allThreadID(event);
+      var data = {
+        threads : {},
+        client : client
+      };
+      /** @type {Array} */
+      var buffer = [];
+      /** @type {Array} */
+      var values = [];
+      event.forEach(function(selector) {
+        if (this._fetchingThreads[selector]) {
+          return;
+        }
+        /** @type {boolean} */
+        this._fetchingThreads[selector] = true;
+        var templatePromise = remove(this, selector);
+        var node = that.tokenize(selector);
+        if (node.type == "user") {
+          buffer.push(node.value);
+          /** @type {Array} */
+          data.threads.user_ids = buffer;
+        } else {
+          if (node.type == "thread") {
+            if (templatePromise) {
+              values.push(templatePromise);
+            } else {
+              values.push(node.value);
+            }
+            /** @type {Array} */
+            data.threads.thread_fbids = values;
+          } else {
+            if (node.type != "root" && node.type != "pending") {
+              throw new Error("Unknown thread type", node);
+            }
+          }
+        }
       }.bind(this));
-      this.inform("fetch-thread-data", gc);
-      for (var jc in gc.threads) {
-        dc(this, '/ajax/mercury/thread_info.php', gc);
+      this.inform("fetch-thread-data", data);
+      var type;
+      for (type in data.threads) {
+        callback(this, "/ajax/mercury/thread_info.php", data);
         break;
       }
     },
-    ensureThreadIsFetched: function(ec, fc) {
-      fc = fc || sa;
-      if (!this._FBIDToClientIDs.getResource(ec) && !this._fetchingThreads[ec]) {
-        this._fetchingThreads[ec] = true;
-        dc(this, '/ajax/mercury/thread_info.php', {
-          threads: {
-            thread_fbids: [ec]
+    /**
+     * @param {?} key
+     * @param {?} client
+     * @return {undefined}
+     */
+    ensureThreadIsFetched : function(key, client) {
+      client = client || normalClient;
+      if (!this._FBIDToClientIDs.getResource(key) && !this._fetchingThreads[key]) {
+        /** @type {boolean} */
+        this._fetchingThreads[key] = true;
+        callback(this, "/ajax/mercury/thread_info.php", {
+          threads : {
+            thread_fbids : [key]
           },
-          client: fc
+          client : client
         });
       }
     },
-    fetchThreadMessages: function(ec, fc, gc, hc, ic) {
-      s.isThreadID(ec);
-      ic = ic || sa;
-      var jc, kc, lc = v.tokenize(ec),
-        mc = ya(this, ec),
-        nc = false;
-      if (mc) {
-        jc = mc;
-        kc = (lc.type == 'user') ? 'user_ids' : 'thread_fbids';
+    /**
+     * @param {string} event
+     * @param {number} indentUnit
+     * @param {?} value
+     * @param {?} obj
+     * @param {?} client
+     * @return {undefined}
+     */
+    fetchThreadMessages : function(event, indentUnit, value, obj, client) {
+      fixHook.isThreadID(event);
+      client = client || normalClient;
+      var r;
+      var i;
+      var row = that.tokenize(event);
+      var e = remove(this, event);
+      /** @type {boolean} */
+      var nc = false;
+      if (e) {
+        r = e;
+        /** @type {string} */
+        i = row.type == "user" ? "user_ids" : "thread_fbids";
       } else {
-        jc = lc.value;
-        switch (lc.type) {
-          case 'user':
-            kc = 'user_ids';
+        r = row.value;
+        switch(row.type) {
+          case "user":
+            /** @type {string} */
+            i = "user_ids";
+            /** @type {boolean} */
             nc = true;
             break;
-          case 'thread':
-            kc = 'thread_fbids';
+          case "thread":
+            /** @type {string} */
+            i = "thread_fbids";
             break;
         }
       }
-      var oc = {
-        messages: {},
-        threads: {},
-        client: ic
+      var self = {
+        messages : {},
+        threads : {},
+        client : client
       };
-      if (kc) {
-        oc.messages[kc] = {};
-        oc.messages[kc][jc] = {
-          offset: fc,
-          limit: gc
+      if (i) {
+        self.messages[i] = {};
+        self.messages[i][r] = {
+          offset : indentUnit,
+          limit : value
         };
-        if (nc) oc.threads[kc] = [jc];
-        dc(this, '/ajax/mercury/thread_info.php', oc, hc);
-      } else xa(this, ec, function(pc) {
-        oc.messages.thread_fbids = {};
-        oc.messages.thread_fbids[pc] = {
-          offset: fc,
-          limit: gc
-        };
-        dc(this, '/ajax/mercury/thread_info.php', oc, hc);
-      }.bind(this));
-    },
-    handleThreadInfoError: function(ec) {
-      var fc = ec.getRequest().getData(),
-        gc = [];
-      if (fc.messages) {
-        for (var hc in fc.messages.thread_fbids) gc.push(sb(bb(this, hc)));
-        for (var ic in fc.messages.user_ids) gc.push(sb('user:' + ic));
-        for (var jc in fc.messages.group_ids) gc.push(sb('group:' + jc));
+        if (nc) {
+          /** @type {Array} */
+          self.threads[i] = [r];
+        }
+        callback(this, "/ajax/mercury/thread_info.php", self, obj);
+      } else {
+        add(this, event, function(key) {
+          self.messages.thread_fbids = {};
+          self.messages.thread_fbids[key] = {
+            offset : indentUnit,
+            limit : value
+          };
+          callback(this, "/ajax/mercury/thread_info.php", self, obj);
+        }.bind(this));
       }
-      if (gc.length) this.handleUpdate({
-        actions: gc,
-        from_client: true,
-        payload_source: z.CLIENT_CHANNEL_MESSAGE
-      });
-      if (fc.threads && (fc.threads.user_ids || fc.threads.group_ids || fc.threads.thread_ids)) {
-        var kc = 5,
-          lc = true;
-        if (!fc.retry_count) {
-          fc.retry_count = 0;
-          if (fc.messages) delete fc.messages;
-        } else if (fc.retry_count >= kc) {
-          lc = false;
-          (fc.threads.thread_ids || []).forEach(function(nc) {
-            if (nc in this._fetchingThreads) delete this._fetchingThreads[nc];
-          }.bind(this));
+    },
+    /**
+     * @param {?} keepData
+     * @return {undefined}
+     */
+    handleThreadInfoError : function(keepData) {
+      var self = keepData.getRequest().getData();
+      /** @type {Array} */
+      var configList = [];
+      if (self.messages) {
+        var camelKey;
+        for (camelKey in self.messages.thread_fbids) {
+          configList.push(test(success(this, camelKey)));
+        }
+        var key;
+        for (key in self.messages.user_ids) {
+          configList.push(test("user:" + key));
+        }
+        var type;
+        for (type in self.messages.group_ids) {
+          configList.push(test("group:" + type));
+        }
+      }
+      if (configList.length) {
+        this.handleUpdate({
+          actions : configList,
+          from_client : true,
+          payload_source : deepDataAndEvents.CLIENT_CHANNEL_MESSAGE
+        });
+      }
+      if (self.threads && (self.threads.user_ids || (self.threads.group_ids || self.threads.thread_ids))) {
+        /** @type {number} */
+        var interval = 5;
+        /** @type {boolean} */
+        var lc = true;
+        if (!self.retry_count) {
+          /** @type {number} */
+          self.retry_count = 0;
+          if (self.messages) {
+            delete self.messages;
+          }
+        } else {
+          if (self.retry_count >= interval) {
+            /** @type {boolean} */
+            lc = false;
+            (self.threads.thread_ids || []).forEach(function(timeoutKey) {
+              if (timeoutKey in this._fetchingThreads) {
+                delete this._fetchingThreads[timeoutKey];
+              }
+            }.bind(this));
+          }
         }
         if (lc) {
-          var mc = fc.retry_count * 1000;
-          qa(function() {
-            ra.log('retry_thread', fc);
-            dc(this, '/ajax/mercury/thread_info.php', fc);
-          }.bind(this), mc);
-          fc.retry_count++;
+          /** @type {number} */
+          var progressContexts = self.retry_count * 1E3;
+          updateFunc(function() {
+            logger.log("retry_thread", self);
+            callback(this, "/ajax/mercury/thread_info.php", self);
+          }.bind(this), progressContexts);
+          self.retry_count++;
         }
       }
     },
-    markFolderAsRead: function(ec) {
-      dc(this, '/ajax/mercury/mark_folder_as_read.php', {
-        folder: ec
+    /**
+     * @param {?} keepData
+     * @return {undefined}
+     */
+    markFolderAsRead : function(keepData) {
+      callback(this, "/ajax/mercury/mark_folder_as_read.php", {
+        folder : keepData
       });
-      var fc = [{
-        action_type: u.MARK_ALL_READ,
-        action_id: null,
-        folder: ec
+      /** @type {Array} */
+      var global_actions = [{
+        action_type : matcherFunction.MARK_ALL_READ,
+        action_id : null,
+        folder : keepData
       }];
       this.handleUpdate({
-        global_actions: fc,
-        from_client: true,
-        payload_source: z.CLIENT_CHANGE_READ_STATUS
+        global_actions : global_actions,
+        from_client : true,
+        payload_source : deepDataAndEvents.CLIENT_CHANGE_READ_STATUS
       });
     },
-    changeThreadReadStatus: function(ec, fc, gc) {
-      s.isThreadID(ec);
-      xa(this, ec, function(hc) {
-        var ic = {
-          ids: {},
-          source: gc
+    /**
+     * @param {string} event
+     * @param {boolean} dataAndEvents
+     * @param {Object} key
+     * @return {undefined}
+     */
+    changeThreadReadStatus : function(event, dataAndEvents, key) {
+      fixHook.isThreadID(event);
+      add(this, event, function(i) {
+        var params = {
+          ids : {},
+          source : key
         };
-        ic.ids[hc] = fc;
-        dc(this, '/ajax/mercury/change_read_status.php', ic);
+        /** @type {boolean} */
+        params.ids[i] = dataAndEvents;
+        callback(this, "/ajax/mercury/change_read_status.php", params);
       }.bind(this));
     },
-    changeThreadArchivedStatus: function(ec, fc, gc) {
-      s.isThreadID(ec);
-      xa(this, ec, function(hc) {
-        var ic = {
-          ids: {},
-          source: gc
+    /**
+     * @param {string} event
+     * @param {boolean} recurring
+     * @param {string} deepDataAndEvents
+     * @return {undefined}
+     */
+    changeThreadArchivedStatus : function(event, recurring, deepDataAndEvents) {
+      fixHook.isThreadID(event);
+      add(this, event, function(i) {
+        var params = {
+          ids : {},
+          source : deepDataAndEvents
         };
-        ic.ids[hc] = fc;
-        dc(this, '/ajax/mercury/change_archived_status.php', ic);
+        /** @type {boolean} */
+        params.ids[i] = recurring;
+        callback(this, "/ajax/mercury/change_archived_status.php", params);
       }.bind(this));
     },
-    changeThreadFolder: function(ec, fc) {
-      s.isThreadID(ec);
-      xa(this, ec, function(gc) {
-        var hc = {};
-        hc[fc] = [gc];
-        dc(this, '/ajax/mercury/move_thread.php', hc);
+    /**
+     * @param {string} event
+     * @param {?} key
+     * @return {undefined}
+     */
+    changeThreadFolder : function(event, key) {
+      fixHook.isThreadID(event);
+      add(this, event, function(v) {
+        var obj = {};
+        /** @type {Array} */
+        obj[key] = [v];
+        callback(this, "/ajax/mercury/move_thread.php", obj);
       }.bind(this));
     },
-    changeMutingOnThread: function(ec, fc) {
-      s.isThreadID(ec);
-      xa(this, ec, function(gc) {
-        dc(this, '/ajax/mercury/change_mute_thread.php', {
-          thread_fbid: gc,
-          mute_settings: fc,
-          payload_source: sa
+    /**
+     * @param {string} event
+     * @param {Array} isXML
+     * @return {undefined}
+     */
+    changeMutingOnThread : function(event, isXML) {
+      fixHook.isThreadID(event);
+      add(this, event, function(dataAndEvents) {
+        callback(this, "/ajax/mercury/change_mute_thread.php", {
+          thread_fbid : dataAndEvents,
+          mute_settings : isXML,
+          payload_source : normalClient
         });
       }.bind(this));
     },
-    markThreadSpam: function(ec, fc) {
-      s.isThreadID(ec);
-      xa(this, ec, function(gc) {
-        dc(this, '/ajax/mercury/mark_spam.php', {
-          id: gc,
-          source: fc
+    /**
+     * @param {string} event
+     * @param {Object} deepDataAndEvents
+     * @return {undefined}
+     */
+    markThreadSpam : function(event, deepDataAndEvents) {
+      fixHook.isThreadID(event);
+      add(this, event, function(term) {
+        callback(this, "/ajax/mercury/mark_spam.php", {
+          id : term,
+          source : deepDataAndEvents
         });
       }.bind(this));
     },
-    markMessagesSpam: function(ec, fc) {
-      ha.getServerIDs(fc || [], function(gc) {
-        dc(this, '/ajax/mercury/mark_spam_messages.php', {
-          message_ids: gc
+    /**
+     * @param {?} regex
+     * @param {Array} elems
+     * @return {undefined}
+     */
+    markMessagesSpam : function(regex, elems) {
+      task.getServerIDs(elems || [], function(dataAndEvents) {
+        callback(this, "/ajax/mercury/mark_spam_messages.php", {
+          message_ids : dataAndEvents
         });
       }.bind(this));
     },
-    unmarkThreadSpam: function(ec, fc) {
-      s.isThreadID(ec);
-      xa(this, ec, function(gc) {
-        dc(this, '/ajax/mercury/unmark_spam.php', {
-          id: gc,
-          source: fc
+    /**
+     * @param {string} event
+     * @param {Object} deepDataAndEvents
+     * @return {undefined}
+     */
+    unmarkThreadSpam : function(event, deepDataAndEvents) {
+      fixHook.isThreadID(event);
+      add(this, event, function(term) {
+        callback(this, "/ajax/mercury/unmark_spam.php", {
+          id : term,
+          source : deepDataAndEvents
         });
       }.bind(this));
     },
-    deleteThread: function(ec, fc) {
-      s.isThreadID(ec);
-      xa(this, ec, function(gc) {
-        var hc = {
-          ids: [gc],
-          source: fc
+    /**
+     * @param {string} event
+     * @param {string} init
+     * @return {undefined}
+     */
+    deleteThread : function(event, init) {
+      fixHook.isThreadID(event);
+      add(this, event, function(id2) {
+        var params = {
+          ids : [id2],
+          source : init
         };
-        dc(this, '/ajax/mercury/delete_thread.php', hc);
+        callback(this, "/ajax/mercury/delete_thread.php", params);
       }.bind(this));
     },
-    unpinThread: function(ec) {
-      s.isThreadID(ec);
-      xa(this, ec, function(fc) {
-        dc(this, '/mercury/unpin_thread/', {
-          id: fc
+    /**
+     * @param {string} event
+     * @return {undefined}
+     */
+    unpinThread : function(event) {
+      fixHook.isThreadID(event);
+      add(this, event, function(term) {
+        callback(this, "/mercury/unpin_thread/", {
+          id : term
         });
       }.bind(this));
     },
-    deleteMessages: function(ec, fc) {
-      ha.getServerIDs(fc || [], function(gc) {
-        dc(this, '/ajax/mercury/delete_messages.php', {
-          message_ids: gc
+    /**
+     * @param {string} keepData
+     * @param {Array} millis
+     * @return {undefined}
+     */
+    deleteMessages : function(keepData, millis) {
+      task.getServerIDs(millis || [], function(dataAndEvents) {
+        callback(this, "/ajax/mercury/delete_messages.php", {
+          message_ids : dataAndEvents
         });
       }.bind(this));
     },
-    sendDeliveryReceipts: function(ec) {
-      ha.getServerIDs(ec || [], function(fc) {
-        dc(this, '/ajax/mercury/delivery_receipts.php', {
-          message_ids: fc
+    /**
+     * @param {Array} millis
+     * @return {undefined}
+     */
+    sendDeliveryReceipts : function(millis) {
+      task.getServerIDs(millis || [], function(dataAndEvents) {
+        callback(this, "/ajax/mercury/delivery_receipts.php", {
+          message_ids : dataAndEvents
         });
       }.bind(this));
     },
-    clearChat: function(ec, fc, gc) {
-      s.isThreadID(ec);
-      dc(this, '/ajax/chat/settings.php', {
-        clear_history_id: fc
+    /**
+     * @param {string} event
+     * @param {?} dataAndEvents
+     * @param {?} ignoreMethodDoesntExist
+     * @return {undefined}
+     */
+    clearChat : function(event, dataAndEvents, ignoreMethodDoesntExist) {
+      fixHook.isThreadID(event);
+      callback(this, "/ajax/chat/settings.php", {
+        clear_history_id : dataAndEvents
       });
-      var hc = [{
-        action_type: q.CLEAR_CHAT,
-        action_id: null,
-        thread_id: ec,
-        clear_time: gc
+      /** @type {Array} */
+      var actions = [{
+        action_type : buf.CLEAR_CHAT,
+        action_id : null,
+        thread_id : event,
+        clear_time : ignoreMethodDoesntExist
       }];
       this.handleUpdate({
-        actions: hc,
-        from_client: true,
-        payload_source: z.CLIENT_CLEAR_CHAT
+        actions : actions,
+        from_client : true,
+        payload_source : deepDataAndEvents.CLIENT_CLEAR_CHAT
       });
-      k.bumpEntityKey('chat.web', 'chat.clear_window');
+      keepData.bumpEntityKey("chat.web", "chat.clear_window");
     },
-    sendNewMessage: function(ec, fc) {
-      fc = fc || sa;
-      if (!ec.client_state || ec.client_state == y.SEND_TO_SERVER) ha.getServerIDs(ec.forward_message_ids || [], function(gc) {
-        var hc = v.tokenize(ec.thread_id),
-          ic = hc.type,
-          jc = oa({}, ec);
-        jc.forward_message_ids = gc;
-        if ((ic == 'root' && hc.value == jc.message_id) || (ic == 'user')) {
-          jc.client_thread_id = jc.thread_id;
-          jc.thread_id = null;
-          this._sendNewMessageToServer(jc, fc);
-        } else xa(this, jc.thread_id, function(kc) {
-          hc = v.tokenize(jc.thread_id);
-          if (hc.type == 'user') {
-            jc.other_user_fbid = hc.values;
-          } else jc.thread_fbid = kc;
-          jc.thread_id = null;
-          this._sendNewMessageToServer(jc);
+    /**
+     * @param {Object} obj
+     * @param {?} client
+     * @return {undefined}
+     */
+    sendNewMessage : function(obj, client) {
+      client = client || normalClient;
+      if (!obj.client_state || obj.client_state == Socket.SEND_TO_SERVER) {
+        task.getServerIDs(obj.forward_message_ids || [], function(ok) {
+          var data = that.tokenize(obj.thread_id);
+          var type = data.type;
+          var value = done({}, obj);
+          /** @type {Array} */
+          value.forward_message_ids = ok;
+          if (type == "root" && data.value == value.message_id || type == "user") {
+            value.client_thread_id = value.thread_id;
+            /** @type {null} */
+            value.thread_id = null;
+            this._sendNewMessageToServer(value, client);
+          } else {
+            add(this, value.thread_id, function(ok) {
+              data = that.tokenize(value.thread_id);
+              if (data.type == "user") {
+                value.other_user_fbid = data.values;
+              } else {
+                value.thread_fbid = ok;
+              }
+              /** @type {null} */
+              value.thread_id = null;
+              this._sendNewMessageToServer(value);
+            }.bind(this));
+          }
         }.bind(this));
-      }.bind(this));
+      }
     },
-    _sendNewMessageToServer: function(ec, fc) {
-      g.inform(l.ATTEMPT_RECONNECT);
-      fc = fc || sa;
-      this._sentMessagesTimestamp[ec.message_id] = Date.now();
-      da.getForFBID(this._fbid).enqueue(db(ec), this._sendMessageQueueOptions, fc, ec);
+    /**
+     * @param {?} user
+     * @param {?} client
+     * @return {undefined}
+     */
+    _sendNewMessageToServer : function(user, client) {
+      m.inform(lt.ATTEMPT_RECONNECT);
+      client = client || normalClient;
+      /** @type {number} */
+      this._sentMessagesTimestamp[user.message_id] = Date.now();
+      positionError.getForFBID(this._fbid).enqueue(processMessage(user), this._sendMessageQueueOptions, client, user);
     },
-    requestMessageConfirmation: function(ec, fc) {
-      fc = fc || sa;
-      var gc = {},
-        hc = {};
-      for (var ic in ec) {
-        var jc = ya(this, ic);
-        if (jc) {
-          gc[jc] = ec[ic];
+    /**
+     * @param {Object} obj
+     * @param {?} client
+     * @return {undefined}
+     */
+    requestMessageConfirmation : function(obj, client) {
+      client = client || normalClient;
+      var filtered = {};
+      var seen = {};
+      var name;
+      for (name in obj) {
+        var method = remove(this, name);
+        if (method) {
+          filtered[method] = obj[name];
         } else {
-          var kc = ec[ic];
-          for (var lc = 0; lc < kc.length; lc++) hc[kc[lc]] = ic;
+          var original = obj[name];
+          /** @type {number} */
+          var i = 0;
+          for (;i < original.length;i++) {
+            /** @type {string} */
+            seen[original[i]] = name;
+          }
         }
       }
-      var mc = Object.keys(gc),
-        nc = Object.keys(hc);
-      if (mc.length || nc.length) dc(this, '/ajax/mercury/confirm_messages.php', {
-        thread_message_map: gc,
-        local_messages: hc,
-        client: fc
-      });
+      /** @type {Array.<string>} */
+      var persist = Object.keys(filtered);
+      /** @type {Array.<string>} */
+      var originalIds = Object.keys(seen);
+      if (persist.length || originalIds.length) {
+        callback(this, "/ajax/mercury/confirm_messages.php", {
+          thread_message_map : filtered,
+          local_messages : seen,
+          client : client
+        });
+      }
     },
-    handleMessageConfirmError: function(ec) {
-      var fc = ec.getRequest().getData().thread_message_map,
-        gc = ec.getRequest().getData().local_messages;
-      if (!fc && !gc) return;
-      var hc = [];
-      for (var ic in fc) {
-        var jc = fc[ic];
-        jc.forEach(function(mc) {
-          hc.push({
-            action_type: q.SEND_MESSAGE,
-            client_message_id: mc,
-            message_id: mc,
-            client_thread_id: null,
-            thread_fbid: ic,
-            status: p.UNABLE_TO_CONFIRM
+    /**
+     * @param {?} v
+     * @return {undefined}
+     */
+    handleMessageConfirmError : function(v) {
+      var testSource = v.getRequest().getData().thread_message_map;
+      var params = v.getRequest().getData().local_messages;
+      if (!testSource && !params) {
+        return;
+      }
+      /** @type {Array} */
+      var configList = [];
+      var name;
+      for (name in testSource) {
+        var ref = testSource[name];
+        ref.forEach(function(message_id) {
+          configList.push({
+            action_type : buf.SEND_MESSAGE,
+            client_message_id : message_id,
+            message_id : message_id,
+            client_thread_id : null,
+            thread_fbid : name,
+            status : status.UNABLE_TO_CONFIRM
           });
         });
       }
-      for (var kc in gc) {
-        var lc = gc[kc];
-        hc.push({
-          action_type: q.SEND_MESSAGE,
-          client_message_id: kc,
-          message_id: kc,
-          client_thread_id: lc,
-          thread_fbid: null,
-          status: p.UNABLE_TO_CONFIRM
+      var i;
+      for (i in params) {
+        var param = params[i];
+        configList.push({
+          action_type : buf.SEND_MESSAGE,
+          client_message_id : i,
+          message_id : i,
+          client_thread_id : param,
+          thread_fbid : null,
+          status : status.UNABLE_TO_CONFIRM
         });
       }
-      if (hc.length) this.handleUpdate({
-        actions: hc,
-        payload_source: z.CLIENT_HANDLE_ERROR
-      });
-    },
-    markSeen: function() {
-      var ec = this._lastActionTimestamp;
-      dc(this, '/ajax/mercury/mark_seen.php', {
-        seen_timestamp: ec
-      });
-    },
-    handleRoger: function(ec) {
-      var fc = ec.thread_fbid ? this._FBIDToClientIDs.getResource(ec.thread_fbid) : v.getThreadIDFromUserID(ec.reader);
-      if (fc) {
-        var gc = v.getParticipantIDFromUserID(ec.reader),
-          hc = {};
-        hc[fc] = {};
-        hc[fc][gc] = ec.time;
-        this.inform('update-roger', hc);
+      if (configList.length) {
+        this.handleUpdate({
+          actions : configList,
+          payload_source : deepDataAndEvents.CLIENT_HANDLE_ERROR
+        });
       }
     },
-    handleUpdateWaitForThread: function(ec, fc, gc) {
-      gc = gc || sa;
-      var hc = this._FBIDToClientIDs.getResource(fc);
-      if (hc) {
-        this.handleUpdate(ec);
+    /**
+     * @return {undefined}
+     */
+    markSeen : function() {
+      var _lastActionTimestamp = this._lastActionTimestamp;
+      callback(this, "/ajax/mercury/mark_seen.php", {
+        seen_timestamp : _lastActionTimestamp
+      });
+    },
+    /**
+     * @param {Object} obj
+     * @return {undefined}
+     */
+    handleRoger : function(obj) {
+      var name = obj.thread_fbid ? this._FBIDToClientIDs.getResource(obj.thread_fbid) : that.getThreadIDFromUserID(obj.reader);
+      if (name) {
+        var id = that.getParticipantIDFromUserID(obj.reader);
+        var domParts = {};
+        domParts[name] = {};
+        domParts[name][id] = obj.time;
+        this.inform("update-roger", domParts);
+      }
+    },
+    /**
+     * @param {?} opt_attributes
+     * @param {number} att
+     * @param {?} client
+     * @return {undefined}
+     */
+    handleUpdateWaitForThread : function(opt_attributes, att, client) {
+      client = client || normalClient;
+      var val = this._FBIDToClientIDs.getResource(att);
+      if (val) {
+        this.handleUpdate(opt_attributes);
         return;
       }
-      this._FBIDToClientIDs.executeOrEnqueue(fc, function() {
-        this._pendingUpdates.push(ec);
+      this._FBIDToClientIDs.executeOrEnqueue(att, function() {
+        this._pendingUpdates.push(opt_attributes);
       }.bind(this));
-      if (!this._fetchingThreads[fc]) {
-        this._fetchingThreads[fc] = true;
-        var ic = {
-          threads: {
-            thread_fbids: [fc]
+      if (!this._fetchingThreads[att]) {
+        /** @type {boolean} */
+        this._fetchingThreads[att] = true;
+        var attributes = {
+          threads : {
+            thread_fbids : [att]
           },
-          client: gc
+          client : client
         };
-        if (this.isUser(fc)) ic = {
-          threads: {
-            user_ids: [fc]
-          },
-          client: gc
-        };
-        dc(this, '/ajax/mercury/thread_info.php', ic);
+        if (this.isUser(att)) {
+          attributes = {
+            threads : {
+              user_ids : [att]
+            },
+            client : client
+          };
+        }
+        callback(this, "/ajax/mercury/thread_info.php", attributes);
       }
     },
-    handleUpdate: function(ec) {
-      var fc = [];
-      if (ec && ec.threads)
-        for (var gc = 0; gc < ec.threads.length; gc++) {
-          if (!ec.threads[gc].snippet_attachments) continue;
-          for (var hc = 0; hc < ec.threads[gc].snippet_attachments.length; hc++)
-            if (ec.threads[gc].snippet_attachments[hc].share_xhp) {
-              fc.push({
-                i: gc,
-                j: hc,
-                xhp: ec.threads[gc].snippet_attachments[hc].share_xhp
-              });
-              ec.threads[gc].snippet_attachments[hc].share_xhp = "HTMLDivElement not shown: object contains circular " + "reference, which was breaking JSON.stringify. " + "Look at MercuryServerRequests.handleUpdate";
-            }
-        }
-      var ic = {
-        actions: [],
-        threads: []
-      };
-      if (ec) {
-        if (ec.actions) ic.actions = ec.actions.map(function(lc) {
-          return w.obfuscateMessage(lc);
-        });
-        if (ec.threads) ic.threads = ec.threads.map(function(lc) {
-          return w.obfuscateThread(lc);
-        });
-      }
-      var jc = oa({}, ec, ic);
-      ra.debug('update:' + ec.payload_source, {
-        payload: jc,
-        from_client: ec.from_client
-      });
-      for (var kc = 0; kc < fc.length; kc++) ec.threads[fc[kc].i].snippet_attachments[fc[kc].j].share_xhp = fc[kc].xhp;
-      for (kc in ec) {
-        na.getForFBID(this._fbid).synchronizeInforms(function() {
-          if (!ec.from_client) {
-            ib(this, ec);
-            this.inform('payload-preprocessed', ec);
+    /**
+     * @param {?} opt_attributes
+     * @return {undefined}
+     */
+    handleUpdate : function(opt_attributes) {
+      /** @type {Array} */
+      var nodes = [];
+      if (opt_attributes && opt_attributes.threads) {
+        /** @type {number} */
+        var i = 0;
+        for (;i < opt_attributes.threads.length;i++) {
+          if (!opt_attributes.threads[i].snippet_attachments) {
+            continue;
           }
-          this.inform('update-thread-ids', this._newlyAddedClientIDs);
+          /** @type {number} */
+          var conditionIndex = 0;
+          for (;conditionIndex < opt_attributes.threads[i].snippet_attachments.length;conditionIndex++) {
+            if (opt_attributes.threads[i].snippet_attachments[conditionIndex].share_xhp) {
+              nodes.push({
+                i : i,
+                j : conditionIndex,
+                xhp : opt_attributes.threads[i].snippet_attachments[conditionIndex].share_xhp
+              });
+              /** @type {string} */
+              opt_attributes.threads[i].snippet_attachments[conditionIndex].share_xhp = "HTMLDivElement not shown: object contains circular " + "reference, which was breaking JSON.stringify. " + "Look at MercuryServerRequests.handleUpdate";
+            }
+          }
+        }
+      }
+      var data = {
+        actions : [],
+        threads : []
+      };
+      if (opt_attributes) {
+        if (opt_attributes.actions) {
+          data.actions = opt_attributes.actions.map(function(v) {
+            return nv.obfuscateMessage(v);
+          });
+        }
+        if (opt_attributes.threads) {
+          data.threads = opt_attributes.threads.map(function(v) {
+            return nv.obfuscateThread(v);
+          });
+        }
+      }
+      var result = done({}, opt_attributes, data);
+      logger.debug("update:" + opt_attributes.payload_source, {
+        payload : result,
+        from_client : opt_attributes.from_client
+      });
+      /** @type {number} */
+      var j = 0;
+      for (;j < nodes.length;j++) {
+        opt_attributes.threads[nodes[j].i].snippet_attachments[nodes[j].j].share_xhp = nodes[j].xhp;
+      }
+      for (j in opt_attributes) {
+        _$timeout_.getForFBID(this._fbid).synchronizeInforms(function() {
+          if (!opt_attributes.from_client) {
+            create(this, opt_attributes);
+            this.inform("payload-preprocessed", opt_attributes);
+          }
+          this.inform("update-thread-ids", this._newlyAddedClientIDs);
           this._newlyAddedClientIDs = {};
-          this.inform('update-participants', ec);
-          this.inform('update-threads', ec);
-          this.inform('update-unread', ec);
-          this.inform('update-threadlist', ec);
-          this.inform('update-pinned-threads', ec);
-          this.inform('update-messages', ec);
-          this.inform('update-unseen', ec);
-          this.inform('update-typing-state', ec);
-          this.inform('update-roger', ec.roger);
-          this.inform('model-update-completed', null);
-          jb(this);
+          this.inform("update-participants", opt_attributes);
+          this.inform("update-threads", opt_attributes);
+          this.inform("update-unread", opt_attributes);
+          this.inform("update-threadlist", opt_attributes);
+          this.inform("update-pinned-threads", opt_attributes);
+          this.inform("update-messages", opt_attributes);
+          this.inform("update-unseen", opt_attributes);
+          this.inform("update-typing-state", opt_attributes);
+          this.inform("update-roger", opt_attributes.roger);
+          this.inform("model-update-completed", null);
+          freeze(this);
         }.bind(this));
         break;
       }
     },
-    _handleSendMessageErrorCommon: function(ec, fc, gc, hc) {
-      ra.debug('handle_send_message_error_common', {
-        reliability_error_status: gc,
-        request_error_status: fc
+    /**
+     * @param {Object} obj
+     * @param {number} statusCode
+     * @param {string} errback
+     * @param {boolean} opt_attributes
+     * @return {undefined}
+     */
+    _handleSendMessageErrorCommon : function(obj, statusCode, errback, opt_attributes) {
+      logger.debug("handle_send_message_error_common", {
+        reliability_error_status : errback,
+        request_error_status : statusCode
       });
-      var ic = ec.getData(),
-        jc = ic.message_batch,
-        kc = jc.map(function(mc) {
-          var nc = {
-            action_type: q.SEND_MESSAGE,
-            thread_fbid: mc.thread_fbid,
-            client_message_id: mc.message_id,
-            message_id: mc.message_id,
-            client_thread_id: mc.client_thread_id,
-            status: fc,
-            error_data: hc
-          };
-          return nc;
-        });
-      kc.forEach(function(mc) {
-        eb(this, mc, gc);
+      var context = obj.getData();
+      var j = context.message_batch;
+      var actions = j.map(function(evt) {
+        var data = {
+          action_type : buf.SEND_MESSAGE,
+          thread_fbid : evt.thread_fbid,
+          client_message_id : evt.message_id,
+          message_id : evt.message_id,
+          client_thread_id : evt.client_thread_id,
+          status : statusCode,
+          error_data : opt_attributes
+        };
+        return data;
+      });
+      actions.forEach(function(callback) {
+        handleResponse(this, callback, errback);
       }, this);
-      var lc = {
-        actions: kc,
-        payload_source: z.CLIENT_HANDLE_ERROR
+      var attributes = {
+        actions : actions,
+        payload_source : deepDataAndEvents.CLIENT_HANDLE_ERROR
       };
-      this.handleUpdate(lc);
+      this.handleUpdate(attributes);
     },
-    handleSendMessageError: function(ec) {
-      var fc = ec.getPayload(),
-        gc = null,
-        hc = null;
-      if (fc && fc.error_payload) {
-        gc = p.UNCONFIRMED;
-        hc = 'send_error';
+    /**
+     * @param {Object} ctx
+     * @return {undefined}
+     */
+    handleSendMessageError : function(ctx) {
+      var selector = ctx.getPayload();
+      /** @type {null} */
+      var code = null;
+      /** @type {null} */
+      var errback = null;
+      if (selector && selector.error_payload) {
+        code = status.UNCONFIRMED;
+        /** @type {string} */
+        errback = "send_error";
       } else {
-        gc = p.ERROR;
-        hc = 'request_error' + fb(ec);
+        code = status.ERROR;
+        /** @type {string} */
+        errback = "request_error" + template(ctx);
       }
-      var ic = ec.error;
-      if (ic === 1404102) i.verboseErrorHandler(ec);
-      var jc = /<.*>/.test(ec.getErrorDescription()) ? ec.getErrorSummary() : ec.getErrorDescription();
-      this._handleSendMessageErrorCommon(ec.getRequest(), gc, hc, {
-        type: t.SERVER,
-        code: ec.getError(),
-        description: jc,
-        is_transient: ec.isTransient()
+      var e = ctx.error;
+      if (e === 1404102) {
+        element.verboseErrorHandler(ctx);
+      }
+      var groupDescription = /<.*>/.test(ctx.getErrorDescription()) ? ctx.getErrorSummary() : ctx.getErrorDescription();
+      this._handleSendMessageErrorCommon(ctx.getRequest(), code, errback, {
+        type : message.SERVER,
+        code : ctx.getError(),
+        description : groupDescription,
+        is_transient : ctx.isTransient()
       });
     },
-    handleSendMessageTransportError: function(ec) {
-      this._handleSendMessageErrorCommon(ec.getRequest(), p.ERROR, 'transport_error' + fb(ec), {
-        type: t.TRANSPORT,
-        code: ec.getError(),
-        is_transient: true
+    /**
+     * @param {?} ctx
+     * @return {undefined}
+     */
+    handleSendMessageTransportError : function(ctx) {
+      this._handleSendMessageErrorCommon(ctx.getRequest(), status.ERROR, "transport_error" + template(ctx), {
+        type : message.TRANSPORT,
+        code : ctx.getError(),
+        is_transient : true
       });
     },
-    handleSendMessageTimeout: function(ec) {
-      this._handleSendMessageErrorCommon(ec, p.ERROR, 'transport_timeout', {
-        type: t.TIMEOUT,
-        is_transient: true
+    /**
+     * @param {Object} owner
+     * @return {undefined}
+     */
+    handleSendMessageTimeout : function(owner) {
+      this._handleSendMessageErrorCommon(owner, status.ERROR, "transport_timeout", {
+        type : message.TIMEOUT,
+        is_transient : true
       });
     },
-    getLastActionTimestamp: function() {
+    /**
+     * @return {?}
+     */
+    getLastActionTimestamp : function() {
       return this._lastActionTimestamp;
     }
   });
-  oa(rb, ea);
-
-  function sb(ec) {
-    return {
-      action_type: q.LOG_MESSAGE,
-      thread_id: ec,
-      message_id: ec,
-      timestamp: Date.now(),
-      timestamp_absolute: '',
-      timestamp_relative: '',
-      is_unread: false,
-      source: fa.UNKNOWN,
-      log_message_type: x.SERVER_ERROR,
-      log_message_data: {}
-    };
-  }
-
-  function tb(ec) {
-    var fc = ec.getData(),
-      gc = fc.request_user_id ? fc.request_user_id : m.getID();
-    return rb.getForFBID(gc);
-  }
-
-  function ub(ec, fc) {
-    tb(fc).handleUpdate(ec);
-  }
-
-  function vb(ec, fc) {
-    var gc = {};
-    oa(gc, ec.ids);
-    oa(gc, fc.ids);
-    var hc = ec.client || fc.client;
-    return {
-      ids: gc,
-      client: hc
-    };
-  }
-
-  function wb(ec, fc) {
-    return fc;
-  }
-
-  function xb(ec) {
-    var fc = tb(ec.getRequest());
-    fc.handleThreadInfoError(ec);
-  }
-
-  function yb(ec) {
-    var fc = tb(ec.getRequest());
-    fc.handleSendMessageError(ec);
-  }
-
-  function zb(ec) {
-    var fc = tb(ec.getRequest());
-    fc.handleSendMessageTransportError(ec);
-  }
-
-  function ac(ec) {
-    var fc = tb(ec);
-    fc.handleSendMessageTimeout(ec);
-  }
-
-  function bc(ec) {
-    var fc = tb(ec.getRequest());
-    fc.handleMessageConfirmError(ec);
-  }
-
-  function cc(ec) {
-    var fc = {
-      '/ajax/mercury/thread_sync.php': {
-        request_user_id: ec._fbid,
-        mode: la.IDEMPOTENT,
-        handler: ub
-      },
-      '/ajax/mercury/thread_info.php': {
-        request_user_id: ec._fbid,
-        mode: la.BATCH_DEFERRED_MULTI,
-        batch_function: kb,
-        handler: ub,
-        error_handler: xb
-      },
-      '/ajax/mercury/mark_folder_as_read.php': {
-        request_user_id: ec._fbid,
-        mode: la.IMMEDIATE,
-        handler: ub
-      },
-      '/ajax/mercury/change_read_status.php': {
-        request_user_id: ec._fbid,
-        mode: la.BATCH_SUCCESSIVE,
-        batch_function: vb,
-        handler: ub
-      },
-      '/ajax/mercury/mark_seen.php': {
-        request_user_id: ec._fbid,
-        mode: la.BATCH_SUCCESSIVE,
-        batch_function: wb,
-        handler: ub
-      },
-      '/ajax/mercury/confirm_messages.php': {
-        request_user_id: ec._fbid,
-        mode: la.IMMEDIATE,
-        handler: ub,
-        error_handler: bc
-      },
-      '/ajax/mercury/threadlist_info.php': {
-        request_user_id: ec._fbid,
-        mode: la.BATCH_SUCCESSIVE_UNIQUE,
-        batch_function: mb,
-        handler: ub
-      },
-      '/ajax/mercury/mark_spam.php': {
-        request_user_id: ec._fbid,
-        mode: la.IMMEDIATE,
-        handler: ub
-      },
-      '/ajax/mercury/mark_spam_messages.php': {
-        request_user_id: ec._fbid,
-        mode: la.IMMEDIATE,
-        handler: ub
-      },
-      '/ajax/mercury/unmark_spam.php': {
-        request_user_id: ec._fbid,
-        mode: la.IMMEDIATE,
-        handler: ub
-      },
-      '/ajax/mercury/unread_threads.php': {
-        request_user_id: ec._fbid,
-        mode: la.BATCH_SUCCESSIVE_UNIQUE,
-        batch_function: lb,
-        handler: ub
-      },
-      '/ajax/chat/settings.php': {
-        request_user_id: ec._fbid,
-        mode: la.IMMEDIATE
-      },
-      '/ajax/mercury/change_archived_status.php': {
-        request_user_id: ec._fbid,
-        mode: la.BATCH_SUCCESSIVE,
-        batch_function: ob,
-        handler: ub
-      },
-      '/ajax/mercury/delete_thread.php': {
-        request_user_id: ec._fbid,
-        mode: la.BATCH_SUCCESSIVE,
-        batch_function: qb,
-        handler: ub
-      },
-      '/ajax/mercury/delete_messages.php': {
-        request_user_id: ec._fbid,
-        mode: la.IMMEDIATE,
-        handler: ub
-      },
-      '/ajax/mercury/delivery_receipts.php': {
-        request_user_id: ec._fbid,
-        mode: la.IMMEDIATE,
-        handler: ub
-      },
-      '/ajax/mercury/move_thread.php': {
-        request_user_id: ec._fbid,
-        mode: la.BATCH_SUCCESSIVE,
-        batch_function: pb,
-        handler: ub
-      },
-      '/ajax/mercury/change_mute_thread.php': {
-        request_user_id: ec._fbid,
-        mode: la.IMMEDIATE,
-        handler: ub
-      },
-      '/mercury/pinned_threads/': {
-        request_user_id: ec._fbid,
-        mode: la.BATCH_SUCCESSIVE_UNIQUE,
-        handler: ub
-      },
-      '/mercury/unpin_thread/': {
-        request_user_id: ec._fbid,
-        mode: la.IMMEDIATE,
-        handler: ub
-      }
-    };
-    la.registerEndpoints(fc);
-  }
-
-  function dc(ec, fc, gc, hc) {
-    la.trySend(fc, gc, hc, ec._fbid);
-  }
-  e.exports = rb;
+  done(error, array);
+  /** @type {function (?): undefined} */
+  module.exports = error;
 }, null);
-__d("MercuryThreads", ["EventEmitter", "ImmutableObject", "KeyedCallbackManager", "LogHistory", "Map", "MercuryActionType", "MercuryAssert", "MercuryAttachment", "MercuryGlobalActionType", "MercuryIDs", "MercuryLogMessageType", "MercuryLoggingHelper", "MercuryPayloadSource", "MercurySingletonMixin", "MercuryThreadMode", "MessagingTag", "ReportState", "MercuryServerRequests", "Set", "MercuryThreadInformer", "setImmediate"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa) {
-  'use strict';
-  var ba = new g(),
-    ca = j.getInstance('mercury_threads');
-
-  function da(ea) {
-    this.$MercuryThreads0 = ea;
-    this.$MercuryThreads1 = x.getForFBID(this.$MercuryThreads0);
-    this.$MercuryThreads2 = z.getForFBID(this.$MercuryThreads0);
-    this.$MercuryThreads3 = p.getParticipantIDFromUserID(this.$MercuryThreads0);
+__d("MercuryThreads", ["EventEmitter", "ImmutableObject", "KeyedCallbackManager", "LogHistory", "Map", "MercuryActionType", "MercuryAssert", "MercuryAttachment", "MercuryGlobalActionType", "MercuryIDs", "MercuryLogMessageType", "MercuryLoggingHelper", "MercuryPayloadSource", "MercurySingletonMixin", "MercuryThreadMode", "MessagingTag", "ReportState", "MercuryServerRequests", "Set", "MercuryThreadInformer", "setImmediate"], function(dataAndEvents, textAlt, keepData, opt_attributes, module, matcherFunction,
+Model, Cookie, f, ProgressIndicator, Collection, fruits, jQuery, $location, contestant, helper, e, rule, buf, map, mode, folder, moduleInfo, deepDataAndEvents, Hash, ignoreMethodDoesntExist, $sanitize) {
+  /**
+   * @param {?} map
+   * @return {undefined}
+   */
+  function object(map) {
+    this.$MercuryThreads0 = map;
+    this.$MercuryThreads1 = deepDataAndEvents.getForFBID(this.$MercuryThreads0);
+    this.$MercuryThreads2 = ignoreMethodDoesntExist.getForFBID(this.$MercuryThreads0);
+    this.$MercuryThreads3 = helper.getParticipantIDFromUserID(this.$MercuryThreads0);
+    /** @type {boolean} */
     this.$MercuryThreads4 = false;
-    this.$MercuryThreads5 = new i();
-    this.$MercuryThreads6 = new y();
+    this.$MercuryThreads5 = new f;
+    this.$MercuryThreads6 = new Hash;
+    /** @type {boolean} */
     this.$MercuryThreads7 = false;
-    this.$MercuryThreads8 = new y();
-    this.$MercuryThreads9 = new y();
+    this.$MercuryThreads8 = new Hash;
+    this.$MercuryThreads9 = new Hash;
     this.$MercuryThreadsa();
   }
-  da.prototype.getThreadMetaNow = function(ea) {
-    m.isThreadID(ea);
-    return this.$MercuryThreads5.getResource(ea);
+  var model = new Model;
+  var utils = ProgressIndicator.getInstance("mercury_threads");
+  /**
+   * @param {string} val
+   * @return {?}
+   */
+  object.prototype.getThreadMetaNow = function(val) {
+    jQuery.isThreadID(val);
+    return this.$MercuryThreads5.getResource(val);
   };
-  da.prototype.getOrFetch = function(ea) {
-    var fa = this.getThreadMetaNow(ea);
-    if (!fa && !this.$MercuryThreads9.has(ea)) this.$MercuryThreads8.add(ea);
-    if (this.$MercuryThreads8.size > 0 && !this.$MercuryThreads7) this.$MercuryThreadsb();
-    return fa;
+  /**
+   * @param {string} arg
+   * @return {?}
+   */
+  object.prototype.getOrFetch = function(arg) {
+    var keyName = this.getThreadMetaNow(arg);
+    if (!keyName && !this.$MercuryThreads9.has(arg)) {
+      this.$MercuryThreads8.add(arg);
+    }
+    if (this.$MercuryThreads8.size > 0 && !this.$MercuryThreads7) {
+      this.$MercuryThreadsb();
+    }
+    return keyName;
   };
-  da.prototype.$MercuryThreadsb = function() {
-    if (this.$MercuryThreads7) return;
+  /**
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsb = function() {
+    if (this.$MercuryThreads7) {
+      return;
+    }
+    /** @type {boolean} */
     this.$MercuryThreads7 = true;
-    aa(function() {
+    $sanitize(function() {
+      /** @type {boolean} */
       this.$MercuryThreads7 = false;
-      this.$MercuryThreads8.forEach(function(ea) {
-        return this.$MercuryThreads9.add(ea);
+      this.$MercuryThreads8.forEach(function(dest) {
+        return this.$MercuryThreads9.add(dest);
       }.bind(this));
-      this.getMultiThreadMeta(Array.from(this.$MercuryThreads8), function(ea) {
-        for (var fa in ea) ea.hasOwnProperty(fa) && this.$MercuryThreads9["delete"](fa);
+      this.getMultiThreadMeta(Array.from(this.$MercuryThreads8), function(files) {
+        var file;
+        for (file in files) {
+          if (files.hasOwnProperty(file)) {
+            this.$MercuryThreads9["delete"](file);
+          }
+        }
       }.bind(this));
       this.$MercuryThreads8.clear();
     }.bind(this));
   };
-  da.prototype.getThreadMeta = function(ea, fa, ga) {
-    return this.getMultiThreadMeta([ea], function(ha) {
-      return fa(ha[ea]);
-    }, ga);
+  /**
+   * @param {?} i
+   * @param {Function} fn
+   * @param {?} walkers
+   * @return {?}
+   */
+  object.prototype.getThreadMeta = function(i, fn, walkers) {
+    return this.getMultiThreadMeta([i], function(elems) {
+      return fn(elems[i]);
+    }, walkers);
   };
-  da.prototype.getMultiThreadMeta = function(ea, fa, ga) {
-    m.allThreadID(ea);
-    var ha = this.$MercuryThreads5.executeOrEnqueue(ea, fa),
-      ia = this.$MercuryThreads5.getUnavailableResources(ha);
-    if (ia.length) {
-      var ja = [];
-      for (var ka = 0; ka < ia.length; ka++) {
-        var la = ia[ka],
-          ma = p.tokenize(la),
-          na = ma.type,
-          oa = ma.value;
-        if (na == 'user') {
-          this.createNewLocalThread(la, [this.$MercuryThreads3, p.getParticipantIDFromUserID(oa)]);
-        } else ja.push(la);
+  /**
+   * @param {?} qualifier
+   * @param {Function} deepDataAndEvents
+   * @param {?} obj
+   * @return {?}
+   */
+  object.prototype.getMultiThreadMeta = function(qualifier, deepDataAndEvents, obj) {
+    jQuery.allThreadID(qualifier);
+    var r20 = this.$MercuryThreads5.executeOrEnqueue(qualifier, deepDataAndEvents);
+    var codeSegments = this.$MercuryThreads5.getUnavailableResources(r20);
+    if (codeSegments.length) {
+      /** @type {Array} */
+      var fragment = [];
+      /** @type {number} */
+      var i = 0;
+      for (;i < codeSegments.length;i++) {
+        var input = codeSegments[i];
+        var field = helper.tokenize(input);
+        var type = field.type;
+        var value = field.value;
+        if (type == "user") {
+          this.createNewLocalThread(input, [this.$MercuryThreads3, helper.getParticipantIDFromUserID(value)]);
+        } else {
+          fragment.push(input);
+        }
       }
-      if (ja.length) this.$MercuryThreads1.fetchThreadData(ja, ga);
+      if (fragment.length) {
+        this.$MercuryThreads1.fetchThreadData(fragment, obj);
+      }
     }
-    return ha;
+    return r20;
   };
-  da.addListener = function(ea, fa) {
-    return ba.addListener(ea, fa);
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {?} triggerRoute
+   * @return {?}
+   */
+  object.addListener = function(deepDataAndEvents, triggerRoute) {
+    return model.addListener(deepDataAndEvents, triggerRoute);
   };
-  da.prototype.unsubscribe = function(ea) {
-    this.$MercuryThreads5.unsubscribe(ea);
+  /**
+   * @param {?} target
+   * @return {undefined}
+   */
+  object.prototype.unsubscribe = function(target) {
+    this.$MercuryThreads5.unsubscribe(target);
   };
-  da.prototype.getCanonicalThreadToParticipant = function(ea, fa, ga, ha) {
-    var ia = p.getThreadIDFromParticipantID(ea),
-      ja = this.$MercuryThreads5.getResource(ia);
-    if (typeof ja == 'undefined') {
-      ja = this.createNewLocalThread(ia, [this.$MercuryThreads3, ea], fa);
-      !ha && this.$MercuryThreads1.fetchThreadData([ia], ga);
+  /**
+   * @param {string} string
+   * @param {number} deepDataAndEvents
+   * @param {?} next
+   * @param {?} dataAndEvents
+   * @return {?}
+   */
+  object.prototype.getCanonicalThreadToParticipant = function(string, deepDataAndEvents, next, dataAndEvents) {
+    var ast = helper.getThreadIDFromParticipantID(string);
+    var ret = this.$MercuryThreads5.getResource(ast);
+    if (typeof ret == "undefined") {
+      ret = this.createNewLocalThread(ast, [this.$MercuryThreads3, string], deepDataAndEvents);
+      if (!dataAndEvents) {
+        this.$MercuryThreads1.fetchThreadData([ast], next);
+      }
     }
-    return ja;
+    return ret;
   };
-  da.prototype.createNewLocalThread = function(ea, fa, ga) {
-    var ha = this.$MercuryThreads5.getResource(ea);
-    if (!ha) {
-      var ia = p.tokenize(ea),
-        ja = ia.type,
-        ka = ia.value;
-      ha = new h({
-        thread_id: ea,
-        last_action_id: null,
-        participants: Array.from(fa),
-        name: null,
-        snippet: '',
-        snippet_has_attachment: false,
-        snippet_sender: null,
-        unread_count: ga ? ga : 0,
-        message_count: 0,
-        image_src: null,
-        timestamp_absolute: null,
-        timestamp_relative: null,
-        timestamp: null,
-        canonical_fbid: ja === 'user' ? ka : null,
-        is_canonical_user: ja == 'user',
-        is_canonical: this.$MercuryThreadsc(fa),
-        is_subscribed: true,
-        root_message_threading_id: null,
-        folder: v.INBOX,
-        is_archived: false,
-        mode: u.TITAN_ORIGINATED
+  /**
+   * @param {string} input
+   * @param {Array} node
+   * @param {number} deepDataAndEvents
+   * @return {?}
+   */
+  object.prototype.createNewLocalThread = function(input, node, deepDataAndEvents) {
+    var b = this.$MercuryThreads5.getResource(input);
+    if (!b) {
+      var e = helper.tokenize(input);
+      var type = e.type;
+      var key = e.value;
+      b = new Cookie({
+        thread_id : input,
+        last_action_id : null,
+        participants : Array.from(node),
+        name : null,
+        snippet : "",
+        snippet_has_attachment : false,
+        snippet_sender : null,
+        unread_count : deepDataAndEvents ? deepDataAndEvents : 0,
+        message_count : 0,
+        image_src : null,
+        timestamp_absolute : null,
+        timestamp_relative : null,
+        timestamp : null,
+        canonical_fbid : type === "user" ? key : null,
+        is_canonical_user : type == "user",
+        is_canonical : this.$MercuryThreadsc(node),
+        is_subscribed : true,
+        root_message_threading_id : null,
+        folder : folder.INBOX,
+        is_archived : false,
+        mode : mode.TITAN_ORIGINATED
       });
-      this.$MercuryThreads5.setResource(ea, ha);
+      this.$MercuryThreads5.setResource(input, b);
     }
-    return ha;
+    return b;
   };
-  da.prototype.isEmptyLocalThread = function(ea) {
-    var fa = this.$MercuryThreads5.getResource(ea);
-    if (!fa) return false;
-    var ga = p.tokenize(ea),
-      ha = ga.type;
-    return ha == 'root' && !fa.timestamp;
-  };
-  da.prototype.isNewEmptyLocalThread = function(ea) {
-    if (!this.isEmptyLocalThread(ea)) return false;
-    var fa = this.$MercuryThreads5.getResource(ea);
-    return !!fa.participants && fa.participants.length === 0;
-  };
-  da.prototype.canReply = function(ea) {
-    var fa = this.$MercuryThreads5.getResource(ea);
-    return !!(fa && fa.is_subscribed && fa.mode != u.OBJECT_ORIGINATED && !fa.has_email_participant && !fa.read_only && (fa.recipients_loadable || fa.recipients_loadable === (void 0)));
-  };
-  da.prototype.$MercuryThreadsd = function(ea, fa) {
-    if (!ea || !ea.length) return;
-    var ga = new k(),
-      ha = new k(),
-      ia = new k(),
-      ja = [];
-    for (var ka = 0; ka < ea.length; ka++) {
-      var la = ea[ka];
-      if (la.is_forward) continue;
-      var ma = la.action_type;
-      if (ma == l.LOG_MESSAGE && la.log_message_type == q.SERVER_ERROR) continue;
-      var na = !!(la.sync_id || la.action_id),
-        oa = la.thread_id;
-      m.isThreadID(oa);
-      var pa = this.$MercuryThreads5.getResource(oa);
-      if (!pa && !na && ma == l.USER_GENERATED_MESSAGE) {
-        pa = this.$MercuryThreadse(la);
-        this.$MercuryThreads5.setResource(oa, pa);
-      }
-      if (!pa) continue;
-      if (ma == l.LOG_MESSAGE || ma == l.USER_GENERATED_MESSAGE) na = !fa;
-      if (pa.server_timestamp && la.timestamp <= pa.server_timestamp && na) continue;
-      if (!ia.has(oa)) ia.set(oa, Object.assign({}, pa));
-      this.$MercuryThreadsf(ia.get(oa), la, fa);
-      if (ma == l.USER_GENERATED_MESSAGE) ga.set(oa, la);
-      if (ma == l.USER_GENERATED_MESSAGE || ma == l.LOG_MESSAGE || ma == l.SEND_MESSAGE)
-        if (la && la.timestamp && (!ha.has(oa) || la.timestamp > ha.get(oa).timestamp)) ha.set(oa, la);
+  /**
+   * @param {string} context
+   * @return {?}
+   */
+  object.prototype.isEmptyLocalThread = function(context) {
+    var res = this.$MercuryThreads5.getResource(context);
+    if (!res) {
+      return false;
     }
-    ia.forEach(function(qa, ra) {
-      var sa = ga.get(ra);
-      if (sa) this.$MercuryThreadsg(qa, sa);
-      var ta = ha.get(ra),
-        ua = qa.timestamp;
-      if (ta) {
-        if (ta.timestamp > ua) Object.assign(qa, {
-          timestamp_absolute: ta.timestamp_absolute,
-          timestamp_relative: ta.timestamp_relative,
-          timestamp: ta.timestamp
-        });
-        var va = qa.server_timestamp;
-        if (!fa && ta.timestamp > va) qa.server_timestamp = ta.timestamp;
+    var event = helper.tokenize(context);
+    var type = event.type;
+    return type == "root" && !res.timestamp;
+  };
+  /**
+   * @param {string} context
+   * @return {?}
+   */
+  object.prototype.isNewEmptyLocalThread = function(context) {
+    if (!this.isEmptyLocalThread(context)) {
+      return false;
+    }
+    var data = this.$MercuryThreads5.getResource(context);
+    return!!data.participants && data.participants.length === 0;
+  };
+  /**
+   * @param {?} _super
+   * @return {?}
+   */
+  object.prototype.canReply = function(_super) {
+    var that = this.$MercuryThreads5.getResource(_super);
+    return!!(that && (that.is_subscribed && (that.mode != mode.OBJECT_ORIGINATED && (!that.has_email_participant && (!that.read_only && (that.recipients_loadable || that.recipients_loadable === void 0))))));
+  };
+  /**
+   * @param {Array} codeSegments
+   * @param {boolean} deepDataAndEvents
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsd = function(codeSegments, deepDataAndEvents) {
+    if (!codeSegments || !codeSegments.length) {
+      return;
+    }
+    var c = new Collection;
+    var collection = new Collection;
+    var map = new Collection;
+    /** @type {Array} */
+    var yels = [];
+    /** @type {number} */
+    var i = 0;
+    for (;i < codeSegments.length;i++) {
+      var self = codeSegments[i];
+      if (self.is_forward) {
+        continue;
       }
-      var wa = new h(qa);
-      this.$MercuryThreads5.setResource(ra, wa);
-      ja.push(r.obfuscateThread(wa));
+      var len = self.action_type;
+      if (len == fruits.LOG_MESSAGE && self.log_message_type == e.SERVER_ERROR) {
+        continue;
+      }
+      /** @type {boolean} */
+      var server_timestamp = !!(self.sync_id || self.action_id);
+      var key = self.thread_id;
+      jQuery.isThreadID(key);
+      var value = this.$MercuryThreads5.getResource(key);
+      if (!value && (!server_timestamp && len == fruits.USER_GENERATED_MESSAGE)) {
+        value = this.$MercuryThreadse(self);
+        this.$MercuryThreads5.setResource(key, value);
+      }
+      if (!value) {
+        continue;
+      }
+      if (len == fruits.LOG_MESSAGE || len == fruits.USER_GENERATED_MESSAGE) {
+        /** @type {boolean} */
+        server_timestamp = !deepDataAndEvents;
+      }
+      if (value.server_timestamp && (self.timestamp <= value.server_timestamp && server_timestamp)) {
+        continue;
+      }
+      if (!map.has(key)) {
+        map.set(key, Object.assign({}, value));
+      }
+      this.$MercuryThreadsf(map.get(key), self, deepDataAndEvents);
+      if (len == fruits.USER_GENERATED_MESSAGE) {
+        c.set(key, self);
+      }
+      if (len == fruits.USER_GENERATED_MESSAGE || (len == fruits.LOG_MESSAGE || len == fruits.SEND_MESSAGE)) {
+        if (self && (self.timestamp && (!collection.has(key) || self.timestamp > collection.get(key).timestamp))) {
+          collection.set(key, self);
+        }
+      }
+    }
+    map.forEach(function(self, key) {
+      var camelKey = c.get(key);
+      if (camelKey) {
+        this.$MercuryThreadsg(self, camelKey);
+      }
+      var p = collection.get(key);
+      var h = self.timestamp;
+      if (p) {
+        if (p.timestamp > h) {
+          Object.assign(self, {
+            timestamp_absolute : p.timestamp_absolute,
+            timestamp_relative : p.timestamp_relative,
+            timestamp : p.timestamp
+          });
+        }
+        var rate = self.server_timestamp;
+        if (!deepDataAndEvents && p.timestamp > rate) {
+          self.server_timestamp = p.timestamp;
+        }
+      }
+      var e = new Cookie(self);
+      this.$MercuryThreads5.setResource(key, e);
+      yels.push(rule.obfuscateThread(e));
     }.bind(this), this);
-    ja.length && ca.debug('threads_updated', {
-      threads: ja
-    });
-  };
-  da.prototype.$MercuryThreadsf = function(ea, fa, ga) {
-    var ha = fa.action_type;
-    if (ha == l.USER_GENERATED_MESSAGE || ha == l.LOG_MESSAGE) {
-      fa.is_unread && ea.unread_count++;
-      ea.message_count++;
-      ea.is_archived = false;
+    if (yels.length) {
+      utils.debug("threads_updated", {
+        threads : yels
+      });
     }
-    switch (ha) {
-      case l.DELETE_THREAD:
-        ea.message_count = 0;
-        this.$MercuryThreadsh(fa.thread_id);
+  };
+  /**
+   * @param {Object} item
+   * @param {Object} self
+   * @param {boolean} deepDataAndEvents
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsf = function(item, self, deepDataAndEvents) {
+    var len = self.action_type;
+    if (len == fruits.USER_GENERATED_MESSAGE || len == fruits.LOG_MESSAGE) {
+      if (self.is_unread) {
+        item.unread_count++;
+      }
+      item.message_count++;
+      /** @type {boolean} */
+      item.is_archived = false;
+    }
+    switch(len) {
+      case fruits.DELETE_THREAD:
+        /** @type {number} */
+        item.message_count = 0;
+        this.$MercuryThreadsh(self.thread_id);
         break;
-      case l.USER_GENERATED_MESSAGE:
-        if (ea.last_read_timestamp >= fa.timestamp) this.$MercuryThreadsi(ea, fa, true);
-        this.$MercuryThreadsj(ea, fa.author);
-        break;
-      case l.SEND_MESSAGE:
-        var ia = fa.log_message_type;
-        if (ia == q.THREAD_IMAGE) ea.image_src = fa.log_message_data.image ? fa.log_message_data.image.preview_url : null;
-        ea.snippet_attachments = fa.attachments;
-        break;
-      case l.LOG_MESSAGE:
-        var ia = fa.log_message_type;
-        if (ia == q.SUBSCRIBE) {
-          this.$MercuryThreadsk(ea, fa.log_message_data.added_participants);
-        } else if (ia == q.UNSUBSCRIBE) {
-          this.$MercuryThreadsl(ea, fa.log_message_data.removed_participants);
-        } else if (ia == q.THREAD_IMAGE) {
-          if (!ga) ea.image_src = fa.log_message_data.image ? fa.log_message_data.image.preview_url : null;
-        } else if (ia == q.THREAD_NAME) ea.name = fa.log_message_data.name;
-        break;
-      case l.CHANGE_READ_STATUS:
-        var ja = this.$MercuryThreadsi(ea, fa, fa.mark_as_read);
-        if (ja && fa.timestamp) ea.last_read_timestamp = fa.timestamp;
-        if (ja && ga) this.$MercuryThreads1.changeThreadReadStatus(ea.thread_id, fa.mark_as_read, fa.source);
-        break;
-      case l.CLEAR_CHAT:
-        this.$MercuryThreadsm(ea, fa.clear_time);
-        break;
-      case l.CHANGE_ARCHIVED_STATUS:
-        if (ea.is_archived != fa.archived) {
-          ea.is_archived = fa.archived;
-          this.$MercuryThreadsn(fa.thread_id);
+      case fruits.USER_GENERATED_MESSAGE:
+        if (item.last_read_timestamp >= self.timestamp) {
+          this.$MercuryThreadsi(item, self, true);
         }
+        this.$MercuryThreadsj(item, self.author);
         break;
-      case l.CHANGE_FOLDER:
-        if (ea.folder != fa.new_folder) {
-          ea.folder = fa.new_folder;
-          this.$MercuryThreadsn(fa.thread_id);
+      case fruits.SEND_MESSAGE:
+        var el = self.log_message_type;
+        if (el == e.THREAD_IMAGE) {
+          item.image_src = self.log_message_data.image ? self.log_message_data.image.preview_url : null;
         }
+        item.snippet_attachments = self.attachments;
         break;
-      case l.DELETE_MESSAGES:
-        if (ga) {
-          ea.snippet = '...';
-          ea.snippet_has_attachment = false;
-          ea.snippet_attachments = null;
-          ea.snippet_sender = null;
-          ea.is_forwarded_snippet = false;
-          this.$MercuryThreadsn(fa.thread_id);
-        } else if (fa.message_ids) ea.message_count = ea.message_count - fa.message_ids.length;
-        break;
-      case l.CHANGE_MUTE_SETTINGS:
-        if (fa.mute_settings !== (void 0)) {
-          var ka = this.$MercuryThreads0 + '@facebook.com';
-          if (ea.mute_settings) {
-            if (fa.mute_settings) {
-              var la = {};
-              la[ka] = fa.mute_settings;
-              ea.mute_settings = Object.assign({}, ea.mute_settings, la);
+      case fruits.LOG_MESSAGE:
+        el = self.log_message_type;
+        if (el == e.SUBSCRIBE) {
+          this.$MercuryThreadsk(item, self.log_message_data.added_participants);
+        } else {
+          if (el == e.UNSUBSCRIBE) {
+            this.$MercuryThreadsl(item, self.log_message_data.removed_participants);
+          } else {
+            if (el == e.THREAD_IMAGE) {
+              if (!deepDataAndEvents) {
+                item.image_src = self.log_message_data.image ? self.log_message_data.image.preview_url : null;
+              }
             } else {
-              ea.mute_settings = Object.assign({}, ea.mute_settings);
-              delete ea.mute_settings[ka];
+              if (el == e.THREAD_NAME) {
+                item.name = self.log_message_data.name;
+              }
             }
-            this.$MercuryThreadsn(ea.thread_id);
           }
         }
         break;
-      case l.ADD_PARTICIPANTS:
-        this.$MercuryThreadsk(ea, fa.participants);
-        this.$MercuryThreadsn(ea.thread_id);
+      case fruits.CHANGE_READ_STATUS:
+        var v = this.$MercuryThreadsi(item, self, self.mark_as_read);
+        if (v && self.timestamp) {
+          item.last_read_timestamp = self.timestamp;
+        }
+        if (v && deepDataAndEvents) {
+          this.$MercuryThreads1.changeThreadReadStatus(item.thread_id, self.mark_as_read, self.source);
+        }
+        break;
+      case fruits.CLEAR_CHAT:
+        this.$MercuryThreadsm(item, self.clear_time);
+        break;
+      case fruits.CHANGE_ARCHIVED_STATUS:
+        if (item.is_archived != self.archived) {
+          item.is_archived = self.archived;
+          this.$MercuryThreadsn(self.thread_id);
+        }
+        break;
+      case fruits.CHANGE_FOLDER:
+        if (item.folder != self.new_folder) {
+          item.folder = self.new_folder;
+          this.$MercuryThreadsn(self.thread_id);
+        }
+        break;
+      case fruits.DELETE_MESSAGES:
+        if (deepDataAndEvents) {
+          /** @type {string} */
+          item.snippet = "...";
+          /** @type {boolean} */
+          item.snippet_has_attachment = false;
+          /** @type {null} */
+          item.snippet_attachments = null;
+          /** @type {null} */
+          item.snippet_sender = null;
+          /** @type {boolean} */
+          item.is_forwarded_snippet = false;
+          this.$MercuryThreadsn(self.thread_id);
+        } else {
+          if (self.message_ids) {
+            /** @type {number} */
+            item.message_count = item.message_count - self.message_ids.length;
+          }
+        }
+        break;
+      case fruits.CHANGE_MUTE_SETTINGS:
+        if (self.mute_settings !== void 0) {
+          /** @type {string} */
+          var prop = this.$MercuryThreads0 + "@facebook.com";
+          if (item.mute_settings) {
+            if (self.mute_settings) {
+              var originalEvent = {};
+              originalEvent[prop] = self.mute_settings;
+              item.mute_settings = Object.assign({}, item.mute_settings, originalEvent);
+            } else {
+              item.mute_settings = Object.assign({}, item.mute_settings);
+              delete item.mute_settings[prop];
+            }
+            this.$MercuryThreadsn(item.thread_id);
+          }
+        }
+        break;
+      case fruits.ADD_PARTICIPANTS:
+        this.$MercuryThreadsk(item, self.participants);
+        this.$MercuryThreadsn(item.thread_id);
         break;
     }
   };
-  da.prototype.$MercuryThreadse = function(ea) {
-    var fa = p.tokenize(ea.thread_id),
-      ga = fa.type,
-      ha = fa.value,
-      ia = this.$MercuryThreadsc(ea.specific_to_list);
-    return new h({
-      thread_id: ea.thread_id,
-      last_action_id: null,
-      participants: ea.specific_to_list,
-      name: null,
-      snippet: ea.body,
-      snippet_has_attachment: false,
-      snippet_attachments: [],
-      snippet_sender: ea.author,
-      unread_count: 0,
-      message_count: 0,
-      image_src: null,
-      timestamp_absolute: ea.timestamp_absolute,
-      timestamp_relative: ea.timestamp_relative,
-      timestamp: ea.timestamp,
-      canonical_fbid: ga === 'user' ? ha : null,
-      is_canonical_user: ga === 'user',
-      is_canonical: ia,
-      is_subscribed: true,
-      root_message_threading_id: ea.message_id,
-      folder: v.INBOX,
-      is_archived: false,
-      mode: u.TITAN_ORIGINATED
+  /**
+   * @param {Object} params
+   * @return {?}
+   */
+  object.prototype.$MercuryThreadse = function(params) {
+    var event = helper.tokenize(params.thread_id);
+    var type = event.type;
+    var content = event.value;
+    var is_canonical = this.$MercuryThreadsc(params.specific_to_list);
+    return new Cookie({
+      thread_id : params.thread_id,
+      last_action_id : null,
+      participants : params.specific_to_list,
+      name : null,
+      snippet : params.body,
+      snippet_has_attachment : false,
+      snippet_attachments : [],
+      snippet_sender : params.author,
+      unread_count : 0,
+      message_count : 0,
+      image_src : null,
+      timestamp_absolute : params.timestamp_absolute,
+      timestamp_relative : params.timestamp_relative,
+      timestamp : params.timestamp,
+      canonical_fbid : type === "user" ? content : null,
+      is_canonical_user : type === "user",
+      is_canonical : is_canonical,
+      is_subscribed : true,
+      root_message_threading_id : params.message_id,
+      folder : folder.INBOX,
+      is_archived : false,
+      mode : mode.TITAN_ORIGINATED
     });
   };
-  da.prototype.$MercuryThreadsi = function(ea, fa, ga) {
-    if (fa.timestamp) this.$MercuryThreadso(ea.thread_id, ga, fa.timestamp);
-    if (!ea || !ea.thread_id) return false;
-    if (!ea.timestamp) {
-      this.$MercuryThreads6.add(ea.thread_id);
+  /**
+   * @param {Object} parent
+   * @param {Object} event
+   * @param {boolean} deepDataAndEvents
+   * @return {?}
+   */
+  object.prototype.$MercuryThreadsi = function(parent, event, deepDataAndEvents) {
+    if (event.timestamp) {
+      this.$MercuryThreadso(parent.thread_id, deepDataAndEvents, event.timestamp);
+    }
+    if (!parent || !parent.thread_id) {
       return false;
     }
-    var ha = !ea.unread_count;
-    if (ga == ha) return false;
-    ea.unread_count = ga ? 0 : 1;
-    this.$MercuryThreadsn(ea.thread_id);
+    if (!parent.timestamp) {
+      this.$MercuryThreads6.add(parent.thread_id);
+      return false;
+    }
+    /** @type {boolean} */
+    var ha = !parent.unread_count;
+    if (deepDataAndEvents == ha) {
+      return false;
+    }
+    /** @type {number} */
+    parent.unread_count = deepDataAndEvents ? 0 : 1;
+    this.$MercuryThreadsn(parent.thread_id);
     return true;
   };
-  da.prototype.$MercuryThreadsp = function(ea) {
-    var fa = this.$MercuryThreads5.getAllResources();
-    for (var ga in fa)
-      if (fa.hasOwnProperty(ga)) {
-        var ha = fa[ga];
-        if (ha.folder == ea) {
-          this.$MercuryThreads5.setResource(ga, h.setProperty(ha, 'unread_count', 0));
-          this.$MercuryThreadsn(ga);
+  /**
+   * @param {?} dataAndEvents
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsp = function(dataAndEvents) {
+    var types = this.$MercuryThreads5.getAllResources();
+    var type;
+    for (type in types) {
+      if (types.hasOwnProperty(type)) {
+        var name = types[type];
+        if (name.folder == dataAndEvents) {
+          this.$MercuryThreads5.setResource(type, Cookie.setProperty(name, "unread_count", 0));
+          this.$MercuryThreadsn(type);
         }
       }
+    }
   };
-  da.prototype.$MercuryThreadsm = function(ea, fa) {
-    if (!ea || ea.chat_clear_time === fa) return;
-    ea.chat_clear_time = fa;
-    this.$MercuryThreads2.reorderedMessages(ea.thread_id);
+  /**
+   * @param {Object} message
+   * @param {?} follow
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsm = function(message, follow) {
+    if (!message || message.chat_clear_time === follow) {
+      return;
+    }
+    message.chat_clear_time = follow;
+    this.$MercuryThreads2.reorderedMessages(message.thread_id);
   };
-  da.prototype.$MercuryThreadsk = function(ea, fa) {
-    var ga = new y(ea.participants);
-    ea.participants = Array.from(ea.participants);
-    fa.forEach(function(ha) {
-      if (!ga.has(ha)) {
-        ea.participants.push(ha);
-        if (ha === this.$MercuryThreads3) ea.is_subscribed = true;
+  /**
+   * @param {Object} self
+   * @param {Array} failures
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsk = function(self, failures) {
+    var item = new Hash(self.participants);
+    self.participants = Array.from(self.participants);
+    failures.forEach(function(arg) {
+      if (!item.has(arg)) {
+        self.participants.push(arg);
+        if (arg === this.$MercuryThreads3) {
+          /** @type {boolean} */
+          self.is_subscribed = true;
+        }
       }
     }.bind(this));
   };
-  da.prototype.$MercuryThreadsl = function(ea, fa) {
-    var ga = new y(fa);
-    ea.participants = ea.participants.filter(function(ha) {
-      return !ga.has(ha);
+  /**
+   * @param {Object} self
+   * @param {?} object
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsl = function(self, object) {
+    var _ = new Hash(object);
+    self.participants = self.participants.filter(function(protoProps) {
+      return!_.has(protoProps);
     });
-    if (ga.has(this.$MercuryThreads3)) ea.is_subscribed = false;
-  };
-  da.prototype.$MercuryThreadsj = function(ea, fa) {
-    if (ea.participants[0] != fa) {
-      ea.participants = ea.participants.filter(function(ga) {
-        return ga != fa;
-      });
-      ea.participants.unshift(fa);
+    if (_.has(this.$MercuryThreads3)) {
+      /** @type {boolean} */
+      self.is_subscribed = false;
     }
   };
-  da.prototype.$MercuryThreadsg = function(ea, fa) {
-    var ga = fa.body,
-      ha = fa.subject,
-      ia = '';
-    if (ha) {
-      ha = ha.toLowerCase();
-      if (ga.slice(0, ha.length).toLowerCase() == ha) {
-        ia = ga;
-      } else if (ga) {
-        ia = ha + ' \u00B7 ' + ga;
-      } else ia = ha;
-    } else ia = ga;
-    ea.snippet = ia;
-    ea.snippet_has_attachment = fa.has_attachment;
-    if (fa.raw_attachments && fa.raw_attachments.length > 0) {
-      var ja = n.convertRaw(fa.raw_attachments);
-      ea.snippet_attachments = ja;
-    } else ea.snippet_attachments = fa.attachments;
-    ea.is_forwarded_snippet = !!fa.forward_count;
-    ea.snippet_sender = fa.author;
+  /**
+   * @param {Object} self
+   * @param {number} suite
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsj = function(self, suite) {
+    if (self.participants[0] != suite) {
+      self.participants = self.participants.filter(function(dataAndEvents) {
+        return dataAndEvents != suite;
+      });
+      self.participants.unshift(suite);
+    }
   };
-  da.prototype.$MercuryThreadsc = function(ea) {
-    return ea.filter(function(fa) {
-      return fa != this.$MercuryThreads3;
+  /**
+   * @param {Object} item
+   * @param {Object} result
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsg = function(item, result) {
+    var value = result.body;
+    var name = result.subject;
+    /** @type {string} */
+    var data = "";
+    if (name) {
+      name = name.toLowerCase();
+      if (value.slice(0, name.length).toLowerCase() == name) {
+        data = value;
+      } else {
+        if (value) {
+          /** @type {string} */
+          data = name + " \u00b7 " + value;
+        } else {
+          data = name;
+        }
+      }
+    } else {
+      data = value;
+    }
+    item.snippet = data;
+    item.snippet_has_attachment = result.has_attachment;
+    if (result.raw_attachments && result.raw_attachments.length > 0) {
+      var source = $location.convertRaw(result.raw_attachments);
+      item.snippet_attachments = source;
+    } else {
+      item.snippet_attachments = result.attachments;
+    }
+    /** @type {boolean} */
+    item.is_forwarded_snippet = !!result.forward_count;
+    item.snippet_sender = result.author;
+  };
+  /**
+   * @param {Array} dataAndEvents
+   * @return {?}
+   */
+  object.prototype.$MercuryThreadsc = function(dataAndEvents) {
+    return dataAndEvents.filter(function(dataAndEvents) {
+      return dataAndEvents != this.$MercuryThreads3;
     }.bind(this)).length <= 1;
   };
-  da.prototype.$MercuryThreadsa = function() {
-    this.$MercuryThreads1.subscribe('update-threads', function(ea, fa) {
-      var ga = (fa.actions || []).filter(function(ha) {
-        return ha.thread_id;
+  /**
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsa = function() {
+    this.$MercuryThreads1.subscribe("update-threads", function(dataAndEvents, data) {
+      var r20 = (data.actions || []).filter(function(dataAndEvents) {
+        return dataAndEvents.thread_id;
       });
-      if (fa.threads && fa.payload_source == s.SERVER_FETCH_THREAD_INFO) fa.threads.forEach(function(ha) {
-        var ia = ha.thread_id;
-        if (this.$MercuryThreads6.has(ia)) {
-          this.$MercuryThreads6["delete"](ia);
-          if (ha.unread_count) this.$MercuryThreads1.changeThreadReadStatus(ha.thread_id, true);
-        }
-      }.bind(this));
-      this.$MercuryThreadsq(fa.threads);
-      this.$MercuryThreadsd(ga, fa.from_client);
-      fa.threads && fa.threads.forEach(function(ha) {
-        this.$MercuryThreadsn(ha.thread_id);
-      }.bind(this));
-      if (fa.global_actions) fa.global_actions.forEach(function(ha) {
-        if (ha.action_type == o.MARK_ALL_READ) this.$MercuryThreadsp(ha.folder);
-      }.bind(this));
+      if (data.threads && data.payload_source == buf.SERVER_FETCH_THREAD_INFO) {
+        data.threads.forEach(function(dataAndEvents) {
+          var toDelete = dataAndEvents.thread_id;
+          if (this.$MercuryThreads6.has(toDelete)) {
+            this.$MercuryThreads6["delete"](toDelete);
+            if (dataAndEvents.unread_count) {
+              this.$MercuryThreads1.changeThreadReadStatus(dataAndEvents.thread_id, true);
+            }
+          }
+        }.bind(this));
+      }
+      this.$MercuryThreadsq(data.threads);
+      this.$MercuryThreadsd(r20, data.from_client);
+      if (data.threads) {
+        data.threads.forEach(function(dataAndEvents) {
+          this.$MercuryThreadsn(dataAndEvents.thread_id);
+        }.bind(this));
+      }
+      if (data.global_actions) {
+        data.global_actions.forEach(function(node) {
+          if (node.action_type == contestant.MARK_ALL_READ) {
+            this.$MercuryThreadsp(node.folder);
+          }
+        }.bind(this));
+      }
       if (this.$MercuryThreads4) {
+        /** @type {boolean} */
         this.$MercuryThreads4 = false;
-        ba.emit('change');
+        model.emit("change");
       }
     }.bind(this));
   };
-  da.prototype.$MercuryThreadsq = function(ea) {
-    if (!ea || !ea.length) return;
-    var fa = {},
-      ga = [];
-    ea.forEach(function(ha) {
-      var ia = new h(ha);
-      fa[ha.thread_id] = ia;
-      ga.push(r.obfuscateThread(ia));
+  /**
+   * @param {Array} assertions
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsq = function(assertions) {
+    if (!assertions || !assertions.length) {
+      return;
+    }
+    var imports = {};
+    /** @type {Array} */
+    var rulesets = [];
+    assertions.forEach(function(key) {
+      var paths = new Cookie(key);
+      imports[key.thread_id] = paths;
+      rulesets.push(rule.obfuscateThread(paths));
     });
-    ga.length && ca.debug('threads_added', {
-      threads: ga
-    });
-    this.$MercuryThreads5.addResourcesAndExecute(fa);
+    if (rulesets.length) {
+      utils.debug("threads_added", {
+        threads : rulesets
+      });
+    }
+    this.$MercuryThreads5.addResourcesAndExecute(imports);
   };
-  da.prototype.$MercuryThreadsn = function(ea) {
+  /**
+   * @param {?} types
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsn = function(types) {
+    /** @type {boolean} */
     this.$MercuryThreads4 = true;
-    this.$MercuryThreads2.updatedThread(ea);
+    this.$MercuryThreads2.updatedThread(types);
   };
-  da.prototype.$MercuryThreadsh = function(ea) {
+  /**
+   * @param {?} until
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadsh = function(until) {
+    /** @type {boolean} */
     this.$MercuryThreads4 = true;
-    this.$MercuryThreads2.deletedThread(ea);
+    this.$MercuryThreads2.deletedThread(until);
   };
-  da.prototype.$MercuryThreadso = function(ea, fa, ga) {
+  /**
+   * @param {?} dataName
+   * @param {boolean} deepDataAndEvents
+   * @param {boolean} timestamp
+   * @return {undefined}
+   */
+  object.prototype.$MercuryThreadso = function(dataName, deepDataAndEvents, timestamp) {
+    /** @type {boolean} */
     this.$MercuryThreads4 = true;
-    this.$MercuryThreads2.changedThreadReadState(ea, fa, ga);
+    this.$MercuryThreads2.changedThreadReadState(dataName, deepDataAndEvents, timestamp);
   };
-  da.prototype.dumpResourcesDO_NOT_USE = function() {
+  /**
+   * @return {?}
+   */
+  object.prototype.dumpResourcesDO_NOT_USE = function() {
     return this.$MercuryThreads5.dumpResources();
   };
-  Object.assign(da, t);
-  w.registerCallback('mercury-threads', function() {
-    var ea = {};
-    ea.threads = {};
-    var fa = da._getInstances();
-    for (var ga in fa) ea.threads[ga] = fa[ga].dumpResourcesDO_NOT_USE();
-    return ea;
+  Object.assign(object, map);
+  moduleInfo.registerCallback("mercury-threads", function() {
+    var self = {};
+    self.threads = {};
+    var map = object._getInstances();
+    var letter;
+    for (letter in map) {
+      self.threads[letter] = map[letter].dumpResourcesDO_NOT_USE();
+    }
+    return self;
   });
-  e.exports = da;
+  /** @type {function (?): undefined} */
+  module.exports = object;
 }, null);
-__d("WebMessengerPermalinkConstants", ["URI"], function(a, b, c, d, e, f, g) {
-  var h = {
-    ARCHIVED_PATH: '/messages/archived',
-    BASE_PATH: '/messages',
-    OTHER_PATH: '/messages/other',
-    SPAM_PATH: '/messages/spam',
-    COMPOSE_POSTFIX_PATH: '/new',
-    SEARCH_POSTFIX_PATH: '/search',
-    TID_POSTFIX_PARTIAL_PATH: '/conversation-',
-    overriddenVanities: '(archived|other|spam|new|search|conversation-.*)',
-    getURIPathForThreadID: function(i, j) {
-      return (j || h.BASE_PATH) + h.TID_POSTFIX_PARTIAL_PATH + g.encodeComponent(g.encodeComponent(i));
+__d("WebMessengerPermalinkConstants", ["URI"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, gl) {
+  var JsDiff = {
+    ARCHIVED_PATH : "/messages/archived",
+    BASE_PATH : "/messages",
+    OTHER_PATH : "/messages/other",
+    SPAM_PATH : "/messages/spam",
+    COMPOSE_POSTFIX_PATH : "/new",
+    SEARCH_POSTFIX_PATH : "/search",
+    TID_POSTFIX_PARTIAL_PATH : "/conversation-",
+    overriddenVanities : "(archived|other|spam|new|search|conversation-.*)",
+    /**
+     * @param {?} program
+     * @param {string} dataAndEvents
+     * @return {?}
+     */
+    getURIPathForThreadID : function(program, dataAndEvents) {
+      return(dataAndEvents || JsDiff.BASE_PATH) + JsDiff.TID_POSTFIX_PARTIAL_PATH + gl.encodeComponent(gl.encodeComponent(program));
     },
-    getThreadIDFromURI: function(i) {
-      var j = i.getPath().match(h.BASE_PATH + '(/[^/]*)*' + h.TID_POSTFIX_PARTIAL_PATH + '([^/]+)');
-      if (j) {
-        var k = g.decodeComponent(g.decodeComponent(j[2]));
-        return k;
+    /**
+     * @param {?} iteration
+     * @return {?}
+     */
+    getThreadIDFromURI : function(iteration) {
+      var oldClearColor = iteration.getPath().match(JsDiff.BASE_PATH + "(/[^/]*)*" + JsDiff.TID_POSTFIX_PARTIAL_PATH + "([^/]+)");
+      if (oldClearColor) {
+        var getThreadIDFromURI = gl.decodeComponent(gl.decodeComponent(oldClearColor[2]));
+        return getThreadIDFromURI;
       }
     },
-    getURIPathForIDOrVanity: function(i, j) {
-      if (i.match('^' + h.overriddenVanities + '$')) i = '.' + i;
-      return (j || h.BASE_PATH) + '/' + i;
+    /**
+     * @param {string} moduleName
+     * @param {string} input
+     * @return {?}
+     */
+    getURIPathForIDOrVanity : function(moduleName, input) {
+      if (moduleName.match("^" + JsDiff.overriddenVanities + "$")) {
+        /** @type {string} */
+        moduleName = "." + moduleName;
+      }
+      return(input || JsDiff.BASE_PATH) + "/" + moduleName;
     },
-    getUserIDOrVanity: function(i) {
-      var j = i.match(h.BASE_PATH + '.*/([^/]+)/?$'),
-        k = j && j[1],
-        l = h.overriddenVanities;
-      if (!k || k.match('^' + l + '$')) {
+    /**
+     * @param {string} optionsString
+     * @return {?}
+     */
+    getUserIDOrVanity : function(optionsString) {
+      var units = optionsString.match(JsDiff.BASE_PATH + ".*/([^/]+)/?$");
+      var moduleName = units && units[1];
+      /** @type {string} */
+      var ele = JsDiff.overriddenVanities;
+      if (!moduleName || moduleName.match("^" + ele + "$")) {
         return false;
-      } else if (k.match('^\\.' + l + '$')) {
-        return k.substr(1);
-      } else return k;
+      } else {
+        if (moduleName.match("^\\." + ele + "$")) {
+          return moduleName.substr(1);
+        } else {
+          return moduleName;
+        }
+      }
     }
   };
-  e.exports = h;
+  module.exports = JsDiff;
 }, null);
-__d("ChatTypeaheadConstants", [], function(a, b, c, d, e, f) {
-  var g = {
-    USER_TYPE: 'user',
-    THREAD_TYPE: 'thread',
-    FRIEND_TYPE: 'friend',
-    NON_FRIEND_TYPE: 'non_friend',
-    FB4C_TYPE: 'fb4c',
-    PAGE_TYPE: 'page',
-    HEADER_TYPE: 'header'
+__d("ChatTypeaheadConstants", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  var JsDiff = {
+    USER_TYPE : "user",
+    THREAD_TYPE : "thread",
+    FRIEND_TYPE : "friend",
+    NON_FRIEND_TYPE : "non_friend",
+    FB4C_TYPE : "fb4c",
+    PAGE_TYPE : "page",
+    HEADER_TYPE : "header"
   };
-  e.exports = g;
+  module.exports = JsDiff;
 }, null);
-__d("ChatOpenTab", ["Event", "requireWeak", "ChatWelcomeMessage", "ContextualThing", "DOM", "csx", "cx", "MercuryIDs", "Parent", "curry"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) {
-  var q = null;
-  h(['ChatApp'], function(aa) {
-    return q = aa;
-  });
-  var r = null;
-  h(['ChatTabModel'], function(aa) {
-    return r = aa;
-  });
-  var s = 716,
-    t = 'messaging_tracking';
-
-  function u() {
-    d(['Toggler'], function(aa) {
-      var ba = aa.getInstance(k.scry(document, "div._1z4y")[0]);
-      if (ba && ba.getActive()) ba.hide();
-    });
-  }
-
-  function v(aa, ba) {
-    d(['LogHistory', 'MercuryThreads', 'WebMessengerPermalinkConstants', 'goURI'], function(ca, da, ea, fa) {
-      da.get().getThreadMeta(aa, function(ga) {
-        if (q && q.isInitialized()) {
-          q.tabController.openTab(aa, q.tabsViewport, ba);
-        } else fa(ea.getURIPathForThreadID(aa));
-        if (!z.canOpenTab()) ca.getInstance('mercury').error('Unable to open chat tab', ga);
-      });
-    });
-    if (document.documentElement.clientHeight <= s) u();
-  }
-
-  function w(aa, ba, ca, da) {
-    g.listen(aa, 'click', function(ea) {
-      if (z.canOpenTab()) {
-        da(ba, ca);
-        return ea.kill();
+__d("ChatOpenTab", ["Event", "requireWeak", "ChatWelcomeMessage", "ContextualThing", "DOM", "csx", "cx", "MercuryIDs", "Parent", "curry"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, fn, module, textAlt, m, $sanitize, self, layer, trap, keepData, opt_attributes, content, ret, makeIterator) {
+  /**
+   * @return {undefined}
+   */
+  function runTest() {
+    fn(["Toggler"], function(ProgressIndicator) {
+      var button = ProgressIndicator.getInstance(trap.scry(document, "div._1z4y")[0]);
+      if (button && button.getActive()) {
+        button.hide();
       }
     });
   }
-
-  function x(aa, ba, ca, da) {
-    var ea = {
-      referrer: aa || '',
-      message_thread_id: ba,
-      message_view: 'chat',
-      timestamp_send: Date.now()
-    };
-    if (ca !== (void 0)) ea.message_target_ids = [ca];
-    d(['ChatImpressionLogger'], function(fa) {
-      fa.logImpression(aa, ca, da);
+  /**
+   * @param {?} program
+   * @param {?} opt_handler
+   * @return {undefined}
+   */
+  function init(program, opt_handler) {
+    fn(["LogHistory", "MercuryThreads", "WebMessengerPermalinkConstants", "goURI"], function(ProgressIndicator, $templateCache, mod, eventType) {
+      $templateCache.get().getThreadMeta(program, function(err) {
+        if (result && result.isInitialized()) {
+          result.tabController.openTab(program, result.tabsViewport, opt_handler);
+        } else {
+          eventType(mod.getURIPathForThreadID(program));
+        }
+        if (!JsDiff.canOpenTab()) {
+          ProgressIndicator.getInstance("mercury").error("Unable to open chat tab", err);
+        }
+      });
     });
-    d(['Banzai'], function(fa) {
-      fa.post(t, ea, {
-        delay: 0,
-        retry: true
+    if (document.documentElement.clientHeight <= height) {
+      runTest();
+    }
+  }
+  /**
+   * @param {?} surface
+   * @param {?} o
+   * @param {?} opt_capt
+   * @param {Function} callback
+   * @return {undefined}
+   */
+  function listen(surface, o, opt_capt, callback) {
+    m.listen(surface, "click", function(worker) {
+      if (JsDiff.canOpenTab()) {
+        callback(o, opt_capt);
+        return worker.kill();
+      }
+    });
+  }
+  /**
+   * @param {string} deepDataAndEvents
+   * @param {?} input
+   * @param {?} recurring
+   * @param {?} f
+   * @return {undefined}
+   */
+  function clone(deepDataAndEvents, input, recurring, f) {
+    var movie = {
+      referrer : deepDataAndEvents || "",
+      message_thread_id : input,
+      message_view : "chat",
+      timestamp_send : Date.now()
+    };
+    if (recurring !== void 0) {
+      /** @type {Array} */
+      movie.message_target_ids = [recurring];
+    }
+    fn(["ChatImpressionLogger"], function(doc) {
+      doc.logImpression(deepDataAndEvents, recurring, f);
+    });
+    fn(["Banzai"], function($http) {
+      $http.post(url, movie, {
+        delay : 0,
+        retry : true
       });
     });
   }
-
-  function y(aa) {
-    var ba = j.getContext(aa);
-    return (ba && o.byClass(ba, "_3qw") !== null);
+  /**
+   * @param {?} surface
+   * @return {?}
+   */
+  function next(surface) {
+    var rreturn = layer.getContext(surface);
+    return rreturn && ret.byClass(rreturn, "_3qw") !== null;
   }
-  var z = {
-    canOpenTab: function() {
-      return q && !q.isHidden();
+  /** @type {null} */
+  var result = null;
+  $sanitize(["ChatApp"], function(subKey) {
+    return result = subKey;
+  });
+  /** @type {null} */
+  var text = null;
+  $sanitize(["ChatTabModel"], function(textAlt) {
+    return text = textAlt;
+  });
+  /** @type {number} */
+  var height = 716;
+  /** @type {string} */
+  var url = "messaging_tracking";
+  var JsDiff = {
+    /**
+     * @return {?}
+     */
+    canOpenTab : function() {
+      return result && !result.isHidden();
     },
-    openEmptyTab: function(aa, ba, ca) {
-      if (z.canOpenTab() && r) {
-        var da = r.getEmptyTab();
-        v(da);
-        x(ba, da, null, ca);
-        u();
-        return da;
+    /**
+     * @param {Array} recurring
+     * @param {string} deepDataAndEvents
+     * @param {?} opt_obj2
+     * @return {?}
+     */
+    openEmptyTab : function(recurring, deepDataAndEvents, opt_obj2) {
+      if (JsDiff.canOpenTab() && text) {
+        var environment = text.getEmptyTab();
+        init(environment);
+        clone(deepDataAndEvents, environment, null, opt_obj2);
+        runTest();
+        return environment;
       }
       return null;
     },
-    listenOpenEmptyTab: function(aa, ba) {
-      w(aa, null, ba, z.openEmptyTab);
+    /**
+     * @param {?} surface
+     * @param {?} callback
+     * @return {undefined}
+     */
+    listenOpenEmptyTab : function(surface, callback) {
+      listen(surface, null, callback, JsDiff.openEmptyTab);
     },
-    openThread: function(aa, ba, ca, da) {
-      d(['MercuryServerRequests'], function(ea) {
-        if (n.isValid(aa)) {
-          v(aa);
-        } else ea.get().getClientThreadID(aa, function(fa) {
-          return v(fa, da);
-        });
-        x(ba, aa, null, ca);
-        u();
+    /**
+     * @param {string} input
+     * @param {string} deepDataAndEvents
+     * @param {?} opt_obj2
+     * @param {?} eventName
+     * @return {undefined}
+     */
+    openThread : function(input, deepDataAndEvents, opt_obj2, eventName) {
+      fn(["MercuryServerRequests"], function($templateCache) {
+        if (content.isValid(input)) {
+          init(input);
+        } else {
+          $templateCache.get().getClientThreadID(input, function(input) {
+            return init(input, eventName);
+          });
+        }
+        clone(deepDataAndEvents, input, null, opt_obj2);
+        runTest();
       });
     },
-    listenOpenThread: function(aa, ba, ca) {
-      w(aa, ba, ca, z.openThread);
+    /**
+     * @param {?} surface
+     * @param {?} test
+     * @param {?} callback
+     * @return {undefined}
+     */
+    listenOpenThread : function(surface, test, callback) {
+      listen(surface, test, callback, JsDiff.openThread);
     },
-    openUserTab: function(aa, ba, ca) {
-      var da = n.getThreadIDFromUserID(aa);
-      v(da);
-      x(ba, da, aa, ca);
+    /**
+     * @param {string} recurring
+     * @param {string} deepDataAndEvents
+     * @param {?} opt_obj2
+     * @return {?}
+     */
+    openUserTab : function(recurring, deepDataAndEvents, opt_obj2) {
+      var environment = content.getThreadIDFromUserID(recurring);
+      init(environment);
+      clone(deepDataAndEvents, environment, recurring, opt_obj2);
       return true;
     },
-    openPageTab: function(aa, ba, ca) {
-      d(['MercuryThreads'], function(da) {
-        var ea = n.getThreadIDFromUserID(ba);
-        da.get().getThreadMeta(ea, function(fa) {
-          if (aa && aa.length > 0) {
-            var ga = (Date.now() - fa.timestamp) / 1000,
-              ha = ga / 3600;
-            if (fa.message_count === 0 || ha > 24) i.setWelcomeMessage(ea, n.getParticipantIDFromUserID(ba), aa);
+    /**
+     * @param {string} millis
+     * @param {string} recurring
+     * @param {string} deepDataAndEvents
+     * @return {?}
+     */
+    openPageTab : function(millis, recurring, deepDataAndEvents) {
+      fn(["MercuryThreads"], function($templateCache) {
+        var input = content.getThreadIDFromUserID(recurring);
+        $templateCache.get().getThreadMeta(input, function(p) {
+          if (millis && millis.length > 0) {
+            /** @type {number} */
+            var r = (Date.now() - p.timestamp) / 1E3;
+            /** @type {number} */
+            var normR = r / 3600;
+            if (p.message_count === 0 || normR > 24) {
+              self.setWelcomeMessage(input, content.getParticipantIDFromUserID(recurring), millis);
+            }
           }
         });
-        v(ea);
-        x(ca, ea, ba);
+        init(input);
+        clone(deepDataAndEvents, input, recurring);
       });
       return true;
     },
-    listenOpenUserTab: function(aa, ba, ca) {
-      if (!y(aa)) w(aa, ba, ca, z.openUserTab);
+    /**
+     * @param {?} surface
+     * @param {?} test
+     * @param {?} callback
+     * @return {undefined}
+     */
+    listenOpenUserTab : function(surface, test, callback) {
+      if (!next(surface)) {
+        listen(surface, test, callback, JsDiff.openUserTab);
+      }
     },
-    listenOpenPageTab: function(aa, ba, ca, da) {
-      if (!y(aa)) w(aa, ba, da, p(z.openPageTab, ca));
+    /**
+     * @param {?} surface
+     * @param {?} test
+     * @param {?} thisObj
+     * @param {?} callback
+     * @return {undefined}
+     */
+    listenOpenPageTab : function(surface, test, thisObj, callback) {
+      if (!next(surface)) {
+        listen(surface, test, callback, makeIterator(JsDiff.openPageTab, thisObj));
+      }
     },
-    openTabByType: function(aa, ba, ca) {
-      d(['ChatTypeaheadConstants', 'MercuryParticipantTypes'], function(da, ea) {
-        if (ba === da.THREAD_TYPE) {
-          if (aa) {
-            z.openThread(aa, ca);
-          } else z.openEmptyTab(null, ca);
-        } else if (!ba || ba === ea.FRIEND || ba === da.FRIEND_TYPE || ba === da.PAGE_TYPE || ba === da.USER_TYPE) z.openUserTab(aa, ca);
+    /**
+     * @param {string} recurring
+     * @param {?} type
+     * @param {string} deepDataAndEvents
+     * @return {undefined}
+     */
+    openTabByType : function(recurring, type, deepDataAndEvents) {
+      fn(["ChatTypeaheadConstants", "MercuryParticipantTypes"], function(m, Phone) {
+        if (type === m.THREAD_TYPE) {
+          if (recurring) {
+            JsDiff.openThread(recurring, deepDataAndEvents);
+          } else {
+            JsDiff.openEmptyTab(null, deepDataAndEvents);
+          }
+        } else {
+          if (!type || (type === Phone.FRIEND || (type === m.FRIEND_TYPE || (type === m.PAGE_TYPE || type === m.USER_TYPE)))) {
+            JsDiff.openUserTab(recurring, deepDataAndEvents);
+          }
+        }
       });
     }
   };
-  e.exports = z;
+  module.exports = JsDiff;
 }, null);
-__d("SplitImage.react", ["React", "Image.react", "cx", "joinClasses"], function(a, b, c, d, e, f, g, h, i, j) {
-  var k = g.createClass({
-    displayName: "SplitImage",
-    render: function() {
-      var l = this.props.size;
-      return (g.createElement("div", g.__spread({}, this.props, {
-        className: j(this.props.className, "_55lt"),
-        style: Object.assign({}, (this.props.style || {}), {
-          width: l,
-          height: l
+__d("SplitImage.react", ["React", "Image.react", "cx", "joinClasses"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, dom, tr, opt_attributes, update) {
+  var JsDiff = dom.createClass({
+    displayName : "SplitImage",
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var cs = this.props.size;
+      return dom.createElement("div", dom.__spread({}, this.props, {
+        className : update(this.props.className, "_55lt"),
+        style : Object.assign({}, this.props.style || {}, {
+          width : cs,
+          height : cs
         })
-      }), this.renderImages()));
+      }), this.renderImages());
     },
-    renderImages: function() {
-      if (!this.props.srcs) return null;
-      var l = this.props.srcs,
-        m = Array.isArray(l);
-      if (!m || l.length == 1) return this.renderOne(m ? l[0] : l);
-      return l.length == 2 ? this.renderTwo(l) : this.renderThree(l);
+    /**
+     * @return {?}
+     */
+    renderImages : function() {
+      if (!this.props.srcs) {
+        return null;
+      }
+      var value = this.props.srcs;
+      /** @type {boolean} */
+      var iterator = Array.isArray(value);
+      if (!iterator || value.length == 1) {
+        return this.renderOne(iterator ? value[0] : value);
+      }
+      return value.length == 2 ? this.renderTwo(value) : this.renderThree(value);
     },
-    renderOne: function(l) {
-      return (g.createElement(h, {
-        src: l,
-        width: this.props.size,
-        height: this.props.size,
-        alt: ""
-      }));
+    /**
+     * @param {string} scriptLocation
+     * @return {?}
+     */
+    renderOne : function(scriptLocation) {
+      return dom.createElement(tr, {
+        src : scriptLocation,
+        width : this.props.size,
+        height : this.props.size,
+        alt : ""
+      });
     },
-    renderTwo: function(l) {
-      var m = this.props.size,
-        n = Math.floor(m / 2),
-        o = -Math.floor(n / 2),
-        p = (("_55lu") + (this.props.border ? ' ' + "_57xo" : ''));
-      return (g.createElement("div", null, g.createElement("div", {
-        className: "_55lu",
-        style: {
-          width: n
+    /**
+     * @param {Array} obj
+     * @return {?}
+     */
+    renderTwo : function(obj) {
+      var size = this.props.size;
+      /** @type {number} */
+      var W = Math.floor(size / 2);
+      /** @type {number} */
+      var ml = -Math.floor(W / 2);
+      /** @type {string} */
+      var cls = "_55lu" + (this.props.border ? " " + "_57xo" : "");
+      return dom.createElement("div", null, dom.createElement("div", {
+        className : "_55lu",
+        style : {
+          width : W
         }
-      }, g.createElement(h, {
-        src: l[0],
-        width: m,
-        height: m,
-        style: {
-          marginLeft: o
+      }, dom.createElement(tr, {
+        src : obj[0],
+        width : size,
+        height : size,
+        style : {
+          marginLeft : ml
         }
-      })), g.createElement("div", {
-        className: p,
-        style: {
-          width: n
+      })), dom.createElement("div", {
+        className : cls,
+        style : {
+          width : W
         }
-      }, g.createElement(h, {
-        src: l[1],
-        width: m,
-        height: m,
-        style: {
-          marginLeft: o
+      }, dom.createElement(tr, {
+        src : obj[1],
+        width : size,
+        height : size,
+        style : {
+          marginLeft : ml
         }
-      }))));
+      })));
     },
-    renderThree: function(l) {
-      var m = this.props.size,
-        n = Math.floor(m / 3 * 2),
-        o = -Math.floor((m - n) / 2),
-        p = Math.floor(m / 2),
-        q = m - n,
-        r = -Math.floor((p - q) / 2),
-        s = (("_55lu") + (this.props.border ? ' ' + "_57pl" : '')),
-        t = (("_55lu") + (this.props.border ? ' ' + "_57pm" : ''));
-      return (g.createElement("div", null, g.createElement("div", {
-        className: s,
-        style: {
-          width: n
+    /**
+     * @param {Array} obj
+     * @return {?}
+     */
+    renderThree : function(obj) {
+      var size = this.props.size;
+      /** @type {number} */
+      var val = Math.floor(size / 3 * 2);
+      /** @type {number} */
+      var ml = -Math.floor((size - val) / 2);
+      /** @type {number} */
+      var i = Math.floor(size / 2);
+      /** @type {number} */
+      var diff = size - val;
+      /** @type {number} */
+      var left = -Math.floor((i - diff) / 2);
+      /** @type {string} */
+      var cls = "_55lu" + (this.props.border ? " " + "_57pl" : "");
+      /** @type {string} */
+      var statusBarClassName = "_55lu" + (this.props.border ? " " + "_57pm" : "");
+      return dom.createElement("div", null, dom.createElement("div", {
+        className : cls,
+        style : {
+          width : val
         }
-      }, g.createElement(h, {
-        src: l[0],
-        width: m,
-        height: m,
-        style: {
-          marginLeft: o
+      }, dom.createElement(tr, {
+        src : obj[0],
+        width : size,
+        height : size,
+        style : {
+          marginLeft : ml
         }
-      })), g.createElement("div", {
-        className: t,
-        style: {
-          width: q,
-          height: p
+      })), dom.createElement("div", {
+        className : statusBarClassName,
+        style : {
+          width : diff,
+          height : i
         }
-      }, g.createElement(h, {
-        src: l[1],
-        width: p,
-        height: p,
-        style: {
-          marginLeft: r
+      }, dom.createElement(tr, {
+        src : obj[1],
+        width : i,
+        height : i,
+        style : {
+          marginLeft : left
         }
-      })), g.createElement("div", {
-        className: "_55lu",
-        style: {
-          width: q,
-          height: p
+      })), dom.createElement("div", {
+        className : "_55lu",
+        style : {
+          width : diff,
+          height : i
         }
-      }, g.createElement(h, {
-        src: l[2],
-        width: p,
-        height: p,
-        style: {
-          marginLeft: r
+      }, dom.createElement(tr, {
+        src : obj[2],
+        width : i,
+        height : i,
+        style : {
+          marginLeft : left
         }
-      }))));
+      })));
     }
   });
-  e.exports = k;
+  module.exports = JsDiff;
 }, null);
-__d("RangedCallbackManager", ["CallbackManagerController", "copyProperties", "createObjectFrom"], function(a, b, c, d, e, f, g, h, i) {
-  var j = function(k, l, m) {
+__d("RangedCallbackManager", ["CallbackManagerController", "copyProperties", "createObjectFrom"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, dataAndEvents, createObject, unique) {
+  /**
+   * @param {?} runner
+   * @param {?} array
+   * @param {?} b
+   * @return {undefined}
+   */
+  var Min = function(runner, array, b) {
+    /** @type {Array} */
     this._resources = [];
+    /** @type {boolean} */
     this._reachedEndOfArray = false;
+    /** @type {boolean} */
     this._error = false;
     this._existingIDs = {};
-    this._controller = new g(this._constructCallbackArg.bind(this));
-    this._getValueHandler = k;
-    this._compareValuesHandler = l;
-    this._skipOnStrictHandler = m;
+    this._controller = new dataAndEvents(this._constructCallbackArg.bind(this));
+    this._getValueHandler = runner;
+    this._compareValuesHandler = array;
+    this._skipOnStrictHandler = b;
   };
-  h(j.prototype, {
-    executeOrEnqueue: function(k, l, m, n, o) {
+  createObject(Min.prototype, {
+    /**
+     * @param {?} obj
+     * @param {Function} deepDataAndEvents
+     * @param {Function} clone
+     * @param {?} ignoreMethodDoesntExist
+     * @param {?} dataAndEvents
+     * @return {?}
+     */
+    executeOrEnqueue : function(obj, deepDataAndEvents, clone, ignoreMethodDoesntExist, dataAndEvents) {
       return this._controller.executeOrEnqueue({
-        start: k,
-        limit: l
-      }, m, {
-        strict: !!n,
-        skipOnStrictHandler: o
+        start : obj,
+        /** @type {Function} */
+        limit : deepDataAndEvents
+      }, clone, {
+        strict : !!ignoreMethodDoesntExist,
+        skipOnStrictHandler : dataAndEvents
       });
     },
-    unsubscribe: function(k) {
-      this._controller.unsubscribe(k);
+    /**
+     * @param {?} target
+     * @return {undefined}
+     */
+    unsubscribe : function(target) {
+      this._controller.unsubscribe(target);
     },
-    getUnavailableResources: function(k) {
-      var l = this._controller.getRequest(k),
-        m = [];
-      if (l && !this._reachedEndOfArray) {
-        var n = l.request,
-          o = this._filterForStrictResults(l.options),
-          p = n.start + n.limit;
-        for (var q = o.length; q < p; q++) m.push(q);
+    /**
+     * @param {?} regex
+     * @return {?}
+     */
+    getUnavailableResources : function(regex) {
+      var result = this._controller.getRequest(regex);
+      /** @type {Array} */
+      var bProperties = [];
+      if (result && !this._reachedEndOfArray) {
+        var request = result.request;
+        var first = this._filterForStrictResults(result.options);
+        var padLength = request.start + request.limit;
+        var i = first.length;
+        for (;i < padLength;i++) {
+          bProperties.push(i);
+        }
       }
-      return m;
+      return bProperties;
     },
-    addResources: function(k) {
-      k.forEach(function(l) {
-        if (!this._existingIDs[l]) {
-          this._existingIDs[l] = true;
-          this._resources.push(l);
+    /**
+     * @param {Array} resources
+     * @return {undefined}
+     */
+    addResources : function(resources) {
+      resources.forEach(function(depth) {
+        if (!this._existingIDs[depth]) {
+          /** @type {boolean} */
+          this._existingIDs[depth] = true;
+          this._resources.push(depth);
+          /** @type {null} */
           this._error = null;
         }
       }.bind(this));
       this.resortResources();
       this._controller.runPossibleCallbacks();
     },
-    addResourcesWithoutSorting: function(k, l) {
-      var m = this._resources.slice(0, l);
-      m = m.concat(k);
-      m = m.concat(this._resources.slice(l));
-      this._resources = m;
-      h(this._existingIDs, i(k, true));
+    /**
+     * @param {?} elems
+     * @param {number} index
+     * @return {undefined}
+     */
+    addResourcesWithoutSorting : function(elems, index) {
+      var ret = this._resources.slice(0, index);
+      ret = ret.concat(elems);
+      ret = ret.concat(this._resources.slice(index));
+      this._resources = ret;
+      createObject(this._existingIDs, unique(elems, true));
+      /** @type {null} */
       this._error = null;
       this._controller.runPossibleCallbacks();
     },
-    removeResources: function(k) {
-      k.forEach(function(l) {
-        if (this._existingIDs[l]) {
-          this._existingIDs[l] = false;
-          var m = this._resources.indexOf(l);
-          if (m != -1) this._resources.splice(m, 1);
+    /**
+     * @param {Array} callback
+     * @return {undefined}
+     */
+    removeResources : function(callback) {
+      callback.forEach(function(key) {
+        if (this._existingIDs[key]) {
+          /** @type {boolean} */
+          this._existingIDs[key] = false;
+          var camelKey = this._resources.indexOf(key);
+          if (camelKey != -1) {
+            this._resources.splice(camelKey, 1);
+          }
         }
       }.bind(this));
     },
-    removeAllResources: function() {
+    /**
+     * @return {undefined}
+     */
+    removeAllResources : function() {
+      /** @type {Array} */
       this._resources = [];
       this._existingIDs = {};
     },
-    resortResources: function() {
-      this._resources = this._resources.sort(function(k, l) {
-        return this._compareValuesHandler(this._getValueHandler(k), this._getValueHandler(l));
+    /**
+     * @return {undefined}
+     */
+    resortResources : function() {
+      this._resources = this._resources.sort(function(deepDataAndEvents, opt_obj2) {
+        return this._compareValuesHandler(this._getValueHandler(deepDataAndEvents), this._getValueHandler(opt_obj2));
       }.bind(this));
     },
-    setReachedEndOfArray: function() {
+    /**
+     * @return {undefined}
+     */
+    setReachedEndOfArray : function() {
       if (!this._reachedEndOfArray) {
+        /** @type {boolean} */
         this._reachedEndOfArray = true;
+        /** @type {null} */
         this._error = null;
         this._controller.runPossibleCallbacks();
       }
     },
-    hasReachedEndOfArray: function() {
+    /**
+     * @return {?}
+     */
+    hasReachedEndOfArray : function() {
       return this._reachedEndOfArray;
     },
-    setError: function(k) {
-      if (this._error !== k) {
-        this._error = k;
+    /**
+     * @param {string} err
+     * @return {undefined}
+     */
+    setError : function(err) {
+      if (this._error !== err) {
+        /** @type {string} */
+        this._error = err;
         this._controller.runPossibleCallbacks();
       }
     },
-    getError: function(k, l, m) {
-      var n = this._filterForStrictResults({
-        strict: m
+    /**
+     * @param {number} offset
+     * @param {number} length
+     * @param {Function} severity
+     * @return {?}
+     */
+    getError : function(offset, length, severity) {
+      var gridStore = this._filterForStrictResults({
+        /** @type {Function} */
+        strict : severity
       });
-      return k + l > n.length ? this._error : null;
+      return offset + length > gridStore.length ? this._error : null;
     },
-    hasResource: function(k) {
-      return this._existingIDs[k];
+    /**
+     * @param {?} name
+     * @return {?}
+     */
+    hasResource : function(name) {
+      return this._existingIDs[name];
     },
-    getResourceAtIndex: function(k) {
-      return this._resources[k];
+    /**
+     * @param {number} timeoutKey
+     * @return {?}
+     */
+    getResourceAtIndex : function(timeoutKey) {
+      return this._resources[timeoutKey];
     },
-    getAllResources: function() {
+    /**
+     * @return {?}
+     */
+    getAllResources : function() {
       return this._resources.concat();
     },
-    getCurrentArraySize: function(k) {
-      return this._filterForStrictResults(k).length;
+    /**
+     * @param {Object} condition
+     * @return {?}
+     */
+    getCurrentArraySize : function(condition) {
+      return this._filterForStrictResults(condition).length;
     },
-    _filterForStrictResults: function(k) {
-      var l = this._resources;
-      if (k && k.strict) {
-        var m = k.skipOnStrictHandler || this._skipOnStrictHandler;
-        if (m) l = l.filter(m);
+    /**
+     * @param {Object} options
+     * @return {?}
+     */
+    _filterForStrictResults : function(options) {
+      var Sizzle = this._resources;
+      if (options && options.strict) {
+        var later = options.skipOnStrictHandler || this._skipOnStrictHandler;
+        if (later) {
+          Sizzle = Sizzle.filter(later);
+        }
       }
-      return l;
+      return Sizzle;
     },
-    _constructCallbackArg: function(k, l) {
-      var m = this._filterForStrictResults(l);
-      if (!this._reachedEndOfArray && !this._error && k.start + k.limit > m.length) {
+    /**
+     * @param {Object} operation
+     * @param {Object} fn
+     * @return {?}
+     */
+    _constructCallbackArg : function(operation, fn) {
+      var _ = this._filterForStrictResults(fn);
+      if (!this._reachedEndOfArray && (!this._error && operation.start + operation.limit > _.length)) {
         return false;
       } else {
-        var n = m.slice(k.start, k.start + k.limit),
-          o = k.start + k.limit > m.length ? this._error : null;
-        return [n, o];
+        var n = _.slice(operation.start, operation.start + operation.limit);
+        var _error = operation.start + operation.limit > _.length ? this._error : null;
+        return[n, _error];
       }
     },
-    getElementsUntil: function(k) {
-      var l = [];
-      for (var m = 0; m < this._resources.length; m++) {
-        var n = this._getValueHandler(this._resources[m]);
-        if (this._compareValuesHandler(n, k) > 0) break;
-        l.push(this._resources[m]);
+    /**
+     * @param {?} co
+     * @return {?}
+     */
+    getElementsUntil : function(co) {
+      /** @type {Array} */
+      var byteout = [];
+      /** @type {number} */
+      var value = 0;
+      for (;value < this._resources.length;value++) {
+        var r20 = this._getValueHandler(this._resources[value]);
+        if (this._compareValuesHandler(r20, co) > 0) {
+          break;
+        }
+        byteout.push(this._resources[value]);
       }
-      return l;
+      return byteout;
     }
   });
-  e.exports = j;
+  /** @type {function (?, ?, ?): undefined} */
+  module.exports = Min;
 }, null);
-__d("arraySort", ["invariant"], function(a, b, c, d, e, f, g) {
-  function h(i, j) {
-    g(Array.isArray(i));
-    var k = i.slice();
-    if (j) return k.sort(j);
-    return k.sort();
+__d("arraySort", ["invariant"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, push) {
+  /**
+   * @param {Object} a
+   * @param {?} obj
+   * @return {?}
+   */
+  function toArray(a, obj) {
+    push(Array.isArray(a));
+    var arr = a.slice();
+    if (obj) {
+      return arr.sort(obj);
+    }
+    return arr.sort();
   }
-  e.exports = h;
+  /** @type {function (Object, ?): ?} */
+  module.exports = toArray;
 }, null);
-__d("mergeDeepInto", ["invariant", "mergeHelpers"], function(a, b, c, d, e, f, g, h) {
-  "use strict";
-  var i = h.ArrayStrategies,
-    j = h.checkArrayStrategy,
-    k = h.checkMergeArrayArgs,
-    l = h.checkMergeLevel,
-    m = h.checkMergeObjectArgs,
-    n = h.isTerminal,
-    o = h.normalizeMergeArg,
-    p = function(t, u, v, w) {
-      m(t, u);
-      l(w);
-      var x = u ? Object.keys(u) : [];
-      for (var y = 0; y < x.length; y++) {
-        var z = x[y];
-        r(t, u, z, v, w);
+__d("mergeDeepInto", ["invariant", "mergeHelpers"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, isArray, options) {
+  var args = options.ArrayStrategies;
+  var test = options.checkArrayStrategy;
+  var expect = options.checkMergeArrayArgs;
+  var fn = options.checkMergeLevel;
+  var cb = options.checkMergeObjectArgs;
+  var callback = options.isTerminal;
+  var filter = options.normalizeMergeArg;
+  /**
+   * @param {?} id
+   * @param {string} results
+   * @param {?} selector
+   * @param {number} isXML
+   * @return {undefined}
+   */
+  var find = function(id, results, selector, isXML) {
+    cb(id, results);
+    fn(isXML);
+    /** @type {Array} */
+    var resultItems = results ? Object.keys(results) : [];
+    /** @type {number} */
+    var i = 0;
+    for (;i < resultItems.length;i++) {
+      var result = resultItems[i];
+      add(id, results, result, selector, isXML);
+    }
+  };
+  /**
+   * @param {string} body
+   * @param {string} value
+   * @param {?} selector
+   * @param {?} isXML
+   * @return {undefined}
+   */
+  var check = function(body, value, selector, isXML) {
+    expect(body, value);
+    fn(isXML);
+    /** @type {number} */
+    var x = Math.max(body.length, value.length);
+    /** @type {number} */
+    var camelKey = 0;
+    for (;camelKey < x;camelKey++) {
+      add(body, value, camelKey, selector, isXML);
+    }
+  };
+  /**
+   * @param {Object} a
+   * @param {Object} values
+   * @param {number} key
+   * @param {?} event
+   * @param {number} isXML
+   * @return {undefined}
+   */
+  var add = function(a, values, key, event, isXML) {
+    var value = values[key];
+    var val = values.hasOwnProperty(key);
+    var valIsObj = val && callback(value);
+    var exp = val && Array.isArray(value);
+    var ca = val && (!exp && !exp);
+    var node = a[key];
+    var child = a.hasOwnProperty(key);
+    var childStyle = child && callback(node);
+    var ga = child && Array.isArray(node);
+    var ha = child && (!ga && !ga);
+    if (childStyle) {
+      if (valIsObj) {
+        a[key] = value;
+      } else {
+        if (exp) {
+          /** @type {Array} */
+          a[key] = [];
+          check(a[key], value, event, isXML + 1);
+        } else {
+          if (ca) {
+            a[key] = {};
+            find(a[key], value, event, isXML + 1);
+          } else {
+            if (!val) {
+              a[key] = node;
+            }
+          }
+        }
       }
-    },
-    q = function(t, u, v, w) {
-      k(t, u);
-      l(w);
-      var x = Math.max(t.length, u.length);
-      for (var y = 0; y < x; y++) r(t, u, y, v, w);
-    },
-    r = function(t, u, v, w, x) {
-      var y = u[v],
-        z = u.hasOwnProperty(v),
-        aa = z && n(y),
-        ba = z && Array.isArray(y),
-        ca = z && !ba && !ba,
-        da = t[v],
-        ea = t.hasOwnProperty(v),
-        fa = ea && n(da),
-        ga = ea && Array.isArray(da),
-        ha = ea && !ga && !ga;
-      if (fa) {
-        if (aa) {
-          t[v] = y;
-        } else if (ba) {
-          t[v] = [];
-          q(t[v], y, w, x + 1);
-        } else if (ca) {
-          t[v] = {};
-          p(t[v], y, w, x + 1);
-        } else if (!z) t[v] = da;
-      } else if (ga) {
-        if (aa) {
-          t[v] = y;
-        } else if (ba) {
-          g(i[w]);
-          if (w === i.Clobber) da.length = 0;
-          q(da, y, w, x + 1);
-        } else if (ca) {
-          t[v] = {};
-          p(t[v], y, w, x + 1);
-        } else !z;
-      } else if (ha) {
-        if (aa) {
-          t[v] = y;
-        } else if (ba) {
-          t[v] = [];
-          q(t[v], y, w, x + 1);
-        } else if (ca) {
-          p(da, y, w, x + 1);
-        } else !z;
-      } else if (!ea)
-        if (aa) {
-          t[v] = y;
-        } else if (ba) {
-        t[v] = [];
-        q(t[v], y, w, x + 1);
-      } else if (ca) {
-        t[v] = {};
-        p(t[v], y, w, x + 1);
-      } else !z;
-    },
-    s = function(t, u, v) {
-      var w = o(u);
-      j(v);
-      p(t, w, v, 0);
-    };
-  e.exports = s;
-}, null);
-__d("mergeDeep", ["mergeHelpers", "mergeDeepInto"], function(a, b, c, d, e, f, g, h) {
-  "use strict";
-  var i = g.checkArrayStrategy,
-    j = g.checkMergeObjectArgs,
-    k = g.normalizeMergeArg,
-    l = function(m, n, o) {
-      var p = k(m),
-        q = k(n);
-      j(p, q);
-      i(o);
-      var r = {};
-      h(r, p, o);
-      h(r, q, o);
-      return r;
-    };
-  e.exports = l;
-}, null);
-__d("mergeObjects", ["copyProperties"], function(a, b, c, d, e, f, g) {
-  function h() {
-    var i = {};
-    for (var j = 0; j < arguments.length; j++) g(i, arguments[j]);
-    return i;
-  }
-  e.exports = h;
-}, null);
-__d("MercuryLocalIDs", ["PresenceUtil", "randomInt"], function(a, b, c, d, e, f, g, h) {
-  'use strict';
-  var i = {
-    generateMessageID: function(j) {
-      var k = j || Date.now(),
-        l = h(0, 4294967295),
-        m = g.getSessionID();
-      return ("<" + k + ":" + l + "-" + m + "@mail.projektitan.com>");
-    },
-    generateThreadID: function(j) {
-      return 'root:' + i.generateMessageID(j);
-    }
-  };
-  e.exports = i;
-}, null);
-__d("MercuryMessageObject", ["MercuryActionStatus", "MercuryActionType", "MercuryIDs", "MercuryLocalIDs", "MercuryMessageClientState", "MercuryMessageSourceTags", "MercurySingletonMixin", "MercurySourceType", "MercuryTimePassed", "MercurySendMessageFields", "fbt", "formatDate"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) {
-  function s(v) {
-    "use strict";
-    this.$MercuryMessageObject0 = v;
-  }
-  s.prototype.constructUserGeneratedMessageObject = function(v, w, x, y, z) {
-    "use strict";
-    var aa = t(this.$MercuryMessageObject0, h.USER_GENERATED_MESSAGE, w, x);
-    if (typeof v == 'string') v = v.replace(/^\s+/, '').replace(/\s+$/, '');
-    aa.body = v;
-    aa.has_attachment = false;
-    aa.html_body = false;
-    aa.attachments = [];
-    aa.specific_to_list = y || [];
-    aa.creator_info = z;
-    return aa;
-  };
-  s.prototype.constructStickerMessageObject = function(v, w, x) {
-    "use strict";
-    var y = t(this.$MercuryMessageObject0, h.USER_GENERATED_MESSAGE, w, x);
-    y.has_attachment = true;
-    y.html_body = false;
-    y.attachments = [];
-    y.sticker_id = v;
-    y.specific_to_list = [];
-    return y;
-  };
-  s.prototype.constructAttachmentMessageObject = function(v, w) {
-    "use strict";
-    var x = t(this.$MercuryMessageObject0, h.USER_GENERATED_MESSAGE, v, w);
-    x.attachments = [];
-    x.specific_to_list = [];
-    return x;
-  };
-  s.prototype.constructLogMessageObject = function(v, w, x, y) {
-    "use strict";
-    var z = t(this.$MercuryMessageObject0, h.LOG_MESSAGE, v, w);
-    z.log_message_type = x;
-    z.log_message_data = y;
-    return z;
-  };
-  s.prototype.normalizeNewMessage = function(v) {
-    "use strict";
-    if (v.status === undefined) v.status = g.UNSENT;
-    v.timestamp_absolute = "Today";
-    v.message_id = v.message_id || j.generateMessageID(v.timestamp);
-    var w = i.getParticipantIDFromUserID(this.$MercuryMessageObject0);
-    v.specific_to_list = v.specific_to_list || [];
-    if (v.specific_to_list.length && v.specific_to_list.indexOf(w) === -1) v.specific_to_list.push(w);
-    if (!v.thread_id) {
-      if (v.specific_to_list.length == 1) {
-        v.thread_id = 'user:' + this.$MercuryMessageObject0;
-      } else if (v.specific_to_list.length == 2) {
-        var x = v.specific_to_list[0] == w ? v.specific_to_list[1] : v.specific_to_list[0];
-        v.thread_id = i.getThreadIDFromParticipantID(x);
+    } else {
+      if (ga) {
+        if (valIsObj) {
+          a[key] = value;
+        } else {
+          if (exp) {
+            isArray(args[event]);
+            if (event === args.Clobber) {
+              /** @type {number} */
+              node.length = 0;
+            }
+            check(node, value, event, isXML + 1);
+          } else {
+            if (ca) {
+              a[key] = {};
+              find(a[key], value, event, isXML + 1);
+            } else {
+              !val;
+            }
+          }
+        }
+      } else {
+        if (ha) {
+          if (valIsObj) {
+            a[key] = value;
+          } else {
+            if (exp) {
+              /** @type {Array} */
+              a[key] = [];
+              check(a[key], value, event, isXML + 1);
+            } else {
+              if (ca) {
+                find(node, value, event, isXML + 1);
+              } else {
+                !val;
+              }
+            }
+          }
+        } else {
+          if (!child) {
+            if (valIsObj) {
+              a[key] = value;
+            } else {
+              if (exp) {
+                /** @type {Array} */
+                a[key] = [];
+                check(a[key], value, event, isXML + 1);
+              } else {
+                if (ca) {
+                  a[key] = {};
+                  find(a[key], value, event, isXML + 1);
+                } else {
+                  !val;
+                }
+              }
+            }
+          }
+        }
       }
-      v.thread_id = v.thread_id || 'root:' + v.message_id;
     }
-    if (!v.specific_to_list.length) {
-      var y = i.tokenize(v.thread_id),
-        z = y.type,
-        aa = y.value;
-      if (z == 'user') v.specific_to_list = ['fbid:' + aa, w];
+  };
+  /**
+   * @param {?} query
+   * @param {?} seed
+   * @param {?} context
+   * @return {undefined}
+   */
+  var Sizzle = function(query, seed, context) {
+    var matched = filter(seed);
+    test(context);
+    find(query, matched, context, 0);
+  };
+  /** @type {function (?, ?, ?): undefined} */
+  module.exports = Sizzle;
+}, null);
+__d("mergeDeep", ["mergeHelpers", "mergeDeepInto"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, Tools, set) {
+  var fn = Tools.checkArrayStrategy;
+  var indexOf = Tools.checkMergeObjectArgs;
+  var trim = Tools.normalizeMergeArg;
+  /**
+   * @param {?} value
+   * @param {?} source
+   * @param {?} val
+   * @return {?}
+   */
+  var resolve = function(value, source, val) {
+    var values = trim(value);
+    var key = trim(source);
+    indexOf(values, key);
+    fn(val);
+    var tag = {};
+    set(tag, values, val);
+    set(tag, key, val);
+    return tag;
+  };
+  /** @type {function (?, ?, ?): ?} */
+  module.exports = resolve;
+}, null);
+__d("mergeObjects", ["copyProperties"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, cb) {
+  /**
+   * @return {?}
+   */
+  function request() {
+    var r = {};
+    /** @type {number} */
+    var i = 0;
+    for (;i < arguments.length;i++) {
+      cb(r, arguments[i]);
     }
-    if (!v[p.MANUAL_RETRY_CNT]) v[p.MANUAL_RETRY_CNT] = 0;
-  };
-  s.prototype.normalizeResendMessage = function(v) {
-    "use strict";
-    v.status = g.RESENDING;
-    v.timestamp = Date.now();
-    v[p.MANUAL_RETRY_CNT] += 1;
-  };
-  s.prototype.normalizeAddAttachmentPlaceholder = function(v, w, x) {
-    "use strict";
-    if (x.preview_attachments.length > 0) {
-      v.has_attachment = true;
-      v.preview_attachments = x.preview_attachments;
-    }
-    v.client_state = k.DO_NOT_SEND_TO_SERVER;
-    v.status = g.RESENDING;
-    v.upload_id = w;
-  };
-
-  function t(v, w, x, y) {
-    var z = u(x) ? [l.CHAT] : [],
-      aa = Date.now(),
-      ba = r(new Date(aa), 'g:ia'),
-      ca = {
-        action_type: w,
-        thread_id: y,
-        author: i.getParticipantIDFromUserID(v),
-        author_email: null,
-        coordinates: null,
-        timestamp: aa,
-        timestamp_absolute: (new Date(aa)).toLocaleDateString(),
-        timestamp_relative: ba,
-        timestamp_time_passed: o.TODAY,
-        is_unread: false,
-        is_cleared: false,
-        is_forward: false,
-        is_filtered_content: false,
-        is_spoof_warning: false,
-        source: x,
-        source_tags: z
-      };
-    return ca;
+    return r;
   }
-
-  function u(v) {
-    switch (v) {
-      case n.CHAT_WEB:
-      case n.CHAT_JABBER:
-      case n.CHAT_IPHONE:
-      case n.CHAT_MEEBO:
-      case n.CHAT_ORCA:
-      case n.CHAT_TEST:
-      case n.CHAT:
-      case n.DESKTOP:
+  /** @type {function (): ?} */
+  module.exports = request;
+}, null);
+__d("MercuryLocalIDs", ["PresenceUtil", "randomInt"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, dataAndEvents, proceed) {
+  var JsDiff = {
+    /**
+     * @param {number} deepDataAndEvents
+     * @return {?}
+     */
+    generateMessageID : function(deepDataAndEvents) {
+      var k = deepDataAndEvents || Date.now();
+      var value = proceed(0, 4294967295);
+      var oid = dataAndEvents.getSessionID();
+      return "<" + k + ":" + value + "-" + oid + "@mail.projektitan.com>";
+    },
+    /**
+     * @param {number} deepDataAndEvents
+     * @return {?}
+     */
+    generateThreadID : function(deepDataAndEvents) {
+      return "root:" + JsDiff.generateMessageID(deepDataAndEvents);
+    }
+  };
+  module.exports = JsDiff;
+}, null);
+__d("MercuryMessageObject", ["MercuryActionStatus", "MercuryActionType", "MercuryIDs", "MercuryLocalIDs", "MercuryMessageClientState", "MercuryMessageSourceTags", "MercurySingletonMixin", "MercurySourceType", "MercuryTimePassed", "MercurySendMessageFields", "fbt", "formatDate"], function(keepData, opt_attributes, matcherFunction, execResult, module, opt_keys, data, cause, state, Users, event, deepDataAndEvents, map, dataAndEvents, ignoreMethodDoesntExist, $attr, textAlt, callback) {
+  /**
+   * @param {?} cur
+   * @return {undefined}
+   */
+  function root(cur) {
+    this.$MercuryMessageObject0 = cur;
+  }
+  /**
+   * @param {?} object
+   * @param {?} message
+   * @param {Object} key
+   * @param {?} obj2
+   * @return {?}
+   */
+  function debug(object, message, key, obj2) {
+    /** @type {Array} */
+    var source_tags = isEmpty(key) ? [deepDataAndEvents.CHAT] : [];
+    /** @type {number} */
+    var newDate = Date.now();
+    var current = callback(new Date(newDate), "g:ia");
+    var isDebugging = {
+      action_type : message,
+      thread_id : obj2,
+      author : state.getParticipantIDFromUserID(object),
+      author_email : null,
+      coordinates : null,
+      timestamp : newDate,
+      timestamp_absolute : (new Date(newDate)).toLocaleDateString(),
+      timestamp_relative : current,
+      timestamp_time_passed : ignoreMethodDoesntExist.TODAY,
+      is_unread : false,
+      is_cleared : false,
+      is_forward : false,
+      is_filtered_content : false,
+      is_spoof_warning : false,
+      source : key,
+      source_tags : source_tags
+    };
+    return isDebugging;
+  }
+  /**
+   * @param {Object} str
+   * @return {?}
+   */
+  function isEmpty(str) {
+    switch(str) {
+      case dataAndEvents.CHAT_WEB:
+      ;
+      case dataAndEvents.CHAT_JABBER:
+      ;
+      case dataAndEvents.CHAT_IPHONE:
+      ;
+      case dataAndEvents.CHAT_MEEBO:
+      ;
+      case dataAndEvents.CHAT_ORCA:
+      ;
+      case dataAndEvents.CHAT_TEST:
+      ;
+      case dataAndEvents.CHAT:
+      ;
+      case dataAndEvents.DESKTOP:
         return true;
       default:
         return false;
     }
   }
-  Object.assign(s, m);
-  e.exports = s;
-}, null);
-__d("MercuryMessageActions", ["CurrentUser", "MercuryActionType", "MercuryMessageObject", "MercuryPayloadSource", "MercuryServerRequests", "MercurySingletonMixin"], function(a, b, c, d, e, f, g, h, i, j, k, l) {
-  'use strict';
-
-  function m(n) {
-    this.$MercuryMessageActions0 = n;
-    this.$MercuryMessageActions1 = i.getForFBID(this.$MercuryMessageActions0);
-    this.$MercuryMessageActions2 = k.getForFBID(this.$MercuryMessageActions0);
-  }
-  m.prototype.send = function(n, o, p) {
-    o = o || Function.prototype;
-    this.$MercuryMessageActions1.normalizeNewMessage(n);
-    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions3(Object.assign({}, n), j.CLIENT_SEND_MESSAGE));
-    this.$MercuryMessageActions2.sendNewMessage(n, p);
-    o(n.thread_id);
+  /**
+   * @param {string} what
+   * @param {Object} path
+   * @param {?} options
+   * @param {Array} b
+   * @param {?} lvl
+   * @return {?}
+   */
+  root.prototype.constructUserGeneratedMessageObject = function(what, path, options, b, lvl) {
+    var o = debug(this.$MercuryMessageObject0, cause.USER_GENERATED_MESSAGE, path, options);
+    if (typeof what == "string") {
+      /** @type {string} */
+      what = what.replace(/^\s+/, "").replace(/\s+$/, "");
+    }
+    /** @type {string} */
+    o.body = what;
+    /** @type {boolean} */
+    o.has_attachment = false;
+    /** @type {boolean} */
+    o.html_body = false;
+    /** @type {Array} */
+    o.attachments = [];
+    o.specific_to_list = b || [];
+    o.creator_info = lvl;
+    return o;
   };
-  m.prototype.resend = function(n, o) {
-    var p = Object.assign({}, n);
-    this.$MercuryMessageActions1.normalizeResendMessage(p);
-    this.send(p, (void 0), o);
+  /**
+   * @param {?} source
+   * @param {Object} a
+   * @param {?} data
+   * @return {?}
+   */
+  root.prototype.constructStickerMessageObject = function(source, a, data) {
+    var details = debug(this.$MercuryMessageObject0, cause.USER_GENERATED_MESSAGE, a, data);
+    /** @type {boolean} */
+    details.has_attachment = true;
+    /** @type {boolean} */
+    details.html_body = false;
+    /** @type {Array} */
+    details.attachments = [];
+    details.sticker_id = source;
+    /** @type {Array} */
+    details.specific_to_list = [];
+    return details;
   };
-  m.prototype.addAttachmentPlaceholder = function(n, o, p) {
-    this.$MercuryMessageActions1.normalizeAddAttachmentPlaceholder(n, o, p);
-    this.$MercuryMessageActions1.normalizeNewMessage(n);
-    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions3(Object.assign({}, n), j.CLIENT_SEND_MESSAGE));
+  /**
+   * @param {Object} data
+   * @param {?} parameters
+   * @return {?}
+   */
+  root.prototype.constructAttachmentMessageObject = function(data, parameters) {
+    var settings = debug(this.$MercuryMessageObject0, cause.USER_GENERATED_MESSAGE, data, parameters);
+    /** @type {Array} */
+    settings.attachments = [];
+    /** @type {Array} */
+    settings.specific_to_list = [];
+    return settings;
   };
-  m.prototype.cancelAttachmentPlaceholder = function(n, o) {
-    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions3({
-      upload_id: n,
-      upload_data: o,
-      action_type: h.CANCEL_ATTACHMENT_PLACEHOLDER
-    }, j.CLIENT_SEND_MESSAGE));
+  /**
+   * @param {Object} path
+   * @param {?} options
+   * @param {?} lvl
+   * @param {?} i
+   * @return {?}
+   */
+  root.prototype.constructLogMessageObject = function(path, options, lvl, i) {
+    var o = debug(this.$MercuryMessageObject0, cause.LOG_MESSAGE, path, options);
+    o.log_message_type = lvl;
+    o.log_message_data = i;
+    return o;
   };
-  m.prototype.confirmAttachmentPlaceholder = function(n, o) {
-    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions3({
-      upload_id: n,
-      upload_data: o,
-      action_type: h.CONFIRM_ATTACHMENT_PLACEHOLDER
-    }, j.CLIENT_SEND_MESSAGE));
-  };
-  m.addShareDataToExistingMessage = function(n, o, p, q) {
-    q = q || g.getID();
-    m.getForFBID(q).addShareDataToExistingMessage(n, o, p);
-  };
-  m.prototype.addShareDataToExistingMessage = function(n, o, p) {
-    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions4({
-      server_id: n,
-      attach_key: o,
-      attach_data: p,
-      action_type: h.ADD_SHARE_DATA_TO_EXISTING_MESSAGE
-    }, j.SERVER_ADD_SHARE_DATA_TO_EXISTING_MESSAGE));
-  };
-  m.prototype.markSpam = function(n, o) {
-    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions5(n, o, h.MARK_MESSAGES_SPAM, j.CLIENT_MARK_MESSAGES_SPAM));
-  };
-  m.prototype["delete"] = function(n, o, p) {
-    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions5(n, o, h.DELETE_MESSAGES, p || j.CLIENT_DELETE_MESSAGES));
-  };
-  m.prototype.$MercuryMessageActions3 = function(n, o) {
-    return {
-      actions: [n],
-      from_client: true,
-      payload_source: o
-    };
-  };
-  m.prototype.$MercuryMessageActions4 = function(n, o) {
-    return {
-      actions: [n],
-      from_client: false,
-      payload_source: o
-    };
-  };
-  m.prototype.$MercuryMessageActions5 = function(n, o, p, q) {
-    return {
-      actions: [{
-        action_type: p,
-        action_id: null,
-        thread_id: n,
-        message_ids: o
-      }],
-      from_client: true,
-      payload_source: q
-    };
-  };
-  Object.assign(m, l);
-  e.exports = m;
-}, null);
-__d("MercuryThreadActions", ["MercuryActionType", "MercuryPayloadSource", "MercuryServerRequests", "MercurySingletonMixin", "MessagingTag", "merge"], function(a, b, c, d, e, f, g, h, i, j, k, l) {
-  'use strict';
-
-  function m(n) {
-    this.$MercuryThreadActions0 = n;
-    this.$MercuryThreadActions1 = i.getForFBID(this.$MercuryThreadActions0);
-  }
-  m.prototype.markRead = function(n, o) {
-    this.batchMarkRead([n], o);
-  };
-  m.prototype.batchMarkRead = function(n, o) {
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions2(n, true, o));
-  };
-  m.prototype.markUnread = function(n, o) {
-    this.batchMarkUnread([n], o);
-  };
-  m.prototype.batchMarkUnread = function(n, o) {
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions2(n, false, o));
-  };
-  m.prototype.markSeen = function(n, o) {
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions3([n], g.MARK_THREAD_SEEN, h.CLIENT_MARK_THREAD_SEEN, {
-      persistent: o
-    }));
-  };
-  m.prototype.archive = function(n, o) {
-    this.batchArchive([n], o);
-  };
-  m.prototype.batchArchive = function(n, o) {
-    n.forEach(function(p) {
-      this.$MercuryThreadActions1.changeThreadArchivedStatus(p, true, o);
-    }.bind(this));
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions4(n, true));
-  };
-  m.prototype.unarchive = function(n, o) {
-    this.batchUnarchive([n], o);
-  };
-  m.prototype.batchUnarchive = function(n, o) {
-    n.forEach(function(p) {
-      this.$MercuryThreadActions1.changeThreadArchivedStatus(p, false, o);
-    }.bind(this));
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions4(n, false));
-  };
-  m.prototype.markSpam = function(n, o) {
-    this.batchMarkSpam([n], o);
-  };
-  m.prototype.batchMarkSpam = function(n, o) {
-    n.forEach(function(p) {
-      this.$MercuryThreadActions1.markThreadSpam(p, o);
-    }.bind(this));
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions5(n, k.SPAM));
-  };
-  m.prototype.unmarkSpam = function(n, o) {
-    this.batchUnmarkSpam([n], o);
-  };
-  m.prototype.batchUnmarkSpam = function(n, o) {
-    n.forEach(function(p) {
-      this.$MercuryThreadActions1.unmarkThreadSpam(p, o);
-    }.bind(this));
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions5(n, k.INBOX));
-  };
-  m.prototype.changeFolder = function(n, o) {
-    this.batchChangeFolder([n], o);
-  };
-  m.prototype.batchChangeFolder = function(n, o) {
-    n.forEach(function(p) {
-      this.$MercuryThreadActions1.changeThreadFolder(p, o);
-    }.bind(this));
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions5(n, o));
-  };
-  m.prototype["delete"] = function(n, o) {
-    this.batchDelete([n], o);
-  };
-  m.prototype.batchDelete = function(n, o) {
-    n.forEach(function(p) {
-      this.$MercuryThreadActions1.deleteThread(p, o);
-    }.bind(this));
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions3(n, g.DELETE_THREAD, h.CLIENT_DELETE_THREAD));
-  };
-  m.prototype.unmute = function(n) {
-    this.updateMuteSetting(n, 0);
-  };
-  m.prototype.updateMuteSetting = function(n, o) {
-    this.$MercuryThreadActions1.changeMutingOnThread(n, o);
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions3([n], g.CHANGE_MUTE_SETTINGS, h.CLIENT_CHANGE_MUTE_SETTINGS, {
-      mute_settings: o
-    }));
-  };
-  m.prototype.addParticipants = function(n, o) {
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions3([n], g.ADD_PARTICIPANTS, h.CLIENT_ADD_PARTICIPANTS, {
-      participants: o
-    }));
-  };
-  m.prototype.unpinThread = function(n) {
-    this.$MercuryThreadActions1.unpinThread(n);
-    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions3([n], g.UNPIN_THREAD, h.CLIENT_UNPIN_THREAD));
-  };
-  m.prototype.$MercuryThreadActions2 = function(n, o, p) {
-    return this.$MercuryThreadActions3(n, g.CHANGE_READ_STATUS, h.CLIENT_CHANGE_READ_STATUS, {
-      mark_as_read: o,
-      source: p
-    });
-  };
-  m.prototype.$MercuryThreadActions4 = function(n, o) {
-    return this.$MercuryThreadActions3(n, g.CHANGE_ARCHIVED_STATUS, h.CLIENT_CHANGE_ARCHIVED_STATUS, {
-      archived: o
-    });
-  };
-  m.prototype.$MercuryThreadActions5 = function(n, o) {
-    return this.$MercuryThreadActions3(n, g.CHANGE_FOLDER, h.CLIENT_CHANGE_FOLDER, {
-      new_folder: o
-    });
-  };
-  m.prototype.$MercuryThreadActions3 = function(n, o, p, q) {
-    return {
-      actions: n.map(function(r) {
-        return l({
-          action_type: o,
-          action_id: null,
-          thread_id: r
-        }, q);
-      }),
-      from_client: true,
-      payload_source: p
-    };
-  };
-  Object.assign(m, j);
-  e.exports = m;
-}, null);
-__d("MercuryFolders", ["MessagingTag", "arrayContains"], function(a, b, c, d, e, f, g, h) {
-  var i = [g.INBOX, g.OTHER, g.ACTION_ARCHIVED, g.SPAM],
-    j = {
-      getSupportedFolders: function() {
-        return i.concat();
-      },
-      isSupportedFolder: function(k) {
-        return h(i, k);
-      },
-      getFromMeta: function(k) {
-        var l = k.folder;
-        if (k.is_archived) l = g.ACTION_ARCHIVED;
-        return l;
+  /**
+   * @param {Object} message
+   * @return {undefined}
+   */
+  root.prototype.normalizeNewMessage = function(message) {
+    if (message.status === undefined) {
+      message.status = data.UNSENT;
+    }
+    /** @type {string} */
+    message.timestamp_absolute = "Today";
+    message.message_id = message.message_id || Users.generateMessageID(message.timestamp);
+    var SPACE = state.getParticipantIDFromUserID(this.$MercuryMessageObject0);
+    message.specific_to_list = message.specific_to_list || [];
+    if (message.specific_to_list.length && message.specific_to_list.indexOf(SPACE) === -1) {
+      message.specific_to_list.push(SPACE);
+    }
+    if (!message.thread_id) {
+      if (message.specific_to_list.length == 1) {
+        /** @type {string} */
+        message.thread_id = "user:" + this.$MercuryMessageObject0;
+      } else {
+        if (message.specific_to_list.length == 2) {
+          var text = message.specific_to_list[0] == SPACE ? message.specific_to_list[1] : message.specific_to_list[0];
+          message.thread_id = state.getThreadIDFromParticipantID(text);
+        }
       }
-    };
-  e.exports = j;
+      message.thread_id = message.thread_id || "root:" + message.message_id;
+    }
+    if (!message.specific_to_list.length) {
+      var event = state.tokenize(message.thread_id);
+      var type = event.type;
+      var image = event.value;
+      if (type == "user") {
+        /** @type {Array} */
+        message.specific_to_list = ["fbid:" + image, SPACE];
+      }
+    }
+    if (!message[$attr.MANUAL_RETRY_CNT]) {
+      /** @type {number} */
+      message[$attr.MANUAL_RETRY_CNT] = 0;
+    }
+  };
+  /**
+   * @param {Object} $scope
+   * @return {undefined}
+   */
+  root.prototype.normalizeResendMessage = function($scope) {
+    $scope.status = data.RESENDING;
+    /** @type {number} */
+    $scope.timestamp = Date.now();
+    $scope[$attr.MANUAL_RETRY_CNT] += 1;
+  };
+  /**
+   * @param {Object} params
+   * @param {?} obj
+   * @param {?} options
+   * @return {undefined}
+   */
+  root.prototype.normalizeAddAttachmentPlaceholder = function(params, obj, options) {
+    if (options.preview_attachments.length > 0) {
+      /** @type {boolean} */
+      params.has_attachment = true;
+      params.preview_attachments = options.preview_attachments;
+    }
+    params.client_state = event.DO_NOT_SEND_TO_SERVER;
+    params.status = data.RESENDING;
+    params.upload_id = obj;
+  };
+  Object.assign(root, map);
+  /** @type {function (?): undefined} */
+  module.exports = root;
 }, null);
-__d("MercuryUnreadState", ["MercuryFolders", "LogHistory", "KeyedCallbackManager", "MercuryActionType", "MercuryGlobalActionType", "MercurySingletonMixin", "MercuryThreadlistConstants", "MessagingTag", "ReportState", "MercuryServerRequests", "MercuryThreadInformer", "MercuryThreads", "arrayContains", "copyProperties", "createObjectFrom"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u) {
-  var v = (g.getSupportedFolders() || []).filter(function(na) {
-      return na != n.ACTION_ARCHIVED;
-    }),
-    w = 'unread_thread_hash',
-    x = 'unseen_thread_list',
-    y = m.MAX_UNREAD_COUNT,
-    z = h.getInstance('mercury_unread_state');
-
-  function aa(na) {
-    this._fbid = na;
-    this._serverRequests = p.getForFBID(this._fbid);
-    this._threadInformer = q.getForFBID(this._fbid);
-    this._threads = r.getForFBID(this._fbid);
+__d("MercuryMessageActions", ["CurrentUser", "MercuryActionType", "MercuryMessageObject", "MercuryPayloadSource", "MercuryServerRequests", "MercurySingletonMixin"], function(keepData, opt_attributes, matcherFunction, execResult, module, opt_keys, a, dataAndEvents, ignoreMethodDoesntExist, deepDataAndEvents, textAlt, map) {
+  /**
+   * @param {?} descriptor
+   * @return {undefined}
+   */
+  function Promise(descriptor) {
+    this.$MercuryMessageActions0 = descriptor;
+    this.$MercuryMessageActions1 = ignoreMethodDoesntExist.getForFBID(this.$MercuryMessageActions0);
+    this.$MercuryMessageActions2 = textAlt.getForFBID(this.$MercuryMessageActions0);
+  }
+  /**
+   * @param {Object} data
+   * @param {Object} errorCallback
+   * @param {?} obj
+   * @return {undefined}
+   */
+  Promise.prototype.send = function(data, errorCallback, obj) {
+    errorCallback = errorCallback || Function.prototype;
+    this.$MercuryMessageActions1.normalizeNewMessage(data);
+    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions3(Object.assign({}, data), deepDataAndEvents.CLIENT_SEND_MESSAGE));
+    this.$MercuryMessageActions2.sendNewMessage(data, obj);
+    errorCallback(data.thread_id);
+  };
+  /**
+   * @param {?} map
+   * @param {?} walkers
+   * @return {undefined}
+   */
+  Promise.prototype.resend = function(map, walkers) {
+    var pdataCur = Object.assign({}, map);
+    this.$MercuryMessageActions1.normalizeResendMessage(pdataCur);
+    this.send(pdataCur, void 0, walkers);
+  };
+  /**
+   * @param {Object} config
+   * @param {?} walkers
+   * @param {?} pending
+   * @return {undefined}
+   */
+  Promise.prototype.addAttachmentPlaceholder = function(config, walkers, pending) {
+    this.$MercuryMessageActions1.normalizeAddAttachmentPlaceholder(config, walkers, pending);
+    this.$MercuryMessageActions1.normalizeNewMessage(config);
+    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions3(Object.assign({}, config), deepDataAndEvents.CLIENT_SEND_MESSAGE));
+  };
+  /**
+   * @param {?} ignoreMethodDoesntExist
+   * @param {?} textAlt
+   * @return {undefined}
+   */
+  Promise.prototype.cancelAttachmentPlaceholder = function(ignoreMethodDoesntExist, textAlt) {
+    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions3({
+      upload_id : ignoreMethodDoesntExist,
+      upload_data : textAlt,
+      action_type : dataAndEvents.CANCEL_ATTACHMENT_PLACEHOLDER
+    }, deepDataAndEvents.CLIENT_SEND_MESSAGE));
+  };
+  /**
+   * @param {?} ignoreMethodDoesntExist
+   * @param {?} textAlt
+   * @return {undefined}
+   */
+  Promise.prototype.confirmAttachmentPlaceholder = function(ignoreMethodDoesntExist, textAlt) {
+    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions3({
+      upload_id : ignoreMethodDoesntExist,
+      upload_data : textAlt,
+      action_type : dataAndEvents.CONFIRM_ATTACHMENT_PLACEHOLDER
+    }, deepDataAndEvents.CLIENT_SEND_MESSAGE));
+  };
+  /**
+   * @param {?} triggerRoute
+   * @param {?} deepDataAndEvents
+   * @param {?} until
+   * @param {(Document|string)} timeoutKey
+   * @return {undefined}
+   */
+  Promise.addShareDataToExistingMessage = function(triggerRoute, deepDataAndEvents, until, timeoutKey) {
+    timeoutKey = timeoutKey || a.getID();
+    Promise.getForFBID(timeoutKey).addShareDataToExistingMessage(triggerRoute, deepDataAndEvents, until);
+  };
+  /**
+   * @param {?} triggerRoute
+   * @param {?} ignoreMethodDoesntExist
+   * @param {?} arg
+   * @return {undefined}
+   */
+  Promise.prototype.addShareDataToExistingMessage = function(triggerRoute, ignoreMethodDoesntExist, arg) {
+    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions4({
+      server_id : triggerRoute,
+      attach_key : ignoreMethodDoesntExist,
+      attach_data : arg,
+      action_type : dataAndEvents.ADD_SHARE_DATA_TO_EXISTING_MESSAGE
+    }, deepDataAndEvents.SERVER_ADD_SHARE_DATA_TO_EXISTING_MESSAGE));
+  };
+  /**
+   * @param {?} walkers
+   * @param {(Array|string)} opt_obj2
+   * @return {undefined}
+   */
+  Promise.prototype.markSpam = function(walkers, opt_obj2) {
+    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions5(walkers, opt_obj2, dataAndEvents.MARK_MESSAGES_SPAM, deepDataAndEvents.CLIENT_MARK_MESSAGES_SPAM));
+  };
+  /**
+   * @param {?} walkers
+   * @param {(Array|string)} opt_obj2
+   * @param {?} ignoreMethodDoesntExist
+   * @return {undefined}
+   */
+  Promise.prototype["delete"] = function(walkers, opt_obj2, ignoreMethodDoesntExist) {
+    this.$MercuryMessageActions2.handleUpdate(this.$MercuryMessageActions5(walkers, opt_obj2, dataAndEvents.DELETE_MESSAGES, ignoreMethodDoesntExist || deepDataAndEvents.CLIENT_DELETE_MESSAGES));
+  };
+  /**
+   * @param {?} opt_attributes
+   * @param {?} dataAndEvents
+   * @return {?}
+   */
+  Promise.prototype.$MercuryMessageActions3 = function(opt_attributes, dataAndEvents) {
+    return{
+      actions : [opt_attributes],
+      from_client : true,
+      payload_source : dataAndEvents
+    };
+  };
+  /**
+   * @param {?} opt_attributes
+   * @param {?} dataAndEvents
+   * @return {?}
+   */
+  Promise.prototype.$MercuryMessageActions4 = function(opt_attributes, dataAndEvents) {
+    return{
+      actions : [opt_attributes],
+      from_client : false,
+      payload_source : dataAndEvents
+    };
+  };
+  /**
+   * @param {?} obj
+   * @param {Array} f
+   * @param {?} dataAndEvents
+   * @param {?} deepDataAndEvents
+   * @return {?}
+   */
+  Promise.prototype.$MercuryMessageActions5 = function(obj, f, dataAndEvents, deepDataAndEvents) {
+    return{
+      actions : [{
+        action_type : dataAndEvents,
+        action_id : null,
+        thread_id : obj,
+        message_ids : f
+      }],
+      from_client : true,
+      payload_source : deepDataAndEvents
+    };
+  };
+  Object.assign(Promise, map);
+  /** @type {function (?): undefined} */
+  module.exports = Promise;
+}, null);
+__d("MercuryThreadActions", ["MercuryActionType", "MercuryPayloadSource", "MercuryServerRequests", "MercurySingletonMixin", "MessagingTag", "merge"], function(keepData, opt_attributes, matcherFunction, execResult, context, opt_keys, dataAndEvents, deepDataAndEvents, textAlt, map, ignoreMethodDoesntExist, $sanitize) {
+  /**
+   * @param {?} err
+   * @return {undefined}
+   */
+  function self(err) {
+    this.$MercuryThreadActions0 = err;
+    this.$MercuryThreadActions1 = textAlt.getForFBID(this.$MercuryThreadActions0);
+  }
+  /**
+   * @param {?} tid
+   * @param {string} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.markRead = function(tid, deepDataAndEvents) {
+    this.batchMarkRead([tid], deepDataAndEvents);
+  };
+  /**
+   * @param {Array} walkers
+   * @param {string} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.batchMarkRead = function(walkers, deepDataAndEvents) {
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions2(walkers, true, deepDataAndEvents));
+  };
+  /**
+   * @param {?} dataAndEvents
+   * @param {string} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.markUnread = function(dataAndEvents, deepDataAndEvents) {
+    this.batchMarkUnread([dataAndEvents], deepDataAndEvents);
+  };
+  /**
+   * @param {Array} walkers
+   * @param {string} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.batchMarkUnread = function(walkers, deepDataAndEvents) {
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions2(walkers, false, deepDataAndEvents));
+  };
+  /**
+   * @param {?} person
+   * @param {?} persistent
+   * @return {undefined}
+   */
+  self.prototype.markSeen = function(person, persistent) {
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions3([person], dataAndEvents.MARK_THREAD_SEEN, deepDataAndEvents.CLIENT_MARK_THREAD_SEEN, {
+      persistent : persistent
+    }));
+  };
+  /**
+   * @param {?} res
+   * @param {string} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.archive = function(res, deepDataAndEvents) {
+    this.batchArchive([res], deepDataAndEvents);
+  };
+  /**
+   * @param {Array} defs
+   * @param {string} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.batchArchive = function(defs, deepDataAndEvents) {
+    defs.forEach(function(qualifier) {
+      this.$MercuryThreadActions1.changeThreadArchivedStatus(qualifier, true, deepDataAndEvents);
+    }.bind(this));
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions4(defs, true));
+  };
+  /**
+   * @param {?} bookPath
+   * @param {string} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.unarchive = function(bookPath, deepDataAndEvents) {
+    this.batchUnarchive([bookPath], deepDataAndEvents);
+  };
+  /**
+   * @param {Array} defs
+   * @param {string} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.batchUnarchive = function(defs, deepDataAndEvents) {
+    defs.forEach(function(qualifier) {
+      this.$MercuryThreadActions1.changeThreadArchivedStatus(qualifier, false, deepDataAndEvents);
+    }.bind(this));
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions4(defs, false));
+  };
+  /**
+   * @param {?} regex
+   * @param {?} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.markSpam = function(regex, deepDataAndEvents) {
+    this.batchMarkSpam([regex], deepDataAndEvents);
+  };
+  /**
+   * @param {Array} defs
+   * @param {?} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.batchMarkSpam = function(defs, deepDataAndEvents) {
+    defs.forEach(function(qualifier) {
+      this.$MercuryThreadActions1.markThreadSpam(qualifier, deepDataAndEvents);
+    }.bind(this));
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions5(defs, ignoreMethodDoesntExist.SPAM));
+  };
+  /**
+   * @param {?} dataAndEvents
+   * @param {?} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.unmarkSpam = function(dataAndEvents, deepDataAndEvents) {
+    this.batchUnmarkSpam([dataAndEvents], deepDataAndEvents);
+  };
+  /**
+   * @param {Array} defs
+   * @param {?} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.batchUnmarkSpam = function(defs, deepDataAndEvents) {
+    defs.forEach(function(qualifier) {
+      this.$MercuryThreadActions1.unmarkThreadSpam(qualifier, deepDataAndEvents);
+    }.bind(this));
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions5(defs, ignoreMethodDoesntExist.INBOX));
+  };
+  /**
+   * @param {?} folder
+   * @param {?} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.changeFolder = function(folder, deepDataAndEvents) {
+    this.batchChangeFolder([folder], deepDataAndEvents);
+  };
+  /**
+   * @param {Array} defs
+   * @param {?} deepDataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.batchChangeFolder = function(defs, deepDataAndEvents) {
+    defs.forEach(function(qualifier) {
+      this.$MercuryThreadActions1.changeThreadFolder(qualifier, deepDataAndEvents);
+    }.bind(this));
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions5(defs, deepDataAndEvents));
+  };
+  /**
+   * @param {?} dataAndEvents
+   * @param {string} walkers
+   * @return {undefined}
+   */
+  self.prototype["delete"] = function(dataAndEvents, walkers) {
+    this.batchDelete([dataAndEvents], walkers);
+  };
+  /**
+   * @param {Array} defs
+   * @param {string} obj
+   * @return {undefined}
+   */
+  self.prototype.batchDelete = function(defs, obj) {
+    defs.forEach(function(qualifier) {
+      this.$MercuryThreadActions1.deleteThread(qualifier, obj);
+    }.bind(this));
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions3(defs, dataAndEvents.DELETE_THREAD, deepDataAndEvents.CLIENT_DELETE_THREAD));
+  };
+  /**
+   * @param {string} walkers
+   * @return {undefined}
+   */
+  self.prototype.unmute = function(walkers) {
+    this.updateMuteSetting(walkers, 0);
+  };
+  /**
+   * @param {string} obj
+   * @param {Array} isXML
+   * @return {undefined}
+   */
+  self.prototype.updateMuteSetting = function(obj, isXML) {
+    this.$MercuryThreadActions1.changeMutingOnThread(obj, isXML);
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions3([obj], dataAndEvents.CHANGE_MUTE_SETTINGS, deepDataAndEvents.CLIENT_CHANGE_MUTE_SETTINGS, {
+      mute_settings : isXML
+    }));
+  };
+  /**
+   * @param {?} ignoreMethodDoesntExist
+   * @param {Array} participants
+   * @return {undefined}
+   */
+  self.prototype.addParticipants = function(ignoreMethodDoesntExist, participants) {
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions3([ignoreMethodDoesntExist], dataAndEvents.ADD_PARTICIPANTS, deepDataAndEvents.CLIENT_ADD_PARTICIPANTS, {
+      participants : participants
+    }));
+  };
+  /**
+   * @param {string} shallow
+   * @return {undefined}
+   */
+  self.prototype.unpinThread = function(shallow) {
+    this.$MercuryThreadActions1.unpinThread(shallow);
+    this.$MercuryThreadActions1.handleUpdate(this.$MercuryThreadActions3([shallow], dataAndEvents.UNPIN_THREAD, deepDataAndEvents.CLIENT_UNPIN_THREAD));
+  };
+  /**
+   * @param {Array} obj
+   * @param {boolean} recurring
+   * @param {string} key
+   * @return {?}
+   */
+  self.prototype.$MercuryThreadActions2 = function(obj, recurring, key) {
+    return this.$MercuryThreadActions3(obj, dataAndEvents.CHANGE_READ_STATUS, deepDataAndEvents.CLIENT_CHANGE_READ_STATUS, {
+      mark_as_read : recurring,
+      source : key
+    });
+  };
+  /**
+   * @param {Array} defs
+   * @param {boolean} recurring
+   * @return {?}
+   */
+  self.prototype.$MercuryThreadActions4 = function(defs, recurring) {
+    return this.$MercuryThreadActions3(defs, dataAndEvents.CHANGE_ARCHIVED_STATUS, deepDataAndEvents.CLIENT_CHANGE_ARCHIVED_STATUS, {
+      archived : recurring
+    });
+  };
+  /**
+   * @param {Array} defs
+   * @param {?} ignoreMethodDoesntExist
+   * @return {?}
+   */
+  self.prototype.$MercuryThreadActions5 = function(defs, ignoreMethodDoesntExist) {
+    return this.$MercuryThreadActions3(defs, dataAndEvents.CHANGE_FOLDER, deepDataAndEvents.CLIENT_CHANGE_FOLDER, {
+      new_folder : ignoreMethodDoesntExist
+    });
+  };
+  /**
+   * @param {Array} a
+   * @param {?} dataAndEvents
+   * @param {?} deepDataAndEvents
+   * @param {?} opt_attributes
+   * @return {?}
+   */
+  self.prototype.$MercuryThreadActions3 = function(a, dataAndEvents, deepDataAndEvents, opt_attributes) {
+    return{
+      actions : a.map(function(thread) {
+        return $sanitize({
+          action_type : dataAndEvents,
+          action_id : null,
+          thread_id : thread
+        }, opt_attributes);
+      }),
+      from_client : true,
+      payload_source : deepDataAndEvents
+    };
+  };
+  Object.assign(self, map);
+  /** @type {function (?): undefined} */
+  context.exports = self;
+}, null);
+__d("MercuryFolders", ["MessagingTag", "arrayContains"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, models, makeIterator) {
+  /** @type {Array} */
+  var fxAttrs = [models.INBOX, models.OTHER, models.ACTION_ARCHIVED, models.SPAM];
+  var JsDiff = {
+    /**
+     * @return {?}
+     */
+    getSupportedFolders : function() {
+      return fxAttrs.concat();
+    },
+    /**
+     * @param {?} thisObj
+     * @return {?}
+     */
+    isSupportedFolder : function(thisObj) {
+      return makeIterator(fxAttrs, thisObj);
+    },
+    /**
+     * @param {?} node
+     * @return {?}
+     */
+    getFromMeta : function(node) {
+      var l = node.folder;
+      if (node.is_archived) {
+        l = models.ACTION_ARCHIVED;
+      }
+      return l;
+    }
+  };
+  module.exports = JsDiff;
+}, null);
+__d("MercuryUnreadState", ["MercuryFolders", "LogHistory", "KeyedCallbackManager", "MercuryActionType", "MercuryGlobalActionType", "MercurySingletonMixin", "MercuryThreadlistConstants", "MessagingTag", "ReportState", "MercuryServerRequests", "MercuryThreadInformer", "MercuryThreads", "arrayContains", "copyProperties", "createObjectFrom"], function(dataAndEvents, opt_attributes, matcherFunction, execResult, module, opt_keys, rootjQuery, ProgressIndicator, clazz, global, contestant, opt_obj2, animations,
+keepData, moduleInfo, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, reduce, freeze, complete) {
+  /**
+   * @param {?} var_args
+   * @return {undefined}
+   */
+  function create(var_args) {
+    this._fbid = var_args;
+    this._serverRequests = deepDataAndEvents.getForFBID(this._fbid);
+    this._threadInformer = ignoreMethodDoesntExist.getForFBID(this._fbid);
+    this._threads = textAlt.getForFBID(this._fbid);
     this._allReadTimestamp = {};
     this._threadReadTimestamp = {};
     this._initialUnreadCount = {};
     this._maxCount = {};
     this._unreadResources = {};
-    v.forEach(function(oa) {
-      this._initialUnreadCount[oa] = 0;
-      this._maxCount[oa] = false;
-      this._unreadResources[oa] = new i();
+    patterns.forEach(function(timeoutKey) {
+      /** @type {number} */
+      this._initialUnreadCount[timeoutKey] = 0;
+      /** @type {boolean} */
+      this._maxCount[timeoutKey] = false;
+      this._unreadResources[timeoutKey] = new clazz;
     }.bind(this));
-    this._serverRequests.subscribe('update-unread', function(oa, pa) {
-      fa(this, pa);
-      var qa = pa.global_actions || [];
-      for (var ra = 0; ra < qa.length; ra++) {
-        var sa = qa[ra];
-        if (sa.action_type == k.MARK_ALL_READ) ia(this, sa.folder, sa.timestamp);
-      }
-    }.bind(this));
-    this._serverRequests.subscribe('update-thread-ids', function(oa, pa) {
-      ka(this, pa);
-    }.bind(this));
-  }
-  t(aa.prototype, {
-    getUnreadCount: function(na) {
-      if (this.exceedsMaxCount(na)) {
-        z.error('unguarded_unread_count_fetch', {});
-        return 0;
-      }
-      return ea(this, na);
-    },
-    exceedsMaxCount: function(na) {
-      return this._maxCount[na] || (ea(this, na) > y);
-    },
-    markFolderAsRead: function(na) {
-      if (this._maxCount[na] || ea(this, na) > 0) this._serverRequests.markFolderAsRead(na);
-    }
-  });
-  t(aa, l);
-
-  function ba(na, oa, pa) {
-    na._unreadResources[oa].setResource(w, pa);
-    na._unreadResources[oa].setResource(x, Object.keys(pa));
-  }
-
-  function ca(na, oa, pa) {
-    var qa = na._unreadResources[oa].executeOrEnqueue(w, pa),
-      ra = na._unreadResources[oa].getUnavailableResources(qa);
-    if (ra.length) na._serverRequests.fetchUnreadThreadIDs(oa);
-  }
-
-  function da(na, oa) {
-    return na._unreadResources[oa].getResource(w);
-  }
-
-  function ea(na, oa) {
-    var pa = na._unreadResources[oa].getResource(x);
-    if (pa) {
-      return pa.length;
-    } else return na._initialUnreadCount[oa];
-  }
-
-  function fa(na, oa) {
-    var pa;
-    (oa.unread_thread_fbids || []).forEach(function(qa) {
-      pa = qa.folder;
-      if (!ma(pa)) return;
-      var ra = qa.thread_fbids || [];
-      ra = ra.concat(qa.other_user_fbids || []);
-      var sa = ja(na, ra);
-      ba(na, pa, u(sa, true));
-      if (sa.length > y) na._maxCount[pa] = true;
-      na._threadInformer.updatedUnreadState();
-    });
-    (oa.message_counts || []).forEach(function(qa) {
-      if (qa.unread_count === (void 0)) return;
-      pa = qa.folder;
-      if (qa.unread_count > y) {
-        na._maxCount[pa] = true;
-        ba(na, pa, {});
-        na._threadInformer.updatedUnreadState();
-      } else {
-        na._initialUnreadCount[pa] = qa.unread_count;
-        if (na._initialUnreadCount[pa] === 0) ba(na, pa, {});
-        na._threadInformer.updatedUnreadState();
-      }
-    });
-    (oa.actions || []).forEach(function(qa) {
-      if (qa.is_forward) return;
-      var ra = j,
-        sa = qa.other_user_fbid ? qa.other_user_fbid : qa.thread_fbid,
-        ta = qa.thread_id ? qa.thread_id : sa;
-      if (qa.action_type == ra.DELETE_THREAD) {
-        v.forEach(function(va) {
-          ha(na, va, ta);
-        });
-      } else if (qa.action_type == ra.CHANGE_ARCHIVED_STATUS || qa.action_type == ra.CHANGE_FOLDER) {
-        var ua = na._threads.getThreadMetaNow(qa.thread_id);
-        pa = g.getFromMeta(ua);
-        if (ma(pa) && ua.unread_count > 0) ga(na, pa, ta);
-        v.forEach(function(va) {
-          if (va != pa) ha(na, va, ta);
-        });
-      } else {
-        pa = la(na, qa);
-        if (!ma(pa)) return;
-        if (qa.action_type == ra.CHANGE_READ_STATUS) {
-          if (qa.mark_as_read) {
-            ha(na, pa, ta, qa.timestamp);
-          } else ga(na, pa, ta, qa.timestamp);
-        } else if (qa.action_type == ra.USER_GENERATED_MESSAGE || qa.action_type == ra.LOG_MESSAGE)
-          if (qa.is_unread) ga(na, pa, ta, qa.timestamp);
-      }
-    });
-  }
-
-  function ga(na, oa, pa, qa) {
-    if (na._maxCount[oa]) return;
-    ca(na, oa, function(ra) {
-      var sa = na._allReadTimestamp[oa] || 0,
-        ta = na._threadReadTimestamp[pa] || 0,
-        ua = qa || Number.POSITIVE_INFINITY;
-      if (ua >= sa && ua >= ta && !ra[pa]) {
-        ra[pa] = qa || 0;
-        ba(na, oa, ra);
-        na._threadInformer.updatedUnreadState();
-      }
-    });
-  }
-
-  function ha(na, oa, pa, qa) {
-    if (na._maxCount[oa]) return;
-    ca(na, oa, function(ra) {
-      if (qa) {
-        var sa = na._threadReadTimestamp[pa];
-        if (!sa || sa < qa) na._threadReadTimestamp[pa] = qa;
-      }
-      var ta = ra[pa];
-      if (qa && typeof ta == 'number' && qa < ta) return;
-      if (pa in ra) {
-        delete ra[pa];
-        ba(na, oa, ra);
-        na._threadInformer.updatedUnreadState();
-      }
-    });
-  }
-
-  function ia(na, oa, pa) {
-    na._maxCount[oa] = false;
-    ba(na, oa, {});
-    na._allReadTimestamp[oa] = Math.max(na._allReadTimestamp[oa] || 0, pa || 0);
-    na._threadInformer.updatedUnreadState();
-  }
-
-  function ja(na, oa) {
-    return oa.map(na._serverRequests.convertThreadIDIfAvailable, na._serverRequests);
-  }
-
-  function ka(na, oa) {
-    v.forEach(function(pa) {
-      var qa = da(na, pa);
-      if (!qa) return;
-      for (var ra in oa) {
-        var sa = oa[ra];
-        if (qa[ra]) {
-          qa[sa] = qa[ra];
-          delete qa[ra];
+    this._serverRequests.subscribe("update-unread", function(dataAndEvents, ev) {
+      start(this, ev);
+      var codeSegments = ev.global_actions || [];
+      /** @type {number} */
+      var i = 0;
+      for (;i < codeSegments.length;i++) {
+        var node = codeSegments[i];
+        if (node.action_type == contestant.MARK_ALL_READ) {
+          exit(this, node.folder, node.timestamp);
         }
       }
-      ba(na, pa, qa);
+    }.bind(this));
+    this._serverRequests.subscribe("update-thread-ids", function(dataAndEvents, walkers) {
+      emit(this, walkers);
+    }.bind(this));
+  }
+  /**
+   * @param {?} e
+   * @param {?} i
+   * @param {Object} data
+   * @return {undefined}
+   */
+  function cb(e, i, data) {
+    e._unreadResources[i].setResource(suiteView, data);
+    e._unreadResources[i].setResource(path, Object.keys(data));
+  }
+  /**
+   * @param {?} error
+   * @param {?} key
+   * @param {Function} deepDataAndEvents
+   * @return {undefined}
+   */
+  function callback(error, key, deepDataAndEvents) {
+    var r20 = error._unreadResources[key].executeOrEnqueue(suiteView, deepDataAndEvents);
+    var codeSegments = error._unreadResources[key].getUnavailableResources(r20);
+    if (codeSegments.length) {
+      error._serverRequests.fetchUnreadThreadIDs(key);
+    }
+  }
+  /**
+   * @param {?} self
+   * @param {?} timeoutKey
+   * @return {?}
+   */
+  function listener(self, timeoutKey) {
+    return self._unreadResources[timeoutKey].getResource(suiteView);
+  }
+  /**
+   * @param {?} parent
+   * @param {?} key
+   * @return {?}
+   */
+  function promote(parent, key) {
+    var resolved = parent._unreadResources[key].getResource(path);
+    if (resolved) {
+      return resolved.length;
+    } else {
+      return parent._initialUnreadCount[key];
+    }
+  }
+  /**
+   * @param {?} e
+   * @param {Object} ui
+   * @return {undefined}
+   */
+  function start(e, ui) {
+    var r;
+    (ui.unread_thread_fbids || []).forEach(function(val) {
+      r = val.folder;
+      if (!each(r)) {
+        return;
+      }
+      var camelKey = val.thread_fbids || [];
+      camelKey = camelKey.concat(val.other_user_fbids || []);
+      var data = fn(e, camelKey);
+      cb(e, r, complete(data, true));
+      if (data.length > max) {
+        /** @type {boolean} */
+        e._maxCount[r] = true;
+      }
+      e._threadInformer.updatedUnreadState();
+    });
+    (ui.message_counts || []).forEach(function(val) {
+      if (val.unread_count === void 0) {
+        return;
+      }
+      r = val.folder;
+      if (val.unread_count > max) {
+        /** @type {boolean} */
+        e._maxCount[r] = true;
+        cb(e, r, {});
+        e._threadInformer.updatedUnreadState();
+      } else {
+        e._initialUnreadCount[r] = val.unread_count;
+        if (e._initialUnreadCount[r] === 0) {
+          cb(e, r, {});
+        }
+        e._threadInformer.updatedUnreadState();
+      }
+    });
+    (ui.actions || []).forEach(function(message) {
+      if (message.is_forward) {
+        return;
+      }
+      var root = global;
+      var me = message.other_user_fbid ? message.other_user_fbid : message.thread_fbid;
+      var camelKey = message.thread_id ? message.thread_id : me;
+      if (message.action_type == root.DELETE_THREAD) {
+        patterns.forEach(function(dataName) {
+          action(e, dataName, camelKey);
+        });
+      } else {
+        if (message.action_type == root.CHANGE_ARCHIVED_STATUS || message.action_type == root.CHANGE_FOLDER) {
+          var selector = e._threads.getThreadMetaNow(message.thread_id);
+          r = rootjQuery.getFromMeta(selector);
+          if (each(r) && selector.unread_count > 0) {
+            ready(e, r, camelKey);
+          }
+          patterns.forEach(function(i) {
+            if (i != r) {
+              action(e, i, camelKey);
+            }
+          });
+        } else {
+          r = next(e, message);
+          if (!each(r)) {
+            return;
+          }
+          if (message.action_type == root.CHANGE_READ_STATUS) {
+            if (message.mark_as_read) {
+              action(e, r, camelKey, message.timestamp);
+            } else {
+              ready(e, r, camelKey, message.timestamp);
+            }
+          } else {
+            if (message.action_type == root.USER_GENERATED_MESSAGE || message.action_type == root.LOG_MESSAGE) {
+              if (message.is_unread) {
+                ready(e, r, camelKey, message.timestamp);
+              }
+            }
+          }
+        }
+      }
     });
   }
-
-  function la(na, oa) {
-    var pa = oa.thread_id ? na._threads.getThreadMetaNow(oa.thread_id) : null;
-    return pa ? g.getFromMeta(pa) : oa.folder;
+  /**
+   * @param {?} e
+   * @param {?} index
+   * @param {string} key
+   * @param {number} args
+   * @return {undefined}
+   */
+  function ready(e, index, key, args) {
+    if (e._maxCount[index]) {
+      return;
+    }
+    callback(e, index, function(files) {
+      var b = e._allReadTimestamp[index] || 0;
+      var d = e._threadReadTimestamp[key] || 0;
+      var a = args || Number.POSITIVE_INFINITY;
+      if (a >= b && (a >= d && !files[key])) {
+        files[key] = args || 0;
+        cb(e, index, files);
+        e._threadInformer.updatedUnreadState();
+      }
+    });
   }
-
-  function ma(na) {
-    return s(v, na);
+  /**
+   * @param {?} e
+   * @param {?} i
+   * @param {?} key
+   * @param {boolean} value
+   * @return {undefined}
+   */
+  function action(e, i, key, value) {
+    if (e._maxCount[i]) {
+      return;
+    }
+    callback(e, i, function(data) {
+      if (value) {
+        var v = e._threadReadTimestamp[key];
+        if (!v || v < value) {
+          /** @type {boolean} */
+          e._threadReadTimestamp[key] = value;
+        }
+      }
+      var label = data[key];
+      if (value && (typeof label == "number" && value < label)) {
+        return;
+      }
+      if (key in data) {
+        delete data[key];
+        cb(e, i, data);
+        e._threadInformer.updatedUnreadState();
+      }
+    });
   }
-  o.registerCallback('mercury-unread-state', function() {
-    var na = {};
-    na.unread = {};
-    na.unread_max_count = {};
-    var oa = aa._getInstances();
-    for (var pa in oa) {
-      na.unread[pa] = {};
-      na.unread_max_count[pa] = {};
-      v.forEach(function(qa) {
-        na.unread[pa][qa] = t({}, da(oa[pa], qa));
-        na.unread_max_count[pa][qa] = oa[pa]._maxCount[qa];
+  /**
+   * @param {?} status
+   * @param {?} name
+   * @param {number} y
+   * @return {undefined}
+   */
+  function exit(status, name, y) {
+    /** @type {boolean} */
+    status._maxCount[name] = false;
+    cb(status, name, {});
+    /** @type {number} */
+    status._allReadTimestamp[name] = Math.max(status._allReadTimestamp[name] || 0, y || 0);
+    status._threadInformer.updatedUnreadState();
+  }
+  /**
+   * @param {?} s
+   * @param {Array} data
+   * @return {?}
+   */
+  function fn(s, data) {
+    return data.map(s._serverRequests.convertThreadIDIfAvailable, s._serverRequests);
+  }
+  /**
+   * @param {?} evt
+   * @param {Object} obj
+   * @return {undefined}
+   */
+  function emit(evt, obj) {
+    patterns.forEach(function(id) {
+      var old = listener(evt, id);
+      if (!old) {
+        return;
+      }
+      var i;
+      for (i in obj) {
+        var name = obj[i];
+        if (old[i]) {
+          old[name] = old[i];
+          delete old[i];
+        }
+      }
+      cb(evt, id, old);
+    });
+  }
+  /**
+   * @param {?} event
+   * @param {?} val
+   * @return {?}
+   */
+  function next(event, val) {
+    var selector = val.thread_id ? event._threads.getThreadMetaNow(val.thread_id) : null;
+    return selector ? rootjQuery.getFromMeta(selector) : val.folder;
+  }
+  /**
+   * @param {?} fn
+   * @return {?}
+   */
+  function each(fn) {
+    return reduce(patterns, fn);
+  }
+  var patterns = (rootjQuery.getSupportedFolders() || []).filter(function(dataAndEvents) {
+    return dataAndEvents != keepData.ACTION_ARCHIVED;
+  });
+  /** @type {string} */
+  var suiteView = "unread_thread_hash";
+  /** @type {string} */
+  var path = "unseen_thread_list";
+  var max = animations.MAX_UNREAD_COUNT;
+  var $log = ProgressIndicator.getInstance("mercury_unread_state");
+  freeze(create.prototype, {
+    /**
+     * @param {?} key
+     * @return {?}
+     */
+    getUnreadCount : function(key) {
+      if (this.exceedsMaxCount(key)) {
+        $log.error("unguarded_unread_count_fetch", {});
+        return 0;
+      }
+      return promote(this, key);
+    },
+    /**
+     * @param {?} key
+     * @return {?}
+     */
+    exceedsMaxCount : function(key) {
+      return this._maxCount[key] || promote(this, key) > max;
+    },
+    /**
+     * @param {?} key
+     * @return {undefined}
+     */
+    markFolderAsRead : function(key) {
+      if (this._maxCount[key] || promote(this, key) > 0) {
+        this._serverRequests.markFolderAsRead(key);
+      }
+    }
+  });
+  freeze(create, opt_obj2);
+  moduleInfo.registerCallback("mercury-unread-state", function() {
+    var item = {};
+    item.unread = {};
+    item.unread_max_count = {};
+    var testSource = create._getInstances();
+    var name;
+    for (name in testSource) {
+      item.unread[name] = {};
+      item.unread_max_count[name] = {};
+      patterns.forEach(function(id) {
+        item.unread[name][id] = freeze({}, listener(testSource[name], id));
+        item.unread_max_count[name][id] = testSource[name]._maxCount[id];
       });
     }
-    return na;
+    return item;
   });
-  e.exports = aa;
+  /** @type {function (?): undefined} */
+  module.exports = create;
 }, null);
-__d("MercuryLeftNav", ["Arbiter", "MessagingTag", "NavigationMessage", "MercuryThreadInformer", "MercuryUnreadState"], function(a, b, c, d, e, f, g, h, i) {
-  var j = b('MercuryThreadInformer').get(),
-    k = b('MercuryUnreadState').get(),
-    l = false;
-
-  function m() {
-    var o = k.getUnreadCount(h.INBOX);
-    g.inform(i.NAVIGATION_COUNT_UPDATE, {
-      key: 'inbox',
-      hide: true
+__d("MercuryLeftNav", ["Arbiter", "MessagingTag", "NavigationMessage", "MercuryThreadInformer", "MercuryUnreadState"], function(dataAndEvents, nock, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt, lang, socket, i18n) {
+  /**
+   * @return {undefined}
+   */
+  function n() {
+    var countInfo = communication.getUnreadCount(socket.INBOX);
+    lang.inform(i18n.NAVIGATION_COUNT_UPDATE, {
+      key : "inbox",
+      hide : true
     });
-    g.inform(i.NAVIGATION_COUNT_UPDATE, {
-      key: 'inbox',
-      count: o
+    lang.inform(i18n.NAVIGATION_COUNT_UPDATE, {
+      key : "inbox",
+      count : countInfo
     });
   }
-  var n = {
-    bootstrap: function() {
-      if (l) return;
-      j.subscribe('unread-updated', m);
+  var source = nock("MercuryThreadInformer").get();
+  var communication = nock("MercuryUnreadState").get();
+  /** @type {boolean} */
+  var l = false;
+  var JsDiff = {
+    /**
+     * @return {undefined}
+     */
+    bootstrap : function() {
+      if (l) {
+        return;
+      }
+      source.subscribe("unread-updated", n);
+      /** @type {boolean} */
       l = true;
     }
   };
-  e.exports = n;
+  module.exports = JsDiff;
 }, null);
-__d("MercuryThreadMuter", ["AsyncDialog", "AsyncRequest", "CurrentUser", "DOM"], function(a, b, c, d, e, f, g, h, i, j) {
-  var k = {
-    getUserIDEmail: function() {
-      return i.getID() + '@facebook.com';
+__d("MercuryThreadMuter", ["AsyncDialog", "AsyncRequest", "CurrentUser", "DOM"], function(ignoreMethodDoesntExist, textAlt, keepData, $sanitize, module, opt_attributes, res, dataAndEvents, a, deepDataAndEvents) {
+  var jQuery = {
+    /**
+     * @return {?}
+     */
+    getUserIDEmail : function() {
+      return a.getID() + "@facebook.com";
     },
-    getThreadMuteSettingForUser: function(l) {
-      return l.mute_settings && l.mute_settings[k.getUserIDEmail()];
+    /**
+     * @param {?} dataAndEvents
+     * @return {?}
+     */
+    getThreadMuteSettingForUser : function(dataAndEvents) {
+      return dataAndEvents.mute_settings && dataAndEvents.mute_settings[jQuery.getUserIDEmail()];
     },
-    isThreadMuted: function(l) {
-      return k.getThreadMuteSettingForUser(l) !== (void 0);
+    /**
+     * @param {?} node
+     * @return {?}
+     */
+    isThreadMuted : function(node) {
+      return jQuery.getThreadMuteSettingForUser(node) !== void 0;
     },
-    showMuteChangeDialog: function(l, m) {
-      g.send(new h('/ajax/mercury/mute_thread_dialog.php').setRelativeTo(m), function(n) {
-        n.subscribe('confirm', function() {
+    /**
+     * @param {string} walkers
+     * @param {?} comments
+     * @return {undefined}
+     */
+    showMuteChangeDialog : function(walkers, comments) {
+      res.send((new dataAndEvents("/ajax/mercury/mute_thread_dialog.php")).setRelativeTo(comments), function(self) {
+        self.subscribe("confirm", function() {
           this.hide();
-          var o;
-          j.scry(this.getRoot(), 'input[type="radio"]').forEach(function(p) {
-            if (p.checked) o = p.value;
+          var ret;
+          deepDataAndEvents.scry(this.getRoot(), 'input[type="radio"]').forEach(function(elem) {
+            if (elem.checked) {
+              ret = elem.value;
+            }
           });
-          o = k.convertRawMuteSetting(o);
-          d(['MercuryThreadActions'], function(p) {
-            p.get().updateMuteSetting(l, o);
+          ret = jQuery.convertRawMuteSetting(ret);
+          $sanitize(["MercuryThreadActions"], function($templateCache) {
+            $templateCache.get().updateMuteSetting(walkers, ret);
           });
-        }.bind(n));
+        }.bind(self));
       });
     },
-    convertRawMuteSetting: function(l) {
-      switch (l) {
-        case 'always':
-          return -1;
-        case '1hour':
+    /**
+     * @param {?} second
+     * @return {?}
+     */
+    convertRawMuteSetting : function(second) {
+      switch(second) {
+        case "always":
+          return-1;
+        case "1hour":
           return 3600;
-        case '8am':
-          var m, n = new Date(),
-            o = new Date();
-          o.setHours(8);
-          o.setMinutes(0);
-          o.setSeconds(0);
-          if (o > n) {
-            m = o - n;
-          } else m = o - n + (24 * 3600 * 1000);
-          return m / 1000;
+        case "8am":
+          var m;
+          /** @type {Date} */
+          var date2 = new Date;
+          /** @type {Date} */
+          var date1 = new Date;
+          date1.setHours(8);
+          date1.setMinutes(0);
+          date1.setSeconds(0);
+          if (date1 > date2) {
+            /** @type {number} */
+            m = date1 - date2;
+          } else {
+            /** @type {number} */
+            m = date1 - date2 + 24 * 3600 * 1E3;
+          }
+          return m / 1E3;
         default:
           return 0;
       }
     }
   };
-  e.exports = k;
+  module.exports = jQuery;
 }, null);
-__d("ImageSourceType", [], function(a, b, c, d, e, f) {
-  var g = {
-    PROFILE_PICTURE: 'profile_picture',
-    IMAGE: 'image'
+__d("ImageSourceType", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  var JsDiff = {
+    PROFILE_PICTURE : "profile_picture",
+    IMAGE : "image"
   };
-  e.exports = g;
+  module.exports = JsDiff;
 }, null);
-__d("ImageSourceRequest", ["CurrentUser", "ImageSourceType", "KeyedCallbackManager", "PhotoResizeModeConst", "MercuryServerDispatcher", "arrayContains", "extendArray"], function(a, b, c, d, e, f, g, h, i, j, k, l, m) {
-  function n() {
-    "use strict";
+__d("ImageSourceRequest", ["CurrentUser", "ImageSourceType", "KeyedCallbackManager", "PhotoResizeModeConst", "MercuryServerDispatcher", "arrayContains", "extendArray"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, a, propNames, Deferred, dataAndEvents, stats, ondata, done) {
+  /**
+   * @return {undefined}
+   */
+  function $() {
     this._request = {
-      fbid: null,
-      type: null,
-      width: null,
-      height: null,
-      resize_mode: null
+      fbid : null,
+      type : null,
+      width : null,
+      height : null,
+      resize_mode : null
     };
+    /** @type {null} */
     this._callback = null;
   }
-  n.prototype.setFBID = function(r) {
-    "use strict";
-    this._request.fbid = r;
-    return this;
-  };
-  n.prototype.setType = function(r) {
-    "use strict";
-    if (!l([h.PROFILE_PICTURE, h.IMAGE], r)) throw new TypeError('ImageSourceRequest.setType: invalid type ' + r);
-    this._request.type = r;
-    return this;
-  };
-  n.prototype.setDimensions = function(r, s) {
-    "use strict";
-    this._request.width = r;
-    this._request.height = s;
-    return this;
-  };
-  n.prototype.setResizeMode = function(r) {
-    "use strict";
-    if (!l([j.COVER, j.CONTAIN], r)) throw new TypeError('ImageSourceRequest.setResizeMode: invalid resize mode ' + r);
-    this._request.resize_mode = r;
-    return this;
-  };
-  n.prototype.setCallback = function(r) {
-    "use strict";
-    this._callback = r;
-    return this;
-  };
-  n.prototype.send = function() {
-    "use strict";
-    if (!this._request.fbid || !this._request.width || !this._request.height || !this._request.type || !this._request.resize_mode || !this._callback) throw new Error('ImageSourceRequest: You must set all the fields');
-    var r = p(),
-      s = q(this._request);
-    r.executeOrEnqueue(s, this._callback);
-    if (r.getUnavailableResourcesFromRequest(s).length === 1) {
-      k.trySend('/ajax/image_source.php', {
-        requests: [this._request]
-      });
-      return true;
+  /**
+   * @return {?}
+   */
+  function next() {
+    if (ret) {
+      return ret;
     }
-    return false;
-  };
-  var o = null;
-
-  function p() {
-    if (o) return o;
-    var r = new i();
-    o = r;
-    k.registerEndpoints({
-      '/ajax/image_source.php': {
-        request_user_id: g.getID(),
-        mode: k.BATCH_DEFERRED_MULTI,
-        batch_function: function(s, t) {
-          m(s.requests, t.requests);
-          return s;
+    var r = new Deferred;
+    ret = r;
+    stats.registerEndpoints({
+      "/ajax/image_source.php" : {
+        request_user_id : a.getID(),
+        mode : stats.BATCH_DEFERRED_MULTI,
+        /**
+         * @param {Object} error
+         * @param {Object} client
+         * @return {?}
+         */
+        batch_function : function(error, client) {
+          done(error.requests, client.requests);
+          return error;
         },
-        handler: function(s, t) {
-          var u = t.getData().requests;
-          for (var v = 0; v < u.length; ++v) r.setResource(q(u[v]), s[v]);
+        /**
+         * @param {Array} bits
+         * @param {Object} event
+         * @return {undefined}
+         */
+        handler : function(bits, event) {
+          var codeSegments = event.getData().requests;
+          /** @type {number} */
+          var i = 0;
+          for (;i < codeSegments.length;++i) {
+            r.setResource(fn(codeSegments[i]), bits[i]);
+          }
         }
       }
     });
     return r;
   }
-
-  function q(r) {
-    return [r.fbid, r.type, r.width, r.height, r.resize_mode].join('|');
+  /**
+   * @param {Object} ev
+   * @return {?}
+   */
+  function fn(ev) {
+    return[ev.fbid, ev.type, ev.width, ev.height, ev.resize_mode].join("|");
   }
-  e.exports = n;
+  /**
+   * @param {?} pageStart
+   * @return {?}
+   */
+  $.prototype.setFBID = function(pageStart) {
+    this._request.fbid = pageStart;
+    return this;
+  };
+  /**
+   * @param {string} val
+   * @return {?}
+   */
+  $.prototype.setType = function(val) {
+    if (!ondata([propNames.PROFILE_PICTURE, propNames.IMAGE], val)) {
+      throw new TypeError("ImageSourceRequest.setType: invalid type " + val);
+    }
+    /** @type {string} */
+    this._request.type = val;
+    return this;
+  };
+  /**
+   * @param {number} width
+   * @param {number} height
+   * @return {?}
+   */
+  $.prototype.setDimensions = function(width, height) {
+    /** @type {number} */
+    this._request.width = width;
+    /** @type {number} */
+    this._request.height = height;
+    return this;
+  };
+  /**
+   * @param {?} val
+   * @return {?}
+   */
+  $.prototype.setResizeMode = function(val) {
+    if (!ondata([dataAndEvents.COVER, dataAndEvents.CONTAIN], val)) {
+      throw new TypeError("ImageSourceRequest.setResizeMode: invalid resize mode " + val);
+    }
+    this._request.resize_mode = val;
+    return this;
+  };
+  /**
+   * @param {Function} callback
+   * @return {?}
+   */
+  $.prototype.setCallback = function(callback) {
+    /** @type {Function} */
+    this._callback = callback;
+    return this;
+  };
+  /**
+   * @return {?}
+   */
+  $.prototype.send = function() {
+    if (!this._request.fbid || (!this._request.width || (!this._request.height || (!this._request.type || (!this._request.resize_mode || !this._callback))))) {
+      throw new Error("ImageSourceRequest: You must set all the fields");
+    }
+    var buf = next();
+    var pair = fn(this._request);
+    buf.executeOrEnqueue(pair, this._callback);
+    if (buf.getUnavailableResourcesFromRequest(pair).length === 1) {
+      stats.trySend("/ajax/image_source.php", {
+        requests : [this._request]
+      });
+      return true;
+    }
+    return false;
+  };
+  /** @type {null} */
+  var ret = null;
+  /** @type {function (): undefined} */
+  module.exports = $;
 }, null);
-__d("MercuryParticipants", ["CurrentUser", "EventEmitter", "ImageSourceRequest", "ImageSourceType", "ImmutableObject", "KeyedCallbackManager", "Map", "MercuryAssert", "MercuryIDs", "MercuryParticipantsConstants", "MercuryParticipantTypes", "MercuryPayloadSource", "MercuryServerRequests", "PhotoResizeModeConst", "Set", "ShortProfiles", "fbt", "getObjectValues", "mapObject", "setImmediate"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z) {
-  'use strict';
-  var aa = 'change';
-
-  function ba(ea) {
-    this.$MercuryParticipants0 = ea;
-    this.$MercuryParticipants1 = new h();
-    this.$MercuryParticipants2 = new l();
-    this.$MercuryParticipants3 = new m();
+__d("MercuryParticipants", ["CurrentUser", "EventEmitter", "ImageSourceRequest", "ImageSourceType", "ImmutableObject", "KeyedCallbackManager", "Map", "MercuryAssert", "MercuryIDs", "MercuryParticipantsConstants", "MercuryParticipantTypes", "MercuryPayloadSource", "MercuryServerRequests", "PhotoResizeModeConst", "Set", "ShortProfiles", "fbt", "getObjectValues", "mapObject", "setImmediate"], function(deepDataAndEvents, opt_keys, positionError, oFunctionBody, module, _$timeout_, a, ignoreMethodDoesntExist,
+textAlt, inDataSet, binding, keepData, opt_attributes, Data, _, patient, subject, special, matcherFunction, execResult, Layout, jQuery, dataAndEvents, filter, $, $sanitize) {
+  /**
+   * @param {?} err
+   * @return {undefined}
+   */
+  function self(err) {
+    this.$MercuryParticipants0 = err;
+    this.$MercuryParticipants1 = new ignoreMethodDoesntExist;
+    this.$MercuryParticipants2 = new keepData;
+    this.$MercuryParticipants3 = new opt_attributes;
+    /** @type {boolean} */
     this.$MercuryParticipants4 = false;
-    this.$MercuryParticipants5 = new u();
-    this.$MercuryParticipants6 = new u();
-    this.$MercuryParticipants7 = s.getForFBID(this.$MercuryParticipants0);
-    this.$MercuryParticipants7.subscribe('update-participants', function(fa, ga) {
-      if (ga.participants && ga.participants.length > 0) {
-        var ha = {};
-        ga.participants.forEach(function(ia) {
-          ha[ia.id] = ia;
+    this.$MercuryParticipants5 = new Layout;
+    this.$MercuryParticipants6 = new Layout;
+    this.$MercuryParticipants7 = matcherFunction.getForFBID(this.$MercuryParticipants0);
+    this.$MercuryParticipants7.subscribe("update-participants", function(dataAndEvents, data) {
+      if (data.participants && data.participants.length > 0) {
+        var defs = {};
+        data.participants.forEach(function(def) {
+          /** @type {Element} */
+          defs[def.id] = def;
         });
-        this.$MercuryParticipants8(ha);
+        this.$MercuryParticipants8(defs);
       }
     }.bind(this));
   }
-  ba.prototype.addListener = function(ea, fa) {
-    return this.$MercuryParticipants1.addListener(ea, fa);
+  /**
+   * @param {string} id
+   * @param {Object} item
+   * @return {?}
+   */
+  function text(id, item) {
+    var data = {
+      gender : item.gender,
+      href : item.uri,
+      id : id,
+      image_src : item.thumbSrc,
+      name : item.name,
+      short_name : item.firstName,
+      employee : item.employee,
+      is_employee_away : item.is_employee_away,
+      type : item.type,
+      vanity : item.vanity,
+      is_friend : item.is_friend,
+      orion_eligible : item.orionEligible,
+      social_snippets : item.social_snippets
+    };
+    if (item.officeStatus) {
+      data.officeStatus = item.officeStatus;
+      data.officeStatusStartDate = item.officeStatusStartDate;
+      data.officeStatusEndDate = item.officeStatusEndDate;
+      data.officeStatusComment = item.officeStatusComment;
+      data.officeStatusLocation = item.officeStatusLocation;
+    }
+    return data;
+  }
+  /**
+   * @param {string} query
+   * @param {string} arg
+   * @return {?}
+   */
+  function process(query, arg) {
+    return{
+      gender : patient.UNKNOWN_GENDER,
+      href : null,
+      id : query,
+      image_src : patient.EMAIL_IMAGE,
+      big_image_src : patient.EMAIL_IMAGE,
+      name : arg,
+      short_name : arg,
+      employee : false
+    };
+  }
+  /** @type {string} */
+  var ev = "change";
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {?} triggerRoute
+   * @return {?}
+   */
+  self.prototype.addListener = function(deepDataAndEvents, triggerRoute) {
+    return this.$MercuryParticipants1.addListener(deepDataAndEvents, triggerRoute);
   };
-  ba.prototype.getIDFromVanityOrFBID = function(ea) {
-    if (!ea) return;
-    if (this.$MercuryParticipants3.has(ea)) return this.$MercuryParticipants3.get(ea);
-    if (/^\d+$/.test(ea)) return o.getParticipantIDFromUserID(ea);
+  /**
+   * @param {string} result
+   * @return {?}
+   */
+  self.prototype.getIDFromVanityOrFBID = function(result) {
+    if (!result) {
+      return;
+    }
+    if (this.$MercuryParticipants3.has(result)) {
+      return this.$MercuryParticipants3.get(result);
+    }
+    if (/^\d+$/.test(result)) {
+      return _.getParticipantIDFromUserID(result);
+    }
   };
-  ba.prototype.getNow = function(ea) {
-    return this.$MercuryParticipants9(ea);
+  /**
+   * @param {string} name
+   * @return {?}
+   */
+  self.prototype.getNow = function(name) {
+    return this.$MercuryParticipants9(name);
   };
-  ba.prototype.getOrFetch = function(ea) {
-    var fa = this.$MercuryParticipants9(ea);
-    if (!fa && !this.$MercuryParticipants6.has(ea)) this.$MercuryParticipants5.add(ea);
-    if (this.$MercuryParticipants5.size > 0 && !this.$MercuryParticipants4) this.$MercuryParticipantsa();
-    return fa;
+  /**
+   * @param {string} arg
+   * @return {?}
+   */
+  self.prototype.getOrFetch = function(arg) {
+    var keyName = this.$MercuryParticipants9(arg);
+    if (!keyName && !this.$MercuryParticipants6.has(arg)) {
+      this.$MercuryParticipants5.add(arg);
+    }
+    if (this.$MercuryParticipants5.size > 0 && !this.$MercuryParticipants4) {
+      this.$MercuryParticipantsa();
+    }
+    return keyName;
   };
-  ba.prototype.get = function(ea, fa) {
-    n.isParticipantID(ea);
-    return this.$MercuryParticipantsb([ea], function(ga) {
-      fa(ga[ea]);
+  /**
+   * @param {string} name
+   * @param {Object} fn
+   * @return {?}
+   */
+  self.prototype.get = function(name, fn) {
+    Data.isParticipantID(name);
+    return this.$MercuryParticipantsb([name], function(context) {
+      fn(context[name]);
     });
   };
-  ba.prototype.getMulti = function(ea, fa) {
-    return this.$MercuryParticipantsb(ea, fa);
+  /**
+   * @param {?} elems
+   * @param {Function} deepDataAndEvents
+   * @return {?}
+   */
+  self.prototype.getMulti = function(elems, deepDataAndEvents) {
+    return this.$MercuryParticipantsb(elems, deepDataAndEvents);
   };
-  ba.prototype.getBigImageMulti = function(ea, fa) {
-    n.allParticipantIDs(ea);
-    var ga = p.BIG_IMAGE_SIZE;
-    return this.$MercuryParticipantsb(ea, function(ha) {
-      var ia = {},
-        ja = 0,
-        ka = new u(),
-        la = function(pa, qa) {
-          ja++;
-          ia[pa] = qa;
-          if (ja === ea.length) {
-            fa(ia);
-            if (ka.size > 0) this.$MercuryParticipantsc(ka);
+  /**
+   * @param {string} owner
+   * @param {Function} $sanitize
+   * @return {?}
+   */
+  self.prototype.getBigImageMulti = function(owner, $sanitize) {
+    Data.allParticipantIDs(owner);
+    var height = patient.BIG_IMAGE_SIZE;
+    return this.$MercuryParticipantsb(owner, function(context) {
+      var value = {};
+      /** @type {number} */
+      var completed = 0;
+      var layer = new Layout;
+      var fn = function(name, rhs) {
+        completed++;
+        value[name] = rhs;
+        if (completed === owner.length) {
+          $sanitize(value);
+          if (layer.size > 0) {
+            this.$MercuryParticipantsc(layer);
           }
-        }.bind(this),
-        ma = function(pa, qa) {
-          this.$MercuryParticipants2.setResource(pa, k.set(this.$MercuryParticipants2.getResource(pa), {
-            big_image_src: qa.uri
-          }));
-          ka.add(pa);
-          la(pa, qa.uri);
-        }.bind(this);
-      for (var na in ha) {
-        var oa = ha[na];
-        if (!oa.big_image_src) {
-          new i().setFBID(o.getUserIDFromParticipantID(na)).setType(j.PROFILE_PICTURE).setDimensions(ga, ga).setResizeMode(t.COVER).setCallback(ma.bind(null, na)).send();
-        } else la(oa.id, oa.big_image_src);
+        }
+      }.bind(this);
+      var callback = function(path, module) {
+        this.$MercuryParticipants2.setResource(path, binding.set(this.$MercuryParticipants2.getResource(path), {
+          big_image_src : module.uri
+        }));
+        layer.add(path);
+        fn(path, module.uri);
+      }.bind(this);
+      var match;
+      for (match in context) {
+        var f = context[match];
+        if (!f.big_image_src) {
+          (new textAlt).setFBID(_.getUserIDFromParticipantID(match)).setType(inDataSet.PROFILE_PICTURE).setDimensions(height, height).setResizeMode(execResult.COVER).setCallback(callback.bind(null, match)).send();
+        } else {
+          fn(f.id, f.big_image_src);
+        }
       }
     }.bind(this));
   };
-  ba.prototype.getOrderedBigImageMulti = function(ea, fa) {
-    return this.getBigImageMulti(ea, function(ga) {
-      fa(ea.map(function(ha) {
-        return ga[ha];
+  /**
+   * @param {Object} elems
+   * @param {Function} $sanitize
+   * @return {?}
+   */
+  self.prototype.getOrderedBigImageMulti = function(elems, $sanitize) {
+    return this.getBigImageMulti(elems, function(buf) {
+      $sanitize(elems.map(function(off) {
+        return buf[off];
       }));
     });
   };
-  ba.prototype.$MercuryParticipantsb = function(ea, fa) {
-    n.allParticipantIDs(ea);
-    var ga = this.$MercuryParticipants2.executeOrEnqueue(ea, fa),
-      ha = this.$MercuryParticipants2.getUnavailableResources(ga),
-      ia = {};
-    ha.forEach(function(ka) {
-      var la = o.tokenize(ka),
-        ma = la.type,
-        na = la.value;
-      if (ma == 'fbid') {
-        ia[ka] = na;
-      } else if (ma == 'email') this.$MercuryParticipantsd(ka, na);
+  /**
+   * @param {?} owner
+   * @param {Function} deepDataAndEvents
+   * @return {?}
+   */
+  self.prototype.$MercuryParticipantsb = function(owner, deepDataAndEvents) {
+    Data.allParticipantIDs(owner);
+    var r20 = this.$MercuryParticipants2.executeOrEnqueue(owner, deepDataAndEvents);
+    var asserterNames = this.$MercuryParticipants2.getUnavailableResources(r20);
+    var elem = {};
+    asserterNames.forEach(function(style) {
+      var target = _.tokenize(style);
+      var type = target.type;
+      var value = target.value;
+      if (type == "fbid") {
+        elem[style] = value;
+      } else {
+        if (type == "email") {
+          this.$MercuryParticipantsd(style, value);
+        }
+      }
     }.bind(this));
-    var ja = x(ia);
-    if (ja.length) v.getMulti(ja, function(ka) {
-      var la = y(ia, function(ma, na) {
-        return ca(na, ka[ma]);
-      });
-      this.$MercuryParticipantse(la);
-    }.bind(this));
-    return this.$MercuryParticipantsf(ga);
-  };
-  ba.prototype.$MercuryParticipants9 = function(ea) {
-    var fa = this.$MercuryParticipants2.getResource(ea);
-    if (!fa) {
-      var ga = o.tokenize(ea),
-        ha = ga.type,
-        ia = ga.value;
-      if (ha === 'email') fa = this.$MercuryParticipantsd(ea, ia);
+    var matched = filter(elem);
+    if (matched.length) {
+      jQuery.getMulti(matched, function(buf) {
+        var q = $(elem, function(off, datum) {
+          return text(datum, buf[off]);
+        });
+        this.$MercuryParticipantse(q);
+      }.bind(this));
     }
-    return fa;
+    return this.$MercuryParticipantsf(r20);
   };
-  ba.prototype.$MercuryParticipantsd = function(ea, fa) {
-    var ga = new k(da(ea, fa));
-    this.$MercuryParticipants2.setResource(ea, ga);
-    return ga;
+  /**
+   * @param {string} option
+   * @return {?}
+   */
+  self.prototype.$MercuryParticipants9 = function(option) {
+    var data = this.$MercuryParticipants2.getResource(option);
+    if (!data) {
+      var elem = _.tokenize(option);
+      var nodeType = elem.type;
+      var camelKey = elem.value;
+      if (nodeType === "email") {
+        data = this.$MercuryParticipantsd(option, camelKey);
+      }
+    }
+    return data;
   };
-  ba.prototype.$MercuryParticipantsc = function(ea) {
-    this.$MercuryParticipants1.emit(aa, ea);
+  /**
+   * @param {string} selector
+   * @param {string} value
+   * @return {?}
+   */
+  self.prototype.$MercuryParticipantsd = function(selector, value) {
+    var r20 = new binding(process(selector, value));
+    this.$MercuryParticipants2.setResource(selector, r20);
+    return r20;
   };
-  ba.prototype.$MercuryParticipantse = function(ea, fa) {
+  /**
+   * @param {?} data
+   * @return {undefined}
+   */
+  self.prototype.$MercuryParticipantsc = function(data) {
+    this.$MercuryParticipants1.emit(ev, data);
+  };
+  /**
+   * @param {?} q
+   * @param {?} selector
+   * @return {undefined}
+   */
+  self.prototype.$MercuryParticipantse = function(q, selector) {
     this.$MercuryParticipants7.handleUpdate({
-      participants: x(ea),
-      from_client: !!fa,
-      payload_source: fa ? r.CLIENT_FETCH_PARTICIPANTS : r.SERVER_FETCH_PARTICIPANTS
+      participants : filter(q),
+      from_client : !!selector,
+      payload_source : selector ? special.CLIENT_FETCH_PARTICIPANTS : special.SERVER_FETCH_PARTICIPANTS
     });
   };
-  ba.prototype.$MercuryParticipants8 = function(ea) {
-    ea = y(ea, function(fa, ga) {
-      if (fa.vanity) this.$MercuryParticipants3.set(fa.vanity, ga);
-      return new k(this.$MercuryParticipantsg(fa));
+  /**
+   * @param {Text} defs
+   * @return {undefined}
+   */
+  self.prototype.$MercuryParticipants8 = function(defs) {
+    defs = $(defs, function(tree, build) {
+      if (tree.vanity) {
+        this.$MercuryParticipants3.set(tree.vanity, build);
+      }
+      return new binding(this.$MercuryParticipantsg(tree));
     }.bind(this));
-    this.$MercuryParticipants2.addResourcesAndExecute(ea);
-    this.$MercuryParticipantsc(new u(Object.keys(ea)));
+    this.$MercuryParticipants2.addResourcesAndExecute(defs);
+    this.$MercuryParticipantsc(new Layout(Object.keys(defs)));
   };
-  ba.prototype.$MercuryParticipantsg = function(ea) {
-    var fa = ea.type === q.USER || ea.type === q.FRIEND;
-    if (!fa) return ea;
-    if (!ea.name && !ea.href && !ea.vanity) {
-      var ga = "Facebook User";
-      ea.name = ga;
-      ea.short_name = ga;
+  /**
+   * @param {Object} object
+   * @return {?}
+   */
+  self.prototype.$MercuryParticipantsg = function(object) {
+    /** @type {boolean} */
+    var fa = object.type === subject.USER || object.type === subject.FRIEND;
+    if (!fa) {
+      return object;
     }
-    return ea;
+    if (!object.name && (!object.href && !object.vanity)) {
+      /** @type {string} */
+      var name = "Facebook User";
+      /** @type {string} */
+      object.name = name;
+      /** @type {string} */
+      object.short_name = name;
+    }
+    return object;
   };
-  ba.prototype.$MercuryParticipantsa = function() {
-    if (this.$MercuryParticipants4) return;
+  /**
+   * @return {undefined}
+   */
+  self.prototype.$MercuryParticipantsa = function() {
+    if (this.$MercuryParticipants4) {
+      return;
+    }
+    /** @type {boolean} */
     this.$MercuryParticipants4 = true;
-    z(function() {
+    $sanitize(function() {
+      /** @type {boolean} */
       this.$MercuryParticipants4 = false;
-      this.$MercuryParticipants5.forEach(function(ea) {
-        return this.$MercuryParticipants6.add(ea);
+      this.$MercuryParticipants5.forEach(function(dest) {
+        return this.$MercuryParticipants6.add(dest);
       }.bind(this));
-      this.$MercuryParticipantsb(Array.from(this.$MercuryParticipants5), function(ea) {
-        for (var fa in ea) ea.hasOwnProperty(fa) && this.$MercuryParticipants6["delete"](fa);
+      this.$MercuryParticipantsb(Array.from(this.$MercuryParticipants5), function(files) {
+        var file;
+        for (file in files) {
+          if (files.hasOwnProperty(file)) {
+            this.$MercuryParticipants6["delete"](file);
+          }
+        }
       }.bind(this));
       this.$MercuryParticipants5.clear();
     }.bind(this));
   };
-  ba.prototype.$MercuryParticipantsf = function(ea) {
-    return {
-      remove: function() {
-        this.$MercuryParticipants2.unsubscribe(ea);
+  /**
+   * @param {?} existing
+   * @return {?}
+   */
+  self.prototype.$MercuryParticipantsf = function(existing) {
+    return{
+      remove : function() {
+        this.$MercuryParticipants2.unsubscribe(existing);
       }.bind(this)
     };
   };
-
-  function ca(ea, fa) {
-    var ga = {
-      gender: fa.gender,
-      href: fa.uri,
-      id: ea,
-      image_src: fa.thumbSrc,
-      name: fa.name,
-      short_name: fa.firstName,
-      employee: fa.employee,
-      is_employee_away: fa.is_employee_away,
-      type: fa.type,
-      vanity: fa.vanity,
-      is_friend: fa.is_friend,
-      orion_eligible: fa.orionEligible,
-      social_snippets: fa.social_snippets
-    };
-    if (fa.officeStatus) {
-      ga.officeStatus = fa.officeStatus;
-      ga.officeStatusStartDate = fa.officeStatusStartDate;
-      ga.officeStatusEndDate = fa.officeStatusEndDate;
-      ga.officeStatusComment = fa.officeStatusComment;
-      ga.officeStatusLocation = fa.officeStatusLocation;
-    }
-    return ga;
-  }
-
-  function da(ea, fa) {
-    return {
-      gender: p.UNKNOWN_GENDER,
-      href: null,
-      id: ea,
-      image_src: p.EMAIL_IMAGE,
-      big_image_src: p.EMAIL_IMAGE,
-      name: fa,
-      short_name: fa,
-      employee: false
-    };
-  }
-  e.exports = new ba(g.getID());
+  module.exports = new self(a.getID());
 }, null);
-__d("MercuryAttachmentSnippet.react", ["EmoticonsList", "Image.react", "MercuryAttachment", "MercuryAttachmentType", "MercuryConstants", "MercuryIDs", "MercuryParticipants", "React", "StickerConstants", "TextWithEmoticons.react", "cx", "fbt", "ix", "joinClasses", "OrionMercuryAttachmentSnippet"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t) {
-  'use strict';
-  var u = b('OrionMercuryAttachmentSnippet').module,
-    v = n.createClass({
-      displayName: "MercuryAttachmentSnippet",
-      propTypes: {
-        thread: n.PropTypes.object.isRequired,
-        viewer: n.PropTypes.string.isRequired
-      },
-      componentWillMount: function() {
-        this._ensureParticipant(this.props.thread.snippet_sender);
-        this._setVariables(this.props);
-      },
-      componentWillReceiveProps: function(z) {
-        this._ensureParticipant(z.thread.snippet_sender);
-        this._setVariables(z);
-      },
-      componentWillUnmount: function() {
-        this._cancelParticipantFetch();
-      },
-      render: function() {
-        var z = this._getSenderName();
-        if (this._hasOnlyPhotos()) return this._renderPhotoSnippet(z);
-        if (this._hasOnlyVideo()) return this._renderVideoSnippet(z);
-        if (this._hasAudioClip()) return this._renderAudioClipSnippet(z);
-        if (this._hasSticker()) return this._renderStickerSnippet(z);
-        if (this._hasOrion()) return this._renderOrionSnippet(z);
-        if (this._hasShoerackInvitation()) return this._renderShoerackInvitationSnippet(z);
-        if (this._hasShare()) return this._renderShareSnippet(z);
-        return this._renderMixedSnippet(z);
-      },
-      _renderPhotoSnippet: function(z) {
-        var aa;
-        if (this._photos.length === 1) {
-          if (this._isViewerSender) {
-            aa = ("You sent a photo.");
-          } else aa = (r._("{name} sent a photo.", [r.param("name", z)]));
-        } else if (this._isViewerSender) {
-          aa = (r._("You sent {num_photos} photos.", [r.param("num_photos", this._photos.length)]));
-        } else aa = (r._("{name} sent {num_photos} photos.", [r.param("name", z), r.param("num_photos", this._photos.length)]));
-        return this._renderSnippet(aa);
-      },
-      _renderVideoSnippet: function(z) {
-        var aa;
+__d("MercuryAttachmentSnippet.react", ["EmoticonsList", "Image.react", "MercuryAttachment", "MercuryAttachmentType", "MercuryConstants", "MercuryIDs", "MercuryParticipants", "React", "StickerConstants", "TextWithEmoticons.react", "cx", "fbt", "ix", "joinClasses", "OrionMercuryAttachmentSnippet"], function(ignoreMethodDoesntExist, require, textAlt, keepData, module, opt_attributes, gen, property, obj, ActivityObject, dataAndEvents, util, rule, self, node, def, deepDataAndEvents, el, $sanitize, func) {
+  /**
+   * @param {Array} contextElem
+   * @return {?}
+   */
+  function str2array(contextElem) {
+    if (!contextElem) {
+      return[];
+    }
+    return contextElem.filter(function(dataAndEvents) {
+      return dataAndEvents.attach_type === ActivityObject.PHOTO;
+    });
+  }
+  /**
+   * @param {?} object
+   * @return {?}
+   */
+  function isArguments(object) {
+    return object == node.LIKE_STICKER_ID || (object == node.HOT_LIKE_SMALL_STICKER_ID || (object == node.HOT_LIKE_MEDIUM_STICKER_ID || object == node.HOT_LIKE_LARGE_STICKER_ID));
+  }
+  /**
+   * @param {boolean} a
+   * @param {string} val2
+   * @return {?}
+   */
+  function equal(a, val2) {
+    return!!(a && util.getParticipantIDFromUserID(val2) == a);
+  }
+  var elm = require("OrionMercuryAttachmentSnippet").module;
+  var JsDiff = self.createClass({
+    displayName : "MercuryAttachmentSnippet",
+    propTypes : {
+      thread : self.PropTypes.object.isRequired,
+      viewer : self.PropTypes.string.isRequired
+    },
+    /**
+     * @return {undefined}
+     */
+    componentWillMount : function() {
+      this._ensureParticipant(this.props.thread.snippet_sender);
+      this._setVariables(this.props);
+    },
+    /**
+     * @param {Object} deepDataAndEvents
+     * @return {undefined}
+     */
+    componentWillReceiveProps : function(deepDataAndEvents) {
+      this._ensureParticipant(deepDataAndEvents.thread.snippet_sender);
+      this._setVariables(deepDataAndEvents);
+    },
+    /**
+     * @return {undefined}
+     */
+    componentWillUnmount : function() {
+      this._cancelParticipantFetch();
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var task = this._getSenderName();
+      if (this._hasOnlyPhotos()) {
+        return this._renderPhotoSnippet(task);
+      }
+      if (this._hasOnlyVideo()) {
+        return this._renderVideoSnippet(task);
+      }
+      if (this._hasAudioClip()) {
+        return this._renderAudioClipSnippet(task);
+      }
+      if (this._hasSticker()) {
+        return this._renderStickerSnippet(task);
+      }
+      if (this._hasOrion()) {
+        return this._renderOrionSnippet(task);
+      }
+      if (this._hasShoerackInvitation()) {
+        return this._renderShoerackInvitationSnippet(task);
+      }
+      if (this._hasShare()) {
+        return this._renderShareSnippet(task);
+      }
+      return this._renderMixedSnippet(task);
+    },
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    _renderPhotoSnippet : function(fn) {
+      var r20;
+      if (this._photos.length === 1) {
         if (this._isViewerSender) {
-          aa = ("You sent a video.");
-        } else aa = (r._("{sender name} sent a video.", [r.param("sender name", z)]));
-        return this._renderSnippet(aa);
-      },
-      _renderAudioClipSnippet: function(z) {
-        var aa;
+          /** @type {string} */
+          r20 = "You sent a photo.";
+        } else {
+          r20 = el._("{name} sent a photo.", [el.param("name", fn)]);
+        }
+      } else {
         if (this._isViewerSender) {
-          aa = ("You sent a voice message.");
-        } else aa = (r._("{name} sent a voice message.", [r.param("name", z)]));
-        return this._renderSnippet(aa);
-      },
-      _renderStickerSnippet: function(z) {
-        if (x(this._attachments[0].metadata.stickerID)) {
-          return (n.createElement(p, {
-            renderEmoticons: true,
-            text: g.symbols.like
-          }));
-        } else if (this._isViewerSender) {
-          return (n.createElement("span", null, "You sent a sticker."));
-        } else return (n.createElement("span", null, r._("{name} sent a sticker.", [r.param("name", z)])));
-      },
-      _renderOrionSnippet: function(z) {
-        if (!u) return null;
-        return (n.createElement("span", null, n.createElement(u, n.__spread({}, this._attachments[0].metadata))));
-      },
-      _renderShoerackInvitationSnippet: function(z) {
-        var aa;
+          r20 = el._("You sent {num_photos} photos.", [el.param("num_photos", this._photos.length)]);
+        } else {
+          r20 = el._("{name} sent {num_photos} photos.", [el.param("name", fn), el.param("num_photos", this._photos.length)]);
+        }
+      }
+      return this._renderSnippet(r20);
+    },
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    _renderVideoSnippet : function(fn) {
+      var r20;
+      if (this._isViewerSender) {
+        /** @type {string} */
+        r20 = "You sent a video.";
+      } else {
+        r20 = el._("{sender name} sent a video.", [el.param("sender name", fn)]);
+      }
+      return this._renderSnippet(r20);
+    },
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    _renderAudioClipSnippet : function(fn) {
+      var r20;
+      if (this._isViewerSender) {
+        /** @type {string} */
+        r20 = "You sent a voice message.";
+      } else {
+        r20 = el._("{name} sent a voice message.", [el.param("name", fn)]);
+      }
+      return this._renderSnippet(r20);
+    },
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    _renderStickerSnippet : function(fn) {
+      if (isArguments(this._attachments[0].metadata.stickerID)) {
+        return self.createElement(def, {
+          renderEmoticons : true,
+          text : gen.symbols.like
+        });
+      } else {
         if (this._isViewerSender) {
-          aa = ("You sent a Moments invitation.");
-        } else aa = (r._("{sender name} invited you to share photos using Moments.", [r.param("sender name", z)]));
-        return this._renderSnippet(aa);
-      },
-      _renderShareSnippet: function(z) {
-        var aa;
-        if (this._isViewerSender) {
-          aa = ("You shared a link.");
-        } else aa = (r._("{sender name} shared a link.", [r.param("sender name", z)]));
-        return this._renderSnippet(aa);
-      },
-      _renderMixedSnippet: function(z) {
-        return (n.createElement("span", null, this._attachments.filter(function(aa) {
-          return aa.attach_type === j.FILE || aa.attach_type === j.PHOTO || aa.attach_type === j.VIDEO;
-        }).map(function(aa) {
-          return this._renderSnippet(aa.name, aa.icon_type);
-        }.bind(this))));
-      },
-      _renderSnippet: function(z, aa) {
-        var ba = i.getAttachIconClass(aa || this._attachments[0].icon_type),
-          ca = t(ba, "uiIconText _3tn");
-        return (n.createElement("span", {
-          className: ca
-        }, n.createElement(h, {
-          src: s('/images/messaging/docs/generic.png')
-        }), z));
-      },
-      _hasOnlyPhotos: function() {
-        return this._photos.length === this._attachments.length;
-      },
-      _hasOnlyVideo: function() {
-        return (this._attachments.length === 1 && this._attachments[0].attach_type === j.VIDEO);
-      },
-      _hasAudioClip: function() {
-        return !!(this._attachments.length === 1 && this._attachments[0].metadata && i.isVoiceMessage(this._attachments[0].metadata.type));
-      },
-      _hasSticker: function() {
-        return (this._attachments.length === 1 && this._attachments[0].attach_type === j.STICKER);
-      },
-      _hasOrion: function() {
-        return this._hasSingleAttachmentOfShareDataType(k.MercurySupportedShareType.FB_ORION);
-      },
-      _hasShoerackInvitation: function() {
-        return this._hasSingleAttachmentOfShareDataType(k.MercurySupportedShareType.FB_SHOERACK_INVITATION);
-      },
-      _hasSingleAttachmentOfShareDataType: function(z) {
-        return (this._attachments.length === 1 && this._attachments[0].share_data_type === z);
-      },
-      _hasShare: function() {
-        return (this._attachments.length === 1 && this._attachments[0].attach_type === j.SHARE);
-      },
-      _setVariables: function(z) {
-        this._viewer = z.viewer;
-        this._sender = z.thread.snippet_sender;
-        this._attachments = z.thread.snippet_attachments;
-        this._photos = w(this._attachments);
-        this._isViewerSender = y(this._sender, this._viewer);
-      },
-      _getSenderName: function() {
-        if (!this._sender || this._isViewerSender) return null;
-        var z = m.getNow(this._sender);
-        if (!z) return null;
-        return z.short_name;
-      },
-      _ensureParticipant: function(z) {
-        if (!z) return;
-        this._cancelParticipantFetch();
-        if (!m.getNow(z)) this._sub = m.get(z, function(aa) {
+          return self.createElement("span", null, "You sent a sticker.");
+        } else {
+          return self.createElement("span", null, el._("{name} sent a sticker.", [el.param("name", fn)]));
+        }
+      }
+    },
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    _renderOrionSnippet : function(fn) {
+      if (!elm) {
+        return null;
+      }
+      return self.createElement("span", null, self.createElement(elm, self.__spread({}, this._attachments[0].metadata)));
+    },
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    _renderShoerackInvitationSnippet : function(fn) {
+      var r20;
+      if (this._isViewerSender) {
+        /** @type {string} */
+        r20 = "You sent a Moments invitation.";
+      } else {
+        r20 = el._("{sender name} invited you to share photos using Moments.", [el.param("sender name", fn)]);
+      }
+      return this._renderSnippet(r20);
+    },
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    _renderShareSnippet : function(fn) {
+      var r20;
+      if (this._isViewerSender) {
+        /** @type {string} */
+        r20 = "You shared a link.";
+      } else {
+        r20 = el._("{sender name} shared a link.", [el.param("sender name", fn)]);
+      }
+      return this._renderSnippet(r20);
+    },
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    _renderMixedSnippet : function(fn) {
+      return self.createElement("span", null, this._attachments.filter(function(dataAndEvents) {
+        return dataAndEvents.attach_type === ActivityObject.FILE || (dataAndEvents.attach_type === ActivityObject.PHOTO || dataAndEvents.attach_type === ActivityObject.VIDEO);
+      }).map(function(unused) {
+        return this._renderSnippet(unused.name, unused.icon_type);
+      }.bind(this)));
+    },
+    /**
+     * @param {?} regex
+     * @param {?} str
+     * @return {?}
+     */
+    _renderSnippet : function(regex, str) {
+      var child = obj.getAttachIconClass(str || this._attachments[0].icon_type);
+      var item = func(child, "uiIconText _3tn");
+      return self.createElement("span", {
+        className : item
+      }, self.createElement(property, {
+        src : $sanitize("/images/messaging/docs/generic.png")
+      }), regex);
+    },
+    /**
+     * @return {?}
+     */
+    _hasOnlyPhotos : function() {
+      return this._photos.length === this._attachments.length;
+    },
+    /**
+     * @return {?}
+     */
+    _hasOnlyVideo : function() {
+      return this._attachments.length === 1 && this._attachments[0].attach_type === ActivityObject.VIDEO;
+    },
+    /**
+     * @return {?}
+     */
+    _hasAudioClip : function() {
+      return!!(this._attachments.length === 1 && (this._attachments[0].metadata && obj.isVoiceMessage(this._attachments[0].metadata.type)));
+    },
+    /**
+     * @return {?}
+     */
+    _hasSticker : function() {
+      return this._attachments.length === 1 && this._attachments[0].attach_type === ActivityObject.STICKER;
+    },
+    /**
+     * @return {?}
+     */
+    _hasOrion : function() {
+      return this._hasSingleAttachmentOfShareDataType(dataAndEvents.MercurySupportedShareType.FB_ORION);
+    },
+    /**
+     * @return {?}
+     */
+    _hasShoerackInvitation : function() {
+      return this._hasSingleAttachmentOfShareDataType(dataAndEvents.MercurySupportedShareType.FB_SHOERACK_INVITATION);
+    },
+    /**
+     * @param {?} dataAndEvents
+     * @return {?}
+     */
+    _hasSingleAttachmentOfShareDataType : function(dataAndEvents) {
+      return this._attachments.length === 1 && this._attachments[0].share_data_type === dataAndEvents;
+    },
+    /**
+     * @return {?}
+     */
+    _hasShare : function() {
+      return this._attachments.length === 1 && this._attachments[0].attach_type === ActivityObject.SHARE;
+    },
+    /**
+     * @param {Object} deepDataAndEvents
+     * @return {undefined}
+     */
+    _setVariables : function(deepDataAndEvents) {
+      this._viewer = deepDataAndEvents.viewer;
+      this._sender = deepDataAndEvents.thread.snippet_sender;
+      this._attachments = deepDataAndEvents.thread.snippet_attachments;
+      this._photos = str2array(this._attachments);
+      this._isViewerSender = equal(this._sender, this._viewer);
+    },
+    /**
+     * @return {?}
+     */
+    _getSenderName : function() {
+      if (!this._sender || this._isViewerSender) {
+        return null;
+      }
+      var object = rule.getNow(this._sender);
+      if (!object) {
+        return null;
+      }
+      return object.short_name;
+    },
+    /**
+     * @param {string} paths
+     * @return {undefined}
+     */
+    _ensureParticipant : function(paths) {
+      if (!paths) {
+        return;
+      }
+      this._cancelParticipantFetch();
+      if (!rule.getNow(paths)) {
+        this._sub = rule.get(paths, function(dataAndEvents) {
           return this.forceUpdate();
         }.bind(this));
-      },
-      _cancelParticipantFetch: function() {
-        this._sub && this._sub.remove();
       }
-    });
-
-  function w(z) {
-    if (!z) return [];
-    return z.filter(function(aa) {
-      return aa.attach_type === j.PHOTO;
-    });
-  }
-
-  function x(z) {
-    return (z == o.LIKE_STICKER_ID || z == o.HOT_LIKE_SMALL_STICKER_ID || z == o.HOT_LIKE_MEDIUM_STICKER_ID || z == o.HOT_LIKE_LARGE_STICKER_ID);
-  }
-
-  function y(z, aa) {
-    return !!(z && l.getParticipantIDFromUserID(aa) == z);
-  }
-  e.exports = v;
-}, null);
-__d("MercuryThreadImage.react", ["ImmutableObject", "MercuryIDs", "MercuryParticipants", "MercuryParticipantsConstants", "Pixelz.react", "React", "SplitImage.react", "areEqual"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n) {
-  'use strict';
-  var o = l.createClass({
-    displayName: "MercuryThreadImage",
-    propTypes: {
-      thread: l.PropTypes.instanceOf(g).isRequired,
-      viewer: l.PropTypes.string.isRequired,
-      size: l.PropTypes.number
     },
-    getInitialState: function() {
-      return {
-        participantImages: []
+    /**
+     * @return {undefined}
+     */
+    _cancelParticipantFetch : function() {
+      if (this._sub) {
+        this._sub.remove();
+      }
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("MercuryThreadImage.react", ["ImmutableObject", "MercuryIDs", "MercuryParticipants", "MercuryParticipantsConstants", "Pixelz.react", "React", "SplitImage.react", "areEqual"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, logger, nv, top, rawFile, property, self, def, worker) {
+  var JsDiff = self.createClass({
+    displayName : "MercuryThreadImage",
+    propTypes : {
+      thread : self.PropTypes.instanceOf(logger).isRequired,
+      viewer : self.PropTypes.string.isRequired,
+      size : self.PropTypes.number
+    },
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      return{
+        participantImages : []
       };
     },
-    componentDidMount: function() {
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
       this._getParticipantImages(this.props);
     },
-    componentWillReceiveProps: function(p, q) {
-      this._getParticipantImages(p);
+    /**
+     * @param {Object} deepDataAndEvents
+     * @param {?} nextProps
+     * @return {undefined}
+     */
+    componentWillReceiveProps : function(deepDataAndEvents, nextProps) {
+      this._getParticipantImages(deepDataAndEvents);
     },
-    shouldComponentUpdate: function(p, q) {
-      return (p.thread.image_src !== this.props.thread.image_src || p.size !== this.props.size || !n(q.participantImages, this.state.participantImages));
+    /**
+     * @param {Object} props
+     * @param {?} task
+     * @return {?}
+     */
+    shouldComponentUpdate : function(props, task) {
+      return props.thread.image_src !== this.props.thread.image_src || (props.size !== this.props.size || !worker(task.participantImages, this.state.participantImages));
     },
-    render: function() {
-      var p = this.props.size || j.BIG_IMAGE_SIZE;
-      if (this.props.thread.image_src) return (l.createElement(k, {
-        height: p,
-        resizeMode: 'cover',
-        src: this.props.thread.image_src,
-        width: p
-      }));
-      if (this.state.participantImages.length > 0) return (l.createElement(m, {
-        srcs: this.state.participantImages,
-        border: true,
-        size: p
-      }));
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var size = this.props.size || rawFile.BIG_IMAGE_SIZE;
+      if (this.props.thread.image_src) {
+        return self.createElement(property, {
+          height : size,
+          resizeMode : "cover",
+          src : this.props.thread.image_src,
+          width : size
+        });
+      }
+      if (this.state.participantImages.length > 0) {
+        return self.createElement(def, {
+          srcs : this.state.participantImages,
+          border : true,
+          size : size
+        });
+      }
       return null;
     },
-    _getParticipantImages: function(p) {
-      var q = p.thread,
-        r = p.viewer;
-      if (q.image_src) return;
-      var s = h.getParticipantIDFromUserID(r),
-        t = q.participants.filter(function(v) {
-          return v != s;
-        }),
-        u = [];
-      if (!t.length) {
-        u = [s];
-      } else if (t.length == 1) {
-        u = t;
-      } else u = t.slice(0, 3);
-      i.getOrderedBigImageMulti(u, function(v) {
-        this.isMounted() && this.setState({
-          participantImages: v
-        });
+    /**
+     * @param {Object} deepDataAndEvents
+     * @return {undefined}
+     */
+    _getParticipantImages : function(deepDataAndEvents) {
+      var self = deepDataAndEvents.thread;
+      var v = deepDataAndEvents.viewer;
+      if (self.image_src) {
+        return;
+      }
+      var c = nv.getParticipantIDFromUserID(v);
+      var array = self.participants.filter(function(inSender) {
+        return inSender != c;
+      });
+      /** @type {Array} */
+      var ret = [];
+      if (!array.length) {
+        /** @type {Array} */
+        ret = [c];
+      } else {
+        if (array.length == 1) {
+          ret = array;
+        } else {
+          ret = array.slice(0, 3);
+        }
+      }
+      top.getOrderedBigImageMulti(ret, function(dataAndEvents) {
+        if (this.isMounted()) {
+          this.setState({
+            participantImages : dataAndEvents
+          });
+        }
       }.bind(this));
     }
   });
-  e.exports = o;
+  module.exports = JsDiff;
 }, null);
-__d("MercuryParticipantListRenderer", ["fbt"], function(a, b, c, d, e, f, g) {
-  'use strict';
-
-  function h() {
+__d("MercuryParticipantListRenderer", ["fbt"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, self) {
+  /**
+   * @return {undefined}
+   */
+  function Context() {
+    /** @type {boolean} */
     this.$MercuryParticipantListRenderer0 = false;
+    /** @type {boolean} */
     this.$MercuryParticipantListRenderer1 = false;
+    /** @type {boolean} */
     this.$MercuryParticipantListRenderer2 = false;
-    this.$MercuryParticipantListRenderer3 = function(r) {
-      return this.$MercuryParticipantListRenderer1 ? r.short_name : r.name;
+    this.$MercuryParticipantListRenderer3 = function(school) {
+      return this.$MercuryParticipantListRenderer1 ? school.short_name : school.name;
     }.bind(this);
   }
-  h.prototype.renderParticipantList = function(r) {
-    var s = r.map(this.$MercuryParticipantListRenderer3);
-    switch (s.length) {
+  /**
+   * @param {?} failing_message
+   * @return {?}
+   */
+  function report(failing_message) {
+    if (failing_message) {
+      return "New Message";
+    } else {
+      return "No Participants";
+    }
+  }
+  /**
+   * @param {Array} parent
+   * @return {?}
+   */
+  function isDescendant(parent) {
+    return parent[0];
+  }
+  /**
+   * @param {Array} args
+   * @return {?}
+   */
+  function pass(args) {
+    return self._("{participant1}, {participant2}", [self.param("participant1", args[0]), self.param("participant2", args[1])]);
+  }
+  /**
+   * @param {Array} key
+   * @return {?}
+   */
+  function assignOrWrapInDeprecateGetter(key) {
+    return self._("{participant1} and {participant2}", [self.param("participant1", key[0]), self.param("participant2", key[1])]);
+  }
+  /**
+   * @param {Array} name
+   * @return {?}
+   */
+  function addClass(name) {
+    return self._("{participant1}, {participant2}, {participant3}", [self.param("participant1", name[0]), self.param("participant2", name[1]), self.param("participant3", name[2])]);
+  }
+  /**
+   * @param {Array} obj
+   * @return {?}
+   */
+  function isFunction(obj) {
+    return self._("{participant1}, {participant2} and {participant3}", [self.param("participant1", obj[0]), self.param("participant2", obj[1]), self.param("participant3", obj[2])]);
+  }
+  /**
+   * @param {Array} args
+   * @return {?}
+   */
+  function start(args) {
+    return self._("{participant1}, {participant2}, {participant3}, {others_link}", [self.param("participant1", args[0]), self.param("participant2", args[1]), self.param("participant3", args[2]), self.param("others_link", param(args.length - 3))]);
+  }
+  /**
+   * @param {Array} parent
+   * @return {?}
+   */
+  function promote(parent) {
+    return self._("{participant1}, {participant2} and {others_link}", [self.param("participant1", parent[0]), self.param("participant2", parent[1]), self.param("others_link", param(parent.length - 2))]);
+  }
+  /**
+   * @param {number} fn
+   * @return {?}
+   */
+  function param(fn) {
+    if (fn > 1) {
+      return self._("{others_count} others", [self.param("others_count", fn)]);
+    } else {
+      return "1 other";
+    }
+  }
+  /**
+   * @param {Array} key
+   * @return {?}
+   */
+  Context.prototype.renderParticipantList = function(key) {
+    var parent = key.map(this.$MercuryParticipantListRenderer3);
+    switch(parent.length) {
       case 0:
-        return i(this.$MercuryParticipantListRenderer0);
+        return report(this.$MercuryParticipantListRenderer0);
       case 1:
-        return j(s);
+        return isDescendant(parent);
       case 2:
-        return this.$MercuryParticipantListRenderer2 ? l(s) : k(s);
+        return this.$MercuryParticipantListRenderer2 ? assignOrWrapInDeprecateGetter(parent) : pass(parent);
       case 3:
-        return this.$MercuryParticipantListRenderer2 ? n(s) : m(s);
+        return this.$MercuryParticipantListRenderer2 ? isFunction(parent) : addClass(parent);
       default:
-        return this.$MercuryParticipantListRenderer2 ? p(s) : o(s);
+        return this.$MercuryParticipantListRenderer2 ? promote(parent) : start(parent);
     }
   };
-  h.prototype.setIsNewThread = function(r) {
-    this.$MercuryParticipantListRenderer0 = r;
+  /**
+   * @param {boolean} dataAndEvents
+   * @return {?}
+   */
+  Context.prototype.setIsNewThread = function(dataAndEvents) {
+    /** @type {boolean} */
+    this.$MercuryParticipantListRenderer0 = dataAndEvents;
     return this;
   };
-  h.prototype.setNameRenderer = function(r) {
-    this.$MercuryParticipantListRenderer3 = r;
+  /**
+   * @param {(RegExp|string)} dataAndEvents
+   * @return {?}
+   */
+  Context.prototype.setNameRenderer = function(dataAndEvents) {
+    /** @type {(RegExp|string)} */
+    this.$MercuryParticipantListRenderer3 = dataAndEvents;
     return this;
   };
-  h.prototype.setUseShortName = function(r) {
-    this.$MercuryParticipantListRenderer1 = r;
+  /**
+   * @param {boolean} dataAndEvents
+   * @return {?}
+   */
+  Context.prototype.setUseShortName = function(dataAndEvents) {
+    /** @type {boolean} */
+    this.$MercuryParticipantListRenderer1 = dataAndEvents;
     return this;
   };
-  h.prototype.setUseAndSeparator = function(r) {
-    this.$MercuryParticipantListRenderer2 = r;
+  /**
+   * @param {?} dataAndEvents
+   * @return {?}
+   */
+  Context.prototype.setUseAndSeparator = function(dataAndEvents) {
+    this.$MercuryParticipantListRenderer2 = dataAndEvents;
     return this;
   };
-
-  function i(r) {
-    if (r) {
-      return ("New Message");
-    } else return ("No Participants");
-  }
-
-  function j(r) {
-    return r[0];
-  }
-
-  function k(r) {
-    return (g._("{participant1}, {participant2}", [g.param("participant1", r[0]), g.param("participant2", r[1])]));
-  }
-
-  function l(r) {
-    return (g._("{participant1} and {participant2}", [g.param("participant1", r[0]), g.param("participant2", r[1])]));
-  }
-
-  function m(r) {
-    return (g._("{participant1}, {participant2}, {participant3}", [g.param("participant1", r[0]), g.param("participant2", r[1]), g.param("participant3", r[2])]));
-  }
-
-  function n(r) {
-    return (g._("{participant1}, {participant2} and {participant3}", [g.param("participant1", r[0]), g.param("participant2", r[1]), g.param("participant3", r[2])]));
-  }
-
-  function o(r) {
-    return (g._("{participant1}, {participant2}, {participant3}, {others_link}", [g.param("participant1", r[0]), g.param("participant2", r[1]), g.param("participant3", r[2]), g.param("others_link", q(r.length - 3))]));
-  }
-
-  function p(r) {
-    return (g._("{participant1}, {participant2} and {others_link}", [g.param("participant1", r[0]), g.param("participant2", r[1]), g.param("others_link", q(r.length - 2))]));
-  }
-
-  function q(r) {
-    if (r > 1) {
-      return (g._("{others_count} others", [g.param("others_count", r)]));
-    } else return ("1 other");
-  }
-  e.exports = h;
+  /** @type {function (): undefined} */
+  module.exports = Context;
 }, null);
-__d("MercuryThreadTitle.react", ["MercuryIDs", "MercuryParticipantListRenderer", "MercuryParticipants", "React", "TextWithEmoticons.react", "fbt"], function(a, b, c, d, e, f, g, h, i, j, k, l) {
-  'use strict';
-  var m = j.createClass({
-    displayName: "MercuryThreadTitle",
-    propTypes: {
-      isNewThread: j.PropTypes.bool,
-      thread: j.PropTypes.object.isRequired,
-      viewer: j.PropTypes.string.isRequired,
-      showUnreadCount: j.PropTypes.bool,
-      useShortName: j.PropTypes.bool,
-      useAndSeparator: j.PropTypes.bool
+__d("MercuryThreadTitle.react", ["MercuryIDs", "MercuryParticipantListRenderer", "MercuryParticipants", "React", "TextWithEmoticons.react", "fbt"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, $log, dataAndEvents, rule, self, property, obj) {
+  var JsDiff = self.createClass({
+    displayName : "MercuryThreadTitle",
+    propTypes : {
+      isNewThread : self.PropTypes.bool,
+      thread : self.PropTypes.object.isRequired,
+      viewer : self.PropTypes.string.isRequired,
+      showUnreadCount : self.PropTypes.bool,
+      useShortName : self.PropTypes.bool,
+      useAndSeparator : self.PropTypes.bool
     },
-    getDefaultProps: function() {
-      return {
-        isNewThread: false,
-        showUnreadCount: false,
-        useShortName: false,
-        useAndSeparator: false
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        isNewThread : false,
+        showUnreadCount : false,
+        useShortName : false,
+        useAndSeparator : false
       };
     },
-    getInitialState: function() {
-      return {
-        participantNames: ''
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      return{
+        participantNames : ""
       };
     },
-    componentDidMount: function() {
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
       this._renderParticipantsList(this.props);
     },
-    componentWillReceiveProps: function(n) {
-      this._renderParticipantsList(n);
+    /**
+     * @param {Object} $rootScope
+     * @return {undefined}
+     */
+    componentWillReceiveProps : function($rootScope) {
+      this._renderParticipantsList($rootScope);
     },
-    render: function() {
-      return (j.createElement("span", {
-        className: this.props.className
-      }, this.props.thread.name ? this._renderThreadTitle() : this.state.participantNames));
+    /**
+     * @return {?}
+     */
+    render : function() {
+      return self.createElement("span", {
+        className : this.props.className
+      }, this.props.thread.name ? this._renderThreadTitle() : this.state.participantNames);
     },
-    getTitle: function() {
+    /**
+     * @return {?}
+     */
+    getTitle : function() {
       return this.state.participantNames;
     },
-    _renderThreadTitle: function() {
-      var n = this.props.thread,
-        o = j.createElement(k, {
-          renderEmoticons: true,
-          renderEmoji: true,
-          text: n.name
-        });
-      if (!n.unread_count || !this.props.showUnreadCount) return o;
-      return this._renderTitleWithUnreadCount(o, n.unread_count);
-    },
-    _renderParticipantsList: function(n) {
-      if (n.thread.name) return;
-      var o = g.getParticipantIDFromUserID(n.viewer),
-        p = n.thread.participants;
-      if (p.length > 1) p = p.filter(function(q) {
-        return q != o;
+    /**
+     * @return {?}
+     */
+    _renderThreadTitle : function() {
+      var button = this.props.thread;
+      var traditional = self.createElement(property, {
+        renderEmoticons : true,
+        renderEmoji : true,
+        text : button.name
       });
-      i.getMulti(p, function(q) {
-        if (!this.isMounted()) return;
-        var r = p.map(function(u) {
-            return q[u];
-          }),
-          s = new h().setUseShortName(this.props.useShortName).setUseAndSeparator(this.props.useAndSeparator).setIsNewThread(this.props.isNewThread).renderParticipantList(r),
-          t = (n.showUnreadCount && n.thread.unread_count) ? this._renderTitleWithUnreadCount(s, n.thread.unread_count) : s;
+      if (!button.unread_count || !this.props.showUnreadCount) {
+        return traditional;
+      }
+      return this._renderTitleWithUnreadCount(traditional, button.unread_count);
+    },
+    /**
+     * @param {Object} $scope
+     * @return {undefined}
+     */
+    _renderParticipantsList : function($scope) {
+      if ($scope.thread.name) {
+        return;
+      }
+      var className = $log.getParticipantIDFromUserID($scope.viewer);
+      var paths = $scope.thread.participants;
+      if (paths.length > 1) {
+        paths = paths.filter(function(c) {
+          return c != className;
+        });
+      }
+      rule.getMulti(paths, function(buf) {
+        if (!this.isMounted()) {
+          return;
+        }
+        var camelKey = paths.map(function(off) {
+          return buf[off];
+        });
+        var traditional = (new dataAndEvents).setUseShortName(this.props.useShortName).setUseAndSeparator(this.props.useAndSeparator).setIsNewThread(this.props.isNewThread).renderParticipantList(camelKey);
+        var participantNames = $scope.showUnreadCount && $scope.thread.unread_count ? this._renderTitleWithUnreadCount(traditional, $scope.thread.unread_count) : traditional;
         this.setState({
-          participantNames: t
+          participantNames : participantNames
         });
       }.bind(this));
     },
-    _renderTitleWithUnreadCount: function(n, o) {
-      return (l._("{conversation-title} ({unread-count})", [l.param("conversation-title", n), l.param("unread-count", o)]));
+    /**
+     * @param {?} traditional
+     * @param {?} fn
+     * @return {?}
+     */
+    _renderTitleWithUnreadCount : function(traditional, fn) {
+      return obj._("{conversation-title} ({unread-count})", [obj.param("conversation-title", traditional), obj.param("unread-count", fn)]);
     }
   });
-  e.exports = m;
+  module.exports = JsDiff;
 }, null);
-__d("WebMessengerThreadPermalinks", ["MercuryIDs", "MessagingTag", "URI", "WebMessengerPermalinkConstants", "WWWBase", "requireWeak"], function(a, b, c, d, e, f, g, h, i, j, k, l) {
-  'use strict';
-  var m = {
-    getThreadURI: function(q, r, s) {
-      if (g.isCanonical(q)) {
-        n(q, r, s);
-      } else o(q, r, s);
+__d("WebMessengerThreadPermalinks", ["MercuryIDs", "MessagingTag", "URI", "WebMessengerPermalinkConstants", "WWWBase", "requireWeak"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, selfObj, element, Feature, s, v, iterator) {
+  /**
+   * @param {string} key
+   * @param {?} fn
+   * @param {string} val
+   * @return {undefined}
+   */
+  function reduce(key, fn, val) {
+    var object = new Feature(v.uri);
+    var name = selfObj.tokenize(key).value;
+    object.setPath(toString(val) + "/" + name);
+    if (fn) {
+      fn(object.toString());
     }
-  };
-
-  function n(q, r, s) {
-    var t = new i(k.uri),
-      u = g.tokenize(q).value;
-    t.setPath(p(s) + '/' + u);
-    r && r(t.toString());
   }
-
-  function o(q, r, s) {
-    l(['MercuryServerRequests'], function(t) {
-      var u = t.get();
-      u.getServerThreadID(q, function(v) {
-        var w = new i(k.uri);
-        w.setPath(j.getURIPathForThreadID(v, p(s)));
-        r && r(w.toString());
+  /**
+   * @param {string} obj
+   * @param {?} fn
+   * @param {string} str
+   * @return {undefined}
+   */
+  function iterate(obj, fn, str) {
+    iterator(["MercuryServerRequests"], function($templateCache) {
+      var readyList = $templateCache.get();
+      readyList.getServerThreadID(obj, function(i) {
+        var c = new Feature(v.uri);
+        c.setPath(s.getURIPathForThreadID(i, toString(str)));
+        if (fn) {
+          fn(c.toString());
+        }
       });
     });
   }
-
-  function p(q) {
-    var r = j.BASE_PATH;
-    if (q && q != h.INBOX) r += '/' + q;
-    return r;
+  /**
+   * @param {string} value
+   * @return {?}
+   */
+  function toString(value) {
+    var url = s.BASE_PATH;
+    if (value && value != element.INBOX) {
+      url += "/" + value;
+    }
+    return url;
   }
-  e.exports = m;
-}, null);
-__d("MercuryViewer", ["CurrentUser", "MercuryAssert"], function(a, b, c, d, e, f, g, h) {
-  'use strict';
-  var i = 'fbid:' + g.getID(),
-    j = {
-      getID: function() {
-        return i;
-      },
-      isViewer: function(k) {
-        h.isParticipantID(k);
-        return k === i;
+  var JsDiff = {
+    /**
+     * @param {string} key
+     * @param {?} fn
+     * @param {string} objId
+     * @return {undefined}
+     */
+    getThreadURI : function(key, fn, objId) {
+      if (selfObj.isCanonical(key)) {
+        reduce(key, fn, objId);
+      } else {
+        iterate(key, fn, objId);
       }
-    };
-  e.exports = j;
+    }
+  };
+  module.exports = JsDiff;
 }, null);
-__d("MercuryMessages", ["AsyncRequest", "BanzaiODS", "CurrentUser", "LogHistory", "MercuryActionStatus", "MercuryActionType", "MercuryAssert", "MercuryAttachmentType", "MercuryLogMessageType", "MercuryMessageClientState", "MercuryPayloadSource", "MercurySingletonMixin", "MercuryViewer", "MercuryMessageActions", "MercuryMessageIDs", "RangedCallbackManager", "ReportState", "MercurySendMessageFields", "MercuryServerRequests", "MercuryThreadActions", "MercuryThreadInformer", "MercuryThreads", "copyProperties", "debounceAcrossTransitions", "invariant", "isNode", "mergeDeep", "setImmediate"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ba, ca, da, ea, fa, ga, ha) {
-  'use strict';
-  var ia = j.getInstance('mercury_messages');
-
-  function ja(wa, xa) {
-    var ya = xa;
-    if (wa._localIdsMap[xa]) ya = wa._localIdsMap[xa];
-    return wa._messages[ya];
+__d("MercuryViewer", ["CurrentUser", "MercuryAssert"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, a, nv) {
+  var k = "fbid:" + a.getID();
+  var JsDiff = {
+    /**
+     * @return {?}
+     */
+    getID : function() {
+      return k;
+    },
+    /**
+     * @param {string} v
+     * @return {?}
+     */
+    isViewer : function(v) {
+      nv.isParticipantID(v);
+      return v === k;
+    }
+  };
+  module.exports = JsDiff;
+}, null);
+__d("MercuryMessages", ["AsyncRequest", "BanzaiODS", "CurrentUser", "LogHistory", "MercuryActionStatus", "MercuryActionType", "MercuryAssert", "MercuryAttachmentType", "MercuryLogMessageType", "MercuryMessageClientState", "MercuryPayloadSource", "MercurySingletonMixin", "MercuryViewer", "MercuryMessageActions", "MercuryMessageIDs", "RangedCallbackManager", "ReportState", "MercurySendMessageFields", "MercuryServerRequests", "MercuryThreadActions", "MercuryThreadInformer", "MercuryThreads", "copyProperties",
+"debounceAcrossTransitions", "invariant", "isNode", "mergeDeep", "setImmediate"], function(execResult, opt_keys, positionError, oFunctionBody, module, _$timeout_, dataAndEvents, deepDataAndEvents, a, ProgressIndicator, xhr, req, process, match, opt, msg, Browser, map, b, ignoreMethodDoesntExist, assert, Event, moduleInfo, el, textAlt, keepData, opt_attributes, matcherFunction, createObject, require, on, isArray, $sanitize, Application) {
+  /**
+   * @param {?} self
+   * @param {?} name
+   * @return {?}
+   */
+  function update(self, name) {
+    var src = name;
+    if (self._localIdsMap[name]) {
+      src = self._localIdsMap[name];
+    }
+    return self._messages[src];
   }
-
-  function ka(wa) {
-    switch (wa) {
-      case q.UNKNOWN:
-      case q.SERVER_INITIAL_DATA:
-      case q.SERVER_FETCH_THREAD_INFO:
-      case q.SERVER_THREAD_SYNC:
+  /**
+   * @param {?} options
+   * @return {?}
+   */
+  function toJSON(options) {
+    switch(options) {
+      case Browser.UNKNOWN:
+      ;
+      case Browser.SERVER_INITIAL_DATA:
+      ;
+      case Browser.SERVER_FETCH_THREAD_INFO:
+      ;
+      case Browser.SERVER_THREAD_SYNC:
         return true;
     }
     return false;
   }
-
-  function la(wa) {
-    return wa && wa.substr(0, 6) === 'server';
+  /**
+   * @param {string} range
+   * @return {?}
+   */
+  function fn(range) {
+    return range && range.substr(0, 6) === "server";
   }
-
-  function ma(wa, xa) {
-    if (!wa._threadsToMessages[xa]) wa._threadsToMessages[xa] = new v(function(ya) {
-      return ja(wa, ya).timestamp;
-    }, function(ya, za) {
-      return za - ya;
-    });
-    return wa._threadsToMessages[xa];
-  }
-
-  function na(wa) {
-    var xa = [];
-    return JSON.stringify(wa, function(ya, za) {
-      if (typeof za === 'object' && za !== null) {
-        if (fa(za)) return '<' + za.nodeName + '>';
-        if (xa.indexOf(za) !== -1) return 'CIRCULAR';
-        xa.push(za);
-      }
-      return za;
-    });
-  }
-  w.registerCallback('mercury-messages', function() {
-    var wa = {},
-      xa = {},
-      ya = pa._getInstances();
-    for (var za in ya) {
-      wa[za] = {};
-      for (var ab in ya[za]._messages) {
-        var bb = ya[za]._messages[ab];
-        if (Object.keys(bb).length === 0) continue;
-        var cb = bb.thread_id;
-        wa[za][cb] = wa[za][cb] || {};
-        wa[za][cb][bb.message_id] = JSON.parse(na(bb));
-      }
-      xa[za] = ca({}, ya[za]._localIdsMap);
+  /**
+   * @param {?} item
+   * @param {string} eventName
+   * @return {?}
+   */
+  function _getRespondersForEvent(item, eventName) {
+    if (!item._threadsToMessages[eventName]) {
+      item._threadsToMessages[eventName] = new Event(function(obj) {
+        return update(item, obj).timestamp;
+      }, function(near, far) {
+        return far - near;
+      });
     }
-    var db = {};
-    db.local_message_ids = xa;
-    db.messages = wa;
-    return db;
-  });
-
-  function oa(wa, xa, ya) {
-    xa.forEach(function(za) {
-      var ab = ma(wa, za);
-      ab.setReachedEndOfArray();
-      wa._threadInformer.reorderedMessages(za, ya);
+    return item._threadsToMessages[eventName];
+  }
+  /**
+   * @param {?} object
+   * @return {?}
+   */
+  function serialize(object) {
+    /** @type {Array} */
+    var children = [];
+    return JSON.stringify(object, function(dataAndEvents, child) {
+      if (typeof child === "object" && child !== null) {
+        if (isArray(child)) {
+          return "<" + child.nodeName + ">";
+        }
+        if (children.indexOf(child) !== -1) {
+          return "CIRCULAR";
+        }
+        children.push(child);
+      }
+      return child;
     });
   }
-
-  function pa(wa) {
-    this._fbid = wa;
-    this._messageActions = t.getForFBID(this._fbid);
-    this._serverRequests = y.getForFBID(this._fbid);
-    this._threadInformer = aa.getForFBID(this._fbid);
-    this._threads = ba.getForFBID(this._fbid);
-    this._threadActions = z.getForFBID(this._fbid);
+  /**
+   * @param {?} key
+   * @param {Array} array
+   * @param {Object} propName
+   * @return {undefined}
+   */
+  function pluck(key, array, propName) {
+    array.forEach(function(eventName) {
+      var r = _getRespondersForEvent(key, eventName);
+      r.setReachedEndOfArray();
+      key._threadInformer.reorderedMessages(eventName, propName);
+    });
+  }
+  /**
+   * @param {?} var_args
+   * @return {undefined}
+   */
+  function create(var_args) {
+    this._fbid = var_args;
+    this._messageActions = ignoreMethodDoesntExist.getForFBID(this._fbid);
+    this._serverRequests = textAlt.getForFBID(this._fbid);
+    this._threadInformer = opt_attributes.getForFBID(this._fbid);
+    this._threads = matcherFunction.getForFBID(this._fbid);
+    this._threadActions = keepData.getForFBID(this._fbid);
     this._failedHistoryFetchThreads = {};
     this._threadsToMessages = {};
     this._localTitanMessagesCount = {};
@@ -4573,43 +7292,193 @@ __d("MercuryMessages", ["AsyncRequest", "BanzaiODS", "CurrentUser", "LogHistory"
     this._attachmentData = {};
     this._messagesNeedingAttachmentData = {};
     this._localIdsMap = {};
-    this._serverRequests.subscribe('update-messages', function(xa, ya) {
-      var za = (ya.actions || []).filter(function(bb) {
-          var cb = bb.action_type,
-            db = ((bb.is_forward || bb.thread_id) && (cb == l.LOG_MESSAGE || cb == l.USER_GENERATED_MESSAGE || cb == l.SEND_MESSAGE || cb == l.CLEAR_CHAT || cb == l.DELETE_THREAD || cb == l.DELETE_MESSAGES || cb == l.MARK_MESSAGES_SPAM)),
-            eb = ((bb.upload_id && bb.upload_data) && (cb == l.CANCEL_ATTACHMENT_PLACEHOLDER || cb == l.CONFIRM_ATTACHMENT_PLACEHOLDER)),
-            fb = (cb == l.ADD_SHARE_DATA_TO_EXISTING_MESSAGE && (bb.server_id && bb.attach_key && bb.attach_data));
-          return (db || eb || fb);
-        }),
-        ab = ka(ya.payload_source);
-      if (la(ya.payload_source)) za.forEach(function(bb) {
-        if (!bb.is_forward && bb.action_type !== l.ADD_SHARE_DATA_TO_EXISTING_MESSAGE) {
-          var cb = this._threads.getThreadMetaNow(bb.thread_id);
-          if (cb) bb.is_cleared = bb.timestamp < cb.chat_clear_time;
-        }
-      }.bind(this));
-      this.handleUpdates(za, ab, ya.payload_source, ya.from_client);
-      if (ya.end_of_history) oa(this, ya.end_of_history, ya.payload_source);
+    this._serverRequests.subscribe("update-messages", function(dataAndEvents, options) {
+      var failures = (options.actions || []).filter(function(params) {
+        var path = params.action_type;
+        var waiting = (params.is_forward || params.thread_id) && (path == req.LOG_MESSAGE || (path == req.USER_GENERATED_MESSAGE || (path == req.SEND_MESSAGE || (path == req.CLEAR_CHAT || (path == req.DELETE_THREAD || (path == req.DELETE_MESSAGES || path == req.MARK_MESSAGES_SPAM))))));
+        var program = params.upload_id && params.upload_data && (path == req.CANCEL_ATTACHMENT_PLACEHOLDER || path == req.CONFIRM_ATTACHMENT_PLACEHOLDER);
+        var inverse = path == req.ADD_SHARE_DATA_TO_EXISTING_MESSAGE && (params.server_id && (params.attach_key && params.attach_data));
+        return waiting || (program || inverse);
+      });
+      var typePattern = toJSON(options.payload_source);
+      if (fn(options.payload_source)) {
+        failures.forEach(function(a) {
+          if (!a.is_forward && a.action_type !== req.ADD_SHARE_DATA_TO_EXISTING_MESSAGE) {
+            var b = this._threads.getThreadMetaNow(a.thread_id);
+            if (b) {
+              /** @type {boolean} */
+              a.is_cleared = a.timestamp < b.chat_clear_time;
+            }
+          }
+        }.bind(this));
+      }
+      this.handleUpdates(failures, typePattern, options.payload_source, options.from_client);
+      if (options.end_of_history) {
+        pluck(this, options.end_of_history, options.payload_source);
+      }
     }.bind(this));
-    ia.debug('constructed', {
-      fbid: this._fbid
+    $.debug("constructed", {
+      fbid : this._fbid
     });
   }
-  ca(pa.prototype, {
-    getMessagesFromIDs: function(wa) {
-      return (wa || []).map(ja.bind(null, this)).filter(function(xa) {
-        return xa;
+  /**
+   * @param {?} root
+   * @param {Array} args
+   * @return {?}
+   */
+  function get(root, args) {
+    var matched = args.map(update.bind(null, root));
+    return matched.reverse();
+  }
+  /**
+   * @param {?} item
+   * @param {string} key
+   * @param {Array} attrs
+   * @return {undefined}
+   */
+  function save(item, key, attrs) {
+    var codeSegments = attrs.filter(function(obj) {
+      return ok(update(item, obj));
+    });
+    if (!item._localTitanMessagesCount[key]) {
+      /** @type {number} */
+      item._localTitanMessagesCount[key] = 0;
+    }
+    item._localTitanMessagesCount[key] += codeSegments.length;
+  }
+  /**
+   * @param {?} value
+   * @return {?}
+   */
+  function ok(value) {
+    var ctor = value.action_type;
+    if (ctor == req.USER_GENERATED_MESSAGE) {
+      return true;
+    }
+    switch(value.log_message_type) {
+      case opt.SUBSCRIBE:
+      ;
+      case opt.UNSUBSCRIBE:
+      ;
+      case opt.SERVER_ERROR:
+      ;
+      case opt.LIVE_LISTEN:
+        return false;
+      default:
+        return true;
+    }
+  }
+  /**
+   * @param {?} list
+   * @param {?} obj
+   * @param {Node} k
+   * @return {undefined}
+   */
+  function validate(list, obj, k) {
+    k = k || obj.message_id;
+    var cs = list._attachmentData[k];
+    if (cs) {
+      cs.forEach(function(res) {
+        var i = obj.attachments.indexOf(res.attach_key);
+        if (i !== -1) {
+          obj.attachments[i] = res.data;
+        }
+      });
+      delete list._attachmentData[k];
+    } else {
+      if (!obj.is_forward && arrayContains(list, obj)) {
+        /** @type {boolean} */
+        list._messagesNeedingAttachmentData[k] = true;
+        isObject(list);
+      }
+    }
+  }
+  /**
+   * @param {?} value
+   * @param {?} obj
+   * @return {?}
+   */
+  function arrayContains(value, obj) {
+    if (!obj || !obj.attachments) {
+      return false;
+    }
+    /** @type {number} */
+    var i = 0;
+    for (;i < obj.attachments.length;i++) {
+      var part = obj.attachments[i];
+      if (typeof part === "string" && part.indexOf(match.SHARE) === 0) {
+        return true;
+      }
+    }
+    var codeSegments = obj.forward_message_ids || [];
+    /** @type {number} */
+    i = 0;
+    for (;i < codeSegments.length;i++) {
+      var str = update(value, codeSegments[i]);
+      if (arrayContains(value, str)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  var $ = ProgressIndicator.getInstance("mercury_messages");
+  moduleInfo.registerCallback("mercury-messages", function() {
+    var messages = {};
+    var $cookies = {};
+    var iterable = create._getInstances();
+    var key;
+    for (key in iterable) {
+      messages[key] = {};
+      var paramIndex;
+      for (paramIndex in iterable[key]._messages) {
+        var params = iterable[key]._messages[paramIndex];
+        if (Object.keys(params).length === 0) {
+          continue;
+        }
+        var type = params.thread_id;
+        messages[key][type] = messages[key][type] || {};
+        /** @type {*} */
+        messages[key][type][params.message_id] = JSON.parse(serialize(params));
+      }
+      $cookies[key] = createObject({}, iterable[key]._localIdsMap);
+    }
+    var $scope = {};
+    $scope.local_message_ids = $cookies;
+    $scope.messages = messages;
+    return $scope;
+  });
+  createObject(create.prototype, {
+    /**
+     * @param {Array} files
+     * @return {?}
+     */
+    getMessagesFromIDs : function(files) {
+      return(files || []).map(update.bind(null, this)).filter(function(dataAndEvents) {
+        return dataAndEvents;
       });
     },
-    hasLoadedNMessages: function(wa, xa) {
-      var ya = ma(this, wa);
-      return ya.hasReachedEndOfArray() || ya.getCurrentArraySize() >= xa;
+    /**
+     * @param {string} eventName
+     * @param {?} dataAndEvents
+     * @return {?}
+     */
+    hasLoadedNMessages : function(eventName, dataAndEvents) {
+      var r = _getRespondersForEvent(this, eventName);
+      return r.hasReachedEndOfArray() || r.getCurrentArraySize() >= dataAndEvents;
     },
-    hasLoadedExactlyNMessages: function(wa, xa) {
-      var ya = ma(this, wa);
-      return ya.getCurrentArraySize() == xa;
+    /**
+     * @param {string} eventName
+     * @param {?} dataAndEvents
+     * @return {?}
+     */
+    hasLoadedExactlyNMessages : function(eventName, dataAndEvents) {
+      var r = _getRespondersForEvent(this, eventName);
+      return r.getCurrentArraySize() == dataAndEvents;
     },
-    clearMercuryInternalState_DO_NOT_USE: function() {
+    /**
+     * @return {undefined}
+     */
+    clearMercuryInternalState_DO_NOT_USE : function() {
       this._failedHistoryFetchThreads = {};
       this._threadsToMessages = {};
       this._localTitanMessagesCount = {};
@@ -4618,894 +7487,1250 @@ __d("MercuryMessages", ["AsyncRequest", "BanzaiODS", "CurrentUser", "LogHistory"
       this._messagesNeedingAttachmentData = {};
       this._localIdsMap = {};
     },
-    getThreadMessagesRange: function(wa, xa, ya, za, ab, bb) {
-      var cb = ma(this, wa),
-        db = function(lb) {
-          za(qa(this, lb));
-        }.bind(this),
-        eb = cb.executeOrEnqueue(xa, ya, db),
-        fb = cb.getUnavailableResources(eb),
-        gb = this._failedHistoryFetchThreads[wa];
-      if (fb.length && !gb) {
-        var hb = cb.getCurrentArraySize(),
-          ib = this._localTitanMessagesCount[wa] || 0,
-          jb = hb - ib,
-          kb = fb.length + ib;
-        ia.debug('fetch_missing_messages', {
-          threadID: wa,
-          offset: xa,
-          limit: ya,
-          missingIndices: fb,
-          messageCount: hb,
-          localMessageCount: ib
+    /**
+     * @param {string} eventName
+     * @param {Object} context
+     * @param {?} dataAndEvents
+     * @param {Function} callback
+     * @param {?} walkers
+     * @param {?} next
+     * @return {?}
+     */
+    getThreadMessagesRange : function(eventName, context, dataAndEvents, callback, walkers, next) {
+      var jQuery = _getRespondersForEvent(this, eventName);
+      var i = function(prop) {
+        callback(get(this, prop));
+      }.bind(this);
+      var key = jQuery.executeOrEnqueue(context, dataAndEvents, i);
+      var arr = jQuery.getUnavailableResources(key);
+      var iterator = this._failedHistoryFetchThreads[eventName];
+      if (arr.length && !iterator) {
+        var length = jQuery.getCurrentArraySize();
+        var fromIndex = this._localTitanMessagesCount[eventName] || 0;
+        /** @type {number} */
+        var padLength = length - fromIndex;
+        var udataCur = arr.length + fromIndex;
+        $.debug("fetch_missing_messages", {
+          threadID : eventName,
+          offset : context,
+          limit : dataAndEvents,
+          missingIndices : arr,
+          messageCount : length,
+          localMessageCount : fromIndex
         });
-        this._serverRequests.fetchThreadMessages(wa, jb, kb, ab, bb);
-      } else this._failedHistoryFetchThreads[wa] = false;
-      return eb;
+        this._serverRequests.fetchThreadMessages(eventName, padLength, udataCur, walkers, next);
+      } else {
+        /** @type {boolean} */
+        this._failedHistoryFetchThreads[eventName] = false;
+      }
+      return key;
     },
-    getThreadMessagesSinceTimestamp: function(wa, xa) {
-      var ya = ma(this, wa),
-        za = ya.getElementsUntil(xa);
-      return qa(this, za);
+    /**
+     * @param {?} eventName
+     * @param {?} obj
+     * @return {?}
+     */
+    getThreadMessagesSinceTimestamp : function(eventName, obj) {
+      var r = _getRespondersForEvent(this, eventName);
+      var keys = r.getElementsUntil(obj);
+      return get(this, keys);
     },
-    hasLoadedAllMessages: function(wa) {
-      return ma(this, wa).hasReachedEndOfArray();
+    /**
+     * @param {string} eventName
+     * @return {?}
+     */
+    hasLoadedAllMessages : function(eventName) {
+      return _getRespondersForEvent(this, eventName).hasReachedEndOfArray();
     },
-    getCurrentlyLoadedMessages: function(wa) {
-      var xa = ma(this, wa).getAllResources();
-      return qa(this, xa);
+    /**
+     * @param {string} eventName
+     * @return {?}
+     */
+    getCurrentlyLoadedMessages : function(eventName) {
+      var typePattern = _getRespondersForEvent(this, eventName).getAllResources();
+      return get(this, typePattern);
     },
-    unsubscribe: function(wa, xa) {
-      m.isThreadID(xa);
-      var ya = ma(this, xa);
-      ya.unsubscribe(wa);
+    /**
+     * @param {?} target
+     * @param {string} callback
+     * @return {undefined}
+     */
+    unsubscribe : function(target, callback) {
+      process.isThreadID(callback);
+      var args = _getRespondersForEvent(this, callback);
+      args.unsubscribe(target);
     },
-    _addAttachmentData: function(wa, xa, ya) {
-      var za = ja(this, wa);
-      if (za) {
-        var ab = za.attachments.indexOf(xa);
-        if (ab != -1) {
-          za.attachments = za.attachments.map(function(bb, cb) {
-            return cb === ab ? ya : bb;
+    /**
+     * @param {?} size
+     * @param {?} existingFn
+     * @param {string} task
+     * @return {undefined}
+     */
+    _addAttachmentData : function(size, existingFn, task) {
+      var message = update(this, size);
+      if (message) {
+        var pos = message.attachments.indexOf(existingFn);
+        if (pos != -1) {
+          message.attachments = message.attachments.map(function(distance, motion) {
+            return motion === pos ? task : distance;
           });
-          this._threadInformer.updatedMessage(za.thread_id, za.message_id, 'attach');
+          this._threadInformer.updatedMessage(message.thread_id, message.message_id, "attach");
         }
       } else {
-        if (!this._attachmentData[wa]) this._attachmentData[wa] = [];
-        this._attachmentData[wa].push({
-          attach_key: xa,
-          data: ya
+        if (!this._attachmentData[size]) {
+          /** @type {Array} */
+          this._attachmentData[size] = [];
+        }
+        this._attachmentData[size].push({
+          attach_key : existingFn,
+          data : task
         });
       }
     },
-    shouldSortOutOfOrderMessages: function(wa, xa, ya) {
-      if (wa == q.CLIENT_CHANNEL_MESSAGE) {
-        var za = this.getThreadMessagesSinceTimestamp(xa, ya);
-        if (za.length > 0) {
-          h.bumpEntityKey('chat.web', 'channel.messages_reordered');
+    /**
+     * @param {?} browser
+     * @param {?} eventName
+     * @param {?} walkers
+     * @return {?}
+     */
+    shouldSortOutOfOrderMessages : function(browser, eventName, walkers) {
+      if (browser == Browser.CLIENT_CHANNEL_MESSAGE) {
+        var subscribers = this.getThreadMessagesSinceTimestamp(eventName, walkers);
+        if (subscribers.length > 0) {
+          deepDataAndEvents.bumpEntityKey("chat.web", "channel.messages_reordered");
           return true;
         }
       }
       return false;
     },
-    _preprocessIncomingAction: function(wa, xa) {
-      var ya = wa.action_type;
-      if (xa == q.CLIENT_CHANNEL_MESSAGE && ya == l.USER_GENERATED_MESSAGE && wa.threading_id && this._localIdsMap[wa.threading_id] === wa.threading_id) {
-        wa.client_message_id = wa.threading_id;
-        wa.status = k.SUCCESS;
-        wa.action_type = l.SEND_MESSAGE;
-        ya = wa.action_type;
+    /**
+     * @param {Object} response
+     * @param {?} browser
+     * @return {?}
+     */
+    _preprocessIncomingAction : function(response, browser) {
+      var url = response.action_type;
+      if (browser == Browser.CLIENT_CHANNEL_MESSAGE && (url == req.USER_GENERATED_MESSAGE && (response.threading_id && this._localIdsMap[response.threading_id] === response.threading_id))) {
+        response.client_message_id = response.threading_id;
+        response.status = xhr.SUCCESS;
+        response.action_type = req.SEND_MESSAGE;
+        url = response.action_type;
       }
-      if (xa === q.CLIENT_CHANNEL_MESSAGE && ya == l.USER_GENERATED_MESSAGE) {
-        var za = this._threads.getThreadMetaNow(wa.thread_id);
-        if (za && za.folder) wa.folder = za.folder;
+      if (browser === Browser.CLIENT_CHANNEL_MESSAGE && url == req.USER_GENERATED_MESSAGE) {
+        var opts = this._threads.getThreadMetaNow(response.thread_id);
+        if (opts && opts.folder) {
+          response.folder = opts.folder;
+        }
       }
-      return wa;
+      return response;
     },
-    handleUpdates: function(wa, xa, ya, za) {
-      var ab, bb = {},
-        cb = {};
-      for (var db = 0; db < wa.length; db++) {
-        var eb = this._preprocessIncomingAction(wa[db], ya),
-          fb = eb.action_type,
-          gb = ja(this, eb.message_id);
-        if (eb.is_forward || ya == q.SERVER_SEARCH) {
-          if (!this._messages[eb.message_id]) {
-            this._messages[eb.message_id] = eb;
-            ta(this, eb);
+    /**
+     * @param {Array} codeSegments
+     * @param {(Document|string)} args
+     * @param {Object} browser
+     * @param {?} dataAndEvents
+     * @return {undefined}
+     */
+    handleUpdates : function(codeSegments, args, browser, dataAndEvents) {
+      var callback;
+      var object = {};
+      var lines = {};
+      /** @type {number} */
+      var i = 0;
+      for (;i < codeSegments.length;i++) {
+        var message = this._preprocessIncomingAction(codeSegments[i], browser);
+        var HEAD = message.action_type;
+        var self = update(this, message.message_id);
+        if (message.is_forward || browser == Browser.SERVER_SEARCH) {
+          if (!this._messages[message.message_id]) {
+            this._messages[message.message_id] = message;
+            validate(this, message);
           }
-          continue;
-        } else if (eb.client_state === p.SEND_TO_SERVER) {
-          this._messages[eb.message_id] = eb;
-          ta(this, eb);
-          continue;
-        } else if (fb == l.SEND_MESSAGE) {
-          var hb = eb.client_message_id;
-          if (hb && this._localIdsMap[hb] && eb.status) {
-            var ib = ja(this, hb),
-              jb = ib.status;
-            if (ib.status == k.SUCCESS) continue;
-            if (eb.status == k.UNCONFIRMED) {
-              if (!cb[eb.thread_id]) cb[eb.thread_id] = [];
-              cb[eb.thread_id].push(hb);
-            } else if (!bb[eb.thread_id]) bb[eb.thread_id] = [];
-            this._updateLocalMessage(eb);
-            if (typeof jb !== (void 0) || eb.status == k.FAILED_UNKNOWN_REASON || eb.status == k.UNABLE_TO_CONFIRM || eb.status == k.SUCCESS || eb.status == k.ERROR) this._threadInformer.updatedMessage(eb.thread_id, ja(this, hb).message_id, ya);
-          }
-          continue;
-        } else if (fb == l.DELETE_THREAD) {
-          ma(this, eb.thread_id).removeAllResources();
-          continue;
-        } else if (fb == l.DELETE_MESSAGES) {
-          this._deleteMessages(eb.thread_id, eb.message_ids, ya);
-          continue;
-        } else if (fb == l.CLEAR_CHAT) {
-          var kb = ma(this, eb.thread_id).getAllResources();
-          kb.map(ja.bind(null, this)).forEach(function(pb) {
-            pb.is_cleared = true;
-          });
-          continue;
-        } else if (fb === l.MARK_MESSAGES_SPAM) {
-          this._markMessagesSpam(eb, ya);
-          continue;
-        } else if ((eb.threading_id && this._localIdsMap[eb.threading_id]) || (gb && !gb.is_forward)) {
-          if (gb && eb.ranges && eb.ranges.length > 0) {
-            gb.ranges = eb.ranges;
-            this._threadInformer.updatedMessage(gb.thread_id, gb.message_id, 'link_shim');
-          }
-          continue;
-        } else if (fb === l.CONFIRM_ATTACHMENT_PLACEHOLDER) {
-          this._confirmAttachmentPlaceholder(eb.upload_id, eb.upload_data);
-          continue;
-        } else if (fb === l.CANCEL_ATTACHMENT_PLACEHOLDER) {
-          this._cancelAttachmentPlaceholder(eb.upload_id, eb.upload_data);
-          continue;
-        } else if (fb === l.ADD_SHARE_DATA_TO_EXISTING_MESSAGE) {
-          this._addAttachmentData(eb.server_id, eb.attach_key, eb.attach_data);
           continue;
         } else {
-          if (ya === q.CLIENT_SEND_MESSAGE) {
-            this._localIdsMap[eb.message_id] = eb.message_id;
-            if (eb.thread_id == 'root:' + eb.message_id) ma(this, eb.thread_id).setReachedEndOfArray();
+          if (message.client_state === msg.SEND_TO_SERVER) {
+            this._messages[message.message_id] = message;
+            validate(this, message);
+            continue;
+          } else {
+            if (HEAD == req.SEND_MESSAGE) {
+              var text = message.client_message_id;
+              if (text && (this._localIdsMap[text] && message.status)) {
+                var a = update(this, text);
+                var al = a.status;
+                if (a.status == xhr.SUCCESS) {
+                  continue;
+                }
+                if (message.status == xhr.UNCONFIRMED) {
+                  if (!lines[message.thread_id]) {
+                    /** @type {Array} */
+                    lines[message.thread_id] = [];
+                  }
+                  lines[message.thread_id].push(text);
+                } else {
+                  if (!object[message.thread_id]) {
+                    /** @type {Array} */
+                    object[message.thread_id] = [];
+                  }
+                }
+                this._updateLocalMessage(message);
+                if (typeof al !== void 0 || (message.status == xhr.FAILED_UNKNOWN_REASON || (message.status == xhr.UNABLE_TO_CONFIRM || (message.status == xhr.SUCCESS || message.status == xhr.ERROR)))) {
+                  this._threadInformer.updatedMessage(message.thread_id, update(this, text).message_id, browser);
+                }
+              }
+              continue;
+            } else {
+              if (HEAD == req.DELETE_THREAD) {
+                _getRespondersForEvent(this, message.thread_id).removeAllResources();
+                continue;
+              } else {
+                if (HEAD == req.DELETE_MESSAGES) {
+                  this._deleteMessages(message.thread_id, message.message_ids, browser);
+                  continue;
+                } else {
+                  if (HEAD == req.CLEAR_CHAT) {
+                    var mod = _getRespondersForEvent(this, message.thread_id).getAllResources();
+                    mod.map(update.bind(null, this)).forEach(function(dataAndEvents) {
+                      /** @type {boolean} */
+                      dataAndEvents.is_cleared = true;
+                    });
+                    continue;
+                  } else {
+                    if (HEAD === req.MARK_MESSAGES_SPAM) {
+                      this._markMessagesSpam(message, browser);
+                      continue;
+                    } else {
+                      if (message.threading_id && this._localIdsMap[message.threading_id] || self && !self.is_forward) {
+                        if (self && (message.ranges && message.ranges.length > 0)) {
+                          self.ranges = message.ranges;
+                          this._threadInformer.updatedMessage(self.thread_id, self.message_id, "link_shim");
+                        }
+                        continue;
+                      } else {
+                        if (HEAD === req.CONFIRM_ATTACHMENT_PLACEHOLDER) {
+                          this._confirmAttachmentPlaceholder(message.upload_id, message.upload_data);
+                          continue;
+                        } else {
+                          if (HEAD === req.CANCEL_ATTACHMENT_PLACEHOLDER) {
+                            this._cancelAttachmentPlaceholder(message.upload_id, message.upload_data);
+                            continue;
+                          } else {
+                            if (HEAD === req.ADD_SHARE_DATA_TO_EXISTING_MESSAGE) {
+                              this._addAttachmentData(message.server_id, message.attach_key, message.attach_data);
+                              continue;
+                            } else {
+                              if (browser === Browser.CLIENT_SEND_MESSAGE) {
+                                this._localIdsMap[message.message_id] = message.message_id;
+                                if (message.thread_id == "root:" + message.message_id) {
+                                  _getRespondersForEvent(this, message.thread_id).setReachedEndOfArray();
+                                }
+                              }
+                              if (HEAD == req.LOG_MESSAGE && message.log_message_type == opt.SERVER_ERROR) {
+                                /** @type {boolean} */
+                                this._failedHistoryFetchThreads[message.thread_id] = true;
+                              }
+                              if (message.client_state === msg.DO_NOT_SEND_TO_SERVER && message.upload_id) {
+                                this._uploadMessages[message.upload_id] = message;
+                              }
+                              if (!object[message.thread_id]) {
+                                /** @type {Array} */
+                                object[message.thread_id] = [];
+                              }
+                              object[message.thread_id].push(message.message_id);
+                              this._messages[message.message_id] = message;
+                              validate(this, message);
+                              if (message.threading_id && message.threading_id != message.message_id) {
+                                assert.addServerID(message.threading_id, message.message_id);
+                              }
+                              if (message[el.MANUAL_RETRY_CNT] > 0) {
+                                callback = _getRespondersForEvent(this, message.thread_id);
+                                callback.resortResources([message.message_id]);
+                                this._threadInformer.reorderedMessages(message.thread_id, Browser.CLIENT_SEND_MESSAGE);
+                              }
+                              args = args || this.shouldSortOutOfOrderMessages(browser, message.thread_id, message.timestamp);
+                              if (!args) {
+                                this._threadInformer.receivedMessage(message);
+                              }
+                              continue;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
-          if (fb == l.LOG_MESSAGE && eb.log_message_type == o.SERVER_ERROR) this._failedHistoryFetchThreads[eb.thread_id] = true;
-          if (eb.client_state === p.DO_NOT_SEND_TO_SERVER && eb.upload_id) this._uploadMessages[eb.upload_id] = eb;
-          if (!bb[eb.thread_id]) bb[eb.thread_id] = [];
-          bb[eb.thread_id].push(eb.message_id);
-          this._messages[eb.message_id] = eb;
-          ta(this, eb);
-          if (eb.threading_id && eb.threading_id != eb.message_id) u.addServerID(eb.threading_id, eb.message_id);
-          if (eb[x.MANUAL_RETRY_CNT] > 0) {
-            ab = ma(this, eb.thread_id);
-            ab.resortResources([eb.message_id]);
-            this._threadInformer.reorderedMessages(eb.thread_id, q.CLIENT_SEND_MESSAGE);
-          }
-          xa = xa || this.shouldSortOutOfOrderMessages(ya, eb.thread_id, eb.timestamp);
-          if (!xa) this._threadInformer.receivedMessage(eb);
-          continue;
         }
       }
-      for (var lb in bb) {
-        ab = ma(this, lb);
-        var mb = ab.getAllResources(),
-          nb = mb.filter(function(pb) {
-            var qb = this._messages[pb];
-            return qb.action_type == l.LOG_MESSAGE && qb.log_message_type == o.SERVER_ERROR;
-          }.bind(this));
-        ab.removeResources(nb);
-        if (za) ra(this, lb, bb[lb]);
-        if (xa) {
-          ab.addResources(bb[lb]);
-          this._threadInformer.reorderedMessages(lb, ya);
-        } else ab.addResourcesWithoutSorting(bb[lb].reverse(), 0);
-        this._threadInformer.updatedThread(lb);
+      var key;
+      for (key in object) {
+        callback = _getRespondersForEvent(this, key);
+        var contextElem = callback.getAllResources();
+        var restoreScript = contextElem.filter(function(i) {
+          var parsed = this._messages[i];
+          return parsed.action_type == req.LOG_MESSAGE && parsed.log_message_type == opt.SERVER_ERROR;
+        }.bind(this));
+        callback.removeResources(restoreScript);
+        if (dataAndEvents) {
+          save(this, key, object[key]);
+        }
+        if (args) {
+          callback.addResources(object[key]);
+          this._threadInformer.reorderedMessages(key, browser);
+        } else {
+          callback.addResourcesWithoutSorting(object[key].reverse(), 0);
+        }
+        this._threadInformer.updatedThread(key);
       }
-      var ob = Object.keys(cb);
-      if (ob.length) this._serverRequests.requestMessageConfirmation(cb);
-      ia.debug('handle_updates', {
-        localMessageCounts: ga(this._localTitanMessagesCount)
+      /** @type {Array.<string>} */
+      var lastLine = Object.keys(lines);
+      if (lastLine.length) {
+        this._serverRequests.requestMessageConfirmation(lines);
+      }
+      $.debug("handle_updates", {
+        localMessageCounts : $sanitize(this._localTitanMessagesCount)
       });
     },
-    isOutbound: function(wa) {
-      return wa.author == s.getID();
+    /**
+     * @param {Object} deepDataAndEvents
+     * @return {?}
+     */
+    isOutbound : function(deepDataAndEvents) {
+      return deepDataAndEvents.author == b.getID();
     },
-    isInbound: function(wa) {
-      return !this.isOutbound(wa);
+    /**
+     * @param {Object} deepDataAndEvents
+     * @return {?}
+     */
+    isInbound : function(deepDataAndEvents) {
+      return!this.isOutbound(deepDataAndEvents);
     },
-    isSending: function(wa) {
-      return (wa.status === k.UNSENT || wa.status === k.UNCONFIRMED || wa.status === k.UNABLE_TO_CONFIRM || wa.status === k.RESENDING);
+    /**
+     * @param {Object} jqXHR
+     * @return {?}
+     */
+    isSending : function(jqXHR) {
+      return jqXHR.status === xhr.UNSENT || (jqXHR.status === xhr.UNCONFIRMED || (jqXHR.status === xhr.UNABLE_TO_CONFIRM || jqXHR.status === xhr.RESENDING));
     },
-    isFirstMessage: function(wa) {
-      var xa = ma(this, wa.thread_id);
-      if (xa.getCurrentArraySize() === 0) return false;
-      var ya = xa.getResourceAtIndex(xa.getCurrentArraySize() - 1),
-        za = ja(this, ya).message_id,
-        ab = ja(this, wa.message_id).message_id;
-      return xa.hasReachedEndOfArray() && za == ab;
+    /**
+     * @param {?} user
+     * @return {?}
+     */
+    isFirstMessage : function(user) {
+      var responders = _getRespondersForEvent(this, user.thread_id);
+      if (responders.getCurrentArraySize() === 0) {
+        return false;
+      }
+      var rvar = responders.getResourceAtIndex(responders.getCurrentArraySize() - 1);
+      var i = update(this, rvar).message_id;
+      var last = update(this, user.message_id).message_id;
+      return responders.hasReachedEndOfArray() && i == last;
     },
-    _isWholeThread: function(wa, xa) {
-      var ya = ma(this, wa);
-      return (ya.getCurrentArraySize() == xa.length && ya.hasReachedEndOfArray());
+    /**
+     * @param {string} eventName
+     * @param {Array} millis
+     * @return {?}
+     */
+    _isWholeThread : function(eventName, millis) {
+      var r = _getRespondersForEvent(this, eventName);
+      return r.getCurrentArraySize() == millis.length && r.hasReachedEndOfArray();
     },
-    _markMessagesSpam: function(wa, xa) {
-      var ya = wa,
-        za = ya.thread_id,
-        ab = ya.message_ids;
-      if (!ab.length) return;
-      if (this._isWholeThread(za, ab)) {
-        ha(function() {
-          return this._threadActions.markSpam(za);
+    /**
+     * @param {?} message
+     * @param {Object} browser
+     * @return {undefined}
+     */
+    _markMessagesSpam : function(message, browser) {
+      var _message = message;
+      var r20 = _message.thread_id;
+      var destElements = _message.message_ids;
+      if (!destElements.length) {
+        return;
+      }
+      if (this._isWholeThread(r20, destElements)) {
+        Application(function() {
+          return this._threadActions.markSpam(r20);
         }.bind(this));
       } else {
-        this._deleteIndividualMessages(wa.thread_id, wa.message_ids, xa);
-        this._serverRequests.markMessagesSpam(za, ab);
+        this._deleteIndividualMessages(message.thread_id, message.message_ids, browser);
+        this._serverRequests.markMessagesSpam(r20, destElements);
       }
     },
-    _deleteMessages: function(wa, xa, ya) {
-      if (!xa.length) return;
-      if (ya === q.CLIENT_CHANNEL_MESSAGE) this._deleteIndividualMessages(wa, xa, ya);
-      if (this._isWholeThread(wa, xa)) {
-        ha(function() {
-          return this._threadActions["delete"](wa);
+    /**
+     * @param {string} key
+     * @param {Array} millis
+     * @param {Object} browser
+     * @return {undefined}
+     */
+    _deleteMessages : function(key, millis, browser) {
+      if (!millis.length) {
+        return;
+      }
+      if (browser === Browser.CLIENT_CHANNEL_MESSAGE) {
+        this._deleteIndividualMessages(key, millis, browser);
+      }
+      if (this._isWholeThread(key, millis)) {
+        Application(function() {
+          return this._threadActions["delete"](key);
         }.bind(this));
       } else {
-        this._serverRequests.deleteMessages(wa, xa);
-        this._deleteIndividualMessages(wa, xa, ya);
+        this._serverRequests.deleteMessages(key, millis);
+        this._deleteIndividualMessages(key, millis, browser);
       }
     },
-    _deleteIndividualMessages: function(wa, xa, ya) {
-      var za = xa.map(function(bb) {
-          return ja(this, bb).message_id;
-        }, this),
-        ab = ma(this, wa);
-      ab.removeResources(za);
-      this._threadInformer.reorderedMessages(wa, ya);
+    /**
+     * @param {string} eventName
+     * @param {Array} millis
+     * @param {Object} browser
+     * @return {undefined}
+     */
+    _deleteIndividualMessages : function(eventName, millis, browser) {
+      var restoreScript = millis.map(function(obj) {
+        return update(this, obj).message_id;
+      }, this);
+      var r = _getRespondersForEvent(this, eventName);
+      r.removeResources(restoreScript);
+      this._threadInformer.reorderedMessages(eventName, browser);
     },
-    _updateLocalMessage: function(wa) {
-      var xa = ja(this, wa.client_message_id);
-      xa.status = wa.status;
-      if (wa.status === k.SUCCESS || wa.error_data) xa.error_data = wa.error_data;
-      var ya = wa.message_id,
-        za = wa.client_message_id;
-      if (this._messages[ya]) return false;
-      this._localIdsMap[za] = ya;
-      this._messages[ya] = this._messages[za];
-      u.addServerID(za, ya);
-      this._messages[za] = {};
-      var ab = ja(this, za);
-      if (wa.timestamp) ab.timestamp = wa.timestamp;
-      if (wa.attachments && wa.attachments.length) {
-        ab.raw_attachments = null;
-        ab.attachments = wa.attachments;
-        ta(this, ab, ya);
+    /**
+     * @param {Object} data
+     * @return {?}
+     */
+    _updateLocalMessage : function(data) {
+      var a = update(this, data.client_message_id);
+      a.status = data.status;
+      if (data.status === xhr.SUCCESS || data.error_data) {
+        a.error_data = data.error_data;
       }
-      if (wa.log_message_data) ab.log_message_data = wa.log_message_data;
-      if (sa(ab)) this._localTitanMessagesCount[ab.thread_id] --;
+      var c = data.message_id;
+      var i = data.client_message_id;
+      if (this._messages[c]) {
+        return false;
+      }
+      this._localIdsMap[i] = c;
+      this._messages[c] = this._messages[i];
+      assert.addServerID(i, c);
+      this._messages[i] = {};
+      var message = update(this, i);
+      if (data.timestamp) {
+        message.timestamp = data.timestamp;
+      }
+      if (data.attachments && data.attachments.length) {
+        /** @type {null} */
+        message.raw_attachments = null;
+        message.attachments = data.attachments;
+        validate(this, message, c);
+      }
+      if (data.log_message_data) {
+        message.log_message_data = data.log_message_data;
+      }
+      if (ok(message)) {
+        this._localTitanMessagesCount[message.thread_id]--;
+      }
       return true;
     },
-    getNumberLocalMessages: function(wa) {
-      return this._localTitanMessagesCount[wa] || 0;
+    /**
+     * @param {?} timeoutKey
+     * @return {?}
+     */
+    getNumberLocalMessages : function(timeoutKey) {
+      return this._localTitanMessagesCount[timeoutKey] || 0;
     },
-    _uploadMessages: {},
-    _confirmAttachmentPlaceholder: function(wa, xa) {
-      var ya = this._popPendingAttachmentMessage(wa, xa);
-      this._serverRequests.sendNewMessage(ya);
+    _uploadMessages : {},
+    /**
+     * @param {?} deepDataAndEvents
+     * @param {?} dataAndEvents
+     * @return {undefined}
+     */
+    _confirmAttachmentPlaceholder : function(deepDataAndEvents, dataAndEvents) {
+      var suiteView = this._popPendingAttachmentMessage(deepDataAndEvents, dataAndEvents);
+      this._serverRequests.sendNewMessage(suiteView);
     },
-    _cancelAttachmentPlaceholder: function(wa, xa) {
-      var ya = this._popPendingAttachmentMessage(wa, xa);
-      this._deleteIndividualMessages(ya.thread_id, [ya.message_id]);
-      if (this._localTitanMessagesCount[ya.thread_id]) this._localTitanMessagesCount[ya.thread_id] --;
+    /**
+     * @param {?} deepDataAndEvents
+     * @param {?} dataAndEvents
+     * @return {undefined}
+     */
+    _cancelAttachmentPlaceholder : function(deepDataAndEvents, dataAndEvents) {
+      var message = this._popPendingAttachmentMessage(deepDataAndEvents, dataAndEvents);
+      this._deleteIndividualMessages(message.thread_id, [message.message_id]);
+      if (this._localTitanMessagesCount[message.thread_id]) {
+        this._localTitanMessagesCount[message.thread_id]--;
+      }
     },
-    _popPendingAttachmentMessage: function(wa, xa) {
-      var ya = this._uploadMessages[wa];
-      ea(ya);
-      ya.image_ids = xa.image_ids;
-      ya.file_ids = xa.file_ids;
-      ya.audio_ids = xa.audio_ids;
-      ya.gif_ids = xa.gif_ids;
-      ya.client_state = p.SEND_TO_SERVER;
-      delete this._uploadMessages[wa];
-      return ya;
+    /**
+     * @param {?} deepDataAndEvents
+     * @param {?} dataAndEvents
+     * @return {?}
+     */
+    _popPendingAttachmentMessage : function(deepDataAndEvents, dataAndEvents) {
+      var failuresLink = this._uploadMessages[deepDataAndEvents];
+      on(failuresLink);
+      failuresLink.image_ids = dataAndEvents.image_ids;
+      failuresLink.file_ids = dataAndEvents.file_ids;
+      failuresLink.audio_ids = dataAndEvents.audio_ids;
+      failuresLink.gif_ids = dataAndEvents.gif_ids;
+      failuresLink.client_state = msg.SEND_TO_SERVER;
+      delete this._uploadMessages[deepDataAndEvents];
+      return failuresLink;
     }
   });
-  Object.assign(pa, r);
-
-  function qa(wa, xa) {
-    var ya = xa.map(ja.bind(null, wa));
-    return ya.reverse();
-  }
-
-  function ra(wa, xa, ya) {
-    var za = ya.filter(function(ab) {
-      return sa(ja(wa, ab));
-    });
-    if (!wa._localTitanMessagesCount[xa]) wa._localTitanMessagesCount[xa] = 0;
-    wa._localTitanMessagesCount[xa] += za.length;
-  }
-
-  function sa(wa) {
-    var xa = wa.action_type;
-    if (xa == l.USER_GENERATED_MESSAGE) return true;
-    switch (wa.log_message_type) {
-      case o.SUBSCRIBE:
-      case o.UNSUBSCRIBE:
-      case o.SERVER_ERROR:
-      case o.LIVE_LISTEN:
-        return false;
-      default:
-        return true;
+  Object.assign(create, map);
+  var isObject = require(function(value) {
+    var scrubbed = {};
+    var i;
+    for (i in value._messagesNeedingAttachmentData) {
+      var str = update(value, i);
+      if (arrayContains(value, str)) {
+        /** @type {boolean} */
+        scrubbed[i] = true;
+      }
     }
-  }
-
-  function ta(wa, xa, ya) {
-    ya = ya || xa.message_id;
-    var za = wa._attachmentData[ya];
-    if (za) {
-      za.forEach(function(ab) {
-        var bb = xa.attachments.indexOf(ab.attach_key);
-        if (bb !== -1) xa.attachments[bb] = ab.data;
-      });
-      delete wa._attachmentData[ya];
-    } else if (!xa.is_forward && ua(wa, xa)) {
-      wa._messagesNeedingAttachmentData[ya] = true;
-      va(wa);
-    }
-  }
-
-  function ua(wa, xa) {
-    if (!xa || !xa.attachments) return false;
-    for (var ya = 0; ya < xa.attachments.length; ya++) {
-      var za = xa.attachments[ya];
-      if (typeof za === 'string' && za.indexOf(n.SHARE) === 0) return true;
-    }
-    var ab = xa.forward_message_ids || [];
-    for (ya = 0; ya < ab.length; ya++) {
-      var bb = ja(wa, ab[ya]);
-      if (ua(wa, bb)) return true;
-    }
-    return false;
-  }
-  var va = da(function(wa) {
-    var xa = {};
-    for (var ya in wa._messagesNeedingAttachmentData) {
-      var za = ja(wa, ya);
-      if (ua(wa, za)) xa[ya] = true;
-    }
-    var ab = Object.keys(xa);
-    if (ab.length) {
-      var bb = {
-        message_ids: ab
+    /** @type {Array.<string>} */
+    var codeSegments = Object.keys(scrubbed);
+    if (codeSegments.length) {
+      var newValue = {
+        message_ids : codeSegments
       };
-      if (wa._fbid != i.getID()) bb.request_user_id = wa._fbid;
-      new g('/ajax/mercury/attachments/fetch_shares.php').setData(bb).setAllowCrossPageTransition(true).send();
+      if (value._fbid != a.getID()) {
+        newValue.request_user_id = value._fbid;
+      }
+      (new dataAndEvents("/ajax/mercury/attachments/fetch_shares.php")).setData(newValue).setAllowCrossPageTransition(true).send();
     }
-    wa._messagesNeedingAttachmentData = {};
+    value._messagesNeedingAttachmentData = {};
   }, 0, this);
-  e.exports = pa;
+  /** @type {function (?): undefined} */
+  module.exports = create;
 }, null);
-__d("MercuryChannelHandler", ["Arbiter", "ChannelConstants", "MercuryActionType", "MercuryGlobalActionType", "MercuryMessages", "MercuryPayloadSource", "MercuryServerRequests", "MercurySingletonMixin", "MercuryThreadInformer", "MercuryViewer", "MessagingEvent", "MessagingReliabilityLogger", "MessagingTag", "PresenceUtil", "copyProperties", "mixin"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v) {
-  var w = v(n);
-  for (var x in w)
-    if (w.hasOwnProperty(x)) z[x] = w[x];
-  var y = w === null ? null : w.prototype;
-  z.prototype = Object.create(y);
-  z.prototype.constructor = z;
-  z.__superConstructor__ = w;
-
-  function z(aa) {
-    "use strict";
-    this.$MercuryChannelHandler0 = aa;
-    this.$MercuryChannelHandler1 = m.getForFBID(this.$MercuryChannelHandler0);
-    this.$MercuryChannelHandler2 = o.getForFBID(this.$MercuryChannelHandler0);
-    this.$MercuryChannelHandler3 = k.getForFBID(this.$MercuryChannelHandler0);
+__d("MercuryChannelHandler", ["Arbiter", "ChannelConstants", "MercuryActionType", "MercuryGlobalActionType", "MercuryMessages", "MercuryPayloadSource", "MercuryServerRequests", "MercurySingletonMixin", "MercuryThreadInformer", "MercuryViewer", "MessagingEvent", "MessagingReliabilityLogger", "MessagingTag", "PresenceUtil", "copyProperties", "mixin"], function(dataAndEvents, matcherFunction, execResult, opt_keys, module, positionError, c, assert, a, ignoreMethodDoesntExist, deepDataAndEvents, xmlhttp,
+textAlt, value, keepData, fn, event, $scope, folder, opt_attributes, callback, func) {
+  /**
+   * @param {?} config
+   * @return {undefined}
+   */
+  function constructor(config) {
+    this.$MercuryChannelHandler0 = config;
+    this.$MercuryChannelHandler1 = textAlt.getForFBID(this.$MercuryChannelHandler0);
+    this.$MercuryChannelHandler2 = keepData.getForFBID(this.$MercuryChannelHandler0);
+    this.$MercuryChannelHandler3 = deepDataAndEvents.getForFBID(this.$MercuryChannelHandler0);
+    /** @type {Array} */
     this.$MercuryChannelHandler4 = [];
   }
-  z.prototype.getInstanceFBID = function() {
-    "use strict";
+  var newValue = func(value);
+  var key;
+  for (key in newValue) {
+    if (newValue.hasOwnProperty(key)) {
+      constructor[key] = newValue[key];
+    }
+  }
+  var basePrototype = newValue === null ? null : newValue.prototype;
+  /** @type {Object} */
+  constructor.prototype = Object.create(basePrototype);
+  /** @type {function (?): undefined} */
+  constructor.prototype.constructor = constructor;
+  constructor.__superConstructor__ = newValue;
+  /**
+   * @return {?}
+   */
+  constructor.prototype.getInstanceFBID = function() {
     return this.$MercuryChannelHandler0;
   };
-  z.prototype.$MercuryChannelHandler5 = function(aa, ba) {
-    "use strict";
-    if (!this.$MercuryChannelHandler6(aa) || !ba.obj || !ba.obj.message) {
-      r.addEntry('channel_receive', 'invalid_data');
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} data
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryChannelHandler5 = function(deepDataAndEvents, data) {
+    if (!this.$MercuryChannelHandler6(deepDataAndEvents) || (!data.obj || !data.obj.message)) {
+      $scope.addEntry("channel_receive", "invalid_data");
       return;
     }
-    var ca = ba.obj.message,
-      da = ca.other_user_fbid ? ca.other_user_fbid : ca.thread_fbid,
-      ea = {
-        author: ca.mercury_author_id,
-        author_email: ca.mercury_author_email,
-        body: ca.body,
-        subject: ca.subject,
-        has_attachment: ca.has_attachment,
-        attachments: ca.attachments,
-        html_body: ca.html_body,
-        thread_id: ca.tid,
-        thread_fbid: ca.thread_fbid,
-        other_user_fbid: ca.other_user_fbid,
-        message_id: ca.mid,
-        coordinates: ca.mercury_coordinates,
-        is_spoof_warning: ca.is_spoof_warning,
-        ranges: ca.ranges,
-        source: ca.mercury_source,
-        source_tags: ca.mercury_source_tags,
-        threading_id: ca.threading_id,
-        timestamp: ca.timestamp,
-        timestamp_absolute: ca.timestamp_absolute,
-        timestamp_relative: ca.timestamp_relative,
-        timestamp_time_passed: ca.timestamp_time_passed,
-        action_type: i.USER_GENERATED_MESSAGE,
-        is_unread: ca.is_unread,
-        is_forward: false,
-        forward_count: ca.forward_count || ca.forward,
-        forward_message_ids: ca.forward_msg_ids,
-        location_text: ca.location_text,
-        folder: ba.obj.folder
-      };
-    if ("sync_id" in ca) {
-      ea.sync_id = ca.sync_id;
-    } else ea.action_id = ca.action_id;
-    var fa = [u({}, ea)];
-    fa = fa.concat(ca.forward_actions || []);
-    var ga = l.CLIENT_CHANNEL_MESSAGE;
+    var options = data.obj.message;
+    var i = options.other_user_fbid ? options.other_user_fbid : options.thread_fbid;
+    var params = {
+      author : options.mercury_author_id,
+      author_email : options.mercury_author_email,
+      body : options.body,
+      subject : options.subject,
+      has_attachment : options.has_attachment,
+      attachments : options.attachments,
+      html_body : options.html_body,
+      thread_id : options.tid,
+      thread_fbid : options.thread_fbid,
+      other_user_fbid : options.other_user_fbid,
+      message_id : options.mid,
+      coordinates : options.mercury_coordinates,
+      is_spoof_warning : options.is_spoof_warning,
+      ranges : options.ranges,
+      source : options.mercury_source,
+      source_tags : options.mercury_source_tags,
+      threading_id : options.threading_id,
+      timestamp : options.timestamp,
+      timestamp_absolute : options.timestamp_absolute,
+      timestamp_relative : options.timestamp_relative,
+      timestamp_time_passed : options.timestamp_time_passed,
+      action_type : a.USER_GENERATED_MESSAGE,
+      is_unread : options.is_unread,
+      is_forward : false,
+      forward_count : options.forward_count || options.forward,
+      forward_message_ids : options.forward_msg_ids,
+      location_text : options.location_text,
+      folder : data.obj.folder
+    };
+    if ("sync_id" in options) {
+      params.sync_id = options.sync_id;
+    } else {
+      params.action_id = options.action_id;
+    }
+    /** @type {Array} */
+    var actions = [callback({}, params)];
+    /** @type {Array} */
+    actions = actions.concat(options.forward_actions || []);
+    var msg = xmlhttp.CLIENT_CHANNEL_MESSAGE;
     this.$MercuryChannelHandler1.handleUpdateWaitForThread({
-      actions: fa,
-      payload_source: ga
-    }, da);
-    if (!ca.is_unread && p.isViewer(ca.mercury_author_id)) {
-      var ha = {};
-      ha[da] = ba.obj.folder;
+      actions : actions,
+      payload_source : msg
+    }, i);
+    if (!options.is_unread && fn.isViewer(options.mercury_author_id)) {
+      var prevSources = {};
+      prevSources[i] = data.obj.folder;
       this.$MercuryChannelHandler7(this.__getMessagingPayloadType(), {
-        obj: {
-          event: q.READ,
-          thread_fbids: ca.thread_fbid ? [ca.thread_fbid] : [],
-          other_user_fbids: ca.other_user_fbid ? [ca.other_user_fbid] : [],
-          folder_info: ha,
-          timestamp: ca.timestamp
+        obj : {
+          event : event.READ,
+          thread_fbids : options.thread_fbid ? [options.thread_fbid] : [],
+          other_user_fbids : options.other_user_fbid ? [options.other_user_fbid] : [],
+          folder_info : prevSources,
+          timestamp : options.timestamp
         }
       });
     }
-    r.addEntry('channel_receive', 'success', [da, ea.message_id, t.getSessionID()]);
+    $scope.addEntry("channel_receive", "success", [i, params.message_id, opt_attributes.getSessionID()]);
   };
-  z.prototype.$MercuryChannelHandler7 = function(aa, ba) {
-    "use strict";
-    if (!this.$MercuryChannelHandler6(aa) || !ba.obj || (!ba.obj.thread_fbids && !ba.obj.other_user_fbids)) return;
-    var ca = [],
-      da = ba.obj.event == q.READ;
-    (ba.obj.thread_fbids || []).forEach(function(ea) {
-      ca.push({
-        action_type: i.CHANGE_READ_STATUS,
-        action_id: null,
-        thread_fbid: ea,
-        mark_as_read: da,
-        timestamp: ba.obj.timestamp || 0,
-        folder: ba.obj.folder_info[ea]
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} data
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryChannelHandler7 = function(deepDataAndEvents, data) {
+    if (!this.$MercuryChannelHandler6(deepDataAndEvents) || (!data.obj || !data.obj.thread_fbids && !data.obj.other_user_fbids)) {
+      return;
+    }
+    /** @type {Array} */
+    var action_list = [];
+    /** @type {boolean} */
+    var mark_as_read = data.obj.event == event.READ;
+    (data.obj.thread_fbids || []).forEach(function(timeoutKey) {
+      action_list.push({
+        action_type : a.CHANGE_READ_STATUS,
+        action_id : null,
+        thread_fbid : timeoutKey,
+        mark_as_read : mark_as_read,
+        timestamp : data.obj.timestamp || 0,
+        folder : data.obj.folder_info[timeoutKey]
       });
     });
-    (ba.obj.other_user_fbids || []).forEach(function(ea) {
-      ca.push({
-        action_type: i.CHANGE_READ_STATUS,
-        action_id: null,
-        other_user_fbid: ea,
-        mark_as_read: da,
-        timestamp: ba.obj.timestamp || 0,
-        folder: ba.obj.folder_info[ea]
-      });
-    });
-    this.$MercuryChannelHandler1.handleUpdate({
-      actions: ca,
-      payload_source: l.CLIENT_CHANNEL_MESSAGE
-    });
-  };
-  z.prototype.$MercuryChannelHandler8 = function(aa, ba) {
-    "use strict";
-    if (!this.$MercuryChannelHandler6(aa) || !ba.obj || !(ba.obj.thread_fbids || ba.obj.other_user_fbids)) return;
-    var ca = [];
-    (ba.obj.thread_fbids || []).forEach(function(da) {
-      ca.push({
-        action_type: i.DELETE_THREAD,
-        action_id: null,
-        thread_fbid: da
-      });
-    });
-    (ba.obj.other_user_fbids || []).forEach(function(da) {
-      ca.push({
-        action_type: i.DELETE_THREAD,
-        action_id: null,
-        other_user_fbid: da
+    (data.obj.other_user_fbids || []).forEach(function(timeoutKey) {
+      action_list.push({
+        action_type : a.CHANGE_READ_STATUS,
+        action_id : null,
+        other_user_fbid : timeoutKey,
+        mark_as_read : mark_as_read,
+        timestamp : data.obj.timestamp || 0,
+        folder : data.obj.folder_info[timeoutKey]
       });
     });
     this.$MercuryChannelHandler1.handleUpdate({
-      actions: ca,
-      payload_source: l.CLIENT_CHANNEL_MESSAGE
+      actions : action_list,
+      payload_source : xmlhttp.CLIENT_CHANNEL_MESSAGE
     });
   };
-  z.prototype.$MercuryChannelHandler9 = function(aa, ba) {
-    "use strict";
-    if (!this.$MercuryChannelHandler6(aa) || !ba.obj || (!ba.obj.thread_fbids && !ba.obj.other_user_fbids) || !ba.obj.mids) return;
-    var ca = ba.obj.thread_fbids.length ? ba.obj.thread_fbids[0] : null,
-      da = ba.obj.other_user_fbids.length ? ba.obj.other_user_fbids[0] : null,
-      ea = {
-        action_type: i.DELETE_MESSAGES,
-        action_id: null,
-        thread_fbid: ca,
-        other_user_fbid: da,
-        message_ids: ba.obj.mids
-      };
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} data
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryChannelHandler8 = function(deepDataAndEvents, data) {
+    if (!this.$MercuryChannelHandler6(deepDataAndEvents) || (!data.obj || !(data.obj.thread_fbids || data.obj.other_user_fbids))) {
+      return;
+    }
+    /** @type {Array} */
+    var action_list = [];
+    (data.obj.thread_fbids || []).forEach(function(dataAndEvents) {
+      action_list.push({
+        action_type : a.DELETE_THREAD,
+        action_id : null,
+        thread_fbid : dataAndEvents
+      });
+    });
+    (data.obj.other_user_fbids || []).forEach(function(dataAndEvents) {
+      action_list.push({
+        action_type : a.DELETE_THREAD,
+        action_id : null,
+        other_user_fbid : dataAndEvents
+      });
+    });
     this.$MercuryChannelHandler1.handleUpdate({
-      actions: [ea],
-      threads: [ba.obj.updated_thread],
-      payload_source: l.CLIENT_CHANNEL_MESSAGE
+      actions : action_list,
+      payload_source : xmlhttp.CLIENT_CHANNEL_MESSAGE
     });
   };
-  z.prototype.$MercuryChannelHandlera = function(aa, ba) {
-    "use strict";
-    if (!this.$MercuryChannelHandler6(aa) || !ba.obj || !ba.obj.folder) return;
-    var ca = {
-      action_type: j.MARK_ALL_READ,
-      action_id: ba.obj.action_id,
-      folder: ba.obj.folder
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} data
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryChannelHandler9 = function(deepDataAndEvents, data) {
+    if (!this.$MercuryChannelHandler6(deepDataAndEvents) || (!data.obj || (!data.obj.thread_fbids && !data.obj.other_user_fbids || !data.obj.mids))) {
+      return;
+    }
+    var thread_fbid = data.obj.thread_fbids.length ? data.obj.thread_fbids[0] : null;
+    var other_user_fbid = data.obj.other_user_fbids.length ? data.obj.other_user_fbids[0] : null;
+    var actionServer = {
+      action_type : a.DELETE_MESSAGES,
+      action_id : null,
+      thread_fbid : thread_fbid,
+      other_user_fbid : other_user_fbid,
+      message_ids : data.obj.mids
     };
     this.$MercuryChannelHandler1.handleUpdate({
-      global_actions: [ca]
+      actions : [actionServer],
+      threads : [data.obj.updated_thread],
+      payload_source : xmlhttp.CLIENT_CHANNEL_MESSAGE
     });
   };
-  z.prototype.$MercuryChannelHandlerb = function(aa, ba) {
-    "use strict";
-    if (!this.$MercuryChannelHandler6(aa) || (!ba.obj.thread_fbids && !ba.obj.other_user_fbids)) return;
-    var ca = l.CLIENT_CHANNEL_MESSAGE;
-    (ba.obj.thread_fbids || []).forEach(function(da) {
-      var ea = {
-        action_type: i.CHANGE_ARCHIVED_STATUS,
-        action_id: null,
-        thread_fbid: da,
-        other_user_fbid: null,
-        archived: ba.obj.state
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} data
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryChannelHandlera = function(deepDataAndEvents, data) {
+    if (!this.$MercuryChannelHandler6(deepDataAndEvents) || (!data.obj || !data.obj.folder)) {
+      return;
+    }
+    var folder = {
+      action_type : ignoreMethodDoesntExist.MARK_ALL_READ,
+      action_id : data.obj.action_id,
+      folder : data.obj.folder
+    };
+    this.$MercuryChannelHandler1.handleUpdate({
+      global_actions : [folder]
+    });
+  };
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} data
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryChannelHandlerb = function(deepDataAndEvents, data) {
+    if (!this.$MercuryChannelHandler6(deepDataAndEvents) || !data.obj.thread_fbids && !data.obj.other_user_fbids) {
+      return;
+    }
+    var msg = xmlhttp.CLIENT_CHANNEL_MESSAGE;
+    (data.obj.thread_fbids || []).forEach(function(transform) {
+      var feed = {
+        action_type : a.CHANGE_ARCHIVED_STATUS,
+        action_id : null,
+        thread_fbid : transform,
+        other_user_fbid : null,
+        archived : data.obj.state
       };
       this.$MercuryChannelHandler1.handleUpdateWaitForThread({
-        actions: [u({}, ea)],
-        payload_source: ca
-      }, da);
+        actions : [callback({}, feed)],
+        payload_source : msg
+      }, transform);
     }, this);
-    (ba.obj.other_user_fbids || []).forEach(function(da) {
-      var ea = {
-        action_type: i.CHANGE_ARCHIVED_STATUS,
-        action_id: null,
-        thread_fbid: null,
-        other_user_fbid: da,
-        archived: ba.obj.state
+    (data.obj.other_user_fbids || []).forEach(function(transform) {
+      var feed = {
+        action_type : a.CHANGE_ARCHIVED_STATUS,
+        action_id : null,
+        thread_fbid : null,
+        other_user_fbid : transform,
+        archived : data.obj.state
       };
       this.$MercuryChannelHandler1.handleUpdateWaitForThread({
-        actions: [u({}, ea)],
-        payload_source: ca
-      }, da);
+        actions : [callback({}, feed)],
+        payload_source : msg
+      }, transform);
     }, this);
   };
-  z.prototype.$MercuryChannelHandlerc = function(aa, ba) {
-    "use strict";
-    if (!this.$MercuryChannelHandler6(aa) || (!ba.obj.thread_fbids && !ba.obj.other_user_fbids)) return;
-    var ca = l.CLIENT_CHANNEL_MESSAGE,
-      da;
-    (ba.obj.thread_fbids || []).forEach(function(ea) {
-      if (ba.obj.event == q.TAG) {
-        da = ba.obj.tag;
-      } else da = ba.obj.marked_as_spam ? s.SPAM : s.INBOX;
-      var fa = {
-        action_type: i.CHANGE_FOLDER,
-        action_id: null,
-        thread_fbid: ea,
-        other_user_fbid: null,
-        new_folder: da
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} data
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryChannelHandlerc = function(deepDataAndEvents, data) {
+    if (!this.$MercuryChannelHandler6(deepDataAndEvents) || !data.obj.thread_fbids && !data.obj.other_user_fbids) {
+      return;
+    }
+    var msg = xmlhttp.CLIENT_CHANNEL_MESSAGE;
+    var tag;
+    (data.obj.thread_fbids || []).forEach(function(transform) {
+      if (data.obj.event == event.TAG) {
+        tag = data.obj.tag;
+      } else {
+        tag = data.obj.marked_as_spam ? folder.SPAM : folder.INBOX;
+      }
+      var feed = {
+        action_type : a.CHANGE_FOLDER,
+        action_id : null,
+        thread_fbid : transform,
+        other_user_fbid : null,
+        new_folder : tag
       };
       this.$MercuryChannelHandler1.handleUpdateWaitForThread({
-        actions: [u({}, fa)],
-        payload_source: ca
-      }, ea);
+        actions : [callback({}, feed)],
+        payload_source : msg
+      }, transform);
     }, this);
-    (ba.obj.other_user_fbids || []).forEach(function(ea) {
-      if (ba.obj.event == q.TAG) {
-        da = ba.obj.tag;
-      } else da = ba.obj.marked_as_spam ? s.SPAM : s.INBOX;
-      var fa = {
-        action_type: i.CHANGE_FOLDER,
-        action_id: null,
-        other_user_fbid: ea,
-        thread_fbid: null,
-        new_folder: da
+    (data.obj.other_user_fbids || []).forEach(function(transform) {
+      if (data.obj.event == event.TAG) {
+        tag = data.obj.tag;
+      } else {
+        tag = data.obj.marked_as_spam ? folder.SPAM : folder.INBOX;
+      }
+      var feed = {
+        action_type : a.CHANGE_FOLDER,
+        action_id : null,
+        other_user_fbid : transform,
+        thread_fbid : null,
+        new_folder : tag
       };
       this.$MercuryChannelHandler1.handleUpdateWaitForThread({
-        actions: [u({}, fa)],
-        payload_source: ca
-      }, ea);
+        actions : [callback({}, feed)],
+        payload_source : msg
+      }, transform);
     }, this);
   };
-  z.prototype.$MercuryChannelHandlerd = function(aa, ba) {
-    "use strict";
-    if (!this.$MercuryChannelHandler6(aa) || !ba.obj.tag) return;
-    switch (ba.obj.tag) {
-      case s.ACTION_ARCHIVED:
-        this.$MercuryChannelHandlerb(aa, ba);
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} data
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryChannelHandlerd = function(deepDataAndEvents, data) {
+    if (!this.$MercuryChannelHandler6(deepDataAndEvents) || !data.obj.tag) {
+      return;
+    }
+    switch(data.obj.tag) {
+      case folder.ACTION_ARCHIVED:
+        this.$MercuryChannelHandlerb(deepDataAndEvents, data);
         break;
-      case s.INBOX:
-      case s.OTHER:
-        this.$MercuryChannelHandlerc(aa, ba);
+      case folder.INBOX:
+      ;
+      case folder.OTHER:
+        this.$MercuryChannelHandlerc(deepDataAndEvents, data);
         break;
     }
   };
-  z.prototype.__markAsSeen = function(aa, ba) {
-    "use strict";
-    if (!this.$MercuryChannelHandlere(aa) || !ba.obj || !ba.obj.seen_timestamp) return;
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} a
+   * @return {undefined}
+   */
+  constructor.prototype.__markAsSeen = function(deepDataAndEvents, a) {
+    if (!this.$MercuryChannelHandlere(deepDataAndEvents) || (!a.obj || !a.obj.seen_timestamp)) {
+      return;
+    }
     this.$MercuryChannelHandler1.handleUpdate({
-      message_counts: [{
-        seen_timestamp: ba.obj.seen_timestamp,
-        folder: s.INBOX
+      message_counts : [{
+        seen_timestamp : a.obj.seen_timestamp,
+        folder : folder.INBOX
       }],
-      unseen_thread_fbids: [{
-        thread_fbids: [],
-        other_user_fbids: [],
-        folder: s.INBOX
+      unseen_thread_fbids : [{
+        thread_fbids : [],
+        other_user_fbids : [],
+        folder : folder.INBOX
       }],
-      payload_source: l.CLIENT_CHANNEL_MESSAGE
+      payload_source : xmlhttp.CLIENT_CHANNEL_MESSAGE
     });
   };
-  z.prototype.__updateModelsFromMercuryPayload = function(aa, ba) {
-    "use strict";
-    if (!this.$MercuryChannelHandlerf(aa) || !ba.obj) return;
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} scope
+   * @return {undefined}
+   */
+  constructor.prototype.__updateModelsFromMercuryPayload = function(deepDataAndEvents, scope) {
+    if (!this.$MercuryChannelHandlerf(deepDataAndEvents) || !scope.obj) {
+      return;
+    }
     this.$MercuryChannelHandler2.synchronizeInforms(function() {
-      var ca = ba.obj,
-        da = [];
-      (ca.actions || []).forEach(function(ea) {
-        var fa = i.USER_GENERATED_MESSAGE;
-        if (ea.action_type == i.LOG_MESSAGE) {
-          var ga = l.CLIENT_CHANNEL_MESSAGE,
-            ha;
-          ha = ea.other_user_fbid || ea.thread_fbid;
+      var attributes = scope.obj;
+      /** @type {Array} */
+      var data = [];
+      (attributes.actions || []).forEach(function(chunk) {
+        var al = a.USER_GENERATED_MESSAGE;
+        if (chunk.action_type == a.LOG_MESSAGE) {
+          var msg = xmlhttp.CLIENT_CHANNEL_MESSAGE;
+          var updated;
+          updated = chunk.other_user_fbid || chunk.thread_fbid;
           this.$MercuryChannelHandler1.handleUpdateWaitForThread({
-            actions: [u({}, ea)],
-            payload_source: ga
-          }, ha);
-        } else if (ea.action_type != fa) da.push(ea);
+            actions : [callback({}, chunk)],
+            payload_source : msg
+          }, updated);
+        } else {
+          if (chunk.action_type != al) {
+            data.push(chunk);
+          }
+        }
       }, this);
-      ca.actions = da;
-      ca.payload_source = l.CLIENT_CHANNEL_MESSAGE;
-      this.$MercuryChannelHandler1.handleUpdate(ca);
+      /** @type {Array} */
+      attributes.actions = data;
+      attributes.payload_source = xmlhttp.CLIENT_CHANNEL_MESSAGE;
+      this.$MercuryChannelHandler1.handleUpdate(attributes);
     }.bind(this));
   };
-  z.prototype.$MercuryChannelHandlerg = function(aa, ba) {
-    "use strict";
-    this.$MercuryChannelHandler1.handleRoger(ba.obj);
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} data
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryChannelHandlerg = function(deepDataAndEvents, data) {
+    this.$MercuryChannelHandler1.handleRoger(data.obj);
   };
-  z.prototype.$MercuryChannelHandlerh = function(aa, ba) {
-    "use strict";
-    if (!this.$MercuryChannelHandler6(aa) || !ba.obj || ba.obj.mute_settings === (void 0) || (!ba.obj.thread_fbid && !ba.obj.other_user_fbid)) return;
-    var ca = i.CHANGE_MUTE_SETTINGS,
-      da = [{
-        action_type: ca,
-        action_id: null,
-        thread_fbid: ba.obj.thread_fbid,
-        other_user_fbid: ba.obj.other_user_fbid,
-        mute_settings: ba.obj.mute_settings
-      }];
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} data
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryChannelHandlerh = function(deepDataAndEvents, data) {
+    if (!this.$MercuryChannelHandler6(deepDataAndEvents) || (!data.obj || (data.obj.mute_settings === void 0 || !data.obj.thread_fbid && !data.obj.other_user_fbid))) {
+      return;
+    }
+    var al = a.CHANGE_MUTE_SETTINGS;
+    /** @type {Array} */
+    var actions = [{
+      action_type : al,
+      action_id : null,
+      thread_fbid : data.obj.thread_fbid,
+      other_user_fbid : data.obj.other_user_fbid,
+      mute_settings : data.obj.mute_settings
+    }];
     this.$MercuryChannelHandler1.handleUpdate({
-      actions: da,
-      payload_source: l.CLIENT_CHANNEL_MESSAGE
+      actions : actions,
+      payload_source : xmlhttp.CLIENT_CHANNEL_MESSAGE
     });
   };
-  z.prototype.__handleMessagingPayload = function(aa, ba) {
-    "use strict";
-    switch (ba.obj.event) {
-      case q.DELIVER:
-        this.$MercuryChannelHandler5(aa, ba);
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} msgs
+   * @return {undefined}
+   */
+  constructor.prototype.__handleMessagingPayload = function(deepDataAndEvents, msgs) {
+    switch(msgs.obj.event) {
+      case event.DELIVER:
+        this.$MercuryChannelHandler5(deepDataAndEvents, msgs);
         break;
-      case q.READ:
-      case q.UNREAD:
-        this.$MercuryChannelHandler7(aa, ba);
+      case event.READ:
+      ;
+      case event.UNREAD:
+        this.$MercuryChannelHandler7(deepDataAndEvents, msgs);
         break;
-      case q.READ_ALL:
-        this.$MercuryChannelHandlera(aa, ba);
+      case event.READ_ALL:
+        this.$MercuryChannelHandlera(deepDataAndEvents, msgs);
         break;
-      case q.DELETE:
-        this.$MercuryChannelHandler8(aa, ba);
+      case event.DELETE:
+        this.$MercuryChannelHandler8(deepDataAndEvents, msgs);
         break;
-      case q.DELETE_MESSAGES:
-        this.$MercuryChannelHandler9(aa, ba);
+      case event.DELETE_MESSAGES:
+        this.$MercuryChannelHandler9(deepDataAndEvents, msgs);
         break;
-      case q.TAG:
-        this.$MercuryChannelHandlerd(aa, ba);
+      case event.TAG:
+        this.$MercuryChannelHandlerd(deepDataAndEvents, msgs);
         break;
-      case q.REPORT_SPAM:
-        this.$MercuryChannelHandlerc(aa, ba);
+      case event.REPORT_SPAM:
+        this.$MercuryChannelHandlerc(deepDataAndEvents, msgs);
         break;
-      case q.READ_RECEIPT:
-        this.$MercuryChannelHandlerg(aa, ba);
+      case event.READ_RECEIPT:
+        this.$MercuryChannelHandlerg(deepDataAndEvents, msgs);
         break;
-      case q.CHANGE_MUTE_SETTINGS:
-        this.$MercuryChannelHandlerh(aa, ba);
+      case event.CHANGE_MUTE_SETTINGS:
+        this.$MercuryChannelHandlerh(deepDataAndEvents, msgs);
         break;
     }
   };
-  z.prototype.getRouting = function() {
-    "use strict";
-    return {
-      mercury: this.__updateModelsFromMercuryPayload,
-      messaging: this.__handleMessagingPayload,
-      inbox: this.__markAsSeen
+  /**
+   * @return {?}
+   */
+  constructor.prototype.getRouting = function() {
+    return{
+      mercury : this.__updateModelsFromMercuryPayload,
+      messaging : this.__handleMessagingPayload,
+      inbox : this.__markAsSeen
     };
   };
-  z.prototype.__getMessagingPayloadType = function() {
-    "use strict";
-    return h.getArbiterType('messaging');
+  /**
+   * @return {?}
+   */
+  constructor.prototype.__getMessagingPayloadType = function() {
+    return assert.getArbiterType("messaging");
   };
-  z.prototype.__getMercuryPayloadType = function() {
-    "use strict";
-    return h.getArbiterType('mercury');
+  /**
+   * @return {?}
+   */
+  constructor.prototype.__getMercuryPayloadType = function() {
+    return assert.getArbiterType("mercury");
   };
-  z.prototype.__getInboxPayloadType = function() {
-    "use strict";
-    return h.getArbiterType('inbox');
+  /**
+   * @return {?}
+   */
+  constructor.prototype.__getInboxPayloadType = function() {
+    return assert.getArbiterType("inbox");
   };
-  z.prototype.$MercuryChannelHandler6 = function(aa) {
-    "use strict";
-    return (aa == this.__getMessagingPayloadType());
+  /**
+   * @param {?} deepDataAndEvents
+   * @return {?}
+   */
+  constructor.prototype.$MercuryChannelHandler6 = function(deepDataAndEvents) {
+    return deepDataAndEvents == this.__getMessagingPayloadType();
   };
-  z.prototype.$MercuryChannelHandlerf = function(aa) {
-    "use strict";
-    return (aa == this.__getMercuryPayloadType());
+  /**
+   * @param {?} deepDataAndEvents
+   * @return {?}
+   */
+  constructor.prototype.$MercuryChannelHandlerf = function(deepDataAndEvents) {
+    return deepDataAndEvents == this.__getMercuryPayloadType();
   };
-  z.prototype.$MercuryChannelHandlere = function(aa) {
-    "use strict";
-    return (aa == this.__getInboxPayloadType());
+  /**
+   * @param {?} deepDataAndEvents
+   * @return {?}
+   */
+  constructor.prototype.$MercuryChannelHandlere = function(deepDataAndEvents) {
+    return deepDataAndEvents == this.__getInboxPayloadType();
   };
-  z.prototype.turnOn = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  constructor.prototype.turnOn = function() {
     if (!this.$MercuryChannelHandler4.length) {
-      var aa = this.getRouting();
-      for (var ba in aa) this.$MercuryChannelHandler4.push(g.subscribe(h.getArbiterType(ba), aa[ba].bind(this)));
+      var set = this.getRouting();
+      var i;
+      for (i in set) {
+        this.$MercuryChannelHandler4.push(c.subscribe(assert.getArbiterType(i), set[i].bind(this)));
+      }
     }
     return this;
   };
-  z.prototype.turnOff = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  constructor.prototype.turnOff = function() {
     if (this.$MercuryChannelHandler4.length) {
-      this.$MercuryChannelHandler4.forEach(g.unsubscribe);
+      this.$MercuryChannelHandler4.forEach(c.unsubscribe);
+      /** @type {Array} */
       this.$MercuryChannelHandler4 = [];
     }
     return this;
   };
-  u(z, n);
-  e.exports = z;
+  callback(constructor, value);
+  /** @type {function (?): undefined} */
+  module.exports = constructor;
 }, null);
-__d("MercuryRoger", ["Arbiter", "ArbiterMixin", "immutable", "JSLogger", "MercuryActionStatus", "copyProperties", "mapObject", "MercuryServerRequests", "MercuryThreads"], function(a, b, c, d, e, f, g, h, i, j, k, l, m) {
-  var n = b('MercuryServerRequests').get(),
-    o = b('MercuryThreads').get(),
-    p = {},
-    q = [],
-    r = k.SUCCESS,
-    s = {
-      getSeenBy: function(u, v) {
-        if (!u) return [];
-        var w = [],
-          x = p[u.thread_id];
-        if (!x) return w;
-        x.forEach(function(y, z) {
-          if (y > u.timestamp && (u.status === (void 0) || u.status === r) && (!v || z != u.author)) w.push(z);
-        });
-        return w;
-      },
-      getSeenTimestamps: function(u) {
-        var v = p[u];
-        if (!v) {
-          v = i.OrderedMap();
-          p[u] = v;
-        }
-        return v;
-      },
-      getSeenTimestamp: function(u, v) {
-        var w = p[u];
-        return w ? w.get(v) : null;
+__d("MercuryRoger", ["Arbiter", "ArbiterMixin", "immutable", "JSLogger", "MercuryActionStatus", "copyProperties", "mapObject", "MercuryServerRequests", "MercuryThreads"], function(deepDataAndEvents, nock, ignoreMethodDoesntExist, textAlt, module, keepData, tracker, thisObj, dataAndEvents, req, state, makeIterator, callback) {
+  /**
+   * @param {?} o
+   * @return {?}
+   */
+  function compile(o) {
+    return callback(o, function(ko) {
+      return ko.toJS();
+    });
+  }
+  var _this = nock("MercuryServerRequests").get();
+  var manipulation_rcheckableType = nock("MercuryThreads").get();
+  var handlers = {};
+  /** @type {Array} */
+  var _results2 = [];
+  var id = state.SUCCESS;
+  var assert = {
+    /**
+     * @param {Object} message
+     * @param {?} deepDataAndEvents
+     * @return {?}
+     */
+    getSeenBy : function(message, deepDataAndEvents) {
+      if (!message) {
+        return[];
       }
-    };
-  l(s, h);
-  n.subscribe('update-roger', function(u, v) {
-    for (var w in v) {
-      var x = p[w] || i.OrderedMap();
-      x = x.withMutations(function(y) {
-        for (var z in v[w]) {
-          var aa = o.getThreadMetaNow(w);
-          if (aa && aa.participants)
-            if (aa.participants.indexOf(z) == -1) {
-              q.push(t(p));
-              continue;
-            }
-          var ba = y.get(z),
-            ca = v[w][z];
-          if (!ba || ca > ba) y.set(z, ca);
+      /** @type {Array} */
+      var assigns = [];
+      var handler = handlers[message.thread_id];
+      if (!handler) {
+        return assigns;
+      }
+      handler.forEach(function(dataAndEvents, vvar) {
+        if (dataAndEvents > message.timestamp && ((message.status === void 0 || message.status === id) && (!deepDataAndEvents || vvar != message.author))) {
+          assigns.push(vvar);
         }
       });
-      p[w] = x.sort();
+      return assigns;
+    },
+    /**
+     * @param {?} type
+     * @return {?}
+     */
+    getSeenTimestamps : function(type) {
+      var handler = handlers[type];
+      if (!handler) {
+        handler = dataAndEvents.OrderedMap();
+        handlers[type] = handler;
+      }
+      return handler;
+    },
+    /**
+     * @param {?} j
+     * @param {string} item
+     * @return {?}
+     */
+    getSeenTimestamp : function(j, item) {
+      var arr = handlers[j];
+      return arr ? arr.get(item) : null;
     }
-    v && s.inform('change', v);
+  };
+  makeIterator(assert, thisObj);
+  _this.subscribe("update-roger", function(deepDataAndEvents, src) {
+    var type;
+    for (type in src) {
+      var bProperties = handlers[type] || dataAndEvents.OrderedMap();
+      bProperties = bProperties.withMutations(function(data_user) {
+        var key;
+        for (key in src[type]) {
+          var data = manipulation_rcheckableType.getThreadMetaNow(type);
+          if (data && data.participants) {
+            if (data.participants.indexOf(key) == -1) {
+              _results2.push(compile(handlers));
+              continue;
+            }
+          }
+          var camelKey = data_user.get(key);
+          var udataCur = src[type][key];
+          if (!camelKey || udataCur > camelKey) {
+            data_user.set(key, udataCur);
+          }
+        }
+      });
+      handlers[type] = bProperties.sort();
+    }
+    if (src) {
+      assert.inform("change", src);
+    }
   });
-  g.subscribe(j.DUMP_EVENT, function(u, v) {
-    v.bad_read_receipts = {
-      receipts: q
+  tracker.subscribe(req.DUMP_EVENT, function(deepDataAndEvents, dataAndEvents) {
+    dataAndEvents.bad_read_receipts = {
+      receipts : _results2
     };
   });
-
-  function t(u) {
-    return m(u, function(v) {
-      return v.toJS();
-    });
-  }
-  e.exports = s;
+  module.exports = assert;
 }, null);
-__d("MercuryDelayedRoger", ["ArbiterMixin", "LiveTimer", "MercuryActionStatus", "MercuryConfig", "MercuryRoger", "copyProperties", "setTimeoutAcrossTransitions", "MercuryMessages", "MercuryThreadInformer", "MercuryThreads"], function(a, b, c, d, e, f, g, h, i, j, k, l, m) {
-  var n = b('MercuryMessages').get(),
-    o = b('MercuryThreadInformer').get(),
-    p = b('MercuryThreads').get(),
-    q = {},
-    r = {},
-    s = j['roger.seen_delay'],
-    t = l({
-      getSeenBy: function(x, y) {
-        if (r[x]) return [];
-        if (!q[x]) {
-          var z = p.getThreadMetaNow(x);
-          if (z) q[x] = {
-            thread_id: x,
-            author: z.participants[0],
-            timestamp: z.timestamp
-          };
-        }
-        return k.getSeenBy(q[x], y);
+__d("MercuryDelayedRoger", ["ArbiterMixin", "LiveTimer", "MercuryActionStatus", "MercuryConfig", "MercuryRoger", "copyProperties", "setTimeoutAcrossTransitions", "MercuryMessages", "MercuryThreadInformer", "MercuryThreads"], function(deepDataAndEvents, nock, ignoreMethodDoesntExist, textAlt, module, keepData, key, dataAndEvents, contestant, files, value, callback, $) {
+  /**
+   * @param {string} name
+   * @return {?}
+   */
+  function start(name) {
+    /** @type {boolean} */
+    var started = false;
+    rparentsprev.getThreadMessagesRange(name, 0, 1, function(nodes) {
+      var node = nodes[0];
+      if (!node) {
+        return;
       }
-    }, g);
-
-  function u(x) {
-    var y = false;
-    n.getThreadMessagesRange(x, 0, 1, function(z) {
-      var aa = z[0];
-      if (!aa) return;
-      var ba = aa.timestamp;
-      if (aa.action_id || aa.status == i.SUCCESS) ba -= h.getServerTimeOffset();
-      var ca = t.getSeenBy(x);
-      if (r[x]) {
-        clearTimeout(r[x]);
-        delete r[x];
+      var t = node.timestamp;
+      if (node.action_id || node.status == contestant.SUCCESS) {
+        t -= dataAndEvents.getServerTimeOffset();
       }
-      var da = ba + s,
-        ea = da - Date.now();
-      if (ea > 0) r[x] = m(function() {
-        delete r[x];
-        v(x);
-      }, ea);
-      q[x] = aa;
-      var fa = t.getSeenBy(x);
-      if (ca.length || fa.length) y = true;
+      var attributes = prop.getSeenBy(name);
+      if (cache[name]) {
+        clearTimeout(cache[name]);
+        delete cache[name];
+      }
+      var b = t + content;
+      /** @type {number} */
+      var doc = b - Date.now();
+      if (doc > 0) {
+        cache[name] = $(function() {
+          delete cache[name];
+          ondata(name);
+        }, doc);
+      }
+      elems[name] = node;
+      var defaultSettings = prop.getSeenBy(name);
+      if (attributes.length || defaultSettings.length) {
+        /** @type {boolean} */
+        started = true;
+      }
     });
-    return y;
+    return started;
   }
-
-  function v(x) {
-    var y = {};
-    y[x] = true;
-    t.inform('state-changed', y);
+  /**
+   * @param {string} name
+   * @return {undefined}
+   */
+  function ondata(name) {
+    var normalized = {};
+    /** @type {boolean} */
+    normalized[name] = true;
+    prop.inform("state-changed", normalized);
   }
-
-  function w(event, x) {
-    var y = {};
-    for (var z in x)
-      if (u(z)) y[z] = true;
-    for (var aa in y) {
-      t.inform('state-changed', y);
+  /**
+   * @param {?} object
+   * @param {?} context
+   * @return {undefined}
+   */
+  function spy(object, context) {
+    var entities = {};
+    var match;
+    for (match in context) {
+      if (start(match)) {
+        /** @type {boolean} */
+        entities[match] = true;
+      }
+    }
+    var p;
+    for (p in entities) {
+      prop.inform("state-changed", entities);
       break;
     }
   }
-  k.subscribe('change', function(x, y) {
-    for (var z in y) !r[z] && v(z);
+  var rparentsprev = nock("MercuryMessages").get();
+  var root = nock("MercuryThreadInformer").get();
+  var selfObj = nock("MercuryThreads").get();
+  var elems = {};
+  var cache = {};
+  var content = files["roger.seen_delay"];
+  var prop = callback({
+    /**
+     * @param {string} key
+     * @param {?} deepDataAndEvents
+     * @return {?}
+     */
+    getSeenBy : function(key, deepDataAndEvents) {
+      if (cache[key]) {
+        return[];
+      }
+      if (!elems[key]) {
+        var self = selfObj.getThreadMetaNow(key);
+        if (self) {
+          elems[key] = {
+            thread_id : key,
+            author : self.participants[0],
+            timestamp : self.timestamp
+          };
+        }
+      }
+      return value.getSeenBy(elems[key], deepDataAndEvents);
+    }
+  }, key);
+  value.subscribe("change", function(dataAndEvents, prop) {
+    var name;
+    for (name in prop) {
+      if (!cache[name]) {
+        ondata(name);
+      }
+    }
   });
-  o.subscribe('messages-received', w);
-  o.subscribe('messages-reordered', w);
-  o.subscribe('messages-updated', w);
-  e.exports = t;
+  root.subscribe("messages-received", spy);
+  root.subscribe("messages-reordered", spy);
+  root.subscribe("messages-updated", spy);
+  module.exports = prop;
 }, null);

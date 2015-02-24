@@ -1,3490 +1,5190 @@
-/*!CK:3520455836!*/
-/*1424458920,*/
 if (self.CavalryLogger) {
   CavalryLogger.start_js(["IKJ5j"]);
 }
-
-__d("BlackbirdUpsellConstants", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    ACTION_EDUCATE: "educate",
-    ACTION_UPSELL: "upsell",
-    CLICK_TYPE_DISMISS_PROMO: "dismiss_promo",
-    CLICK_TYPE_ENABLE_CHAT: "enable_chat",
-    CLICK_TYPE_OPEN_SETTINGS: "open_settings"
+__d("BlackbirdUpsellConstants", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    ACTION_EDUCATE : "educate",
+    ACTION_UPSELL : "upsell",
+    CLICK_TYPE_DISMISS_PROMO : "dismiss_promo",
+    CLICK_TYPE_ENABLE_CHAT : "enable_chat",
+    CLICK_TYPE_OPEN_SETTINGS : "open_settings"
   };
 }, null);
-__d("MessagesViewerSetID", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    MESSAGES: "messages",
-    MESSAGES_VIEW_ALL_IN_THREAD: "messages:view_all_in_thread"
+__d("MessagesViewerSetID", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    MESSAGES : "messages",
+    MESSAGES_VIEW_ALL_IN_THREAD : "messages:view_all_in_thread"
   };
 }, null);
-__d("MessageTranscriptWaitHandleState", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    BUSY: "BUSY",
-    READY: "READY",
-    UNAVAILABLE: "UNAVAILABLE"
+__d("MessageTranscriptWaitHandleState", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    BUSY : "BUSY",
+    READY : "READY",
+    UNAVAILABLE : "UNAVAILABLE"
   };
 }, null);
-__d("StickerAssetType", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    IMAGE: "BestEffortImage",
-    SPRITE: "SpriteImage",
-    PADDED_SPRITE: "PaddedSpriteImage"
+__d("StickerAssetType", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    IMAGE : "BestEffortImage",
+    SPRITE : "SpriteImage",
+    PADDED_SPRITE : "PaddedSpriteImage"
   };
 }, null);
-__d("StoryAttachmentStyle", [], function(a, b, c, d, e, f) {
-  e.exports = {
-    FALLBACK: "fallback",
-    SHARE: "share",
-    OG_COMPOSER_SIMPLE: "og_composer_simple",
-    SPORTS_MATCHUP: "sports_matchup",
-    SHARE_LARGE_IMAGE: "share_large_image",
-    PHOTO: "photo",
-    COVER_PHOTO: "cover_photo",
-    ALBUM: "album",
-    NEW_ALBUM: "new_album",
-    COUPON: "coupon",
-    QUESTION: "question",
-    ANSWER: "answer",
-    OPTION: "option",
-    GALLERY: "gallery",
-    STREAM_PUBLISH: "stream_publish",
-    MUSIC_AGGREGATION: "music_aggregation",
-    ITEM_LIST: "list",
-    HIGH_SCORE: "high_score",
-    SCORE_LEADERBOARD: "score_leaderboard",
-    FRIEND_LIST: "friend_list",
-    CHECKIN: "checkin",
-    POPULAR_OBJECTS: "popular_objects",
-    AVATAR_LIST: "avatar_list",
-    AVATAR: "avatar",
-    AVATAR_WITH_VIDEO: "avatar_with_video",
-    EVENT: "event",
-    EXPERIENCE: "experience",
-    LIFE_EVENT: "life_event",
-    TRAVEL_SLIDESHOW_LIFE_EVENT: "travel_slideshow_life_event",
-    GIFT: "gift",
-    IMAGE_SHARE: "image_share",
-    ANIMATED_IMAGE_SHARE: "animated_image_share",
-    NOTE: "note",
-    TOPIC: "topic",
-    FILE_UPLOAD: "file_upload",
-    NOTIFICATION_TARGET: "notification_target",
-    UNAVAILABLE: "unavailable",
-    PAGE_RECOMMENDATION: "page_recommendation",
-    VIDEO: "video",
-    VIDEO_INLINE: "video_inline",
-    VIDEO_AUTOPLAY: "video_autoplay",
-    VIDEO_SHARE: "video_share",
-    VIDEO_SHARE_HIGHLIGHTED: "video_share_highlighted",
-    VIDEO_SHARE_YOUTUBE: "video_share_youtube",
-    MAP: "map",
-    PRODUCT: "product",
-    EXTERNAL_PRODUCT: "external_product",
-    FITNESS_COURSE: "fitness_course",
-    APPLICATION: "application",
-    STICKER: "sticker",
-    EXTERNAL_OG_PRODUCT: "external_og_product",
-    TRAVEL_LOG: "travel_log",
-    MULTI_SHARE: "multi_share",
-    YEAR_IN_REVIEW: "year_in_review",
-    AVATAR_LARGE_COVER: "avatar_large_cover",
-    BROADCAST_REQUEST: "broadcast_request",
-    COMMERCE_PRODUCT_ITEM: "commerce_product_item",
-    THIRD_PARTY_PHOTO: "third_party_photo",
-    PROMPT: "prompt",
-    BIRTHDAY: "birthday",
-    DONATIONS_CAMPAIGN: "donations_campaign",
-    DONATE_PROMPT: "donate_prompt",
-    DISCUSSION_CONVERSATION: "discussion_conversation",
-    DISCUSSION_COMMENT: "discussion_comment",
-    GROUP_SELL_PRODUCT_ITEM: "group_sell_product_item",
-    GROUP_SELL_PRODUCT_ITEM_MARK_AS_SOLD: "group_sell_mark_as_sold",
-    GAMETIME: "gametime",
-    GROUP_REPORTED_POST_QUEUE: "group_reported_post_queue",
-    GROUP_PENDING_POST_QUEUE: "group_pending_post_queue",
-    GROUP_JOIN_REQUEST_QUEUE: "group_join_request_queue",
-    GREETING_CARD: "greeting_card",
-    LEAD_GEN: "lead_gen",
-    ATTACHED_STORY: "attached_story",
-    SOUVENIR: "souvenir",
-    ORION: "orion"
+__d("StoryAttachmentStyle", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  module.exports = {
+    FALLBACK : "fallback",
+    SHARE : "share",
+    OG_COMPOSER_SIMPLE : "og_composer_simple",
+    SPORTS_MATCHUP : "sports_matchup",
+    SHARE_LARGE_IMAGE : "share_large_image",
+    PHOTO : "photo",
+    COVER_PHOTO : "cover_photo",
+    ALBUM : "album",
+    NEW_ALBUM : "new_album",
+    COUPON : "coupon",
+    QUESTION : "question",
+    ANSWER : "answer",
+    OPTION : "option",
+    GALLERY : "gallery",
+    STREAM_PUBLISH : "stream_publish",
+    MUSIC_AGGREGATION : "music_aggregation",
+    ITEM_LIST : "list",
+    HIGH_SCORE : "high_score",
+    SCORE_LEADERBOARD : "score_leaderboard",
+    FRIEND_LIST : "friend_list",
+    CHECKIN : "checkin",
+    POPULAR_OBJECTS : "popular_objects",
+    AVATAR_LIST : "avatar_list",
+    AVATAR : "avatar",
+    AVATAR_WITH_VIDEO : "avatar_with_video",
+    EVENT : "event",
+    EXPERIENCE : "experience",
+    LIFE_EVENT : "life_event",
+    TRAVEL_SLIDESHOW_LIFE_EVENT : "travel_slideshow_life_event",
+    GIFT : "gift",
+    IMAGE_SHARE : "image_share",
+    ANIMATED_IMAGE_SHARE : "animated_image_share",
+    NOTE : "note",
+    TOPIC : "topic",
+    FILE_UPLOAD : "file_upload",
+    NOTIFICATION_TARGET : "notification_target",
+    UNAVAILABLE : "unavailable",
+    PAGE_RECOMMENDATION : "page_recommendation",
+    VIDEO : "video",
+    VIDEO_INLINE : "video_inline",
+    VIDEO_AUTOPLAY : "video_autoplay",
+    VIDEO_SHARE : "video_share",
+    VIDEO_SHARE_HIGHLIGHTED : "video_share_highlighted",
+    VIDEO_SHARE_YOUTUBE : "video_share_youtube",
+    MAP : "map",
+    PRODUCT : "product",
+    EXTERNAL_PRODUCT : "external_product",
+    FITNESS_COURSE : "fitness_course",
+    APPLICATION : "application",
+    STICKER : "sticker",
+    EXTERNAL_OG_PRODUCT : "external_og_product",
+    TRAVEL_LOG : "travel_log",
+    MULTI_SHARE : "multi_share",
+    YEAR_IN_REVIEW : "year_in_review",
+    AVATAR_LARGE_COVER : "avatar_large_cover",
+    BROADCAST_REQUEST : "broadcast_request",
+    COMMERCE_PRODUCT_ITEM : "commerce_product_item",
+    THIRD_PARTY_PHOTO : "third_party_photo",
+    PROMPT : "prompt",
+    BIRTHDAY : "birthday",
+    DONATIONS_CAMPAIGN : "donations_campaign",
+    DONATE_PROMPT : "donate_prompt",
+    DISCUSSION_CONVERSATION : "discussion_conversation",
+    DISCUSSION_COMMENT : "discussion_comment",
+    GROUP_SELL_PRODUCT_ITEM : "group_sell_product_item",
+    GROUP_SELL_PRODUCT_ITEM_MARK_AS_SOLD : "group_sell_mark_as_sold",
+    GAMETIME : "gametime",
+    GROUP_REPORTED_POST_QUEUE : "group_reported_post_queue",
+    GROUP_PENDING_POST_QUEUE : "group_pending_post_queue",
+    GROUP_JOIN_REQUEST_QUEUE : "group_join_request_queue",
+    GREETING_CARD : "greeting_card",
+    LEAD_GEN : "lead_gen",
+    ATTACHED_STORY : "attached_story",
+    SOUVENIR : "souvenir",
+    ORION : "orion"
   };
 }, null);
-__d("BlackbirdUpsell", ["Event", "Arbiter", "AsyncRequest", "LegacyContextualDialog", "DOM", "LayerDestroyOnHide", "LayerHideOnTransition", "PresencePrivacy", "copyProperties", "BlackbirdUpsellConfig", "BlackbirdUpsellConstants", "BlackbirdUpsellTemplates"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) {
-  var s = '/ajax/chat/blackbird/update_clicks.php',
-    t = '/ajax/chat/blackbird/update_impressions.php',
-    u = '/ajax/chat/blackbird/dismiss.php',
-    v = 235,
-    w = null,
-    x = null,
-    y = false,
-    z = false;
-
-  function aa() {}
-  o(aa, {
-    shouldShow: function() {
-      if (this._dialogDismissed) return false;
+__d("BlackbirdUpsell", ["Event", "Arbiter", "AsyncRequest", "LegacyContextualDialog", "DOM", "LayerDestroyOnHide", "LayerHideOnTransition", "PresencePrivacy", "copyProperties", "BlackbirdUpsellConfig", "BlackbirdUpsellConstants", "BlackbirdUpsellTemplates"], function(ignoreMethodDoesntExist, textAlt, keepData, opt_attributes, context, matcherFunction, $window, left, Server, deepDataAndEvents, body, opt_obj2, walkers, m, a, result, node, dataAndEvents) {
+  /**
+   * @return {undefined}
+   */
+  function self() {
+  }
+  /**
+   * @param {?} a
+   * @param {?} n
+   * @return {undefined}
+   */
+  function f(a, n) {
+    if (!err && member) {
+      /** @type {boolean} */
+      err = true;
+      m.inform("privacy-user-presence-changed");
+      var promise = new Server(configFile);
+      promise.setData({
+        source : a,
+        impressions : n,
+        time_offline : result.TimeOffline
+      });
+      promise.setErrorHandler(function() {
+        /** @type {boolean} */
+        err = false;
+      });
+      promise.send();
+    }
+  }
+  /**
+   * @return {undefined}
+   */
+  function flush() {
+    f(node.ACTION_UPSELL, result.UpsellImpressions);
+  }
+  /**
+   * @return {undefined}
+   */
+  function setError() {
+    f(node.ACTION_EDUCATE, result.EducationImpressions);
+  }
+  /**
+   * @param {string} action
+   * @param {?} stats
+   * @return {undefined}
+   */
+  function cb(action, stats) {
+    if (!member) {
+      /** @type {boolean} */
+      member = true;
+      var server = new Server(opts);
+      server.setData({
+        action : action,
+        impressions : stats,
+        time_offline : result.TimeOffline
+      });
+      server.setErrorHandler(function() {
+        /** @type {boolean} */
+        member = false;
+      });
+      server.send();
+    }
+  }
+  /**
+   * @return {undefined}
+   */
+  function hidden() {
+    cb(node.ACTION_UPSELL, result.UpsellImpressions);
+  }
+  /**
+   * @return {undefined}
+   */
+  function checkDone() {
+    cb(node.ACTION_EDUCATE, result.EducationImpressions);
+  }
+  /**
+   * @param {string} a
+   * @param {?} key
+   * @param {?} range
+   * @param {?} sendFn
+   * @return {undefined}
+   */
+  function fn(a, key, range, sendFn) {
+    var server = new Server(config);
+    server.setData({
+      action : a,
+      impressions : range,
+      source : key,
+      time_offline : sendFn
+    });
+    server.send();
+  }
+  /**
+   * @param {?} obj
+   * @return {undefined}
+   */
+  function iterator(obj) {
+    fn(obj, node.ACTION_UPSELL, result.UpsellImpressions, result.TimeOffline);
+  }
+  /**
+   * @param {string} elem
+   * @return {undefined}
+   */
+  function reduce(elem) {
+    fn(elem, node.ACTION_EDUCATE, result.EducateImpressions, result.TimeOffline);
+  }
+  /** @type {string} */
+  var config = "/ajax/chat/blackbird/update_clicks.php";
+  /** @type {string} */
+  var opts = "/ajax/chat/blackbird/update_impressions.php";
+  /** @type {string} */
+  var configFile = "/ajax/chat/blackbird/dismiss.php";
+  /** @type {number} */
+  var orgWidth = 235;
+  /** @type {null} */
+  var screen = null;
+  /** @type {null} */
+  var rvar = null;
+  /** @type {boolean} */
+  var err = false;
+  /** @type {boolean} */
+  var member = false;
+  a(self, {
+    /**
+     * @return {?}
+     */
+    shouldShow : function() {
+      if (this._dialogDismissed) {
+        return false;
+      }
       if (this.isEducation()) {
-        return !p.EducationDismissed && p.EducationImpressions < p.EducationImpressionLimit;
-      } else return !!p.UpsellGK && !p.UpsellDismissed && p.UpsellImpressions < p.UpsellImpressionLimit && p.FriendCount >= p.UpsellMinFriendCount;
+        return!result.EducationDismissed && result.EducationImpressions < result.EducationImpressionLimit;
+      } else {
+        return!!result.UpsellGK && (!result.UpsellDismissed && (result.UpsellImpressions < result.UpsellImpressionLimit && result.FriendCount >= result.UpsellMinFriendCount));
+      }
     },
-    isEducation: function() {
-      return p.TimeOffline <= p.EducationTimeOfflineThresdhold;
+    /**
+     * @return {?}
+     */
+    isEducation : function() {
+      return result.TimeOffline <= result.EducationTimeOfflineThresdhold;
     },
-    getOfflineContent: function() {
+    /**
+     * @return {?}
+     */
+    getOfflineContent : function() {
       if (this.isEducation()) {
         return this._getEducationContent();
-      } else return this._getUpsellContent();
-    },
-    _getEducationContent: function() {
-      ga();
-      var ka = r[':fb:chat:blackbird:offline-educate'].build(),
-        la = ka.getNode('chatSettingsButton');
-      g.listen(la, 'click', function() {
-        h.inform('chat/advanced-settings-dialog-opened');
-        ja(q.CLICK_TYPE_OPEN_SETTINGS);
-        da();
-      });
-      return ka.getRoot();
-    },
-    _getUpsellContent: function() {
-      fa();
-      var ka = r[':fb:chat:blackbird:upsell'].build(),
-        la = ka.getNode('chatSettingsButton');
-      g.listen(la, 'click', function() {
-        h.inform('chat/advanced-settings-dialog-opened');
-        ia(q.CLICK_TYPE_OPEN_SETTINGS);
-        ca();
-      });
-      var ma = ka.getNode('enableChatButton');
-      g.listen(ma, 'click', function() {
-        ia(q.CLICK_TYPE_ENABLE_CHAT);
-        ca();
-      });
-      return ka.getRoot();
-    },
-    getBlackbirdContent: function(ka) {
-      ga();
-      switch (ka) {
-        case n.ONLINE:
-          return r[':fb:chat:blackbird:most-friends-educate'].build().getRoot();
-        case n.OFFLINE:
-          return r[':fb:chat:blackbird:some-friends-educate'].build().getRoot();
+      } else {
+        return this._getUpsellContent();
       }
     },
-    showOfflineDialog: function(ka) {
-      this.showDialog(ka, this.getOfflineContent.bind(this));
+    /**
+     * @return {?}
+     */
+    _getEducationContent : function() {
+      checkDone();
+      var store = dataAndEvents[":fb:chat:blackbird:offline-educate"].build();
+      var element = store.getNode("chatSettingsButton");
+      $window.listen(element, "click", function() {
+        left.inform("chat/advanced-settings-dialog-opened");
+        reduce(node.CLICK_TYPE_OPEN_SETTINGS);
+        setError();
+      });
+      return store.getRoot();
     },
-    showBlackbirdDialog: function(ka, la) {
-      this.showDialog(ka, this.getBlackbirdContent.bind(null, la));
+    /**
+     * @return {?}
+     */
+    _getUpsellContent : function() {
+      hidden();
+      var store = dataAndEvents[":fb:chat:blackbird:upsell"].build();
+      var element = store.getNode("chatSettingsButton");
+      $window.listen(element, "click", function() {
+        left.inform("chat/advanced-settings-dialog-opened");
+        iterator(node.CLICK_TYPE_OPEN_SETTINGS);
+        flush();
+      });
+      var done = store.getNode("enableChatButton");
+      $window.listen(done, "click", function() {
+        iterator(node.CLICK_TYPE_ENABLE_CHAT);
+        flush();
+      });
+      return store.getRoot();
     },
-    showDialog: function(ka, la) {
-      !w && this._constructDialog();
-      k.setContent(x, la());
-      w.setContext(ka);
-      w.show();
+    /**
+     * @param {?} deepDataAndEvents
+     * @return {?}
+     */
+    getBlackbirdContent : function(deepDataAndEvents) {
+      checkDone();
+      switch(deepDataAndEvents) {
+        case m.ONLINE:
+          return dataAndEvents[":fb:chat:blackbird:most-friends-educate"].build().getRoot();
+        case m.OFFLINE:
+          return dataAndEvents[":fb:chat:blackbird:some-friends-educate"].build().getRoot();
+      }
     },
-    hide: function() {
-      if (w && w.isShown()) w.hide();
+    /**
+     * @param {?} completeEvent
+     * @return {undefined}
+     */
+    showOfflineDialog : function(completeEvent) {
+      this.showDialog(completeEvent, this.getOfflineContent.bind(this));
     },
-    dismiss: function() {
+    /**
+     * @param {?} completeEvent
+     * @param {?} fnOut
+     * @return {undefined}
+     */
+    showBlackbirdDialog : function(completeEvent, fnOut) {
+      this.showDialog(completeEvent, this.getBlackbirdContent.bind(null, fnOut));
+    },
+    /**
+     * @param {?} e
+     * @param {?} callback
+     * @return {undefined}
+     */
+    showDialog : function(e, callback) {
+      if (!screen) {
+        this._constructDialog();
+      }
+      body.setContent(rvar, callback());
+      screen.setContext(e);
+      screen.show();
+    },
+    /**
+     * @return {undefined}
+     */
+    hide : function() {
+      if (screen && screen.isShown()) {
+        screen.hide();
+      }
+    },
+    /**
+     * @return {undefined}
+     */
+    dismiss : function() {
       this.hide();
       if (this.isEducation()) {
-        da();
-      } else ca();
+        setError();
+      } else {
+        flush();
+      }
     },
-    registerDismissClick: function() {
+    /**
+     * @return {undefined}
+     */
+    registerDismissClick : function() {
       if (this.isEducation()) {
-        ja(q.CLICK_TYPE_DISMISS_PROMO);
-      } else ia(q.CLICK_TYPE_DISMISS_PROMO);
+        reduce(node.CLICK_TYPE_DISMISS_PROMO);
+      } else {
+        iterator(node.CLICK_TYPE_DISMISS_PROMO);
+      }
     },
-    isVisible: function() {
-      return z && !y;
+    /**
+     * @return {?}
+     */
+    isVisible : function() {
+      return member && !err;
     },
-    _constructDialog: function() {
-      var ka = r[':fb:chat:blackbird:dialog-frame'].build();
-      x = ka.getNode('dialogContent');
-      w = new j();
-      w.init(ka.getRoot());
-      w.setPosition('above').setWidth(v).setFixed(true).disableBehavior(l).disableBehavior(m);
-      g.listen(ka.getNode('dialogCloseButton'), 'click', this.dismiss.bind(this));
-      g.listen(ka.getNode('dialogCloseButton'), 'click', this.registerDismissClick.bind(this));
+    /**
+     * @return {undefined}
+     */
+    _constructDialog : function() {
+      var store = dataAndEvents[":fb:chat:blackbird:dialog-frame"].build();
+      rvar = store.getNode("dialogContent");
+      screen = new deepDataAndEvents;
+      screen.init(store.getRoot());
+      screen.setPosition("above").setWidth(orgWidth).setFixed(true).disableBehavior(opt_obj2).disableBehavior(walkers);
+      $window.listen(store.getNode("dialogCloseButton"), "click", this.dismiss.bind(this));
+      $window.listen(store.getNode("dialogCloseButton"), "click", this.registerDismissClick.bind(this));
     }
   });
-
-  function ba(ka, la) {
-    if (!y && z) {
-      y = true;
-      n.inform('privacy-user-presence-changed');
-      var ma = new i(u);
-      ma.setData({
-        source: ka,
-        impressions: la,
-        time_offline: p.TimeOffline
-      });
-      ma.setErrorHandler(function() {
-        y = false;
-      });
-      ma.send();
-    }
-  }
-
-  function ca() {
-    ba(q.ACTION_UPSELL, p.UpsellImpressions);
-  }
-
-  function da() {
-    ba(q.ACTION_EDUCATE, p.EducationImpressions);
-  }
-
-  function ea(ka, la) {
-    if (!z) {
-      z = true;
-      var ma = new i(t);
-      ma.setData({
-        action: ka,
-        impressions: la,
-        time_offline: p.TimeOffline
-      });
-      ma.setErrorHandler(function() {
-        z = false;
-      });
-      ma.send();
-    }
-  }
-
-  function fa() {
-    ea(q.ACTION_UPSELL, p.UpsellImpressions);
-  }
-
-  function ga() {
-    ea(q.ACTION_EDUCATE, p.EducationImpressions);
-  }
-
-  function ha(ka, la, ma, na) {
-    var oa = new i(s);
-    oa.setData({
-      action: ka,
-      impressions: ma,
-      source: la,
-      time_offline: na
-    });
-    oa.send();
-  }
-
-  function ia(ka) {
-    ha(ka, q.ACTION_UPSELL, p.UpsellImpressions, p.TimeOffline);
-  }
-
-  function ja(ka) {
-    ha(ka, q.ACTION_EDUCATE, p.EducateImpressions, p.TimeOffline);
-  }
-  h.subscribe('chat/advanced-settings-dialog-opened', aa.dismiss.bind(aa));
-  h.subscribe('chat-visibility/go-online', aa.dismiss.bind(aa));
-  h.subscribe('chat-visibility/go-offline', aa.dismiss.bind(aa));
-  e.exports = aa;
+  left.subscribe("chat/advanced-settings-dialog-opened", self.dismiss.bind(self));
+  left.subscribe("chat-visibility/go-online", self.dismiss.bind(self));
+  left.subscribe("chat-visibility/go-offline", self.dismiss.bind(self));
+  /** @type {function (): undefined} */
+  context.exports = self;
 }, null);
-__d("Chat", ["Arbiter"], function(a, b, c, d, e, f, g) {
-  var h = {
-    buddyListNub: 'buddylist-nub/initialized',
-    sidebar: 'sidebar/initialized'
-  };
-
-  function i(k, l) {
-    g.subscribe(h[k], function(event, m) {
-      l(m);
+__d("Chat", ["Arbiter"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, $) {
+  /**
+   * @param {string} name
+   * @param {Function} cb
+   * @return {undefined}
+   */
+  function fn(name, cb) {
+    $.subscribe(events[name], function(dataAndEvents, outErr) {
+      cb(outErr);
     });
   }
-  var j = {
-    openBuddyList: function() {
-      i('buddyListNub', function(k) {
-        k.show();
-        i('sidebar', function(l) {
-          l.enable();
+  var events = {
+    buddyListNub : "buddylist-nub/initialized",
+    sidebar : "sidebar/initialized"
+  };
+  var JsDiff = {
+    /**
+     * @return {undefined}
+     */
+    openBuddyList : function() {
+      fn("buddyListNub", function(a) {
+        a.show();
+        fn("sidebar", function(field) {
+          field.enable();
         });
       });
     },
-    closeBuddyList: function() {
-      i('buddyListNub', function(k) {
-        k.hide();
+    /**
+     * @return {undefined}
+     */
+    closeBuddyList : function() {
+      fn("buddyListNub", function(poster) {
+        poster.hide();
       });
     },
-    toggleSidebar: function() {
-      i('sidebar', function(k) {
-        k.toggle();
+    /**
+     * @return {undefined}
+     */
+    toggleSidebar : function() {
+      fn("sidebar", function(selectCtrl) {
+        selectCtrl.toggle();
       });
     }
   };
-  e.exports = j;
+  module.exports = JsDiff;
 }, null);
-__d("ChatOptions", ["Arbiter", "ChannelConstants", "JSLogger", "PresenceUtil", "copyProperties", "ChatOptionsInitialData"], function(a, b, c, d, e, f, g, h, i, j, k) {
-  var l = i.create('chat_options'),
-    m = {};
+__d("ChatOptions", ["Arbiter", "ChannelConstants", "JSLogger", "PresenceUtil", "copyProperties", "ChatOptionsInitialData"], function(deepDataAndEvents, $sanitize, ignoreMethodDoesntExist, textAlt, module, keepData, socket, lock, data, dataAndEvents, require) {
+  var logger = data.create("chat_options");
+  var old = {};
   (function() {
-    var o = b('ChatOptionsInitialData');
-    for (var p in o) {
-      var q = o[p];
-      m[p] = !!q;
+    var testSource = $sanitize("ChatOptionsInitialData");
+    var name;
+    for (name in testSource) {
+      var ref = testSource[name];
+      /** @type {boolean} */
+      old[name] = !!ref;
     }
   })();
-  var n = k(new g(), {
-    getSetting: function(o) {
-      return m[o];
+  var util = require(new socket, {
+    /**
+     * @param {string} name
+     * @return {?}
+     */
+    getSetting : function(name) {
+      return old[name];
     },
-    setSetting: function(o, p, q) {
-      if (this.getSetting(o) == p) return;
-      if (q) {
-        q = 'from_' + q;
-        l.log(q, {
-          name: o,
-          new_value: p,
-          old_value: this.getSetting(o)
+    /**
+     * @param {string} name
+     * @param {boolean} value
+     * @param {string} id
+     * @return {undefined}
+     */
+    setSetting : function(name, value, id) {
+      if (this.getSetting(name) == value) {
+        return;
+      }
+      if (id) {
+        /** @type {string} */
+        id = "from_" + id;
+        logger.log(id, {
+          name : name,
+          new_value : value,
+          old_value : this.getSetting(name)
         });
       }
-      m[o] = !!p;
-      g.inform('chat/option-changed', {
-        name: o,
-        value: p
+      /** @type {boolean} */
+      old[name] = !!value;
+      socket.inform("chat/option-changed", {
+        name : name,
+        value : value
       });
     }
   });
-  g.subscribe(h.getArbiterType('setting'), function(o, p) {
-    var q = p.obj;
-    if (q.window_id === j.getSessionID()) return;
-    n.setSetting(q.setting, !!q.value, 'channel');
-  });
-  g.subscribe(i.DUMP_EVENT, function(o, p) {
-    p.chat_options = m;
-  });
-  e.exports = n;
-}, null);
-__d("ChatQuietLinks", ["Event", "DOM", "UserAgent_DEPRECATED", "DataStore", "Parent"], function(a, b, c, d, e, f, g, h, i, j, k) {
-  var l = {},
-    m = {
-      silenceLinks: function(q) {
-        n(q, this.removeEmptyHrefs.bind(this));
-      },
-      nukeLinks: function(q) {
-        n(q, this.removeAllHrefs.bind(this));
-      },
-      removeEmptyHrefs: function(q) {
-        o(q, function(r) {
-          return !r || r === '#';
-        });
-      },
-      removeAllHrefs: function(q) {
-        o(q);
-      }
-    };
-
-  function n(q, r) {
-    var s = !!i.chrome(),
-      t = !!i.chrome() || i.ie() >= 9 || i.firefox() >= 4;
-    if (l[h.getID(q)]) return;
-    l[h.getID(q)] = true;
-    if (!t) return;
-    if (!s) {
-      r && r(q);
+  socket.subscribe(lock.getArbiterType("setting"), function(deepDataAndEvents, req) {
+    var obj = req.obj;
+    if (obj.window_id === dataAndEvents.getSessionID()) {
       return;
     }
-    g.listen(q, 'mouseover', function u(v) {
-      var w = k.byTag(v.getTarget(), 'a');
-      if (w) {
-        var x = w.getAttribute('href');
-        if (p(x)) {
-          j.set(w, 'stashedHref', w.getAttribute('href'));
-          w.removeAttribute('href');
+    util.setSetting(obj.setting, !!obj.value, "channel");
+  });
+  socket.subscribe(data.DUMP_EVENT, function(dataAndEvents, req) {
+    req.chat_options = old;
+  });
+  module.exports = util;
+}, null);
+__d("ChatQuietLinks", ["Event", "DOM", "UserAgent_DEPRECATED", "DataStore", "Parent"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, r, b, UA, acc, Dom) {
+  /**
+   * @param {?} el
+   * @param {?} fn
+   * @return {undefined}
+   */
+  function init(el, fn) {
+    /** @type {boolean} */
+    var s = !!UA.chrome();
+    /** @type {boolean} */
+    var t = !!UA.chrome() || (UA.ie() >= 9 || UA.firefox() >= 4);
+    if (cache[b.getID(el)]) {
+      return;
+    }
+    /** @type {boolean} */
+    cache[b.getID(el)] = true;
+    if (!t) {
+      return;
+    }
+    if (!s) {
+      if (fn) {
+        fn(el);
+      }
+      return;
+    }
+    r.listen(el, "mouseover", function click(e) {
+      var node = Dom.byTag(e.getTarget(), "a");
+      if (node) {
+        var id = node.getAttribute("href");
+        if (indexOf(id)) {
+          acc.set(node, "stashedHref", node.getAttribute("href"));
+          node.removeAttribute("href");
         }
       }
     });
-    g.listen(q, 'mouseout', function u(v) {
-      var w = k.byTag(v.getTarget(), 'a'),
-        x = w && j.remove(w, 'stashedHref');
-      if (p(x)) w.setAttribute('href', x);
-    });
-    g.listen(q, 'mousedown', function(u) {
-      if (!u.isDefaultRequested()) return true;
-      var v = k.byTag(u.getTarget(), 'a'),
-        w = v && j.get(v, 'stashedHref');
-      if (p(w)) v.setAttribute('href', w);
-    });
-  }
-
-  function o(q, r) {
-    var s = h.scry(q, 'a');
-    if (r) s = s.filter(function(t) {
-      return r(t.getAttribute('href'));
-    });
-    s.forEach(function(t) {
-      t.removeAttribute('href');
-      t.setAttribute('tabindex', 0);
-    });
-  }
-
-  function p(q) {
-    return q && q !== '#';
-  }
-  e.exports = m;
-}, null);
-__d("OrderedFriendsList", ["AvailableListConstants", "PresenceStatus", "SearchableEntry", "ShortProfiles", "WorkModeConfig", "createArrayFromMixed", "isValidUniqueID", "InitialChatFriendsList"], function(a, b, c, d, e, f, g, h, i, j, k, l, m) {
-  var n = [],
-    o = [],
-    p = {},
-    q = [],
-    r = {},
-    s = [],
-    t = {
-      contains: function(u) {
-        return u in p;
-      },
-      getList: function() {
-        if (k.is_work_user) return l(n);
-        t.reRank();
-        var u = l(n);
-        u = u.filter(function(v) {
-          var w = j.getNowUnsafe(v);
-          return !w || w.type == "friend";
-        });
-        return u;
-      },
-      getSearchableEntries: function(u, v) {
-        var w = t.getList();
-        j.getMulti(w.slice(0, u), function(x) {
-          var y = [];
-          for (var z in x) y.push(t.normalizeProfileEntry(x[z]));
-          var aa = t.getGroups().map(t.normalizeThreadEntry);
-          v(y.concat(aa).filter(function(ba) {
-            return !!ba;
-          }).sort(function(ba, ca) {
-            return ba.order - ca.order;
-          }));
-        });
-      },
-      normalizeProfileEntry: function(u) {
-        var v = u.searchTokens || [];
-        return new i({
-          uniqueID: u.id,
-          keywordString: v.join(' '),
-          order: t.getActiveRank(u.id),
-          photo: u.thumbSrc,
-          title: u.name,
-          type: u.type,
-          uri: u.uri
-        });
-      },
-      normalizeThreadEntry: function(u, v) {
-        var w = u.mercury_thread,
-          x = u.participants_to_render,
-          y = u.text,
-          z = null;
-        if (!y) y = w.name;
-        var aa = x.map(function(ca) {
-          return ca.name;
-        }).join(', ');
-        if (!y) {
-          y = aa;
-        } else z = aa;
-        var ba = u.uid;
-        if (!y || !m(ba)) return null;
-        return new i({
-          uniqueID: ba,
-          order: v,
-          photo: w.image_src,
-          title: y,
-          subtitle: z,
-          type: 'thread',
-          auxiliaryData: {
-            participantsToRender: x,
-            thread: w
-          }
-        });
-      },
-      getRank: function(u) {
-        return u in p ? p[u] : n.length;
-      },
-      getActiveList: function() {
-        if (q.length > 0) return q;
-        return t.getList();
-      },
-      getActiveRank: function(u) {
-        return u in r ? r[u] : t.getRank(u);
-      },
-      reRank: function() {
-        n = [];
-        var u = 0;
-        s.forEach(function(v) {
-          var w = v.slice(0, -2),
-            x = v.slice(-1);
-          if (h.get(w) == x) {
-            n[u] = w;
-            p[w] = u++;
-          }
-        });
-      },
-      rankActive: function() {
-        var u = 0;
-        s.forEach(function(v) {
-          var w = v.slice(0, -2),
-            x = v.slice(-1);
-          if (x == g.ACTIVE) {
-            q[u] = w;
-            r[w] = u++;
-          }
-        });
-      },
-      getGroups: function() {
-        return o;
+    r.listen(el, "mouseout", function update(ev) {
+      var node = Dom.byTag(ev.getTarget(), "a");
+      var id = node && acc.remove(node, "stashedHref");
+      if (indexOf(id)) {
+        node.setAttribute("href", id);
       }
-    };
-  (function() {
-    var u = b('InitialChatFriendsList');
-    n = u.list.length ? u.list : [];
-    o = u.groups || [];
-    if (!k.is_work_user) {
-      s = n.slice();
-      t.rankActive();
-      t.reRank();
-    } else n.forEach(function(v, w) {
-      p[v] = w;
     });
-  })();
-  e.exports = a.OrderedFriendsList || t;
-}, null);
-__d("ChatSortUsers", ["AvailableListConstants", "OrderedFriendsList", "PresencePrivacy", "PresenceStatus", "ShortProfiles", "TokenizeUtil"], function(a, b, c, d, e, f, g, h, i, j, k, l) {
-  function m(q, r) {
-    var s = i.allows(q),
-      t = i.allows(r);
-    if (s !== t) return s ? -1 : 1;
-    return 0;
+    r.listen(el, "mousedown", function(resolver) {
+      if (!resolver.isDefaultRequested()) {
+        return true;
+      }
+      var node = Dom.byTag(resolver.getTarget(), "a");
+      var id = node && acc.get(node, "stashedHref");
+      if (indexOf(id)) {
+        node.setAttribute("href", id);
+      }
+    });
   }
-  var n = {};
-
-  function o(q) {
-    if (n[q]) return n[q];
-    var r = (k.getNowUnsafe(q) || {}).name;
-    if (r) return n[q] = l.flatten(r);
-    return '~';
+  /**
+   * @param {?} name
+   * @param {Function} callback
+   * @return {undefined}
+   */
+  function initialize(name, callback) {
+    var buttons = b.scry(name, "a");
+    if (callback) {
+      buttons = buttons.filter(function(demoLink) {
+        return callback(demoLink.getAttribute("href"));
+      });
+    }
+    buttons.forEach(function(elem) {
+      elem.removeAttribute("href");
+      elem.setAttribute("tabindex", 0);
+    });
   }
-  var p = {
-    sortAlphabetical: function(q, r) {
-      var s = o(q),
-        t = o(r);
-      if (s !== t) return s < t ? -1 : 1;
-      return 0;
+  /**
+   * @param {string} value
+   * @return {?}
+   */
+  function indexOf(value) {
+    return value && value !== "#";
+  }
+  var cache = {};
+  var JsDiff = {
+    /**
+     * @param {?} slide
+     * @return {undefined}
+     */
+    silenceLinks : function(slide) {
+      init(slide, this.removeEmptyHrefs.bind(this));
     },
-    sortMobile: function(q, r) {
-      var s = j.get(q) === g.MOBILE,
-        t = j.get(r) === g.MOBILE;
-      if (s !== t) return t ? -1 : 1;
-      return p.sortAlphabetical(q, r);
+    /**
+     * @param {?} slide
+     * @return {undefined}
+     */
+    nukeLinks : function(slide) {
+      init(slide, this.removeAllHrefs.bind(this));
     },
-    sortCoefficient: function(q, r) {
-      var s = h.getRank(q),
-        t = h.getRank(r);
-      if (s !== t) return s - t;
-      return p.sortAlphabetical(q, r);
+    /**
+     * @param {?} node
+     * @return {undefined}
+     */
+    removeEmptyHrefs : function(node) {
+      initialize(node, function(value) {
+        return!value || value === "#";
+      });
     },
-    sort: function(q, r) {
-      var s = m(q, r);
-      if (s !== 0) return s;
-      return p.sortCoefficient(q, r);
+    /**
+     * @param {?} node
+     * @return {undefined}
+     */
+    removeAllHrefs : function(node) {
+      initialize(node);
     }
   };
-  e.exports = p;
+  module.exports = JsDiff;
 }, null);
-__d("TypingDetector", ["ArbiterMixin", "Event", "Input", "Run", "TypingStates", "copyProperties", "createObjectFrom", "emptyFunction"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n) {
-  function o(p, q) {
-    this._input = p;
-    this._ignoreKeys = {};
-    this._getValueFn = q;
+__d("OrderedFriendsList", ["AvailableListConstants", "PresenceStatus", "SearchableEntry", "ShortProfiles", "WorkModeConfig", "createArrayFromMixed", "isValidUniqueID", "InitialChatFriendsList"], function(event, Event, dataAndEvents, ignoreMethodDoesntExist, module, textAlt, a, otherMap, UndoRedoMenuItem, assert, deepDataAndEvents, get, proceed) {
+  /** @type {Array} */
+  var groups = [];
+  /** @type {Array} */
+  var promise = [];
+  var obj = {};
+  /** @type {Array} */
+  var passedValues = [];
+  var node = {};
+  /** @type {Array} */
+  var asserterNames = [];
+  var item = {
+    /**
+     * @param {Object} target
+     * @return {?}
+     */
+    contains : function(target) {
+      return target in obj;
+    },
+    /**
+     * @return {?}
+     */
+    getList : function() {
+      if (deepDataAndEvents.is_work_user) {
+        return get(groups);
+      }
+      item.reRank();
+      var list = get(groups);
+      list = list.filter(function(_) {
+        var buf = assert.getNowUnsafe(_);
+        return!buf || buf.type == "friend";
+      });
+      return list;
+    },
+    /**
+     * @param {number} num
+     * @param {Function} $sanitize
+     * @return {undefined}
+     */
+    getSearchableEntries : function(num, $sanitize) {
+      var fxAttrs = item.getList();
+      assert.getMulti(fxAttrs.slice(0, num), function(map) {
+        /** @type {Array} */
+        var beginswith = [];
+        var letter;
+        for (letter in map) {
+          beginswith.push(item.normalizeProfileEntry(map[letter]));
+        }
+        var caseSensitive = item.getGroups().map(item.normalizeThreadEntry);
+        $sanitize(beginswith.concat(caseSensitive).filter(function(dataAndEvents) {
+          return!!dataAndEvents;
+        }).sort(function(a, b) {
+          return a.order - b.order;
+        }));
+      });
+    },
+    /**
+     * @param {Object} args
+     * @return {?}
+     */
+    normalizeProfileEntry : function(args) {
+      var dig = args.searchTokens || [];
+      return new UndoRedoMenuItem({
+        uniqueID : args.id,
+        keywordString : dig.join(" "),
+        order : item.getActiveRank(args.id),
+        photo : args.thumbSrc,
+        title : args.name,
+        type : args.type,
+        uri : args.uri
+      });
+    },
+    /**
+     * @param {Object} item
+     * @param {string} dataAndEvents
+     * @return {?}
+     */
+    normalizeThreadEntry : function(item, dataAndEvents) {
+      var args = item.mercury_thread;
+      var children = item.participants_to_render;
+      var title = item.text;
+      /** @type {null} */
+      var text = null;
+      if (!title) {
+        title = args.name;
+      }
+      var _ = children.map(function(unused) {
+        return unused.name;
+      }).join(", ");
+      if (!title) {
+        title = _;
+      } else {
+        text = _;
+      }
+      var element = item.uid;
+      if (!title || !proceed(element)) {
+        return null;
+      }
+      return new UndoRedoMenuItem({
+        uniqueID : element,
+        order : dataAndEvents,
+        photo : args.image_src,
+        title : title,
+        subtitle : text,
+        type : "thread",
+        auxiliaryData : {
+          participantsToRender : children,
+          thread : args
+        }
+      });
+    },
+    /**
+     * @param {Function} prop
+     * @return {?}
+     */
+    getRank : function(prop) {
+      return prop in obj ? obj[prop] : groups.length;
+    },
+    /**
+     * @return {?}
+     */
+    getActiveList : function() {
+      if (passedValues.length > 0) {
+        return passedValues;
+      }
+      return item.getList();
+    },
+    /**
+     * @param {Function} name
+     * @return {?}
+     */
+    getActiveRank : function(name) {
+      return name in node ? node[name] : item.getRank(name);
+    },
+    /**
+     * @return {undefined}
+     */
+    reRank : function() {
+      /** @type {Array} */
+      groups = [];
+      /** @type {number} */
+      var i = 0;
+      asserterNames.forEach(function(models) {
+        var key = models.slice(0, -2);
+        var object = models.slice(-1);
+        if (otherMap.get(key) == object) {
+          groups[i] = key;
+          /** @type {number} */
+          obj[key] = i++;
+        }
+      });
+    },
+    /**
+     * @return {undefined}
+     */
+    rankActive : function() {
+      /** @type {number} */
+      var i = 0;
+      asserterNames.forEach(function(models) {
+        var o = models.slice(0, -2);
+        var text = models.slice(-1);
+        if (text == a.ACTIVE) {
+          passedValues[i] = o;
+          /** @type {number} */
+          node[o] = i++;
+        }
+      });
+    },
+    /**
+     * @return {?}
+     */
+    getGroups : function() {
+      return promise;
+    }
+  };
+  (function() {
+    var self = Event("InitialChatFriendsList");
+    groups = self.list.length ? self.list : [];
+    promise = self.groups || [];
+    if (!deepDataAndEvents.is_work_user) {
+      asserterNames = groups.slice();
+      item.rankActive();
+      item.reRank();
+    } else {
+      groups.forEach(function(key, res) {
+        obj[key] = res;
+      });
+    }
+  })();
+  module.exports = event.OrderedFriendsList || item;
+}, null);
+__d("ChatSortUsers", ["AvailableListConstants", "OrderedFriendsList", "PresencePrivacy", "PresenceStatus", "ShortProfiles", "TokenizeUtil"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, event, handler, jQuery, $injector, gridStore, contextElem) {
+  /**
+   * @param {Function} context
+   * @param {?} fragment
+   * @return {?}
+   */
+  function getAll(context, fragment) {
+    var key = jQuery.allows(context);
+    var args = jQuery.allows(fragment);
+    if (key !== args) {
+      return key ? -1 : 1;
+    }
+    return 0;
   }
-  l(o.prototype, g, {
-    _timeout: 7000,
-    _currentState: k.INACTIVE,
-    init: function() {
-      this.init = n;
+  /**
+   * @param {Function} data
+   * @return {?}
+   */
+  function fn(data) {
+    if (cache[data]) {
+      return cache[data];
+    }
+    var name = (gridStore.getNowUnsafe(data) || {}).name;
+    if (name) {
+      return cache[data] = contextElem.flatten(name);
+    }
+    return "~";
+  }
+  var cache = {};
+  var me = {
+    /**
+     * @param {Function} value
+     * @param {?} context
+     * @return {?}
+     */
+    sortAlphabetical : function(value, context) {
+      var actual = fn(value);
+      var expected = fn(context);
+      if (actual !== expected) {
+        return actual < expected ? -1 : 1;
+      }
+      return 0;
+    },
+    /**
+     * @param {Object} key
+     * @param {string} c
+     * @return {?}
+     */
+    sortMobile : function(key, c) {
+      /** @type {boolean} */
+      var val = $injector.get(key) === event.MOBILE;
+      /** @type {boolean} */
+      var skip = $injector.get(c) === event.MOBILE;
+      if (val !== skip) {
+        return skip ? -1 : 1;
+      }
+      return me.sortAlphabetical(key, c);
+    },
+    /**
+     * @param {Function} name
+     * @param {?} fragment
+     * @return {?}
+     */
+    sortCoefficient : function(name, fragment) {
+      var end = handler.getRank(name);
+      var start = handler.getRank(fragment);
+      if (end !== start) {
+        return end - start;
+      }
+      return me.sortAlphabetical(name, fragment);
+    },
+    /**
+     * @param {Function} node
+     * @param {?} fragmentOverride
+     * @return {?}
+     */
+    sort : function(node, fragmentOverride) {
+      var allDataForNode = getAll(node, fragmentOverride);
+      if (allDataForNode !== 0) {
+        return allDataForNode;
+      }
+      return me.sortCoefficient(node, fragmentOverride);
+    }
+  };
+  module.exports = me;
+}, null);
+__d("TypingDetector", ["ArbiterMixin", "Event", "Input", "Run", "TypingStates", "copyProperties", "createObjectFrom", "emptyFunction"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, IOStream, testPage, div, dataAndEvents, UploaderQueue, declare, $sanitize, init) {
+  /**
+   * @param {string} input
+   * @param {?} opt_renderer
+   * @return {undefined}
+   */
+  function Item(input, opt_renderer) {
+    /** @type {string} */
+    this._input = input;
+    this._ignoreKeys = {};
+    this._getValueFn = opt_renderer;
+  }
+  declare(Item.prototype, IOStream, {
+    _timeout : 7E3,
+    _currentState : UploaderQueue.INACTIVE,
+    /**
+     * @return {undefined}
+     */
+    init : function() {
+      /** @type {(RegExp|string)} */
+      this.init = init;
       this.reset();
-      this._subscription = h.listen(this._input, 'keyup', this._update.bind(this));
-      j.onUnload(this._onunload.bind(this));
+      this._subscription = testPage.listen(this._input, "keyup", this._update.bind(this));
+      dataAndEvents.onUnload(this._onunload.bind(this));
     },
-    reset: function() {
+    /**
+     * @return {undefined}
+     */
+    reset : function() {
       clearTimeout(this._checkTimer);
+      /** @type {null} */
       this._checkTimer = null;
+      /** @type {null} */
       this._lastKeystrokeAt = null;
-      this._currentState = k.INACTIVE;
+      this._currentState = UploaderQueue.INACTIVE;
     },
-    setIgnoreKeys: function(p) {
-      this._ignoreKeys = m(p);
+    /**
+     * @param {Array} value
+     * @return {undefined}
+     */
+    setIgnoreKeys : function(value) {
+      this._ignoreKeys = $sanitize(value);
     },
-    destroy: function() {
+    /**
+     * @return {undefined}
+     */
+    destroy : function() {
       this._subscription.remove();
     },
-    _onunload: function() {
-      if (this._currentState == k.TYPING) this._transition(k.QUITTING);
+    /**
+     * @return {undefined}
+     */
+    _onunload : function() {
+      if (this._currentState == UploaderQueue.TYPING) {
+        this._transition(UploaderQueue.QUITTING);
+      }
     },
-    _update: function(event) {
-      var p = h.getKeyCode(event),
-        q = this._currentState;
-      if (!this._ignoreKeys[p]) {
-        var r = this._getValueFn ? this._getValueFn() : i.getValue(this._input);
-        if (r.trim().length === 0) {
-          if (q == k.TYPING) this._transition(k.INACTIVE);
-        } else if (q == k.TYPING) {
-          this._recordKeystroke();
-        } else if (q == k.INACTIVE) {
-          this._transition(k.TYPING);
-          this._recordKeystroke();
+    /**
+     * @param {?} element
+     * @return {undefined}
+     */
+    _update : function(element) {
+      var $element = testPage.getKeyCode(element);
+      var current = this._currentState;
+      if (!this._ignoreKeys[$element]) {
+        var buf = this._getValueFn ? this._getValueFn() : div.getValue(this._input);
+        if (buf.trim().length === 0) {
+          if (current == UploaderQueue.TYPING) {
+            this._transition(UploaderQueue.INACTIVE);
+          }
+        } else {
+          if (current == UploaderQueue.TYPING) {
+            this._recordKeystroke();
+          } else {
+            if (current == UploaderQueue.INACTIVE) {
+              this._transition(UploaderQueue.TYPING);
+              this._recordKeystroke();
+            }
+          }
         }
       }
     },
-    _transition: function(p) {
+    /**
+     * @param {?} animate
+     * @return {undefined}
+     */
+    _transition : function(animate) {
       this.reset();
-      this._currentState = p;
-      this.inform('change', p);
+      this._currentState = animate;
+      this.inform("change", animate);
     },
-    _recordKeystroke: function() {
+    /**
+     * @return {undefined}
+     */
+    _recordKeystroke : function() {
+      /** @type {number} */
       this._lastKeystrokeTime = Date.now();
-      if (!this._checkTimer) this._checkTimer = setTimeout(this._checkTyping.bind(this), this._timeout);
+      if (!this._checkTimer) {
+        /** @type {number} */
+        this._checkTimer = setTimeout(this._checkTyping.bind(this), this._timeout);
+      }
     },
-    _checkTyping: function() {
-      var p = this._lastKeystrokeTime + this._timeout,
-        q = Date.now();
-      if (q > p) {
-        this._transition(k.INACTIVE);
+    /**
+     * @return {undefined}
+     */
+    _checkTyping : function() {
+      var right = this._lastKeystrokeTime + this._timeout;
+      /** @type {number} */
+      var left = Date.now();
+      if (left > right) {
+        this._transition(UploaderQueue.INACTIVE);
       } else {
         clearTimeout(this._checkTimer);
-        this._checkTimer = setTimeout(this._checkTyping.bind(this), p - q + 10);
+        /** @type {number} */
+        this._checkTimer = setTimeout(this._checkTyping.bind(this), right - left + 10);
       }
     }
   });
-  e.exports = o;
+  /** @type {function (string, ?): undefined} */
+  module.exports = Item;
 }, null);
-__d("TypingDetectorController", ["AsyncRequest", "AvailableList", "AvailableListConstants", "ChannelConnection", "ChatVisibility", "Keys", "PresencePrivacy", "ShortProfiles", "TypingDetector", "TypingStates", "copyProperties", "emptyFunction", "setTimeoutAcrossTransitions", "shield"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t) {
-  function u(v, w, x, y, z, aa) {
-    "use strict";
-    this.userID = v;
-    this.input = w;
-    this.source = x;
-    this.threadID = z;
-    this.remoteState = p.INACTIVE;
+__d("TypingDetectorController", ["AsyncRequest", "AvailableList", "AvailableListConstants", "ChannelConnection", "ChatVisibility", "Keys", "PresencePrivacy", "ShortProfiles", "TypingDetector", "TypingStates", "copyProperties", "emptyFunction", "setTimeoutAcrossTransitions", "shield"], function(deepDataAndEvents, textAlt, keepData, opt_attributes, module, matcherFunction, ignoreMethodDoesntExist, params, value, results, AngularForce, e, rule, h, Renderer, dataAndEvents, expect, opt_obj2, arrMin, values) {
+  /**
+   * @param {?} allBindingsAccessor
+   * @param {string} str
+   * @param {?} out
+   * @param {Object} arg
+   * @param {?} depMaps
+   * @param {Function} options
+   * @return {undefined}
+   */
+  function init(allBindingsAccessor, str, out, arg, depMaps, options) {
+    this.userID = allBindingsAccessor;
+    /** @type {string} */
+    this.input = str;
+    this.source = out;
+    this.threadID = depMaps;
+    this.remoteState = dataAndEvents.INACTIVE;
+    /** @type {null} */
     this.notifyTimer = null;
-    y = y || {};
-    this.notifyDelay = y.notifyDelay || this.notifyDelay;
-    this._typingDetector = new o(w, aa);
-    this._typingDetector.init(y);
-    this._typingDetector.subscribe('change', this._stateChange.bind(this));
+    arg = arg || {};
+    this.notifyDelay = arg.notifyDelay || this.notifyDelay;
+    this._typingDetector = new Renderer(str, options);
+    this._typingDetector.init(arg);
+    this._typingDetector.subscribe("change", this._stateChange.bind(this));
   }
-  u.prototype.setUserAndThread = function(v, w) {
-    "use strict";
-    if (this.userID !== v || this.threadID !== w) {
+  /**
+   * @param {?} userID
+   * @param {?} dataAndEvents
+   * @return {undefined}
+   */
+  init.prototype.setUserAndThread = function(userID, dataAndEvents) {
+    if (this.userID !== userID || this.threadID !== dataAndEvents) {
       this.resetState();
-      this.userID = v;
-      this.threadID = w;
+      this.userID = userID;
+      this.threadID = dataAndEvents;
     }
   };
-  u.prototype.setIgnoreEnter = function(v) {
-    "use strict";
-    var w = v ? [l.RETURN] : [];
-    this._typingDetector.setIgnoreKeys(w);
+  /**
+   * @param {string} dataAndEvents
+   * @return {undefined}
+   */
+  init.prototype.setIgnoreEnter = function(dataAndEvents) {
+    /** @type {Array} */
+    var udataCur = dataAndEvents ? [e.RETURN] : [];
+    this._typingDetector.setIgnoreKeys(udataCur);
   };
-  u.prototype.resetState = function() {
-    "use strict";
-    this._notifyState(p.INACTIVE);
-    this.remoteState = p.INACTIVE;
+  /**
+   * @return {undefined}
+   */
+  init.prototype.resetState = function() {
+    this._notifyState(dataAndEvents.INACTIVE);
+    this.remoteState = dataAndEvents.INACTIVE;
     this._typingDetector.reset();
     clearTimeout(this.notifyTimer);
+    /** @type {null} */
     this.notifyTimer = null;
   };
-  u.prototype.destroy = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  init.prototype.destroy = function() {
     this.resetState();
     this._typingDetector.destroy();
   };
-  u.prototype._stateChange = function(v, w) {
-    "use strict";
-    if (w != p.QUITTING) {
+  /**
+   * @param {?} ignoreMethodDoesntExist
+   * @param {?} deepDataAndEvents
+   * @return {undefined}
+   */
+  init.prototype._stateChange = function(ignoreMethodDoesntExist, deepDataAndEvents) {
+    if (deepDataAndEvents != dataAndEvents.QUITTING) {
       clearTimeout(this.notifyTimer);
-      this.notifyTimer = s(t(this._notifyState, this, w), this.notifyDelay);
-    } else this._notifyState(w, true);
+      this.notifyTimer = arrMin(values(this._notifyState, this, deepDataAndEvents), this.notifyDelay);
+    } else {
+      this._notifyState(deepDataAndEvents, true);
+    }
   };
-  u.prototype._notifyState = function(v, w) {
-    "use strict";
-    if ((!this.userID && !this.threadID) || !k.isOnline() || v === this.remoteState || j.disconnected()) return;
-    var x = this.userID;
-    if (x) {
-      n.get(x, function(y) {
-        if (y && y.type == 'friend' && m.allows(x)) this._sendRequest(v, x, w);
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {boolean} dataAndEvents
+   * @return {undefined}
+   */
+  init.prototype._notifyState = function(deepDataAndEvents, dataAndEvents) {
+    if (!this.userID && !this.threadID || (!AngularForce.isOnline() || (deepDataAndEvents === this.remoteState || results.disconnected()))) {
+      return;
+    }
+    var paths = this.userID;
+    if (paths) {
+      h.get(paths, function(statement) {
+        if (statement && (statement.type == "friend" && rule.allows(paths))) {
+          this._sendRequest(deepDataAndEvents, paths, dataAndEvents);
+        }
       }.bind(this));
-    } else this._sendRequest(v, x, w);
+    } else {
+      this._sendRequest(deepDataAndEvents, paths, dataAndEvents);
+    }
   };
-  u.prototype._sendRequest = function(v, w, x) {
-    "use strict";
-    this.remoteState = v;
-    var y = {
-      typ: v,
-      to: w,
-      source: this.source,
-      thread: this.threadID
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {number} callback
+   * @param {boolean} dataAndEvents
+   * @return {undefined}
+   */
+  init.prototype._sendRequest = function(deepDataAndEvents, callback, dataAndEvents) {
+    this.remoteState = deepDataAndEvents;
+    var data = {
+      typ : deepDataAndEvents,
+      to : callback,
+      source : this.source,
+      thread : this.threadID
     };
-    new g().setHandler(this._onTypResponse.bind(this, w)).setErrorHandler(r).setData(y).setURI('/ajax/messaging/typ.php').setAllowCrossPageTransition(true).setOption('asynchronous', !x).send();
+    (new ignoreMethodDoesntExist).setHandler(this._onTypResponse.bind(this, callback)).setErrorHandler(opt_obj2).setData(data).setURI("/ajax/messaging/typ.php").setAllowCrossPageTransition(true).setOption("asynchronous", !dataAndEvents).send();
   };
-  u.prototype._onTypResponse = function(v, w) {
-    "use strict";
-    var x = w.getPayload() || {};
-    if (x.offline) h.set(v, i.OFFLINE, 'typing_response');
+  /**
+   * @param {?} source
+   * @param {?} join
+   * @return {undefined}
+   */
+  init.prototype._onTypResponse = function(source, join) {
+    var config = join.getPayload() || {};
+    if (config.offline) {
+      params.set(source, value.OFFLINE, "typing_response");
+    }
   };
-  q(u.prototype, {
-    notifyDelay: 1000
+  expect(init.prototype, {
+    notifyDelay : 1E3
   });
-  e.exports = u;
+  /** @type {function (?, string, ?, Object, ?, Function): undefined} */
+  module.exports = init;
 }, null);
-__d("ChatDispatcher", ["Dispatcher"], function(a, b, c, d, e, f, g) {
-  'use strict';
-  e.exports = new g();
+__d("ChatDispatcher", ["Dispatcher"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, Device) {
+  module.exports = new Device;
 }, null);
-__d("ChatTabActions", ["ChatDispatcher", "keyMirror"], function(a, b, c, d, e, f, g, h) {
-  'use strict';
-  var i = h({
-      CLOSE_TAB: null,
-      CLOSE_ALL_TABS: null,
-      CLOSE_FRAGILE_TABS: null,
-      LOWER_TAB: null,
-      PERSIST_LOCAL_STATE: null,
-      PROMOTE_TAB: null,
-      RAISE_TAB: null
-    }),
-    j = {
-      Types: i,
-      closeTab: function(k, l) {
-        g.dispatch({
-          actionType: i.CLOSE_TAB,
-          reason: l,
-          threadID: k
-        });
-      },
-      closeAllTabs: function() {
-        g.dispatch({
-          actionType: i.CLOSE_ALL_TABS
-        });
-      },
-      closeFragileTabs: function() {
-        g.dispatch({
-          actionType: i.CLOSE_FRAGILE_TABS
-        });
-      },
-      lowerTab: function(k) {
-        g.dispatch({
-          actionType: i.LOWER_TAB,
-          threadID: k
-        });
-      },
-      persistLocalState: function() {
-        g.dispatch({
-          actionType: i.PERSIST_LOCAL_STATE
-        });
-      },
-      promoteTab: function(k) {
-        g.dispatch({
-          actionType: i.PROMOTE_TAB,
-          threadID: k
-        });
-      },
-      raiseTab: function(k, l, m) {
-        g.dispatch({
-          actionType: i.RAISE_TAB,
-          signatureID: m,
-          threadID: k,
-          userAction: l
-        });
-      }
-    };
-  e.exports = j;
-}, null);
-__d("ChatSidebarComposeLink.react", ["ChatOpenTab", "React", "TooltipLink.react", "URI", "fbt"], function(a, b, c, d, e, f, g, h, i, j, k) {
-  var l = h.createClass({
-    displayName: "ChatSidebarComposeLink",
-    propTypes: {
-      className: h.PropTypes.string.isRequired
+__d("ChatTabActions", ["ChatDispatcher", "keyMirror"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, router, require) {
+  var Block = require({
+    CLOSE_TAB : null,
+    CLOSE_ALL_TABS : null,
+    CLOSE_FRAGILE_TABS : null,
+    LOWER_TAB : null,
+    PERSIST_LOCAL_STATE : null,
+    PROMOTE_TAB : null,
+    RAISE_TAB : null
+  });
+  var JsDiff = {
+    Types : Block,
+    /**
+     * @param {string} idx
+     * @param {?} err
+     * @return {undefined}
+     */
+    closeTab : function(idx, err) {
+      router.dispatch({
+        actionType : Block.CLOSE_TAB,
+        reason : err,
+        threadID : idx
+      });
     },
-    componentDidMount: function() {
-      g.listenOpenEmptyTab(this.getDOMNode(), 'sidebar');
+    /**
+     * @return {undefined}
+     */
+    closeAllTabs : function() {
+      router.dispatch({
+        actionType : Block.CLOSE_ALL_TABS
+      });
     },
-    render: function() {
-      var m = "New Message";
-      return (h.createElement(i, {
-        ajaxify: new j('/ajax/messaging/composer.php'),
-        className: this.props.className,
-        tooltip: m,
-        rel: "dialog"
-      }));
+    /**
+     * @return {undefined}
+     */
+    closeFragileTabs : function() {
+      router.dispatch({
+        actionType : Block.CLOSE_FRAGILE_TABS
+      });
+    },
+    /**
+     * @param {?} dataAndEvents
+     * @return {undefined}
+     */
+    lowerTab : function(dataAndEvents) {
+      router.dispatch({
+        actionType : Block.LOWER_TAB,
+        threadID : dataAndEvents
+      });
+    },
+    /**
+     * @return {undefined}
+     */
+    persistLocalState : function() {
+      router.dispatch({
+        actionType : Block.PERSIST_LOCAL_STATE
+      });
+    },
+    /**
+     * @param {?} dataAndEvents
+     * @return {undefined}
+     */
+    promoteTab : function(dataAndEvents) {
+      router.dispatch({
+        actionType : Block.PROMOTE_TAB,
+        threadID : dataAndEvents
+      });
+    },
+    /**
+     * @param {?} dataAndEvents
+     * @param {?} tab
+     * @param {?} deepDataAndEvents
+     * @return {undefined}
+     */
+    raiseTab : function(dataAndEvents, tab, deepDataAndEvents) {
+      router.dispatch({
+        actionType : Block.RAISE_TAB,
+        signatureID : deepDataAndEvents,
+        threadID : dataAndEvents,
+        userAction : tab
+      });
+    }
+  };
+  module.exports = JsDiff;
+}, null);
+__d("ChatSidebarComposeLink.react", ["ChatOpenTab", "React", "TooltipLink.react", "URI", "fbt"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, dataAndEvents, self, type, StatusView, matcherFunction) {
+  var JsDiff = self.createClass({
+    displayName : "ChatSidebarComposeLink",
+    propTypes : {
+      className : self.PropTypes.string.isRequired
+    },
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
+      dataAndEvents.listenOpenEmptyTab(this.getDOMNode(), "sidebar");
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      /** @type {string} */
+      var tooltip = "New Message";
+      return self.createElement(type, {
+        ajaxify : new StatusView("/ajax/messaging/composer.php"),
+        className : this.props.className,
+        tooltip : tooltip,
+        rel : "dialog"
+      });
     }
   });
-  e.exports = l;
+  module.exports = JsDiff;
 }, null);
-__d("ChatSidebarConstants", [], function(a, b, c, d, e, f) {
-  var g = {
-    LITESTAND_CLASSIC_SIZE: 32,
-    IMAGE_SIZE: 28
+__d("ChatSidebarConstants", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  var scope = {
+    LITESTAND_CLASSIC_SIZE : 32,
+    IMAGE_SIZE : 28
   };
-  Object.assign(g, {
-    getImageSize: function(h) {
-      if (h === false) return g.IMAGE_SIZE;
-      return g.LITESTAND_CLASSIC_SIZE;
+  Object.assign(scope, {
+    /**
+     * @param {(boolean|string)} bounds
+     * @return {?}
+     */
+    getImageSize : function(bounds) {
+      if (bounds === false) {
+        return scope.IMAGE_SIZE;
+      }
+      return scope.LITESTAND_CLASSIC_SIZE;
     },
-    getItemHeight: function(h) {
-      if (h === false) return g.IMAGE_SIZE + 4;
-      return g.LITESTAND_CLASSIC_SIZE + 4;
+    /**
+     * @param {boolean} dataAndEvents
+     * @return {?}
+     */
+    getItemHeight : function(dataAndEvents) {
+      if (dataAndEvents === false) {
+        return scope.IMAGE_SIZE + 4;
+      }
+      return scope.LITESTAND_CLASSIC_SIZE + 4;
     }
   });
-  e.exports = g;
+  module.exports = scope;
 }, null);
-__d("ChatBehavior", ["Arbiter", "AvailableList", "AvailableListConstants", "copyProperties", "MercuryConstants"], function(a, b, c, d, e, f, g, h, i, j) {
-  var k = b('MercuryConstants').ChatNotificationConstants,
-    l = false,
-    m = h.getWebChatNotification(),
-    n = l,
-    o = true,
-    p = j(new g(), {
-      ON_CHANGED: 'changed',
-      notifiesUserMessages: function() {
-        return m !== k.NO_USER_MESSAGE_NOTIFICATION;
-      },
-      ignoresRemoteTabRaise: function() {
-        return n;
-      },
-      showsTabUnreadUI: function() {
-        return o;
-      }
-    });
-
-  function q() {
-    p.inform(p.ON_CHANGED);
+__d("ChatBehavior", ["Arbiter", "AvailableList", "AvailableListConstants", "copyProperties", "MercuryConstants"], function(dataAndEvents, $sanitize, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt, left, exports, message, topic) {
+  /**
+   * @return {undefined}
+   */
+  function processNewAttribute() {
+    out.inform(out.ON_CHANGED);
   }
-  h.subscribe(i.ON_CHAT_NOTIFICATION_CHANGED, function() {
-    var r = m,
-      s = h.getWebChatNotification();
-    m = s;
-    if (r != s) q();
+  var input = $sanitize("MercuryConstants").ChatNotificationConstants;
+  /** @type {boolean} */
+  var YY_START = false;
+  var pos = exports.getWebChatNotification();
+  /** @type {boolean} */
+  var YYSTATE = YY_START;
+  /** @type {boolean} */
+  var showsTabUnreadUI = true;
+  var out = topic(new left, {
+    ON_CHANGED : "changed",
+    /**
+     * @return {?}
+     */
+    notifiesUserMessages : function() {
+      return pos !== input.NO_USER_MESSAGE_NOTIFICATION;
+    },
+    /**
+     * @return {?}
+     */
+    ignoresRemoteTabRaise : function() {
+      return YYSTATE;
+    },
+    /**
+     * @return {?}
+     */
+    showsTabUnreadUI : function() {
+      return showsTabUnreadUI;
+    }
   });
-  g.subscribe('chat/set_does_page_occlude_tabs', function(r, s) {
-    n = !!s;
-    q();
+  exports.subscribe(message.ON_CHAT_NOTIFICATION_CHANGED, function() {
+    var mat = pos;
+    var dest = exports.getWebChatNotification();
+    pos = dest;
+    if (mat != dest) {
+      processNewAttribute();
+    }
   });
-  g.subscribe('chat/set_show_tab_unread_ui', function(r, s) {
-    o = !!s;
-    q();
+  left.subscribe("chat/set_does_page_occlude_tabs", function(dataAndEvents, deepDataAndEvents) {
+    /** @type {boolean} */
+    YYSTATE = !!deepDataAndEvents;
+    processNewAttribute();
   });
-  e.exports = p;
+  left.subscribe("chat/set_show_tab_unread_ui", function(dataAndEvents, deepDataAndEvents) {
+    /** @type {boolean} */
+    showsTabUnreadUI = !!deepDataAndEvents;
+    processNewAttribute();
+  });
+  module.exports = out;
 }, null);
-__d("ChatSidebarSheet", ["ArbiterMixin", "BlackbirdUpsell", "ChannelConnection", "ChannelConstants", "ChatBehavior", "ChatConfig", "ChatVisibility", "CSS", "DOM", "Event", "JSLogger", "PresencePrivacy", "copyProperties", "fbt", "mixin", "setTimeoutAcrossTransitions"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v) {
-  var w = q.create('sidebar_sheet');
-
-  function x(da) {
-    switch (da) {
-      case j.HINT_AUTH:
+__d("ChatSidebarSheet", ["ArbiterMixin", "BlackbirdUpsell", "ChannelConnection", "ChannelConstants", "ChatBehavior", "ChatConfig", "ChatVisibility", "CSS", "DOM", "Event", "JSLogger", "PresencePrivacy", "copyProperties", "fbt", "mixin", "setTimeoutAcrossTransitions"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, element, exports, self, dataAndEvents, channel, $templateCache, AngularForce, d, dom, m, activator, event, defineProperty, obj, proceed,
+$sanitize) {
+  /**
+   * @param {?} failing_message
+   * @return {?}
+   */
+  function report(failing_message) {
+    switch(failing_message) {
+      case dataAndEvents.HINT_AUTH:
         return "Your session has timed out. Please log in.";
-      case j.HINT_CONN:
-        return t._("Facebook {Chat} is currently unavailable.", [t.param("Chat", "Chat")]);
-      case j.HINT_MAINT:
-        return t._("Facebook {Chat} is currently down for maintenance.", [t.param("Chat", "Chat")]);
+      case dataAndEvents.HINT_CONN:
+        return obj._("Facebook {Chat} is currently unavailable.", [obj.param("Chat", "Chat")]);
+      case dataAndEvents.HINT_MAINT:
+        return obj._("Facebook {Chat} is currently down for maintenance.", [obj.param("Chat", "Chat")]);
       default:
-        return t._("Facebook {Chat} is currently unavailable.", [t.param("Chat", "Chat")]);
+        return obj._("Facebook {Chat} is currently unavailable.", [obj.param("Chat", "Chat")]);
     }
   }
-
-  function y(da) {
-    var ea;
-    if (da === null || false === navigator.onLine) {
-      ea = "Unable to connect to chat. Check your Internet connection.";
-    } else if (da > l.get('warning_countdown_threshold_msec')) {
-      var fa = o.create('a', {
-        href: '#',
-        className: 'fbChatReconnectLink'
-      }, "Try again");
-      ea = t._("Unable to connect to chat. {try-again-link}", [t.param("try-again-link", fa)]);
-    } else if (da > 1000) {
-      ea = t._("Unable to connect to chat. Reconnecting in {seconds}...", [t.param("seconds", Math.floor(da / 1000))]);
-    } else ea = "Unable to connect to chat. Reconnecting...";
-    return ea;
+  /**
+   * @param {number} t
+   * @return {?}
+   */
+  function init(t) {
+    var enabled;
+    if (t === null || false === navigator.onLine) {
+      /** @type {string} */
+      enabled = "Unable to connect to chat. Check your Internet connection.";
+    } else {
+      if (t > $templateCache.get("warning_countdown_threshold_msec")) {
+        var fn = dom.create("a", {
+          href : "#",
+          className : "fbChatReconnectLink"
+        }, "Try again");
+        enabled = obj._("Unable to connect to chat. {try-again-link}", [obj.param("try-again-link", fn)]);
+      } else {
+        if (t > 1E3) {
+          enabled = obj._("Unable to connect to chat. Reconnecting in {seconds}...", [obj.param("seconds", Math.floor(t / 1E3))]);
+        } else {
+          /** @type {string} */
+          enabled = "Unable to connect to chat. Reconnecting...";
+        }
+      }
+    }
+    return enabled;
   }
-  var z = u(g);
-  for (var aa in z)
-    if (z.hasOwnProperty(aa)) ca[aa] = z[aa];
-  var ba = z === null ? null : z.prototype;
-  ca.prototype = Object.create(ba);
-  ca.prototype.constructor = ca;
-  ca.__superConstructor__ = z;
-
-  function ca(da) {
-    "use strict";
-    this._root = da;
-    this._message = o.find(da, 'div.fbChatSidebarMessage div.message');
-    i.subscribe([i.CONNECTED, i.SHUTDOWN, i.RECONNECTING], this._handleConnectionChange.bind(this));
-    i.subscribe([i.MUTE_WARNING, i.UNMUTE_WARNING], this._render.bind(this));
-    r.subscribe('privacy-user-presence-changed', this._render.bind(this));
-    k.subscribe(k.ON_CHANGED, this._render.bind(this));
+  /**
+   * @param {Object} root
+   * @return {undefined}
+   */
+  function constructor(root) {
+    /** @type {Object} */
+    this._root = root;
+    this._message = dom.find(root, "div.fbChatSidebarMessage div.message");
+    self.subscribe([self.CONNECTED, self.SHUTDOWN, self.RECONNECTING], this._handleConnectionChange.bind(this));
+    self.subscribe([self.MUTE_WARNING, self.UNMUTE_WARNING], this._render.bind(this));
+    event.subscribe("privacy-user-presence-changed", this._render.bind(this));
+    channel.subscribe(channel.ON_CHANGED, this._render.bind(this));
     this._render();
   }
-  ca.prototype._handleConnectionChange = function(da, ea) {
-    "use strict";
-    this._channelStatus = da;
-    this._channelData = ea;
+  var $log = activator.create("sidebar_sheet");
+  var info = proceed(element);
+  var name;
+  for (name in info) {
+    if (info.hasOwnProperty(name)) {
+      constructor[name] = info[name];
+    }
+  }
+  var basePrototype = info === null ? null : info.prototype;
+  /** @type {Object} */
+  constructor.prototype = Object.create(basePrototype);
+  /** @type {function (Object): undefined} */
+  constructor.prototype.constructor = constructor;
+  constructor.__superConstructor__ = info;
+  /**
+   * @param {?} dataAndEvents
+   * @param {Function} deepDataAndEvents
+   * @return {undefined}
+   */
+  constructor.prototype._handleConnectionChange = function(dataAndEvents, deepDataAndEvents) {
+    this._channelStatus = dataAndEvents;
+    /** @type {Function} */
+    this._channelData = deepDataAndEvents;
     this._render();
   };
-  ca.prototype._renderChannelDisconnect = function() {
-    "use strict";
-    if (this._channelStatus === i.SHUTDOWN) {
-      return o.setContent(this._message, x(this._channelData));
-    } else if (this._channelStatus === i.RECONNECTING) {
-      var da = this._channelData;
-      o.setContent(this._message, y(da));
-      if (da > 1000) {
-        if (da > l.get('warning_countdown_threshold_msec')) this._warningMsgEventListener = p.listen(this._message, 'click', function(event) {
-          if (n.hasClass(event.getTarget(), 'fbChatReconnectLink')) {
-            i.reconnect();
-            return false;
+  /**
+   * @return {?}
+   */
+  constructor.prototype._renderChannelDisconnect = function() {
+    if (this._channelStatus === self.SHUTDOWN) {
+      return dom.setContent(this._message, report(this._channelData));
+    } else {
+      if (this._channelStatus === self.RECONNECTING) {
+        var el = this._channelData;
+        dom.setContent(this._message, init(el));
+        if (el > 1E3) {
+          if (el > $templateCache.get("warning_countdown_threshold_msec")) {
+            this._warningMsgEventListener = m.listen(this._message, "click", function(resolver) {
+              if (d.hasClass(resolver.getTarget(), "fbChatReconnectLink")) {
+                self.reconnect();
+                return false;
+              }
+            });
           }
-        });
-        this._showWarningTimeout = v(this._handleConnectionChange.bind(this, i.RECONNECTING, da - 1000), 1000);
+          this._showWarningTimeout = $sanitize(this._handleConnectionChange.bind(this, self.RECONNECTING, el - 1E3), 1E3);
+        }
       }
     }
   };
-  ca.prototype._renderOffline = function() {
-    "use strict";
-    var da = 'fbChatGoOnlineLink',
-      ea = "Turn on chat",
-      fa = o.create('a', {
-        href: '#',
-        className: da
-      }, ea),
-      ga = t._("{=Go online} to see who's available.", [t.param("=Go online", fa)]);
-    o.setContent(this._message, ga);
-    this._goOnlineEventListener = p.listen(this._message, 'click', function(event) {
-      if (n.hasClass(event.getTarget(), da)) {
-        w.log('sidebar_go_online');
-        m.goOnline();
+  /**
+   * @return {undefined}
+   */
+  constructor.prototype._renderOffline = function() {
+    /** @type {string} */
+    var style = "fbChatGoOnlineLink";
+    /** @type {string} */
+    var requires = "Turn on chat";
+    var fn = dom.create("a", {
+      href : "#",
+      className : style
+    }, requires);
+    var root = obj._("{=Go online} to see who's available.", [obj.param("=Go online", fn)]);
+    dom.setContent(this._message, root);
+    this._goOnlineEventListener = m.listen(this._message, "click", function(resolver) {
+      if (d.hasClass(resolver.getTarget(), style)) {
+        $log.log("sidebar_go_online");
+        AngularForce.goOnline();
         return false;
       }
     });
   };
-  ca.prototype._renderBlackbirdUpsell = function() {
-    "use strict";
-    o.setContent(this._message, h.getOfflineContent());
+  /**
+   * @return {undefined}
+   */
+  constructor.prototype._renderBlackbirdUpsell = function() {
+    dom.setContent(this._message, exports.getOfflineContent());
   };
-  ca.prototype._renderBlackbird = function(da) {
-    "use strict";
-    o.setContent(this._message, h.getBlackbirdContent(da));
+  /**
+   * @param {?} deepDataAndEvents
+   * @return {undefined}
+   */
+  constructor.prototype._renderBlackbird = function(deepDataAndEvents) {
+    dom.setContent(this._message, exports.getBlackbirdContent(deepDataAndEvents));
   };
-  ca.prototype._clear = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  constructor.prototype._clear = function() {
     if (this._showWarningTimeout) {
       clearTimeout(this._showWarningTimeout);
+      /** @type {null} */
       this._showWarningTimeout = null;
     }
     if (this._warningMsgEventListener) {
       this._warningMsgEventListener.remove();
+      /** @type {null} */
       this._warningMsgEventListener = null;
     }
     if (this._goOnlineEventListener) {
       this._goOnlineEventListener.remove();
+      /** @type {null} */
       this._goOnlineEventListener = null;
     }
-    n.removeClass(this._root, 'upsell');
-    n.removeClass(this._root, 'offline');
-    n.removeClass(this._root, 'blackbird');
-    n.removeClass(this._root, 'error');
-    n.removeClass(this._root, 'notice');
-    o.empty(this._message);
+    d.removeClass(this._root, "upsell");
+    d.removeClass(this._root, "offline");
+    d.removeClass(this._root, "blackbird");
+    d.removeClass(this._root, "error");
+    d.removeClass(this._root, "notice");
+    dom.empty(this._message);
   };
-  ca.prototype._render = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  constructor.prototype._render = function() {
     this._clear();
-    if (h.shouldShow()) {
-      if (m.hasBlackbirdEnabled()) {
-        var da = m.isOnline() ? 'blackbird' : 'upsell';
-        n.addClass(this._root, da);
-        this._renderBlackbird(r.getVisibility());
-      } else if (!m.isOnline()) {
-        n.addClass(this._root, 'upsell');
-        this._renderBlackbirdUpsell();
+    if (exports.shouldShow()) {
+      if (AngularForce.hasBlackbirdEnabled()) {
+        /** @type {string} */
+        var cssClass = AngularForce.isOnline() ? "blackbird" : "upsell";
+        d.addClass(this._root, cssClass);
+        this._renderBlackbird(event.getVisibility());
+      } else {
+        if (!AngularForce.isOnline()) {
+          d.addClass(this._root, "upsell");
+          this._renderBlackbirdUpsell();
+        }
       }
-    } else if (!m.isOnline()) {
-      n.addClass(this._root, 'offline');
-      this._renderOffline();
-    } else if (i.disconnected()) {
-      n.addClass(this._root, 'error');
-      this._renderChannelDisconnect();
-    } else if (!k.notifiesUserMessages()) {
-      n.addClass(this._root, 'notice');
-      var ea = "Alerts are off while you use another client to chat.";
-      o.setContent(this._message, ea);
+    } else {
+      if (!AngularForce.isOnline()) {
+        d.addClass(this._root, "offline");
+        this._renderOffline();
+      } else {
+        if (self.disconnected()) {
+          d.addClass(this._root, "error");
+          this._renderChannelDisconnect();
+        } else {
+          if (!channel.notifiesUserMessages()) {
+            d.addClass(this._root, "notice");
+            /** @type {string} */
+            var root = "Alerts are off while you use another client to chat.";
+            dom.setContent(this._message, root);
+          }
+        }
+      }
     }
-    this.inform('updated');
+    this.inform("updated");
   };
-  s(ca.prototype, {
-    _channelStatus: null,
-    _channelData: null,
-    _showWarningTimeout: null,
-    _warningMsgEventListener: null,
-    _goOnlineEventListener: null
+  defineProperty(constructor.prototype, {
+    _channelStatus : null,
+    _channelData : null,
+    _showWarningTimeout : null,
+    _warningMsgEventListener : null,
+    _goOnlineEventListener : null
   });
-  e.exports = ca;
+  /** @type {function (Object): undefined} */
+  module.exports = constructor;
 }, null);
-__d("SidebarFitWindowHeight", ["Arbiter", "ArbiterMixin", "Event", "Style", "SubscriptionsHandler", "TinyViewport", "Vector", "mixin", "queryThenMutateDOM"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
-  var p = n(h);
-  for (var q in p)
-    if (p.hasOwnProperty(q)) s[q] = p[q];
-  var r = p === null ? null : p.prototype;
-  s.prototype = Object.create(r);
-  s.prototype.constructor = s;
-  s.__superConstructor__ = p;
-
-  function s(t) {
-    "use strict";
-    this.$SidebarFitWindowHeight0 = t;
+__d("SidebarFitWindowHeight", ["Arbiter", "ArbiterMixin", "Event", "Style", "SubscriptionsHandler", "TinyViewport", "Vector", "mixin", "queryThenMutateDOM"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, m, _super, Event, domStyle, dataAndEvents, _this, widget, method, $sanitize) {
+  /**
+   * @param {?} map
+   * @return {undefined}
+   */
+  function object(map) {
+    this.$SidebarFitWindowHeight0 = map;
     this.onViewportUpdate();
-    l.subscribe('change', this.onViewportUpdate.bind(this));
+    _this.subscribe("change", this.onViewportUpdate.bind(this));
   }
-  s.prototype.onViewportUpdate = function() {
-    "use strict";
-    if (l.isTiny()) {
+  var prototype = method(_super);
+  var k;
+  for (k in prototype) {
+    if (prototype.hasOwnProperty(k)) {
+      object[k] = prototype[k];
+    }
+  }
+  var basePrototype = prototype === null ? null : prototype.prototype;
+  /** @type {Object} */
+  object.prototype = Object.create(basePrototype);
+  /** @type {function (?): undefined} */
+  object.prototype.constructor = object;
+  object.__superConstructor__ = prototype;
+  /**
+   * @return {undefined}
+   */
+  object.prototype.onViewportUpdate = function() {
+    if (_this.isTiny()) {
       this.onScroll();
-      var t = this.onScroll.bind(this);
-      this.$SidebarFitWindowHeight1 = new k();
-      this.$SidebarFitWindowHeight1.addSubscriptions(i.listen(window, 'scroll', t), g.subscribe('dom-scroll', t));
+      var listener = this.onScroll.bind(this);
+      this.$SidebarFitWindowHeight1 = new dataAndEvents;
+      this.$SidebarFitWindowHeight1.addSubscriptions(Event.listen(window, "scroll", listener), m.subscribe("dom-scroll", listener));
     } else {
       if (this.$SidebarFitWindowHeight2 !== 0) {
-        j.set(this.$SidebarFitWindowHeight0, 'margin-top', '0');
+        domStyle.set(this.$SidebarFitWindowHeight0, "margin-top", "0");
+        /** @type {number} */
         this.$SidebarFitWindowHeight2 = 0;
       }
-      this.$SidebarFitWindowHeight1 && this.$SidebarFitWindowHeight1.release();
+      if (this.$SidebarFitWindowHeight1) {
+        this.$SidebarFitWindowHeight1.release();
+      }
     }
   };
-  s.prototype.onScroll = function() {
-    "use strict";
-    o(this.updateScrollPosition.bind(this), this.resizeSidebar.bind(this), 'SidebarFitWindowHeight/scroll');
+  /**
+   * @return {undefined}
+   */
+  object.prototype.onScroll = function() {
+    $sanitize(this.updateScrollPosition.bind(this), this.resizeSidebar.bind(this), "SidebarFitWindowHeight/scroll");
   };
-  s.prototype.updateScrollPosition = function() {
-    "use strict";
-    this.$SidebarFitWindowHeight3 = m.getScrollPosition().y;
-    this.$SidebarFitWindowHeight4 || (this.$SidebarFitWindowHeight4 = this.$SidebarFitWindowHeight0.offsetHeight);
-  };
-  s.prototype.resizeSidebar = function() {
-    "use strict";
-    var t = -Math.max(Math.min(this.$SidebarFitWindowHeight3, this.$SidebarFitWindowHeight4), 0);
-    j.set(this.$SidebarFitWindowHeight0, 'margin-top', t + 'px');
-    if (t != this.$SidebarFitWindowHeight2) {
-      this.$SidebarFitWindowHeight2 = t;
-      this.inform('resized', t);
+  /**
+   * @return {undefined}
+   */
+  object.prototype.updateScrollPosition = function() {
+    this.$SidebarFitWindowHeight3 = widget.getScrollPosition().y;
+    if (!this.$SidebarFitWindowHeight4) {
+      this.$SidebarFitWindowHeight4 = this.$SidebarFitWindowHeight0.offsetHeight;
     }
   };
-  s.prototype.getOffset = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  object.prototype.resizeSidebar = function() {
+    /** @type {number} */
+    var pixels = -Math.max(Math.min(this.$SidebarFitWindowHeight3, this.$SidebarFitWindowHeight4), 0);
+    domStyle.set(this.$SidebarFitWindowHeight0, "margin-top", pixels + "px");
+    if (pixels != this.$SidebarFitWindowHeight2) {
+      /** @type {number} */
+      this.$SidebarFitWindowHeight2 = pixels;
+      this.inform("resized", pixels);
+    }
+  };
+  /**
+   * @return {?}
+   */
+  object.prototype.getOffset = function() {
     return this.$SidebarFitWindowHeight2;
   };
-  e.exports = s;
+  /** @type {function (?): undefined} */
+  module.exports = object;
 }, null);
-__d("ChatSidebar", ["Arbiter", "ArbiterMixin", "AsyncRequest", "Banzai", "BanzaiLogger", "Bootloader", "BootloaderConfig", "ChatConfig", "ChatImpressionLogger", "ChatOptions", "ChatSidebarComposeLink.react", "ChatSidebarConstants", "ChatSidebarSheet", "CSS", "DOM", "DOMDimensions", "Event", "JSLogger", "KeyEventController", "LitestandClassicPlaceHolders", "MercuryConfig", "OrderedFriendsList", "Parent", "PresencePrivacy", "React", "ScrollableArea", "SidebarFitWindowHeight", "Style", "ViewportBounds", "copyProperties", "createArrayFromMixed", "csx", "cx", "debounce", "emptyFunction", "ge"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ba, ca, da, ea, fa, ga, ha, ia, ja, ka, la, ma, na, oa, pa) {
-  var qa, ra = null,
-    sa, ta = false,
-    ua = false,
-    va = false,
-    wa = false,
-    xa = false,
-    ya = false,
-    za, ab, bb = false,
-    cb, db, eb, fb, gb, hb, ib, jb = null,
-    kb, lb = x.create('chat_sidebar'),
-    mb = 'succeeded',
-    nb = k.create(ja({
-      retry: true
-    }, j.VITAL));
-
-  function ob() {
-    t.removeClass(document.documentElement, 'sidebarMode');
-    if (!xa || (!zb.isVisible() && !wa)) {
-      g.inform('reflow');
+__d("ChatSidebar", ["Arbiter", "ArbiterMixin", "AsyncRequest", "Banzai", "BanzaiLogger", "Bootloader", "BootloaderConfig", "ChatConfig", "ChatImpressionLogger", "ChatOptions", "ChatSidebarComposeLink.react", "ChatSidebarConstants", "ChatSidebarSheet", "CSS", "DOM", "DOMDimensions", "Event", "JSLogger", "KeyEventController", "LitestandClassicPlaceHolders", "MercuryConfig", "OrderedFriendsList", "Parent", "PresencePrivacy", "React", "ScrollableArea", "SidebarFitWindowHeight", "Style", "ViewportBounds",
+"copyProperties", "createArrayFromMixed", "csx", "cx", "debounce", "emptyFunction", "ge"], function(opt_attributes, matcherFunction, execResult, $sanitize, module, opt_keys, m, key, Color, dataAndEvents, activator, exports, deepDataAndEvents, $templateCache, fn, emu, name, ignoreMethodDoesntExist, List, win, view, set, Event, Company, engine, dom, textAlt, keepData, find, parent, self, ProgressIndicator, Observable, DOM, _, hasOwn, $, positionError, oFunctionBody, subscribe, value, Application) {
+  /**
+   * @return {undefined}
+   */
+  function done() {
+    win.removeClass(document.documentElement, "sidebarMode");
+    if (!initialized || !obj.isVisible() && !property) {
+      m.inform("reflow");
       return;
     }
-    va = false;
-    wa = false;
-    jb = null;
-    fb.hide();
-    hb.getCore().reset();
-    t.hide(db);
-    if (bb) {
-      t.hide(ab);
-      t.hide(cb);
-      t.removeClass(document.documentElement, 'miniSidebar');
-      t.removeClass(db, "_51xq");
-      za && za.setProps({
-        shown: false
-      }, function() {
-        return ub(false);
-      });
-      lb.log('minisidebar_hide');
-    } else lb.log('sidebar_hide');
-    g.inform('sidebar/hide', zb);
-    g.inform('reflow');
-  }
-
-  function pb() {
-    var ac = zb.shouldShowSidebar(),
-      bc = zb.shouldShowMiniSidebar();
-    if (zb.isEnabled() && (ac || bc)) {
-      if (ac) {
-        sb();
-        tb();
-      } else vb();
-    } else ob();
-    if (!xa) {
-      yb();
-      xa = true;
-    }
-    jb = null;
-  }
-
-  function qb() {
-    if (hb && zb.isVisible()) hb.getCore().getElement().focus();
-  }
-
-  function rb(ac) {
-    var bc = ib.height;
-    ac.forEach(function(cc) {
-      if (cc && cc !== qa) bc -= v.getElementDimensions(cc).height;
-    });
-    if (kb) bc -= kb.getOffset();
-    if (gb) bc -= v.getElementDimensions(gb).height;
-    return Math.max(0, bc);
-  }
-
-  function sb() {
-    if (zb.isVisible()) return;
-    if (bb) {
-      t.hide(ab);
-      t.show(cb);
-      t.removeClass(document.documentElement, 'miniSidebar');
-      t.removeClass(db, "_51xq");
-      za && za.setProps({
-        shown: false
-      }, function() {
-        return ub(false);
-      });
-    }
-    va = true;
-    wa = false;
-    jb = null;
-    t.show(db);
-    t.addClass(document.documentElement, 'sidebarMode');
-    fb.show();
-    lb.log('sidebar_show');
-    g.inform('sidebar/show', zb);
-    z.destroy('sidebar');
-  }
-
-  function tb() {
-    var ac = rb(ka(cb.childNodes)),
-      bc = fb.getItemHeight(),
-      cc = 8,
-      dc = Math.floor((ac - cc) / bc);
-    ha.set(qa, 'height', ac + 'px');
-    fb.setNumTopFriends(dc);
-    var ec = Math.floor((ac - cc) / bc);
-    ec = (ec - 2) > 0 ? ec - 2 : 0;
-    hb.getData().setMaxResults(ec);
-    g.inform('sidebar/resized', zb);
-    g.inform('reflow');
-  }
-
-  function ub(ac) {
-    if (db === null) return;
-    t.conditionClass(db, "_2e4g", ac);
-  }
-
-  function vb() {
-    t.hide(cb);
-    t.show(ab);
-    t.show(db);
-    t.addClass(document.documentElement, 'sidebarMode');
-    t.addClass(document.documentElement, 'miniSidebar');
-    t.addClass(db, "_51xq");
-    var ac = rb([]),
-      bc = r.getItemHeight(true),
-      cc = Math.floor(ac / bc) - 4;
-    if (!za) {
-      l.loadModules(["ChatMiniSidebar.react", "ChatMiniSidebarSearchSource"], function(dc, ec) {
-        if (!sa) sa = new ec({
-          queryRequests: [{
-            uri: '/ajax/mercury/composer_query.php'
-          }]
+    /** @type {boolean} */
+    object = false;
+    /** @type {boolean} */
+    property = false;
+    /** @type {null} */
+    offsetWidth = null;
+    me.hide();
+    entry.getCore().reset();
+    win.hide(el);
+    if (www_mini_sidebar) {
+      win.hide(event);
+      win.hide(container);
+      win.removeClass(document.documentElement, "miniSidebar");
+      win.removeClass(el, "_51xq");
+      if (page) {
+        page.setProps({
+          shown : false
+        }, function() {
+          return addTimer(false);
         });
-        za = ea.render(ea.createElement(dc, {
-          dataSource: sa,
-          height: ac,
-          maxEntries: Math.max(cc, 0),
-          onClickSearch: ub,
-          onToggleSidebar: zb.toggle,
-          shown: true
-        }), ab);
-      });
-    } else za.setProps({
-      height: ac,
-      maxEntries: Math.max(cc, 0),
-      shown: true
-    });
-    va = false;
-    wa = true;
-    z.destroy('sidebar');
-    lb.log('minisidebar_show');
-    g.inform('minisidebar/show', zb);
-    g.inform('reflow');
+      }
+      response.log("minisidebar_hide");
+    } else {
+      response.log("sidebar_hide");
+    }
+    m.inform("sidebar/hide", obj);
+    m.inform("reflow");
   }
-
-  function wb() {
-    p.setSetting('sidebar_mode', zb.isEnabled(), 'sidebar');
-    new i('/ajax/chat/settings.php').setHandler(oa).setErrorHandler(oa).setData({
-      sidebar_mode: zb.isEnabled()
+  /**
+   * @return {undefined}
+   */
+  function next() {
+    var program = obj.shouldShowSidebar();
+    var inverse = obj.shouldShowMiniSidebar();
+    if (obj.isEnabled() && (program || inverse)) {
+      if (program) {
+        onSuccess();
+        start();
+      } else {
+        init();
+      }
+    } else {
+      done();
+    }
+    if (!initialized) {
+      _next();
+      /** @type {boolean} */
+      initialized = true;
+    }
+    /** @type {null} */
+    offsetWidth = null;
+  }
+  /**
+   * @return {undefined}
+   */
+  function show() {
+    if (entry && obj.isVisible()) {
+      entry.getCore().getElement().focus();
+    }
+  }
+  /**
+   * @param {Array} event
+   * @return {?}
+   */
+  function resize(event) {
+    var height = metrics.height;
+    event.forEach(function(s) {
+      if (s && s !== out) {
+        height -= set.getElementDimensions(s).height;
+      }
+    });
+    if (plugin) {
+      height -= plugin.getOffset();
+    }
+    if (index) {
+      height -= set.getElementDimensions(index).height;
+    }
+    return Math.max(0, height);
+  }
+  /**
+   * @return {undefined}
+   */
+  function onSuccess() {
+    if (obj.isVisible()) {
+      return;
+    }
+    if (www_mini_sidebar) {
+      win.hide(event);
+      win.show(container);
+      win.removeClass(document.documentElement, "miniSidebar");
+      win.removeClass(el, "_51xq");
+      if (page) {
+        page.setProps({
+          shown : false
+        }, function() {
+          return addTimer(false);
+        });
+      }
+    }
+    /** @type {boolean} */
+    object = true;
+    /** @type {boolean} */
+    property = false;
+    /** @type {null} */
+    offsetWidth = null;
+    win.show(el);
+    win.addClass(document.documentElement, "sidebarMode");
+    me.show();
+    response.log("sidebar_show");
+    m.inform("sidebar/show", obj);
+    dom.destroy("sidebar");
+  }
+  /**
+   * @return {undefined}
+   */
+  function start() {
+    var max = resize($(container.childNodes));
+    var resolution = me.getItemHeight();
+    /** @type {number} */
+    var min = 8;
+    /** @type {number} */
+    var er = Math.floor((max - min) / resolution);
+    DOM.set(out, "height", max + "px");
+    me.setNumTopFriends(er);
+    /** @type {number} */
+    var r20 = Math.floor((max - min) / resolution);
+    /** @type {number} */
+    r20 = r20 - 2 > 0 ? r20 - 2 : 0;
+    entry.getData().setMaxResults(r20);
+    m.inform("sidebar/resized", obj);
+    m.inform("reflow");
+  }
+  /**
+   * @param {boolean} recurring
+   * @return {undefined}
+   */
+  function addTimer(recurring) {
+    if (el === null) {
+      return;
+    }
+    win.conditionClass(el, "_2e4g", recurring);
+  }
+  /**
+   * @return {undefined}
+   */
+  function init() {
+    win.hide(container);
+    win.show(event);
+    win.show(el);
+    win.addClass(document.documentElement, "sidebarMode");
+    win.addClass(document.documentElement, "miniSidebar");
+    win.addClass(el, "_51xq");
+    var val = resize([]);
+    var order = ignoreMethodDoesntExist.getItemHeight(true);
+    /** @type {number} */
+    var expectedHashCode = Math.floor(val / order) - 4;
+    if (!page) {
+      exports.loadModules(["ChatMiniSidebar.react", "ChatMiniSidebarSearchSource"], function(name, Buffer) {
+        if (!c) {
+          c = new Buffer({
+            queryRequests : [{
+              uri : "/ajax/mercury/composer_query.php"
+            }]
+          });
+        }
+        page = self.render(self.createElement(name, {
+          dataSource : c,
+          height : val,
+          maxEntries : Math.max(expectedHashCode, 0),
+          /** @type {function (boolean): undefined} */
+          onClickSearch : addTimer,
+          /** @type {function (): undefined} */
+          onToggleSidebar : obj.toggle,
+          shown : true
+        }), event);
+      });
+    } else {
+      page.setProps({
+        height : val,
+        maxEntries : Math.max(expectedHashCode, 0),
+        shown : true
+      });
+    }
+    /** @type {boolean} */
+    object = false;
+    /** @type {boolean} */
+    property = true;
+    dom.destroy("sidebar");
+    response.log("minisidebar_show");
+    m.inform("minisidebar/show", obj);
+    m.inform("reflow");
+  }
+  /**
+   * @return {undefined}
+   */
+  function draw() {
+    emu.setSetting("sidebar_mode", obj.isEnabled(), "sidebar");
+    (new Color("/ajax/chat/settings.php")).setHandler(value).setErrorHandler(value).setData({
+      sidebar_mode : obj.isEnabled()
     }).setAllowCrossPageTransition(true).send();
   }
-
-  function xb() {
-    return ba.getActiveList().length <= n.get('sidebar.min_friends');
+  /**
+   * @return {?}
+   */
+  function _get() {
+    return keepData.getActiveList().length <= $templateCache.get("sidebar.min_friends");
   }
-
-  function yb() {
-    var ac = true;
-    if (!zb.isEnabled()) {
-      lb.log('state_not_enabled');
-      ac = false;
+  /**
+   * @return {undefined}
+   */
+  function _next() {
+    /** @type {boolean} */
+    var error = true;
+    if (!obj.isEnabled()) {
+      response.log("state_not_enabled");
+      /** @type {boolean} */
+      error = false;
     }
-    if (!zb.isViewportCapable())
-      if (!bb) {
-        lb.log('state_not_shown_viewport');
-        ac = false;
-      } else if (!zb.isViewportCapableForMiniSidebar()) {
-      lb.log('state_not_shown_viewport_mini');
-      ac = false;
-    }
-    if (ua) {
-      lb.log('state_not_shown_hidden');
-      ac = false;
-    }
-    if (xb()) {
-      lb.log('state_not_shown_num_friends');
-      ac = false;
-    }
-    lb.log(ac ? 'state_shown' : 'state_not_shown');
-  }
-  var zb = {
-    init: function(ac, bc, cc, dc) {
-      zb.init = oa;
-      ya = true;
-      db = ac;
-      fb = bc;
-      hb = cc;
-      eb = dc;
-      qa = u.find(ac, 'div.fbChatSidebarBody');
-      ab = u.find(ac, "._51x-");
-      cb = u.find(ac, "._51x_");
-      gb = u.find(ac, "._5qqe");
-      bb = n.get('www_mini_sidebar', false);
-      if (dc && dc.react_compose_link) {
-        var ec = u.find(ac, "._x1u");
-        ec && ea.render(ea.createElement(q, {
-          className: "_3a-4 _5q85"
-        }), ec);
+    if (!obj.isViewportCapable()) {
+      if (!www_mini_sidebar) {
+        response.log("state_not_shown_viewport");
+        /** @type {boolean} */
+        error = false;
+      } else {
+        if (!obj.isViewportCapableForMiniSidebar()) {
+          response.log("state_not_shown_viewport_mini");
+          /** @type {boolean} */
+          error = false;
+        }
       }
-      w.listen(window, 'resize', pb);
-      y.registerKey('q', function(event) {
-        if (va) {
-          if (!ra) ra = u.scry(ac, '.inputsearch')[0];
-          if (ra) {
-            ra.focus();
-            event.prevent();
+    }
+    if (YY_START) {
+      response.log("state_not_shown_hidden");
+      /** @type {boolean} */
+      error = false;
+    }
+    if (_get()) {
+      response.log("state_not_shown_num_friends");
+      /** @type {boolean} */
+      error = false;
+    }
+    response.log(error ? "state_shown" : "state_not_shown");
+  }
+  var out;
+  /** @type {null} */
+  var submenu = null;
+  var c;
+  /** @type {boolean} */
+  var enabled = false;
+  /** @type {boolean} */
+  var YY_START = false;
+  /** @type {boolean} */
+  var object = false;
+  /** @type {boolean} */
+  var property = false;
+  /** @type {boolean} */
+  var initialized = false;
+  /** @type {boolean} */
+  var ya = false;
+  var page;
+  var event;
+  /** @type {boolean} */
+  var www_mini_sidebar = false;
+  var container;
+  var el;
+  var dict;
+  var me;
+  var index;
+  var entry;
+  var metrics;
+  /** @type {null} */
+  var offsetWidth = null;
+  var plugin;
+  var response = Company.create("chat_sidebar");
+  /** @type {string} */
+  var e = "succeeded";
+  var console = activator.create(hasOwn({
+    retry : true
+  }, dataAndEvents.VITAL));
+  var obj = {
+    /**
+     * @param {Object} target
+     * @param {string} player
+     * @param {Object} $
+     * @param {?} arg
+     * @return {undefined}
+     */
+    init : function(target, player, $, arg) {
+      /** @type {(RegExp|string)} */
+      obj.init = value;
+      /** @type {boolean} */
+      ya = true;
+      /** @type {Object} */
+      el = target;
+      /** @type {string} */
+      me = player;
+      /** @type {Object} */
+      entry = $;
+      dict = arg;
+      out = view.find(target, "div.fbChatSidebarBody");
+      event = view.find(target, "._51x-");
+      container = view.find(target, "._51x_");
+      index = view.find(target, "._5qqe");
+      www_mini_sidebar = $templateCache.get("www_mini_sidebar", false);
+      if (arg && arg.react_compose_link) {
+        var targets = view.find(target, "._x1u");
+        if (targets) {
+          self.render(self.createElement(name, {
+            className : "_3a-4 _5q85"
+          }), targets);
+        }
+      }
+      Event.listen(window, "resize", next);
+      engine.registerKey("q", function(tail) {
+        if (object) {
+          if (!submenu) {
+            submenu = view.scry(target, ".inputsearch")[0];
+          }
+          if (submenu) {
+            submenu.focus();
+            tail.prevent();
           }
         }
       });
-      var fc = new s(ac);
-      fc.subscribe('updated', pb);
-      fb.setScrollContainer(ca.byClass(fb.getRoot(), 'uiScrollableAreaWrap'));
-      fb.subscribe(['render', 'show', 'hide'], na(function(hc) {
-        var ic = fa.getInstance(fb.getRoot());
-        ic && ic.adjustGripper();
-      }));
-      g.subscribe('chat/option-changed', function(hc, ic) {
-        if (ic.name == "sidebar_mode") {
-          ta = !!p.getSetting('sidebar_mode');
-          pb();
+      var _this = new List(target);
+      _this.subscribe("updated", next);
+      me.setScrollContainer(find.byClass(me.getRoot(), "uiScrollableAreaWrap"));
+      me.subscribe(["render", "show", "hide"], subscribe(function(dataAndEvents) {
+        var adjustGripper = ProgressIndicator.getInstance(me.getRoot());
+        if (adjustGripper) {
+          adjustGripper.adjustGripper();
         }
-        if (ic.name === 'hide_groups') pb();
+      }));
+      m.subscribe("chat/option-changed", function(dataAndEvents, unused) {
+        if (unused.name == "sidebar_mode") {
+          /** @type {boolean} */
+          enabled = !!emu.getSetting("sidebar_mode");
+          next();
+        }
+        if (unused.name === "hide_groups") {
+          next();
+        }
       });
-      cc.getCore().subscribe('sidebar/typeahead/active', zb.updateOnActiveTypeahead);
-      if (aa.SidebarClearTypeaheadGK) {
-        cc.subscribe('blur', function() {
-          if (!fb.isVisible()) zb.updateOnActiveTypeahead(null, false);
+      $.getCore().subscribe("sidebar/typeahead/active", obj.updateOnActiveTypeahead);
+      if (textAlt.SidebarClearTypeaheadGK) {
+        $.subscribe("blur", function() {
+          if (!me.isVisible()) {
+            obj.updateOnActiveTypeahead(null, false);
+          }
         });
-        cc.subscribe('focus', function() {
-          if (fb.isVisible() && cc.getCore().getValue()) zb.updateOnActiveTypeahead(null, true);
+        $.subscribe("focus", function() {
+          if (me.isVisible() && $.getCore().getValue()) {
+            obj.updateOnActiveTypeahead(null, true);
+          }
         });
       }
-      cc.subscribe('reset', function() {
-        if (!cc.getCore().getValue() && !fb.isVisible()) zb.updateOnActiveTypeahead(null, false);
+      $.subscribe("reset", function() {
+        if (!$.getCore().getValue() && !me.isVisible()) {
+          obj.updateOnActiveTypeahead(null, false);
+        }
       });
-      g.subscribe('buddylist-nub/initialized', function(hc, ic) {
-        w.listen(ic.getButton(), 'click', function(event) {
-          var jc = ua;
-          ua = false;
-          zb.enable();
-          var kc = zb.shouldShowSidebar() || zb.shouldShowMiniSidebar();
-          ua = jc && !kc;
-          return !kc;
+      m.subscribe("buddylist-nub/initialized", function(dataAndEvents, ev) {
+        Event.listen(ev.getButton(), "click", function(dataAndEvents) {
+          var YYSTATE = YY_START;
+          /** @type {boolean} */
+          YY_START = false;
+          obj.enable();
+          var kc = obj.shouldShowSidebar() || obj.shouldShowMiniSidebar();
+          YY_START = YYSTATE && !kc;
+          return!kc;
         });
       });
-      ta = !!p.getSetting('sidebar_mode');
-      da.subscribe('privacy-user-presence-changed', pb);
-      pb();
-      o.init(fb);
-      ia.addPersistentRight(zb.getVisibleWidth);
-      zb.inform('sidebar/initialized', zb, g.BEHAVIOR_PERSISTENT);
-      g.inform('sidebar/initialized', zb, g.BEHAVIOR_PERSISTENT);
-      kb = new ga(gb);
-      kb.subscribe('resized', pb);
-      if (n.get('chat_sidebar_load_log')) {
-        var gc = {
-          event: mb,
-          session_token: dc.session_token,
-          country_code: dc.viewer_country_code,
-          buddylist_short: n.get('buddylist_short_group'),
-          bootloader_retry: m.retry_on_timeout
+      /** @type {boolean} */
+      enabled = !!emu.getSetting("sidebar_mode");
+      parent.subscribe("privacy-user-presence-changed", next);
+      next();
+      fn.init(me);
+      _.addPersistentRight(obj.getVisibleWidth);
+      obj.inform("sidebar/initialized", obj, m.BEHAVIOR_PERSISTENT);
+      m.inform("sidebar/initialized", obj, m.BEHAVIOR_PERSISTENT);
+      plugin = new Observable(index);
+      plugin.subscribe("resized", next);
+      if ($templateCache.get("chat_sidebar_load_log")) {
+        var details = {
+          event : e,
+          session_token : arg.session_token,
+          country_code : arg.viewer_country_code,
+          buddylist_short : $templateCache.get("buddylist_short_group"),
+          bootloader_retry : deepDataAndEvents.retry_on_timeout
         };
-        nb.log('MessagesSidebarLoadLoggerConfig', gc);
+        console.log("MessagesSidebarLoadLoggerConfig", details);
       }
     },
-    updateOnActiveTypeahead: function(ac, bc) {
-      if (!va) return;
-      if (bc) {
-        fb.hide();
+    /**
+     * @param {Array} recurring
+     * @param {boolean} commas
+     * @return {undefined}
+     */
+    updateOnActiveTypeahead : function(recurring, commas) {
+      if (!object) {
+        return;
+      }
+      if (commas) {
+        me.hide();
       } else {
-        hb.getView().clearContent();
-        fb.show();
-        pb();
+        entry.getView().clearContent();
+        me.show();
+        next();
       }
     },
-    isInitialized: function() {
-      return xa;
+    /**
+     * @return {?}
+     */
+    isInitialized : function() {
+      return initialized;
     },
-    disable: function() {
-      if (!zb.isEnabled()) return;
-      ta = false;
-      wb();
-      ob();
+    /**
+     * @return {undefined}
+     */
+    disable : function() {
+      if (!obj.isEnabled()) {
+        return;
+      }
+      /** @type {boolean} */
+      enabled = false;
+      draw();
+      done();
     },
-    enable: function() {
-      if (zb.isEnabled()) return;
-      ta = true;
-      wb();
-      pb();
-      setTimeout(qb, 0);
+    /**
+     * @return {undefined}
+     */
+    enable : function() {
+      if (obj.isEnabled()) {
+        return;
+      }
+      /** @type {boolean} */
+      enabled = true;
+      draw();
+      next();
+      setTimeout(show, 0);
     },
-    ensureLoaded: function() {
-      if (!ta) return;
-      if (ya) return;
-      if (pa('pagelet_sidebar')) return;
-      d(['UIPagelet'], function(ac) {
-        var bc = u.create('div', {
-          id: 'pagelet_sidebar'
+    /**
+     * @return {undefined}
+     */
+    ensureLoaded : function() {
+      if (!enabled) {
+        return;
+      }
+      if (ya) {
+        return;
+      }
+      if (Application("pagelet_sidebar")) {
+        return;
+      }
+      $sanitize(["UIPagelet"], function(dataAndEvents) {
+        var content = view.create("div", {
+          id : "pagelet_sidebar"
         });
-        u.appendContent(document.body, bc);
-        ac.loadFromEndpoint('SidebarPagelet', 'pagelet_sidebar');
+        view.appendContent(document.body, content);
+        dataAndEvents.loadFromEndpoint("SidebarPagelet", "pagelet_sidebar");
       });
+      /** @type {boolean} */
       ya = true;
     },
-    hide: function() {
-      if (ua) return;
-      ua = true;
-      ob();
-    },
-    unhide: function() {
-      if (!ua) return;
-      ua = false;
-      pb();
-    },
-    getBody: function() {
-      return qa;
-    },
-    getRoot: function() {
-      return db;
-    },
-    getVisibleWidth: function() {
-      if ((!va && !wa) || !db) return 0;
-      if (jb === null) {
-        jb = db.offsetWidth;
-        if (wa) jb = 206;
+    /**
+     * @return {undefined}
+     */
+    hide : function() {
+      if (YY_START) {
+        return;
       }
-      return jb;
+      /** @type {boolean} */
+      YY_START = true;
+      done();
     },
-    isEnabled: function() {
-      return ta;
+    /**
+     * @return {undefined}
+     */
+    unhide : function() {
+      if (!YY_START) {
+        return;
+      }
+      /** @type {boolean} */
+      YY_START = false;
+      next();
     },
-    isViewportCapable: function() {
-      ib = v.getViewportWithoutScrollbarDimensions();
-      var ac = n.get('sidebar.minimum_width');
-      return ib.width > ac;
+    /**
+     * @return {?}
+     */
+    getBody : function() {
+      return out;
     },
-    shouldShowSidebar: function() {
-      var ac = zb.isViewportCapable();
-      return ac && !ua && !xb();
+    /**
+     * @return {?}
+     */
+    getRoot : function() {
+      return el;
     },
-    isViewportCapableForMiniSidebar: function() {
-      ib = v.getViewportWithoutScrollbarDimensions();
-      var ac = n.get('sidebar.minimum_width'),
-        bc = n.get('minisidebar.minimum_width');
-      return ib.width > bc && ib.width <= ac;
+    /**
+     * @return {?}
+     */
+    getVisibleWidth : function() {
+      if (!object && !property || !el) {
+        return 0;
+      }
+      if (offsetWidth === null) {
+        offsetWidth = el.offsetWidth;
+        if (property) {
+          /** @type {number} */
+          offsetWidth = 206;
+        }
+      }
+      return offsetWidth;
     },
-    shouldShowMiniSidebar: function() {
-      if (!bb) return false;
-      var ac = zb.isViewportCapableForMiniSidebar();
-      return ac && !ua && !xb();
+    /**
+     * @return {?}
+     */
+    isEnabled : function() {
+      return enabled;
     },
-    isVisible: function() {
-      return va;
+    /**
+     * @return {?}
+     */
+    isViewportCapable : function() {
+      metrics = set.getViewportWithoutScrollbarDimensions();
+      var width = $templateCache.get("sidebar.minimum_width");
+      return metrics.width > width;
     },
-    resize: pb,
-    toggle: function() {
-      zb.isEnabled() ? zb.disable() : zb.enable();
+    /**
+     * @return {?}
+     */
+    shouldShowSidebar : function() {
+      var ac = obj.isViewportCapable();
+      return ac && (!YY_START && !_get());
+    },
+    /**
+     * @return {?}
+     */
+    isViewportCapableForMiniSidebar : function() {
+      metrics = set.getViewportWithoutScrollbarDimensions();
+      var width = $templateCache.get("sidebar.minimum_width");
+      var height = $templateCache.get("minisidebar.minimum_width");
+      return metrics.width > height && metrics.width <= width;
+    },
+    /**
+     * @return {?}
+     */
+    shouldShowMiniSidebar : function() {
+      if (!www_mini_sidebar) {
+        return false;
+      }
+      var ac = obj.isViewportCapableForMiniSidebar();
+      return ac && (!YY_START && !_get());
+    },
+    /**
+     * @return {?}
+     */
+    isVisible : function() {
+      return object;
+    },
+    /** @type {function (): undefined} */
+    resize : next,
+    /**
+     * @return {undefined}
+     */
+    toggle : function() {
+      if (obj.isEnabled()) {
+        obj.disable();
+      } else {
+        obj.enable();
+      }
     }
   };
-  ja(zb, h);
-  e.exports = zb;
+  hasOwn(obj, key);
+  module.exports = obj;
 }, null);
-__d("ChatMiniSidebarSearchSource", ["AbstractSearchSource", "AsyncRequest", "ChatSortUsers", "CurrentUser", "MercuryParticipantTypes", "OrderedFriendsList", "SearchableEntry", "SearchSourceCallbackManager", "ShortProfiles", "TokenizeUtil", "copyProperties", "emptyFunction", "isValidUniqueID"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s) {
-  'use strict';
-  for (var t in g)
-    if (g.hasOwnProperty(t)) v[t] = g[t];
-  var u = g === null ? null : g.prototype;
-  v.prototype = Object.create(u);
-  v.prototype.constructor = v;
-  v.__superConstructor__ = g;
-
-  function v(w) {
-    this.$ChatMiniSidebarSearchSource0 = new n({
-      parseFn: p.parse,
-      matchFn: p.isQueryMatch,
-      indexFn: w.indexFn
+__d("ChatMiniSidebarSearchSource", ["AbstractSearchSource", "AsyncRequest", "ChatSortUsers", "CurrentUser", "MercuryParticipantTypes", "OrderedFriendsList", "SearchableEntry", "SearchSourceCallbackManager", "ShortProfiles", "TokenizeUtil", "copyProperties", "emptyFunction", "isValidUniqueID"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, $sanitize, module, textAlt, info, Device, cursor, a, self, jQuery, Recipe, VCFTabixDriver, fin, form, cb, err2, serialize) {
+  /**
+   * @param {?} config
+   * @return {undefined}
+   */
+  function constructor(config) {
+    this.$ChatMiniSidebarSearchSource0 = new VCFTabixDriver({
+      parseFn : form.parse,
+      matchFn : form.isQueryMatch,
+      indexFn : config.indexFn
     });
+    /** @type {Array} */
     this.$ChatMiniSidebarSearchSource1 = [];
-    this.$ChatMiniSidebarSearchSource2 = w.queryRequests || [];
+    this.$ChatMiniSidebarSearchSource2 = config.queryRequests || [];
   }
-  v.prototype.bootstrapImpl = function(w) {
-    o.fetchAll().then(function() {
+  var name;
+  for (name in info) {
+    if (info.hasOwnProperty(name)) {
+      constructor[name] = info[name];
+    }
+  }
+  var basePrototype = info === null ? null : info.prototype;
+  /** @type {Object} */
+  constructor.prototype = Object.create(basePrototype);
+  /** @type {function (?): undefined} */
+  constructor.prototype.constructor = constructor;
+  /** @type {(Object|string)} */
+  constructor.__superConstructor__ = info;
+  /**
+   * @param {?} $sanitize
+   * @return {undefined}
+   */
+  constructor.prototype.bootstrapImpl = function($sanitize) {
+    fin.fetchAll().then(function() {
       this.$ChatMiniSidebarSearchSource3();
-      w();
+      $sanitize();
     }.bind(this));
   };
-  v.prototype.searchImpl = function(w, x, y) {
-    var z = null,
-      aa = {},
-      ba = y && y.onQueryFinished,
-      ca = this.$ChatMiniSidebarSearchSource0.search(w, function(fa) {
-        if (!z) {
-          z = fa;
-          z.forEach(function(ga) {
-            return aa[ga.getUniqueID()] = true;
-          });
-        } else fa.forEach(function(ga) {
-          var ha = ga.getUniqueID();
-          if (!aa[ha]) {
-            z.push(ga);
-            aa[ha] = true;
+  /**
+   * @param {string} re
+   * @param {?} text
+   * @param {?} local
+   * @return {undefined}
+   */
+  constructor.prototype.searchImpl = function(re, text, local) {
+    /** @type {null} */
+    var failures = null;
+    var map = {};
+    var objectToString = local && local.onQueryFinished;
+    var arr = this.$ChatMiniSidebarSearchSource0.search(re, function(xs) {
+      if (!failures) {
+        /** @type {Array} */
+        failures = xs;
+        failures.forEach(function(dataAndEvents) {
+          return map[dataAndEvents.getUniqueID()] = true;
+        });
+      } else {
+        xs.forEach(function(test) {
+          var objUid = test.getUniqueID();
+          if (!map[objUid]) {
+            failures.push(test);
+            /** @type {boolean} */
+            map[objUid] = true;
           }
         });
-        x(z, w);
-      }, y);
-    if (!ca || !this.$ChatMiniSidebarSearchSource2 || !this.$ChatMiniSidebarSearchSource2.length || w.length <= 1) {
-      ba && ba(w);
+      }
+      text(failures, re);
+    }, local);
+    if (!arr || (!this.$ChatMiniSidebarSearchSource2 || (!this.$ChatMiniSidebarSearchSource2.length || re.length <= 1))) {
+      if (objectToString) {
+        objectToString(re);
+      }
       return;
     }
-    var da = {
-        value: w,
-        existing_ids: z && z.map(function(fa) {
-          return fa.getUniqueID();
-        }).join(',')
-      },
-      ea = this.$ChatMiniSidebarSearchSource2.length;
-    this.$ChatMiniSidebarSearchSource2.forEach(function(fa) {
-      this.$ChatMiniSidebarSearchSource4(da, fa, function(ga) {
-        this.$ChatMiniSidebarSearchSource5(this.$ChatMiniSidebarSearchSource6(this.$ChatMiniSidebarSearchSource7(ga)), w);
-        ea--;
-        if (ea === 0) {
-          this.$ChatMiniSidebarSearchSource0.setQueryStringAsExhausted(w);
-          ba && ba(w);
+    var expectationResult = {
+      value : re,
+      existing_ids : failures && failures.map(function(dataAndEvents) {
+        return dataAndEvents.getUniqueID();
+      }).join(",")
+    };
+    var cnl = this.$ChatMiniSidebarSearchSource2.length;
+    this.$ChatMiniSidebarSearchSource2.forEach(function(walkers) {
+      this.$ChatMiniSidebarSearchSource4(expectationResult, walkers, function(deepDataAndEvents) {
+        this.$ChatMiniSidebarSearchSource5(this.$ChatMiniSidebarSearchSource6(this.$ChatMiniSidebarSearchSource7(deepDataAndEvents)), re);
+        cnl--;
+        if (cnl === 0) {
+          this.$ChatMiniSidebarSearchSource0.setQueryStringAsExhausted(re);
+          if (objectToString) {
+            objectToString(re);
+          }
         }
       }.bind(this));
     }.bind(this), this);
   };
-  v.prototype.getBootstrappedEntries = function(w) {
+  /**
+   * @param {?} $sanitize
+   * @return {?}
+   */
+  constructor.prototype.getBootstrappedEntries = function($sanitize) {
     return this.bootstrap(function() {
-      return w(this.$ChatMiniSidebarSearchSource1 || []);
+      return $sanitize(this.$ChatMiniSidebarSearchSource1 || []);
     }.bind(this));
   };
-  v.prototype.getAllEntriesMap = function() {
+  /**
+   * @return {?}
+   */
+  constructor.prototype.getAllEntriesMap = function() {
     return this.$ChatMiniSidebarSearchSource0.getAllEntries();
   };
-  v.prototype.$ChatMiniSidebarSearchSource3 = function() {
-    var w = o.getCachedProfileIDs(),
-      x = w.filter(function(z) {
-        var aa = o.getNow(z);
-        return (z == j.getID() || aa.type === k.FRIEND);
-      });
-    x.sort(i.sort);
-    var y = x.map(this.$ChatMiniSidebarSearchSource8);
-    if (y.length) {
-      this.$ChatMiniSidebarSearchSource0.addLocalEntries(y);
-      this.$ChatMiniSidebarSearchSource1 = this.$ChatMiniSidebarSearchSource1.concat(y);
+  /**
+   * @return {undefined}
+   */
+  constructor.prototype.$ChatMiniSidebarSearchSource3 = function() {
+    var contextElem = fin.getCachedProfileIDs();
+    var keys = contextElem.filter(function(l) {
+      var evt = fin.getNow(l);
+      return l == a.getID() || evt.type === self.FRIEND;
+    });
+    keys.sort(cursor.sort);
+    var leaks = keys.map(this.$ChatMiniSidebarSearchSource8);
+    if (leaks.length) {
+      this.$ChatMiniSidebarSearchSource0.addLocalEntries(leaks);
+      this.$ChatMiniSidebarSearchSource1 = this.$ChatMiniSidebarSearchSource1.concat(leaks);
     }
   };
-  v.prototype.$ChatMiniSidebarSearchSource6 = function(w) {
-    return w.map(this.$ChatMiniSidebarSearchSource9, this);
+  /**
+   * @param {Array} mod
+   * @return {?}
+   */
+  constructor.prototype.$ChatMiniSidebarSearchSource6 = function(mod) {
+    return mod.map(this.$ChatMiniSidebarSearchSource9, this);
   };
-  v.prototype.$ChatMiniSidebarSearchSource9 = function(w, x) {
-    if (w.mercury_thread) return l.normalizeThreadEntry(w, x);
-    var y = w.text,
-      z = w.uid;
-    if (!y || !s(z)) return null;
-    return new m({
-      uniqueID: z,
-      title: y,
-      order: l.getActiveRank(z),
-      subtitle: w.subtext,
-      type: w.render_type || w.type,
-      photo: w.photo,
-      uri: w.path
+  /**
+   * @param {Object} args
+   * @param {string} dataAndEvents
+   * @return {?}
+   */
+  constructor.prototype.$ChatMiniSidebarSearchSource9 = function(args, dataAndEvents) {
+    if (args.mercury_thread) {
+      return jQuery.normalizeThreadEntry(args, dataAndEvents);
+    }
+    var t = args.text;
+    var index = args.uid;
+    if (!t || !serialize(index)) {
+      return null;
+    }
+    return new Recipe({
+      uniqueID : index,
+      title : t,
+      order : jQuery.getActiveRank(index),
+      subtitle : args.subtext,
+      type : args.render_type || args.type,
+      photo : args.photo,
+      uri : args.path
     });
   };
-  v.prototype.$ChatMiniSidebarSearchSource7 = function(w) {
-    var x = w.getPayload();
-    if (Array.isArray(x)) {
-      return x;
-    } else if (x && x.entries) {
-      return x.entries;
-    } else return [];
-  };
-  v.prototype.$ChatMiniSidebarSearchSource8 = function(w, x) {
-    var y = o.getNow(w),
-      z = w == j.getID() ? k.FRIEND : y.type,
-      aa = [y.additionalName, y.alternateName].concat(y.searchTokens || []).join(' ');
-    return new m({
-      uniqueID: w,
-      title: y.name,
-      order: x,
-      subtitle: y.additionalName,
-      keywordString: aa,
-      type: z,
-      photo: y.thumbSrc,
-      uri: y.uri
-    });
-  };
-  v.prototype.$ChatMiniSidebarSearchSource4 = function(w, x, y, z) {
-    new h(x.uri).setData(q({}, w, x.data)).setMethod('GET').setReadOnly(true).setHandler(y).setErrorHandler(z || r).send();
-  };
-  v.prototype.$ChatMiniSidebarSearchSource5 = function(w, x) {
-    if (w.length) this.$ChatMiniSidebarSearchSource0.addQueryEntries(w.filter(function(y) {
-      return !!y;
-    }), x);
-  };
-  v.prototype.refreshData = function() {
-    o.fetchAll();
-    d(['AvailableList'], function(w) {
-      return w.update();
-    });
-  };
-  e.exports = v;
-}, null);
-__d("ChatTypeaheadBehavior", ["ChatOpenTab", "CSS", "MercuryConfig", "Parent", "Rect", "copyProperties", "cx"], function(a, b, c, d, e, f, g, h, i, j, k, l, m) {
-  function n(p, q) {
-    var r = j.byClass(p, "_4oes");
-    if (r) h.conditionClass(r, "_5q83", q);
-  }
-
-  function o(p) {
-    "use strict";
-    this._typeahead = p;
-  }
-  o.prototype.enable = function() {
-    "use strict";
-    var p = this._typeahead;
-    this._subscriptions = [p.subscribe('focus', function() {
-      p.getData().refreshData();
-      n(p.getElement(), true);
-    }), p.subscribe('blur', function(q) {
-      if (!i.SidebarClearTypeaheadGK) p.getCore().reset();
-      n(p.getElement(), false);
-    }), p.subscribe('respond', function(q, r) {
-      if (r.value && r.value === p.getCore().getValue()) {
-        if (!r.results.length) {
-          var s = r.value.toLowerCase(),
-            t = p.getData().getQueryCache();
-          if (!r.isAsync && !t.hasOwnProperty(s)) return;
-          p.getView().showNoResults();
-        }
-        h.addClass(p.getElement(), 'hasValue');
+  /**
+   * @param {?} deepDataAndEvents
+   * @return {?}
+   */
+  constructor.prototype.$ChatMiniSidebarSearchSource7 = function(deepDataAndEvents) {
+    var that = deepDataAndEvents.getPayload();
+    if (Array.isArray(that)) {
+      return that;
+    } else {
+      if (that && that.entries) {
+        return that.entries;
+      } else {
+        return[];
       }
-    }), p.subscribe('reset', function() {
-      h.removeClass(p.getElement(), 'hasValue');
-    }), p.subscribe('select', function(q, r) {
-      var s = r.selected.uid;
-      if (r.selected.mercury_thread && !r.selected.mercury_thread.is_canonical) s = r.selected.mercury_thread.thread_fbid;
-      p.getView().hide();
-      g.openTabByType(s, r.selected.type, 'typeahead');
-    }), p.subscribe('highlight', function(q, r) {
-      if (r.index >= 0) {
-        var s = p.getView().getItems()[r.index];
-        if (s) {
-          var t = new k(s),
-            u = s.offsetParent,
-            v = t.boundWithin(new k(u)).getPositionVector();
-          t.getPositionVector().sub(v).scrollElementBy(u);
+    }
+  };
+  /**
+   * @param {?} l
+   * @param {?} order
+   * @return {?}
+   */
+  constructor.prototype.$ChatMiniSidebarSearchSource8 = function(l, order) {
+    var args = fin.getNow(l);
+    var paramType = l == a.getID() ? self.FRIEND : args.type;
+    /** @type {string} */
+    var keywordString = [args.additionalName, args.alternateName].concat(args.searchTokens || []).join(" ");
+    return new Recipe({
+      uniqueID : l,
+      title : args.name,
+      order : order,
+      subtitle : args.additionalName,
+      keywordString : keywordString,
+      type : paramType,
+      photo : args.thumbSrc,
+      uri : args.uri
+    });
+  };
+  /**
+   * @param {?} result
+   * @param {Object} obj
+   * @param {Function} serializer
+   * @param {Object} err
+   * @return {undefined}
+   */
+  constructor.prototype.$ChatMiniSidebarSearchSource4 = function(result, obj, serializer, err) {
+    (new Device(obj.uri)).setData(cb({}, result, obj.data)).setMethod("GET").setReadOnly(true).setHandler(serializer).setErrorHandler(err || err2).send();
+  };
+  /**
+   * @param {Array} decEndpoints
+   * @param {string} exp
+   * @return {undefined}
+   */
+  constructor.prototype.$ChatMiniSidebarSearchSource5 = function(decEndpoints, exp) {
+    if (decEndpoints.length) {
+      this.$ChatMiniSidebarSearchSource0.addQueryEntries(decEndpoints.filter(function(dataAndEvents) {
+        return!!dataAndEvents;
+      }), exp);
+    }
+  };
+  /**
+   * @return {undefined}
+   */
+  constructor.prototype.refreshData = function() {
+    fin.fetchAll();
+    $sanitize(["AvailableList"], function(vec) {
+      return vec.update();
+    });
+  };
+  /** @type {function (?): undefined} */
+  module.exports = constructor;
+}, null);
+__d("ChatTypeaheadBehavior", ["ChatOpenTab", "CSS", "MercuryConfig", "Parent", "Rect", "copyProperties", "cx"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, assert, template, dataAndEvents, spec, enable, createObject, matcherFunction) {
+  /**
+   * @param {?} func
+   * @param {boolean} recurring
+   * @return {undefined}
+   */
+  function proxy(func, recurring) {
+    var match = spec.byClass(func, "_4oes");
+    if (match) {
+      template.conditionClass(match, "_5q83", recurring);
+    }
+  }
+  /**
+   * @param {Object} topic
+   * @return {undefined}
+   */
+  function exp(topic) {
+    /** @type {Object} */
+    this._typeahead = topic;
+  }
+  /**
+   * @return {undefined}
+   */
+  exp.prototype.enable = function() {
+    var self = this._typeahead;
+    /** @type {Array} */
+    this._subscriptions = [self.subscribe("focus", function() {
+      self.getData().refreshData();
+      proxy(self.getElement(), true);
+    }), self.subscribe("blur", function(deepDataAndEvents) {
+      if (!dataAndEvents.SidebarClearTypeaheadGK) {
+        self.getCore().reset();
+      }
+      proxy(self.getElement(), false);
+    }), self.subscribe("respond", function(dataAndEvents, test) {
+      if (test.value && test.value === self.getCore().getValue()) {
+        if (!test.results.length) {
+          var word = test.value.toLowerCase();
+          var dateSQL = self.getData().getQueryCache();
+          if (!test.isAsync && !dateSQL.hasOwnProperty(word)) {
+            return;
+          }
+          self.getView().showNoResults();
+        }
+        template.addClass(self.getElement(), "hasValue");
+      }
+    }), self.subscribe("reset", function() {
+      template.removeClass(self.getElement(), "hasValue");
+    }), self.subscribe("select", function(dataAndEvents, item) {
+      var gotErr = item.selected.uid;
+      if (item.selected.mercury_thread && !item.selected.mercury_thread.is_canonical) {
+        gotErr = item.selected.mercury_thread.thread_fbid;
+      }
+      self.getView().hide();
+      assert.openTabByType(gotErr, item.selected.type, "typeahead");
+    }), self.subscribe("highlight", function(dataAndEvents, pos) {
+      if (pos.index >= 0) {
+        var element = self.getView().getItems()[pos.index];
+        if (element) {
+          var wrapper = new enable(element);
+          var offsetParent = element.offsetParent;
+          var eyeVec = wrapper.boundWithin(new enable(offsetParent)).getPositionVector();
+          wrapper.getPositionVector().sub(eyeVec).scrollElementBy(offsetParent);
         }
       }
     })];
   };
-  o.prototype.disable = function() {
-    "use strict";
-    this._subscriptions.forEach(function(p) {
-      this._typeahead.unsubscribe(p);
+  /**
+   * @return {undefined}
+   */
+  exp.prototype.disable = function() {
+    this._subscriptions.forEach(function(subKey) {
+      this._typeahead.unsubscribe(subKey);
     }, this);
+    /** @type {null} */
     this._subscriptions = null;
   };
-  l(o.prototype, {
-    _subscriptions: null
+  createObject(exp.prototype, {
+    _subscriptions : null
   });
-  e.exports = o;
+  /** @type {function (Object): undefined} */
+  module.exports = exp;
 }, null);
-__d("MercuryErrorInfo", ["MercuryActionStatus", "MercuryErrorType", "fbt"], function(a, b, c, d, e, f, g, h, i) {
-  var j = {
-    getMessage: function(k) {
-      var l = '';
-      if (j.isConnectionError(k)) {
-        l = "This message didn't send.";
-        if (j.isTransient(k)) l = i._("{message} Check your internet connection and click to try again.", [i.param("message", l)]);
+__d("MercuryErrorInfo", ["MercuryActionStatus", "MercuryErrorType", "fbt"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, Status, data, obj) {
+  var assert = {
+    /**
+     * @param {?} task
+     * @return {?}
+     */
+    getMessage : function(task) {
+      /** @type {string} */
+      var fn = "";
+      if (assert.isConnectionError(task)) {
+        /** @type {string} */
+        fn = "This message didn't send.";
+        if (assert.isTransient(task)) {
+          fn = obj._("{message} Check your internet connection and click to try again.", [obj.param("message", fn)]);
+        }
       } else {
-        if (k && k.description) {
-          l = k.description;
-        } else l = "This message failed to send.";
-        if (j.isTransient(k)) l = i._("{message} Click to send again.", [i.param("message", l)]);
+        if (task && task.description) {
+          fn = task.description;
+        } else {
+          /** @type {string} */
+          fn = "This message failed to send.";
+        }
+        if (assert.isTransient(task)) {
+          fn = obj._("{message} Click to send again.", [obj.param("message", fn)]);
+        }
       }
-      return l;
+      return fn;
     },
-    isConnectionError: function(k) {
-      if (k && k.type == h.TRANSPORT) return k.code === 1001 || k.code === 1004 || k.code === 1006;
+    /**
+     * @param {Object} item
+     * @return {?}
+     */
+    isConnectionError : function(item) {
+      if (item && item.type == data.TRANSPORT) {
+        return item.code === 1001 || (item.code === 1004 || item.code === 1006);
+      }
       return false;
     },
-    isTransient: function(k) {
-      return k && k.is_transient;
+    /**
+     * @param {Object} fn
+     * @return {?}
+     */
+    isTransient : function(fn) {
+      return fn && fn.is_transient;
     },
-    isPermanent: function(k) {
-      return k ? !this.isTransient(k) : false;
+    /**
+     * @param {Object} sqlt
+     * @return {?}
+     */
+    isPermanent : function(sqlt) {
+      return sqlt ? !this.isTransient(sqlt) : false;
     },
-    hasErrorStatus: function(k) {
-      return k.status === g.FAILED_UNKNOWN_REASON || k.status === g.UNABLE_TO_CONFIRM || k.status === g.ERROR;
+    /**
+     * @param {Object} deepDataAndEvents
+     * @return {?}
+     */
+    hasErrorStatus : function(deepDataAndEvents) {
+      return deepDataAndEvents.status === Status.FAILED_UNKNOWN_REASON || (deepDataAndEvents.status === Status.UNABLE_TO_CONFIRM || deepDataAndEvents.status === Status.ERROR);
     }
   };
-  e.exports = j;
+  module.exports = assert;
 }, null);
-__d("MercuryMessageError.react", ["CurrentUser", "ImmutableObject", "MercuryErrorInfo", "MercuryMessageActions", "React", "cx", "joinClasses"], function(a, b, c, d, e, f, g, h, i, j, k, l, m) {
-  'use strict';
-  var n = k.PropTypes,
-    o = k.createClass({
-      displayName: "MercuryMessageError",
-      propTypes: {
-        authorFBID: n.string,
-        message: n.instanceOf(h).isRequired
-      },
-      getDefaultProps: function() {
-        return {
-          authorFBID: g.getID()
-        };
-      },
-      render: function() {
-        var p = this.props.message,
-          q = p.error_data;
-        return (k.createElement("div", k.__spread({}, this.props, {
-          className: m(this.props.className, this._getClassNameFromStatus(p)),
-          tabIndex: i.isTransient(q) ? 0 : null,
-          onClick: i.isTransient(q) ? this.messageResend : null
-        }), k.createElement("div", {
-          className: "_2fs1"
-        }), k.createElement("span", {
-          dangerouslySetInnerHTML: {
-            __html: this._getTextFromStatus(p)
-          }
-        })));
-      },
-      messageResend: function() {
-        j.getForFBID(this.props.authorFBID).resend(this.props.message);
-      },
-      _getClassNameFromStatus: function(p) {
-        if (i.hasErrorStatus(p)) {
-          return (("_2fs2") + (' ' + "_2fs3") + (i.isTransient(p.error_data) ? ' ' + "_2fs4" : '') + (i.isPermanent(p.error_data) ? ' ' + "_2fs5" : ''));
-        } else return "_2fs6 _2fs2";
-      },
-      _getTextFromStatus: function(p) {
-        var q = '',
-          r = p.error_data;
-        if (i.hasErrorStatus(p)) q = i.getMessage(r);
-        if (typeof q === 'object' && q.__html) q = q.__html;
-        return q;
+__d("MercuryMessageError.react", ["CurrentUser", "ImmutableObject", "MercuryErrorInfo", "MercuryMessageActions", "React", "cx", "joinClasses"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, a, value, record, dataAndEvents, dojo, matcherFunction, update) {
+  var stringPrettyPrinter = dojo.PropTypes;
+  var JsDiff = dojo.createClass({
+    displayName : "MercuryMessageError",
+    propTypes : {
+      authorFBID : stringPrettyPrinter.string,
+      message : stringPrettyPrinter.instanceOf(value).isRequired
+    },
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        authorFBID : a.getID()
+      };
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var deepDataAndEvents = this.props.message;
+      var source = deepDataAndEvents.error_data;
+      return dojo.createElement("div", dojo.__spread({}, this.props, {
+        className : update(this.props.className, this._getClassNameFromStatus(deepDataAndEvents)),
+        tabIndex : record.isTransient(source) ? 0 : null,
+        onClick : record.isTransient(source) ? this.messageResend : null
+      }), dojo.createElement("div", {
+        className : "_2fs1"
+      }), dojo.createElement("span", {
+        dangerouslySetInnerHTML : {
+          __html : this._getTextFromStatus(deepDataAndEvents)
+        }
+      }));
+    },
+    /**
+     * @return {undefined}
+     */
+    messageResend : function() {
+      dataAndEvents.getForFBID(this.props.authorFBID).resend(this.props.message);
+    },
+    /**
+     * @param {Object} deepDataAndEvents
+     * @return {?}
+     */
+    _getClassNameFromStatus : function(deepDataAndEvents) {
+      if (record.hasErrorStatus(deepDataAndEvents)) {
+        return "_2fs2" + (" " + "_2fs3") + (record.isTransient(deepDataAndEvents.error_data) ? " " + "_2fs4" : "") + (record.isPermanent(deepDataAndEvents.error_data) ? " " + "_2fs5" : "");
+      } else {
+        return "_2fs6 _2fs2";
       }
-    });
-  e.exports = o;
+    },
+    /**
+     * @param {Object} deepDataAndEvents
+     * @return {?}
+     */
+    _getTextFromStatus : function(deepDataAndEvents) {
+      /** @type {string} */
+      var method = "";
+      var name = deepDataAndEvents.error_data;
+      if (record.hasErrorStatus(deepDataAndEvents)) {
+        method = record.getMessage(name);
+      }
+      if (typeof method === "object" && method.__html) {
+        method = method.__html;
+      }
+      return method;
+    }
+  });
+  module.exports = JsDiff;
 }, null);
-__d("MercuryAudioPlayer", ["Event", "Arbiter", "DOM", "Flash", "UserAgent_DEPRECATED", "copyProperties"], function(a, b, c, d, e, f, g, h, i, j, k, l) {
-  var m = 200;
-
-  function n() {
-    if (k.webkit() && !k.chrome()) return false;
-    var w = i.create('audio'),
-      x = false;
+__d("MercuryAudioPlayer", ["Event", "Arbiter", "DOM", "Flash", "UserAgent_DEPRECATED", "copyProperties"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, opt_eventHandler, left, content, adapter, b, patch) {
+  /**
+   * @return {?}
+   */
+  function load() {
+    if (b.webkit() && !b.chrome()) {
+      return false;
+    }
+    var elem = content.create("audio");
+    /** @type {boolean} */
+    var pipeline = false;
     try {
-      if (!!w.canPlayType)
-        if (w.canPlayType('video/mp4;').replace(/^no$/, '')) x = true;
+      if (!!elem.canPlayType) {
+        if (elem.canPlayType("video/mp4;").replace(/^no$/, "")) {
+          /** @type {boolean} */
+          pipeline = true;
+        }
+      }
     } finally {
-      return x;
+      return pipeline;
     }
   }
-
-  function o() {
-    return j.isAvailable();
+  /**
+   * @return {?}
+   */
+  function throttledUpdate() {
+    return adapter.isAvailable();
   }
-  var p = function() {
-    this.interval = null;
-    this.arbiterInstance = null;
-    this.audio = i.create('audio');
-    g.listen(this.audio, 'playing', function() {
-      this.informAttachment('playing', this.audio.currentTime);
-      this.interval = setInterval(function() {
-        this.informAttachment('playing', this.audio.currentTime);
-      }.bind(this), m);
-    }.bind(this));
-    g.listen(this.audio, 'ended', function() {
-      clearInterval(this.interval);
-      this.informAttachment('finished');
-    }.bind(this));
-  };
-  l(p.prototype, {
-    setAudio: function(w, x) {
-      this.audio.setAttribute('src', w);
-      this.arbiterInstance = x;
-    },
-    informAttachment: function(w, x) {
-      if (this.arbiterInstance) this.arbiterInstance.inform(w, x);
-    },
-    play: function() {
-      this.audio.play();
-      this.informAttachment('played');
-    },
-    resume: function() {
-      this.audio.play();
-      this.informAttachment('played');
-    },
-    pause: function() {
-      this.audio.pause();
-      clearInterval(this.interval);
-      this.informAttachment('paused');
-    },
-    getType: function() {
-      return 'html5';
+  /**
+   * @return {?}
+   */
+  function tryIt() {
+    if (load()) {
+      return new start;
+    } else {
+      if (throttledUpdate()) {
+        return new render;
+      }
     }
-  });
-  var q = function() {
-    this.src = null;
-    this.arbiterInstance = null;
-    var w = i.create('div');
-    document.body.appendChild(w);
-    this.swf = j.embed('/swf/SoundStreamPlayer.swf', w, null, {});
-    this.interval = null;
-    h.subscribe('soundstream/finished', function() {
-      clearInterval(this.interval);
-      this.informAttachment('finished');
-    }.bind(this));
-  };
-  l(q.prototype, {
-    setAudio: function(w, x) {
-      this.src = w;
-      this.arbiterInstance = x;
-    },
-    informAttachment: function(w, x) {
-      if (this.arbiterInstance) this.arbiterInstance.inform(w, x);
-    },
-    play: function() {
-      this.swf.playSound(this.src);
-      this.interval = setInterval(function() {
-        var w = this.swf.getCurrentTime();
-        this.informAttachment('playing', w);
-      }.bind(this), m);
-      this.informAttachment('played');
-    },
-    resume: function() {
-      this.swf.resume();
-      this.informAttachment('played');
-    },
-    pause: function() {
-      clearInterval(this.interval);
-      this.swf.pause();
-      this.informAttachment('paused');
-    },
-    getType: function() {
-      return 'flash';
-    }
-  });
-
-  function r() {
-    if (n()) {
-      return new p();
-    } else if (o()) return new q();
     return false;
   }
-  var s = null,
-    t = null,
-    u = 0;
-
-  function v(w, x) {
-    this.src = w;
-    this.arbiterInstance = x;
+  /**
+   * @param {?} state
+   * @param {?} blockHolder
+   * @return {?}
+   */
+  function $(state, blockHolder) {
+    this.src = state;
+    this.arbiterInstance = blockHolder;
+    /** @type {number} */
     this.audio_id = ++u;
-    s !== null || (s = r());
-    if (!s) return false;
+    if (!(self !== null)) {
+      self = tryIt();
+    }
+    if (!self) {
+      return false;
+    }
   }
-  l(v.prototype, {
-    getType: function() {
-      if (!s) {
-        return false;
-      } else return s.getType();
+  /** @type {number} */
+  var interval = 200;
+  /**
+   * @return {undefined}
+   */
+  var start = function() {
+    /** @type {null} */
+    this.interval = null;
+    /** @type {null} */
+    this.arbiterInstance = null;
+    this.audio = content.create("audio");
+    opt_eventHandler.listen(this.audio, "playing", function() {
+      this.informAttachment("playing", this.audio.currentTime);
+      /** @type {number} */
+      this.interval = setInterval(function() {
+        this.informAttachment("playing", this.audio.currentTime);
+      }.bind(this), interval);
+    }.bind(this));
+    opt_eventHandler.listen(this.audio, "ended", function() {
+      clearInterval(this.interval);
+      this.informAttachment("finished");
+    }.bind(this));
+  };
+  patch(start.prototype, {
+    /**
+     * @param {?} value
+     * @param {?} data
+     * @return {undefined}
+     */
+    setAudio : function(value, data) {
+      this.audio.setAttribute("src", value);
+      this.arbiterInstance = data;
     },
-    play: function(w) {
-      if (w && t == this.audio_id) {
-        s.resume();
+    /**
+     * @param {string} status
+     * @param {?} deepDataAndEvents
+     * @return {undefined}
+     */
+    informAttachment : function(status, deepDataAndEvents) {
+      if (this.arbiterInstance) {
+        this.arbiterInstance.inform(status, deepDataAndEvents);
+      }
+    },
+    /**
+     * @return {undefined}
+     */
+    play : function() {
+      this.audio.play();
+      this.informAttachment("played");
+    },
+    /**
+     * @return {undefined}
+     */
+    resume : function() {
+      this.audio.play();
+      this.informAttachment("played");
+    },
+    /**
+     * @return {undefined}
+     */
+    pause : function() {
+      this.audio.pause();
+      clearInterval(this.interval);
+      this.informAttachment("paused");
+    },
+    /**
+     * @return {?}
+     */
+    getType : function() {
+      return "html5";
+    }
+  });
+  /**
+   * @return {undefined}
+   */
+  var render = function() {
+    /** @type {null} */
+    this.src = null;
+    /** @type {null} */
+    this.arbiterInstance = null;
+    var title = content.create("div");
+    document.body.appendChild(title);
+    this.swf = adapter.embed("/swf/SoundStreamPlayer.swf", title, null, {});
+    /** @type {null} */
+    this.interval = null;
+    left.subscribe("soundstream/finished", function() {
+      clearInterval(this.interval);
+      this.informAttachment("finished");
+    }.bind(this));
+  };
+  patch(render.prototype, {
+    /**
+     * @param {?} src
+     * @param {?} value
+     * @return {undefined}
+     */
+    setAudio : function(src, value) {
+      this.src = src;
+      this.arbiterInstance = value;
+    },
+    /**
+     * @param {string} status
+     * @param {?} deepDataAndEvents
+     * @return {undefined}
+     */
+    informAttachment : function(status, deepDataAndEvents) {
+      if (this.arbiterInstance) {
+        this.arbiterInstance.inform(status, deepDataAndEvents);
+      }
+    },
+    /**
+     * @return {undefined}
+     */
+    play : function() {
+      this.swf.playSound(this.src);
+      /** @type {number} */
+      this.interval = setInterval(function() {
+        var deepDataAndEvents = this.swf.getCurrentTime();
+        this.informAttachment("playing", deepDataAndEvents);
+      }.bind(this), interval);
+      this.informAttachment("played");
+    },
+    /**
+     * @return {undefined}
+     */
+    resume : function() {
+      this.swf.resume();
+      this.informAttachment("played");
+    },
+    /**
+     * @return {undefined}
+     */
+    pause : function() {
+      clearInterval(this.interval);
+      this.swf.pause();
+      this.informAttachment("paused");
+    },
+    /**
+     * @return {?}
+     */
+    getType : function() {
+      return "flash";
+    }
+  });
+  /** @type {null} */
+  var self = null;
+  /** @type {null} */
+  var audio_id = null;
+  /** @type {number} */
+  var u = 0;
+  patch($.prototype, {
+    /**
+     * @return {?}
+     */
+    getType : function() {
+      if (!self) {
+        return false;
+      } else {
+        return self.getType();
+      }
+    },
+    /**
+     * @param {number} expectedHashCode
+     * @return {undefined}
+     */
+    play : function(expectedHashCode) {
+      if (expectedHashCode && audio_id == this.audio_id) {
+        self.resume();
       } else {
         this.pause();
-        t = this.audio_id;
-        s.setAudio(this.src, this.arbiterInstance);
-        s.play();
+        audio_id = this.audio_id;
+        self.setAudio(this.src, this.arbiterInstance);
+        self.play();
       }
     },
-    pause: function() {
-      s.pause();
+    /**
+     * @return {undefined}
+     */
+    pause : function() {
+      self.pause();
     }
   });
-  e.exports = v;
+  /** @type {function (?, ?): ?} */
+  module.exports = $;
 }, null);
-__d("MercuryShareAttachmentRenderLocations", [], function(a, b, c, d, e, f) {
-  'use strict';
-  var g = {
-    CHAT: 'chat',
-    CHAT_PREVIEW: 'chat_preview',
-    MESSENGER: 'messenger',
-    getValues: function() {
-      return [g.CHAT, g.CHAT_PREVIEW, g.MESSENGER];
+__d("MercuryShareAttachmentRenderLocations", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  var JsDiff = {
+    CHAT : "chat",
+    CHAT_PREVIEW : "chat_preview",
+    MESSENGER : "messenger",
+    /**
+     * @return {?}
+     */
+    getValues : function() {
+      return[JsDiff.CHAT, JsDiff.CHAT_PREVIEW, JsDiff.MESSENGER];
     },
-    isPreview: function(h) {
-      return h === g.CHAT_PREVIEW;
+    /**
+     * @param {string} location
+     * @return {?}
+     */
+    isPreview : function(location) {
+      return location === JsDiff.CHAT_PREVIEW;
     }
   };
-  e.exports = g;
+  module.exports = JsDiff;
 }, null);
-__d("MercuryAttachmentAudioClip.react", ["Arbiter", "ArbiterMixin", "MercuryAudioPlayer", "CurrentUser", "JSLogger", "LeftRight.react", "MercuryShareAttachmentRenderLocations", "React", "SubscriptionsHandler", "cx", "fbt", "joinClasses", "shield"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s) {
-  var t = 'MercuryAttachmentAudioClip/play',
-    u = k.create('mercury_audio_clip'),
-    v = n.createClass({
-      displayName: "AudioClip",
-      mixins: [h],
-      propTypes: {
-        duration: n.PropTypes.number,
-        location: n.PropTypes.oneOf(m.getValues()),
-        rootClassName: n.PropTypes.string,
-        showHelp: n.PropTypes.bool,
-        src: n.PropTypes.string.isRequired,
-        width: n.PropTypes.number
-      },
-      getInitialState: function() {
-        this.logged = false;
-        var w = this.props.downloadOnly ? false : new i(this.props.src, this);
-        return {
-          time: 0,
-          playing: false,
-          started: false,
-          duration: this.props.duration,
-          audioPlayer: w
-        };
-      },
-      componentDidMount: function() {
-        this._subscriptionsHandler = new o();
-        this._subscriptionsHandler.addSubscriptions(this.subscribe('playing', this.updateTime), this.subscribe('played', s(this.setState, this, {
-          playing: true,
-          started: true
-        })), this.subscribe('paused', s(this.setState, this, {
-          playing: false
-        })), this.subscribe('finished', s(this.setState, this, {
-          playing: false,
-          started: false,
-          time: this.props.duration
-        })), g.subscribe(t, function(w, x) {
-          if (this.props.src != x) this.setState({
-            time: 0
+__d("MercuryAttachmentAudioClip.react", ["Arbiter", "ArbiterMixin", "MercuryAudioPlayer", "CurrentUser", "JSLogger", "LeftRight.react", "MercuryShareAttachmentRenderLocations", "React", "SubscriptionsHandler", "cx", "fbt", "joinClasses", "shield"], function(ignoreMethodDoesntExist, textAlt, keepData, opt_attributes, module, matcherFunction, m, deepDataAndEvents, TagLoader, a, activator, label, data, dh, dataAndEvents, execResult, opt_keys, get, setState) {
+  /** @type {string} */
+  var msg = "MercuryAttachmentAudioClip/play";
+  var that = activator.create("mercury_audio_clip");
+  var JsDiff = dh.createClass({
+    displayName : "AudioClip",
+    mixins : [deepDataAndEvents],
+    propTypes : {
+      duration : dh.PropTypes.number,
+      location : dh.PropTypes.oneOf(data.getValues()),
+      rootClassName : dh.PropTypes.string,
+      showHelp : dh.PropTypes.bool,
+      src : dh.PropTypes.string.isRequired,
+      width : dh.PropTypes.number
+    },
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      /** @type {boolean} */
+      this.logged = false;
+      var audioPlayer = this.props.downloadOnly ? false : new TagLoader(this.props.src, this);
+      return{
+        time : 0,
+        playing : false,
+        started : false,
+        duration : this.props.duration,
+        audioPlayer : audioPlayer
+      };
+    },
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
+      this._subscriptionsHandler = new dataAndEvents;
+      this._subscriptionsHandler.addSubscriptions(this.subscribe("playing", this.updateTime), this.subscribe("played", setState(this.setState, this, {
+        playing : true,
+        started : true
+      })), this.subscribe("paused", setState(this.setState, this, {
+        playing : false
+      })), this.subscribe("finished", setState(this.setState, this, {
+        playing : false,
+        started : false,
+        time : this.props.duration
+      })), m.subscribe(msg, function(dataAndEvents, src) {
+        if (this.props.src != src) {
+          this.setState({
+            time : 0
           });
-        }.bind(this)));
-      },
-      componentWillUnmount: function() {
-        this._subscriptionsHandler && this._subscriptionsHandler.release();
-      },
-      updateTime: function(w, x) {
-        this.setState({
-          time: x
-        });
-      },
-      play: function() {
-        if (this.state.playing) {
-          this.state.audioPlayer.pause();
-        } else {
-          this.state.audioPlayer.play(this.state.started);
-          g.inform(t, this.props.src);
-          if (!this.logged) {
-            this.logged = true;
-            u.log('play', {
-              uid: j.getID(),
-              duration: this.props.duration
-            });
-          }
         }
-      },
-      _formatSeconds: function(w) {
-        if (w) {
-          w = Math.ceil(w);
-          var x = w % 60;
-          if (x < 10) x = '0' + x;
-          var y = Math.floor(w / 60);
-          return y + ':' + x;
-        } else return null;
-      },
-      _renderPlayer: function(w, x) {
-        return (n.createElement("a", {
-          className: "_1miz _2e-1",
-          href: "#",
-          style: {
-            width: w
-          },
-          onClick: this.play
-        }, n.createElement("span", {
-          className: "_1mi- _2e-2"
-        }, n.createElement("i", {
-          className: "_1mi_ _2e-3"
-        })), n.createElement("span", {
-          className: "_1mj0 _2e-4"
-        }, x), n.createElement("div", {
-          className: "_1mj1 _2e-5"
-        })));
-      },
-      render: function() {
-        var w = this.state.time,
-          x = this.state.playing,
-          y = this._formatSeconds(this.state.duration),
-          z = this.props.width || 170,
-          aa = null,
-          ba = Math.ceil((w * (z + 2)) / this.state.duration);
-        if (this.state.audioPlayer && this.state.audioPlayer.getType()) {
-          var ca = this._renderPlayer(z, y),
-            da = this._renderPlayer(z, y),
-            ea = (("_1mj2") + (' ' + "_2e-6") + (x && (w !== 0) ? ' ' + "_1mj3" : '') + (x && (w === 0) ? ' ' + "_4g4x" : ''));
-          aa = (n.createElement("div", {
-            className: ea
-          }, ca, n.createElement("div", {
-            className: "_1mj4 _2e-7",
-            style: {
-              width: ba
-            }
-          }, da)));
-        } else aa = (n.createElement("div", {
-          className: "_1mj2"
-        }, n.createElement("div", {
-          className: "_1miz"
-        }, n.createElement(l, null, n.createElement("a", {
-          className: "_1mj5",
-          href: this.props.src
-        }, n.createElement("span", {
-          className: "_3qi6"
-        }, n.createElement("i", {
-          className: "_1mj6"
-        })), n.createElement("span", {
-          className: "_1mj7"
-        }, "Voice Message"), n.createElement("span", {
-          className: "_1mj8"
-        }, y)), n.createElement("a", {
-          href: this.props.src,
-          className: "_1mj9"
-        }, n.createElement("i", {
-          className: "_1mja"
-        }))))));
-        return (n.createElement("div", {
-          className: r("_1mjb", this.props.rootClassName)
-        }, aa));
+      }.bind(this)));
+    },
+    /**
+     * @return {undefined}
+     */
+    componentWillUnmount : function() {
+      if (this._subscriptionsHandler) {
+        this._subscriptionsHandler.release();
       }
-    });
-  e.exports = v;
-}, null);
-__d("XMessageTranscriptController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/fetch_transcript\/", {
-    message_id: {
-      type: "String",
-      required: true
-    }
-  });
-}, null);
-__d("StarsInput.react", ["React", "TooltipLink.react", "cx", "fbt"], function(a, b, c, d, e, f, g, h, i, j) {
-  var k = g.createClass({
-    displayName: "StarsInput",
-    propTypes: {
-      allowMultipleSubmissions: g.PropTypes.bool,
-      onClick: g.PropTypes.func.isRequired,
-      starLabels: g.PropTypes.array
     },
-    getDefaultProps: function() {
-      return {
-        allowMultipleSubmissions: false,
-        starLabels: ["Poor", "Fair", "Good", "Very Good", "Excellent"]
-      };
-    },
-    getInitialState: function() {
-      return {
-        starRating: 0,
-        starsShown: 0,
-        canUpdate: true
-      };
-    },
-    _getStarRating: function(l) {
-      return parseInt(l.split('.').pop(), 10) + 1;
-    },
-    onMouseEnter: function(event) {
-      if (this.state.canUpdate) this.setState({
-        starsShown: this._getStarRating(event.dispatchMarker)
+    /**
+     * @param {?} e
+     * @param {number} time
+     * @return {undefined}
+     */
+    updateTime : function(e, time) {
+      this.setState({
+        time : time
       });
     },
-    onMouseLeave: function(event) {
-      if (this.state.canUpdate) {
-        var l = this.state.starRating;
-        this.setState({
-          starsShown: l
-        });
+    /**
+     * @return {undefined}
+     */
+    play : function() {
+      if (this.state.playing) {
+        this.state.audioPlayer.pause();
+      } else {
+        this.state.audioPlayer.play(this.state.started);
+        m.inform(msg, this.props.src);
+        if (!this.logged) {
+          /** @type {boolean} */
+          this.logged = true;
+          that.log("play", {
+            uid : a.getID(),
+            duration : this.props.duration
+          });
+        }
       }
     },
-    onClick: function(event) {
-      if (this.state.canUpdate) {
-        var l = this._getStarRating(event.dispatchMarker);
-        this.setState({
-          starRating: l,
-          starsShown: l,
-          canUpdate: this.props.allowMultipleSubmissions
-        });
-        this.props.onClick(l);
+    /**
+     * @param {number} number
+     * @return {?}
+     */
+    _formatSeconds : function(number) {
+      if (number) {
+        /** @type {number} */
+        number = Math.ceil(number);
+        /** @type {number} */
+        var b = number % 60;
+        if (b < 10) {
+          /** @type {string} */
+          b = "0" + b;
+        }
+        /** @type {number} */
+        var a = Math.floor(number / 60);
+        return a + ":" + b;
+      } else {
+        return null;
       }
     },
-    getStars: function() {
-      var l = this.props.starLabels.length,
-        m = [];
-      for (var n = 0; n < l; n++) m.push(g.createElement(h, {
-        className: (("mls") + (' ' + "_22mm") + (n >= this.state.starsShown ? ' ' + "_22mn" : '') + (n < this.state.starsShown ? ' ' + "_22mo" : '') + (!this.state.canUpdate ? ' ' + "_1g87" : '')),
-        tooltip: this.props.starLabels[n],
-        onMouseEnter: this.onMouseEnter,
-        onMouseLeave: this.onMouseLeave,
-        onClick: this.onClick,
-        position: "above",
-        alignH: "center"
+    /**
+     * @param {number} value
+     * @param {?} values
+     * @return {?}
+     */
+    _renderPlayer : function(value, values) {
+      return dh.createElement("a", {
+        className : "_1miz _2e-1",
+        href : "#",
+        style : {
+          width : value
+        },
+        onClick : this.play
+      }, dh.createElement("span", {
+        className : "_1mi- _2e-2"
+      }, dh.createElement("i", {
+        className : "_1mi_ _2e-3"
+      })), dh.createElement("span", {
+        className : "_1mj0 _2e-4"
+      }, values), dh.createElement("div", {
+        className : "_1mj1 _2e-5"
       }));
-      return m;
     },
-    render: function() {
-      return (g.createElement("div", null, this.getStars()));
-    }
-  });
-  e.exports = k;
-}, null);
-__d("Stars.react", ["React", "cx"], function(a, b, c, d, e, f, g, h) {
-  var i = 4,
-    j = ['emptyStar', 'onefourthStar', 'halfStar', 'threefourthsStar', 'fullStar'],
-    k = g.createClass({
-      displayName: "Stars",
-      propTypes: {
-        count: g.PropTypes.number.isRequired,
-        max: g.PropTypes.number,
-        size: g.PropTypes.oneOf(['small', 'large']),
-        title: g.PropTypes.string
-      },
-      getDefaultProps: function() {
-        return {
-          max: 5,
-          size: 'small'
-        };
-      },
-      getNumSubStars: function(l) {
-        return Math.round(l * i);
-      },
-      render: function() {
-        var l = this.getNumSubStars(this.props.count),
-          m = Array.apply(null, {
-            length: this.props.max
-          }).map(function(o, p) {
-            return l - p * i;
-          }).map(function(o) {
-            return Math.max(0, Math.min(i, o));
-          }).map(function(o) {
-            return g.createElement("i", {
-              className: j[o]
-            });
-          }),
-          n = (("uiStars") + (this.props.size === 'large' ? ' ' + "largeStars" : ''));
-        return g.createElement("div", {
-          className: n,
-          title: this.props.title
-        }, m);
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var time = this.state.time;
+      var query = this.state.playing;
+      var progressValues = this._formatSeconds(this.state.duration);
+      var udataCur = this.props.width || 170;
+      /** @type {null} */
+      var result = null;
+      /** @type {number} */
+      var w = Math.ceil(time * (udataCur + 2) / this.state.duration);
+      if (this.state.audioPlayer && this.state.audioPlayer.getType()) {
+        var handler = this._renderPlayer(udataCur, progressValues);
+        var showLink = this._renderPlayer(udataCur, progressValues);
+        /** @type {string} */
+        var cls = "_1mj2" + (" " + "_2e-6") + (query && time !== 0 ? " " + "_1mj3" : "") + (query && time === 0 ? " " + "_4g4x" : "");
+        result = dh.createElement("div", {
+          className : cls
+        }, handler, dh.createElement("div", {
+          className : "_1mj4 _2e-7",
+          style : {
+            width : w
+          }
+        }, showLink));
+      } else {
+        result = dh.createElement("div", {
+          className : "_1mj2"
+        }, dh.createElement("div", {
+          className : "_1miz"
+        }, dh.createElement(label, null, dh.createElement("a", {
+          className : "_1mj5",
+          href : this.props.src
+        }, dh.createElement("span", {
+          className : "_3qi6"
+        }, dh.createElement("i", {
+          className : "_1mj6"
+        })), dh.createElement("span", {
+          className : "_1mj7"
+        }, "Voice Message"), dh.createElement("span", {
+          className : "_1mj8"
+        }, progressValues)), dh.createElement("a", {
+          href : this.props.src,
+          className : "_1mj9"
+        }, dh.createElement("i", {
+          className : "_1mja"
+        })))));
       }
-    });
-  e.exports = k;
+      return dh.createElement("div", {
+        className : get("_1mjb", this.props.rootClassName)
+      }, result);
+    }
+  });
+  module.exports = JsDiff;
 }, null);
-__d("XMessageTranscriptRatingController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/asr\/transcript\/rate\/", {
-    message_id: {
-      type: "String",
-      required: true
-    },
-    rating: {
-      type: "Int",
-      required: true
+__d("XMessageTranscriptController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/fetch_transcript/", {
+    message_id : {
+      type : "String",
+      required : true
     }
   });
 }, null);
-__d("MercuryAttachmentAudioClipTranscript.react", ["AsyncRequest", "React", "XMessageTranscriptController", "MessageTranscriptWaitHandleState", "LoadingIndicator.react", "StarsInput.react", "Stars.react", "XMessageTranscriptRatingController", "MercuryConfig", "cx", "fbt"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) {
-  var r = h.createClass({
-    displayName: "Transcript",
-    fetchTranscript: function() {
-      var s = i.getURIBuilder().setString('message_id', this.props.message_id).getURI();
-      new g(s).setHandler(function(t) {
-        var u = t.getPayload();
+__d("StarsInput.react", ["React", "TooltipLink.react", "cx", "fbt"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, self, elem, opt_attributes, matcherFunction) {
+  var JsDiff = self.createClass({
+    displayName : "StarsInput",
+    propTypes : {
+      allowMultipleSubmissions : self.PropTypes.bool,
+      onClick : self.PropTypes.func.isRequired,
+      starLabels : self.PropTypes.array
+    },
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        allowMultipleSubmissions : false,
+        starLabels : ["Poor", "Fair", "Good", "Very Good", "Excellent"]
+      };
+    },
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      return{
+        starRating : 0,
+        starsShown : 0,
+        canUpdate : true
+      };
+    },
+    /**
+     * @param {string} pair
+     * @return {?}
+     */
+    _getStarRating : function(pair) {
+      return parseInt(pair.split(".").pop(), 10) + 1;
+    },
+    /**
+     * @param {?} event
+     * @return {undefined}
+     */
+    onMouseEnter : function(event) {
+      if (this.state.canUpdate) {
         this.setState({
-          transcript: u.transcript ? u.transcript.text : null,
-          transcriptState: u.status,
-          transcriptRetryTimeout: u.retryTimeout,
-          rating: u.rating
+          starsShown : this._getStarRating(event.dispatchMarker)
         });
-        if (this.state.transcriptState === j.BUSY) setTimeout(this.fetchTranscript, Math.max(this.state.transcriptRetryTimeout, 1000));
-      }.bind(this)).send();
-    },
-    componentDidMount: function() {
-      this.fetchTranscript();
-    },
-    getInitialState: function() {
-      return {
-        transcript: null,
-        transcriptState: j.BUSY,
-        transcriptRetryTimeout: null,
-        rating: null
-      };
-    },
-    _submitRating: function(s) {
-      var t = n.getURIBuilder().setString('message_id', this.props.message_id).setInt('rating', s).getURI();
-      (new g(t)).send();
-    },
-    render: function() {
-      var s = this.state.transcriptState,
-        t = this.state.transcript,
-        u = null,
-        v = null,
-        w = null;
-      if (s === j.READY) {
-        u = h.createElement("p", null, t);
-        if (o.TranscriptRatingGK)
-          if (this.state.rating === null) {
-            w = h.createElement(l, {
-              onClick: this._submitRating
-            });
-          } else w = h.createElement(m, {
-            count: this.state.rating
-          });
-      } else if (s === j.UNAVAILABLE) {
-        u = (h.createElement("p", null, "Transcript unavailable"));
-      } else if (s === j.BUSY) v = h.createElement(k, {
-        size: "small",
-        color: "white"
-      });
-      return (h.createElement("div", {
-        className: "_44v-"
-      }, u, w, v));
-    }
-  });
-  e.exports = r;
-}, null);
-__d("MercuryThreadMetadataRawRenderer", ["Event", "CSS", "DOM", "MercuryActionStatus", "MercuryErrorInfo", "MercuryStatusTemplates", "Tooltip", "cx", "fbt"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
-  var p = {
-    renderParticipantListWithNoThreadName: function(q, r, s, t, u, v) {
-      var w = {
-        callback: true,
-        check_length: true,
-        show_unread_count: true
-      };
-      v = v || {};
-      var x = {};
-      for (var y in v)
-        if (w[y]) {
-          x[y] = v[y];
-          delete v[y];
-        }
-      var z = s.map(function(ea) {
-          return t[ea];
-        }),
-        aa = this.renderRawParticipantList(q, z, s.length, v);
-      aa = this.renderRawTitleWithUnreadCount(aa, x.show_unread_count ? r.unread_count : 0);
-      var ba = v.abbr_mode,
-        ca = {};
-      for (var da in v) ca[da] = v[da];
-      ca.abbr_mode = true;
-      u.forEach(function(ea) {
-        var fa = u.length > 1 ? this._cloneIfDOMElement(aa) : aa;
-        i.setContent(ea, fa);
-        if (x.check_length && !ba && ea.scrollWidth > ea.clientWidth) {
-          var ga = this.renderRawParticipantList(q, z, s.length, ca),
-            ha = this.renderRawTitleWithUnreadCount(ga, x.show_unread_count ? r.unread_count : 0);
-          i.setContent(ea, ha);
-        }
-      }.bind(this));
-      x.callback && x.callback(aa);
-    },
-    renderRawParticipantList: function(q, r, s, t) {
-      var u = {
-        abbr_mode: true,
-        last_separator_uses_and: true,
-        names_renderer: true
-      };
-      t = t || {};
-      var v = null;
-      if (t.names_renderer) {
-        v = t.names_renderer(r);
-      } else v = r.map(function(x) {
-        return x.name;
-      });
-      var w = null;
-      if (v.length === 0) {
-        if (!q) {
-          w = "New Message";
-        } else w = "No Participants";
-      } else if (v.length == 1) {
-        w = v[0];
-      } else if (v.length == 2) {
-        if (t.last_separator_uses_and) {
-          w = o._("{participant1} and {participant2}", [o.param("participant1", v[0]), o.param("participant2", v[1])]);
-        } else w = o._("{participant1}, {participant2}", [o.param("participant1", v[0]), o.param("participant2", v[1])]);
-      } else if (t.last_separator_uses_and) {
-        if (t.abbr_mode) {
-          w = o._("{participant1} and {others_link}", [o.param("participant1", v[0]), o.param("others_link", this.renderRawParticipantCount({
-            render_subset: true,
-            count: s - 1
-          }))]);
-        } else if (v.length == 3) {
-          w = o._("{participant1}, {participant2} and {participant3}", [o.param("participant1", v[0]), o.param("participant2", v[1]), o.param("participant3", v[2])]);
-        } else w = o._("{participant1}, {participant2} and {others_link}", [o.param("participant1", v[0]), o.param("participant2", v[1]), o.param("others_link", this.renderRawParticipantCount({
-          render_subset: true,
-          count: s - 2
-        }))]);
-      } else if (v.length == 3) {
-        w = o._("{participant1}, {participant2}, {participant3}", [o.param("participant1", v[0]), o.param("participant2", v[1]), o.param("participant3", v[2])]);
-      } else w = o._("{participant1}, {participant2}, {participant3}, {others_link}", [o.param("participant1", v[0]), o.param("participant2", v[1]), o.param("participant3", v[2]), o.param("others_link", this.renderRawParticipantCount({
-        render_subset: true,
-        count: s - 3
-      }))]);
-      if (Array.isArray(w)) w = i.create('span', {}, w);
-      return w;
-    },
-    renderRawTitleWithUnreadCount: function(q, r) {
-      var s = q;
-      if (r && r > 1) s = i.create('span', {}, o._("{conversation_title} ({unread_count})", [o.param("conversation_title", q), o.param("unread_count", r)]));
-      return s;
-    },
-    renderRawParticipantCount: function(q) {
-      var r = q.render_subset,
-        s;
-      if (!r) {
-        s = q.count > 1 ? o._("{num} people", [o.param("num", q.count)]) : "1 person";
-      } else s = q.count > 1 ? o._("{others_count} others", [o.param("others_count", q.count)]) : "1 other";
-      return s;
-    },
-    renderShortNames: function(q) {
-      if (q.length == 1) return [q[0].name];
-      return q.map(function(r) {
-        return r.short_name;
-      });
-    },
-    renderStatusIndicator: function(q, r, s) {
-      var t;
-      if (q == j.RESENDING) {
-        t = this.renderResendIndicator();
-      } else if (q !== (void 0) && q != j.UNSENT && q != j.UNCONFIRMED && q != j.SUCCESS) t = this.renderErrorIndicator(r, s);
-      return t;
-    },
-    renderResendIndicator: function() {
-      return l[':fb:mercury:resend-indicator'].render();
-    },
-    renderErrorIndicator: function(q, r) {
-      if (!q) return null;
-      var s = l[':fb:mercury:error-indicator'].render(),
-        t = q.is_transient,
-        u = k.getMessage(q);
-      if (t)
-        if (k.isConnectionError(q)) {
-          u = o._("{message} Check your internet connection and click to try again.", [o.param("message", u)]);
-        } else u = o._("{message} Click to send again.", [o.param("message", u)]);
-      m.set(s, u, 'above', 'center');
-      if (r && t) {
-        g.listen(s, 'click', r);
-        s.setAttribute('tabindex', '0');
-        h.addClass(s, "_55q-");
       }
-      return s;
     },
-    _cloneIfDOMElement: function(q) {
-      if (q && q.cloneNode) {
-        return q.cloneNode();
-      } else return q;
-    }
-  };
-  e.exports = p;
-}, null);
-__d("MessagingRecipientTypeaheadItem.react", ["BackgroundImage.react", "ChatTypeaheadConstants", "ImageBlock.react", "LeftRight.react", "React", "SplitImage.react", "MercuryThreadMetadataRawRenderer", "TypeaheadViewItem", "cx", "joinClasses"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) {
-  var q = k.createClass({
-    displayName: "MessagingRecipientTypeaheadItem",
-    propTypes: Object.assign({}, n.propTypes, {
-      imageSize: k.PropTypes.number.isRequired
-    }),
-    mixins: [n.Mixin],
-    isThreadRecipient: function() {
-      return this.props.entry.getType() === h.THREAD_TYPE;
+    /**
+     * @param {?} e
+     * @return {undefined}
+     */
+    onMouseLeave : function(e) {
+      if (this.state.canUpdate) {
+        var pos = this.state.starRating;
+        this.setState({
+          starsShown : pos
+        });
+      }
     },
-    _getImage: function() {
-      var r = this.props.entry;
-      if (r.getType() === h.THREAD_TYPE && !r.getPhoto()) {
-        var s = r.getAuxiliaryData();
-        return (k.createElement(l, {
-          size: this.props.imageSize,
-          srcs: s.participantsToRender.map(function(t) {
-            return t.image_src;
-          })
+    /**
+     * @param {number} expectedHashCode
+     * @return {undefined}
+     */
+    onClick : function(expectedHashCode) {
+      if (this.state.canUpdate) {
+        var r20 = this._getStarRating(expectedHashCode.dispatchMarker);
+        this.setState({
+          starRating : r20,
+          starsShown : r20,
+          canUpdate : this.props.allowMultipleSubmissions
+        });
+        this.props.onClick(r20);
+      }
+    },
+    /**
+     * @return {?}
+     */
+    getStars : function() {
+      var valuesLen = this.props.starLabels.length;
+      /** @type {Array} */
+      var nodes = [];
+      /** @type {number} */
+      var i = 0;
+      for (;i < valuesLen;i++) {
+        nodes.push(self.createElement(elem, {
+          className : "mls" + (" " + "_22mm") + (i >= this.state.starsShown ? " " + "_22mn" : "") + (i < this.state.starsShown ? " " + "_22mo" : "") + (!this.state.canUpdate ? " " + "_1g87" : ""),
+          tooltip : this.props.starLabels[i],
+          onMouseEnter : this.onMouseEnter,
+          onMouseLeave : this.onMouseLeave,
+          onClick : this.onClick,
+          position : "above",
+          alignH : "center"
         }));
       }
-      if (r.getPhoto()) return (k.createElement(g, {
-        width: this.props.imageSize,
-        height: this.props.imageSize,
-        backgroundSize: "cover",
-        src: r.getPhoto()
-      }));
-      return k.createElement("span", null);
+      return nodes;
     },
-    _getThreadParticipantList: function() {
-      if (!this.isThreadRecipient()) return null;
-      var r = this.props.entry;
-      return m.renderRawParticipantList(r.getUniqueID(), r.getAuxiliaryData().participantsToRender, r.getAuxiliaryData().thread.participants.length - 1, {
-        names_renderer: m.renderShortNames
-      });
-    },
-    _getTitle: function() {
-      var r = this.props.entry;
-      if (this.isThreadRecipient() && !r.getTitle()) return this._getThreadParticipantList();
-      return r.getTitle();
-    },
-    _getSubtitle: function() {
-      var r = this.props.entry;
-      if (this.isThreadRecipient() && !r.getTitle()) return this._getThreadParticipantList();
-      return r.getSubtitle() ? r.getSubtitle().split(' \u00b7 ')[0] : null;
-    },
-    render: function() {
-      var r = this._getSubtitle(),
-        s = p((("_599m") + (' ' + "_55xn") + (!r ? ' ' + "_5mne" : '') + (this.props.highlighted ? ' ' + "_599n" : '')), this.props.className);
-      return (k.createElement("li", {
-        "aria-selected": this.props.selected,
-        className: s,
-        onMouseDown: this._onSelect,
-        onMouseEnter: this._onHighlight,
-        role: this.props.role
-      }, k.createElement(i, {
-        spacing: "medium"
-      }, this._getImage(), k.createElement(j, null, k.createElement("div", null, k.createElement("div", {
-        className: "_55xt _599p"
-      }, this._getTitle()), k.createElement("div", {
-        className: "_55z3 _599q"
-      }, r)), this.props.children))));
+    /**
+     * @return {?}
+     */
+    render : function() {
+      return self.createElement("div", null, this.getStars());
     }
   });
-  e.exports = q;
+  module.exports = JsDiff;
 }, null);
-__d("MessagingRecipientSelectedList.react", ["Image.react", "LeftRight.react", "Map", "MessagingRecipientTypeaheadItem.react", "React", "cx", "fbt", "xuiglyph"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n) {
-  var o = k.createClass({
-    displayName: "MessagingRecipientSelectedList",
-    propTypes: {
-      entries: k.PropTypes.instanceOf(i),
-      onSelect: k.PropTypes.func.isRequired
+__d("Stars.react", ["React", "cx"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, self, opt_attributes) {
+  /** @type {number} */
+  var percentComplete = 4;
+  /** @type {Array} */
+  var prevSources = ["emptyStar", "onefourthStar", "halfStar", "threefourthsStar", "fullStar"];
+  var JsDiff = self.createClass({
+    displayName : "Stars",
+    propTypes : {
+      count : self.PropTypes.number.isRequired,
+      max : self.PropTypes.number,
+      size : self.PropTypes.oneOf(["small", "large"]),
+      title : self.PropTypes.string
     },
-    _renderSelectedEntry: function(p) {
-      var q = n({
-        name: 'cross',
-        shade: 'dark',
-        size: 'small'
-      });
-      return (k.createElement(j, {
-        key: p.getUniqueID(),
-        entry: p,
-        imageSize: 24,
-        onSelect: this.props.onSelect
-      }, k.createElement(g, {
-        className: "_1jm4",
-        src: q
-      })));
-    },
-    render: function() {
-      var p = ("Selected"),
-        q = [];
-      this.props.entries.forEach(function(r) {
-        return q.push(this._renderSelectedEntry(r));
-      }.bind(this));
-      return (k.createElement("div", {
-        className: "_1jm5"
-      }, k.createElement(h, {
-        className: "_1jm6 _2ph-"
-      }, k.createElement("span", null, p), k.createElement("span", null, this.props.entries.size)), k.createElement("ul", null, q)));
-    }
-  });
-  e.exports = o;
-}, null);
-__d("MessagingRecipientTypeaheadView.react", ["CenteredContainer.react", "Link.react", "Map", "MessagingRecipientTypeaheadItem.react", "React", "TypeaheadViewPropTypes", "XUISpinner.react", "cx", "fbt"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
-  var p = 32,
-    q = k.createClass({
-      displayName: "MessagingRecipientTypeaheadView",
-      propTypes: Object.assign({}, l, {
-        selectedEntries: k.PropTypes.instanceOf(i),
-        loading: k.PropTypes.bool
-      }),
-      getDefaultProps: function() {
-        return {
-          role: 'listbox'
-        };
-      },
-      _renderItem: function(r) {
-        var s = r === this.props.highlightedEntry,
-          t = this.props.selectedEntries.has(r.getUniqueID());
-        return (k.createElement(j, {
-          key: r.getUniqueID(),
-          entry: r,
-          highlighted: s,
-          imageSize: p,
-          selected: t,
-          onSelect: this.props.onSelect,
-          onHighlight: this.props.onHighlight,
-          onRenderHighlight: this.props.onRenderHighlight
-        }, k.createElement(h, {
-          "aria-checked": t,
-          className: (("_1v32") + (t ? ' ' + "_1v33" : '') + (!t ? ' ' + "_1v34" : '')),
-          href: "#",
-          role: "checkbox",
-          tabIndex: "0"
-        })));
-      },
-      render: function() {
-        if (this.props.entries.length === 0 && !this.props.loading) return (k.createElement(g, {
-          className: "_2pi1"
-        }, "No results"));
-        return (k.createElement("ul", {
-          id: this.props.ariaOwneeID,
-          className: "_51do",
-          role: this.props.role
-        }, this.props.entries.map(this._renderItem), k.createElement("div", {
-          className: "_51dq"
-        }, this.props.loading ? k.createElement(m, null) : null)));
-      }
-    });
-  e.exports = q;
-}, null);
-__d("XMessagingForwardAttachmentController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/mercury\/attachments\/forward\/", {});
-}, null);
-__d("MessagingForwardAttachmentDialog.react", ["AsyncRequest", "ChatMiniSidebarSearchSource", "Image.react", "LayerFadeOnHide", "Layout.react", "Map", "MessagingRecipientSelectedList.react", "MessagingRecipientTypeaheadView.react", "OrderedFriendsList", "React", "SearchableTextInput.react", "ScrollableArea.react", "XMessagingForwardAttachmentController", "XUIDialog.react", "XUIDialogBody.react", "XUIDialogButton.react", "XUIDialogCancelButton.react", "XUIDialogFooter.react", "XUIDialogTitle.react", "XUISpinner.react", "cx", "fbt", "xuiglyph"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ba, ca) {
-  var da = k.Column,
-    ea = k.FillColumn,
-    fa = p.createClass({
-      displayName: "MessagingForwardAttachmentDialog",
-      propTypes: {
-        attachmentID: p.PropTypes.string.isRequired,
-        onClose: p.PropTypes.func,
-        shown: p.PropTypes.bool.isRequired,
-        title: p.PropTypes.string.isRequired
-      },
-      getInitialState: function() {
-        return {
-          bootstrappedEntries: [],
-          entries: [],
-          loading: true,
-          selectedEntries: new l(),
-          sendError: null,
-          sending: false,
-          startingThreadingID: Date.now(),
-          query: ''
-        };
-      },
-      componentDidMount: function() {
-        this._dataSource = new h({
-          queryRequests: [{
-            uri: '/ajax/mercury/composer_query.php'
-          }]
-        });
-        o.getSearchableEntries(20, function(ga) {
-          this.setState({
-            bootstrappedEntries: ga,
-            loading: false
-          });
-        }.bind(this));
-      },
-      _onSelectEntry: function(ga) {
-        var ha = ga.getUniqueID(),
-          ia = new l(this.state.selectedEntries);
-        if (ia.has(ha)) {
-          ia["delete"](ha);
-        } else ia.set(ha, ga);
-        this.setState({
-          selectedEntries: ia
-        });
-      },
-      _onSearchChange: function(ga) {
-        var ha = ga.target.value;
-        this.setState({
-          loading: true,
-          query: ha
-        });
-      },
-      _onSearchEntriesFound: function(ga) {
-        this.setState({
-          entries: ga
-        });
-      },
-      _onSearchFinished: function(ga) {
-        ga === this.state.query && this.setState({
-          loading: false
-        });
-      },
-      _onSubmit: function() {
-        var ga = {},
-          ha = this.state.startingThreadingID;
-        this.state.selectedEntries.forEach(function(ja) {
-          ga[ha++] = ja.getUniqueID();
-        });
-        var ia = s.getURIBuilder().getURI();
-        new g(ia).setMethod('POST').setHandler(this._onSubmitResponse).setData({
-          attachment_id: this.props.attachmentID,
-          recipient_map: ga
-        }).send();
-        this.setState({
-          sending: true,
-          sendError: null
-        });
-      },
-      _onSubmitResponse: function(ga) {
-        if (ga.payload.success) {
-          this.props.onClose && this.props.onClose();
-          this.setState({
-            bootstrappedEntries: [],
-            selectedEntries: new l(),
-            sending: false,
-            startingThreadID: Date.now(),
-            query: ''
-          });
-          return;
-        }
-        this.setState({
-          sending: false,
-          sendError: ga.payload.error
-        });
-      },
-      render: function() {
-        var ga = ("Send Message");
-        if (this.state.selectedEntries.size > 1) ga = ("Send Messages");
-        var ha = null;
-        if (this.state.sending) {
-          ha = (p.createElement("div", null, p.createElement(z, null), p.createElement("span", {
-            className: "_5s0d _3-99"
-          }, "Sending")));
-        } else if (this.state.sendError) {
-          var ia = ca({
-            name: 'error-solid',
-            shade: 'dark',
-            size: 'medium'
-          });
-          ha = (p.createElement("div", {
-            className: "_5s0d"
-          }, p.createElement(i, {
-            src: ia
-          }), p.createElement("span", {
-            className: "_3-99"
-          }, this.state.sendError)));
-        }
-        return (p.createElement(t, {
-          shown: this.props.shown,
-          behaviors: {
-            LayerFadeOnHide: j
-          },
-          width: 560
-        }, p.createElement(y, null, this.props.title), p.createElement(u, {
-          useCustomPadding: true
-        }, p.createElement(k, null, p.createElement(da, {
-          className: "_5s0e"
-        }, p.createElement("div", {
-          className: "_2ph_"
-        }, p.createElement(q, {
-          className: "_5s0f",
-          onChange: this._onSearchChange,
-          onEntriesFound: this._onSearchEntriesFound,
-          placeholder: "Search",
-          queryString: this.state.query,
-          searchSource: this._dataSource,
-          searchSourceOptions: {
-            onQueryFinished: this._onSearchFinished
-          }
-        })), p.createElement(r, {
-          className: "_5s0g",
-          fade: true,
-          height: 400,
-          width: 360
-        }, p.createElement(n, {
-          entries: this.state.query ? this.state.entries : this.state.bootstrappedEntries,
-          loading: this.state.loading,
-          selectedEntries: this.state.selectedEntries,
-          onSelect: this._onSelectEntry
-        }))), p.createElement(ea, {
-          className: "_5s0h"
-        }, p.createElement(r, {
-          fade: true,
-          height: 457,
-          shadow: false
-        }, p.createElement(m, {
-          entries: this.state.selectedEntries,
-          onSelect: this._onSelectEntry
-        }))))), p.createElement(x, {
-          leftContent: ha
-        }, p.createElement(w, null), p.createElement(v, {
-          use: "confirm",
-          disabled: !this.state.selectedEntries.size || this.state.sending,
-          label: ga,
-          onClick: this._onSubmit
-        }))));
-      }
-    });
-  e.exports = fa;
-}, null);
-__d("Spotlight.react", ["LayerHideOnBlur", "LayerHideOnEscape", "ReactLayer", "Spotlight"], function(a, b, c, d, e, f, g, h, i, j) {
-  var k = i.createClass({
-    getDefaultEnabledBehaviors: function() {
-      return {
-        hideOnBlur: g,
-        hideOnEscape: h
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        max : 5,
+        size : "small"
       };
     },
-    createLayer: function(l) {
-      var m = this.enumerateBehaviors(this.props.behaviors),
-        n = {
-          addedBehaviors: m,
-          rootClassName: this.props.rootClassName
-        },
-        o = new j(n, l);
-      o.conditionShow(this.props.shown);
-      if (this.props.onBeforeHide) o.subscribe('beforehide', this.props.onBeforeHide);
-      if (this.props.onHide) o.subscribe('hide', this.props.onHide);
-      return o;
+    /**
+     * @param {number} innerWidth
+     * @return {?}
+     */
+    getNumSubStars : function(innerWidth) {
+      return Math.round(innerWidth * percentComplete);
     },
-    receiveProps: function(l) {
-      this.layer.conditionShow(l.shown);
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var bufLen = this.getNumSubStars(this.props.count);
+      var millis = Array.apply(null, {
+        length : this.props.max
+      }).map(function(dataAndEvents, i) {
+        return bufLen - i * percentComplete;
+      }).map(function(offsetY) {
+        return Math.max(0, Math.min(percentComplete, offsetY));
+      }).map(function(i) {
+        return self.createElement("i", {
+          className : prevSources[i]
+        });
+      });
+      /** @type {string} */
+      var cls = "uiStars" + (this.props.size === "large" ? " " + "largeStars" : "");
+      return self.createElement("div", {
+        className : cls,
+        title : this.props.title
+      }, millis);
     }
   });
-  e.exports = k;
+  module.exports = JsDiff;
 }, null);
-__d("SpotlightViewer", ["React", "ReactLayeredComponentMixin", "Spotlight.react", "cx"], function(a, b, c, d, e, f, g, h, i, j) {
-  var k = g.createClass({
-    displayName: "SpotlightViewer",
-    mixins: [h],
-    renderLayers: function() {
-      if (!this.props.open) return null;
-      var l = "_n3";
-      if (this.props.className) l += ' ' + this.props.className;
-      return {
-        photoLayer: g.createElement(i, {
-          onBeforeHide: this.props.onBeforeHide,
-          onHide: this.props.onHide,
-          rootClassName: this.props.rootClassName,
-          shown: this.props.open
-        }, g.createElement("div", {
-          className: l,
-          onClick: this.props.onClick
+__d("XMessageTranscriptRatingController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/asr/transcript/rate/", {
+    message_id : {
+      type : "String",
+      required : true
+    },
+    rating : {
+      type : "Int",
+      required : true
+    }
+  });
+}, null);
+__d("MercuryAttachmentAudioClipTranscript.react", ["AsyncRequest", "React", "XMessageTranscriptController", "MessageTranscriptWaitHandleState", "LoadingIndicator.react", "StarsInput.react", "Stars.react", "XMessageTranscriptRatingController", "MercuryConfig", "cx", "fbt"], function(textAlt, keepData, opt_attributes, matcherFunction, module, execResult, Parser, $, dataAndEvents, K, elem, regex, t, deepDataAndEvents, ignoreMethodDoesntExist, opt_keys, positionError) {
+  var JsDiff = $.createClass({
+    displayName : "Transcript",
+    /**
+     * @return {undefined}
+     */
+    fetchTranscript : function() {
+      var str = dataAndEvents.getURIBuilder().setString("message_id", this.props.message_id).getURI();
+      (new Parser(str)).setHandler(function(join) {
+        var item = join.getPayload();
+        this.setState({
+          transcript : item.transcript ? item.transcript.text : null,
+          transcriptState : item.status,
+          transcriptRetryTimeout : item.retryTimeout,
+          rating : item.rating
+        });
+        if (this.state.transcriptState === K.BUSY) {
+          setTimeout(this.fetchTranscript, Math.max(this.state.transcriptRetryTimeout, 1E3));
+        }
+      }.bind(this)).send();
+    },
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
+      this.fetchTranscript();
+    },
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      return{
+        transcript : null,
+        transcriptState : K.BUSY,
+        transcriptRetryTimeout : null,
+        rating : null
+      };
+    },
+    /**
+     * @param {number} expectedHashCode
+     * @return {undefined}
+     */
+    _submitRating : function(expectedHashCode) {
+      var options = deepDataAndEvents.getURIBuilder().setString("message_id", this.props.message_id).setInt("rating", expectedHashCode).getURI();
+      (new Parser(options)).send();
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var state = this.state.transcriptState;
+      var pos = this.state.transcript;
+      /** @type {null} */
+      var result = null;
+      /** @type {null} */
+      var data = null;
+      /** @type {null} */
+      var text = null;
+      if (state === K.READY) {
+        result = $.createElement("p", null, pos);
+        if (ignoreMethodDoesntExist.TranscriptRatingGK) {
+          if (this.state.rating === null) {
+            text = $.createElement(regex, {
+              onClick : this._submitRating
+            });
+          } else {
+            text = $.createElement(t, {
+              count : this.state.rating
+            });
+          }
+        }
+      } else {
+        if (state === K.UNAVAILABLE) {
+          result = $.createElement("p", null, "Transcript unavailable");
+        } else {
+          if (state === K.BUSY) {
+            data = $.createElement(elem, {
+              size : "small",
+              color : "white"
+            });
+          }
+        }
+      }
+      return $.createElement("div", {
+        className : "_44v-"
+      }, result, text, data);
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("MercuryThreadMetadataRawRenderer", ["Event", "CSS", "DOM", "MercuryActionStatus", "MercuryErrorInfo", "MercuryStatusTemplates", "Tooltip", "cx", "fbt"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, Event, content, d, el, record, dataAndEvents, view, matcherFunction, self) {
+  var JsDiff = {
+    /**
+     * @param {?} deepDataAndEvents
+     * @param {Function} _xhr
+     * @param {Array} fields
+     * @param {Array} buf
+     * @param {Array} monitors
+     * @param {Object} object
+     * @return {undefined}
+     */
+    renderParticipantListWithNoThreadName : function(deepDataAndEvents, _xhr, fields, buf, monitors, object) {
+      var payload = {
+        callback : true,
+        check_length : true,
+        show_unread_count : true
+      };
+      object = object || {};
+      var result = {};
+      var key;
+      for (key in object) {
+        if (payload[key]) {
+          result[key] = object[key];
+          delete object[key];
+        }
+      }
+      var camelKey = fields.map(function(off) {
+        return buf[off];
+      });
+      var value = this.renderRawParticipantList(deepDataAndEvents, camelKey, fields.length, object);
+      value = this.renderRawTitleWithUnreadCount(value, result.show_unread_count ? _xhr.unread_count : 0);
+      var length = object.abbr_mode;
+      var old = {};
+      var name;
+      for (name in object) {
+        old[name] = object[name];
+      }
+      /** @type {boolean} */
+      old.abbr_mode = true;
+      monitors.forEach(function(el) {
+        var content = monitors.length > 1 ? this._cloneIfDOMElement(value) : value;
+        d.setContent(el, content);
+        if (result.check_length && (!length && el.scrollWidth > el.clientWidth)) {
+          var data = this.renderRawParticipantList(deepDataAndEvents, camelKey, fields.length, old);
+          var args = this.renderRawTitleWithUnreadCount(data, result.show_unread_count ? _xhr.unread_count : 0);
+          d.setContent(el, args);
+        }
+      }.bind(this));
+      if (result.callback) {
+        result.callback(value);
+      }
+    },
+    /**
+     * @param {?} deepDataAndEvents
+     * @param {Array} key
+     * @param {number} i
+     * @param {Object} obj
+     * @return {?}
+     */
+    renderRawParticipantList : function(deepDataAndEvents, key, i, obj) {
+      var names_renderer = {
+        abbr_mode : true,
+        last_separator_uses_and : true,
+        names_renderer : true
+      };
+      obj = obj || {};
+      /** @type {null} */
+      var args = null;
+      if (obj.names_renderer) {
+        args = obj.names_renderer(key);
+      } else {
+        args = key.map(function(unused) {
+          return unused.name;
+        });
+      }
+      /** @type {null} */
+      var a = null;
+      if (args.length === 0) {
+        if (!deepDataAndEvents) {
+          /** @type {string} */
+          a = "New Message";
+        } else {
+          /** @type {string} */
+          a = "No Participants";
+        }
+      } else {
+        if (args.length == 1) {
+          a = args[0];
+        } else {
+          if (args.length == 2) {
+            if (obj.last_separator_uses_and) {
+              a = self._("{participant1} and {participant2}", [self.param("participant1", args[0]), self.param("participant2", args[1])]);
+            } else {
+              a = self._("{participant1}, {participant2}", [self.param("participant1", args[0]), self.param("participant2", args[1])]);
+            }
+          } else {
+            if (obj.last_separator_uses_and) {
+              if (obj.abbr_mode) {
+                a = self._("{participant1} and {others_link}", [self.param("participant1", args[0]), self.param("others_link", this.renderRawParticipantCount({
+                  render_subset : true,
+                  count : i - 1
+                }))]);
+              } else {
+                if (args.length == 3) {
+                  a = self._("{participant1}, {participant2} and {participant3}", [self.param("participant1", args[0]), self.param("participant2", args[1]), self.param("participant3", args[2])]);
+                } else {
+                  a = self._("{participant1}, {participant2} and {others_link}", [self.param("participant1", args[0]), self.param("participant2", args[1]), self.param("others_link", this.renderRawParticipantCount({
+                    render_subset : true,
+                    count : i - 2
+                  }))]);
+                }
+              }
+            } else {
+              if (args.length == 3) {
+                a = self._("{participant1}, {participant2}, {participant3}", [self.param("participant1", args[0]), self.param("participant2", args[1]), self.param("participant3", args[2])]);
+              } else {
+                a = self._("{participant1}, {participant2}, {participant3}, {others_link}", [self.param("participant1", args[0]), self.param("participant2", args[1]), self.param("participant3", args[2]), self.param("others_link", this.renderRawParticipantCount({
+                  render_subset : true,
+                  count : i - 3
+                }))]);
+              }
+            }
+          }
+        }
+      }
+      if (Array.isArray(a)) {
+        a = d.create("span", {}, a);
+      }
+      return a;
+    },
+    /**
+     * @param {?} value
+     * @param {number} fn
+     * @return {?}
+     */
+    renderRawTitleWithUnreadCount : function(value, fn) {
+      var wrapper = value;
+      if (fn && fn > 1) {
+        wrapper = d.create("span", {}, self._("{conversation_title} ({unread_count})", [self.param("conversation_title", value), self.param("unread_count", fn)]));
+      }
+      return wrapper;
+    },
+    /**
+     * @param {Object} opt_attributes
+     * @return {?}
+     */
+    renderRawParticipantCount : function(opt_attributes) {
+      var render_subset = opt_attributes.render_subset;
+      var renderRawParticipantCount;
+      if (!render_subset) {
+        renderRawParticipantCount = opt_attributes.count > 1 ? self._("{num} people", [self.param("num", opt_attributes.count)]) : "1 person";
+      } else {
+        renderRawParticipantCount = opt_attributes.count > 1 ? self._("{others_count} others", [self.param("others_count", opt_attributes.count)]) : "1 other";
+      }
+      return renderRawParticipantCount;
+    },
+    /**
+     * @param {Array} key
+     * @return {?}
+     */
+    renderShortNames : function(key) {
+      if (key.length == 1) {
+        return[key[0].name];
+      }
+      return key.map(function(i) {
+        return i.short_name;
+      });
+    },
+    /**
+     * @param {?} tagName
+     * @param {?} field
+     * @param {Object} initial
+     * @return {?}
+     */
+    renderStatusIndicator : function(tagName, field, initial) {
+      var value;
+      if (tagName == el.RESENDING) {
+        value = this.renderResendIndicator();
+      } else {
+        if (tagName !== void 0 && (tagName != el.UNSENT && (tagName != el.UNCONFIRMED && tagName != el.SUCCESS))) {
+          value = this.renderErrorIndicator(field, initial);
+        }
+      }
+      return value;
+    },
+    /**
+     * @return {?}
+     */
+    renderResendIndicator : function() {
+      return dataAndEvents[":fb:mercury:resend-indicator"].render();
+    },
+    /**
+     * @param {?} name
+     * @param {Object} obj
+     * @return {?}
+     */
+    renderErrorIndicator : function(name, obj) {
+      if (!name) {
+        return null;
+      }
+      var button = dataAndEvents[":fb:mercury:error-indicator"].render();
+      var storedAltContent = name.is_transient;
+      var fn = record.getMessage(name);
+      if (storedAltContent) {
+        if (record.isConnectionError(name)) {
+          fn = self._("{message} Check your internet connection and click to try again.", [self.param("message", fn)]);
+        } else {
+          fn = self._("{message} Click to send again.", [self.param("message", fn)]);
+        }
+      }
+      view.set(button, fn, "above", "center");
+      if (obj && storedAltContent) {
+        Event.listen(button, "click", obj);
+        button.setAttribute("tabindex", "0");
+        content.addClass(button, "_55q-");
+      }
+      return button;
+    },
+    /**
+     * @param {Object} putativeSpy
+     * @return {?}
+     */
+    _cloneIfDOMElement : function(putativeSpy) {
+      if (putativeSpy && putativeSpy.cloneNode) {
+        return putativeSpy.cloneNode();
+      } else {
+        return putativeSpy;
+      }
+    }
+  };
+  module.exports = JsDiff;
+}, null);
+__d("MessagingRecipientTypeaheadItem.react", ["BackgroundImage.react", "ChatTypeaheadConstants", "ImageBlock.react", "LeftRight.react", "React", "SplitImage.react", "MercuryThreadMetadataRawRenderer", "TypeaheadViewItem", "cx", "joinClasses"], function(ignoreMethodDoesntExist, textAlt, keepData, opt_attributes, module, matcherFunction, attribute, deepDataAndEvents, tr, type, dom, a, dataAndEvents, NumberTextBox, execResult, requestAnimationFrame) {
+  var JsDiff = dom.createClass({
+    displayName : "MessagingRecipientTypeaheadItem",
+    propTypes : Object.assign({}, NumberTextBox.propTypes, {
+      imageSize : dom.PropTypes.number.isRequired
+    }),
+    mixins : [NumberTextBox.Mixin],
+    /**
+     * @return {?}
+     */
+    isThreadRecipient : function() {
+      return this.props.entry.getType() === deepDataAndEvents.THREAD_TYPE;
+    },
+    /**
+     * @return {?}
+     */
+    _getImage : function() {
+      var name = this.props.entry;
+      if (name.getType() === deepDataAndEvents.THREAD_TYPE && !name.getPhoto()) {
+        var body = name.getAuxiliaryData();
+        return dom.createElement(a, {
+          size : this.props.imageSize,
+          srcs : body.participantsToRender.map(function(dataAndEvents) {
+            return dataAndEvents.image_src;
+          })
+        });
+      }
+      if (name.getPhoto()) {
+        return dom.createElement(attribute, {
+          width : this.props.imageSize,
+          height : this.props.imageSize,
+          backgroundSize : "cover",
+          src : name.getPhoto()
+        });
+      }
+      return dom.createElement("span", null);
+    },
+    /**
+     * @return {?}
+     */
+    _getThreadParticipantList : function() {
+      if (!this.isThreadRecipient()) {
+        return null;
+      }
+      var entry = this.props.entry;
+      return dataAndEvents.renderRawParticipantList(entry.getUniqueID(), entry.getAuxiliaryData().participantsToRender, entry.getAuxiliaryData().thread.participants.length - 1, {
+        names_renderer : dataAndEvents.renderShortNames
+      });
+    },
+    /**
+     * @return {?}
+     */
+    _getTitle : function() {
+      var p = this.props.entry;
+      if (this.isThreadRecipient() && !p.getTitle()) {
+        return this._getThreadParticipantList();
+      }
+      return p.getTitle();
+    },
+    /**
+     * @return {?}
+     */
+    _getSubtitle : function() {
+      var p = this.props.entry;
+      if (this.isThreadRecipient() && !p.getTitle()) {
+        return this._getThreadParticipantList();
+      }
+      return p.getSubtitle() ? p.getSubtitle().split(" \u00b7 ")[0] : null;
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var MSG_TEX_EDITOR = this._getSubtitle();
+      var id = requestAnimationFrame("_599m" + (" " + "_55xn") + (!MSG_TEX_EDITOR ? " " + "_5mne" : "") + (this.props.highlighted ? " " + "_599n" : ""), this.props.className);
+      return dom.createElement("li", {
+        "aria-selected" : this.props.selected,
+        className : id,
+        onMouseDown : this._onSelect,
+        onMouseEnter : this._onHighlight,
+        role : this.props.role
+      }, dom.createElement(tr, {
+        spacing : "medium"
+      }, this._getImage(), dom.createElement(type, null, dom.createElement("div", null, dom.createElement("div", {
+        className : "_55xt _599p"
+      }, this._getTitle()), dom.createElement("div", {
+        className : "_55z3 _599q"
+      }, MSG_TEX_EDITOR)), this.props.children)));
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("MessagingRecipientSelectedList.react", ["Image.react", "LeftRight.react", "Map", "MessagingRecipientTypeaheadItem.react", "React", "cx", "fbt", "xuiglyph"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, type, t, logger, attribute, self, opt_attributes, matcherFunction, parse) {
+  var JsDiff = self.createClass({
+    displayName : "MessagingRecipientSelectedList",
+    propTypes : {
+      entries : self.PropTypes.instanceOf(logger),
+      onSelect : self.PropTypes.func.isRequired
+    },
+    /**
+     * @param {Object} deepDataAndEvents
+     * @return {?}
+     */
+    _renderSelectedEntry : function(deepDataAndEvents) {
+      var url = parse({
+        name : "cross",
+        shade : "dark",
+        size : "small"
+      });
+      return self.createElement(attribute, {
+        key : deepDataAndEvents.getUniqueID(),
+        entry : deepDataAndEvents,
+        imageSize : 24,
+        onSelect : this.props.onSelect
+      }, self.createElement(type, {
+        className : "_1jm4",
+        src : url
+      }));
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      /** @type {string} */
+      var millis = "Selected";
+      /** @type {Array} */
+      var version = [];
+      this.props.entries.forEach(function(deepDataAndEvents) {
+        return version.push(this._renderSelectedEntry(deepDataAndEvents));
+      }.bind(this));
+      return self.createElement("div", {
+        className : "_1jm5"
+      }, self.createElement(t, {
+        className : "_1jm6 _2ph-"
+      }, self.createElement("span", null, millis), self.createElement("span", null, this.props.entries.size)), self.createElement("ul", null, version));
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("MessagingRecipientTypeaheadView.react", ["CenteredContainer.react", "Link.react", "Map", "MessagingRecipientTypeaheadItem.react", "React", "TypeaheadViewPropTypes", "XUISpinner.react", "cx", "fbt"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, attribute, type, logger, property, self, map, t, opt_attributes, matcherFunction) {
+  /** @type {number} */
+  var number0 = 32;
+  var JsDiff = self.createClass({
+    displayName : "MessagingRecipientTypeaheadView",
+    propTypes : Object.assign({}, map, {
+      selectedEntries : self.PropTypes.instanceOf(logger),
+      loading : self.PropTypes.bool
+    }),
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        role : "listbox"
+      };
+    },
+    /**
+     * @param {Object} item
+     * @return {?}
+     */
+    _renderItem : function(item) {
+      /** @type {boolean} */
+      var highlighted = item === this.props.highlightedEntry;
+      var checked = this.props.selectedEntries.has(item.getUniqueID());
+      return self.createElement(property, {
+        key : item.getUniqueID(),
+        entry : item,
+        highlighted : highlighted,
+        imageSize : number0,
+        selected : checked,
+        onSelect : this.props.onSelect,
+        onHighlight : this.props.onHighlight,
+        onRenderHighlight : this.props.onRenderHighlight
+      }, self.createElement(type, {
+        "aria-checked" : checked,
+        className : "_1v32" + (checked ? " " + "_1v33" : "") + (!checked ? " " + "_1v34" : ""),
+        href : "#",
+        role : "checkbox",
+        tabIndex : "0"
+      }));
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      if (this.props.entries.length === 0 && !this.props.loading) {
+        return self.createElement(attribute, {
+          className : "_2pi1"
+        }, "No results");
+      }
+      return self.createElement("ul", {
+        id : this.props.ariaOwneeID,
+        className : "_51do",
+        role : this.props.role
+      }, this.props.entries.map(this._renderItem), self.createElement("div", {
+        className : "_51dq"
+      }, this.props.loading ? self.createElement(t, null) : null));
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("XMessagingForwardAttachmentController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/mercury/attachments/forward/", {});
+}, null);
+__d("MessagingForwardAttachmentDialog.react", ["AsyncRequest", "ChatMiniSidebarSearchSource", "Image.react", "LayerFadeOnHide", "Layout.react", "Map", "MessagingRecipientSelectedList.react", "MessagingRecipientTypeaheadView.react", "OrderedFriendsList", "React", "SearchableTextInput.react", "ScrollableArea.react", "XMessagingForwardAttachmentController", "XUIDialog.react", "XUIDialogBody.react", "XUIDialogButton.react", "XUIDialogCancelButton.react", "XUIDialogFooter.react", "XUIDialogTitle.react",
+"XUISpinner.react", "cx", "fbt", "xuiglyph"], function(ignoreMethodDoesntExist, matcherFunction, execResult, opt_keys, module, positionError, Stack, deepDataAndEvents, el, textAlt, elem, dataAndEvents, style, data, keepData, $, type, element, opt_attributes, t, what, tagType, section, s, template, o, oFunctionBody, _$timeout_, parse) {
+  var options = elem.Column;
+  var attrs = elem.FillColumn;
+  var JsDiff = $.createClass({
+    displayName : "MessagingForwardAttachmentDialog",
+    propTypes : {
+      attachmentID : $.PropTypes.string.isRequired,
+      onClose : $.PropTypes.func,
+      shown : $.PropTypes.bool.isRequired,
+      title : $.PropTypes.string.isRequired
+    },
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      return{
+        bootstrappedEntries : [],
+        entries : [],
+        loading : true,
+        selectedEntries : new dataAndEvents,
+        sendError : null,
+        sending : false,
+        startingThreadingID : Date.now(),
+        query : ""
+      };
+    },
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
+      this._dataSource = new deepDataAndEvents({
+        queryRequests : [{
+          uri : "/ajax/mercury/composer_query.php"
+        }]
+      });
+      keepData.getSearchableEntries(20, function(dataAndEvents) {
+        this.setState({
+          bootstrappedEntries : dataAndEvents,
+          loading : false
+        });
+      }.bind(this));
+    },
+    /**
+     * @param {number} expectedHashCode
+     * @return {undefined}
+     */
+    _onSelectEntry : function(expectedHashCode) {
+      var name = expectedHashCode.getUniqueID();
+      var scope = new dataAndEvents(this.state.selectedEntries);
+      if (scope.has(name)) {
+        scope["delete"](name);
+      } else {
+        scope.set(name, expectedHashCode);
+      }
+      this.setState({
+        selectedEntries : scope
+      });
+    },
+    /**
+     * @param {Event} evt
+     * @return {undefined}
+     */
+    _onSearchChange : function(evt) {
+      var q = evt.target.value;
+      this.setState({
+        loading : true,
+        query : q
+      });
+    },
+    /**
+     * @param {Object} entries
+     * @return {undefined}
+     */
+    _onSearchEntriesFound : function(entries) {
+      this.setState({
+        entries : entries
+      });
+    },
+    /**
+     * @param {string} exp
+     * @return {undefined}
+     */
+    _onSearchFinished : function(exp) {
+      if (exp === this.state.query) {
+        this.setState({
+          loading : false
+        });
+      }
+    },
+    /**
+     * @return {undefined}
+     */
+    _onSubmit : function() {
+      var segments = {};
+      var pos = this.state.startingThreadingID;
+      this.state.selectedEntries.forEach(function(dataAndEvents) {
+        segments[pos++] = dataAndEvents.getUniqueID();
+      });
+      var head = opt_attributes.getURIBuilder().getURI();
+      (new Stack(head)).setMethod("POST").setHandler(this._onSubmitResponse).setData({
+        attachment_id : this.props.attachmentID,
+        recipient_map : segments
+      }).send();
+      this.setState({
+        sending : true,
+        sendError : null
+      });
+    },
+    /**
+     * @param {Object} res
+     * @return {undefined}
+     */
+    _onSubmitResponse : function(res) {
+      if (res.payload.success) {
+        if (this.props.onClose) {
+          this.props.onClose();
+        }
+        this.setState({
+          bootstrappedEntries : [],
+          selectedEntries : new dataAndEvents,
+          sending : false,
+          startingThreadID : Date.now(),
+          query : ""
+        });
+        return;
+      }
+      this.setState({
+        sending : false,
+        sendError : res.payload.error
+      });
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      /** @type {string} */
+      var lab = "Send Message";
+      if (this.state.selectedEntries.size > 1) {
+        /** @type {string} */
+        lab = "Send Messages";
+      }
+      /** @type {null} */
+      var d = null;
+      if (this.state.sending) {
+        d = $.createElement("div", null, $.createElement(o, null), $.createElement("span", {
+          className : "_5s0d _3-99"
+        }, "Sending"));
+      } else {
+        if (this.state.sendError) {
+          var url = parse({
+            name : "error-solid",
+            shade : "dark",
+            size : "medium"
+          });
+          d = $.createElement("div", {
+            className : "_5s0d"
+          }, $.createElement(el, {
+            src : url
+          }), $.createElement("span", {
+            className : "_3-99"
+          }, this.state.sendError));
+        }
+      }
+      return $.createElement(t, {
+        shown : this.props.shown,
+        behaviors : {
+          LayerFadeOnHide : textAlt
+        },
+        width : 560
+      }, $.createElement(template, null, this.props.title), $.createElement(what, {
+        useCustomPadding : true
+      }, $.createElement(elem, null, $.createElement(options, {
+        className : "_5s0e"
+      }, $.createElement("div", {
+        className : "_2ph_"
+      }, $.createElement(type, {
+        className : "_5s0f",
+        onChange : this._onSearchChange,
+        onEntriesFound : this._onSearchEntriesFound,
+        placeholder : "Search",
+        queryString : this.state.query,
+        searchSource : this._dataSource,
+        searchSourceOptions : {
+          onQueryFinished : this._onSearchFinished
+        }
+      })), $.createElement(element, {
+        className : "_5s0g",
+        fade : true,
+        height : 400,
+        width : 360
+      }, $.createElement(data, {
+        entries : this.state.query ? this.state.entries : this.state.bootstrappedEntries,
+        loading : this.state.loading,
+        selectedEntries : this.state.selectedEntries,
+        onSelect : this._onSelectEntry
+      }))), $.createElement(attrs, {
+        className : "_5s0h"
+      }, $.createElement(element, {
+        fade : true,
+        height : 457,
+        shadow : false
+      }, $.createElement(style, {
+        entries : this.state.selectedEntries,
+        onSelect : this._onSelectEntry
+      }))))), $.createElement(s, {
+        leftContent : d
+      }, $.createElement(section, null), $.createElement(tagType, {
+        use : "confirm",
+        disabled : !this.state.selectedEntries.size || this.state.sending,
+        label : lab,
+        onClick : this._onSubmit
+      })));
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("Spotlight.react", ["LayerHideOnBlur", "LayerHideOnEscape", "ReactLayer", "Spotlight"], function(ignoreMethodDoesntExist, textAlt, keepData, opt_attributes, module, matcherFunction, dataAndEvents, deepDataAndEvents, React, Assertion) {
+  var JsDiff = React.createClass({
+    /**
+     * @return {?}
+     */
+    getDefaultEnabledBehaviors : function() {
+      return{
+        hideOnBlur : dataAndEvents,
+        hideOnEscape : deepDataAndEvents
+      };
+    },
+    /**
+     * @param {?} msg
+     * @return {?}
+     */
+    createLayer : function(msg) {
+      var addedBehaviors = this.enumerateBehaviors(this.props.behaviors);
+      var exp = {
+        addedBehaviors : addedBehaviors,
+        rootClassName : this.props.rootClassName
+      };
+      var obj = new Assertion(exp, msg);
+      obj.conditionShow(this.props.shown);
+      if (this.props.onBeforeHide) {
+        obj.subscribe("beforehide", this.props.onBeforeHide);
+      }
+      if (this.props.onHide) {
+        obj.subscribe("hide", this.props.onHide);
+      }
+      return obj;
+    },
+    /**
+     * @param {?} msg
+     * @return {undefined}
+     */
+    receiveProps : function(msg) {
+      this.layer.conditionShow(msg.shown);
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("SpotlightViewer", ["React", "ReactLayeredComponentMixin", "Spotlight.react", "cx"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, dom, dataAndEvents, type, matcherFunction) {
+  var JsDiff = dom.createClass({
+    displayName : "SpotlightViewer",
+    mixins : [dataAndEvents],
+    /**
+     * @return {?}
+     */
+    renderLayers : function() {
+      if (!this.props.open) {
+        return null;
+      }
+      /** @type {string} */
+      var cls = "_n3";
+      if (this.props.className) {
+        cls += " " + this.props.className;
+      }
+      return{
+        photoLayer : dom.createElement(type, {
+          onBeforeHide : this.props.onBeforeHide,
+          onHide : this.props.onHide,
+          rootClassName : this.props.rootClassName,
+          shown : this.props.open
+        }, dom.createElement("div", {
+          className : cls,
+          onClick : this.props.onClick
         }, this.props.children))
       };
     },
-    render: function() {
-      return (g.createElement("div", null));
+    /**
+     * @return {?}
+     */
+    render : function() {
+      return dom.createElement("div", null);
     }
   });
-  e.exports = k;
+  module.exports = JsDiff;
 }, null);
-__d("SpotlightViewerAutoResize", ["Event", "SubscriptionsHandler", "invariant"], function(a, b, c, d, e, f, g, h, i) {
-  function j(k) {
-    "use strict";
-    this.$SpotlightViewerAutoResize0 = k;
-    i(typeof this.$SpotlightViewerAutoResize0.onResize === 'function');
+__d("SpotlightViewerAutoResize", ["Event", "SubscriptionsHandler", "invariant"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, m, dataAndEvents, sync) {
+  /**
+   * @param {?} state
+   * @return {undefined}
+   */
+  function $(state) {
+    this.$SpotlightViewerAutoResize0 = state;
+    sync(typeof this.$SpotlightViewerAutoResize0.onResize === "function");
   }
-  j.prototype.enable = function() {
-    "use strict";
-    this.$SpotlightViewerAutoResize1 = new h();
-    this.$SpotlightViewerAutoResize1.addSubscriptions(g.listen(window, 'resize', this.$SpotlightViewerAutoResize0.onResize.bind(this.$SpotlightViewerAutoResize0)));
+  /**
+   * @return {undefined}
+   */
+  $.prototype.enable = function() {
+    this.$SpotlightViewerAutoResize1 = new dataAndEvents;
+    this.$SpotlightViewerAutoResize1.addSubscriptions(m.listen(window, "resize", this.$SpotlightViewerAutoResize0.onResize.bind(this.$SpotlightViewerAutoResize0)));
   };
-  j.prototype.disable = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  $.prototype.disable = function() {
     this.$SpotlightViewerAutoResize1.release();
     delete this.$SpotlightViewerAutoResize1;
   };
-  e.exports = j;
+  /** @type {function (?): undefined} */
+  module.exports = $;
 }, null);
-__d("SpotlightViewerBehaviorsMixin", ["BehaviorsMixin", "copyProperties"], function(a, b, c, d, e, f, g, h) {
-  var i = {
-    componentWillMount: function() {
-      this.behaviors && this.enableBehaviors(this.behaviors);
+__d("SpotlightViewerBehaviorsMixin", ["BehaviorsMixin", "copyProperties"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, mongoObject, callback) {
+  var unique = {
+    /**
+     * @return {undefined}
+     */
+    componentWillMount : function() {
+      if (this.behaviors) {
+        this.enableBehaviors(this.behaviors);
+      }
     },
-    componentWillUnmount: function() {
+    /**
+     * @return {undefined}
+     */
+    componentWillUnmount : function() {
       this.destroyBehaviors();
     }
   };
-  h(i, g);
-  e.exports = i;
+  callback(unique, mongoObject);
+  module.exports = unique;
 }, null);
-__d("SpotlightViewerBottomBar", ["LeftRight.react", "React", "cx", "joinClasses"], function(a, b, c, d, e, f, g, h, i, j) {
-  var k = h.createClass({
-    displayName: "SpotlightViewerBottomBar",
-    render: function() {
-      var l = Array.isArray(this.props.children) ? this.props.children : [this.props.children],
-        m = "_4_8n _51an";
-      if (this.props.className) m = j(m, this.props.className);
-      if (l.length === 1) return (h.createElement("div", {
-        className: m
-      }, l[0]));
-      m = j(m, "_50-m");
-      return (h.createElement(g, {
-        className: m
-      }, l[0], l[1]));
+__d("SpotlightViewerBottomBar", ["LeftRight.react", "React", "cx", "joinClasses"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, type, self, opt_attributes, callback) {
+  var JsDiff = self.createClass({
+    displayName : "SpotlightViewerBottomBar",
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var value = Array.isArray(this.props.children) ? this.props.children : [this.props.children];
+      /** @type {string} */
+      var basis = "_4_8n _51an";
+      if (this.props.className) {
+        basis = callback(basis, this.props.className);
+      }
+      if (value.length === 1) {
+        return self.createElement("div", {
+          className : basis
+        }, value[0]);
+      }
+      basis = callback(basis, "_50-m");
+      return self.createElement(type, {
+        className : basis
+      }, value[0], value[1]);
     }
   });
-  e.exports = k;
+  module.exports = JsDiff;
 }, null);
-__d("SpotlightViewerBottomBarGroup", ["React", "cx"], function(a, b, c, d, e, f, g, h) {
-  var i = g.createClass({
-    displayName: "SpotlightViewerBottomBarGroup",
-    render: function() {
-      var j = this.props.itemmargin || 'right',
-        k = ((j == 'left' ? "marginLeft" : '') + (j == 'right' ? ' ' + "marginRight" : '') + (' ' + "_4_8i"));
-      return (g.createElement("div", {
-        className: k
-      }, this.props.children));
+__d("SpotlightViewerBottomBarGroup", ["React", "cx"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, self, opt_attributes) {
+  var JsDiff = self.createClass({
+    displayName : "SpotlightViewerBottomBarGroup",
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var dir = this.props.itemmargin || "right";
+      /** @type {string} */
+      var cls = (dir == "left" ? "marginLeft" : "") + (dir == "right" ? " " + "marginRight" : "") + (" " + "_4_8i");
+      return self.createElement("div", {
+        className : cls
+      }, this.props.children);
     }
   });
-  e.exports = i;
+  module.exports = JsDiff;
 }, null);
-__d("SpotlightViewerBottomBarLink", ["Link.react", "React", "cx"], function(a, b, c, d, e, f, g, h, i) {
-  var j = h.createClass({
-    displayName: "SpotlightViewerBottomBarLink",
-    render: function() {
-      return (h.createElement(g, h.__spread({}, this.props, {
-        className: "_4_8j _4_8k"
-      }), this.props.children));
+__d("SpotlightViewerBottomBarLink", ["Link.react", "React", "cx"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, type, DOM, opt_attributes) {
+  var JsDiff = DOM.createClass({
+    displayName : "SpotlightViewerBottomBarLink",
+    /**
+     * @return {?}
+     */
+    render : function() {
+      return DOM.createElement(type, DOM.__spread({}, this.props, {
+        className : "_4_8j _4_8k"
+      }), this.props.children);
     }
   });
-  e.exports = j;
+  module.exports = JsDiff;
 }, null);
-__d("SpotlightViewerPagers", ["LeftRight.react", "Link.react", "React", "cx"], function(a, b, c, d, e, f, g, h, i, j) {
-  var k = i.createClass({
-    displayName: "SpotlightViewerPagers",
-    render: function() {
-      return (i.createElement(g, null, i.createElement(h, {
-        className: "_4-oa _4-ob _50-m"
-      }), i.createElement(h, {
-        className: "_4-oa _4-oc _50-m"
-      })));
+__d("SpotlightViewerPagers", ["LeftRight.react", "Link.react", "React", "cx"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, type, value, self, opt_attributes) {
+  var JsDiff = self.createClass({
+    displayName : "SpotlightViewerPagers",
+    /**
+     * @return {?}
+     */
+    render : function() {
+      return self.createElement(type, null, self.createElement(value, {
+        className : "_4-oa _4-ob _50-m"
+      }), self.createElement(value, {
+        className : "_4-oa _4-oc _50-m"
+      }));
     }
   });
-  e.exports = k;
+  module.exports = JsDiff;
 }, null);
-__d("SpotlightViewerPageWithKeys", ["KeyEventController", "SubscriptionsHandler"], function(a, b, c, d, e, f, g, h) {
-  function i(j) {
-    "use strict";
-    this.$SpotlightViewerPageWithKeys0 = j;
+__d("SpotlightViewerPageWithKeys", ["KeyEventController", "SubscriptionsHandler"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, event, dataAndEvents) {
+  /**
+   * @param {?} topic
+   * @return {undefined}
+   */
+  function exp(topic) {
+    this.$SpotlightViewerPageWithKeys0 = topic;
   }
-  i.prototype.enable = function() {
-    "use strict";
-    this.$SpotlightViewerPageWithKeys1 = new h();
-    this.$SpotlightViewerPageWithKeys1.addSubscriptions(g.registerKey('LEFT', function() {
+  /**
+   * @return {undefined}
+   */
+  exp.prototype.enable = function() {
+    this.$SpotlightViewerPageWithKeys1 = new dataAndEvents;
+    this.$SpotlightViewerPageWithKeys1.addSubscriptions(event.registerKey("LEFT", function() {
       this.$SpotlightViewerPageWithKeys0.viewState.backward();
       return false;
-    }.bind(this)), g.registerKey('RIGHT', function() {
+    }.bind(this)), event.registerKey("RIGHT", function() {
       this.$SpotlightViewerPageWithKeys0.viewState.forward();
       return false;
     }.bind(this)));
   };
-  i.prototype.disable = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  exp.prototype.disable = function() {
     this.$SpotlightViewerPageWithKeys1.release();
     delete this.$SpotlightViewerPageWithKeys1;
   };
-  e.exports = i;
+  /** @type {function (?): undefined} */
+  module.exports = exp;
 }, null);
-__d("SpotlightViewerThumbnailMixin", ["PhotoStore", "Vector"], function(a, b, c, d, e, f, g, h) {
-  var i = {
-    _getInitialPhotoData: function() {
-      var j = g.getIndexForID(this.props.setid, this.props.photoid),
-        k = g.getByIndexImmediate(this.props.setid, j);
-      return k ? k : this._getThumbnailPhotoData();
+__d("SpotlightViewerThumbnailMixin", ["PhotoStore", "Vector"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, props, store) {
+  var JsDiff = {
+    /**
+     * @return {?}
+     */
+    _getInitialPhotoData : function() {
+      var camelKey = props.getIndexForID(this.props.setid, this.props.photoid);
+      var data = props.getByIndexImmediate(this.props.setid, camelKey);
+      return data ? data : this._getThumbnailPhotoData();
     },
-    _getThumbnailPhotoData: function() {
-      if (!this.props.dimensions || !this.props.thumbsrc) return null;
-      var j = {
-        id: this.props.photoid
+    /**
+     * @return {?}
+     */
+    _getThumbnailPhotoData : function() {
+      if (!this.props.dimensions || !this.props.thumbsrc) {
+        return null;
+      }
+      var obj = {
+        id : this.props.photoid
       };
-      for (var k = 0; k < this.props.dimensions.length; ++k) {
-        var l = h.deserialize(this.props.dimensions[k]);
-        j['image' + k] = {
-          width: l.x,
-          height: l.y,
-          uri: this.props.thumbsrc
+      /** @type {number} */
+      var i = 0;
+      for (;i < this.props.dimensions.length;++i) {
+        var cfg = store.deserialize(this.props.dimensions[i]);
+        obj["image" + i] = {
+          width : cfg.x,
+          height : cfg.y,
+          uri : this.props.thumbsrc
         };
       }
-      return j;
+      return obj;
     }
   };
-  e.exports = i;
+  module.exports = JsDiff;
 }, null);
-__d("XMessagingPhotoDownloadController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/mercury\/attachments\/photo\/", {
-    photo_id: {
-      type: "String",
-      required: true
+__d("XMessagingPhotoDownloadController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/mercury/attachments/photo/", {
+    photo_id : {
+      type : "String",
+      required : true
     }
   });
 }, null);
-__d("SpotlightMessagesViewer", ["ArbiterMixin", "MercuryConfig", "MessagingForwardAttachmentDialog.react", "PageTransitions", "React", "ReactLayeredComponentMixin", "SpotlightViewer", "SpotlightViewerAutoResize", "SpotlightViewerBehaviorsMixin", "SpotlightViewerBottomBar", "SpotlightViewerBottomBarGroup", "SpotlightViewerBottomBarLink", "SpotlightViewerClose", "SpotlightViewerCoreMixin", "SpotlightViewerDimensionMixin", "SpotlightViewerPagers", "SpotlightViewerPageWithKeys", "SpotlightViewerThumbnailMixin", "SpotlightViewport", "SubscriptionsHandler", "XMessagingPhotoDownloadController", "fbt"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ba) {
-  var ca = k.createClass({
-    displayName: "SpotlightMessagesViewer",
-    mixins: [g, l, o, t, x, u],
-    behaviors: [w, n],
-    componentWillUnmount: function() {
-      this._subscriptions && this._subscriptions.release();
+__d("SpotlightMessagesViewer", ["ArbiterMixin", "MercuryConfig", "MessagingForwardAttachmentDialog.react", "PageTransitions", "React", "ReactLayeredComponentMixin", "SpotlightViewer", "SpotlightViewerAutoResize", "SpotlightViewerBehaviorsMixin", "SpotlightViewerBottomBar", "SpotlightViewerBottomBarGroup", "SpotlightViewerBottomBarLink", "SpotlightViewerClose", "SpotlightViewerCoreMixin", "SpotlightViewerDimensionMixin", "SpotlightViewerPagers", "SpotlightViewerPageWithKeys", "SpotlightViewerThumbnailMixin",
+"SpotlightViewport", "SubscriptionsHandler", "XMessagingPhotoDownloadController", "fbt"], function(failing_message, nextStack, noCorrect, contextElem, module, stopHere, ignoreMethodDoesntExist, dataAndEvents, t, textAlt, self, keepData, template, opt_attributes, matcherFunction, s, value, type, label, execResult, opt_keys, attribute, positionError, oFunctionBody, property, deepDataAndEvents, _$timeout_, subKey) {
+  var JsDiff = self.createClass({
+    displayName : "SpotlightMessagesViewer",
+    mixins : [ignoreMethodDoesntExist, keepData, matcherFunction, execResult, oFunctionBody, opt_keys],
+    behaviors : [positionError, opt_attributes],
+    /**
+     * @return {undefined}
+     */
+    componentWillUnmount : function() {
+      if (this._subscriptions) {
+        this._subscriptions.release();
+      }
+      /** @type {null} */
       this._subscriptions = null;
     },
-    getViewerID: function() {
+    /**
+     * @return {?}
+     */
+    getViewerID : function() {
       return this.props.setid;
     },
-    getInitialState: function() {
-      this._subscriptions = new z();
-      return {
-        photoData: this._getInitialPhotoData(),
-        open: true,
-        showForward: false
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      this._subscriptions = new deepDataAndEvents;
+      return{
+        photoData : this._getInitialPhotoData(),
+        open : true,
+        showForward : false
       };
     },
-    _enableSubscriptions: function() {
-      this.props.useloadingindicator && this._subscriptions.addSubscriptions(this.viewState.subscribe('photo_fetch', this.setState.bind(this, {
-        photoData: null
-      }, null)));
+    /**
+     * @return {undefined}
+     */
+    _enableSubscriptions : function() {
+      if (this.props.useloadingindicator) {
+        this._subscriptions.addSubscriptions(this.viewState.subscribe("photo_fetch", this.setState.bind(this, {
+          photoData : null
+        }, null)));
+      }
     },
-    _showForwardDialog: function() {
+    /**
+     * @return {undefined}
+     */
+    _showForwardDialog : function() {
       this.setState({
-        showForward: true
+        showForward : true
       });
     },
-    _hideForwardDialog: function() {
+    /**
+     * @return {undefined}
+     */
+    _hideForwardDialog : function() {
       this.setState({
-        showForward: false
+        showForward : false
       });
     },
-    renderLayers: function() {
-      var da = ("Send this photo to friends");
-      return {
-        forwardDialog: (k.createElement(i, {
-          attachmentID: String(this.state.photoData.id),
-          onClose: this._hideForwardDialog,
-          shown: this.state.showForward,
-          title: da
-        }))
+    /**
+     * @return {?}
+     */
+    renderLayers : function() {
+      /** @type {string} */
+      var MSG_CLOSURE_CUSTOM_COLOR_BUTTON = "Send this photo to friends";
+      return{
+        forwardDialog : self.createElement(t, {
+          attachmentID : String(this.state.photoData.id),
+          onClose : this._hideForwardDialog,
+          shown : this.state.showForward,
+          title : MSG_CLOSURE_CUSTOM_COLOR_BUTTON
+        })
       };
     },
-    render: function() {
-      var da = this.getMedia(),
-        ea = this.getStageDimensions(),
-        fa = this.props.useloadingindicator && !this.state.photoData;
-      j.registerCompletionCallback(function() {
-        if (this.state.open) this.close();
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var media = this.getMedia();
+      var stageDimensions = this.getStageDimensions();
+      var showLoadingIndicator = this.props.useloadingindicator && !this.state.photoData;
+      textAlt.registerCompletionCallback(function() {
+        if (this.state.open) {
+          this.close();
+        }
         return true;
       }.bind(this));
-      return (k.createElement(m, {
-        rootClassName: this.props.rootClassName,
-        open: this.state.open,
-        onHide: this.close
-      }, k.createElement(y, {
-        onClick: this._onClickViewport,
-        stageDimensions: ea,
-        media: da,
-        snapToPhoto: this.props.snapToPhoto,
-        showLoadingIndicator: fa
-      }, k.createElement(s, {
-        onClick: this.close
-      }), this.props.disablepaging ? null : k.createElement(v, null), this._renderBottomBar())));
+      return self.createElement(template, {
+        rootClassName : this.props.rootClassName,
+        open : this.state.open,
+        onHide : this.close
+      }, self.createElement(property, {
+        onClick : this._onClickViewport,
+        stageDimensions : stageDimensions,
+        media : media,
+        snapToPhoto : this.props.snapToPhoto,
+        showLoadingIndicator : showLoadingIndicator
+      }, self.createElement(label, {
+        onClick : this.close
+      }), this.props.disablepaging ? null : self.createElement(attribute, null), this._renderBottomBar()));
     },
-    _renderBottomBar: function() {
-      var da = h.ForwardingEnabled ? k.createElement(r, {
-          onClick: this._showForwardDialog
-        }, "Send") : null,
-        ea = aa.getURIBuilder().setString('photo_id', String(this.state.photoData.id)).getURI();
-      return (k.createElement(p, null, k.createElement(q, null), k.createElement(q, null, da, k.createElement(r, {
-        rel: "async",
-        ajaxify: ea
-      }, "Download"))));
+    /**
+     * @return {?}
+     */
+    _renderBottomBar : function() {
+      var version = dataAndEvents.ForwardingEnabled ? self.createElement(type, {
+        onClick : this._showForwardDialog
+      }, "Send") : null;
+      var ajaxify = _$timeout_.getURIBuilder().setString("photo_id", String(this.state.photoData.id)).getURI();
+      return self.createElement(s, null, self.createElement(value, null), self.createElement(value, null, version, self.createElement(type, {
+        rel : "async",
+        ajaxify : ajaxify
+      }, "Download")));
     }
   });
-  e.exports = ca;
+  module.exports = JsDiff;
 }, null);
-__d("MessagesViewer", ["AsyncRequest", "DOM", "MessagesViewerSetID", "PhotoStore", "React", "SpotlightMessagesViewer", "ge"], function(a, b, c, d, e, f, g, h, i, j, k, l, m) {
-  var n = {
-    bootstrapWithElem: function(o) {
-      n.bootstrapWithConfig({
-        fbid: o.getAttribute('data-fbid'),
-        dimensions: o.getAttribute('data-dimensions'),
-        src: o.getAttribute('href'),
-        endpoint: o.getAttribute('data-endpoint'),
-        disablePaging: o.getAttribute('data-disablepaging')
-      }, o);
+__d("MessagesViewer", ["AsyncRequest", "DOM", "MessagesViewerSetID", "PhotoStore", "React", "SpotlightMessagesViewer", "ge"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, m, domConstruct, elemData, object, d, style, html) {
+  var $ = {
+    /**
+     * @param {Element} element
+     * @return {undefined}
+     */
+    bootstrapWithElem : function(element) {
+      $.bootstrapWithConfig({
+        fbid : element.getAttribute("data-fbid"),
+        dimensions : element.getAttribute("data-dimensions"),
+        src : element.getAttribute("href"),
+        endpoint : element.getAttribute("data-endpoint"),
+        disablePaging : element.getAttribute("data-disablepaging")
+      }, element);
     },
-    bootstrapWithConfig: function(o, p) {
-      var q = o.setID;
-      if (!q) q = i.MESSAGES;
-      var r = k.createElement(l, {
-        open: true,
-        setid: q,
-        rootClassName: o.rootClassName,
-        snapToPhoto: o.snapToPhoto,
-        photoid: o.fbid,
-        thumbsrc: o.src,
-        dimensions: [o.dimensions],
-        disablepaging: o.disablePaging,
-        reverse: false
+    /**
+     * @param {Object} spec
+     * @param {Element} allow
+     * @return {undefined}
+     */
+    bootstrapWithConfig : function(spec, allow) {
+      var events = spec.setID;
+      if (!events) {
+        events = elemData.MESSAGES;
+      }
+      var target = d.createElement(style, {
+        open : true,
+        setid : events,
+        rootClassName : spec.rootClassName,
+        snapToPhoto : spec.snapToPhoto,
+        photoid : spec.fbid,
+        thumbsrc : spec.src,
+        dimensions : [spec.dimensions],
+        disablepaging : spec.disablePaging,
+        reverse : false
       });
-      n.render(r);
-      if (!j.hasBeenCreated(q) && o.endpoint) {
-        var s = new g(o.endpoint);
-        if (p) s.setRelativeTo(p);
-        s.send();
+      $.render(target);
+      if (!object.hasBeenCreated(events) && spec.endpoint) {
+        var res = new m(spec.endpoint);
+        if (allow) {
+          res.setRelativeTo(allow);
+        }
+        res.send();
       }
     },
-    render: function(o) {
-      var p = m('messages_viewer');
-      if (!p) {
-        p = h.create('div', {
-          id: 'messages_viewer'
+    /**
+     * @param {?} view
+     * @return {undefined}
+     */
+    render : function(view) {
+      var container = html("messages_viewer");
+      if (!container) {
+        container = domConstruct.create("div", {
+          id : "messages_viewer"
         });
-        document.body.appendChild(p);
+        document.body.appendChild(container);
       }
-      o = k.render(o, p);
-      o.subscribeOnce('close', function() {
-        k.unmountComponentAtNode(p);
+      view = d.render(view, container);
+      view.subscribeOnce("close", function() {
+        d.unmountComponentAtNode(container);
       });
     }
   };
-  e.exports = n;
+  module.exports = $;
 }, null);
-__d("XMessagingVideoAttachmentController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/mercury\/attachments\/video\/", {
-    video_id: {
-      type: "String",
-      required: true
+__d("XMessagingVideoAttachmentController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/mercury/attachments/video/", {
+    video_id : {
+      type : "String",
+      required : true
     },
-    video_container_id: {
-      type: "String",
-      required: true
+    video_container_id : {
+      type : "String",
+      required : true
     },
-    width: {
-      type: "Int",
-      required: true
+    width : {
+      type : "Int",
+      required : true
     },
-    height: {
-      type: "Int",
-      required: true
+    height : {
+      type : "Int",
+      required : true
     }
   });
 }, null);
-__d("MessagingVideoViewer.react", ["ActorURI", "ArbiterMixin", "AsyncRequest", "MercuryConfig", "MessagingForwardAttachmentDialog.react", "React", "ReactLayeredComponentMixin", "SpotlightViewer", "SpotlightViewerBottomBar", "SpotlightViewerBottomBarGroup", "SpotlightViewerBottomBarLink", "SpotlightViewerClose", "SpotlightViewport", "PageTransitions", "PhotoViewerDimensions", "XMessagingVideoAttachmentController", "Vector", "cx", "fbt", "guid"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z) {
-  var aa = 200,
-    ba = l.createClass({
-      displayName: "MessagingVideoViewer",
-      propTypes: {
-        pageID: l.PropTypes.number,
-        rootClassName: l.PropTypes.string,
-        videoSize: l.PropTypes.instanceOf(w).isRequired,
-        videoID: l.PropTypes.string.isRequired,
-        videoURI: l.PropTypes.string.isRequired
-      },
-      mixins: [h, m],
-      getInitialState: function() {
-        var ca = new u({
-          verticalPadding: aa
-        });
-        return {
-          dimensions: ca.getStageDimensions(this.props.videoSize),
-          loading: true,
-          open: true,
-          showForward: false
-        };
-      },
-      componentWillMount: function() {
-        this._domID = z();
-      },
-      componentDidMount: function() {
-        this._loadVideoPlayer();
-        t.registerCompletionCallback(function() {
-          this.close();
-          return true;
-        }.bind(this));
-      },
-      _loadVideoPlayer: function() {
-        var ca = v.getURIBuilder().setString('video_id', this.props.videoID).setString('video_container_id', this._domID).setInt('width', this.state.dimensions.x).setInt('height', this.state.dimensions.y).getURI();
-        if (this.props.pageID) ca = g.create(ca, this.props.pageID);
-        this.request = new i().setMethod('GET').setURI(ca).setReadOnly(true).setHandler(function(da) {
-          return this.setState({
-            loading: false
-          });
-        }.bind(this)).send();
-      },
-      close: function() {
-        if (!this.state.open) return;
-        this.setState({
-          open: false
-        }, function() {
-          this.inform('close');
-        });
-      },
-      _showForwardDialog: function() {
-        this.setState({
-          showForward: true
-        });
-      },
-      _hideForwardDialog: function() {
-        this.setState({
-          showForward: false
-        });
-      },
-      renderLayers: function() {
-        var ca = ("Send this video to friends");
-        return {
-          forwardDialog: (l.createElement(k, {
-            attachmentID: this.props.videoID,
-            onClose: this._hideForwardDialog,
-            shown: this.state.showForward,
-            title: ca
-          }))
-        };
-      },
-      render: function() {
-        var ca = l.createElement("div", {
-            className: "rfloat",
-            id: this._domID
-          }),
-          da = j.ForwardingEnabled ? l.createElement(q, {
-            onClick: this._showForwardDialog
-          }, "Send") : null;
-        return (l.createElement(n, {
-          onHide: this.close,
-          open: this.state.open,
-          rootClassName: this.props.rootClassName
-        }, l.createElement(s, {
-          className: "_39hc",
-          media: ca,
-          showLoadingIndicator: this.state.loading,
-          stageDimensions: this.state.dimensions
-        }, l.createElement(r, {
-          onClick: this.close
-        }), l.createElement(o, {
-          className: "stat_elem"
-        }, l.createElement(p, null), l.createElement(p, null, da, l.createElement(q, {
-          href: this.props.videoURI
-        }, "Download"))))));
-      }
-    });
-  e.exports = ba;
-}, null);
-__d("MercuryAttachmentVideo.react", ["CenteredContainer.react", "FBOverlayBase.react", "FBOverlayContainer.react", "FBOverlayElement.react", "Image.react", "React", "MessagesViewer", "MessagingVideoViewer.react", "Vector", "cx", "ix"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) {
-  var r = l.createClass({
-    displayName: "MercuryAttachmentVideo",
-    propTypes: {
-      duration: l.PropTypes.number.isRequired,
-      name: l.PropTypes.string.isRequired,
-      pageID: l.PropTypes.number,
-      thumbSize: l.PropTypes.shape({
-        height: l.PropTypes.number,
-        width: l.PropTypes.number
-      }).isRequired,
-      thumbnail: l.PropTypes.string.isRequired,
-      videoSize: l.PropTypes.shape({
-        height: l.PropTypes.number,
-        width: l.PropTypes.number
-      }).isRequired,
-      videoID: l.PropTypes.string.isRequired,
-      videoURI: l.PropTypes.string.isRequired
+__d("MessagingVideoViewer.react", ["ActorURI", "ArbiterMixin", "AsyncRequest", "MercuryConfig", "MessagingForwardAttachmentDialog.react", "React", "ReactLayeredComponentMixin", "SpotlightViewer", "SpotlightViewerBottomBar", "SpotlightViewerBottomBarGroup", "SpotlightViewerBottomBarLink", "SpotlightViewerClose", "SpotlightViewport", "PageTransitions", "PhotoViewerDimensions", "XMessagingVideoAttachmentController", "Vector", "cx", "fbt", "guid"], function(ignoreMethodDoesntExist, execResult, opt_keys,
+positionError, module, oFunctionBody, sinon, textAlt, deepDataAndEvents, dataAndEvents, a, dom, keepData, n, attribute, tr, type, value, div, opt_attributes, subject, matcherFunction, logger, _$timeout_, failing_message, $sanitize) {
+  /** @type {number} */
+  var verticalPadding = 200;
+  var JsDiff = dom.createClass({
+    displayName : "MessagingVideoViewer",
+    propTypes : {
+      pageID : dom.PropTypes.number,
+      rootClassName : dom.PropTypes.string,
+      videoSize : dom.PropTypes.instanceOf(logger).isRequired,
+      videoID : dom.PropTypes.string.isRequired,
+      videoURI : dom.PropTypes.string.isRequired
     },
-    _formatDuration: function() {
-      var s = this.props.duration,
-        t = Math.floor(s / 60),
-        u = s % 60;
-      if (u < 10) return t + ':0' + u;
-      return t + ':' + u;
-    },
-    openViewer: function() {
-      var s = new o(this.props.videoSize.width, this.props.videoSize.height);
-      m.render(l.createElement(n, {
-        pageID: this.props.pageID,
-        videoID: this.props.videoID,
-        videoSize: s,
-        videoURI: this.props.videoURI
-      }));
-    },
-    render: function() {
-      var s = (("_zow") + (' ' + "_59go"));
-      return (l.createElement(i, {
-        className: s,
-        onClick: this.openViewer,
-        style: this.props.thumbSize
-      }, l.createElement(j, null, l.createElement("div", {
-        className: "_zox"
-      }, l.createElement("span", {
-        className: "_zoz"
-      }, this._formatDuration()))), l.createElement(j, null, l.createElement(g, {
-        vertical: true
-      }, l.createElement(k, {
-        src: q('/images/chat/chat_play_icon.png')
-      }))), l.createElement(h, null, l.createElement(k, {
-        height: this.props.thumbSize.height,
-        width: this.props.thumbSize.width,
-        src: this.props.thumbnail
-      }))));
-    }
-  });
-  e.exports = r;
-}, null);
-__d("XUIBadge.react", ["React", "cx", "invariant", "joinClasses"], function(a, b, c, d, e, f, g, h, i, j) {
-  function k(m) {
-    return parseInt(m, 10) === m;
-  }
-  var l = g.createClass({
-    displayName: "XUIBadge",
-    propTypes: {
-      type: g.PropTypes.oneOf(['regular', 'special']),
-      count: g.PropTypes.number.isRequired,
-      maxcount: g.PropTypes.number
-    },
-    getDefaultProps: function() {
-      return {
-        type: 'regular',
-        maxcount: 20
+    mixins : [textAlt, keepData],
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      var result = new subject({
+        verticalPadding : verticalPadding
+      });
+      return{
+        dimensions : result.getStageDimensions(this.props.videoSize),
+        loading : true,
+        open : true,
+        showForward : false
       };
     },
-    render: function() {
-      var m = this.props.type,
-        n = this.props.count,
-        o = this.props.maxcount;
-      i(k(n));
-      i(k(o));
-      var p = (("_5ugh") + (n > o ? ' ' + "_5ugi" : '') + (m === 'regular' ? ' ' + "_5ugf" : '') + (m === 'special' ? ' ' + "_5ugg" : '') + (n === 0 ? ' ' + "hidden_elem" : ''));
-      return (g.createElement("span", g.__spread({}, this.props, {
-        className: j(this.props.className, p),
-        type: null
-      }), n > o ? o + '+' : n));
+    /**
+     * @return {undefined}
+     */
+    componentWillMount : function() {
+      this._domID = $sanitize();
+    },
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
+      this._loadVideoPlayer();
+      opt_attributes.registerCompletionCallback(function() {
+        this.close();
+        return true;
+      }.bind(this));
+    },
+    /**
+     * @return {undefined}
+     */
+    _loadVideoPlayer : function() {
+      var functionStub = matcherFunction.getURIBuilder().setString("video_id", this.props.videoID).setString("video_container_id", this._domID).setInt("width", this.state.dimensions.x).setInt("height", this.state.dimensions.y).getURI();
+      if (this.props.pageID) {
+        functionStub = sinon.create(functionStub, this.props.pageID);
+      }
+      this.request = (new deepDataAndEvents).setMethod("GET").setURI(functionStub).setReadOnly(true).setHandler(function(dataAndEvents) {
+        return this.setState({
+          loading : false
+        });
+      }.bind(this)).send();
+    },
+    /**
+     * @return {undefined}
+     */
+    close : function() {
+      if (!this.state.open) {
+        return;
+      }
+      this.setState({
+        open : false
+      }, function() {
+        this.inform("close");
+      });
+    },
+    /**
+     * @return {undefined}
+     */
+    _showForwardDialog : function() {
+      this.setState({
+        showForward : true
+      });
+    },
+    /**
+     * @return {undefined}
+     */
+    _hideForwardDialog : function() {
+      this.setState({
+        showForward : false
+      });
+    },
+    /**
+     * @return {?}
+     */
+    renderLayers : function() {
+      /** @type {string} */
+      var MSG_CLOSURE_CUSTOM_COLOR_BUTTON = "Send this video to friends";
+      return{
+        forwardDialog : dom.createElement(a, {
+          attachmentID : this.props.videoID,
+          onClose : this._hideForwardDialog,
+          shown : this.state.showForward,
+          title : MSG_CLOSURE_CUSTOM_COLOR_BUTTON
+        })
+      };
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var child4 = dom.createElement("div", {
+        className : "rfloat",
+        id : this._domID
+      });
+      var MSG_TEX_EDITOR = dataAndEvents.ForwardingEnabled ? dom.createElement(type, {
+        onClick : this._showForwardDialog
+      }, "Send") : null;
+      return dom.createElement(n, {
+        onHide : this.close,
+        open : this.state.open,
+        rootClassName : this.props.rootClassName
+      }, dom.createElement(div, {
+        className : "_39hc",
+        media : child4,
+        showLoadingIndicator : this.state.loading,
+        stageDimensions : this.state.dimensions
+      }, dom.createElement(value, {
+        onClick : this.close
+      }), dom.createElement(attribute, {
+        className : "stat_elem"
+      }, dom.createElement(tr, null), dom.createElement(tr, null, MSG_TEX_EDITOR, dom.createElement(type, {
+        href : this.props.videoURI
+      }, "Download")))));
     }
   });
-  e.exports = l;
+  module.exports = JsDiff;
 }, null);
-__d("updatePhotoProgressBar", [], function(a, b, c, d, e, f) {
-  'use strict';
-
-  function g(h, event) {
+__d("MercuryAttachmentVideo.react", ["CenteredContainer.react", "FBOverlayBase.react", "FBOverlayContainer.react", "FBOverlayElement.react", "Image.react", "React", "MessagesViewer", "MessagingVideoViewer.react", "Vector", "cx", "ix"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, type, t, attribute, value, label, self, res, name, Canvas, opt_attributes, done) {
+  var JsDiff = self.createClass({
+    displayName : "MercuryAttachmentVideo",
+    propTypes : {
+      duration : self.PropTypes.number.isRequired,
+      name : self.PropTypes.string.isRequired,
+      pageID : self.PropTypes.number,
+      thumbSize : self.PropTypes.shape({
+        height : self.PropTypes.number,
+        width : self.PropTypes.number
+      }).isRequired,
+      thumbnail : self.PropTypes.string.isRequired,
+      videoSize : self.PropTypes.shape({
+        height : self.PropTypes.number,
+        width : self.PropTypes.number
+      }).isRequired,
+      videoID : self.PropTypes.string.isRequired,
+      videoURI : self.PropTypes.string.isRequired
+    },
+    /**
+     * @return {?}
+     */
+    _formatDuration : function() {
+      var d = this.props.duration;
+      /** @type {number} */
+      var type = Math.floor(d / 60);
+      /** @type {number} */
+      var pageX = d % 60;
+      if (pageX < 10) {
+        return type + ":0" + pageX;
+      }
+      return type + ":" + pageX;
+    },
+    /**
+     * @return {undefined}
+     */
+    openViewer : function() {
+      var out = new Canvas(this.props.videoSize.width, this.props.videoSize.height);
+      res.render(self.createElement(name, {
+        pageID : this.props.pageID,
+        videoID : this.props.videoID,
+        videoSize : out,
+        videoURI : this.props.videoURI
+      }));
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      /** @type {string} */
+      var cls = "_zow" + (" " + "_59go");
+      return self.createElement(attribute, {
+        className : cls,
+        onClick : this.openViewer,
+        style : this.props.thumbSize
+      }, self.createElement(value, null, self.createElement("div", {
+        className : "_zox"
+      }, self.createElement("span", {
+        className : "_zoz"
+      }, this._formatDuration()))), self.createElement(value, null, self.createElement(type, {
+        vertical : true
+      }, self.createElement(label, {
+        src : done("/images/chat/chat_play_icon.png")
+      }))), self.createElement(t, null, self.createElement(label, {
+        height : this.props.thumbSize.height,
+        width : this.props.thumbSize.width,
+        src : this.props.thumbnail
+      })));
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("XUIBadge.react", ["React", "cx", "invariant", "joinClasses"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, $, opt_attributes, test, update) {
+  /**
+   * @param {number} value
+   * @return {?}
+   */
+  function parseInt(value) {
+    return parseInt(value, 10) === value;
+  }
+  var JsDiff = $.createClass({
+    displayName : "XUIBadge",
+    propTypes : {
+      type : $.PropTypes.oneOf(["regular", "special"]),
+      count : $.PropTypes.number.isRequired,
+      maxcount : $.PropTypes.number
+    },
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        type : "regular",
+        maxcount : 20
+      };
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var name = this.props.type;
+      var val = this.props.count;
+      var max = this.props.maxcount;
+      test(parseInt(val));
+      test(parseInt(max));
+      /** @type {string} */
+      var length = "_5ugh" + (val > max ? " " + "_5ugi" : "") + (name === "regular" ? " " + "_5ugf" : "") + (name === "special" ? " " + "_5ugg" : "") + (val === 0 ? " " + "hidden_elem" : "");
+      return $.createElement("span", $.__spread({}, this.props, {
+        className : update(this.props.className, length),
+        type : null
+      }), val > max ? max + "+" : val);
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("updatePhotoProgressBar", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  /**
+   * @param {?} target
+   * @param {Object} event
+   * @return {undefined}
+   */
+  function ProgressEvent(target, event) {
     if (event.loaded != event.total) {
-      h.setPosition(50 * event.loaded / event.total);
+      target.setPosition(50 * event.loaded / event.total);
     } else {
-      h.setPosition(50);
-      h.setTarget(100, 2000);
+      target.setPosition(50);
+      target.setTarget(100, 2E3);
     }
   }
-  e.exports = g;
+  /** @type {function (?, Object): undefined} */
+  module.exports = ProgressEvent;
 }, null);
-__d("Dock", ["Event", "shield", "Arbiter", "ArbiterMixin", "ChatQuietLinks", "CSS", "DataStore", "DOM", "Parent", "Style", "Toggler", "Vector", "copyProperties", "csx", "emptyFunction", "WebMessengerWidthControl"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u) {
-  b('WebMessengerWidthControl');
-
-  function v() {}
-  s(v, j, {
-    MIN_HEIGHT: 140,
-    INITIAL_FLYOUT_HEIGHT_OFFSET: 10,
-    init: function(w) {
-      this.init = u;
-      this.rootEl = w;
+__d("Dock", ["Event", "shield", "Arbiter", "ArbiterMixin", "ChatQuietLinks", "CSS", "DataStore", "DOM", "Parent", "Style", "Toggler", "Vector", "copyProperties", "csx", "emptyFunction", "WebMessengerWidthControl"], function(dataAndEvents, $sanitize, textAlt, keepData, module, opt_attributes, m, iterator, deepDataAndEvents, IOStream, ignoreMethodDoesntExist, me, data_user, handler, Dom, node, self, dom, declare, matcherFunction, init) {
+  /**
+   * @return {undefined}
+   */
+  function Selection() {
+  }
+  $sanitize("WebMessengerWidthControl");
+  declare(Selection, IOStream, {
+    MIN_HEIGHT : 140,
+    INITIAL_FLYOUT_HEIGHT_OFFSET : 10,
+    /**
+     * @param {Object} target
+     * @return {undefined}
+     */
+    init : function(target) {
+      /** @type {(RegExp|string)} */
+      this.init = init;
+      /** @type {Object} */
+      this.rootEl = target;
       this.calculateViewportDimensions();
       this.calculateFlyoutHeightOffset();
-      k.removeEmptyHrefs(this.rootEl);
-      g.listen(w, 'click', this._onClick.bind(this));
-      g.listen(window, 'resize', this._onWindowResize.bind(this));
-      q.subscribe(['show', 'hide'], function(x, y) {
-        var z = y.getActive();
-        if (!n.contains(w, z)) return;
-        if (l.hasClass(z, 'fbNub')) {
-          this.notifyNub(z, x);
-          if (x === 'show') this._resizeNubFlyout(z);
+      ignoreMethodDoesntExist.removeEmptyHrefs(this.rootEl);
+      m.listen(target, "click", this._onClick.bind(this));
+      m.listen(window, "resize", this._onWindowResize.bind(this));
+      self.subscribe(["show", "hide"], function(act, exports) {
+        var node = exports.getActive();
+        if (!handler.contains(target, node)) {
+          return;
+        }
+        if (me.hasClass(node, "fbNub")) {
+          this.notifyNub(node, act);
+          if (act === "show") {
+            this._resizeNubFlyout(node);
+          }
         } else {
-          var aa = o.byClass(z, 'fbNubFlyout');
-          if (aa) l.conditionClass(aa, 'menuOpened', x === 'show');
+          var currentValue = Dom.byClass(node, "fbNubFlyout");
+          if (currentValue) {
+            me.conditionClass(currentValue, "menuOpened", act === "show");
+          }
         }
       }.bind(this));
-      this.inform('init', {}, i.BEHAVIOR_PERSISTENT);
+      this.inform("init", {}, deepDataAndEvents.BEHAVIOR_PERSISTENT);
     },
-    calculateViewportDimensions: function() {
-      return (this.viewportDimensions = r.getViewportDimensions());
+    /**
+     * @return {?}
+     */
+    calculateViewportDimensions : function() {
+      return this.viewportDimensions = dom.getViewportDimensions();
     },
-    calculateFlyoutHeightOffset: function() {
-      this.flyoutHeightOffset = this.INITIAL_FLYOUT_HEIGHT_OFFSET + r.getElementDimensions(this.rootEl).y;
-      var w = n.scry(document, "div._4f7n")[0];
-      if (w) {
-        var x = p.isFixed(w) ? 'viewport' : 'document';
-        this.flyoutHeightOffset += r.getElementPosition(w, x).y + r.getElementDimensions(w).y;
+    /**
+     * @return {undefined}
+     */
+    calculateFlyoutHeightOffset : function() {
+      this.flyoutHeightOffset = this.INITIAL_FLYOUT_HEIGHT_OFFSET + dom.getElementDimensions(this.rootEl).y;
+      var element = handler.scry(document, "div._4f7n")[0];
+      if (element) {
+        /** @type {string} */
+        var container = node.isFixed(element) ? "viewport" : "document";
+        this.flyoutHeightOffset += dom.getElementPosition(element, container).y + dom.getElementDimensions(element).y;
       }
     },
-    toggle: function(w) {
-      var x = this._findFlyout(w);
-      if (!x) return;
-      this.subscribe('init', function() {
-        q.toggle(w);
+    /**
+     * @param {(Object|string)} className
+     * @return {undefined}
+     */
+    toggle : function(className) {
+      var match = this._findFlyout(className);
+      if (!match) {
+        return;
+      }
+      this.subscribe("init", function() {
+        self.toggle(className);
       });
     },
-    show: function(w) {
-      this.subscribe('init', function() {
-        q.show(w);
+    /**
+     * @param {?} event
+     * @return {undefined}
+     */
+    show : function(event) {
+      this.subscribe("init", function() {
+        self.show(event);
       });
     },
-    showNub: function(w) {
-      l.show(w);
+    /**
+     * @param {?} event
+     * @return {undefined}
+     */
+    showNub : function(event) {
+      me.show(event);
     },
-    hide: function(w) {
-      this.subscribe('init', function() {
-        var x = q.getInstance(w);
-        n.contains(w, x.getActive()) && x.hide();
+    /**
+     * @param {?} el
+     * @return {undefined}
+     */
+    hide : function(el) {
+      this.subscribe("init", function() {
+        var button = self.getInstance(el);
+        if (handler.contains(el, button.getActive())) {
+          button.hide();
+        }
       });
     },
-    hideNub: function(w) {
-      l.hide(w);
-      this.hide(w);
+    /**
+     * @param {?} event
+     * @return {undefined}
+     */
+    hideNub : function(event) {
+      me.hide(event);
+      this.hide(event);
     },
-    setUseMaxHeight: function(w, x) {
-      l.conditionClass(w, 'maxHeight', x !== false);
-      this._resizeNubFlyout(w);
+    /**
+     * @param {string} token
+     * @param {boolean} dataAndEvents
+     * @return {undefined}
+     */
+    setUseMaxHeight : function(token, dataAndEvents) {
+      me.conditionClass(token, "maxHeight", dataAndEvents !== false);
+      this._resizeNubFlyout(token);
     },
-    _resizeNubFlyout: function(w) {
-      var x = this._findFlyout(w);
-      if (!x || !(l.hasClass(w, 'openToggler') || l.hasClass(w, 'opened'))) return;
-      var y = n.find(x, 'div.fbNubFlyoutOuter'),
-        z = n.find(y, 'div.fbNubFlyoutInner'),
-        aa = n.find(z, 'div.fbNubFlyoutBody'),
-        ba = aa.scrollTop,
-        ca = aa.offsetHeight;
-      p.set(aa, 'height', 'auto');
-      var da = r.getElementDimensions(x),
-        ea = r.getElementDimensions(aa),
-        fa = this.getMaxFlyoutHeight(w);
-      p.set(x, 'max-height', fa + 'px');
-      p.set(y, 'max-height', fa + 'px');
-      da = r.getElementDimensions(x);
-      var ga = r.getElementDimensions(z),
-        ha = ga.y - ea.y,
-        ia = da.y - ha,
-        ja = parseInt(aa.style.height || aa.clientHeight, 10),
-        ka = ia !== ja;
-      if (da.y > ha && ka) p.set(aa, 'height', ia + 'px');
-      l.removeClass(x, 'swapDirection');
-      var la = r.getElementPosition(x).x;
-      l.conditionClass(x, 'swapDirection', function() {
-        if (la < 0) return true;
-        return (la + da.x > this.viewportDimensions.x);
+    /**
+     * @param {string} className
+     * @return {undefined}
+     */
+    _resizeNubFlyout : function(className) {
+      var e = this._findFlyout(className);
+      if (!e || !(me.hasClass(className, "openToggler") || me.hasClass(className, "opened"))) {
+        return;
+      }
+      var i = handler.find(e, "div.fbNubFlyoutOuter");
+      var target = handler.find(i, "div.fbNubFlyoutInner");
+      var element = handler.find(target, "div.fbNubFlyoutBody");
+      var previousScrollTop = element.scrollTop;
+      var originalHeight = element.offsetHeight;
+      node.set(element, "height", "auto");
+      var position = dom.getElementDimensions(e);
+      var elementPos = dom.getElementDimensions(element);
+      var max = this.getMaxFlyoutHeight(className);
+      node.set(e, "max-height", max + "px");
+      node.set(i, "max-height", max + "px");
+      position = dom.getElementDimensions(e);
+      var pos = dom.getElementDimensions(target);
+      /** @type {number} */
+      var top = pos.y - elementPos.y;
+      /** @type {number} */
+      var val = position.y - top;
+      /** @type {number} */
+      var skip = parseInt(element.style.height || element.clientHeight, 10);
+      /** @type {boolean} */
+      var hasVal = val !== skip;
+      if (position.y > top && hasVal) {
+        node.set(element, "height", val + "px");
+      }
+      me.removeClass(e, "swapDirection");
+      var x = dom.getElementPosition(e).x;
+      me.conditionClass(e, "swapDirection", function() {
+        if (x < 0) {
+          return true;
+        }
+        return x + position.x > this.viewportDimensions.x;
       }.bind(this)());
-      if (ka && ba + ca >= ea.y) {
-        aa.scrollTop = aa.scrollHeight;
-      } else aa.scrollTop = ba;
-      this.notifyNub(w, 'resize');
+      if (hasVal && previousScrollTop + originalHeight >= elementPos.y) {
+        element.scrollTop = element.scrollHeight;
+      } else {
+        element.scrollTop = previousScrollTop;
+      }
+      this.notifyNub(className, "resize");
     },
-    getMaxFlyoutHeight: function(w) {
-      var x = this._findFlyout(w),
-        y = r.getElementPosition(x, 'viewport'),
-        z = r.getElementDimensions(x),
-        aa = Math.max(this.MIN_HEIGHT, this.viewportDimensions.y - this.flyoutHeightOffset) - (this.viewportDimensions.y - y.y - z.y);
-      return Math.max(aa, 0);
+    /**
+     * @param {string} selector
+     * @return {?}
+     */
+    getMaxFlyoutHeight : function(selector) {
+      var element = this._findFlyout(selector);
+      var result = dom.getElementPosition(element, "viewport");
+      var outer = dom.getElementDimensions(element);
+      /** @type {number} */
+      var expectedHashCode = Math.max(this.MIN_HEIGHT, this.viewportDimensions.y - this.flyoutHeightOffset) - (this.viewportDimensions.y - result.y - outer.y);
+      return Math.max(expectedHashCode, 0);
     },
-    resizeAllFlyouts: function() {
-      var w = this._getAllNubs(),
-        x = w.length;
-      while (x--) this._resizeNubFlyout(w[x]);
+    /**
+     * @return {undefined}
+     */
+    resizeAllFlyouts : function() {
+      var tokenized = this._getAllNubs();
+      var index = tokenized.length;
+      for (;index--;) {
+        this._resizeNubFlyout(tokenized[index]);
+      }
     },
-    hideAllFlyouts: function() {
-      var w = this._getAllNubs(),
-        x = w.length;
-      while (x--) this.hide(w[x]);
+    /**
+     * @return {undefined}
+     */
+    hideAllFlyouts : function() {
+      var tokenized = this._getAllNubs();
+      var index = tokenized.length;
+      for (;index--;) {
+        this.hide(tokenized[index]);
+      }
     },
-    _getAllNubs: function() {
-      var w = n.scry(this.rootEl, "div._50-v.openToggler");
-      return w.concat(n.scry(this.rootEl, "div._50-v.opened"));
+    /**
+     * @return {?}
+     */
+    _getAllNubs : function() {
+      var l = handler.scry(this.rootEl, "div._50-v.openToggler");
+      return l.concat(handler.scry(this.rootEl, "div._50-v.opened"));
     },
-    _onClick: function(event) {
-      var w = event.getTarget(),
-        x = o.byClass(w, 'fbNub');
-      if (x) {
-        if (o.byClass(w, 'fbNubFlyoutTitlebar')) {
-          var y = o.byTag(w, 'a'),
-            z = w.nodeName == 'INPUT' && w.getAttribute('type') == 'submit';
-          if (!y && !z) {
-            this.hide(x);
+    /**
+     * @param {Event} e
+     * @return {?}
+     */
+    _onClick : function(e) {
+      var elem = e.getTarget();
+      var $elem = Dom.byClass(elem, "fbNub");
+      if ($elem) {
+        if (Dom.byClass(elem, "fbNubFlyoutTitlebar")) {
+          var result = Dom.byTag(elem, "a");
+          /** @type {boolean} */
+          var suppressDebug = elem.nodeName == "INPUT" && elem.getAttribute("type") == "submit";
+          if (!result && !suppressDebug) {
+            this.hide($elem);
             return false;
           }
         }
-        this.notifyNub(x, 'click');
+        this.notifyNub($elem, "click");
       }
     },
-    _onWindowResize: function(event) {
+    /**
+     * @param {?} dataAndEvents
+     * @return {undefined}
+     */
+    _onWindowResize : function(dataAndEvents) {
       this.calculateViewportDimensions();
       this.resizeAllFlyouts();
     },
-    _findFlyout: function(w) {
-      return l.hasClass(w, 'fbNubFlyout') ? w : n.scry(w, 'div.fbNubFlyout')[0] || null;
+    /**
+     * @param {(Object|string)} selector
+     * @return {?}
+     */
+    _findFlyout : function(selector) {
+      return me.hasClass(selector, "fbNubFlyout") ? selector : handler.scry(selector, "div.fbNubFlyout")[0] || null;
     },
-    registerNubController: function(w, x) {
-      m.set(w, 'dock:nub:controller', x);
-      x.subscribe('nub/button/content-changed', h(this.inform, this, 'resize', w));
-      x.subscribe('nub/flyout/content-changed', h(this._resizeNubFlyout, this, w));
+    /**
+     * @param {?} a
+     * @param {Object} data
+     * @return {undefined}
+     */
+    registerNubController : function(a, data) {
+      data_user.set(a, "dock:nub:controller", data);
+      data.subscribe("nub/button/content-changed", iterator(this.inform, this, "resize", a));
+      data.subscribe("nub/flyout/content-changed", iterator(this._resizeNubFlyout, this, a));
     },
-    unregisterNubController: function(w) {
-      m.remove(w, 'dock:nub:controller');
+    /**
+     * @param {?} elem
+     * @return {undefined}
+     */
+    unregisterNubController : function(elem) {
+      data_user.remove(elem, "dock:nub:controller");
     },
-    notifyNub: function(w, x, y) {
-      var z = m.get(w, 'dock:nub:controller');
-      z && z.inform(x, y);
+    /**
+     * @param {string} elem
+     * @param {string} func
+     * @param {?} funcToCall
+     * @return {undefined}
+     */
+    notifyNub : function(elem, func, funcToCall) {
+      var self = data_user.get(elem, "dock:nub:controller");
+      if (self) {
+        self.inform(func, funcToCall);
+      }
     }
   });
-  e.exports = a.Dock || v;
+  module.exports = dataAndEvents.Dock || Selection;
 }, null);
-__d("DropdownContextualHelpLink", ["DOM", "ge"], function(a, b, c, d, e, f, g, h) {
-  var i = {
-    set: function(j) {
-      var k = h('navHelpCenter');
-      if (k !== null) g.replace(k, j);
+__d("DropdownContextualHelpLink", ["DOM", "ge"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, ret, $timeout) {
+  var Vector = {
+    /**
+     * @param {?} className
+     * @return {undefined}
+     */
+    set : function(className) {
+      var rreturn = $timeout("navHelpCenter");
+      if (rreturn !== null) {
+        ret.replace(rreturn, className);
+      }
     }
   };
-  e.exports = i;
+  module.exports = Vector;
 }, null);
-__d("WaterfallIDGenerator", ["CurrentUser", "md5"], function(a, b, c, d, e, f, g, h) {
-  function i() {
+__d("WaterfallIDGenerator", ["CurrentUser", "md5"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, a, toString) {
+  /**
+   * @return {?}
+   */
+  function rand() {
+    /** @type {number} */
     var l = 2147483647;
     return Math.random() * l;
   }
-
-  function j() {
-    return Math.floor(Date.now() / 1000);
+  /**
+   * @return {?}
+   */
+  function f() {
+    return Math.floor(Date.now() / 1E3);
   }
-  var k = {
-    generate: function() {
-      return h([g.getID(), j(), i()].join(':'));
+  var JsDiff = {
+    /**
+     * @return {?}
+     */
+    generate : function() {
+      return toString([a.getID(), f(), rand()].join(":"));
     }
   };
-  e.exports = k;
+  module.exports = JsDiff;
 }, null);
-__d("FileFormResetOnSubmit", ["DOMQuery", "Event", "emptyFunction"], function(a, b, c, d, e, f, g, h, i) {
-  function j(l, m) {
-    var n = h.listen(l, 'change', i.thatReturnsFalse, h.Priority.URGENT);
+__d("FileFormResetOnSubmit", ["DOMQuery", "Event", "emptyFunction"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, element, Event, self) {
+  /**
+   * @param {?} element
+   * @param {Function} done
+   * @return {undefined}
+   */
+  function setup(element, done) {
+    var idx = Event.listen(element, "change", self.thatReturnsFalse, Event.Priority.URGENT);
     try {
-      m();
+      done();
     } catch (o) {
       throw o;
     } finally {
-      n.remove();
+      idx.remove();
     }
   }
-
-  function k(l) {
-    "use strict";
-    this._form = l;
+  /**
+   * @param {?} b
+   * @return {undefined}
+   */
+  function $(b) {
+    this._form = b;
   }
-  k.prototype.enable = function() {
-    "use strict";
-    var l = this._reset.bind(this);
-    this._subscription = this._form.subscribe('submit', function() {
-      setTimeout(l, 0);
+  /**
+   * @return {undefined}
+   */
+  $.prototype.enable = function() {
+    var WAIT = this._reset.bind(this);
+    this._subscription = this._form.subscribe("submit", function() {
+      setTimeout(WAIT, 0);
     });
   };
-  k.prototype.disable = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  $.prototype.disable = function() {
     this._subscription.unsubscribe();
+    /** @type {null} */
     this._subscription = null;
   };
-  k.prototype._reset = function() {
-    "use strict";
-    var l = this._form.getRoot();
-    j(l, function() {
-      var m = g.scry(l, 'input[type="file"]');
-      m.forEach(function(n) {
-        n.value = '';
+  /**
+   * @return {undefined}
+   */
+  $.prototype._reset = function() {
+    var activeClassName = this._form.getRoot();
+    setup(activeClassName, function() {
+      var asserterNames = element.scry(activeClassName, 'input[type="file"]');
+      asserterNames.forEach(function(te) {
+        /** @type {string} */
+        te.value = "";
       });
     });
   };
-  e.exports = k;
+  /** @type {function (?): undefined} */
+  module.exports = $;
 }, null);
-__d("FormSubmitOnChange", ["Event", "copyProperties", "submitForm"], function(a, b, c, d, e, f, g, h, i) {
-  function j(k) {
-    "use strict";
-    this._form = k;
+__d("FormSubmitOnChange", ["Event", "copyProperties", "submitForm"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, m, patch, set) {
+  /**
+   * @param {?} b
+   * @return {undefined}
+   */
+  function $(b) {
+    this._form = b;
   }
-  j.prototype.enable = function() {
-    "use strict";
-    this._listener = g.listen(this._form.getRoot(), 'change', this._submit.bind(this));
+  /**
+   * @return {undefined}
+   */
+  $.prototype.enable = function() {
+    this._listener = m.listen(this._form.getRoot(), "change", this._submit.bind(this));
   };
-  j.prototype.disable = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  $.prototype.disable = function() {
     this._listener.remove();
+    /** @type {null} */
     this._listener = null;
   };
-  j.prototype._submit = function() {
-    "use strict";
-    i(this._form.getRoot());
+  /**
+   * @return {undefined}
+   */
+  $.prototype._submit = function() {
+    set(this._form.getRoot());
   };
-  h(j.prototype, {
-    _listener: null
+  patch($.prototype, {
+    _listener : null
   });
-  e.exports = j;
+  /** @type {function (?): undefined} */
+  module.exports = $;
 }, null);
-__d("MercuryFileUploader", ["ArbiterMixin", "CSS", "Dialog", "DOM", "Event", "FileForm", "FileFormResetOnSubmit", "FileInput", "FormSubmitOnChange", "MercuryAttachment", "MercuryAttachmentTemplates", "MercuryConstants", "PhotosUploadID", "SubscriptionsHandler", "csx", "fbt", "getObjectValues", "mixin", "shield"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y) {
-  var z = x(g);
-  for (var aa in z)
-    if (z.hasOwnProperty(aa)) ca[aa] = z[aa];
-  var ba = z === null ? null : z.prototype;
-  ca.prototype = Object.create(ba);
-  ca.prototype.constructor = ca;
-  ca.__superConstructor__ = z;
-
-  function ca(ea, fa, ga, ha) {
-    "use strict";
-    this.$MercuryFileUploader0 = ea;
+__d("MercuryFileUploader", ["ArbiterMixin", "CSS", "Dialog", "DOM", "Event", "FileForm", "FileFormResetOnSubmit", "FileInput", "FormSubmitOnChange", "MercuryAttachment", "MercuryAttachmentTemplates", "MercuryConstants", "PhotosUploadID", "SubscriptionsHandler", "csx", "fbt", "getObjectValues", "mixin", "shield"], function(dataAndEvents, ignoreMethodDoesntExist, keepData, matcherFunction, module, execResult, object, w, stat, obj, testPage, Game, textAlt, TweenLite, player, goog, children, o, opt_attributes,
+deepDataAndEvents, opt_keys, positionError, $sanitize, keys, callback) {
+  /**
+   * @param {?} config
+   * @param {Object} platform
+   * @param {Object} description
+   * @param {?} scope
+   * @return {undefined}
+   */
+  function constructor(config, platform, description, scope) {
+    this.$MercuryFileUploader0 = config;
     this.$MercuryFileUploader1 = {};
     this.$MercuryFileUploader2 = {};
     this.$MercuryFileUploader3 = {};
@@ -3493,130 +5193,199 @@ __d("MercuryFileUploader", ["ArbiterMixin", "CSS", "Dialog", "DOM", "Event", "Fi
     this.$MercuryFileUploader6 = {};
     this.$MercuryFileUploader7 = {};
     this.$MercuryFileUploader8 = {};
-    this.updateElements(fa, ga, ha);
+    this.updateElements(platform, description, scope);
   }
-  ca.prototype.updateElements = function(ea, fa, ga) {
-    "use strict";
-    this.$MercuryFileUploader9 && this.$MercuryFileUploader9.release();
-    this.$MercuryFileUploader9 = new t();
-    this.$MercuryFileUploadera && this.$MercuryFileUploadera.destroy();
-    this.$MercuryFileUploadera = new l(ea, [o, m]);
+  /**
+   * @param {string} value
+   * @return {?}
+   */
+  function lookupIterator(value) {
+    if (value && value.startsWith("C:\\fakepath\\")) {
+      return value.substring(12);
+    }
+    return value;
+  }
+  var properties = keys(object);
+  var name;
+  for (name in properties) {
+    if (properties.hasOwnProperty(name)) {
+      constructor[name] = properties[name];
+    }
+  }
+  var basePrototype = properties === null ? null : properties.prototype;
+  /** @type {Object} */
+  constructor.prototype = Object.create(basePrototype);
+  /** @type {function (?, Object, Object, ?): undefined} */
+  constructor.prototype.constructor = constructor;
+  constructor.__superConstructor__ = properties;
+  /**
+   * @param {Object} name
+   * @param {Object} desc
+   * @param {?} scope
+   * @return {undefined}
+   */
+  constructor.prototype.updateElements = function(name, desc, scope) {
+    if (this.$MercuryFileUploader9) {
+      this.$MercuryFileUploader9.release();
+    }
+    this.$MercuryFileUploader9 = new deepDataAndEvents;
+    if (this.$MercuryFileUploadera) {
+      this.$MercuryFileUploadera.destroy();
+    }
+    this.$MercuryFileUploadera = new Game(name, [player, textAlt]);
     this.$MercuryFileUploadera.setAllowCrossOrigin(true);
     this.$MercuryFileUploadera.setUploadInParallel(true);
-    var ha = j.find(ea, "._4q60"),
-      ia = j.find(ha, "._4q61");
-    new n(ha, ia, fa);
-    this.$MercuryFileUploader9.addSubscriptions(this.$MercuryFileUploadera.subscribe('submit', function() {
-      var ja = {
-        count: 0,
-        file_sizes: []
+    var target = obj.find(name, "._4q60");
+    var element = obj.find(target, "._4q61");
+    new TweenLite(target, element, desc);
+    this.$MercuryFileUploader9.addSubscriptions(this.$MercuryFileUploadera.subscribe("submit", function() {
+      var session = {
+        count : 0,
+        file_sizes : []
       };
-      if (fa.files) {
-        for (var ka = 0; ka < fa.files.length; ka++)
-          if (fa.files[ka].size > r.AttachmentMaxSize) {
+      if (desc.files) {
+        /** @type {number} */
+        var i = 0;
+        for (;i < desc.files.length;i++) {
+          if (desc.files[i].size > o.AttachmentMaxSize) {
             this.showAttachmentSizeErrorDialog();
             return false;
           }
-        var la = {};
-        for (var ma = 0; ma < fa.files.length; ma++) {
-          var na = this.$MercuryFileUploaderb();
-          this.$MercuryFileUploaderc(na, fa.files[ma].name);
-          ja.count++;
-          ja.file_sizes.push(fa.files[ma].size);
-          la[na] = fa.files[ma];
         }
-        this.$MercuryFileUploadera.setFiles(la);
+        var old = {};
+        /** @type {number} */
+        var type = 0;
+        for (;type < desc.files.length;type++) {
+          var name = this.$MercuryFileUploaderb();
+          this.$MercuryFileUploaderc(name, desc.files[type].name);
+          session.count++;
+          session.file_sizes.push(desc.files[type].size);
+          old[name] = desc.files[type];
+        }
+        this.$MercuryFileUploadera.setFiles(old);
       } else {
-        ga.value = this.$MercuryFileUploaderb();
-        this.$MercuryFileUploaderc(ga.value, fa.value);
-        ja.count = 1;
+        scope.value = this.$MercuryFileUploaderb();
+        this.$MercuryFileUploaderc(scope.value, desc.value);
+        /** @type {number} */
+        session.count = 1;
       }
-      this.inform('submit', ja);
-    }.bind(this)), this.$MercuryFileUploadera.subscribe('success', this.$MercuryFileUploaderd.bind(this)), this.$MercuryFileUploadera.subscribe('failure', this.$MercuryFileUploadere.bind(this)), k.listen(ia, 'click', y(this.inform, this, 'open')));
+      this.inform("submit", session);
+    }.bind(this)), this.$MercuryFileUploadera.subscribe("success", this.$MercuryFileUploaderd.bind(this)), this.$MercuryFileUploadera.subscribe("failure", this.$MercuryFileUploadere.bind(this)), testPage.listen(element, "click", callback(this.inform, this, "open")));
   };
-  ca.prototype.showAttachmentSizeErrorDialog = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  constructor.prototype.showAttachmentSizeErrorDialog = function() {
     this.$MercuryFileUploadera.abort();
     this.$MercuryFileUploadera.clear();
-    new i().setTitle("The file you have selected is too large").setBody("The file you have selected is too large. The maximum size is 25MB.").setButtons(i.OK).setSemiModal(true).show();
+    (new stat).setTitle("The file you have selected is too large").setBody("The file you have selected is too large. The maximum size is 25MB.").setButtons(stat.OK).setSemiModal(true).show();
   };
-  ca.prototype.addDroppedFiles = function(ea) {
-    "use strict";
-    if (!this.$MercuryFileUploadera || !this.$MercuryFileUploadera.canUseXHR()) return;
-    var fa = {},
-      ga = {
-        count: 0,
-        file_sizes: []
-      };
-    for (var ha = 0; ha < ea.length; ha++) {
-      var ia = ea[ha];
-      if (ia.size > r.AttachmentMaxSize) {
+  /**
+   * @param {Array} codeSegments
+   * @return {?}
+   */
+  constructor.prototype.addDroppedFiles = function(codeSegments) {
+    if (!this.$MercuryFileUploadera || !this.$MercuryFileUploadera.canUseXHR()) {
+      return;
+    }
+    var files = {};
+    var session = {
+      count : 0,
+      file_sizes : []
+    };
+    /** @type {number} */
+    var i = 0;
+    for (;i < codeSegments.length;i++) {
+      var file = codeSegments[i];
+      if (file.size > o.AttachmentMaxSize) {
         this.showAttachmentSizeErrorDialog();
         return false;
       }
-      var ja = this.$MercuryFileUploaderb();
-      this.$MercuryFileUploaderc(ja, ia.name);
-      fa[ja] = ia;
-      ga.file_sizes.push(ia.size);
-      ga.count++;
+      var name = this.$MercuryFileUploaderb();
+      this.$MercuryFileUploaderc(name, file.name);
+      files[name] = file;
+      session.file_sizes.push(file.size);
+      session.count++;
     }
-    this.$MercuryFileUploadera.setFiles(fa);
+    this.$MercuryFileUploadera.setFiles(files);
     this.$MercuryFileUploadera.forceSendViaXHR();
-    this.inform('submit', ga);
+    this.inform("submit", session);
   };
-  ca.prototype.isUploading = function() {
-    "use strict";
-    return !!Object.keys(this.$MercuryFileUploader6).length;
+  /**
+   * @return {?}
+   */
+  constructor.prototype.isUploading = function() {
+    return!!Object.keys(this.$MercuryFileUploader6).length;
   };
-  ca.prototype.addCachedAttachments = function(ea) {
-    "use strict";
-    ea.forEach(function(fa) {
-      var ga = this.$MercuryFileUploaderb();
-      this.$MercuryFileUploaderc(ga, fa.filename);
-      this.$MercuryFileUploaderf(ga, fa);
+  /**
+   * @param {Array} failures
+   * @return {undefined}
+   */
+  constructor.prototype.addCachedAttachments = function(failures) {
+    failures.forEach(function(xml) {
+      var camelKey = this.$MercuryFileUploaderb();
+      this.$MercuryFileUploaderc(camelKey, xml.filename);
+      this.$MercuryFileUploaderf(camelKey, xml);
     }.bind(this));
   };
-  ca.prototype.addCachedImageFiles = function(ea) {
-    "use strict";
-    var fa = "Photo";
-    ea.forEach(function(ga) {
-      var ha = this.$MercuryFileUploaderb();
-      this.$MercuryFileUploaderc(ha, fa);
-      this.$MercuryFileUploaderf(ha, {
-        filename: ga,
-        image_id: ga,
-        filetype: 'image/jpeg'
+  /**
+   * @param {Array} failures
+   * @return {undefined}
+   */
+  constructor.prototype.addCachedImageFiles = function(failures) {
+    /** @type {string} */
+    var udataCur = "Photo";
+    failures.forEach(function(file) {
+      var camelKey = this.$MercuryFileUploaderb();
+      this.$MercuryFileUploaderc(camelKey, udataCur);
+      this.$MercuryFileUploaderf(camelKey, {
+        filename : file,
+        image_id : file,
+        filetype : "image/jpeg"
       });
     }.bind(this));
   };
-  ca.prototype.getAttachments = function() {
-    "use strict";
-    return w(this.$MercuryFileUploader1);
+  /**
+   * @return {?}
+   */
+  constructor.prototype.getAttachments = function() {
+    return $sanitize(this.$MercuryFileUploader1);
   };
-  ca.prototype.getImageFiles = function() {
-    "use strict";
-    var ea = Object.keys(this.$MercuryFileUploader2).sort(),
-      fa = [];
-    ea.forEach(function(ga) {
-      return fa.push(this.$MercuryFileUploader2[ga]);
+  /**
+   * @return {?}
+   */
+  constructor.prototype.getImageFiles = function() {
+    var asserterNames = Object.keys(this.$MercuryFileUploader2).sort();
+    /** @type {Array} */
+    var byteout = [];
+    asserterNames.forEach(function(value) {
+      return byteout.push(this.$MercuryFileUploader2[value]);
     }.bind(this));
-    return fa;
+    return byteout;
   };
-  ca.prototype.getVideoFiles = function() {
-    "use strict";
-    return w(this.$MercuryFileUploader3);
+  /**
+   * @return {?}
+   */
+  constructor.prototype.getVideoFiles = function() {
+    return $sanitize(this.$MercuryFileUploader3);
   };
-  ca.prototype.getAudioFiles = function() {
-    "use strict";
-    return w(this.$MercuryFileUploader4);
+  /**
+   * @return {?}
+   */
+  constructor.prototype.getAudioFiles = function() {
+    return $sanitize(this.$MercuryFileUploader4);
   };
-  ca.prototype.getFiles = function() {
-    "use strict";
-    return w(this.$MercuryFileUploader5);
+  /**
+   * @return {?}
+   */
+  constructor.prototype.getFiles = function() {
+    return $sanitize(this.$MercuryFileUploader5);
   };
-  ca.prototype.removeAttachments = function() {
-    "use strict";
-    j.empty(this.$MercuryFileUploader0);
+  /**
+   * @return {undefined}
+   */
+  constructor.prototype.removeAttachments = function() {
+    obj.empty(this.$MercuryFileUploader0);
     this.$MercuryFileUploader1 = {};
     this.$MercuryFileUploader2 = {};
     this.$MercuryFileUploader3 = {};
@@ -3625,2351 +5394,3591 @@ __d("MercuryFileUploader", ["ArbiterMixin", "CSS", "Dialog", "DOM", "Event", "Fi
     this.$MercuryFileUploader7 = {};
     this.$MercuryFileUploader6 = {};
     this.$MercuryFileUploader8 = {};
-    h.hide(this.$MercuryFileUploader0);
-    this.inform('dom-updated');
+    w.hide(this.$MercuryFileUploader0);
+    this.inform("dom-updated");
   };
-  ca.prototype.destroy = function() {
-    "use strict";
-    this.$MercuryFileUploader9 && this.$MercuryFileUploader9.release();
-    this.$MercuryFileUploadera && this.$MercuryFileUploadera.destroy();
+  /**
+   * @return {undefined}
+   */
+  constructor.prototype.destroy = function() {
+    if (this.$MercuryFileUploader9) {
+      this.$MercuryFileUploader9.release();
+    }
+    if (this.$MercuryFileUploadera) {
+      this.$MercuryFileUploadera.destroy();
+    }
     this.removeAttachments();
   };
-  ca.prototype.$MercuryFileUploaderc = function(ea, fa) {
-    "use strict";
-    var ga = q[':fb:mercury:upload-file-row'].build();
-    this.$MercuryFileUploader7[ea] = ga;
-    this.$MercuryFileUploader6[ea] = true;
-    this.$MercuryFileUploader8[ea] = Date.now();
-    j.appendContent(ga.getNode('iconText'), da(fa));
-    k.listen(ga.getNode('closeFileUpload'), 'click', this.$MercuryFileUploaderg.bind(this, ea));
-    j.appendContent(this.$MercuryFileUploader0, ga.getRoot());
-    h.show(this.$MercuryFileUploader0);
-    this.inform('dom-updated');
+  /**
+   * @param {?} key
+   * @param {string} value
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryFileUploaderc = function(key, value) {
+    var t = children[":fb:mercury:upload-file-row"].build();
+    this.$MercuryFileUploader7[key] = t;
+    /** @type {boolean} */
+    this.$MercuryFileUploader6[key] = true;
+    /** @type {number} */
+    this.$MercuryFileUploader8[key] = Date.now();
+    obj.appendContent(t.getNode("iconText"), lookupIterator(value));
+    testPage.listen(t.getNode("closeFileUpload"), "click", this.$MercuryFileUploaderg.bind(this, key));
+    obj.appendContent(this.$MercuryFileUploader0, t.getRoot());
+    w.show(this.$MercuryFileUploader0);
+    this.inform("dom-updated");
   };
-  ca.prototype.$MercuryFileUploaderg = function(ea, event) {
-    "use strict";
-    if (this.$MercuryFileUploader6[ea]) {
-      this.inform('upload-canceled-during-upload');
-    } else if (this.$MercuryFileUploader1[ea] || this.$MercuryFileUploader2[ea] || this.$MercuryFileUploader3[ea] || this.$MercuryFileUploader4[ea] || this.$MercuryFileUploader5[ea]) this.inform('upload-canceled-after-uploaded');
-    delete this.$MercuryFileUploader1[ea];
-    delete this.$MercuryFileUploader2[ea];
-    delete this.$MercuryFileUploader3[ea];
-    delete this.$MercuryFileUploader4[ea];
-    delete this.$MercuryFileUploader5[ea];
-    delete this.$MercuryFileUploader6[ea];
-    delete this.$MercuryFileUploader8[ea];
-    var fa = this.$MercuryFileUploader7[ea];
-    delete this.$MercuryFileUploader7[ea];
-    if (fa) {
-      j.remove(fa.getRoot());
-      this.inform('dom-updated');
+  /**
+   * @param {?} path
+   * @param {?} deepDataAndEvents
+   * @return {?}
+   */
+  constructor.prototype.$MercuryFileUploaderg = function(path, deepDataAndEvents) {
+    if (this.$MercuryFileUploader6[path]) {
+      this.inform("upload-canceled-during-upload");
+    } else {
+      if (this.$MercuryFileUploader1[path] || (this.$MercuryFileUploader2[path] || (this.$MercuryFileUploader3[path] || (this.$MercuryFileUploader4[path] || this.$MercuryFileUploader5[path])))) {
+        this.inform("upload-canceled-after-uploaded");
+      }
     }
-    this.inform('upload-canceled');
+    delete this.$MercuryFileUploader1[path];
+    delete this.$MercuryFileUploader2[path];
+    delete this.$MercuryFileUploader3[path];
+    delete this.$MercuryFileUploader4[path];
+    delete this.$MercuryFileUploader5[path];
+    delete this.$MercuryFileUploader6[path];
+    delete this.$MercuryFileUploader8[path];
+    var store = this.$MercuryFileUploader7[path];
+    delete this.$MercuryFileUploader7[path];
+    if (store) {
+      obj.remove(store.getRoot());
+      this.inform("dom-updated");
+    }
+    this.inform("upload-canceled");
     return false;
   };
-  ca.prototype.$MercuryFileUploaderh = function(ea, fa) {
-    "use strict";
-    var ga = this.$MercuryFileUploader7[ea],
-      ha = p.getAttachIconClassByMime(fa);
-    h.addClass(ga.getNode('iconText'), ha);
-    h.addClass(ga.getRoot(), 'done');
+  /**
+   * @param {?} name
+   * @param {?} tokens
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryFileUploaderh = function(name, tokens) {
+    var store = this.$MercuryFileUploader7[name];
+    var s = goog.getAttachIconClassByMime(tokens);
+    w.addClass(store.getNode("iconText"), s);
+    w.addClass(store.getRoot(), "done");
   };
-  ca.prototype.$MercuryFileUploaderf = function(ea, fa) {
-    "use strict";
-    if (this.$MercuryFileUploader6[ea]) {
-      delete this.$MercuryFileUploader6[ea];
-      if (fa.image_id) {
-        this.$MercuryFileUploader2[ea] = fa.image_id;
-      } else if (fa.video_id) {
-        this.$MercuryFileUploader3[ea] = fa.video_id;
-      } else if (fa.audio_id) {
-        this.$MercuryFileUploader4[ea] = fa.audio_id;
-      } else if (fa.file_id) {
-        this.$MercuryFileUploader5[ea] = fa.file_id;
-      } else this.$MercuryFileUploader1[ea] = fa;
-      this.$MercuryFileUploaderh(ea, fa.filetype);
-      this.inform('one-upload-completed', {
-        upload_time_ms: Date.now() - this.$MercuryFileUploader8[ea]
+  /**
+   * @param {?} key
+   * @param {Object} data
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryFileUploaderf = function(key, data) {
+    if (this.$MercuryFileUploader6[key]) {
+      delete this.$MercuryFileUploader6[key];
+      if (data.image_id) {
+        this.$MercuryFileUploader2[key] = data.image_id;
+      } else {
+        if (data.video_id) {
+          this.$MercuryFileUploader3[key] = data.video_id;
+        } else {
+          if (data.audio_id) {
+            this.$MercuryFileUploader4[key] = data.audio_id;
+          } else {
+            if (data.file_id) {
+              this.$MercuryFileUploader5[key] = data.file_id;
+            } else {
+              /** @type {Object} */
+              this.$MercuryFileUploader1[key] = data;
+            }
+          }
+        }
+      }
+      this.$MercuryFileUploaderh(key, data.filetype);
+      this.inform("one-upload-completed", {
+        upload_time_ms : Date.now() - this.$MercuryFileUploader8[key]
       });
     }
-    if (!this.isUploading()) this.inform('all-uploads-completed', {
-      count: this.getAttachments().length
-    });
+    if (!this.isUploading()) {
+      this.inform("all-uploads-completed", {
+        count : this.getAttachments().length
+      });
+    }
   };
-  ca.prototype.$MercuryFileUploaderd = function(event, ea) {
-    "use strict";
-    var fa = ea.response.getPayload();
-    this.$MercuryFileUploaderf(this.$MercuryFileUploaderi(ea), fa.metadata[0]);
+  /**
+   * @param {?} dataAndEvents
+   * @param {Object} operation
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryFileUploaderd = function(dataAndEvents, operation) {
+    var gridStore = operation.response.getPayload();
+    this.$MercuryFileUploaderf(this.$MercuryFileUploaderi(operation), gridStore.metadata[0]);
   };
-  ca.prototype.$MercuryFileUploadere = function(event, ea) {
-    "use strict";
-    this.inform('one-upload-failed');
-    this.$MercuryFileUploaderg(this.$MercuryFileUploaderi(ea), event);
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {Object} inplace
+   * @return {undefined}
+   */
+  constructor.prototype.$MercuryFileUploadere = function(deepDataAndEvents, inplace) {
+    this.inform("one-upload-failed");
+    this.$MercuryFileUploaderg(this.$MercuryFileUploaderi(inplace), deepDataAndEvents);
   };
-  ca.prototype.$MercuryFileUploaderb = function() {
-    "use strict";
-    return 'upload_' + s.getNewID();
+  /**
+   * @return {?}
+   */
+  constructor.prototype.$MercuryFileUploaderb = function() {
+    return "upload_" + opt_attributes.getNewID();
   };
-  ca.prototype.$MercuryFileUploaderi = function(ea) {
-    "use strict";
-    var fa = ea.response.getPayload();
-    if (ea.upload) {
-      return ea.upload.getName();
-    } else return fa.uploadID;
+  /**
+   * @param {Object} data
+   * @return {?}
+   */
+  constructor.prototype.$MercuryFileUploaderi = function(data) {
+    var uploadID = data.response.getPayload();
+    if (data.upload) {
+      return data.upload.getName();
+    } else {
+      return uploadID.uploadID;
+    }
   };
-
-  function da(ea) {
-    if (ea && ea.startsWith('C:\\fakepath\\')) return ea.substring(12);
-    return ea;
-  }
-  e.exports = ca;
+  /** @type {function (?, Object, Object, ?): undefined} */
+  module.exports = constructor;
 }, null);
-__d("URLScraper", ["ArbiterMixin", "DataStore", "Event", "URLMatcher", "copyProperties", "mixin"], function(a, b, c, d, e, f, g, h, i, j, k, l) {
-  var m = 'scraperLastPermissiveMatch',
-    n = l(g);
-  for (var o in n)
-    if (n.hasOwnProperty(o)) q[o] = n[o];
-  var p = n === null ? null : n.prototype;
-  q.prototype = Object.create(p);
-  q.prototype.constructor = q;
-  q.__superConstructor__ = n;
-
-  function q(r, s) {
-    "use strict";
-    this.input = r;
+__d("URLScraper", ["ArbiterMixin", "DataStore", "Event", "URLMatcher", "copyProperties", "mixin"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, element, data_user, m, mongoObject, callback, proceed) {
+  /**
+   * @param {?} str
+   * @param {?} state
+   * @return {undefined}
+   */
+  function $(str, state) {
+    this.input = str;
     this.enable();
-    this.getValueFn = s;
+    this.getValueFn = state;
   }
-  q.prototype.reset = function() {
-    "use strict";
-    h.set(this.input, m, null);
+  /** @type {string} */
+  var camelKey = "scraperLastPermissiveMatch";
+  var data = proceed(element);
+  var prop;
+  for (prop in data) {
+    if (data.hasOwnProperty(prop)) {
+      $[prop] = data[prop];
+    }
+  }
+  var basePrototype = data === null ? null : data.prototype;
+  /** @type {Object} */
+  $.prototype = Object.create(basePrototype);
+  /** @type {function (?, ?): undefined} */
+  $.prototype.constructor = $;
+  $.__superConstructor__ = data;
+  /**
+   * @return {undefined}
+   */
+  $.prototype.reset = function() {
+    data_user.set(this.input, camelKey, null);
   };
-  q.prototype.enable = function() {
-    "use strict";
-    if (this.events) return;
-    var r = function(s) {
-      setTimeout(this.check.bind(this, s), 30);
+  /**
+   * @return {undefined}
+   */
+  $.prototype.enable = function() {
+    if (this.events) {
+      return;
+    }
+    /**
+     * @param {?} callback
+     * @return {undefined}
+     */
+    var gameLoop = function(callback) {
+      setTimeout(this.check.bind(this, callback), 30);
     };
-    this.events = i.listen(this.input, {
-      paste: r.bind(this, false),
-      keydown: r.bind(this, true)
+    this.events = m.listen(this.input, {
+      paste : gameLoop.bind(this, false),
+      keydown : gameLoop.bind(this, true)
     });
   };
-  q.prototype.disable = function() {
-    "use strict";
-    if (!this.events) return;
-    for (var event in this.events) this.events[event].remove();
+  /**
+   * @return {undefined}
+   */
+  $.prototype.disable = function() {
+    if (!this.events) {
+      return;
+    }
+    var key;
+    for (key in this.events) {
+      this.events[key].remove();
+    }
+    /** @type {null} */
     this.events = null;
   };
-  q.prototype.check = function(r) {
-    "use strict";
-    var s = this.getValueFn ? this.getValueFn() : this.input.value;
-    if (r && q.trigger(s)) return;
-    var t = q.match(s),
-      u = j.permissiveMatch(s);
-    if (u && (u != h.get(this.input, m))) {
-      h.set(this.input, m, u);
-      this.inform('match', {
-        url: t || u,
-        alt_url: u
+  /**
+   * @param {(Node|string)} silent
+   * @return {undefined}
+   */
+  $.prototype.check = function(silent) {
+    var expectedHashCode = this.getValueFn ? this.getValueFn() : this.input.value;
+    if (silent && $.trigger(expectedHashCode)) {
+      return;
+    }
+    var url = $.match(expectedHashCode);
+    var value = mongoObject.permissiveMatch(expectedHashCode);
+    if (value && value != data_user.get(this.input, camelKey)) {
+      data_user.set(this.input, camelKey, value);
+      this.inform("match", {
+        url : url || value,
+        alt_url : value
       });
     }
   };
-  k(q, j);
-  e.exports = q;
+  callback($, mongoObject);
+  /** @type {function (?, ?): undefined} */
+  module.exports = $;
 }, null);
-__d("MercuryShareLinkUploader", ["ArbiterMixin", "AsyncRequest", "CSS", "DOM", "Event", "Form", "URLScraper", "WebMessengerEvents", "mixin", "isEmpty"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) {
-  var q = o(g);
-  for (var r in q)
-    if (q.hasOwnProperty(r)) t[r] = q[r];
-  var s = q === null ? null : q.prototype;
-  t.prototype = Object.create(s);
-  t.prototype.constructor = t;
-  t.__superConstructor__ = q;
-
-  function t(u, v, w, x, y) {
-    "use strict";
-    this.$MercuryShareLinkUploader0 = u;
-    this.$MercuryShareLinkUploader1 = v;
-    this.$MercuryShareLinkUploader2 = w;
-    this.$MercuryShareLinkUploader3 = y;
+__d("MercuryShareLinkUploader", ["ArbiterMixin", "AsyncRequest", "CSS", "DOM", "Event", "Form", "URLScraper", "WebMessengerEvents", "mixin", "isEmpty"], function(ignoreMethodDoesntExist, textAlt, keepData, opt_attributes, module, matcherFunction, _super, dataAndEvents, loading, cell, event, list, Audio, deepDataAndEvents, method, behavior) {
+  /**
+   * @param {?} allBindingsAccessor
+   * @param {?} depMaps
+   * @param {?} rootjQuery
+   * @param {?} el
+   * @param {Object} src
+   * @return {undefined}
+   */
+  function init(allBindingsAccessor, depMaps, rootjQuery, el, src) {
+    this.$MercuryShareLinkUploader0 = allBindingsAccessor;
+    this.$MercuryShareLinkUploader1 = depMaps;
+    this.$MercuryShareLinkUploader2 = rootjQuery;
+    /** @type {Object} */
+    this.$MercuryShareLinkUploader3 = src;
+    /** @type {boolean} */
     this.$MercuryShareLinkUploader4 = false;
+    /** @type {null} */
     this.$MercuryShareLinkUploader5 = null;
+    /** @type {null} */
     this.$MercuryShareLinkUploader6 = null;
-    k.listen(x, 'click', this.close.bind(this));
-    k.listen(y, 'keyup', function() {
-      !y.value.length && this.$MercuryShareLinkUploader7.enable();
+    event.listen(el, "click", this.close.bind(this));
+    event.listen(src, "keyup", function() {
+      if (!src.value.length) {
+        this.$MercuryShareLinkUploader7.enable();
+      }
     }.bind(this));
-    this.$MercuryShareLinkUploader7 = new m(y);
-    this.$MercuryShareLinkUploader7.subscribe('match', function(z, aa) {
-      this.loadShare(aa && aa.url);
+    this.$MercuryShareLinkUploader7 = new Audio(src);
+    this.$MercuryShareLinkUploader7.subscribe("match", function(dataAndEvents, object) {
+      this.loadShare(object && object.url);
     }.bind(this));
   }
-  t.prototype.getAttachData = function() {
-    "use strict";
+  var prototype = method(_super);
+  var k;
+  for (k in prototype) {
+    if (prototype.hasOwnProperty(k)) {
+      init[k] = prototype[k];
+    }
+  }
+  var basePrototype = prototype === null ? null : prototype.prototype;
+  /** @type {Object} */
+  init.prototype = Object.create(basePrototype);
+  /** @type {function (?, ?, ?, ?, Object): undefined} */
+  init.prototype.constructor = init;
+  init.__superConstructor__ = prototype;
+  /**
+   * @return {?}
+   */
+  init.prototype.getAttachData = function() {
     return this.loadAttachData(this.$MercuryShareLinkUploader4, this.$MercuryShareLinkUploader0, this.$MercuryShareLinkUploader3);
   };
-  t.prototype.getShareDataFromStage = function(u, v) {
-    "use strict";
-    var w = l.serialize(v),
-      x = w.attachment && w.attachment.params;
-    if (!x) return null;
-    if (x instanceof Object) {
-      var y = [];
-      y.push(x[0]);
-      y.push(x[1]);
-      x = y;
+  /**
+   * @param {?} dataAndEvents
+   * @param {?} arg
+   * @return {?}
+   */
+  init.prototype.getShareDataFromStage = function(dataAndEvents, arg) {
+    var res = list.serialize(arg);
+    var data = res.attachment && res.attachment.params;
+    if (!data) {
+      return null;
     }
-    return {
-      params: x,
-      type: w.attachment.type
+    if (data instanceof Object) {
+      /** @type {Array} */
+      var tmp = [];
+      tmp.push(data[0]);
+      tmp.push(data[1]);
+      /** @type {Array} */
+      data = tmp;
+    }
+    return{
+      params : data,
+      type : res.attachment.type
     };
   };
-  t.prototype.loadAttachData = function(u, v, w, x) {
-    "use strict";
-    if (u) {
-      var y = l.serialize(v),
-        z = y.attachment && y.attachment.params,
-        aa = y.link_metrics ? y.link_metrics.no_image : true;
-      if (!z || p(z)) return null;
-      var ba = x ? x() : w.value;
-      if (ba.indexOf(z.url) === -1) return y;
-      if (!z.summary && !z.favicon && aa && z.title && z.url && z.url.substr(0, z.title.length) === z.title) return null;
-      return y;
+  /**
+   * @param {?} dataAndEvents
+   * @param {?} arg
+   * @param {Attr} data
+   * @param {boolean} raw
+   * @return {?}
+   */
+  init.prototype.loadAttachData = function(dataAndEvents, arg, data, raw) {
+    if (dataAndEvents) {
+      var args = list.serialize(arg);
+      var result = args.attachment && args.attachment.params;
+      var aa = args.link_metrics ? args.link_metrics.no_image : true;
+      if (!result || behavior(result)) {
+        return null;
+      }
+      var me = raw ? raw() : data.value;
+      if (me.indexOf(result.url) === -1) {
+        return args;
+      }
+      if (!result.summary && (!result.favicon && (aa && (result.title && (result.url && result.url.substr(0, result.title.length) === result.title))))) {
+        return null;
+      }
+      return args;
     }
     return null;
   };
-  t.prototype.check = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  init.prototype.check = function() {
     this.$MercuryShareLinkUploader7.check();
   };
-  t.prototype.close = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  init.prototype.close = function() {
     this.$MercuryShareLinkUploader8();
     this.$MercuryShareLinkUploader7.disable();
-    this.inform('closed');
+    this.inform("closed");
   };
-  t.prototype.clear = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  init.prototype.clear = function() {
     this.$MercuryShareLinkUploader8();
     this.$MercuryShareLinkUploader7.enable();
   };
-  t.prototype.enable = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  init.prototype.enable = function() {
     this.$MercuryShareLinkUploader7.enable();
   };
-  t.prototype.disable = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  init.prototype.disable = function() {
     this.$MercuryShareLinkUploader7.disable();
   };
-  t.prototype.loadShare = function(u) {
-    "use strict";
-    this.$MercuryShareLinkUploader5 = u;
-    this.$MercuryShareLinkUploader6 && this.$MercuryShareLinkUploader6.abort();
-    this.$MercuryShareLinkUploader6 = new h().setMethod('POST').setURI('/ajax/share_scrape.php').setData({
-      u: u
-    }).setHandler(this.$MercuryShareLinkUploader9.bind(this).bind(null, u)).setStatusElement(this.$MercuryShareLinkUploader2);
+  /**
+   * @param {string} url
+   * @return {undefined}
+   */
+  init.prototype.loadShare = function(url) {
+    /** @type {string} */
+    this.$MercuryShareLinkUploader5 = url;
+    if (this.$MercuryShareLinkUploader6) {
+      this.$MercuryShareLinkUploader6.abort();
+    }
+    this.$MercuryShareLinkUploader6 = (new dataAndEvents).setMethod("POST").setURI("/ajax/share_scrape.php").setData({
+      u : url
+    }).setHandler(this.$MercuryShareLinkUploader9.bind(this).bind(null, url)).setStatusElement(this.$MercuryShareLinkUploader2);
     this.$MercuryShareLinkUploader6.send();
-    this.inform('link-detected');
+    this.inform("link-detected");
   };
-  t.prototype.$MercuryShareLinkUploader9 = function(u, v) {
-    "use strict";
-    if (this.$MercuryShareLinkUploader5 !== u) return;
+  /**
+   * @param {?} dataAndEvents
+   * @param {Object} content
+   * @return {undefined}
+   */
+  init.prototype.$MercuryShareLinkUploader9 = function(dataAndEvents, content) {
+    if (this.$MercuryShareLinkUploader5 !== dataAndEvents) {
+      return;
+    }
+    /** @type {null} */
     this.$MercuryShareLinkUploader5 = null;
+    /** @type {null} */
     this.$MercuryShareLinkUploader6 = null;
-    i.show(this.$MercuryShareLinkUploader0);
-    j.empty(this.$MercuryShareLinkUploader1);
-    j.setContent(this.$MercuryShareLinkUploader1, v.payload);
+    loading.show(this.$MercuryShareLinkUploader0);
+    cell.empty(this.$MercuryShareLinkUploader1);
+    cell.setContent(this.$MercuryShareLinkUploader1, content.payload);
+    /** @type {boolean} */
     this.$MercuryShareLinkUploader4 = true;
     if (!this.getAttachData()) {
       this.close();
       return;
     }
-    n.detailDOMChanged();
+    deepDataAndEvents.detailDOMChanged();
   };
-  t.prototype.$MercuryShareLinkUploader8 = function() {
-    "use strict";
-    i.hide(this.$MercuryShareLinkUploader0);
+  /**
+   * @return {undefined}
+   */
+  init.prototype.$MercuryShareLinkUploader8 = function() {
+    loading.hide(this.$MercuryShareLinkUploader0);
+    /** @type {boolean} */
     this.$MercuryShareLinkUploader4 = false;
+    /** @type {null} */
     this.$MercuryShareLinkUploader5 = null;
-    this.$MercuryShareLinkUploader6 && this.$MercuryShareLinkUploader6.abort();
+    if (this.$MercuryShareLinkUploader6) {
+      this.$MercuryShareLinkUploader6.abort();
+    }
+    /** @type {null} */
     this.$MercuryShareLinkUploader6 = null;
     this.$MercuryShareLinkUploader7.reset();
-    n.detailDOMChanged();
+    deepDataAndEvents.detailDOMChanged();
   };
-  e.exports = t;
+  /** @type {function (?, ?, ?, ?, Object): undefined} */
+  module.exports = init;
 }, null);
-__d("ChatActivity", ["Event", "Arbiter", "AvailableList", "AvailableListConstants", "JSLogger", "MercuryConfig", "PresenceState", "UserActivity", "copyProperties"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
-  var p = l.activity_limit || 60000,
-    q = l.idle_limit || 1800000,
-    r = l.idle_poll_interval || 300000,
-    s = k.create('chat_activity'),
-    t = Date.now(),
-    u = t,
-    v = true;
-
-  function w() {
-    var aa = Date.now();
-    return !!(v && (aa - t < p));
+__d("ChatActivity", ["Event", "Arbiter", "AvailableList", "AvailableListConstants", "JSLogger", "MercuryConfig", "PresenceState", "UserActivity", "copyProperties"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, Event, _this, MinPubSub, constant, req, dataAndEvents, app, left, layer) {
+  /**
+   * @return {?}
+   */
+  function onDocumentMouseScroll() {
+    /** @type {number} */
+    var now = Date.now();
+    return!!(lastCall && now - y < resizeThrottle);
   }
-  var x = o(new h(), {
-    isActive: w
-  });
-
-  function y() {
-    var aa = t;
-    t = Date.now();
-    if (t - aa > q) {
-      s.debug('idle_to_active', aa);
-      m.doSync();
+  /**
+   * @return {undefined}
+   */
+  function retry() {
+    var delta = y;
+    /** @type {number} */
+    y = Date.now();
+    if (y - delta > packetLength) {
+      self.debug("idle_to_active", delta);
+      app.doSync();
     }
-    x.inform('activity');
+    t.inform("activity");
   }
-  i.subscribe(j.ON_AVAILABILITY_CHANGED, function() {
-    if (!i.isUserIdle()) u = Date.now();
-  });
-  g.listen(window, 'focus', function() {
-    v = true;
-    y();
-  });
-  g.listen(window, 'blur', function() {
-    v = false;
-  });
-  n.subscribe(function() {
-    y();
-  });
-
-  function z(aa) {
-    var ba = aa && aa.at && m.verifyNumber(aa.at);
-    if (typeof ba !== 'number') ba = null;
-    return ba || 0;
+  /**
+   * @param {boolean} model
+   * @return {?}
+   */
+  function evaluate(model) {
+    var obj = model && (model.at && app.verifyNumber(model.at));
+    if (typeof obj !== "number") {
+      /** @type {null} */
+      obj = null;
+    }
+    return obj || 0;
   }
+  var resizeThrottle = dataAndEvents.activity_limit || 6E4;
+  var packetLength = dataAndEvents.idle_limit || 18E5;
+  var frequency = dataAndEvents.idle_poll_interval || 3E5;
+  var self = req.create("chat_activity");
+  /** @type {number} */
+  var y = Date.now();
+  var cy = y;
+  /** @type {boolean} */
+  var lastCall = true;
+  var t = layer(new _this, {
+    /** @type {function (): ?} */
+    isActive : onDocumentMouseScroll
+  });
+  MinPubSub.subscribe(constant.ON_AVAILABILITY_CHANGED, function() {
+    if (!MinPubSub.isUserIdle()) {
+      /** @type {number} */
+      cy = Date.now();
+    }
+  });
+  Event.listen(window, "focus", function() {
+    /** @type {boolean} */
+    lastCall = true;
+    retry();
+  });
+  Event.listen(window, "blur", function() {
+    /** @type {boolean} */
+    lastCall = false;
+  });
+  left.subscribe(function() {
+    retry();
+  });
   setInterval(function() {
-    var aa = Date.now(),
-      ba = z(m.get()),
-      ca = Math.max(t, ba, u);
-    if (aa - ca > q) {
-      s.debug('idle', {
-        cookie: ba,
-        local: t,
-        presence: u
+    /** @type {number} */
+    var end = Date.now();
+    var val = evaluate(app.get());
+    /** @type {number} */
+    var start = Math.max(y, val, cy);
+    if (end - start > packetLength) {
+      self.debug("idle", {
+        cookie : val,
+        local : y,
+        presence : cy
       });
-      x.inform('idle', aa - ca);
+      t.inform("idle", end - start);
     }
-  }, r);
-  m.registerStateStorer(function(aa) {
-    var ba = z(aa);
-    if (ba < t) aa.at = t;
-    return aa;
+  }, frequency);
+  app.registerStateStorer(function(data) {
+    var ret = evaluate(data);
+    if (ret < y) {
+      data.at = y;
+    }
+    return data;
   });
-  h.subscribe(k.DUMP_EVENT, function(aa, ba) {
-    ba.chat_activity = {
-      activity_limit: p,
-      idle_limit: q,
-      idle_poll_interval: r,
-      last_active_time: t,
-      last_global_active_time: u
+  _this.subscribe(req.DUMP_EVENT, function(deepDataAndEvents, dataAndEvents) {
+    dataAndEvents.chat_activity = {
+      activity_limit : resizeThrottle,
+      idle_limit : packetLength,
+      idle_poll_interval : frequency,
+      last_active_time : y,
+      last_global_active_time : cy
     };
   });
-  e.exports = x;
+  module.exports = t;
 }, null);
-__d("MercuryNotificationRenderer", ["MercuryAssert", "MercuryParticipants", "MercuryViewer", "fbt", "MercuryMessages", "MercuryThreads"], function(a, b, c, d, e, f, g, h, i, j) {
-  var k = b('MercuryMessages').get(),
-    l = b('MercuryThreads').get();
-
-  function m(n, o) {
-    g.isThreadID(n);
-    l.getThreadMeta(n, function(p) {
-      k.getThreadMessagesRange(n, 0, 1, function(q) {
-        var r = q.length && q[q.length - 1];
-        if (r && r.author != i.getID()) {
-          h.get(r.author, function(s) {
-            if (p.name) {
-              o(j._("{senderName} messaged {groupName}", [j.param("senderName", s.short_name), j.param("groupName", p.name)]));
-            } else o(j._("{name} messaged you", [j.param("name", s.short_name)]));
+__d("MercuryNotificationRenderer", ["MercuryAssert", "MercuryParticipants", "MercuryViewer", "fbt", "MercuryMessages", "MercuryThreads"], function(dataAndEvents, nock, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt, fns, User, a, self) {
+  /**
+   * @param {?} fn
+   * @param {Function} eachfn
+   * @return {undefined}
+   */
+  function _concat(fn, eachfn) {
+    fns.isThreadID(fn);
+    reName.getThreadMeta(fn, function(s) {
+      arr.getThreadMessagesRange(fn, 0, 1, function(scopes) {
+        var data = scopes.length && scopes[scopes.length - 1];
+        if (data && data.author != a.getID()) {
+          User.get(data.author, function(part) {
+            if (s.name) {
+              eachfn(self._("{senderName} messaged {groupName}", [self.param("senderName", part.short_name), self.param("groupName", s.name)]));
+            } else {
+              eachfn(self._("{name} messaged you", [self.param("name", part.short_name)]));
+            }
           });
-        } else o("New message!");
+        } else {
+          eachfn("New message!");
+        }
       });
     });
   }
-  e.exports = {
-    renderDocumentTitle: m
+  var arr = nock("MercuryMessages").get();
+  var reName = nock("MercuryThreads").get();
+  module.exports = {
+    /** @type {function (?, Function): undefined} */
+    renderDocumentTitle : _concat
   };
 }, null);
-__d("MercuryTimestampTracker", ["MercuryActionType", "MercuryPayloadSource", "MercurySingletonMixin", "MercuryServerRequests", "copyProperties"], function(a, b, c, d, e, f, g, h, i, j, k) {
-  function l(m) {
-    this._fbid = m;
-    this._serverRequests = j.getForFBID(this._fbid);
+__d("MercuryTimestampTracker", ["MercuryActionType", "MercuryPayloadSource", "MercurySingletonMixin", "MercuryServerRequests", "copyProperties"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, a, contestant, result, dataAndEvents, expect) {
+  /**
+   * @param {?} allBindingsAccessor
+   * @return {undefined}
+   */
+  function init(allBindingsAccessor) {
+    this._fbid = allBindingsAccessor;
+    this._serverRequests = dataAndEvents.getForFBID(this._fbid);
+    /** @type {number} */
     this._lastTimestamp = 0;
-    this._serverRequests.subscribe('update-messages', function(n, o) {
-      if (!o.actions || !o.actions.length) return;
-      if (o.payload_source == h.CLIENT_SEND_MESSAGE || o.payload_source == h.UNKNOWN) return;
-      for (var p = 0; p < o.actions.length; p++) {
-        var q = o.actions[p],
-          r = q.action_type;
-        if (r == g.USER_GENERATED_MESSAGE && q.thread_id && q.timestamp > this._lastTimestamp) this._lastTimestamp = q.timestamp;
+    this._serverRequests.subscribe("update-messages", function(dataAndEvents, node) {
+      if (!node.actions || !node.actions.length) {
+        return;
+      }
+      if (node.payload_source == contestant.CLIENT_SEND_MESSAGE || node.payload_source == contestant.UNKNOWN) {
+        return;
+      }
+      /** @type {number} */
+      var i = 0;
+      for (;i < node.actions.length;i++) {
+        var message = node.actions[i];
+        var text = message.action_type;
+        if (text == a.USER_GENERATED_MESSAGE && (message.thread_id && message.timestamp > this._lastTimestamp)) {
+          this._lastTimestamp = message.timestamp;
+        }
       }
     }.bind(this));
   }
-  k(l.prototype, {
-    getLastUserMessageTimestamp: function() {
+  expect(init.prototype, {
+    /**
+     * @return {?}
+     */
+    getLastUserMessageTimestamp : function() {
       return this._lastTimestamp;
     }
   });
-  k(l, i);
-  e.exports = l;
+  expect(init, result);
+  /** @type {function (?): undefined} */
+  module.exports = init;
 }, null);
-__d("ChatTitleBarBlinker", ["ChatActivity", "DocumentTitle", "JSLogger", "MercuryNotificationRenderer", "PresenceState", "MercuryThreadInformer", "MercuryTimestampTracker"], function(a, b, c, d, e, f, g, h, i, j, k) {
-  var l = b('MercuryThreadInformer').get(),
-    m = b('MercuryTimestampTracker').get(),
-    n = i.create('chat_title'),
-    o = null,
-    p = 0,
-    q = false;
-
-  function r() {
-    if (o) {
-      o.stop();
-      o = null;
+__d("ChatTitleBarBlinker", ["ChatActivity", "DocumentTitle", "JSLogger", "MercuryNotificationRenderer", "PresenceState", "MercuryThreadInformer", "MercuryTimestampTracker"], function(dataAndEvents, nock, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt, plugin, Ext, activator, goog, assert) {
+  /**
+   * @return {?}
+   */
+  function run() {
+    if (event) {
+      event.stop();
+      /** @type {null} */
+      event = null;
       return true;
     }
     return false;
   }
-
-  function s(x) {
-    var y = x || m.getLastUserMessageTimestamp();
-    if (p <= y) {
-      p = y;
-      if (r() || q) k.doSync();
+  /**
+   * @param {Object} elem
+   * @return {undefined}
+   */
+  function queue(elem) {
+    var startIndex = elem || getLastUserMessageTimestamp.getLastUserMessageTimestamp();
+    if (start <= startIndex) {
+      start = startIndex;
+      if (run() || q) {
+        assert.doSync();
+      }
     }
   }
-  var t = {
-    blink: function(x, y) {
-      if (!o && p < y) j.renderDocumentTitle(x, function(z) {
-        if (!o) o = h.blink(z);
-      });
+  /**
+   * @param {boolean} obj
+   * @return {?}
+   */
+  function get(obj) {
+    var value = assert.verifyNumber(obj.sb2);
+    if (!value || value <= start) {
+      return null;
+    }
+    return value;
+  }
+  /**
+   * @param {boolean} data
+   * @return {undefined}
+   */
+  function done(data) {
+    var value = data && get(data);
+    if (value) {
+      start = value;
+      utils.debug("load", start);
+      run();
+      /** @type {boolean} */
+      q = false;
+    }
+  }
+  /**
+   * @param {boolean} obj
+   * @return {?}
+   */
+  function init(obj) {
+    var keys = get(obj);
+    if (!keys) {
+      utils.debug("store", start);
+      obj.sb2 = start;
+      /** @type {boolean} */
+      q = false;
+    }
+    return obj;
+  }
+  var _this = nock("MercuryThreadInformer").get();
+  var getLastUserMessageTimestamp = nock("MercuryTimestampTracker").get();
+  var utils = activator.create("chat_title");
+  /** @type {null} */
+  var event = null;
+  /** @type {number} */
+  var start = 0;
+  /** @type {boolean} */
+  var q = false;
+  var JsDiff = {
+    /**
+     * @param {?} iterable
+     * @param {?} callback
+     * @return {undefined}
+     */
+    blink : function(iterable, callback) {
+      if (!event && start < callback) {
+        goog.renderDocumentTitle(iterable, function(object) {
+          if (!event) {
+            event = Ext.blink(object);
+          }
+        });
+      }
     },
-    stopBlinking: function() {
-      s();
+    /**
+     * @return {undefined}
+     */
+    stopBlinking : function() {
+      queue();
     },
-    blinkingElsewhere: function() {
+    /**
+     * @return {undefined}
+     */
+    blinkingElsewhere : function() {
+      /** @type {boolean} */
       q = true;
     }
   };
-
-  function u(x) {
-    var y = k.verifyNumber(x.sb2);
-    if (!y || y <= p) return null;
-    return y;
-  }
-
-  function v(x) {
-    var y = x && u(x);
-    if (y) {
-      p = y;
-      n.debug('load', p);
-      r();
-      q = false;
+  assert.registerStateStorer(init);
+  assert.registerStateLoader(done);
+  _this.subscribe("thread-read-changed", function(dataAndEvents, map) {
+    var z = getLastUserMessageTimestamp.getLastUserMessageTimestamp();
+    /** @type {number} */
+    var timestamp = 0;
+    var letter;
+    for (letter in map) {
+      if (map[letter].mark_as_read && (map[letter].timestamp >= z && map[letter].timestamp > timestamp)) {
+        timestamp = map[letter].timestamp;
+      }
     }
-  }
-
-  function w(x) {
-    var y = u(x);
-    if (!y) {
-      n.debug('store', p);
-      x.sb2 = p;
-      q = false;
+    if (timestamp) {
+      queue(timestamp);
     }
-    return x;
-  }
-  k.registerStateStorer(w);
-  k.registerStateLoader(v);
-  l.subscribe('thread-read-changed', function(x, y) {
-    var z = m.getLastUserMessageTimestamp(),
-      aa = 0;
-    for (var ba in y)
-      if (y[ba].mark_as_read && y[ba].timestamp >= z && y[ba].timestamp > aa) aa = y[ba].timestamp;
-    aa && s(aa);
   });
-  g.subscribe('activity', function() {
-    s();
+  plugin.subscribe("activity", function() {
+    queue();
   });
   (function() {
-    var x = k.getInitial();
-    if (x) p = u(x) || 0;
+    var suiteView = assert.getInitial();
+    if (suiteView) {
+      start = get(suiteView) || 0;
+    }
   })();
-  e.exports = t;
+  module.exports = JsDiff;
 }, null);
-__d("MercuryBrowserAlerts", ["ArbiterMixin", "ChatActivity", "ChatConfig", "ChatOptions", "ChatTitleBarBlinker", "MercuryThreadMuter", "MercuryViewer", "MessagingTag", "Sound", "copyProperties", "MercuryThreads"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) {
-  var q = b('MercuryThreads').get();
-  o.init(['audio/ogg', 'audio/mpeg']);
-
-  function r(t) {
-    if (j.getSetting('sound')) o.play([i.get('sound.notif_ogg_url'), i.get('sound.notif_mp3_url')], t, false);
+__d("MercuryBrowserAlerts", ["ArbiterMixin", "ChatActivity", "ChatConfig", "ChatOptions", "ChatTitleBarBlinker", "MercuryThreadMuter", "MercuryViewer", "MessagingTag", "Sound", "copyProperties", "MercuryThreads"], function(dataAndEvents, nock, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt, root, oElement, $templateCache, _this, item, Data, User, folder, a, factory) {
+  /**
+   * @param {number} callback
+   * @return {undefined}
+   */
+  function listener(callback) {
+    if (_this.getSetting("sound")) {
+      a.play([$templateCache.get("sound.notif_ogg_url"), $templateCache.get("sound.notif_mp3_url")], callback, false);
+    }
   }
-  var s = {
-    messageReceived: function(t) {
-      if (m.isViewer(t.author) || !t.is_unread || (t.folder != n.INBOX && t.folder != n.ARCHIVED)) return;
-      var u = t.thread_id,
-        v = h.isActive();
+  var ostring = nock("MercuryThreads").get();
+  a.init(["audio/ogg", "audio/mpeg"]);
+  var require = {
+    /**
+     * @param {Object} message
+     * @return {undefined}
+     */
+    messageReceived : function(message) {
+      if (User.isViewer(message.author) || (!message.is_unread || message.folder != folder.INBOX && message.folder != folder.ARCHIVED)) {
+        return;
+      }
+      var it = message.thread_id;
+      var v = oElement.isActive();
       if (v) {
+        /** @type {boolean} */
         var w = false;
-        s.inform('before-alert', {
-          threadID: u,
-          cancelAlert: function() {
+        require.inform("before-alert", {
+          threadID : it,
+          /**
+           * @return {undefined}
+           */
+          cancelAlert : function() {
+            /** @type {boolean} */
             w = true;
           }
         });
       }
-      q.getThreadMeta(u, function(x) {
-        var y = l.isThreadMuted(x);
-        if (y) return;
-        var z = t.timestamp;
-        if (v) {
-          !w && r(z);
-        } else {
-          k.blink(u, z);
-          r(z);
+      ostring.getThreadMeta(it, function(owner) {
+        var unlock = Data.isThreadMuted(owner);
+        if (unlock) {
+          return;
         }
-        k.blinkingElsewhere();
+        var args = message.timestamp;
+        if (v) {
+          if (!w) {
+            listener(args);
+          }
+        } else {
+          item.blink(it, args);
+          listener(args);
+        }
+        item.blinkingElsewhere();
       }.bind(this));
     }
   };
-  e.exports = p(s, g);
+  module.exports = factory(require, root);
 }, null);
-__d("XSkypeDeprecationWarningDialogController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/videocall\/skype_deprecation_warning\/", {
-    __asyncDialog: {
-      type: "Int"
+__d("XSkypeDeprecationWarningDialogController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/videocall/skype_deprecation_warning/", {
+    __asyncDialog : {
+      type : "Int"
     }
   });
 }, null);
-__d("VideoCallSkypeDeprecationWarning", ["AsyncDialog", "AsyncRequest", "CacheStorage", "VideoCallSupport", "XSkypeDeprecationWarningDialogController", "FBRTCLogger", "FBRTCUnsupportedBrowserMessage"], function(a, b, c, d, e, f, g, h, i, j, k, l, m) {
-  var n = 'localstorage',
-    o = 'RTC_',
-    p = 'SKYPE_DEPRECATION_STATE',
-    q = 1000 * 60 * 60 * 24;
-
-  function r(s) {
-    "use strict";
-    this.$VideoCallSkypeDeprecationWarning0 = new i(n, o);
-    this.$VideoCallSkypeDeprecationWarning1 = s;
-    this.$VideoCallSkypeDeprecationWarning2 = l.getInstance();
+__d("VideoCallSkypeDeprecationWarning", ["AsyncDialog", "AsyncRequest", "CacheStorage", "VideoCallSupport", "XSkypeDeprecationWarningDialogController", "FBRTCLogger", "FBRTCUnsupportedBrowserMessage"], function(deepDataAndEvents, keepData, opt_attributes, matcherFunction, module, execResult, res, Test, Renderer, ignoreMethodDoesntExist, dataAndEvents, self, textAlt) {
+  /**
+   * @param {?} allBindingsAccessor
+   * @return {undefined}
+   */
+  function init(allBindingsAccessor) {
+    this.$VideoCallSkypeDeprecationWarning0 = new Renderer(str, options);
+    this.$VideoCallSkypeDeprecationWarning1 = allBindingsAccessor;
+    this.$VideoCallSkypeDeprecationWarning2 = self.getInstance();
   }
-  r.prototype.showWarningOrStartCall = function(s, t) {
-    "use strict";
-    if (j.isSkypeDeprecated()) {
-      if (j.isWebrtcSupported()) {
-        this.$VideoCallSkypeDeprecationWarning1.makeWebRTCCall(s, t || l.Trigger.CHAT_TAB_ICON);
-      } else m.showForOutgoingCall();
-    } else if (this.$VideoCallSkypeDeprecationWarning3(s)) {
-      this.$VideoCallSkypeDeprecationWarning4(s);
-    } else if (this.$VideoCallSkypeDeprecationWarning5(s)) {
-      this.$VideoCallSkypeDeprecationWarning1.makeWebRTCCall(s, t || l.Trigger.CHAT_TAB_ICON);
-    } else this.$VideoCallSkypeDeprecationWarning1.makeSkypeCall(s);
+  /** @type {string} */
+  var str = "localstorage";
+  /** @type {string} */
+  var options = "RTC_";
+  /** @type {string} */
+  var tag = "SKYPE_DEPRECATION_STATE";
+  /** @type {number} */
+  var q = 1E3 * 60 * 60 * 24;
+  /**
+   * @param {string} deepDataAndEvents
+   * @param {?} dataAndEvents
+   * @return {undefined}
+   */
+  init.prototype.showWarningOrStartCall = function(deepDataAndEvents, dataAndEvents) {
+    if (ignoreMethodDoesntExist.isSkypeDeprecated()) {
+      if (ignoreMethodDoesntExist.isWebrtcSupported()) {
+        this.$VideoCallSkypeDeprecationWarning1.makeWebRTCCall(deepDataAndEvents, dataAndEvents || self.Trigger.CHAT_TAB_ICON);
+      } else {
+        textAlt.showForOutgoingCall();
+      }
+    } else {
+      if (this.$VideoCallSkypeDeprecationWarning3(deepDataAndEvents)) {
+        this.$VideoCallSkypeDeprecationWarning4(deepDataAndEvents);
+      } else {
+        if (this.$VideoCallSkypeDeprecationWarning5(deepDataAndEvents)) {
+          this.$VideoCallSkypeDeprecationWarning1.makeWebRTCCall(deepDataAndEvents, dataAndEvents || self.Trigger.CHAT_TAB_ICON);
+        } else {
+          this.$VideoCallSkypeDeprecationWarning1.makeSkypeCall(deepDataAndEvents);
+        }
+      }
+    }
   };
-  r.prototype.$VideoCallSkypeDeprecationWarning5 = function(s) {
-    "use strict";
-    if (!this.$VideoCallSkypeDeprecationWarning1.canCallByWebrtc(s)) return false;
-    if (!j.isPluginInstalled(false)) return true;
+  /**
+   * @param {string} deepDataAndEvents
+   * @return {?}
+   */
+  init.prototype.$VideoCallSkypeDeprecationWarning5 = function(deepDataAndEvents) {
+    if (!this.$VideoCallSkypeDeprecationWarning1.canCallByWebrtc(deepDataAndEvents)) {
+      return false;
+    }
+    if (!ignoreMethodDoesntExist.isPluginInstalled(false)) {
+      return true;
+    }
     return this.$VideoCallSkypeDeprecationWarning6().optedInToWebRTC;
   };
-  r.prototype.$VideoCallSkypeDeprecationWarning3 = function(s) {
-    "use strict";
-    if (!j.isPluginInstalled(false)) return false;
-    var t = this.$VideoCallSkypeDeprecationWarning6();
-    return !t.optedInToWebRTC && (Date.now() - t.updatedAt) > q;
+  /**
+   * @param {string} deepDataAndEvents
+   * @return {?}
+   */
+  init.prototype.$VideoCallSkypeDeprecationWarning3 = function(deepDataAndEvents) {
+    if (!ignoreMethodDoesntExist.isPluginInstalled(false)) {
+      return false;
+    }
+    var body = this.$VideoCallSkypeDeprecationWarning6();
+    return!body.optedInToWebRTC && Date.now() - body.updatedAt > q;
   };
-  r.prototype.$VideoCallSkypeDeprecationWarning4 = function(s) {
-    "use strict";
-    this.$VideoCallSkypeDeprecationWarning2.logInfo(s, null, 'Show Deprecation Dialog');
+  /**
+   * @param {string} deepDataAndEvents
+   * @return {undefined}
+   */
+  init.prototype.$VideoCallSkypeDeprecationWarning4 = function(deepDataAndEvents) {
+    this.$VideoCallSkypeDeprecationWarning2.logInfo(deepDataAndEvents, null, "Show Deprecation Dialog");
     this.$VideoCallSkypeDeprecationWarning7();
-    if (!j.isWebrtcSupported()) {
-      m.warnForOutgoingCall(function() {
-        this.$VideoCallSkypeDeprecationWarning1.makeSkypeCall(s);
+    if (!ignoreMethodDoesntExist.isWebrtcSupported()) {
+      textAlt.warnForOutgoingCall(function() {
+        this.$VideoCallSkypeDeprecationWarning1.makeSkypeCall(deepDataAndEvents);
       }.bind(this));
       return;
     }
-    var t = k.getURIBuilder().getURI(),
-      u = new h(t),
-      v = this;
-    g.send(u, function(w) {
-      w.subscribe('confirm', function() {
-        w.hide();
-        v.$VideoCallSkypeDeprecationWarning8();
-        v.$VideoCallSkypeDeprecationWarning1.makeWebRTCCall(s, l.Trigger.SKYPE_DEPRECATION_DIALOG);
-        v.$VideoCallSkypeDeprecationWarning2.logCallAction(s, null, l.CallAction.TRY_NEW);
+    var title = dataAndEvents.getURIBuilder().getURI();
+    var test = new Test(title);
+    var $VideoCallSkypeDeprecationWarning1 = this;
+    res.send(test, function(el) {
+      el.subscribe("confirm", function() {
+        el.hide();
+        $VideoCallSkypeDeprecationWarning1.$VideoCallSkypeDeprecationWarning8();
+        $VideoCallSkypeDeprecationWarning1.$VideoCallSkypeDeprecationWarning1.makeWebRTCCall(deepDataAndEvents, self.Trigger.SKYPE_DEPRECATION_DIALOG);
+        $VideoCallSkypeDeprecationWarning1.$VideoCallSkypeDeprecationWarning2.logCallAction(deepDataAndEvents, null, self.CallAction.TRY_NEW);
       });
-      w.subscribe('cancel', function() {
-        v.$VideoCallSkypeDeprecationWarning1.makeSkypeCall(s);
-        v.$VideoCallSkypeDeprecationWarning2.logCallAction(s, null, l.CallAction.START_SKYPE);
+      el.subscribe("cancel", function() {
+        $VideoCallSkypeDeprecationWarning1.$VideoCallSkypeDeprecationWarning1.makeSkypeCall(deepDataAndEvents);
+        $VideoCallSkypeDeprecationWarning1.$VideoCallSkypeDeprecationWarning2.logCallAction(deepDataAndEvents, null, self.CallAction.START_SKYPE);
       });
     });
   };
-  r.prototype.$VideoCallSkypeDeprecationWarning7 = function() {
-    "use strict";
-    this.$VideoCallSkypeDeprecationWarning0.set(p, {
-      optedInToWebRTC: false,
-      updatedAt: Date.now()
+  /**
+   * @return {undefined}
+   */
+  init.prototype.$VideoCallSkypeDeprecationWarning7 = function() {
+    this.$VideoCallSkypeDeprecationWarning0.set(tag, {
+      optedInToWebRTC : false,
+      updatedAt : Date.now()
     });
   };
-  r.prototype.$VideoCallSkypeDeprecationWarning8 = function() {
-    "use strict";
-    this.$VideoCallSkypeDeprecationWarning0.set(p, {
-      optedInToWebRTC: true,
-      updatedAt: Date.now()
+  /**
+   * @return {undefined}
+   */
+  init.prototype.$VideoCallSkypeDeprecationWarning8 = function() {
+    this.$VideoCallSkypeDeprecationWarning0.set(tag, {
+      optedInToWebRTC : true,
+      updatedAt : Date.now()
     });
   };
-  r.prototype.$VideoCallSkypeDeprecationWarning6 = function() {
-    "use strict";
-    var s = this.$VideoCallSkypeDeprecationWarning0.get(p);
-    if (s) return s;
-    return {
-      optedInToWebRTC: false,
-      updatedAt: 0
+  /**
+   * @return {?}
+   */
+  init.prototype.$VideoCallSkypeDeprecationWarning6 = function() {
+    var elements = this.$VideoCallSkypeDeprecationWarning0.get(tag);
+    if (elements) {
+      return elements;
+    }
+    return{
+      optedInToWebRTC : false,
+      updatedAt : 0
     };
   };
-  r.prototype.ut_setStorage = function(s) {
-    "use strict";
-    this.$VideoCallSkypeDeprecationWarning0 = s;
+  /**
+   * @param {?} dataAndEvents
+   * @return {undefined}
+   */
+  init.prototype.ut_setStorage = function(dataAndEvents) {
+    this.$VideoCallSkypeDeprecationWarning0 = dataAndEvents;
   };
-  e.exports = r;
+  /** @type {function (?): undefined} */
+  module.exports = init;
 }, null);
-__d("VideoCallRecordMessageDialog", ["AsyncDialog", "AsyncRequest", "Dialog", "URI", "fbt"], function(a, b, c, d, e, f, g, h, i, j, k) {
-  var l = {
-    get: function(m, n) {
-      var o = "Would you like to leave a message?",
-        p = "New Message";
-      return new i().setTitle(k._("{firstname} is Unavailable", [k.param("firstname", n)])).setBody(o).setButtons([{
-        name: 'record-message',
-        label: p
-      }, i.CANCEL]).setHandler(function() {
-        var q = j('/ajax/messaging/composer.php').setQueryData({
-          ids: [m],
-          autoloadvideo: true
+__d("VideoCallRecordMessageDialog", ["AsyncDialog", "AsyncRequest", "Dialog", "URI", "fbt"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, res, Buffer, Logger, next, item) {
+  var prop = {
+    /**
+     * @param {string} key
+     * @param {Function} data
+     * @return {?}
+     */
+    get : function(key, data) {
+      /** @type {string} */
+      var r20 = "Would you like to leave a message?";
+      /** @type {string} */
+      var lab = "New Message";
+      return(new Logger).setTitle(item._("{firstname} is Unavailable", [item.param("firstname", data)])).setBody(r20).setButtons([{
+        name : "record-message",
+        label : lab
+      }, Logger.CANCEL]).setHandler(function() {
+        var str = next("/ajax/messaging/composer.php").setQueryData({
+          ids : [key],
+          autoloadvideo : true
         }).toString();
-        g.send(new h(q));
+        res.send(new Buffer(str));
       });
     }
   };
-  e.exports = l;
+  module.exports = prop;
 }, null);
-__d("VideoCallCore", ["Event", "Arbiter", "AsyncRequest", "AvailableListConstants", "Bootloader", "ChannelConstants", "Cookie", "CSS", "Dialog", "FBRTCCore", "UserAgent_DEPRECATED", "VideoCallSupport", "VideoCallSkypeDeprecationWarning", "emptyFunction", "ge", "PresenceStatus", "randomInt", "VideoCallUI", "VideoCallIncomingCallController", "VideoCallTemplates", "ShortProfiles", "VideoCallRecordMessageDialog"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w) {
-  var x = b('VideoCallUI').module,
-    y = b('VideoCallIncomingCallController').module;
-  b('VideoCallTemplates');
-  var z = [],
-    aa = [],
-    ba = null,
-    ca = false,
-    da = {
-      mightReloadPostInstall: function() {
-        return q.windows();
-      },
-      onVideoMessage: function(ia) {
-        z.push(ia);
-        k.loadModules(["VideoCallController"], t);
-      },
-      onRTCMessage: function(ia) {
-        if (r.isReceiveWebrtcSupported() && y) {
-          aa.push(ia);
-          ea();
-        }
-      },
-      setMessageHandler: function(ia) {
-        this.onVideoMessage = ia;
-        if (ia)
-          while (z.length) ia(z.shift());
-      },
-      setRTCMessageHandler: function(ia) {
-        this.onRTCMessage = ia;
-        if (ia)
-          while (aa.length) ia(aa.shift());
-      },
-      availableForCall: function(ia) {
-        if (!r.isSkypeDeprecated()) {
-          var ja = v.get(ia);
-          if (ja === j.ACTIVE) {
-            var ka = v.getDetailedActivePresence(ia);
-            if (ka === j.ACTIVE_ON_WEB) return true;
-          }
-        }
-        return ga(ia);
-      },
-      attachListenerToProfileButton: function(ia) {
-        var ja = u('videoCallProfileButton');
-        if (ja) {
-          if (!r.isVideoCallSupported()) {
-            n.hide(ja);
-            return;
-          }
-          g.listen(ja, 'click', function(event) {
-            da.startCallOrLeaveMessage(ia, 'profile_button_click_timeline');
-          });
-        }
-      },
-      startCallOrLeaveMessage: function(ia, ja) {
-        if (this.availableForCall(ia)) {
-          da.showOutgoingCallDialog(ia, ja);
-        } else b('ShortProfiles').get(ia, function(ka) {
-          b('VideoCallRecordMessageDialog').get(ia, ka.firstName).show();
-        });
-      },
-      showOutgoingCallDialog: function(ia, ja, ka) {
-        if (ca) return;
-        ca = true;
-        setTimeout(function() {
-          ca = false;
-        }, 1000);
-        da.logClick(ia, (ja || 'unknown'));
-        var la = new s(da);
-        la.showWarningOrStartCall(ia, ka);
-      },
-      canCallByWebrtc: function(ia) {
-        if (r.isSendWebrtcSupported() && x) return ga(ia);
-        return false;
-      },
-      makeWebRTCCall: function(ia, ja) {
-        var ka = parseInt(ia, 10);
-        ea();
-        var la = fa();
-        ba.startingCallTo(ka, la);
-        x.openAsCaller(ia, la, ja);
-      },
-      makeSkypeCall: function(ia) {
-        var ja = r.isPluginInstalled() ? 'outgoing_dialog.php' : 'intro.php',
-          ka = '/ajax/chat/video/' + ja + '?idTarget=' + ia;
-        new o().setAllowCrossPageTransition(true).setAsync(new i(ka).setHandler(t).setServerDialogCancelHandler(t)).show();
-      },
-      logClick: function(ia, ja) {
-        new i().setURI('/ajax/chat/video/log_click.php').setData({
-          targetUserID: ia,
-          clickSource: ja
-        }).setAllowCrossPageTransition(true).setErrorHandler(t).send();
-      }
-    };
-
-  function ea() {
-    if (!ba) ba = new y(da);
+__d("VideoCallCore", ["Event", "Arbiter", "AsyncRequest", "AvailableListConstants", "Bootloader", "ChannelConstants", "Cookie", "CSS", "Dialog", "FBRTCCore", "UserAgent_DEPRECATED", "VideoCallSupport", "VideoCallSkypeDeprecationWarning", "emptyFunction", "ge", "PresenceStatus", "randomInt", "VideoCallUI", "VideoCallIncomingCallController", "VideoCallTemplates", "ShortProfiles", "VideoCallRecordMessageDialog"], function(deepDataAndEvents, require, ignoreMethodDoesntExist, textAlt, context, keepData,
+Event, left, Command, CLASS, assert, util, todo, api, Rect, defer, browser, dataAndEvents, Client, statusCode, oboeBus, otherMap, f) {
+  /**
+   * @return {undefined}
+   */
+  function subscribe() {
+    if (!value) {
+      value = new LatestEvent(self);
+    }
   }
-
-  function fa() {
-    return w(0, 4294967295);
+  /**
+   * @return {?}
+   */
+  function tryIt() {
+    return f(0, 4294967295);
   }
-
-  function ga(ia) {
-    return p.isAvailableForWebrtcCalling(ia);
+  /**
+   * @param {string} obj
+   * @return {?}
+   */
+  function i(obj) {
+    return defer.isAvailableForWebrtcCalling(obj);
   }
-
-  function ha() {
-    if (!da.mightReloadPostInstall()) return;
-    var ia = m.get('vcpwn');
-    if (ia) {
-      m.clear('vcpwn');
-      var ja = m.get('vctid');
-      if (ja) {
-        m.clear('vctid');
-        if (m.get('vctid')) return;
-        if (ja && r.isPluginInstalled()) {
-          var ka = '/ajax/chat/video/outgoing_dialog.php?idTarget=' + ja;
-          new o().setAllowCrossPageTransition(true).setAsync(new i(ka)).show();
+  /**
+   * @return {undefined}
+   */
+  function reset() {
+    if (!self.mightReloadPostInstall()) {
+      return;
+    }
+    var vcpwn = todo.get("vcpwn");
+    if (vcpwn) {
+      todo.clear("vcpwn");
+      var port = todo.get("vctid");
+      if (port) {
+        todo.clear("vctid");
+        if (todo.get("vctid")) {
+          return;
+        }
+        if (port && dataAndEvents.isPluginInstalled()) {
+          /** @type {string} */
+          var name = "/ajax/chat/video/outgoing_dialog.php?idTarget=" + port;
+          (new Rect).setAllowCrossPageTransition(true).setAsync(new Command(name)).show();
         }
       }
     }
   }
-  h.subscribe(l.getArbiterType('video'), function(ia, ja) {
-    da.onVideoMessage(ja.obj);
+  var module = require("VideoCallUI").module;
+  var LatestEvent = require("VideoCallIncomingCallController").module;
+  require("VideoCallTemplates");
+  /** @type {Array} */
+  var ql = [];
+  /** @type {Array} */
+  var arr = [];
+  /** @type {null} */
+  var value = null;
+  /** @type {boolean} */
+  var ca = false;
+  var self = {
+    /**
+     * @return {?}
+     */
+    mightReloadPostInstall : function() {
+      return browser.windows();
+    },
+    /**
+     * @param {?} x
+     * @return {undefined}
+     */
+    onVideoMessage : function(x) {
+      ql.push(x);
+      assert.loadModules(["VideoCallController"], statusCode);
+    },
+    /**
+     * @param {?} chunk
+     * @return {undefined}
+     */
+    onRTCMessage : function(chunk) {
+      if (dataAndEvents.isReceiveWebrtcSupported() && LatestEvent) {
+        arr.push(chunk);
+        subscribe();
+      }
+    },
+    /**
+     * @param {?} callback
+     * @return {undefined}
+     */
+    setMessageHandler : function(callback) {
+      this.onVideoMessage = callback;
+      if (callback) {
+        for (;ql.length;) {
+          callback(ql.shift());
+        }
+      }
+    },
+    /**
+     * @param {?} $sanitize
+     * @return {undefined}
+     */
+    setRTCMessageHandler : function($sanitize) {
+      this.onRTCMessage = $sanitize;
+      if ($sanitize) {
+        for (;arr.length;) {
+          $sanitize(arr.shift());
+        }
+      }
+    },
+    /**
+     * @param {string} key
+     * @return {?}
+     */
+    availableForCall : function(key) {
+      if (!dataAndEvents.isSkypeDeprecated()) {
+        var camelKey = otherMap.get(key);
+        if (camelKey === CLASS.ACTIVE) {
+          var encodedKey = otherMap.getDetailedActivePresence(key);
+          if (encodedKey === CLASS.ACTIVE_ON_WEB) {
+            return true;
+          }
+        }
+      }
+      return i(key);
+    },
+    /**
+     * @param {string} part
+     * @return {undefined}
+     */
+    attachListenerToProfileButton : function(part) {
+      var event = oboeBus("videoCallProfileButton");
+      if (event) {
+        if (!dataAndEvents.isVideoCallSupported()) {
+          api.hide(event);
+          return;
+        }
+        Event.listen(event, "click", function(dataAndEvents) {
+          self.startCallOrLeaveMessage(part, "profile_button_click_timeline");
+        });
+      }
+    },
+    /**
+     * @param {string} cur
+     * @param {string} err
+     * @return {undefined}
+     */
+    startCallOrLeaveMessage : function(cur, err) {
+      if (this.availableForCall(cur)) {
+        self.showOutgoingCallDialog(cur, err);
+      } else {
+        require("ShortProfiles").get(cur, function(args) {
+          require("VideoCallRecordMessageDialog").get(cur, args.firstName).show();
+        });
+      }
+    },
+    /**
+     * @param {string} deepDataAndEvents
+     * @param {string} err
+     * @param {?} dataAndEvents
+     * @return {undefined}
+     */
+    showOutgoingCallDialog : function(deepDataAndEvents, err, dataAndEvents) {
+      if (ca) {
+        return;
+      }
+      /** @type {boolean} */
+      ca = true;
+      setTimeout(function() {
+        /** @type {boolean} */
+        ca = false;
+      }, 1E3);
+      self.logClick(deepDataAndEvents, err || "unknown");
+      var client = new Client(self);
+      client.showWarningOrStartCall(deepDataAndEvents, dataAndEvents);
+    },
+    /**
+     * @param {string} deepDataAndEvents
+     * @return {?}
+     */
+    canCallByWebrtc : function(deepDataAndEvents) {
+      if (dataAndEvents.isSendWebrtcSupported() && module) {
+        return i(deepDataAndEvents);
+      }
+      return false;
+    },
+    /**
+     * @param {string} deepDataAndEvents
+     * @param {?} tx
+     * @return {undefined}
+     */
+    makeWebRTCCall : function(deepDataAndEvents, tx) {
+      /** @type {number} */
+      var core_rnotwhite = parseInt(deepDataAndEvents, 10);
+      subscribe();
+      var index = tryIt();
+      value.startingCallTo(core_rnotwhite, index);
+      module.openAsCaller(deepDataAndEvents, index, tx);
+    },
+    /**
+     * @param {string} deepDataAndEvents
+     * @return {undefined}
+     */
+    makeSkypeCall : function(deepDataAndEvents) {
+      /** @type {string} */
+      var ajaxchatvideo = dataAndEvents.isPluginInstalled() ? "outgoing_dialog.php" : "intro.php";
+      /** @type {string} */
+      var element = "/ajax/chat/video/" + ajaxchatvideo + "?idTarget=" + deepDataAndEvents;
+      (new Rect).setAllowCrossPageTransition(true).setAsync((new Command(element)).setHandler(statusCode).setServerDialogCancelHandler(statusCode)).show();
+    },
+    /**
+     * @param {string} deepDataAndEvents
+     * @param {?} dataAndEvents
+     * @return {undefined}
+     */
+    logClick : function(deepDataAndEvents, dataAndEvents) {
+      (new Command).setURI("/ajax/chat/video/log_click.php").setData({
+        targetUserID : deepDataAndEvents,
+        clickSource : dataAndEvents
+      }).setAllowCrossPageTransition(true).setErrorHandler(statusCode).send();
+    }
+  };
+  left.subscribe(util.getArbiterType("video"), function(dataAndEvents, a) {
+    self.onVideoMessage(a.obj);
   });
-  h.subscribe(l.getArbiterType('webrtc'), function(ia, ja) {
-    da.onRTCMessage(ja.obj);
+  left.subscribe(util.getArbiterType("webrtc"), function(dataAndEvents, a) {
+    self.onRTCMessage(a.obj);
   });
-  ha();
-  if (r.isReceiveWebrtcSupported() && y) ea();
-  e.exports = da;
+  reset();
+  if (dataAndEvents.isReceiveWebrtcSupported() && LatestEvent) {
+    subscribe();
+  }
+  context.exports = self;
 }, null);
-__d("ChatAnimatedGifs", ["URI"], function(a, b, c, d, e, f, g) {
-  var h = {
-    shouldHideBody: function(i) {
-      if (!i.has_attachment) return false;
-      for (var j = 0; j < i.attachments.length; j++) {
-        var k = i.attachments[j];
-        if (k.preview_url) {
-          var l = h.getRawUrlFromSafeUrl(k.preview_url);
-          if (i.body == l) return true;
+__d("ChatAnimatedGifs", ["URI"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, proceed) {
+  var jQuery = {
+    /**
+     * @param {Object} result
+     * @return {?}
+     */
+    shouldHideBody : function(result) {
+      if (!result.has_attachment) {
+        return false;
+      }
+      /** @type {number} */
+      var i = 0;
+      for (;i < result.attachments.length;i++) {
+        var option = result.attachments[i];
+        if (option.preview_url) {
+          var outputLen = jQuery.getRawUrlFromSafeUrl(option.preview_url);
+          if (result.body == outputLen) {
+            return true;
+          }
         }
       }
       return false;
     },
-    getRawUrlFromSafeUrl: function(i) {
-      return g(i).getQueryData().url;
+    /**
+     * @param {?} element
+     * @return {?}
+     */
+    getRawUrlFromSafeUrl : function(element) {
+      return proceed(element).getQueryData().url;
     }
   };
-  e.exports = h;
+  module.exports = jQuery;
 }, null);
-__d("ChatEmployeeAwayWarning", ["MercuryIDs", "MercuryParticipants", "MercuryViewer"], function(a, b, c, d, e, f, g, h, i) {
-  var j = {
-    updateEmployeeAwayWarning: function(k, l, m) {
-      h.get(i.getID(), function(n) {
-        var o = n.employee;
-        if (o) h.getMulti(k.participants, function(p) {
-          var q = false,
-            r = g.getUserIDFromThreadID(k.thread_id);
-          if (!r) return;
-          var s = 'fbid:' + r;
-          for (var t in p)
-            if (s == p[t].id && p[t].is_employee_away) q = true;
-          if (q) {
-            l();
-          } else m();
-        });
+__d("ChatEmployeeAwayWarning", ["MercuryIDs", "MercuryParticipants", "MercuryViewer"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, dataAndEvents, memcached, a) {
+  var JsDiff = {
+    /**
+     * @param {?} participants
+     * @param {?} $sanitize
+     * @param {?} Application
+     * @return {undefined}
+     */
+    updateEmployeeAwayWarning : function(participants, $sanitize, Application) {
+      memcached.get(a.getID(), function(work) {
+        var worksEmp = work.employee;
+        if (worksEmp) {
+          memcached.getMulti(participants.participants, function(map) {
+            /** @type {boolean} */
+            var q = false;
+            var queueHooks = dataAndEvents.getUserIDFromThreadID(participants.thread_id);
+            if (!queueHooks) {
+              return;
+            }
+            /** @type {string} */
+            var key = "fbid:" + queueHooks;
+            var letter;
+            for (letter in map) {
+              if (key == map[letter].id && map[letter].is_employee_away) {
+                /** @type {boolean} */
+                q = true;
+              }
+            }
+            if (q) {
+              $sanitize();
+            } else {
+              Application();
+            }
+          });
+        }
       });
     }
   };
-  e.exports = j;
+  module.exports = JsDiff;
 }, null);
-__d("MercuryShareAttachmentReactShape", ["React"], function(a, b, c, d, e, f, g) {
-  'use strict';
-
-  function h() {
-    return g.PropTypes.shape({
-      description: g.PropTypes.string,
-      media: g.PropTypes.shape({
-        image: g.PropTypes.string,
-        duration: g.PropTypes.number,
-        playable: g.PropTypes.bool,
-        source: g.PropTypes.string
+__d("MercuryShareAttachmentReactShape", ["React"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, framework) {
+  /**
+   * @return {?}
+   */
+  function text() {
+    return framework.PropTypes.shape({
+      description : framework.PropTypes.string,
+      media : framework.PropTypes.shape({
+        image : framework.PropTypes.string,
+        duration : framework.PropTypes.number,
+        playable : framework.PropTypes.bool,
+        source : framework.PropTypes.string
       }),
-      source: g.PropTypes.string,
-      style_list: g.PropTypes.arrayOf(g.PropTypes.string),
-      title: g.PropTypes.string,
-      properties: g.PropTypes.Object,
-      uri: g.PropTypes.string
+      source : framework.PropTypes.string,
+      style_list : framework.PropTypes.arrayOf(framework.PropTypes.string),
+      title : framework.PropTypes.string,
+      properties : framework.PropTypes.Object,
+      uri : framework.PropTypes.string
     }).isRequired;
   }
-  e.exports = h;
+  /** @type {function (): ?} */
+  module.exports = text;
 }, null);
-__d("MercuryFallbackShareAttachment.react", ["Image.react", "ImageBlock.react", "Link.react", "MercuryShareAttachmentRenderLocations", "MercuryShareAttachmentReactShape", "React", "cx", "joinClasses"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n) {
-  'use strict';
-  var o = l.createClass({
-    displayName: "MercuryFallbackShareAttachment",
-    propTypes: {
-      attachment: k(),
-      body: l.PropTypes.string,
-      location: l.PropTypes.oneOf(j.getValues()),
-      rootClassName: l.PropTypes.string
+__d("MercuryFallbackShareAttachment.react", ["Image.react", "ImageBlock.react", "Link.react", "MercuryShareAttachmentRenderLocations", "MercuryShareAttachmentReactShape", "React", "cx", "joinClasses"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, tr, type, attribute, config, $sanitize, dom, opt_attributes, extend) {
+  var JsDiff = dom.createClass({
+    displayName : "MercuryFallbackShareAttachment",
+    propTypes : {
+      attachment : $sanitize(),
+      body : dom.PropTypes.string,
+      location : dom.PropTypes.oneOf(config.getValues()),
+      rootClassName : dom.PropTypes.string
     },
-    renderLink: function(p) {
-      if (j.isPreview(location)) return p;
-      return l.createElement(i, {
-        href: this.props.attachment.uri
-      }, p);
-    },
-    render: function() {
-      var p = this.props.attachment,
-        q = this.props.location,
-        r = this.props.body,
-        s = n(((j.CHAT === q ? "_49or" : '') + (j.CHAT_PREVIEW === q ? ' ' + "_tig" : '') + (' ' + "_tih") + (r ? ' ' + "_r38" : '') + (!(p && p.media) ? ' ' + "_49ou" : '')), this.props.rootClassName),
-        t = (l.createElement("div", {
-          className: "__6j"
-        }, l.createElement("div", {
-          className: "__6k"
-        }, p.title), l.createElement("div", {
-          className: "__6l"
-        }, p.description), l.createElement("div", {
-          className: "__6m"
-        }, p.source)));
-      if (p.media && p.media.image) return this.renderLink(l.createElement(h, {
-        className: n(this.props.className, s)
-      }, l.createElement(g, {
-        className: "__6n",
-        src: p.media.image,
-        width: 68
-      }), t, this.props.children));
-      return this.renderLink(l.createElement("div", {
-        className: n(this.props.className, s)
-      }, t, this.props.children));
-    }
-  });
-  e.exports = o;
-}, null);
-__d("MercuryShareAttachment.react", ["Map", "MercuryShareAttachmentReactShape", "MercuryShareAttachmentRenderLocations", "React", "StoryAttachmentStyle", "MercuryFallbackShareAttachment.react", "OrionMercuryShareAttachment"], function(a, b, c, d, e, f, g, h, i, j, k) {
-  'use strict';
-  var l = new g();
-  l.set(k.FALLBACK, b('MercuryFallbackShareAttachment.react'));
-  l.set(k.ORION, b('OrionMercuryShareAttachment').module);
-  var m = j.createClass({
-    displayName: "MercuryShareAttachment",
-    propTypes: {
-      attachment: h(),
-      location: j.PropTypes.oneOf(i.getValues()),
-      rootClassName: j.PropTypes.string
-    },
-    render: function() {
-      var n = this.props.attachment;
-      if (!n.style_list) return null;
-      var o = null;
-      for (var p = 0; p < n.style_list.length; p++) {
-        o = l.get(n.style_list[p]);
-        if (o) break;
+    /**
+     * @param {?} id
+     * @return {?}
+     */
+    renderLink : function(id) {
+      if (config.isPreview(location)) {
+        return id;
       }
-      if (!o) return null;
-      return (j.createElement(o, j.__spread({}, this.props)));
-    }
-  });
-  e.exports = m;
-}, null);
-__d("XStickerPackImagesController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/stickers\/{pack_id}\/images\/", {
-    pack_id: {
-      type: "Int",
-      required: true
+      return dom.createElement(attribute, {
+        href : this.props.attachment.uri
+      }, id);
     },
-    sticker_size: {
-      type: "Int",
-      defaultValue: 50
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var self = this.props.attachment;
+      var i = this.props.location;
+      var body = this.props.body;
+      var oldconfig = extend((config.CHAT === i ? "_49or" : "") + (config.CHAT_PREVIEW === i ? " " + "_tig" : "") + (" " + "_tih") + (body ? " " + "_r38" : "") + (!(self && self.media) ? " " + "_49ou" : ""), this.props.rootClassName);
+      var html = dom.createElement("div", {
+        className : "__6j"
+      }, dom.createElement("div", {
+        className : "__6k"
+      }, self.title), dom.createElement("div", {
+        className : "__6l"
+      }, self.description), dom.createElement("div", {
+        className : "__6m"
+      }, self.source));
+      if (self.media && self.media.image) {
+        return this.renderLink(dom.createElement(type, {
+          className : extend(this.props.className, oldconfig)
+        }, dom.createElement(tr, {
+          className : "__6n",
+          src : self.media.image,
+          width : 68
+        }), html, this.props.children));
+      }
+      return this.renderLink(dom.createElement("div", {
+        className : extend(this.props.className, oldconfig)
+      }, html, this.props.children));
     }
   });
+  module.exports = JsDiff;
 }, null);
-__d("XStickersAddPackController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/stickers\/addpack\/", {
-    pack_id: {
-      type: "Int"
+__d("MercuryShareAttachment.react", ["Map", "MercuryShareAttachmentReactShape", "MercuryShareAttachmentRenderLocations", "React", "StoryAttachmentStyle", "MercuryFallbackShareAttachment.react", "OrionMercuryShareAttachment"], function(deepDataAndEvents, require, ignoreMethodDoesntExist, textAlt, module, keepData, dataAndEvents, $sanitize, data, self, word) {
+  var words = new dataAndEvents;
+  words.set(word.FALLBACK, require("MercuryFallbackShareAttachment.react"));
+  words.set(word.ORION, require("OrionMercuryShareAttachment").module);
+  var JsDiff = self.createClass({
+    displayName : "MercuryShareAttachment",
+    propTypes : {
+      attachment : $sanitize(),
+      location : self.PropTypes.oneOf(data.getValues()),
+      rootClassName : self.PropTypes.string
     },
-    size: {
-      type: "String"
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var data = this.props.attachment;
+      if (!data.style_list) {
+        return null;
+      }
+      /** @type {null} */
+      var type = null;
+      /** @type {number} */
+      var index = 0;
+      for (;index < data.style_list.length;index++) {
+        type = words.get(data.style_list[index]);
+        if (type) {
+          break;
+        }
+      }
+      if (!type) {
+        return null;
+      }
+      return self.createElement(type, self.__spread({}, this.props));
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("XStickerPackImagesController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/stickers/{pack_id}/images/", {
+    pack_id : {
+      type : "Int",
+      required : true
     },
-    redirect_uri: {
-      type: "String"
+    sticker_size : {
+      type : "Int",
+      defaultValue : 50
+    }
+  });
+}, null);
+__d("XStickersAddPackController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/stickers/addpack/", {
+    pack_id : {
+      type : "Int"
     },
-    is_promoted: {
-      type: "Bool",
-      defaultValue: false
-    }
-  });
-}, null);
-__d("XStickersRemovePackController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/stickers\/removepack\/", {
-    pack_id: {
-      type: "Int"
+    size : {
+      type : "String"
     },
-    size: {
-      type: "String"
+    redirect_uri : {
+      type : "String"
     },
-    redirect_uri: {
-      type: "String"
+    is_promoted : {
+      type : "Bool",
+      defaultValue : false
     }
   });
 }, null);
-__d("XStickerStateInitialDataController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/stickers\/state\/", {});
-}, null);
-__d("XStickerStatePackDataController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/stickers\/state\/pack\/", {
-    pack_id: {
-      type: "Int",
-      required: true
+__d("XStickersRemovePackController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/stickers/removepack/", {
+    pack_id : {
+      type : "Int"
+    },
+    size : {
+      type : "String"
+    },
+    redirect_uri : {
+      type : "String"
     }
   });
 }, null);
-__d("XStickerStateStoreDataController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/stickers\/state\/store\/", {});
+__d("XStickerStateInitialDataController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/stickers/state/", {});
 }, null);
-__d("XStickerSearchPromotePackController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/stickers\/search\/promotePack\/", {
-    sticker_id: {
-      type: "Int",
-      required: true
+__d("XStickerStatePackDataController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/stickers/state/pack/", {
+    pack_id : {
+      type : "Int",
+      required : true
     }
   });
 }, null);
-__d("XStickerSearchNUXSeenController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/stickers\/searchNUX\/seen\/", {});
+__d("XStickerStateStoreDataController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/stickers/state/store/", {});
 }, null);
-__d("XStickerTagDataController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/stickers\/tag\/data\/", {});
-}, null);
-__d("XStickerQueryImagesController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/stickers\/query\/images\/", {
-    query: {
-      type: "String",
-      required: true
+__d("XStickerSearchPromotePackController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/stickers/search/promotePack/", {
+    sticker_id : {
+      type : "Int",
+      required : true
     }
   });
 }, null);
-__d("StickerServerRequests", ["AsyncRequest", "Promise", "XStickerPackImagesController", "XStickersAddPackController", "XStickersRemovePackController", "XStickerStateInitialDataController", "XStickerStatePackDataController", "XStickerStateStoreDataController", "XStickerSearchPromotePackController", "XStickerSearchNUXSeenController", "XStickerTagDataController", "XStickerQueryImagesController"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) {
-  'use strict';
-  var s = {
-    addPack: function(u, v, w) {
-      var x = j.getURIBuilder().setInt('pack_id', u).setBool('is_promoted', v).getURI();
-      new g(x).setHandler(function(y) {
-        return w(y.payload);
+__d("XStickerSearchNUXSeenController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/stickers/searchNUX/seen/", {});
+}, null);
+__d("XStickerTagDataController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/stickers/tag/data/", {});
+}, null);
+__d("XStickerQueryImagesController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/stickers/query/images/", {
+    query : {
+      type : "String",
+      required : true
+    }
+  });
+}, null);
+__d("StickerServerRequests", ["AsyncRequest", "Promise", "XStickerPackImagesController", "XStickersAddPackController", "XStickersRemovePackController", "XStickerStateInitialDataController", "XStickerStatePackDataController", "XStickerStateStoreDataController", "XStickerSearchPromotePackController", "XStickerSearchNUXSeenController", "XStickerTagDataController", "XStickerQueryImagesController"], function(oFunctionBody, _$timeout_, failing_message, nextStack, module, noCorrect, Tag, Deferred, dataAndEvents,
+ignoreMethodDoesntExist, deepDataAndEvents, textAlt, keepData, opt_attributes, matcherFunction, execResult, opt_keys, positionError) {
+  /**
+   * @param {?} dt
+   * @param {Function} callback
+   * @param {boolean} deepDataAndEvents
+   * @return {?}
+   */
+  function tick(dt, callback, deepDataAndEvents) {
+    return(new Deferred(function($sanitize, dataAndEvents) {
+      return(new Tag(dt)).setHandler(function(join) {
+        return $sanitize(join.getPayload());
+      }).setAllowCrossPageTransition(deepDataAndEvents).send();
+    })).then(callback);
+  }
+  var JsDiff = {
+    /**
+     * @param {number} deepDataAndEvents
+     * @param {?} bool
+     * @param {?} cb
+     * @return {undefined}
+     */
+    addPack : function(deepDataAndEvents, bool, cb) {
+      var name = ignoreMethodDoesntExist.getURIBuilder().setInt("pack_id", deepDataAndEvents).setBool("is_promoted", bool).getURI();
+      (new Tag(name)).setHandler(function(msg) {
+        return cb(msg.payload);
       }).send();
     },
-    removePack: function(u, v) {
-      var w = k.getURIBuilder().setInt('pack_id', u).getURI();
-      new g(w).setHandler(function(x) {
-        return v(x.payload);
+    /**
+     * @param {?} union
+     * @param {?} cb
+     * @return {undefined}
+     */
+    removePack : function(union, cb) {
+      var name = deepDataAndEvents.getURIBuilder().setInt("pack_id", union).getURI();
+      (new Tag(name)).setHandler(function(msg) {
+        return cb(msg.payload);
       }).send();
     },
-    getStickersForPack: function(u, v) {
-      var w = i.getURIBuilder().setInt('pack_id', u).setInt('sticker_size', v).getURI();
-      return new h(function(x, y) {
-        return new g().setURI(w).setMethod("POST").setHandler(function(z) {
-          return x(z.payload);
+    /**
+     * @param {(Object|string)} dep
+     * @param {?} deepDataAndEvents
+     * @return {?}
+     */
+    getStickersForPack : function(dep, deepDataAndEvents) {
+      var r20 = dataAndEvents.getURIBuilder().setInt("pack_id", dep).setInt("sticker_size", deepDataAndEvents).getURI();
+      return new Deferred(function(cb, dataAndEvents) {
+        return(new Tag).setURI(r20).setMethod("POST").setHandler(function(msg) {
+          return cb(msg.payload);
         }).send();
       });
     },
-    getStickersForQuery: function(u, v) {
-      new g().setURI(r.getURIBuilder().setString('query', u).getURI()).setMethod("POST").setHandler(function(w) {
-        return v(w);
+    /**
+     * @param {?} deepDataAndEvents
+     * @param {Function} cb
+     * @return {undefined}
+     */
+    getStickersForQuery : function(deepDataAndEvents, cb) {
+      (new Tag).setURI(positionError.getURIBuilder().setString("query", deepDataAndEvents).getURI()).setMethod("POST").setHandler(function(outErr) {
+        return cb(outErr);
       }).send();
     },
-    fetchTrayData: function(u) {
-      return t(l.getURIBuilder().getURI(), u, true);
+    /**
+     * @param {Function} next_callback
+     * @return {?}
+     */
+    fetchTrayData : function(next_callback) {
+      return tick(textAlt.getURIBuilder().getURI(), next_callback, true);
     },
-    fetchStoreData: function(u) {
-      return t(n.getURIBuilder().getURI(), u);
+    /**
+     * @param {Function} next_callback
+     * @return {?}
+     */
+    fetchStoreData : function(next_callback) {
+      return tick(opt_attributes.getURIBuilder().getURI(), next_callback);
     },
-    fetchPackData: function(u, v) {
-      return t(m.getURIBuilder().setInt('pack_id', u).getURI(), v);
+    /**
+     * @param {?} union
+     * @param {Function} next_callback
+     * @return {?}
+     */
+    fetchPackData : function(union, next_callback) {
+      return tick(keepData.getURIBuilder().setInt("pack_id", union).getURI(), next_callback);
     },
-    fetchTagData: function(u) {
-      return t(q.getURIBuilder().getURI(), u, true);
+    /**
+     * @param {Function} next_callback
+     * @return {?}
+     */
+    fetchTagData : function(next_callback) {
+      return tick(opt_keys.getURIBuilder().getURI(), next_callback, true);
     },
-    markSeenSearchNUX: function() {
-      new g(p.getURIBuilder().getURI().toString()).send();
+    /**
+     * @return {undefined}
+     */
+    markSeenSearchNUX : function() {
+      (new Tag(execResult.getURIBuilder().getURI().toString())).send();
     },
-    promotePackSentFromSearch: function(u, v) {
-      var w = o.getURIBuilder().setInt('sticker_id', u).getURI();
-      t(w, v, true);
+    /**
+     * @param {number} union
+     * @param {Function} next_callback
+     * @return {undefined}
+     */
+    promotePackSentFromSearch : function(union, next_callback) {
+      var elapsed = matcherFunction.getURIBuilder().setInt("sticker_id", union).getURI();
+      tick(elapsed, next_callback, true);
     }
   };
-
-  function t(u, v, w) {
-    return new h(function(x, y) {
-      return new g(u).setHandler(function(z) {
-        return x(z.getPayload());
-      }).setAllowCrossPageTransition(w).send();
-    }).then(v);
-  }
-  e.exports = s;
+  module.exports = JsDiff;
 }, null);
-__d("StickerImages", ["StickerServerRequests"], function(a, b, c, d, e, f, g) {
-  'use strict';
-  var h = {},
-    i = {},
-    j = {},
-    k = {
-      getStickerTagsData: function() {
-        return j;
-      },
-      requestStickersForPack: function(l, m, n) {
-        if (!l) return;
-        if (!i[l]) {
-          i[l] = g.getStickersForPack(l, m);
-          i[l].then(function(o) {
-            o.forEach(function(p) {
-              return this.cacheSticker(p);
-            }.bind(this));
+__d("StickerImages", ["StickerServerRequests"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, deps) {
+  var all = {};
+  var list = {};
+  var getStickerTagsData = {};
+  var JsDiff = {
+    /**
+     * @return {?}
+     */
+    getStickerTagsData : function() {
+      return getStickerTagsData;
+    },
+    /**
+     * @param {(Object|string)} dep
+     * @param {?} deepDataAndEvents
+     * @param {Function} cb
+     * @return {undefined}
+     */
+    requestStickersForPack : function(dep, deepDataAndEvents, cb) {
+      if (!dep) {
+        return;
+      }
+      if (!list[dep]) {
+        list[dep] = deps.getStickersForPack(dep, deepDataAndEvents);
+        list[dep].then(function(failures) {
+          failures.forEach(function(walkers) {
+            return this.cacheSticker(walkers);
           }.bind(this));
-        }
-        i[l].then(function(o) {
-          return n(o);
-        });
-      },
-      cacheSticker: function(l) {
-        h[l.id] = l;
-      },
-      getSticker: function(l) {
-        return h[l];
+        }.bind(this));
       }
-    };
-  e.exports = k;
+      list[dep].then(function(outErr) {
+        return cb(outErr);
+      });
+    },
+    /**
+     * @param {Element} obj
+     * @return {undefined}
+     */
+    cacheSticker : function(obj) {
+      /** @type {Element} */
+      all[obj.id] = obj;
+    },
+    /**
+     * @param {?} uuid
+     * @return {?}
+     */
+    getSticker : function(uuid) {
+      return all[uuid];
+    }
+  };
+  module.exports = JsDiff;
 }, null);
-__d("StickerUtils", [], function(a, b, c, d, e, f) {
-  var g = {
-    getScaledDimensions: function(h, i, j) {
-      var k, l, m;
-      if (i > h) {
-        m = j / i;
-        k = h * m;
-        l = i * m;
+__d("StickerUtils", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  var JsDiff = {
+    /**
+     * @param {number} height
+     * @param {number} scale
+     * @param {number} y
+     * @return {?}
+     */
+    getScaledDimensions : function(height, scale, y) {
+      var h;
+      var width;
+      var ratio;
+      if (scale > height) {
+        /** @type {number} */
+        ratio = y / scale;
+        /** @type {number} */
+        h = height * ratio;
+        /** @type {number} */
+        width = scale * ratio;
       } else {
-        m = j / h;
-        k = h * m;
-        l = i * m;
+        /** @type {number} */
+        ratio = y / height;
+        /** @type {number} */
+        h = height * ratio;
+        /** @type {number} */
+        width = scale * ratio;
       }
-      return {
-        height: Math.round(k),
-        width: Math.round(l)
+      return{
+        height : Math.round(h),
+        width : Math.round(width)
       };
     },
-    capitalizeWords: function(h) {
-      var i = h.split(" ");
-      for (var j = 0; j < i.length; j++) {
-        var k = i[j].charAt(0).toUpperCase();
-        i[j] = k + i[j].substr(1);
+    /**
+     * @param {string} str
+     * @return {?}
+     */
+    capitalizeWords : function(str) {
+      var lines = str.split(" ");
+      /** @type {number} */
+      var i = 0;
+      for (;i < lines.length;i++) {
+        var prefix = lines[i].charAt(0).toUpperCase();
+        lines[i] = prefix + lines[i].substr(1);
       }
-      return i.join(" ");
+      return lines.join(" ");
     }
   };
-  e.exports = g;
+  module.exports = JsDiff;
 }, null);
-__d("XStickerAssetController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/stickers\/asset\/", {
-    sticker_id: {
-      type: "Int",
-      required: true
+__d("XStickerAssetController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/stickers/asset/", {
+    sticker_id : {
+      type : "Int",
+      required : true
     },
-    image_type: {
-      type: "Enum",
-      defaultValue: "BestEffortImage",
-      enumType: 1
+    image_type : {
+      type : "Enum",
+      defaultValue : "BestEffortImage",
+      enumType : 1
     }
   });
 }, null);
-__d("XLinkshimLogController", ["XController"], function(a, b, c, d, e, f) {
-  e.exports = b("XController").create("\/si\/ajax\/l\/render_linkshim_log\/", {
-    u: {
-      type: "String",
-      required: true
+__d("XLinkshimLogController", ["XController"], function(dataAndEvents, require, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt) {
+  module.exports = require("XController").create("/si/ajax/l/render_linkshim_log/", {
+    u : {
+      type : "String",
+      required : true
     },
-    h: {
-      type: "String",
-      required: true
+    h : {
+      type : "String",
+      required : true
     },
-    render_verification: {
-      type: "Bool",
-      defaultValue: false
+    render_verification : {
+      type : "Bool",
+      defaultValue : false
     },
-    enc: {
-      type: "String"
+    enc : {
+      type : "String"
     },
-    d: {
-      type: "String"
+    d : {
+      type : "String"
     }
   });
 }, null);
-__d("LinkshimHandler", ["Event", "LinkshimAsyncLink", "LinkshimHandlerConfig", "URI", "XLinkshimLogController", "shield"], function(a, b, c, d, e, f, g, h, i, j, k, l) {
-  var m = {
-    setUpLinkshimHandling: function(s) {
-      try {
-        var u = j(s.getAttribute('href')),
-          v = n(u);
-        if (v && o(u)) {
-          g.listen(s, 'mouseover', l(h.swap, null, s, v));
-          var w = q(u);
-          g.listen(s, 'click', function() {
-            if (i.supports_meta_referrer) {
-              h.referrer_log(s, w, p(u).toString());
-            } else h.swap(s, u);
-          });
-        }
-      } catch (t) {}
-    }
-  };
-
-  function n(s) {
-    return s.getQueryData().u ? new j(s.getQueryData().u) : null;
+__d("LinkshimHandler", ["Event", "LinkshimAsyncLink", "LinkshimHandlerConfig", "URI", "XLinkshimLogController", "shield"], function(ignoreMethodDoesntExist, textAlt, keepData, opt_attributes, module, matcherFunction, m, jQuery, dataAndEvents, prep, deepDataAndEvents, forOwn) {
+  /**
+   * @param {?} req
+   * @return {?}
+   */
+  function get(req) {
+    return req.getQueryData().u ? new prep(req.getQueryData().u) : null;
   }
-
-  function o(s) {
-    return s.getQueryData().hasOwnProperty('s');
+  /**
+   * @param {?} keepData
+   * @return {?}
+   */
+  function remove(keepData) {
+    return keepData.getQueryData().hasOwnProperty("s");
   }
-
-  function p(s) {
-    var t = s.getQueryData().hasOwnProperty('enc') ? s.getQueryData().enc : '';
-    return (k.getURIBuilder()).setString('u', s.getQueryData().u).setString('h', s.getQueryData().h).setBool('render_verification', s.getQueryData().hasOwnProperty('render_verification')).setString('enc', t).getURI();
+  /**
+   * @param {?} req
+   * @return {?}
+   */
+  function compile(req) {
+    var current = req.getQueryData().hasOwnProperty("enc") ? req.getQueryData().enc : "";
+    return deepDataAndEvents.getURIBuilder().setString("u", req.getQueryData().u).setString("h", req.getQueryData().h).setBool("render_verification", req.getQueryData().hasOwnProperty("render_verification")).setString("enc", current).getURI();
   }
-
-  function q(s) {
-    var t;
-    if (r()) {
-      t = j(s).addQueryData({
-        render_verification: true
+  /**
+   * @param {?} req
+   * @return {?}
+   */
+  function load(req) {
+    var result;
+    if (guid()) {
+      result = prep(req).addQueryData({
+        render_verification : true
       });
-    } else t = n(s);
-    return t;
+    } else {
+      result = get(req);
+    }
+    return result;
   }
-
-  function r() {
-    var s = i.render_verification_rate || 0;
+  /**
+   * @return {?}
+   */
+  function guid() {
+    var s = dataAndEvents.render_verification_rate || 0;
     return Math.floor(Math.random() * s + 1) === s;
   }
-  e.exports = m;
-}, null);
-__d("MercuryAttachmentRenderer", ["MercuryAttachmentTemplates", "MercuryAttachmentAudioClip.react", "Bootloader", "ChatAnimatedGifs", "SyncRequest.react", "CSS", "MercuryConstants", "DOM", "Event", "MercuryAttachment", "MercuryAttachmentType", "MercuryAttachmentVideo.react", "MercuryConfig", "MercuryIDs", "MercuryParticipants", "MercuryShareAttachment.react", "MercuryShareAttachmentRenderLocations", "MercuryViewer", "ProgressBar", "React", "Sticker.react", "StickerAssetType", "StickerConstants", "StickerImages", "StickerUtils", "Style", "URI", "UserAgent_DEPRECATED", "cx", "fbt", "invariant", "updatePhotoProgressBar", "XStickerAssetController", "OrionMercuryAttachment", "MercuryMessages", "MercuryAttachmentAudioClipTranscript.react"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ba, ca, da, ea, fa, ga, ha, ia, ja, ka, la, ma) {
-  'use strict';
-  var na = b('OrionMercuryAttachment').module,
-    oa = b('MercuryMessages').get(),
-    pa = ha.ie() <= 8;
-
-  function qa(ta, ua) {
-    var va = g[ua].build().setNodeContent('filename', ta.name),
-      wa = va.getNode('link');
-    wa.setAttribute('href', ta.url);
-    ta.rel && wa.setAttribute('rel', ta.rel);
-    l.addClass(va.getRoot(), p.getAttachIconClass(ta.icon_type));
-    return va;
-  }
-
-  function ra(ta, ua) {
-    var va = g[ua].build().setNodeContent('filename', ta.name);
-    l.addClass(va.getRoot(), p.getAttachIconClass(ta.icon_type));
-    return va;
-  }
-  var sa = {
-    renderAttachment: function(ta, ua, va, wa, xa, ya) {
-      var za = 100,
-        ab = ta ? 160 : 400,
-        bb = null,
-        cb = null,
-        db = m.MercurySupportedShareType;
-      if (this.isErrorAttachment(ua)) bb = sa.renderError(ua);
-      if (this.isShareAttachment(ua) && ua.share) {
-        cb = n.create('div');
-        z.render(z.createElement(v, {
-          attachment: ua.share,
-          body: va.body,
-          location: w.CHAT
-        }), cb);
+  var JsDiff = {
+    /**
+     * @param {Element} target
+     * @return {undefined}
+     */
+    setUpLinkshimHandling : function(target) {
+      try {
+        var key = prep(target.getAttribute("href"));
+        var camelKey = get(key);
+        if (camelKey && remove(key)) {
+          m.listen(target, "mouseover", forOwn(jQuery.swap, null, target, camelKey));
+          var values = load(key);
+          m.listen(target, "click", function() {
+            if (dataAndEvents.supports_meta_referrer) {
+              jQuery.referrer_log(target, values, compile(key).toString());
+            } else {
+              jQuery.swap(target, key);
+            }
+          });
+        }
+      } catch (t) {
       }
-      if (!cb && this.isShareAttachment(ua) && ua.share_xhp && (ua.share_data_type === db.FB_BROWSE_QUERY || !ta)) cb = sa.renderShareXHP(ua, va.id);
-      if (this.isStickerAttachment(ua)) cb = sa.renderSticker(ua, va, ta, ya);
-      if (!cb && this.isShareAttachment(ua)) {
-        var eb = ua.share_data_type;
-        switch (eb) {
-          case db.FB_PHOTO:
-            cb = sa.renderPreview(ua, va, wa, xa);
+    }
+  };
+  module.exports = JsDiff;
+}, null);
+__d("MercuryAttachmentRenderer", ["MercuryAttachmentTemplates", "MercuryAttachmentAudioClip.react", "Bootloader", "ChatAnimatedGifs", "SyncRequest.react", "CSS", "MercuryConstants", "DOM", "Event", "MercuryAttachment", "MercuryAttachmentType", "MercuryAttachmentVideo.react", "MercuryConfig", "MercuryIDs", "MercuryParticipants", "MercuryShareAttachment.react", "MercuryShareAttachmentRenderLocations", "MercuryViewer", "ProgressBar", "React", "Sticker.react", "StickerAssetType", "StickerConstants",
+"StickerImages", "StickerUtils", "Style", "URI", "UserAgent_DEPRECATED", "cx", "fbt", "invariant", "updatePhotoProgressBar", "XStickerAssetController", "OrionMercuryAttachment", "MercuryMessages", "MercuryAttachmentAudioClipTranscript.react"], function(deepDataAndEvents, require, keepData, $sanitize, context, opt_attributes, _device_parser, elem, exports, demoLink, success, $el, depMap, dom, testPage, assert, ActivityObject, type, dataAndEvents, User, deck, name, data, a, Element, $, t, gridStore,
+opts, should, params, domStyle, readFile, UA, ignoreMethodDoesntExist, item, localize, trigger, textAlt) {
+  /**
+   * @param {Object} data
+   * @param {string} regex
+   * @return {?}
+   */
+  function render(data, regex) {
+    var doc = _device_parser[regex].build().setNodeContent("filename", data.name);
+    var link = doc.getNode("link");
+    link.setAttribute("href", data.url);
+    if (data.rel) {
+      link.setAttribute("rel", data.rel);
+    }
+    $el.addClass(doc.getRoot(), assert.getAttachIconClass(data.icon_type));
+    return doc;
+  }
+  /**
+   * @param {Function} head
+   * @param {string} regex
+   * @return {?}
+   */
+  function initialize(head, regex) {
+    var data = _device_parser[regex].build().setNodeContent("filename", head.name);
+    $el.addClass(data.getRoot(), assert.getAttachIconClass(head.icon_type));
+    return data;
+  }
+  var style = require("OrionMercuryAttachment").module;
+  var getMessagesFromIDs = require("MercuryMessages").get();
+  /** @type {boolean} */
+  var STANDARD_CSS_OPACITY_SUPPORTED = UA.ie() <= 8;
+  var self = {
+    /**
+     * @param {boolean} obj
+     * @param {Object} doc
+     * @param {Object} results
+     * @param {number} value
+     * @param {string} i
+     * @param {?} deepDataAndEvents
+     * @return {?}
+     */
+    renderAttachment : function(obj, doc, results, value, i, deepDataAndEvents) {
+      /** @type {number} */
+      var millis = 100;
+      /** @type {number} */
+      var oldconfig = obj ? 160 : 400;
+      /** @type {null} */
+      var object = null;
+      /** @type {null} */
+      var result = null;
+      var depId = depMap.MercurySupportedShareType;
+      if (this.isErrorAttachment(doc)) {
+        object = self.renderError(doc);
+      }
+      if (this.isShareAttachment(doc) && doc.share) {
+        result = dom.create("div");
+        $.render($.createElement(name, {
+          attachment : doc.share,
+          body : results.body,
+          location : data.CHAT
+        }), result);
+      }
+      if (!result && (this.isShareAttachment(doc) && (doc.share_xhp && (doc.share_data_type === depId.FB_BROWSE_QUERY || !obj)))) {
+        result = self.renderShareXHP(doc, results.id);
+      }
+      if (this.isStickerAttachment(doc)) {
+        result = self.renderSticker(doc, results, obj, deepDataAndEvents);
+      }
+      if (!result && this.isShareAttachment(doc)) {
+        var defaultView = doc.share_data_type;
+        switch(defaultView) {
+          case depId.FB_PHOTO:
+            result = self.renderPreview(doc, results, value, i);
             break;
-          case db.FB_VIDEO:
-            cb = sa.renderVideoThumb(ua);
+          case depId.FB_VIDEO:
+            result = self.renderVideoThumb(doc);
             break;
-          case db.FB_MUSIC_ALBUM:
-          case db.FB_SONG:
-          case db.FB_PLAYLIST:
-          case db.FB_MUSICIAN:
-          case db.FB_RADIO_STATION:
-            cb = sa.renderMusic(ua);
+          case depId.FB_MUSIC_ALBUM:
+          ;
+          case depId.FB_SONG:
+          ;
+          case depId.FB_PLAYLIST:
+          ;
+          case depId.FB_MUSICIAN:
+          ;
+          case depId.FB_RADIO_STATION:
+            result = self.renderMusic(doc);
             break;
-          case db.EXTERNAL:
-          case db.FB_TEMPLATE:
-          case db.FB_SOCIAL_REPORT_PHOTO:
-            cb = sa.renderExternalLink(ua);
+          case depId.EXTERNAL:
+          ;
+          case depId.FB_TEMPLATE:
+          ;
+          case depId.FB_SOCIAL_REPORT_PHOTO:
+            result = self.renderExternalLink(doc);
             break;
-          case db.FB_COUPON:
-          case db.FB_EVENT:
-          case db.FB_SHOERACK_INVITATION:
-            cb = sa.renderChatXHP(ua);
+          case depId.FB_COUPON:
+          ;
+          case depId.FB_EVENT:
+          ;
+          case depId.FB_SHOERACK_INVITATION:
+            result = self.renderChatXHP(doc);
             break;
-          case db.FB_SOCIAL_RESOLUTION:
-          case db.FB_STATUS:
-            cb = sa.renderSocialResolution(ua);
+          case depId.FB_SOCIAL_RESOLUTION:
+          ;
+          case depId.FB_STATUS:
+            result = self.renderSocialResolution(doc);
             break;
-          case db.FB_SYNC_REQUEST:
-            cb = sa.renderSyncRequest(ua);
+          case depId.FB_SYNC_REQUEST:
+            result = self.renderSyncRequest(doc);
             break;
-          case db.FB_OPEN_GRAPH:
-            cb = sa.renderOpenGraph(ua);
+          case depId.FB_OPEN_GRAPH:
+            result = self.renderOpenGraph(doc);
             break;
-          case db.FB_ORION:
-            if (na) cb = sa.renderOrionMercuryAttachment(ua, ta);
+          case depId.FB_ORION:
+            if (style) {
+              result = self.renderOrionMercuryAttachment(doc, obj);
+            }
             break;
           default:
-            if (ua.name) cb = sa.renderShareLink(ua, va && va.id, ta);
+            if (doc.name) {
+              result = self.renderShareLink(doc, results && results.id, obj);
+            }
             break;
         }
       }
-      if (!cb && ua.preview_loading) cb = sa.renderPreview(ua, va, wa, xa);
-      if (!cb && this.isVideoAttachment(ua)) {
-        cb = n.create('div');
-        z.render(sa.renderVideo(ua, ta), cb);
+      if (!result && doc.preview_loading) {
+        result = self.renderPreview(doc, results, value, i);
       }
-      if (!cb && ua.preview_url) cb = sa.renderPreview(ua, va, wa, xa);
-      if (!cb && this.isFileAttachment(ua))
-        if (ua.metadata && p.isVoiceMessage(ua.metadata.type)) {
-          cb = n.create('div');
-          var fb = sa.renderAudioClip(ua, va.message_id, za, ab);
-          z.render(fb, cb);
-        } else cb = ta ? sa.renderFileLink(ua) : sa.renderExtendedFileLink(ua);
-      return {
-        error: bb,
-        content: cb,
-        bubblePreferred: this.isBubblePreferred(ua)
+      if (!result && this.isVideoAttachment(doc)) {
+        result = dom.create("div");
+        $.render(self.renderVideo(doc, obj), result);
+      }
+      if (!result && doc.preview_url) {
+        result = self.renderPreview(doc, results, value, i);
+      }
+      if (!result && this.isFileAttachment(doc)) {
+        if (doc.metadata && assert.isVoiceMessage(doc.metadata.type)) {
+          result = dom.create("div");
+          var params = self.renderAudioClip(doc, results.message_id, millis, oldconfig);
+          $.render(params, result);
+        } else {
+          result = obj ? self.renderFileLink(doc) : self.renderExtendedFileLink(doc);
+        }
+      }
+      return{
+        error : object,
+        content : result,
+        bubblePreferred : this.isBubblePreferred(doc)
       };
     },
-    isBubblePreferred: function(ta) {
-      return !this.isStickerAttachment(ta) && !this.isSyncRequestAttachment(ta);
+    /**
+     * @param {Object} walkers
+     * @return {?}
+     */
+    isBubblePreferred : function(walkers) {
+      return!this.isStickerAttachment(walkers) && !this.isSyncRequestAttachment(walkers);
     },
-    renderError: function(ta) {
-      var ua = g[':fb:mercury:attachment:error'].build();
-      n.appendContent(ua.getNode('error'), ta.error_msg);
-      return ua.getRoot();
+    /**
+     * @param {Object} info
+     * @return {?}
+     */
+    renderError : function(info) {
+      var store = _device_parser[":fb:mercury:attachment:error"].build();
+      dom.appendContent(store.getNode("error"), info.error_msg);
+      return store.getRoot();
     },
-    renderSocialResolution: function(ta) {
-      var ua = g[':fb:mercury:attachment:social-resolution'].build();
-      ua.setNodeContent('post', ta.share_xhp);
-      return ua.getRoot();
+    /**
+     * @param {Object} item
+     * @return {?}
+     */
+    renderSocialResolution : function(item) {
+      var store = _device_parser[":fb:mercury:attachment:social-resolution"].build();
+      store.setNodeContent("post", item.share_xhp);
+      return store.getRoot();
     },
-    renderChatXHP: function(ta) {
-      var ua = g[':fb:mercury:attachment:social-resolution'].build();
-      ua.setNodeContent('post', ta.chat_xhp);
-      return ua.getRoot();
+    /**
+     * @param {Object} item
+     * @return {?}
+     */
+    renderChatXHP : function(item) {
+      var store = _device_parser[":fb:mercury:attachment:social-resolution"].build();
+      store.setNodeContent("post", item.chat_xhp);
+      return store.getRoot();
     },
-    renderOpenGraph: function(ta) {
-      var ua = ta.share_xhp.cloneNode(true);
-      if (ha.firefox()) fa.set(ua, 'minWidth', '180px');
-      return ua;
+    /**
+     * @param {Object} state
+     * @return {?}
+     */
+    renderOpenGraph : function(state) {
+      var node = state.share_xhp.cloneNode(true);
+      if (UA.firefox()) {
+        domStyle.set(node, "minWidth", "180px");
+      }
+      return node;
     },
-    renderExternalLink: function(ta) {
-      var ua = g[':fb:mercury:attachment:external-link'].build().setNodeContent('name', ta.name);
-      ta.base_url && ua.setNodeContent('shortLink', ta.base_url);
-      var va = ua.getNode('preview'),
-        wa = ua.getNode('image-link');
-      wa.setAttribute('href', ta.url);
-      ta.rel && wa.setAttribute('rel', ta.rel);
-      if (ta.preview_url) {
-        var xa = ua.getNode('preview-image'),
-          ya = ta.preview_url,
-          za = ga(j.getRawUrlFromSafeUrl(ya));
-        if (ta.animated_gif_uri) {
-          ya = ga(ta.animated_gif_uri);
-          l.addClass(va, "_dri");
-          if (ta.name && ta.name.__html == za.toString()) ua.setNodeContent('name', '');
+    /**
+     * @param {Object} options
+     * @return {?}
+     */
+    renderExternalLink : function(options) {
+      var self = _device_parser[":fb:mercury:attachment:external-link"].build().setNodeContent("name", options.name);
+      if (options.base_url) {
+        self.setNodeContent("shortLink", options.base_url);
+      }
+      var target = self.getNode("preview");
+      var item = self.getNode("image-link");
+      item.setAttribute("href", options.url);
+      if (options.rel) {
+        item.setAttribute("rel", options.rel);
+      }
+      if (options.preview_url) {
+        var e = self.getNode("preview-image");
+        var href = options.preview_url;
+        var input = readFile(demoLink.getRawUrlFromSafeUrl(href));
+        if (options.animated_gif_uri) {
+          href = readFile(options.animated_gif_uri);
+          $el.addClass(target, "_dri");
+          if (options.name && options.name.__html == input.toString()) {
+            self.setNodeContent("name", "");
+          }
         }
-        xa.setAttribute('src', ya);
-        l.addClass(va, ta.preview_class);
-        l.show(xa);
+        e.setAttribute("src", href);
+        $el.addClass(target, options.preview_class);
+        $el.show(e);
       } else {
-        l.addClass(ua.getRoot(), 'noMedia');
-        l.hide(va);
+        $el.addClass(self.getRoot(), "noMedia");
+        $el.hide(target);
       }
-      ua.getNode('name').setAttribute('href', ta.url);
-      d(['LinkshimHandler'], function(ab) {
-        ab.setUpLinkshimHandling(ua.getNode('name'));
-        ab.setUpLinkshimHandling(ua.getNode('image-link'));
+      self.getNode("name").setAttribute("href", options.url);
+      $sanitize(["LinkshimHandler"], function(classes) {
+        classes.setUpLinkshimHandling(self.getNode("name"));
+        classes.setUpLinkshimHandling(self.getNode("image-link"));
       });
-      if (ta.rel) ua.getNode('name').setAttribute('rel', ta.rel);
-      return ua.getRoot();
+      if (options.rel) {
+        self.getNode("name").setAttribute("rel", options.rel);
+      }
+      return self.getRoot();
     },
-    renderFileLink: function(ta) {
-      var ua = null;
-      if (ta.url === '') {
-        ua = ':fb:mercury:attachment:file-name';
-        return ra(ta, ua).getRoot();
+    /**
+     * @param {Object} data
+     * @return {?}
+     */
+    renderFileLink : function(data) {
+      /** @type {null} */
+      var r20 = null;
+      if (data.url === "") {
+        /** @type {string} */
+        r20 = ":fb:mercury:attachment:file-name";
+        return initialize(data, r20).getRoot();
       } else {
-        ua = ':fb:mercury:attachment:file-link';
-        return qa(ta, ua).getRoot();
+        /** @type {string} */
+        r20 = ":fb:mercury:attachment:file-link";
+        return render(data, r20).getRoot();
       }
     },
-    renderAudioClip: function(ta, ua, va, wa) {
-      var xa = ta.metadata.duration / 1000,
-        ya = 200;
-      if (va && wa)
+    /**
+     * @param {Object} result
+     * @param {?} message_id
+     * @param {number} x
+     * @param {string} b
+     * @return {?}
+     */
+    renderAudioClip : function(result, message_id, x, b) {
+      /** @type {number} */
+      var xa = result.metadata.duration / 1E3;
+      /** @type {number} */
+      var w = 200;
+      if (x && b) {
         if (xa < 5) {
-          ya = va;
-        } else ya = (1 - Math.pow(10, (xa - 5) / -30)) * (wa - va) + va;
-      var za = null;
-      if (s.WebMessengerTranscriptRenderGK) {
-        var ab = b('MercuryAttachmentAudioClipTranscript.react');
-        za = z.createElement(ab, {
-          message_id: ua,
-          attachment: ta
+          /** @type {number} */
+          w = x;
+        } else {
+          w = (1 - Math.pow(10, (xa - 5) / -30)) * (b - x) + x;
+        }
+      }
+      /** @type {null} */
+      var text = null;
+      if (dataAndEvents.WebMessengerTranscriptRenderGK) {
+        var t = require("MercuryAttachmentAudioClipTranscript.react");
+        text = $.createElement(t, {
+          message_id : message_id,
+          attachment : result
         });
       }
-      return (z.createElement("div", null, z.createElement(h, {
-        src: ta.url,
-        duration: ta.metadata.duration / 1000,
-        showHelp: false,
-        width: ya
-      }), za));
+      return $.createElement("div", null, $.createElement(elem, {
+        src : result.url,
+        duration : result.metadata.duration / 1E3,
+        showHelp : false,
+        width : w
+      }), text);
     },
-    renderVideo: function(ta, ua) {
-      var va = ua ? ta.metadata.chat_size : ta.metadata.inbox_size,
-        wa = ua ? ta.metadata.chat_preview : ta.metadata.inbox_preview,
-        xa = ta.metadata.dimensions;
-      if (!va) {
-        wa = ta.thumbnail_url;
-        va = xa = {
-          height: ta.preview_height,
-          width: ta.preview_width
+    /**
+     * @param {Object} obj
+     * @param {boolean} callback
+     * @return {?}
+     */
+    renderVideo : function(obj, callback) {
+      var master = callback ? obj.metadata.chat_size : obj.metadata.inbox_size;
+      var l = callback ? obj.metadata.chat_preview : obj.metadata.inbox_preview;
+      var dimensions = obj.metadata.dimensions;
+      if (!master) {
+        l = obj.thumbnail_url;
+        master = dimensions = {
+          height : obj.preview_height,
+          width : obj.preview_width
         };
       }
-      return (z.createElement(r, {
-        duration: ta.metadata.duration,
-        name: ta.name,
-        pageID: ta.metadata.pageid,
-        thumbSize: va,
-        thumbnail: wa,
-        videoSize: xa,
-        videoID: ta.metadata.fbid,
-        videoURI: ta.url
-      }));
-    },
-    renderExtendedFileLink: function(ta) {
-      var ua = null;
-      if (ta.url === '') {
-        ua = ':fb:mercury:attachment:file-name';
-        return ra(ta, ua).getRoot();
-      }
-      ua = ':fb:mercury:attachment:extended-file-link';
-      var va = qa(ta, ua);
-      if (ta.open_url) {
-        var wa = va.getNode('openLinkContainer');
-        l.show(wa);
-        var xa = va.getNode('openFile');
-        xa.setAttribute('href', ta.open_url);
-      }
-      var ya = va.getNode('downloadFile');
-      ya.setAttribute('href', ta.url);
-      ta.rel && ya.setAttribute('rel', ta.rel);
-      return va.getRoot();
-    },
-    renderMusic: function(ta) {
-      var ua = g[':fb:mercury:attachment:music'].build().setNodeContent('filename', ta.name),
-        va = ua.getNode('link');
-      va.setAttribute('href', ta.url);
-      va.setAttribute('target', '_blank');
-      ta.rel && va.setAttribute('rel', ta.rel);
-      var wa = ua.getNode('image-link');
-      wa.setAttribute('href', ta.url);
-      ta.rel && wa.setAttribute('rel', ta.rel);
-      var xa = ua.getNode('preview-image');
-      xa.setAttribute('src', ta.preview_url);
-      l.show(xa);
-      l.addClass(ua.getNode('icon_link'), 'MercuryMusicIcon');
-      return ua.getRoot();
-    },
-    renderSyncRequest: function(ta) {
-      var ua = k(ta.metadata),
-        va = n.create('div');
-      z.render(ua, va);
-      return va;
-    },
-    renderOrionMercuryAttachment: function(ta, ua) {
-      var va = Object.assign({}, ta.metadata);
-      if (!ua) va.theme = 'messages';
-      var wa = z.createElement(na, z.__spread({}, va)),
-        xa = n.create('div');
-      z.render(wa, xa);
-      return xa;
-    },
-    resizeContain: function(ta, ua) {
-      var va = ta.width / ta.height,
-        wa = ua.width / ua.height;
-      if (wa < va) {
-        return {
-          width: Math.min(ta.height * wa, ua.width),
-          height: Math.min(ta.height, ua.height)
-        };
-      } else return {
-        width: Math.min(ta.width, ua.width),
-        height: Math.min(ta.width / wa, ua.height)
-      };
-    },
-    renderPreview: function(ta, ua, va, wa) {
-      var xa = g[':fb:mercury:attachment:preview'].build(),
-        ya = xa.getNode('image-link');
-      if (ta) {
-        if (ta.url) {
-          var za = new ga(ta.url).getQueryData().uri;
-          if (za && ta.rel === 'async') {
-            ya.setAttribute('href', za);
-            ya.setAttribute('ajaxify', ta.url);
-          } else ya.setAttribute('href', ta.url);
-        }
-        ta.rel && ya.setAttribute('rel', ta.rel);
-        var ab;
-        if (ta.preview_uploading) {
-          var bb = xa.getNode('cancel-button-container');
-          l.show(bb);
-          var cb = xa.getNode('cancel-button'),
-            db = o.listen(cb, 'click', function() {
-              ta.upload_canceled(ta.upload_id);
-              l.hide(xa.getRoot());
-              db.remove();
-            });
-          ta.on_success(function(event, lb) {
-            if (lb.upload_id == ta.upload_id) {
-              l.hide(bb);
-              db.remove();
-            }
-          });
-          var eb = xa.getNode('progress-bar'),
-            fb = new y(eb),
-            gb = xa.getNode('progress-bar-container');
-          ka(ta.upload_id);
-          ta.on_progress(function(event, lb) {
-            if (lb.upload_id == ta.upload_id) {
-              l.removeClass(gb, "_395w");
-              l.show(gb);
-              la(fb, lb.event);
-            }
-          });
-          if (ta.on_resizing_progress) ta.on_resizing_progress(function(event, lb) {
-            if (lb.upload_id == ta.upload_id) {
-              l.addClass(gb, "_395w");
-              l.show(gb);
-              fb.setPosition(100 * lb.event.written / lb.event.total);
-            }
-          });
-          l.addClass(ya, "_57jm");
-          if (va >= 176) {
-            ab = '/images/photos/dots_large.png';
-          } else if (va >= 86) {
-            ab = '/images/photos/dots_medium.png';
-          } else ab = '/images/photos/dots_small.png';
-          fa.set(ya, 'width', va + 'px');
-          fa.set(ya, 'max-width', va + 'px');
-          if (ta.preview_width && ta.preview_height) fa.set(ya, 'padding-bottom', ((ta.preview_height / ta.preview_width) * 100) + '%');
-        } else if (ta.preview_loading) {
-          l.addClass(ya, "_5xdv");
-          if (wa === 'contain' && ta.preview_width && ta.preview_height) {
-            fa.set(ya, 'width', ta.preview_width + 'px');
-            fa.set(ya, 'height', ta.preview_height + 'px');
-          }
-          if (wa === 'cover' && !pa) l.addClass(ya, "_55pj");
-        } else if (ta.metadata && ta.metadata.fbid) {
-          ab = ga('/ajax/mercury/attachments/photo.php').addQueryData({
-            fbid: ta.metadata.fbid,
-            request_user_id: ta.metadata.pageid,
-            mode: wa,
-            width: va,
-            height: va
-          }).toString();
-          var hb = ya.getAttribute('ajaxify');
-          ya.removeAttribute('ajaxify');
-          ya.removeAttribute('rel');
-          o.listen(ya, 'click', function(event) {
-            event.prevent();
-            i.loadModules(["MessagesViewer"], function(lb) {
-              lb.bootstrapWithConfig({
-                src: ab,
-                endpoint: hb,
-                fbid: ta.metadata.fbid,
-                dimensions: ta.metadata.dimensions,
-                disablePaging: ua && ua.attachments.length == 1
-              }, ya);
-            });
-          });
-        } else {
-          var ib = ga(ta.preview_url);
-          wa && ib.addQueryData({
-            mode: wa
-          });
-          va && ib.addQueryData({
-            width: va,
-            height: va
-          });
-          ab = ib.toString();
-        }
-        var jb = xa.getNode('preview-image');
-        if (ab) {
-          if (wa === 'contain' && ta.preview_width && ta.preview_height) {
-            var kb = sa.resizeContain({
-              width: va,
-              height: va
-            }, {
-              width: ta.preview_width,
-              height: ta.preview_height
-            });
-            jb.setAttribute('width', kb.width);
-            jb.setAttribute('height', kb.height);
-          }
-          if (ta.preview_uploading || (wa === 'cover' && !pa)) {
-            l.addClass(ya, "_55pj");
-            fa.set(ya, 'backgroundImage', 'url(' + ab + ')');
-          } else {
-            jb.onload = function() {
-              jb.removeAttribute('width');
-              jb.removeAttribute('height');
-            };
-            jb.setAttribute('src', ab);
-          }
-        }
-        if (ua) this.renderReportRespondLink(xa.getRoot(), ta, ua.message_id);
-      }
-      return xa.getRoot();
-    },
-    renderShareLink: function(ta, ua, va) {
-      var wa = g[':fb:mercury:attachment:share-link'].build().setNodeContent('name', ta.name),
-        xa = wa.getNode('link');
-      xa.setAttribute('href', ta.url);
-      ta.rel && xa.setAttribute('rel', ta.rel);
-      return wa.getRoot();
-    },
-    renderVideoThumb: function(ta) {
-      var ua = g[':fb:mercury:attachment:video-thumb'].build(),
-        va = ua.getNode('thumb');
-      va.setAttribute('href', ta.url);
-      va.setAttribute('rel', ta.rel);
-      var wa = n.find(ua.getRoot(), 'img');
-      wa.src = ta.preview_url;
-      return ua.getRoot();
-    },
-    renderShareXHP: function(ta, ua) {
-      var va = n.create('div');
-      if (ta) {
-        n.appendContent(va, ta.share_xhp);
-        this.renderReportRespondLink(va, ta, ua);
-      }
-      return va;
-    },
-    renderSticker: function(ta, ua, va, wa) {
-      var xa = va ? 'chatScrolled/' : 'messengerScrolled/';
-      xa += ua.thread_id;
-      var ya = n.create('div');
-      l.addClass(ya, 'stickerContainer');
-      if (!ta.metadata) {
-        var za = da.getSticker(ua.sticker_id),
-          ab = Object.assign({}, za),
-          bb = ea.getScaledDimensions(za.height, za.width, ca.THREAD_SIZE),
-          cb = bb.height,
-          db = bb.width;
-        ab.height = cb;
-        ab.width = db;
-        ab.stickerID = ua.sticker_id;
-        ab.spriteURI = '';
-        ab.spriteURI2x = '';
-        ab.paddedSpriteURI = '';
-        ab.paddedSpriteURI2x = '';
-        ta.metadata = ab;
-      }
-      var eb = null;
-      if (ta.metadata.stickerID) eb = ta.metadata.stickerID.toString();
-      var fb = null;
-      if (ta.metadata.packID) fb = ta.metadata.packID.toString();
-      var gb = ma.getURIBuilder().setInt('sticker_id', eb),
-        hb = null,
-        ib = null;
-      if (window.devicePixelRatio && window.devicePixelRatio > 1) {
-        ib = ta.metadata.paddedSpriteURI2x;
-        hb = ta.metadata.spriteURI2x;
-      } else {
-        ib = ta.metadata.paddedSpriteURI;
-        hb = ta.metadata.spriteURI;
-      }
-      var jb = z.createElement(aa, {
-        animationTrigger: "hover",
-        className: "mvs",
-        frameCount: ta.metadata.frameCount || 1,
-        frameRate: ta.metadata.frameRate || 83,
-        framesPerCol: ta.metadata.framesPerCol || 1,
-        framesPerRow: ta.metadata.framesPerRow || 1,
-        onStickerClick: wa,
-        packID: fb,
-        paddedSpriteURI: ib,
-        sourceHeight: ta.metadata.height,
-        sourceURI: gb.setEnum('image_type', ba.IMAGE).getURI().toString(),
-        sourceWidth: ta.metadata.width,
-        spriteURI: hb,
-        stickerID: eb,
-        subscribedThreadID: xa
+      return $.createElement(type, {
+        duration : obj.metadata.duration,
+        name : obj.name,
+        pageID : obj.metadata.pageid,
+        thumbSize : master,
+        thumbnail : l,
+        videoSize : dimensions,
+        videoID : obj.metadata.fbid,
+        videoURI : obj.url
       });
-      z.render(jb, ya);
-      return ya;
     },
-    renderReportRespondLink: function(ta, ua, va) {
-      if (!ua.is_social_report_attachment) return null;
-      switch (ua.share_data_type) {
-        case m.MercurySupportedShareType.FB_PHOTO:
+    /**
+     * @param {Object} data
+     * @return {?}
+     */
+    renderExtendedFileLink : function(data) {
+      /** @type {null} */
+      var r20 = null;
+      if (data.url === "") {
+        /** @type {string} */
+        r20 = ":fb:mercury:attachment:file-name";
+        return initialize(data, r20).getRoot();
+      }
+      /** @type {string} */
+      r20 = ":fb:mercury:attachment:extended-file-link";
+      var dom = render(data, r20);
+      if (data.open_url) {
+        var e = dom.getNode("openLinkContainer");
+        $el.show(e);
+        var link = dom.getNode("openFile");
+        link.setAttribute("href", data.open_url);
+      }
+      var item = dom.getNode("downloadFile");
+      item.setAttribute("href", data.url);
+      if (data.rel) {
+        item.setAttribute("rel", data.rel);
+      }
+      return dom.getRoot();
+    },
+    /**
+     * @param {Object} value
+     * @return {?}
+     */
+    renderMusic : function(value) {
+      var fs = _device_parser[":fb:mercury:attachment:music"].build().setNodeContent("filename", value.name);
+      var link = fs.getNode("link");
+      link.setAttribute("href", value.url);
+      link.setAttribute("target", "_blank");
+      if (value.rel) {
+        link.setAttribute("rel", value.rel);
+      }
+      var item = fs.getNode("image-link");
+      item.setAttribute("href", value.url);
+      if (value.rel) {
+        item.setAttribute("rel", value.rel);
+      }
+      var obj = fs.getNode("preview-image");
+      obj.setAttribute("src", value.preview_url);
+      $el.show(obj);
+      $el.addClass(fs.getNode("icon_link"), "MercuryMusicIcon");
+      return fs.getRoot();
+    },
+    /**
+     * @param {Object} state
+     * @return {?}
+     */
+    renderSyncRequest : function(state) {
+      var opts = success(state.metadata);
+      var pos = dom.create("div");
+      $.render(opts, pos);
+      return pos;
+    },
+    /**
+     * @param {Object} item
+     * @param {boolean} activeXObj
+     * @return {?}
+     */
+    renderOrionMercuryAttachment : function(item, activeXObj) {
+      var self = Object.assign({}, item.metadata);
+      if (!activeXObj) {
+        /** @type {string} */
+        self.theme = "messages";
+      }
+      var target = $.createElement(style, $.__spread({}, self));
+      var pos = dom.create("div");
+      $.render(target, pos);
+      return pos;
+    },
+    /**
+     * @param {?} s
+     * @param {?} file
+     * @return {?}
+     */
+    resizeContain : function(s, file) {
+      /** @type {number} */
+      var totalWidth = s.width / s.height;
+      /** @type {number} */
+      var width = file.width / file.height;
+      if (width < totalWidth) {
+        return{
+          width : Math.min(s.height * width, file.width),
+          height : Math.min(s.height, file.height)
+        };
+      } else {
+        return{
+          width : Math.min(s.width, file.width),
+          height : Math.min(s.width / width, file.height)
+        };
+      }
+    },
+    /**
+     * @param {Object} options
+     * @param {Object} obj
+     * @param {number} pixels
+     * @param {string} style
+     * @return {?}
+     */
+    renderPreview : function(options, obj, pixels, style) {
+      var store = _device_parser[":fb:mercury:attachment:preview"].build();
+      var element = store.getNode("image-link");
+      if (options) {
+        if (options.url) {
+          var url = (new readFile(options.url)).getQueryData().uri;
+          if (url && options.rel === "async") {
+            element.setAttribute("href", url);
+            element.setAttribute("ajaxify", options.url);
+          } else {
+            element.setAttribute("href", options.url);
+          }
+        }
+        if (options.rel) {
+          element.setAttribute("rel", options.rel);
+        }
+        var imgSrc;
+        if (options.preview_uploading) {
+          var event = store.getNode("cancel-button-container");
+          $el.show(event);
+          var inputkh = store.getNode("cancel-button");
+          var onResult = testPage.listen(inputkh, "click", function() {
+            options.upload_canceled(options.upload_id);
+            $el.hide(store.getRoot());
+            onResult.remove();
+          });
+          options.on_success(function(dataAndEvents, cursorData) {
+            if (cursorData.upload_id == options.upload_id) {
+              $el.hide(event);
+              onResult.remove();
+            }
+          });
+          var tag = store.getNode("progress-bar");
+          var el = new Element(tag);
+          var active = store.getNode("progress-bar-container");
+          localize(options.upload_id);
+          options.on_progress(function(dataAndEvents, params) {
+            if (params.upload_id == options.upload_id) {
+              $el.removeClass(active, "_395w");
+              $el.show(active);
+              trigger(el, params.event);
+            }
+          });
+          if (options.on_resizing_progress) {
+            options.on_resizing_progress(function(dataAndEvents, result) {
+              if (result.upload_id == options.upload_id) {
+                $el.addClass(active, "_395w");
+                $el.show(active);
+                el.setPosition(100 * result.event.written / result.event.total);
+              }
+            });
+          }
+          $el.addClass(element, "_57jm");
+          if (pixels >= 176) {
+            /** @type {string} */
+            imgSrc = "/images/photos/dots_large.png";
+          } else {
+            if (pixels >= 86) {
+              /** @type {string} */
+              imgSrc = "/images/photos/dots_medium.png";
+            } else {
+              /** @type {string} */
+              imgSrc = "/images/photos/dots_small.png";
+            }
+          }
+          domStyle.set(element, "width", pixels + "px");
+          domStyle.set(element, "max-width", pixels + "px");
+          if (options.preview_width && options.preview_height) {
+            domStyle.set(element, "padding-bottom", options.preview_height / options.preview_width * 100 + "%");
+          }
+        } else {
+          if (options.preview_loading) {
+            $el.addClass(element, "_5xdv");
+            if (style === "contain" && (options.preview_width && options.preview_height)) {
+              domStyle.set(element, "width", options.preview_width + "px");
+              domStyle.set(element, "height", options.preview_height + "px");
+            }
+            if (style === "cover" && !STANDARD_CSS_OPACITY_SUPPORTED) {
+              $el.addClass(element, "_55pj");
+            }
+          } else {
+            if (options.metadata && options.metadata.fbid) {
+              imgSrc = readFile("/ajax/mercury/attachments/photo.php").addQueryData({
+                fbid : options.metadata.fbid,
+                request_user_id : options.metadata.pageid,
+                mode : style,
+                width : pixels,
+                height : pixels
+              }).toString();
+              var endpoint = element.getAttribute("ajaxify");
+              element.removeAttribute("ajaxify");
+              element.removeAttribute("rel");
+              testPage.listen(element, "click", function(tail) {
+                tail.prevent();
+                exports.loadModules(["MessagesViewer"], function(result) {
+                  result.bootstrapWithConfig({
+                    src : imgSrc,
+                    endpoint : endpoint,
+                    fbid : options.metadata.fbid,
+                    dimensions : options.metadata.dimensions,
+                    disablePaging : obj && obj.attachments.length == 1
+                  }, element);
+                });
+              });
+            } else {
+              var input = readFile(options.preview_url);
+              if (style) {
+                input.addQueryData({
+                  mode : style
+                });
+              }
+              if (pixels) {
+                input.addQueryData({
+                  width : pixels,
+                  height : pixels
+                });
+              }
+              imgSrc = input.toString();
+            }
+          }
+        }
+        var img = store.getNode("preview-image");
+        if (imgSrc) {
+          if (style === "contain" && (options.preview_width && options.preview_height)) {
+            var info = self.resizeContain({
+              width : pixels,
+              height : pixels
+            }, {
+              width : options.preview_width,
+              height : options.preview_height
+            });
+            img.setAttribute("width", info.width);
+            img.setAttribute("height", info.height);
+          }
+          if (options.preview_uploading || style === "cover" && !STANDARD_CSS_OPACITY_SUPPORTED) {
+            $el.addClass(element, "_55pj");
+            domStyle.set(element, "backgroundImage", "url(" + imgSrc + ")");
+          } else {
+            /**
+             * @return {undefined}
+             */
+            img.onload = function() {
+              img.removeAttribute("width");
+              img.removeAttribute("height");
+            };
+            img.setAttribute("src", imgSrc);
+          }
+        }
+        if (obj) {
+          this.renderReportRespondLink(store.getRoot(), options, obj.message_id);
+        }
+      }
+      return store.getRoot();
+    },
+    /**
+     * @param {Object} a
+     * @param {?} dataAndEvents
+     * @param {boolean} activeXObj
+     * @return {?}
+     */
+    renderShareLink : function(a, dataAndEvents, activeXObj) {
+      var self = _device_parser[":fb:mercury:attachment:share-link"].build().setNodeContent("name", a.name);
+      var node = self.getNode("link");
+      node.setAttribute("href", a.url);
+      if (a.rel) {
+        node.setAttribute("rel", a.rel);
+      }
+      return self.getRoot();
+    },
+    /**
+     * @param {Object} data
+     * @return {?}
+     */
+    renderVideoThumb : function(data) {
+      var me = _device_parser[":fb:mercury:attachment:video-thumb"].build();
+      var item = me.getNode("thumb");
+      item.setAttribute("href", data.url);
+      item.setAttribute("rel", data.rel);
+      var img = dom.find(me.getRoot(), "img");
+      img.src = data.preview_url;
+      return me.getRoot();
+    },
+    /**
+     * @param {Object} options
+     * @param {?} deepDataAndEvents
+     * @return {?}
+     */
+    renderShareXHP : function(options, deepDataAndEvents) {
+      var node = dom.create("div");
+      if (options) {
+        dom.appendContent(node, options.share_xhp);
+        this.renderReportRespondLink(node, options, deepDataAndEvents);
+      }
+      return node;
+    },
+    /**
+     * @param {Object} data
+     * @param {Object} e
+     * @param {boolean} type
+     * @param {?} deepDataAndEvents
+     * @return {?}
+     */
+    renderSticker : function(data, e, type, deepDataAndEvents) {
+      /** @type {string} */
+      var msg = type ? "chatScrolled/" : "messengerScrolled/";
+      msg += e.thread_id;
+      var view = dom.create("div");
+      $el.addClass(view, "stickerContainer");
+      if (!data.metadata) {
+        var value = should.getSticker(e.sticker_id);
+        var key = Object.assign({}, value);
+        var element = params.getScaledDimensions(value.height, value.width, opts.THREAD_SIZE);
+        var originalHeight = element.height;
+        var originalWidth = element.width;
+        key.height = originalHeight;
+        key.width = originalWidth;
+        key.stickerID = e.sticker_id;
+        /** @type {string} */
+        key.spriteURI = "";
+        /** @type {string} */
+        key.spriteURI2x = "";
+        /** @type {string} */
+        key.paddedSpriteURI = "";
+        /** @type {string} */
+        key.paddedSpriteURI2x = "";
+        data.metadata = key;
+      }
+      /** @type {null} */
+      var numberOfShownHints = null;
+      if (data.metadata.stickerID) {
+        numberOfShownHints = data.metadata.stickerID.toString();
+      }
+      /** @type {null} */
+      var packID = null;
+      if (data.metadata.packID) {
+        packID = data.metadata.packID.toString();
+      }
+      var test = textAlt.getURIBuilder().setInt("sticker_id", numberOfShownHints);
+      /** @type {null} */
+      var spriteURI = null;
+      /** @type {null} */
+      var paddedSpriteURI = null;
+      if (window.devicePixelRatio && window.devicePixelRatio > 1) {
+        paddedSpriteURI = data.metadata.paddedSpriteURI2x;
+        spriteURI = data.metadata.spriteURI2x;
+      } else {
+        paddedSpriteURI = data.metadata.paddedSpriteURI;
+        spriteURI = data.metadata.spriteURI;
+      }
+      var v = $.createElement(t, {
+        animationTrigger : "hover",
+        className : "mvs",
+        frameCount : data.metadata.frameCount || 1,
+        frameRate : data.metadata.frameRate || 83,
+        framesPerCol : data.metadata.framesPerCol || 1,
+        framesPerRow : data.metadata.framesPerRow || 1,
+        onStickerClick : deepDataAndEvents,
+        packID : packID,
+        paddedSpriteURI : paddedSpriteURI,
+        sourceHeight : data.metadata.height,
+        sourceURI : test.setEnum("image_type", gridStore.IMAGE).getURI().toString(),
+        sourceWidth : data.metadata.width,
+        spriteURI : spriteURI,
+        stickerID : numberOfShownHints,
+        subscribedThreadID : msg
+      });
+      $.render(v, view);
+      return view;
+    },
+    /**
+     * @param {?} node
+     * @param {Object} optionsString
+     * @param {?} deepDataAndEvents
+     * @return {?}
+     */
+    renderReportRespondLink : function(node, optionsString, deepDataAndEvents) {
+      if (!optionsString.is_social_report_attachment) {
+        return null;
+      }
+      switch(optionsString.share_data_type) {
+        case depMap.MercurySupportedShareType.FB_PHOTO:
           break;
-        case m.MercurySupportedShareType.FB_SOCIAL_REPORT_PHOTO:
+        case depMap.MercurySupportedShareType.FB_SOCIAL_REPORT_PHOTO:
           return null;
         default:
           return null;
       }
-      var wa = null;
-      if (va) wa = oa.getMessagesFromIDs([va])[0];
-      if (!wa) return null;
-      if (wa.author === x.getID()) return null;
-      var xa = null;
-      u.get(wa.author, function(ya) {
-        xa = n.create('a', {
-          rel: 'dialog-post',
-          className: "_z6l",
-          id: 'respond-link',
-          ajaxify: ga('/ajax/report/social_resolution/post/').setQueryData({
-            attachment_fbid: ua.attach_id,
-            post_fbid: ua.shared_object_id,
-            sender_id: t.getUserIDFromParticipantID(ya.id)
+      /** @type {null} */
+      var data = null;
+      if (deepDataAndEvents) {
+        data = getMessagesFromIDs.getMessagesFromIDs([deepDataAndEvents])[0];
+      }
+      if (!data) {
+        return null;
+      }
+      if (data.author === a.getID()) {
+        return null;
+      }
+      /** @type {null} */
+      var content = null;
+      deck.get(data.author, function(user) {
+        content = dom.create("a", {
+          rel : "dialog-post",
+          className : "_z6l",
+          id : "respond-link",
+          ajaxify : readFile("/ajax/report/social_resolution/post/").setQueryData({
+            attachment_fbid : optionsString.attach_id,
+            post_fbid : optionsString.shared_object_id,
+            sender_id : User.getUserIDFromParticipantID(user.id)
           }).toString()
         });
-        n.setContent(xa, ja._("Respond to {name}'s request", [ja.param("name", ya.name)]));
-        n.appendContent(ta, xa);
+        dom.setContent(content, item._("Respond to {name}'s request", [item.param("name", user.name)]));
+        dom.appendContent(node, content);
       });
     },
-    renderPhotoAttachments: function(ta, ua, va, wa) {
-      var xa = ta.length;
-      if (!xa) return null;
-      var ya = n.create('div', {
-        className: "_55pk"
+    /**
+     * @param {Array} ids
+     * @param {Object} out
+     * @param {number} value
+     * @param {number} delta
+     * @return {?}
+     */
+    renderPhotoAttachments : function(ids, out, value, delta) {
+      var len = ids.length;
+      if (!len) {
+        return null;
+      }
+      var node = dom.create("div", {
+        className : "_55pk"
       });
-      if (xa === 1) {
-        var za = sa.renderPreview(ta[0], ua, va, 'contain');
-        n.appendContent(ya, za);
-        return ya;
+      if (len === 1) {
+        var ret = self.renderPreview(ids[0], out, value, "contain");
+        dom.appendContent(node, ret);
+        return node;
       }
-      var ab = (xa == 2 || xa == 4) ? 2 : 3,
-        bb = (va - (ab - 1) * wa) / ab,
-        cb = Math.ceil(xa / ab),
-        db = cb * bb + (cb - 1) * wa,
-        eb = n.create('div', {
-          className: "_55pm",
-          style: 'padding-bottom: ' + (db / va * 100) + '%;'
+      /** @type {number} */
+      var step = len == 2 || len == 4 ? 2 : 3;
+      /** @type {number} */
+      var y = (value - (step - 1) * delta) / step;
+      /** @type {number} */
+      var x = Math.ceil(len / step);
+      /** @type {number} */
+      var total = x * y + (x - 1) * delta;
+      var content = dom.create("div", {
+        className : "_55pm",
+        style : "padding-bottom: " + total / value * 100 + "%;"
+      });
+      dom.appendContent(node, content);
+      /** @type {number} */
+      var i = 0;
+      for (;i < len;++i) {
+        var target = self.renderPreview(ids[i], out, y, "cover");
+        /** @type {number} */
+        var value_index = i % step;
+        /** @type {number} */
+        var combined = Math.floor(i / step);
+        $el.addClass(target, "_55pn");
+        domStyle.apply(target, {
+          width : y / value * 100 + "%",
+          left : value_index * (y + delta) / value * 100 + "%",
+          top : combined * (y + delta) / total * 100 + "%"
         });
-      n.appendContent(ya, eb);
-      for (var fb = 0; fb < xa; ++fb) {
-        var gb = sa.renderPreview(ta[fb], ua, bb, 'cover'),
-          hb = fb % ab,
-          ib = Math.floor(fb / ab);
-        l.addClass(gb, "_55pn");
-        fa.apply(gb, {
-          width: (bb / va * 100) + '%',
-          left: ((hb * (bb + wa)) / va * 100) + '%',
-          top: ((ib * (bb + wa)) / db * 100) + '%'
-        });
-        n.appendContent(eb, gb);
+        dom.appendContent(content, target);
       }
-      return ya;
+      return node;
     },
-    isPhotoAttachment: function(ta) {
-      return ta.attach_type == q.PHOTO || ta.attach_type == q.GIF || (ta.attach_type == q.FILE && ta.preview_url);
+    /**
+     * @param {?} dataAndEvents
+     * @return {?}
+     */
+    isPhotoAttachment : function(dataAndEvents) {
+      return dataAndEvents.attach_type == ActivityObject.PHOTO || (dataAndEvents.attach_type == ActivityObject.GIF || dataAndEvents.attach_type == ActivityObject.FILE && dataAndEvents.preview_url);
     },
-    isVideoAttachment: function(ta) {
-      return ta.attach_type == q.VIDEO;
+    /**
+     * @param {Object} obj
+     * @return {?}
+     */
+    isVideoAttachment : function(obj) {
+      return obj.attach_type == ActivityObject.VIDEO;
     },
-    isShareAttachment: function(ta) {
-      return ta.attach_type == q.SHARE;
+    /**
+     * @param {Object} obj
+     * @return {?}
+     */
+    isShareAttachment : function(obj) {
+      return obj.attach_type == ActivityObject.SHARE;
     },
-    isFileAttachment: function(ta) {
-      return ta.attach_type == q.FILE;
+    /**
+     * @param {Object} obj
+     * @return {?}
+     */
+    isFileAttachment : function(obj) {
+      return obj.attach_type == ActivityObject.FILE;
     },
-    isErrorAttachment: function(ta) {
-      return ta.attach_type == q.ERROR;
+    /**
+     * @param {Object} obj
+     * @return {?}
+     */
+    isErrorAttachment : function(obj) {
+      return obj.attach_type == ActivityObject.ERROR;
     },
-    isStickerAttachment: function(ta) {
-      return ta.attach_type == q.STICKER;
+    /**
+     * @param {Object} obj
+     * @return {?}
+     */
+    isStickerAttachment : function(obj) {
+      return obj.attach_type == ActivityObject.STICKER;
     },
-    isSyncRequestAttachment: function(ta) {
-      var ua = m.MercurySupportedShareType;
-      return this.isShareAttachment(ta) && ta.share_data_type == ua.FB_SYNC_REQUEST;
+    /**
+     * @param {Object} walkers
+     * @return {?}
+     */
+    isSyncRequestAttachment : function(walkers) {
+      var depId = depMap.MercurySupportedShareType;
+      return this.isShareAttachment(walkers) && walkers.share_data_type == depId.FB_SYNC_REQUEST;
     },
-    sortAttachmentsStablyByType: function(ta) {
-      var ua = [sa.isPhotoAttachment, sa.isShareAttachment, sa.isFileAttachment, sa.isErrorAttachment];
-      ua.push(function(wa) {
+    /**
+     * @param {Array} failures
+     * @return {?}
+     */
+    sortAttachmentsStablyByType : function(failures) {
+      /** @type {Array} */
+      var attrList = [self.isPhotoAttachment, self.isShareAttachment, self.isFileAttachment, self.isErrorAttachment];
+      attrList.push(function(dataAndEvents) {
         return true;
       });
-      var va = ua.map(function(wa) {
-        return [];
+      /** @type {Array.<?>} */
+      var pending = attrList.map(function(dataAndEvents) {
+        return[];
       });
-      ta.forEach(function(wa) {
-        for (var xa = 0; xa < ua.length; xa++)
-          if (ua[xa](wa)) {
-            va[xa].push(wa);
+      failures.forEach(function($injector) {
+        /** @type {number} */
+        var i = 0;
+        for (;i < attrList.length;i++) {
+          if (attrList[i]($injector)) {
+            pending[i].push($injector);
             break;
           }
+        }
       });
-      return Array.prototype.concat.apply([], va);
+      return Array.prototype.concat.apply([], pending);
     }
   };
-  e.exports = sa;
+  context.exports = self;
 }, null);
-__d("MercuryLogMessageRenderer", ["MercuryAttachmentRenderer", "CSS", "DOM", "HovercardLink", "MercuryViewer", "MercuryLogMessageType", "MercuryParticipants", "React", "Image.react", "TextWithEntities.react", "TooltipLink.react", "cx", "fbt", "ix", "OrionMercuryLogMessage"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t) {
-  var u = b('OrionMercuryLogMessage').module,
-    v = {
-      renderText: function(qa, ra) {
-        switch (qa.log_message_type) {
-          case l.SUBSCRIBE:
-            x(qa, ra);
-            break;
-          case l.UNSUBSCRIBE:
-            ca(qa, ra);
-            break;
-          case l.VIDEO_CALL:
-            da(qa, ra);
-            break;
-          case l.PHONE_CALL:
-            ga(qa, ra);
-            break;
-          case l.THREAD_NAME:
-            ha(qa, ra);
-            break;
-          case l.THREAD_IMAGE:
-            ia(qa, ra);
-            break;
-          case l.WALLPAPER:
-            ja(qa, ra);
-            break;
-          case l.SERVER_ERROR:
-            ka(qa, ra);
-            break;
-          case l.ORION:
-            if (u) la(qa, ra);
-            break;
-          case l.PAGE_REPLY:
-            fa(qa, ra);
-            break;
+__d("MercuryLogMessageRenderer", ["MercuryAttachmentRenderer", "CSS", "DOM", "HovercardLink", "MercuryViewer", "MercuryLogMessageType", "MercuryParticipants", "React", "Image.react", "TextWithEntities.react", "TooltipLink.react", "cx", "fbt", "ix", "OrionMercuryLogMessage"], function(deepDataAndEvents, require, ignoreMethodDoesntExist, textAlt, module, keepData, dataAndEvents, me, node, model, a, act, deck, self, t, type, attribute, opt_attributes, item, $sanitize) {
+  /**
+   * @param {?} el
+   * @return {?}
+   */
+  function func(el) {
+    var first = el.log_message_type;
+    var attributes = el.log_message_data;
+    return "_5wzu" + (first == act.SUBSCRIBE ? " " + "_5wzj" : "") + (first == act.UNSUBSCRIBE ? " " + "_5wzk" : "") + (first == act.THREAD_NAME ? " " + "_5wzl" : "") + (first == act.THREAD_IMAGE ? " " + "_5wzm" : "") + (first == act.VIDEO_CALL && (attributes.answered || $(el)) ? " " + "_5wzn" : "") + (first == act.VIDEO_CALL && !(attributes.answered || $(el)) ? " " + "_5wzo" : "") + (first == act.PHONE_CALL && attributes.answered ? " " + "_5wzp" : "") + (first == act.PHONE_CALL && !attributes.answered ?
+    " " + "_5wzq" : "") + (first == act.SERVER_ERROR ? " " + "_5wzr" : "");
+  }
+  /**
+   * @param {Object} node
+   * @param {Function} success
+   * @return {undefined}
+   */
+  function show(node, success) {
+    var parentPath = find(node.log_message_data.added_participants);
+    switch(parentPath.length) {
+      case 1:
+        run(node, success, parentPath);
+        break;
+      case 2:
+        ready(node, success, parentPath);
+        break;
+      case 3:
+        initialize(node, success, parentPath);
+        break;
+      default:
+        load(node, success, parentPath);
+        break;
+    }
+  }
+  /**
+   * @param {Object} output
+   * @param {Function} cb
+   * @param {Array} path
+   * @return {undefined}
+   */
+  function run(output, cb, path) {
+    /** @type {Array} */
+    var titles = [output.author, path[0]];
+    deck.getMulti(titles, function(context) {
+      if (output.author == a.getID()) {
+        cb(item._("You added {subscriber1}.", [item.param("subscriber1", fn(context[path[0]]))]));
+      } else {
+        if (path[0] == a.getID()) {
+          cb(item._("{actor} added you.", [item.param("actor", fn(context[output.author]))]));
+        } else {
+          cb(item._("{actor} added {subscriber1}.", [item.param("actor", fn(context[output.author])), item.param("subscriber1", fn(context[path[0]]))]));
         }
-      },
-      renderIcon: function(qa) {
-        return (n.createElement(o, {
-          className: w(qa),
-          src: t('images/spacer.gif')
+      }
+    });
+  }
+  /**
+   * @param {Object} data
+   * @param {Function} handler
+   * @param {Array} key
+   * @return {undefined}
+   */
+  function ready(data, handler, key) {
+    /** @type {Array} */
+    var camelKey = [data.author].concat(key);
+    deck.getMulti(camelKey, function(arr) {
+      if (data.author == a.getID()) {
+        handler(item._("You added {subscriber1} and {subscriber2}.", [item.param("subscriber1", fn(arr[key[0]])), item.param("subscriber2", fn(arr[key[1]]))]));
+      } else {
+        if (key[0] == a.getID()) {
+          handler(item._("{actor} added you and {subscriber2}.", [item.param("actor", fn(arr[data.author])), item.param("subscriber2", fn(arr[key[1]]))]));
+        } else {
+          handler(item._("{actor} added {subscriber1} and {subscriber2}.", [item.param("actor", fn(arr[data.author])), item.param("subscriber1", fn(arr[key[0]])), item.param("subscriber2", fn(arr[key[1]]))]));
+        }
+      }
+    });
+  }
+  /**
+   * @param {Object} b
+   * @param {Function} callback
+   * @param {Array} path
+   * @return {undefined}
+   */
+  function initialize(b, callback, path) {
+    /** @type {Array} */
+    var resolved = [b.author].concat(path);
+    deck.getMulti(resolved, function(context) {
+      if (b.author == a.getID()) {
+        callback(item._("You added {subscriber1}, {subscriber2} and {subscriber3}.", [item.param("subscriber1", fn(context[path[0]])), item.param("subscriber2", fn(context[path[1]])), item.param("subscriber3", fn(context[path[2]]))]));
+      } else {
+        if (path[0] == a.getID()) {
+          callback(item._("{actor} added you, {subscriber2} and {subscriber3}.", [item.param("actor", fn(context[b.author])), item.param("subscriber2", fn(context[path[1]])), item.param("subscriber3", fn(context[path[2]]))]));
+        } else {
+          callback(item._("{actor} added {subscriber1}, {subscriber2} and {subscriber3}.", [item.param("actor", fn(context[b.author])), item.param("subscriber1", fn(context[path[0]])), item.param("subscriber2", fn(context[path[1]])), item.param("subscriber3", fn(context[path[2]]))]));
+        }
+      }
+    });
+  }
+  /**
+   * @param {Object} b
+   * @param {Function} success
+   * @param {Array} key
+   * @return {undefined}
+   */
+  function load(b, success, key) {
+    /** @type {Array} */
+    var camelKey = [b.author].concat(key);
+    deck.getMulti(camelKey, function(context) {
+      /**
+       * @param {Array} location
+       * @return {?}
+       */
+      function init(location) {
+        var tooltip = self.createElement("div", null, location.map(function(stat) {
+          return self.createElement("div", null, stat.name);
         }));
-      },
-      renderLegacy: function(qa, ra, sa, ta) {
-        w(ta).split(' ').forEach(function(ua) {
-          return ua && h.addClass(qa, ua);
-        });
-        this.renderText(ta, function(ua) {
-          n.render(n.createElement("span", null, ua), ra);
-        });
-        this.renderAttachmentLegacy(sa, ta);
-      },
-      renderAttachmentLegacy: function(qa, ra) {
-        if (ra.log_message_type == l.THREAD_IMAGE) {
-          var sa = ra.log_message_data.image;
-          if (sa) {
-            var ta = g.renderPreview(sa.preview_url ? sa : null);
-            i.setContent(qa, ta);
-            h.addClass(ta, "_z6a");
-            h.show(qa);
+        return self.createElement(attribute, {
+          alignH : "center",
+          position : "above",
+          tooltip : tooltip
+        }, item._("{num} more", [item.param("num", location.length)]));
+      }
+      var elems = key.map(function(valueKey) {
+        return context[valueKey];
+      });
+      if (b.author == a.getID()) {
+        success(item._("You added {subscriber1}, {subscriber2} and {more_people}.", [item.param("subscriber1", fn(elems[0])), item.param("subscriber2", fn(elems[1])), item.param("more_people", init(elems.slice(2)))]));
+      } else {
+        if (key[0] == a.getID()) {
+          success(item._("{actor} added you, {subscriber2} and {more_people}.", [item.param("actor", fn(context[b.author])), item.param("subscriber2", fn(elems[1])), item.param("more_people", init(elems.slice(2)))]));
+        } else {
+          success(item._("{actor} added {subscriber1}, {subscriber2} and {more_people}.", [item.param("actor", fn(context[b.author])), item.param("subscriber1", fn(elems[0])), item.param("subscriber2", fn(elems[1])), item.param("more_people", init(elems.slice(2)))]));
+        }
+      }
+    });
+  }
+  /**
+   * @param {Object} data
+   * @param {Function} r
+   * @return {undefined}
+   */
+  function finish(data, r) {
+    /** @type {Array} */
+    var keys = [data.author];
+    var tmp_keys = data.log_message_data.removed_participants;
+    var key;
+    if (tmp_keys.length === 1) {
+      key = tmp_keys[0];
+      keys.push(key);
+    }
+    deck.getMulti(keys, function($cookies) {
+      var udataCur = $cookies[data.author];
+      var value = $cookies[key];
+      if (data.author == a.getID()) {
+        if (!key || key == data.author) {
+          r("You left the conversation.");
+        } else {
+          r(item._("You removed {name} from the conversation.", [item.param("name", fn(value))]));
+        }
+      } else {
+        if (!key || key == data.author) {
+          r(item._("{actor} left the conversation.", [item.param("actor", fn(udataCur))]));
+        } else {
+          if (key == a.getID()) {
+            r(item._("{actor} removed you from the conversation.", [item.param("actor", fn(udataCur))]));
+          } else {
+            r(item._("{actor} removed {name} from the conversation.", [item.param("actor", fn(udataCur)), item.param("name", fn(value))]));
           }
         }
       }
-    };
-  e.exports = v;
-
-  function w(qa) {
-    var ra = qa.log_message_type,
-      sa = qa.log_message_data;
-    return (("_5wzu") + (ra == l.SUBSCRIBE ? ' ' + "_5wzj" : '') + (ra == l.UNSUBSCRIBE ? ' ' + "_5wzk" : '') + (ra == l.THREAD_NAME ? ' ' + "_5wzl" : '') + (ra == l.THREAD_IMAGE ? ' ' + "_5wzm" : '') + (ra == l.VIDEO_CALL && (sa.answered || pa(qa)) ? ' ' + "_5wzn" : '') + (ra == l.VIDEO_CALL && !(sa.answered || pa(qa)) ? ' ' + "_5wzo" : '') + (ra == l.PHONE_CALL && sa.answered ? ' ' + "_5wzp" : '') + (ra == l.PHONE_CALL && !sa.answered ? ' ' + "_5wzq" : '') + (ra == l.SERVER_ERROR ? ' ' + "_5wzr" : ''));
-  }
-
-  function x(qa, ra) {
-    var sa = oa(qa.log_message_data.added_participants);
-    switch (sa.length) {
-      case 1:
-        y(qa, ra, sa);
-        break;
-      case 2:
-        z(qa, ra, sa);
-        break;
-      case 3:
-        aa(qa, ra, sa);
-        break;
-      default:
-        ba(qa, ra, sa);
-        break;
-    }
-  }
-
-  function y(qa, ra, sa) {
-    var ta = [qa.author, sa[0]];
-    m.getMulti(ta, function(ua) {
-      if (qa.author == k.getID()) {
-        ra(s._("You added {subscriber1}.", [s.param("subscriber1", na(ua[sa[0]]))]));
-      } else if (sa[0] == k.getID()) {
-        ra(s._("{actor} added you.", [s.param("actor", na(ua[qa.author]))]));
-      } else ra(s._("{actor} added {subscriber1}.", [s.param("actor", na(ua[qa.author])), s.param("subscriber1", na(ua[sa[0]]))]));
     });
   }
-
-  function z(qa, ra, sa) {
-    var ta = [qa.author].concat(sa);
-    m.getMulti(ta, function(ua) {
-      if (qa.author == k.getID()) {
-        ra(s._("You added {subscriber1} and {subscriber2}.", [s.param("subscriber1", na(ua[sa[0]])), s.param("subscriber2", na(ua[sa[1]]))]));
-      } else if (sa[0] == k.getID()) {
-        ra(s._("{actor} added you and {subscriber2}.", [s.param("actor", na(ua[qa.author])), s.param("subscriber2", na(ua[sa[1]]))]));
-      } else ra(s._("{actor} added {subscriber1} and {subscriber2}.", [s.param("actor", na(ua[qa.author])), s.param("subscriber1", na(ua[sa[0]])), s.param("subscriber2", na(ua[sa[1]]))]));
-    });
-  }
-
-  function aa(qa, ra, sa) {
-    var ta = [qa.author].concat(sa);
-    m.getMulti(ta, function(ua) {
-      if (qa.author == k.getID()) {
-        ra(s._("You added {subscriber1}, {subscriber2} and {subscriber3}.", [s.param("subscriber1", na(ua[sa[0]])), s.param("subscriber2", na(ua[sa[1]])), s.param("subscriber3", na(ua[sa[2]]))]));
-      } else if (sa[0] == k.getID()) {
-        ra(s._("{actor} added you, {subscriber2} and {subscriber3}.", [s.param("actor", na(ua[qa.author])), s.param("subscriber2", na(ua[sa[1]])), s.param("subscriber3", na(ua[sa[2]]))]));
-      } else ra(s._("{actor} added {subscriber1}, {subscriber2} and {subscriber3}.", [s.param("actor", na(ua[qa.author])), s.param("subscriber1", na(ua[sa[0]])), s.param("subscriber2", na(ua[sa[1]])), s.param("subscriber3", na(ua[sa[2]]))]));
-    });
-  }
-
-  function ba(qa, ra, sa) {
-    var ta = [qa.author].concat(sa);
-    m.getMulti(ta, function(ua) {
-      function va(xa) {
-        var ya = n.createElement("div", null, xa.map(function(za) {
-          return n.createElement("div", null, za.name);
-        }));
-        return (n.createElement(q, {
-          alignH: "center",
-          position: "above",
-          tooltip: ya
-        }, s._("{num} more", [s.param("num", xa.length)])));
-      }
-      var wa = sa.map(function(xa) {
-        return ua[xa];
-      });
-      if (qa.author == k.getID()) {
-        ra(s._("You added {subscriber1}, {subscriber2} and {more_people}.", [s.param("subscriber1", na(wa[0])), s.param("subscriber2", na(wa[1])), s.param("more_people", va(wa.slice(2)))]));
-      } else if (sa[0] == k.getID()) {
-        ra(s._("{actor} added you, {subscriber2} and {more_people}.", [s.param("actor", na(ua[qa.author])), s.param("subscriber2", na(wa[1])), s.param("more_people", va(wa.slice(2)))]));
-      } else ra(s._("{actor} added {subscriber1}, {subscriber2} and {more_people}.", [s.param("actor", na(ua[qa.author])), s.param("subscriber1", na(wa[0])), s.param("subscriber2", na(wa[1])), s.param("more_people", va(wa.slice(2)))]));
-    });
-  }
-
-  function ca(qa, ra) {
-    var sa = [qa.author],
-      ta = qa.log_message_data.removed_participants,
-      ua;
-    if (ta.length === 1) {
-      ua = ta[0];
-      sa.push(ua);
-    }
-    m.getMulti(sa, function(va) {
-      var wa = va[qa.author],
-        xa = va[ua];
-      if (qa.author == k.getID()) {
-        if (!ua || ua == qa.author) {
-          ra("You left the conversation.");
-        } else ra(s._("You removed {name} from the conversation.", [s.param("name", na(xa))]));
-      } else if (!ua || ua == qa.author) {
-        ra(s._("{actor} left the conversation.", [s.param("actor", na(wa))]));
-      } else if (ua == k.getID()) {
-        ra(s._("{actor} removed you from the conversation.", [s.param("actor", na(wa))]));
-      } else ra(s._("{actor} removed {name} from the conversation.", [s.param("actor", na(wa)), s.param("name", na(xa))]));
-    });
-  }
-
-  function da(qa, ra) {
-    if (pa(qa)) {
-      ea(qa, ra);
+  /**
+   * @param {?} node
+   * @param {Function} callback
+   * @return {undefined}
+   */
+  function handler(node, callback) {
+    if ($(node)) {
+      request(node, callback);
       return;
     }
-    var sa = qa.log_message_data.caller,
-      ta = qa.log_message_data.callee,
-      ua = [sa, ta];
-    m.getMulti(ua, function(va) {
-      var wa = ma(va[ta]);
-      if (sa == k.getID()) {
-        if (qa.log_message_data.answered) {
-          ra(s._("You called {firstname}.", [s.param("firstname", wa)]));
-        } else ra(s._("{firstname} missed a call from you.", [s.param("firstname", wa)]));
+    var ptr = node.log_message_data.caller;
+    var i = node.log_message_data.callee;
+    /** @type {Array} */
+    var titles = [ptr, i];
+    deck.getMulti(titles, function(buffer) {
+      var fn = next(buffer[i]);
+      if (ptr == a.getID()) {
+        if (node.log_message_data.answered) {
+          callback(item._("You called {firstname}.", [item.param("firstname", fn)]));
+        } else {
+          callback(item._("{firstname} missed a call from you.", [item.param("firstname", fn)]));
+        }
       } else {
-        var xa = ma(va[sa]);
-        if (qa.log_message_data.answered) {
-          ra(s._("{firstname} called you.", [s.param("firstname", xa)]));
-        } else ra(s._("You missed a call from {firstname}.", [s.param("firstname", xa)]));
+        var LEVEL_ACCESS = next(buffer[ptr]);
+        if (node.log_message_data.answered) {
+          callback(item._("{firstname} called you.", [item.param("firstname", LEVEL_ACCESS)]));
+        } else {
+          callback(item._("You missed a call from {firstname}.", [item.param("firstname", LEVEL_ACCESS)]));
+        }
       }
     });
   }
-
-  function ea(qa, ra) {
-    m.get(qa.log_message_data.callee, function(sa) {
-      var ta = ma(sa);
-      switch (qa.log_message_data.event_name) {
-        case 'installing':
-          ra(s._("{firstname} is setting up video calling...", [s.param("firstname", ta)]));
+  /**
+   * @param {?} dataAndEvents
+   * @param {Function} func
+   * @return {undefined}
+   */
+  function request(dataAndEvents, func) {
+    deck.get(dataAndEvents.log_message_data.callee, function(elem) {
+      var fn = next(elem);
+      switch(dataAndEvents.log_message_data.event_name) {
+        case "installing":
+          func(item._("{firstname} is setting up video calling...", [item.param("firstname", fn)]));
           break;
-        case 'installed':
-          ra(s._("{firstname} finished setting up video calling.", [s.param("firstname", ta)]));
+        case "installed":
+          func(item._("{firstname} finished setting up video calling.", [item.param("firstname", fn)]));
           break;
-        case 'install_canceled':
-          ra("You canceled the video calling installation.");
+        case "install_canceled":
+          func("You canceled the video calling installation.");
           break;
       }
     });
   }
-
-  function fa(qa, ra) {
-    ra(qa.log_message_body);
+  /**
+   * @param {Object} item
+   * @param {Function} frame
+   * @return {undefined}
+   */
+  function render(item, frame) {
+    frame(item.log_message_body);
   }
-
-  function ga(qa, ra) {
-    var sa = qa.log_message_data.caller,
-      ta = qa.log_message_data.callee,
-      ua = [sa, ta];
-    m.getMulti(ua, function(va) {
-      if (sa == k.getID()) {
-        var wa = ma(va[ta]);
-        if (qa.log_message_data.answered) {
-          ra(s._("You called {firstname}.", [s.param("firstname", wa)]));
-        } else ra(s._("{firstname} missed a call from you.", [s.param("firstname", wa)]));
+  /**
+   * @param {Object} message
+   * @param {Function} expr
+   * @return {undefined}
+   */
+  function log(message, expr) {
+    var ptr = message.log_message_data.caller;
+    var i = message.log_message_data.callee;
+    /** @type {Array} */
+    var titles = [ptr, i];
+    deck.getMulti(titles, function(buffer) {
+      if (ptr == a.getID()) {
+        var fn = next(buffer[i]);
+        if (message.log_message_data.answered) {
+          expr(item._("You called {firstname}.", [item.param("firstname", fn)]));
+        } else {
+          expr(item._("{firstname} missed a call from you.", [item.param("firstname", fn)]));
+        }
       } else {
-        var xa = ma(va[sa]);
-        if (qa.log_message_data.answered) {
-          ra(s._("{firstname} called you.", [s.param("firstname", xa)]));
-        } else ra(s._("You missed a call from {firstname}.", [s.param("firstname", xa)]));
+        var LEVEL_ACCESS = next(buffer[ptr]);
+        if (message.log_message_data.answered) {
+          expr(item._("{firstname} called you.", [item.param("firstname", LEVEL_ACCESS)]));
+        } else {
+          expr(item._("You missed a call from {firstname}.", [item.param("firstname", LEVEL_ACCESS)]));
+        }
       }
     });
   }
-
-  function ha(qa, ra) {
-    var sa = qa.log_message_data.name;
-    if (qa.author == k.getID()) {
-      if (sa) {
-        ra(s._("You named the conversation: {name}.", [s.param("name", n.createElement("span", {
-          className: "_5wzs"
-        }, n.createElement(p, {
-          renderEmoticons: true,
-          renderEmoji: true,
-          text: sa
+  /**
+   * @param {Object} data
+   * @param {Function} values
+   * @return {undefined}
+   */
+  function init(data, values) {
+    var v = data.log_message_data.name;
+    if (data.author == a.getID()) {
+      if (v) {
+        values(item._("You named the conversation: {name}.", [item.param("name", self.createElement("span", {
+          className : "_5wzs"
+        }, self.createElement(type, {
+          renderEmoticons : true,
+          renderEmoji : true,
+          text : v
         })))]));
-      } else ra("You removed the conversation name.");
-    } else m.get(qa.author, function(ta) {
-      var ua = na(ta);
-      if (sa) {
-        ra(s._("{actor} named the conversation: {name}.", [s.param("actor", ua), s.param("name", n.createElement("span", {
-          className: "_5wzs"
-        }, sa))]));
-      } else ra(s._("{actor} removed the conversation name.", [s.param("actor", ua)]));
-    });
+      } else {
+        values("You removed the conversation name.");
+      }
+    } else {
+      deck.get(data.author, function(context) {
+        var hash = fn(context);
+        if (v) {
+          values(item._("{actor} named the conversation: {name}.", [item.param("actor", hash), item.param("name", self.createElement("span", {
+            className : "_5wzs"
+          }, v))]));
+        } else {
+          values(item._("{actor} removed the conversation name.", [item.param("actor", hash)]));
+        }
+      });
+    }
   }
-
-  function ia(qa, ra) {
-    if (qa.author == k.getID()) {
-      if (qa.log_message_data.image) {
-        ra("You changed the conversation picture.");
-      } else ra("You removed the conversation picture.");
-    } else m.get(qa.author, function(sa) {
-      var ta = na(sa);
-      if (qa.log_message_data.image) {
-        ra(s._("{actor} changed the conversation picture.", [s.param("actor", ta)]));
-      } else ra(s._("{actor} removed the conversation picture.", [s.param("actor", ta)]));
-    });
+  /**
+   * @param {Object} data
+   * @param {Function} success
+   * @return {undefined}
+   */
+  function get(data, success) {
+    if (data.author == a.getID()) {
+      if (data.log_message_data.image) {
+        success("You changed the conversation picture.");
+      } else {
+        success("You removed the conversation picture.");
+      }
+    } else {
+      deck.get(data.author, function(context) {
+        var hash = fn(context);
+        if (data.log_message_data.image) {
+          success(item._("{actor} changed the conversation picture.", [item.param("actor", hash)]));
+        } else {
+          success(item._("{actor} removed the conversation picture.", [item.param("actor", hash)]));
+        }
+      });
+    }
   }
-
-  function ja(qa, ra) {
-    if (qa.author == k.getID()) {
-      ra("You changed the wallpaper.");
-    } else m.get(qa.author, function(sa) {
-      var ta = na(sa);
-      ra(s._("{actor} changed the wallpaper.", [s.param("actor", ta)]));
-    });
+  /**
+   * @param {Object} data
+   * @param {Function} cb
+   * @return {undefined}
+   */
+  function transform(data, cb) {
+    if (data.author == a.getID()) {
+      cb("You changed the wallpaper.");
+    } else {
+      deck.get(data.author, function(context) {
+        var hash = fn(context);
+        cb(item._("{actor} changed the wallpaper.", [item.param("actor", hash)]));
+      });
+    }
   }
-
-  function ka(qa, ra) {
-    ra("Couldn't find previous messages.");
+  /**
+   * @param {Object} title
+   * @param {Function} expect
+   * @return {undefined}
+   */
+  function test(title, expect) {
+    expect("Couldn't find previous messages.");
   }
-
-  function la(qa, ra) {
-    var sa = qa.log_message_data,
-      ta = sa.senderId,
-      ua = sa.receiverId,
-      va = ta === k.getID();
-    m.getMulti([ta, ua], function(wa) {
-      ra(n.createElement(u, n.__spread({}, sa, {
-        receiverParticipant: wa[ua],
-        senderParticipant: wa[ta],
-        viewerIsSender: va
+  /**
+   * @param {Object} text
+   * @param {Function} callback
+   * @return {undefined}
+   */
+  function template(text, callback) {
+    var data = text.log_message_data;
+    var i = data.senderId;
+    var param = data.receiverId;
+    /** @type {boolean} */
+    var isLast = i === a.getID();
+    deck.getMulti([i, param], function(urlParams) {
+      callback(self.createElement(name, self.__spread({}, data, {
+        receiverParticipant : urlParams[param],
+        senderParticipant : urlParams[i],
+        viewerIsSender : isLast
       })));
     });
   }
-
-  function ma(qa) {
-    return na(qa, true);
+  /**
+   * @param {(Object|string)} elem
+   * @return {?}
+   */
+  function next(elem) {
+    return fn(elem, true);
   }
-
-  function na(qa, ra) {
-    var sa = qa.fbid,
-      ta = j.constructEndpoint({
-        id: sa
-      });
-    if (qa.href) return (n.createElement("a", {
-      className: "_5wzt",
-      href: qa.href,
-      "data-hovercard": ta
-    }, ra ? qa.short_name : qa.name));
-    return qa.name;
-  }
-
-  function oa(qa) {
-    var ra = qa.indexOf(k.getID());
-    if (ra > 0) {
-      var sa = qa.filter(function(ta) {
-        return ta !== k.getID();
-      });
-      return [k.getID()].concat(sa);
-    }
-    return qa;
-  }
-
-  function pa(qa) {
-    return qa.log_message_data.event_name === 'installing' || qa.log_message_data.event_name === 'installed' || qa.log_message_data.event_name === 'install_canceled';
-  }
-}, null);
-__d("MercuryTypingReceiver", ["Arbiter", "ChannelConstants", "MercuryActionType", "MercuryIDs", "MercuryPayloadSource", "MercuryViewer", "TypingStates", "mixInEventEmitter", "setTimeoutAcrossTransitions", "MercuryServerRequests"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
-  var p = b('MercuryServerRequests').get(),
-    q, r = {},
-    s = 30000,
-    t = {};
-  n(t, {
-    'state-changed': true
-  });
-
-  function u(aa) {
-    var ba = r[aa] || {},
-      ca = Object.keys(ba);
-    ca.sort(function(da, ea) {
-      return ba[da] - ba[ea];
+  /**
+   * @param {(Object|string)} value
+   * @param {boolean} name
+   * @return {?}
+   */
+  function fn(value, name) {
+    var newId = value.fbid;
+    var data_hovercard = model.constructEndpoint({
+      id : newId
     });
-    return ca;
-  }
-
-  function v() {
-    q = null;
-    var aa = Date.now(),
-      ba = {},
-      ca = false;
-    for (var da in r) {
-      var ea = false;
-      for (var fa in r[da] || {})
-        if (r[da][fa] < aa - s) {
-          delete r[da][fa];
-          ea = true;
-        } else ca = true;
-      if (ea) ba[da] = u(da);
+    if (value.href) {
+      return self.createElement("a", {
+        className : "_5wzt",
+        href : value.href,
+        "data-hovercard" : data_hovercard
+      }, name ? value.short_name : value.name);
     }
-    for (var ga in ba) {
-      x(ba);
+    return value.name;
+  }
+  /**
+   * @param {Array} results
+   * @return {?}
+   */
+  function find(results) {
+    var ra = results.indexOf(a.getID());
+    if (ra > 0) {
+      var caseSensitive = results.filter(function(dataAndEvents) {
+        return dataAndEvents !== a.getID();
+      });
+      return[a.getID()].concat(caseSensitive);
+    }
+    return results;
+  }
+  /**
+   * @param {?} id
+   * @return {?}
+   */
+  function $(id) {
+    return id.log_message_data.event_name === "installing" || (id.log_message_data.event_name === "installed" || id.log_message_data.event_name === "install_canceled");
+  }
+  var name = require("OrionMercuryLogMessage").module;
+  var JsDiff = {
+    /**
+     * @param {Object} text
+     * @param {Function} data
+     * @return {undefined}
+     */
+    renderText : function(text, data) {
+      switch(text.log_message_type) {
+        case act.SUBSCRIBE:
+          show(text, data);
+          break;
+        case act.UNSUBSCRIBE:
+          finish(text, data);
+          break;
+        case act.VIDEO_CALL:
+          handler(text, data);
+          break;
+        case act.PHONE_CALL:
+          log(text, data);
+          break;
+        case act.THREAD_NAME:
+          init(text, data);
+          break;
+        case act.THREAD_IMAGE:
+          get(text, data);
+          break;
+        case act.WALLPAPER:
+          transform(text, data);
+          break;
+        case act.SERVER_ERROR:
+          test(text, data);
+          break;
+        case act.ORION:
+          if (name) {
+            template(text, data);
+          }
+          break;
+        case act.PAGE_REPLY:
+          render(text, data);
+          break;
+      }
+    },
+    /**
+     * @param {?} child
+     * @return {?}
+     */
+    renderIcon : function(child) {
+      return self.createElement(t, {
+        className : func(child),
+        src : $sanitize("images/spacer.gif")
+      });
+    },
+    /**
+     * @param {?} el
+     * @param {?} funcToCall
+     * @param {?} walkers
+     * @param {Object} text
+     * @return {undefined}
+     */
+    renderLegacy : function(el, funcToCall, walkers, text) {
+      func(text).split(" ").forEach(function(c) {
+        return c && me.addClass(el, c);
+      });
+      this.renderText(text, function(millis) {
+        self.render(self.createElement("span", null, millis), funcToCall);
+      });
+      this.renderAttachmentLegacy(walkers, text);
+    },
+    /**
+     * @param {?} obj
+     * @param {Object} item
+     * @return {undefined}
+     */
+    renderAttachmentLegacy : function(obj, item) {
+      if (item.log_message_type == act.THREAD_IMAGE) {
+        var image = item.log_message_data.image;
+        if (image) {
+          var root = dataAndEvents.renderPreview(image.preview_url ? image : null);
+          node.setContent(obj, root);
+          me.addClass(root, "_z6a");
+          me.show(obj);
+        }
+      }
+    }
+  };
+  module.exports = JsDiff;
+}, null);
+__d("MercuryTypingReceiver", ["Arbiter", "ChannelConstants", "MercuryActionType", "MercuryIDs", "MercuryPayloadSource", "MercuryViewer", "TypingStates", "mixInEventEmitter", "setTimeoutAcrossTransitions", "MercuryServerRequests"], function(deepDataAndEvents, nock, ignoreMethodDoesntExist, textAlt, module, keepData, exports, dataAndEvents, left, _, value, b, Socket, proceed, toString) {
+  /**
+   * @param {?} c
+   * @return {?}
+   */
+  function objectToString(c) {
+    var a = map[c] || {};
+    /** @type {Array.<string>} */
+    var ka = Object.keys(a);
+    ka.sort(function(p1, p2) {
+      return a[p1] - a[p2];
+    });
+    return ka;
+  }
+  /**
+   * @return {undefined}
+   */
+  function isArray() {
+    /** @type {null} */
+    str = null;
+    /** @type {number} */
+    var max = Date.now();
+    var a = {};
+    /** @type {boolean} */
+    var ca = false;
+    var e;
+    for (e in map) {
+      /** @type {boolean} */
+      var ea = false;
+      var id;
+      for (id in map[e] || {}) {
+        if (map[e][id] < max - min) {
+          delete map[e][id];
+          /** @type {boolean} */
+          ea = true;
+        } else {
+          /** @type {boolean} */
+          ca = true;
+        }
+      }
+      if (ea) {
+        a[e] = objectToString(e);
+      }
+    }
+    var prefix;
+    for (prefix in a) {
+      h(a);
       break;
     }
-    if (ca) q = o(v, 3000);
+    if (ca) {
+      str = toString(isArray, 3E3);
+    }
   }
-
-  function w(aa, ba) {
-    if (aa in r)
-      if (ba in r[aa]) {
-        delete r[aa][ba];
-        y(aa);
+  /**
+   * @param {?} type
+   * @param {?} id
+   * @return {undefined}
+   */
+  function has(type, id) {
+    if (type in map) {
+      if (id in map[type]) {
+        delete map[type][id];
+        HOP(type);
       }
+    }
   }
-
-  function x(aa) {
-    t.releaseHeldEventType('state-changed');
-    t.emitAndHold('state-changed', aa);
+  /**
+   * @param {?} e
+   * @return {undefined}
+   */
+  function h(e) {
+    element.releaseHeldEventType("state-changed");
+    element.emitAndHold("state-changed", e);
   }
-
-  function y(aa) {
-    var ba = {};
-    ba[aa] = u(aa);
-    x(ba);
+  /**
+   * @param {?} prop
+   * @return {undefined}
+   */
+  function HOP(prop) {
+    var originalEvent = {};
+    originalEvent[prop] = objectToString(prop);
+    h(originalEvent);
   }
-
-  function z(aa) {
-    if (aa.thread_fbid) return p.getClientThreadIDNow(aa.thread_fbid);
-    if (aa.type === 'typ') return j.getThreadIDFromUserID(aa.from);
+  /**
+   * @param {Object} obj
+   * @return {?}
+   */
+  function isUndefined(obj) {
+    if (obj.thread_fbid) {
+      return me.getClientThreadIDNow(obj.thread_fbid);
+    }
+    if (obj.type === "typ") {
+      return _.getThreadIDFromUserID(obj.from);
+    }
     return null;
   }
-  g.subscribe([h.getArbiterType('typ'), h.getArbiterType('ttyp')], function(aa, ba) {
-    var ca = ba.obj,
-      da = z(ca);
-    if (da) {
-      var ea = j.getParticipantIDFromUserID(ca.from);
-      if (ca.st == m.TYPING) {
-        r[da] = r[da] || {};
-        var fa = r[da][ea];
-        r[da][ea] = Date.now();
-        if (!q) q = o(v, 3000);
-        !fa && y(da);
-      } else if (ca.st == m.INACTIVE) w(da, ea);
+  var me = nock("MercuryServerRequests").get();
+  var str;
+  var map = {};
+  /** @type {number} */
+  var min = 3E4;
+  var element = {};
+  proceed(element, {
+    "state-changed" : true
+  });
+  exports.subscribe([dataAndEvents.getArbiterType("typ"), dataAndEvents.getArbiterType("ttyp")], function(dataAndEvents, req) {
+    var obj = req.obj;
+    var hash = isUndefined(obj);
+    if (hash) {
+      var id = _.getParticipantIDFromUserID(obj.from);
+      if (obj.st == Socket.TYPING) {
+        map[hash] = map[hash] || {};
+        var mod = map[hash][id];
+        /** @type {number} */
+        map[hash][id] = Date.now();
+        if (!str) {
+          str = toString(isArray, 3E3);
+        }
+        if (!mod) {
+          HOP(hash);
+        }
+      } else {
+        if (obj.st == Socket.INACTIVE) {
+          has(hash, id);
+        }
+      }
     }
   });
-  p.subscribe('update-typing-state', function(aa, ba) {
-    var ca = ba.payload_source;
-    if (ca != k.CLIENT_CHANNEL_MESSAGE) return;
-    var da = ba.actions;
-    if (!da || !da.length) return;
-    var ea = i.USER_GENERATED_MESSAGE;
-    da.forEach(function(fa) {
-      if (fa.action_type == ea && fa.author != l.getID()) w(fa.thread_id, fa.author);
+  me.subscribe("update-typing-state", function(dataAndEvents, cls) {
+    var len = cls.payload_source;
+    if (len != value.CLIENT_CHANNEL_MESSAGE) {
+      return;
+    }
+    var actions = cls.actions;
+    if (!actions || !actions.length) {
+      return;
+    }
+    var a = left.USER_GENERATED_MESSAGE;
+    actions.forEach(function(data) {
+      if (data.action_type == a && data.author != b.getID()) {
+        has(data.thread_id, data.author);
+      }
     });
   });
-  e.exports = t;
+  module.exports = element;
 }, null);
-__d("MercuryIndicatorController", ["ArbiterMixin", "DOM", "MercuryActionType", "MercuryDelayedRoger", "MercuryIDs", "MercuryMessageSourceTags", "MercuryParticipants", "MercuryRoger", "MercuryTypingReceiver", "MercuryViewer", "arrayContains", "copyProperties", "formatDate", "removeFromArray", "fbt", "MercuryThreads"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u) {
-  var v = b('MercuryThreads').get(),
-    w = [];
-
-  function x(y) {
-    this._threadID = y;
-    this._canonicalUser = k.getUserIDFromThreadID(y);
-    w.push(this);
+__d("MercuryIndicatorController", ["ArbiterMixin", "DOM", "MercuryActionType", "MercuryDelayedRoger", "MercuryIDs", "MercuryMessageSourceTags", "MercuryParticipants", "MercuryRoger", "MercuryTypingReceiver", "MercuryViewer", "arrayContains", "copyProperties", "formatDate", "removeFromArray", "fbt", "MercuryThreads"], function(ignoreMethodDoesntExist, nock, textAlt, keepData, module, opt_attributes, thisObj, domConstruct, a, left, rootjQuery, dataAndEvents, req, deepDataAndEvents, power, User, on,
+makeIterator, updateFunc, jQuery, self) {
+  /**
+   * @param {?} selector
+   * @return {undefined}
+   */
+  function filter(selector) {
+    this._threadID = selector;
+    this._canonicalUser = rootjQuery.getUserIDFromThreadID(selector);
+    scripts.push(this);
   }
-  r(x.prototype, g, {
-    destroy: function() {
-      t(w, this);
+  var _threadID = nock("MercuryThreads").get();
+  /** @type {Array} */
+  var scripts = [];
+  makeIterator(filter.prototype, thisObj, {
+    /**
+     * @return {undefined}
+     */
+    destroy : function() {
+      jQuery(scripts, this);
     },
-    setLastMessage: function(y) {
-      this._lastMsg = y;
+    /**
+     * @param {?} dataAndEvents
+     * @return {undefined}
+     */
+    setLastMessage : function(dataAndEvents) {
+      this._lastMsg = dataAndEvents;
       this._handleStateChange();
     },
-    _informStateChanged: function(y) {
-      if (y.activity == 'none' && this._currentActivity == 'none') return;
-      if (this._lastMsg && p.isViewer(this._lastMsg.author)) y.self_authored = true;
-      this._currentActivity = y.activity;
-      this.inform('state-changed', y);
-    },
-    _notifySentFrom: function() {
-      var y, z, aa = this._lastMsg.location_text,
-        ba = this._lastMsg.source_tags || [];
-      if (aa) {
-        y = u._("Sent from {location}", [u.param("location", aa)]);
-        z = 'sentFromMobile';
-      } else if (q(ba, l.MESSENGER)) {
-        y = h.create('a', {
-          href: '/mobile/messenger',
-          'class': 'fcg',
-          target: '_blank'
-        }, "Sent from Messenger");
-        z = 'sentFromMobile';
-      } else if (q(ba, l.MOBILE)) {
-        y = h.create('a', {
-          href: '/mobile',
-          'class': 'fcg',
-          target: '_blank'
-        }, "Sent from Mobile");
-        z = 'sentFromMobile';
-      } else if (q(ba, l.EMAIL)) {
-        y = "Sent from email";
-        z = 'sentFromEmail';
-      } else {
-        this._informStateChanged({
-          activity: 'none'
-        });
+    /**
+     * @param {?} opt_attributes
+     * @return {undefined}
+     */
+    _informStateChanged : function(opt_attributes) {
+      if (opt_attributes.activity == "none" && this._currentActivity == "none") {
         return;
       }
-      this._informStateChanged({
-        activity: z,
-        text: y
-      });
+      if (this._lastMsg && User.isViewer(this._lastMsg.author)) {
+        /** @type {boolean} */
+        opt_attributes.self_authored = true;
+      }
+      this._currentActivity = opt_attributes.activity;
+      this.inform("state-changed", opt_attributes);
     },
-    _notifySeenTimestamp: function(y) {
-      var z = n.getSeenTimestamp(this._threadID, y[0]) * .001,
-        aa = Date.now() * .001,
-        ba;
-      if (z < aa - 518400) {
-        ba = 'M j';
-      } else if (z < aa - 86400) {
-        ba = 'D g:ia';
-      } else ba = 'g:ia';
-      this._informStateChanged({
-        activity: 'seen-timestamp',
-        text: u._("Seen {timestamp}", [u.param("timestamp", s(z, ba))])
-      });
-    },
-    _nameNormalizer: function(y) {
-      var z;
-      m.getMulti(y, function(aa) {
-        function ba(da) {
-          if (aa[da] !== (void 0)) {
-            return aa[da].short_name.toLowerCase();
-          } else return da;
+    /**
+     * @return {undefined}
+     */
+    _notifySentFrom : function() {
+      var v;
+      var activity;
+      var fn = this._lastMsg.location_text;
+      var failuresLink = this._lastMsg.source_tags || [];
+      if (fn) {
+        v = self._("Sent from {location}", [self.param("location", fn)]);
+        /** @type {string} */
+        activity = "sentFromMobile";
+      } else {
+        if (on(failuresLink, dataAndEvents.MESSENGER)) {
+          v = domConstruct.create("a", {
+            href : "/mobile/messenger",
+            "class" : "fcg",
+            target : "_blank"
+          }, "Sent from Messenger");
+          /** @type {string} */
+          activity = "sentFromMobile";
+        } else {
+          if (on(failuresLink, dataAndEvents.MOBILE)) {
+            v = domConstruct.create("a", {
+              href : "/mobile",
+              "class" : "fcg",
+              target : "_blank"
+            }, "Sent from Mobile");
+            /** @type {string} */
+            activity = "sentFromMobile";
+          } else {
+            if (on(failuresLink, dataAndEvents.EMAIL)) {
+              /** @type {string} */
+              v = "Sent from email";
+              /** @type {string} */
+              activity = "sentFromEmail";
+            } else {
+              this._informStateChanged({
+                activity : "none"
+              });
+              return;
+            }
+          }
         }
-        var ca = y.map(ba);
-        z = function(da) {
-          var ea = ba(da),
-            fa = ca.indexOf(ea) !== ca.lastIndexOf(ea);
-          return fa ? aa[da].name : aa[da].short_name;
+      }
+      this._informStateChanged({
+        activity : activity,
+        text : v
+      });
+    },
+    /**
+     * @param {Array} v12
+     * @return {undefined}
+     */
+    _notifySeenTimestamp : function(v12) {
+      /** @type {number} */
+      var i = deepDataAndEvents.getSeenTimestamp(this._threadID, v12[0]) * 0.001;
+      /** @type {number} */
+      var length = Date.now() * 0.001;
+      var progressContexts;
+      if (i < length - 518400) {
+        /** @type {string} */
+        progressContexts = "M j";
+      } else {
+        if (i < length - 86400) {
+          /** @type {string} */
+          progressContexts = "D g:ia";
+        } else {
+          /** @type {string} */
+          progressContexts = "g:ia";
+        }
+      }
+      this._informStateChanged({
+        activity : "seen-timestamp",
+        text : self._("Seen {timestamp}", [self.param("timestamp", updateFunc(i, progressContexts))])
+      });
+    },
+    /**
+     * @param {Array} deps
+     * @return {?}
+     */
+    _nameNormalizer : function(deps) {
+      var onError;
+      req.getMulti(deps, function(paramNames) {
+        /**
+         * @param {?} p
+         * @return {?}
+         */
+        function require(p) {
+          if (paramNames[p] !== void 0) {
+            return paramNames[p].short_name.toLowerCase();
+          } else {
+            return p;
+          }
+        }
+        var ret = deps.map(require);
+        /**
+         * @param {?} p
+         * @return {?}
+         */
+        onError = function(p) {
+          var nodes = require(p);
+          /** @type {boolean} */
+          var parentModuleMap = ret.indexOf(nodes) !== ret.lastIndexOf(nodes);
+          return parentModuleMap ? paramNames[p].name : paramNames[p].short_name;
         };
       });
-      return z;
+      return onError;
     },
-    _notifySeenBy: function(y) {
-      var z = this._lastMsg,
-        aa = true;
-      m.getMulti(y, function(ba) {
+    /**
+     * @param {Array} keys
+     * @return {undefined}
+     */
+    _notifySeenBy : function(keys) {
+      var message = this._lastMsg;
+      /** @type {boolean} */
+      var aa = true;
+      req.getMulti(keys, function(docs) {
+        /** @type {boolean} */
         aa = false;
-        if (this._lastMsg != z) return;
-        var ca = v.getThreadMetaNow(this._threadID),
-          da = ca ? ca.participants.length : 0,
-          ea = y.length + (z.author != p.getID()),
-          fa, ga = false,
-          ha = da > 2 && ea >= da - 1,
-          ia;
-        if (ca) ia = this._nameNormalizer(ca.participants);
-        if (!ia) ia = function(ma) {
-          return ba[ma].short_name;
-        };
+        if (this._lastMsg != message) {
+          return;
+        }
+        var collection = _threadID.getThreadMetaNow(this._threadID);
+        var length = collection ? collection.participants.length : 0;
+        var endIdx = keys.length + (message.author != User.getID());
+        var ch;
+        /** @type {boolean} */
+        var tooltip = false;
+        /** @type {boolean} */
+        var ha = length > 2 && endIdx >= length - 1;
+        var prevUntil;
+        if (collection) {
+          prevUntil = this._nameNormalizer(collection.participants);
+        }
+        if (!prevUntil) {
+          /**
+           * @param {number} i
+           * @return {?}
+           */
+          prevUntil = function(i) {
+            return docs[i].short_name;
+          };
+        }
         if (ha) {
-          fa = "Seen by everyone";
-        } else if (y.length == 1) {
-          fa = u._("Seen by {user}", [u.param("user", ba[y[0]].short_name)]);
-        } else if (y.length == 2) {
-          fa = u._("Seen by {user1}, {user2}", [u.param("user1", ba[y[0]].short_name), u.param("user2", ba[y[1]].short_name)]);
-        } else if (y.length == 3) {
-          fa = u._("Seen by {user1}, {user2}, {user3}", [u.param("user1", ba[y[0]].short_name), u.param("user2", ba[y[1]].short_name), u.param("user3", ba[y[2]].short_name)]);
-        } else if (y.length > 3) {
-          var ja = Object.keys(ba).length - 2,
-            ka = u._("{num} more", [u.param("num", ja)]),
-            la = h.create('span', {
-              className: 'more'
-            }, ka);
-          fa = u._("Seen by {user1}, {user2}, {=num more link}", [u.param("user1", ba[y[0]].short_name), u.param("user2", ba[y[1]].short_name), u.param("=num more link", la)]);
-          ga = true;
+          /** @type {string} */
+          ch = "Seen by everyone";
+        } else {
+          if (keys.length == 1) {
+            ch = self._("Seen by {user}", [self.param("user", docs[keys[0]].short_name)]);
+          } else {
+            if (keys.length == 2) {
+              ch = self._("Seen by {user1}, {user2}", [self.param("user1", docs[keys[0]].short_name), self.param("user2", docs[keys[1]].short_name)]);
+            } else {
+              if (keys.length == 3) {
+                ch = self._("Seen by {user1}, {user2}, {user3}", [self.param("user1", docs[keys[0]].short_name), self.param("user2", docs[keys[1]].short_name), self.param("user3", docs[keys[2]].short_name)]);
+              } else {
+                if (keys.length > 3) {
+                  /** @type {number} */
+                  var fn = Object.keys(docs).length - 2;
+                  var p = self._("{num} more", [self.param("num", fn)]);
+                  var ret = domConstruct.create("span", {
+                    className : "more"
+                  }, p);
+                  ch = self._("Seen by {user1}, {user2}, {=num more link}", [self.param("user1", docs[keys[0]].short_name), self.param("user2", docs[keys[1]].short_name), self.param("=num more link", ret)]);
+                  /** @type {boolean} */
+                  tooltip = true;
+                }
+              }
+            }
+          }
         }
         this._informStateChanged({
-          activity: 'seen-by',
-          text: fa,
-          seenBy: y,
-          tooltip: ga
+          activity : "seen-by",
+          text : ch,
+          seenBy : keys,
+          tooltip : tooltip
         });
       }.bind(this));
-      aa && this._informStateChanged({
-        activity: 'none'
-      });
+      if (aa) {
+        this._informStateChanged({
+          activity : "none"
+        });
+      }
     },
-    _notifyTyping: function(y) {
-      var z = this._lastMsg,
-        aa = true;
-      m.getMulti(y, function(ba) {
+    /**
+     * @param {Array} keys
+     * @return {undefined}
+     */
+    _notifyTyping : function(keys) {
+      var message = this._lastMsg;
+      /** @type {boolean} */
+      var aa = true;
+      req.getMulti(keys, function(docs) {
+        /** @type {boolean} */
         aa = false;
-        if (this._lastMsg != z) return;
-        var ca = v.getThreadMetaNow(this._threadID),
-          da = ca ? ca.participants.length : 0,
-          ea;
-        if (ca) ea = this._nameNormalizer(ca.participants);
-        if (!ea) ea = function(ka) {
-          return ba[ka].short_name;
-        };
-        var fa, ga = false;
-        if (da > 2 && y.length >= da - 1) {
-          fa = "Everyone is typing...";
-        } else if (y.length == 1) {
-          fa = u._("{name} is typing...", [u.param("name", ba[y[0]].short_name)]);
-        } else if (y.length == 2) {
-          fa = u._("{user1} and {user2} are typing...", [u.param("user1", ba[y[0]].short_name), u.param("user2", ba[y[1]].short_name)]);
-        } else if (y.length == 3) {
-          fa = u._("{user1}, {user2}, and {user3} are typing...", [u.param("user1", ba[y[0]].short_name), u.param("user2", ba[y[1]].short_name), u.param("user3", ba[y[2]].short_name)]);
-        } else if (y.length > 3) {
-          var ha = Object.keys(ba).length - 2,
-            ia = u._("{num} more", [u.param("num", ha)]),
-            ja = h.create('a', {
-              href: '#'
-            }, ia);
-          fa = u._("{user1}, {user2}, and {=num more link} are typing...", [u.param("user1", ba[y[0]].short_name), u.param("user2", ba[y[1]].short_name), u.param("=num more link", ja)]);
-          ga = true;
+        if (this._lastMsg != message) {
+          return;
+        }
+        var collection = _threadID.getThreadMetaNow(this._threadID);
+        var length = collection ? collection.participants.length : 0;
+        var prevUntil;
+        if (collection) {
+          prevUntil = this._nameNormalizer(collection.participants);
+        }
+        if (!prevUntil) {
+          /**
+           * @param {number} i
+           * @return {?}
+           */
+          prevUntil = function(i) {
+            return docs[i].short_name;
+          };
+        }
+        var ch;
+        /** @type {boolean} */
+        var tooltip = false;
+        if (length > 2 && keys.length >= length - 1) {
+          /** @type {string} */
+          ch = "Everyone is typing...";
+        } else {
+          if (keys.length == 1) {
+            ch = self._("{name} is typing...", [self.param("name", docs[keys[0]].short_name)]);
+          } else {
+            if (keys.length == 2) {
+              ch = self._("{user1} and {user2} are typing...", [self.param("user1", docs[keys[0]].short_name), self.param("user2", docs[keys[1]].short_name)]);
+            } else {
+              if (keys.length == 3) {
+                ch = self._("{user1}, {user2}, and {user3} are typing...", [self.param("user1", docs[keys[0]].short_name), self.param("user2", docs[keys[1]].short_name), self.param("user3", docs[keys[2]].short_name)]);
+              } else {
+                if (keys.length > 3) {
+                  /** @type {number} */
+                  var funcToCall = Object.keys(docs).length - 2;
+                  var childRow = self._("{num} more", [self.param("num", funcToCall)]);
+                  var fn = domConstruct.create("a", {
+                    href : "#"
+                  }, childRow);
+                  ch = self._("{user1}, {user2}, and {=num more link} are typing...", [self.param("user1", docs[keys[0]].short_name), self.param("user2", docs[keys[1]].short_name), self.param("=num more link", fn)]);
+                  /** @type {boolean} */
+                  tooltip = true;
+                }
+              }
+            }
+          }
         }
         this._informStateChanged({
-          activity: 'typing',
-          text: fa,
-          typing: y,
-          tooltip: ga
+          activity : "typing",
+          text : ch,
+          typing : keys,
+          tooltip : tooltip
         });
       }.bind(this));
-      aa && this._informStateChanged({
-        activity: 'none'
-      });
-    },
-    _handleStateChange: function() {
-      var y = i.LOG_MESSAGE;
-      if (!this._lastMsg || this._lastMsg.action_type == y) {
+      if (aa) {
         this._informStateChanged({
-          activity: 'none'
+          activity : "none"
+        });
+      }
+    },
+    /**
+     * @return {undefined}
+     */
+    _handleStateChange : function() {
+      var al = a.LOG_MESSAGE;
+      if (!this._lastMsg || this._lastMsg.action_type == al) {
+        this._informStateChanged({
+          activity : "none"
         });
         return;
       }
@@ -5977,2477 +8986,3852 @@ __d("MercuryIndicatorController", ["ArbiterMixin", "DOM", "MercuryActionType", "
         this._notifyTyping(this._typing);
         return;
       }
-      if (this._canonicalUser && this._lastMsg.author != p.getID()) {
+      if (this._canonicalUser && this._lastMsg.author != User.getID()) {
         this._notifySentFrom();
         return;
       }
-      var z = j.getSeenBy(this._threadID, true);
-      if (z.length)
+      var b = left.getSeenBy(this._threadID, true);
+      if (b.length) {
         if (this._canonicalUser) {
-          this._notifySeenTimestamp(z);
+          this._notifySeenTimestamp(b);
           return;
         } else {
-          this._notifySeenBy(z);
+          this._notifySeenBy(b);
           return;
         }
+      }
       this._informStateChanged({
-        activity: 'none'
+        activity : "none"
       });
     }
   });
-  o.addRetroactiveListener('state-changed', function(y) {
-    w.forEach(function(z) {
-      var aa = y[z._threadID];
-      if (aa !== (void 0)) {
-        z._typing = aa;
-        z._handleStateChange();
+  power.addRetroactiveListener("state-changed", function(pair) {
+    scripts.forEach(function(element) {
+      var value = pair[element._threadID];
+      if (value !== void 0) {
+        element._typing = value;
+        element._handleStateChange();
       }
     });
   });
-  j.subscribe('state-changed', function(y, z) {
-    w.forEach(function(aa) {
-      z[aa._threadID] && aa._handleStateChange();
+  left.subscribe("state-changed", function(dataAndEvents, deepDataAndEvents) {
+    scripts.forEach(function(dataAndEvents) {
+      if (deepDataAndEvents[dataAndEvents._threadID]) {
+        dataAndEvents._handleStateChange();
+      }
     });
   });
-  e.exports = x;
+  /** @type {function (?): undefined} */
+  module.exports = filter;
 }, null);
-__d("MercuryLastMessageIndicator.react", ["DOM", "MercuryIndicatorController", "MercuryParticipants", "ReactPropTypes", "React", "Tooltip", "cx", "emptyFunction", "joinClasses"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
-  var p = k.createClass({
-    displayName: "MercuryLastMessageIndicator",
-    propTypes: {
-      hideTyping: j.bool,
-      indicatorWillShow: j.func,
-      indicatorDidShow: j.func,
-      lastMessage: j.object,
-      threadID: j.string.isRequired
+__d("MercuryLastMessageIndicator.react", ["DOM", "MercuryIndicatorController", "MercuryParticipants", "ReactPropTypes", "React", "Tooltip", "cx", "emptyFunction", "joinClasses"], function(ignoreMethodDoesntExist, textAlt, keepData, opt_attributes, module, matcherFunction, self, ResourceList, dataAndEvents, node, dh, data_user, execResult, deepDataAndEvents, on) {
+  var JsDiff = dh.createClass({
+    displayName : "MercuryLastMessageIndicator",
+    propTypes : {
+      hideTyping : node.bool,
+      indicatorWillShow : node.func,
+      indicatorDidShow : node.func,
+      lastMessage : node.object,
+      threadID : node.string.isRequired
     },
-    getDefaultProps: function() {
-      return {
-        indicatorWillShow: n,
-        indicatorDidShow: n
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        indicatorWillShow : deepDataAndEvents,
+        indicatorDidShow : deepDataAndEvents
       };
     },
-    getInitialState: function() {
-      return {
-        data: {}
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      return{
+        data : {}
       };
     },
-    componentDidMount: function() {
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
       this._setup(this.props);
     },
-    componentWillReceiveProps: function(q) {
-      if (q.threadID != this.props.threadID) {
+    /**
+     * @param {?} deepDataAndEvents
+     * @return {undefined}
+     */
+    componentWillReceiveProps : function(deepDataAndEvents) {
+      if (deepDataAndEvents.threadID != this.props.threadID) {
         this._destroy();
-        this._setup(q);
-      } else if (q.lastMessage != this.props.lastMessage) this._controller.setLastMessage(q.lastMessage);
+        this._setup(deepDataAndEvents);
+      } else {
+        if (deepDataAndEvents.lastMessage != this.props.lastMessage) {
+          this._controller.setLastMessage(deepDataAndEvents.lastMessage);
+        }
+      }
     },
-    componentWillUpdate: function(q, r) {
-      if (this.isVisible(q, r)) this.props.indicatorWillShow();
+    /**
+     * @param {Object} deepDataAndEvents
+     * @param {Object} doc
+     * @return {undefined}
+     */
+    componentWillUpdate : function(deepDataAndEvents, doc) {
+      if (this.isVisible(deepDataAndEvents, doc)) {
+        this.props.indicatorWillShow();
+      }
     },
-    componentDidUpdate: function() {
-      if (!this.isVisible()) return;
+    /**
+     * @return {undefined}
+     */
+    componentDidUpdate : function() {
+      if (!this.isVisible()) {
+        return;
+      }
       this.setText();
       this.setTooltip();
       this.props.indicatorDidShow();
     },
-    componentWillUnmount: function() {
+    /**
+     * @return {undefined}
+     */
+    componentWillUnmount : function() {
       this._destroy();
     },
-    render: function() {
-      return (k.createElement("div", {
-        className: this.getRootClass()
-      }, k.createElement("div", {
-        className: "_510h"
-      }), k.createElement("span", {
-        className: "_510f",
-        ref: "text"
-      }, " ")));
+    /**
+     * @return {?}
+     */
+    render : function() {
+      return dh.createElement("div", {
+        className : this.getRootClass()
+      }, dh.createElement("div", {
+        className : "_510h"
+      }), dh.createElement("span", {
+        className : "_510f",
+        ref : "text"
+      }, "\u00a0"));
     },
-    getRootClass: function() {
-      var q = (("_510g") + (this.state.data.self_authored ? ' ' + "_510e" : '')),
-        r = this.state.data.activity,
-        s = null;
-      if (String(r).startsWith('seen')) {
-        s = 'seen';
-      } else if (r == 'typing') {
-        s = this.props.hideTyping ? null : r;
-      } else s = r;
-      return o(q, s, this.props.className);
+    /**
+     * @return {?}
+     */
+    getRootClass : function() {
+      /** @type {string} */
+      var failuresLink = "_510g" + (this.state.data.self_authored ? " " + "_510e" : "");
+      var e = this.state.data.activity;
+      /** @type {null} */
+      var error = null;
+      if (String(e).startsWith("seen")) {
+        /** @type {string} */
+        error = "seen";
+      } else {
+        if (e == "typing") {
+          error = this.props.hideTyping ? null : e;
+        } else {
+          error = e;
+        }
+      }
+      return on(failuresLink, error, this.props.className);
     },
-    isVisible: function(q, r) {
-      q = q || this.props;
-      r = r || this.state;
-      return (r.data && r.data.activity != 'none' && !(q.hideTyping && r.data.activity == 'typing'));
+    /**
+     * @param {Object} deepDataAndEvents
+     * @param {Object} state
+     * @return {?}
+     */
+    isVisible : function(deepDataAndEvents, state) {
+      deepDataAndEvents = deepDataAndEvents || this.props;
+      state = state || this.state;
+      return state.data && (state.data.activity != "none" && !(deepDataAndEvents.hideTyping && state.data.activity == "typing"));
     },
-    setText: function() {
-      if (this.state.data.text) g.setContent(this.refs.text.getDOMNode(), this.state.data.text);
+    /**
+     * @return {undefined}
+     */
+    setText : function() {
+      if (this.state.data.text) {
+        self.setContent(this.refs.text.getDOMNode(), this.state.data.text);
+      }
     },
-    setTooltip: function() {
-      if (this.state.data.activity == 'seen-by' && this.state.data.tooltip) i.getMulti(this.state.data.seenBy, function(q) {
-        var r = g.create('div', null, this.state.data.seenBy.map(function(s) {
-          return g.create('div', null, q[s].name);
-        }));
-        l.set(g.find(this.getDOMNode(), 'span.more'), r, 'above', 'center');
-      }.bind(this));
+    /**
+     * @return {undefined}
+     */
+    setTooltip : function() {
+      if (this.state.data.activity == "seen-by" && this.state.data.tooltip) {
+        dataAndEvents.getMulti(this.state.data.seenBy, function(scripts) {
+          var udataCur = self.create("div", null, this.state.data.seenBy.map(function(path) {
+            return self.create("div", null, scripts[path].name);
+          }));
+          data_user.set(self.find(this.getDOMNode(), "span.more"), udataCur, "above", "center");
+        }.bind(this));
+      }
     },
-    _setup: function(q) {
-      this._controller = new h(q.threadID);
-      this._subscription = this._controller.subscribe('state-changed', function(r, s) {
+    /**
+     * @param {?} deepDataAndEvents
+     * @return {undefined}
+     */
+    _setup : function(deepDataAndEvents) {
+      this._controller = new ResourceList(deepDataAndEvents.threadID);
+      this._subscription = this._controller.subscribe("state-changed", function(dataAndEvents, task) {
         return this.setState({
-          data: s
+          data : task
         });
       }.bind(this));
-      q.lastMessage && this._controller.setLastMessage(q.lastMessage);
+      if (deepDataAndEvents.lastMessage) {
+        this._controller.setLastMessage(deepDataAndEvents.lastMessage);
+      }
     },
-    _destroy: function() {
+    /**
+     * @return {undefined}
+     */
+    _destroy : function() {
       this._subscription.unsubscribe();
       this._controller.destroy();
     }
   });
-  e.exports = p;
+  module.exports = JsDiff;
 }, null);
-__d("StickersDispatcher", ["Dispatcher", "StickerConstants", "copyProperties", "merge"], function(a, b, c, d, e, f, g, h, i, j) {
-  'use strict';
-  var k = i(new g(), {
-    _handleUpdate: function(l, m) {
-      var n = j({
-        payloadSource: l
-      }, m);
-      this.dispatch(n);
+__d("StickersDispatcher", ["Dispatcher", "StickerConstants", "copyProperties", "merge"], function(ignoreMethodDoesntExist, textAlt, keepData, opt_attributes, module, matcherFunction, deepDataAndEvents, dataAndEvents, topic, iterator) {
+  var out = topic(new deepDataAndEvents, {
+    /**
+     * @param {?} dataAndEvents
+     * @param {?} index
+     * @return {undefined}
+     */
+    _handleUpdate : function(dataAndEvents, index) {
+      var key = iterator({
+        payloadSource : dataAndEvents
+      }, index);
+      this.dispatch(key);
     },
-    handleUpdateFromViewActions: function(l) {
-      this._handleUpdate(h.PayloadSource.VIEW_ACTION, l);
+    /**
+     * @param {?} opt_attributes
+     * @return {undefined}
+     */
+    handleUpdateFromViewActions : function(opt_attributes) {
+      this._handleUpdate(dataAndEvents.PayloadSource.VIEW_ACTION, opt_attributes);
     }
   });
-  e.exports = k;
+  module.exports = out;
 }, null);
-__d("StickerActions", ["BanzaiLogger", "StickerConstants", "StickersDispatcher"], function(a, b, c, d, e, f, g, h, i) {
-  'use strict';
-  var j = {
-    addPack: function(k) {
-      i.handleUpdateFromViewActions({
-        actions: [{
-          actionType: h.ActionTypes.ADD_PACK,
-          packID: k
+__d("StickerActions", ["BanzaiLogger", "StickerConstants", "StickersDispatcher"], function(dataAndEvents, textAlt, keepData, opt_attributes, module, matcherFunction, logger, deepDataAndEvents, ignoreMethodDoesntExist) {
+  var JsDiff = {
+    /**
+     * @param {number} dataAndEvents
+     * @return {undefined}
+     */
+    addPack : function(dataAndEvents) {
+      ignoreMethodDoesntExist.handleUpdateFromViewActions({
+        actions : [{
+          actionType : deepDataAndEvents.ActionTypes.ADD_PACK,
+          packID : dataAndEvents
         }]
       });
     },
-    removePack: function(k) {
-      i.handleUpdateFromViewActions({
-        actions: [{
-          actionType: h.ActionTypes.REMOVE_PACK,
-          packID: k
+    /**
+     * @param {?} dataAndEvents
+     * @return {undefined}
+     */
+    removePack : function(dataAndEvents) {
+      ignoreMethodDoesntExist.handleUpdateFromViewActions({
+        actions : [{
+          actionType : deepDataAndEvents.ActionTypes.REMOVE_PACK,
+          packID : dataAndEvents
         }]
       });
     },
-    selectPack: function(k, l) {
-      if (!l) g.log('StickersLoggerConfig', {
-        event: 'select_pack',
-        packid: k
-      });
-      i.handleUpdateFromViewActions({
-        actions: [{
-          actionType: h.ActionTypes.SELECT_PACK,
-          packID: k
+    /**
+     * @param {number} dataAndEvents
+     * @param {boolean} keepData
+     * @return {undefined}
+     */
+    selectPack : function(dataAndEvents, keepData) {
+      if (!keepData) {
+        logger.log("StickersLoggerConfig", {
+          event : "select_pack",
+          packid : dataAndEvents
+        });
+      }
+      ignoreMethodDoesntExist.handleUpdateFromViewActions({
+        actions : [{
+          actionType : deepDataAndEvents.ActionTypes.SELECT_PACK,
+          packID : dataAndEvents
         }]
       });
     },
-    resetNumNewPacks: function() {
-      i.handleUpdateFromViewActions({
-        actions: [{
-          actionType: h.ActionTypes.RESET_NUM_NEW_PACKS
+    /**
+     * @return {undefined}
+     */
+    resetNumNewPacks : function() {
+      ignoreMethodDoesntExist.handleUpdateFromViewActions({
+        actions : [{
+          actionType : deepDataAndEvents.ActionTypes.RESET_NUM_NEW_PACKS
         }]
       });
     }
   };
-  e.exports = j;
+  module.exports = JsDiff;
 }, null);
-__d("AbstractDialogFitHeight", ["CSS", "DOM", "Event", "Style", "SubscriptionsHandler", "Vector", "csx", "cx", "throttle"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
-  var p = 450,
-    q = 100,
-    r = 67,
-    s = 67;
-
-  function t(u) {
-    "use strict";
-    this.$AbstractDialogFitHeight0 = u;
+__d("AbstractDialogFitHeight", ["CSS", "DOM", "Event", "Style", "SubscriptionsHandler", "Vector", "csx", "cx", "throttle"], function(ignoreMethodDoesntExist, textAlt, keepData, opt_attributes, module, matcherFunction, $animate, execResult, m, domStyle, dataAndEvents, deepDataAndEvents, opt_keys, positionError, done) {
+  /**
+   * @param {string} topic
+   * @return {undefined}
+   */
+  function exp(topic) {
+    /** @type {string} */
+    this.$AbstractDialogFitHeight0 = topic;
   }
-  t.prototype.enable = function() {
-    "use strict";
-    this.$AbstractDialogFitHeight1 = new k();
-    this.$AbstractDialogFitHeight1.addSubscriptions(this.$AbstractDialogFitHeight0.subscribe('beforeshow', this.$AbstractDialogFitHeight2.bind(this)), i.listen(window, 'resize', o(this.$AbstractDialogFitHeight2.bind(this))));
-    this.$AbstractDialogFitHeight3 = h.find(this.$AbstractDialogFitHeight0.getRoot(), "._4-i2");
-    g.addClass(this.$AbstractDialogFitHeight3, "_5pfh");
-    this.$AbstractDialogFitHeight4 = q;
-    if (h.scry(this.$AbstractDialogFitHeight0.getRoot(), "._4-i0").length) this.$AbstractDialogFitHeight4 += r;
-    if (h.scry(this.$AbstractDialogFitHeight0.getRoot(), "._5a8u").length) this.$AbstractDialogFitHeight4 += s;
+  /** @type {number} */
+  var expectedHashCode = 450;
+  /** @type {number} */
+  var $AbstractDialogFitHeight4 = 100;
+  /** @type {number} */
+  var r = 67;
+  /** @type {number} */
+  var s = 67;
+  /**
+   * @return {undefined}
+   */
+  exp.prototype.enable = function() {
+    this.$AbstractDialogFitHeight1 = new dataAndEvents;
+    this.$AbstractDialogFitHeight1.addSubscriptions(this.$AbstractDialogFitHeight0.subscribe("beforeshow", this.$AbstractDialogFitHeight2.bind(this)), m.listen(window, "resize", done(this.$AbstractDialogFitHeight2.bind(this))));
+    this.$AbstractDialogFitHeight3 = execResult.find(this.$AbstractDialogFitHeight0.getRoot(), "._4-i2");
+    $animate.addClass(this.$AbstractDialogFitHeight3, "_5pfh");
+    /** @type {number} */
+    this.$AbstractDialogFitHeight4 = $AbstractDialogFitHeight4;
+    if (execResult.scry(this.$AbstractDialogFitHeight0.getRoot(), "._4-i0").length) {
+      this.$AbstractDialogFitHeight4 += r;
+    }
+    if (execResult.scry(this.$AbstractDialogFitHeight0.getRoot(), "._5a8u").length) {
+      this.$AbstractDialogFitHeight4 += s;
+    }
   };
-  t.prototype.disable = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  exp.prototype.disable = function() {
     this.$AbstractDialogFitHeight1.release();
+    /** @type {null} */
     this.$AbstractDialogFitHeight1 = null;
-    g.removeClass(this.$AbstractDialogFitHeight3, "_5pfh");
+    $animate.removeClass(this.$AbstractDialogFitHeight3, "_5pfh");
   };
-  t.prototype.$AbstractDialogFitHeight2 = function() {
-    "use strict";
-    var u = l.getViewportDimensions().y,
-      v = u - this.$AbstractDialogFitHeight4;
-    j.set(this.$AbstractDialogFitHeight3, this.getHeightProperty(), Math.max(p, v) + 'px');
+  /**
+   * @return {undefined}
+   */
+  exp.prototype.$AbstractDialogFitHeight2 = function() {
+    var cnl = deepDataAndEvents.getViewportDimensions().y;
+    /** @type {number} */
+    var x = cnl - this.$AbstractDialogFitHeight4;
+    domStyle.set(this.$AbstractDialogFitHeight3, this.getHeightProperty(), Math.max(expectedHashCode, x) + "px");
     this.$AbstractDialogFitHeight0.updatePosition();
   };
-  e.exports = t;
+  /** @type {function (string): undefined} */
+  module.exports = exp;
 }, null);
-__d("DialogFitHeight", ["AbstractDialogFitHeight"], function(a, b, c, d, e, f, g) {
-  for (var h in g)
-    if (g.hasOwnProperty(h)) j[h] = g[h];
-  var i = g === null ? null : g.prototype;
-  j.prototype = Object.create(i);
-  j.prototype.constructor = j;
-  j.__superConstructor__ = g;
-
-  function j() {
-    "use strict";
-    if (g !== null) g.apply(this, arguments);
+__d("DialogFitHeight", ["AbstractDialogFitHeight"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, b) {
+  /**
+   * @return {undefined}
+   */
+  function a() {
+    if (b !== null) {
+      b.apply(this, arguments);
+    }
   }
-  j.prototype.getHeightProperty = function() {
-    "use strict";
-    return 'height';
+  var i;
+  for (i in b) {
+    if (b.hasOwnProperty(i)) {
+      a[i] = b[i];
+    }
+  }
+  var basePrototype = b === null ? null : b.prototype;
+  /** @type {Object} */
+  a.prototype = Object.create(basePrototype);
+  /** @type {function (): undefined} */
+  a.prototype.constructor = a;
+  /** @type {(Object|string)} */
+  a.__superConstructor__ = b;
+  /**
+   * @return {?}
+   */
+  a.prototype.getHeightProperty = function() {
+    return "height";
   };
-  e.exports = j;
+  /** @type {function (): undefined} */
+  module.exports = a;
 }, null);
-__d("StickerStoreController", ["Bootloader", "DialogFitHeight", "DOM", "LayerAutoFocus", "LayerFadeOnHide", "LayerHideOnEscape", "React", "XUIDialog.react", "XUIDialogBody.react", "XUISpinner.react", "cx", "requestAnimationFrame"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) {
-  'use strict';
-  var s = 688,
-    t = null,
-    u = m.createClass({
-      displayName: "StoreLayer",
-      propTypes: {
-        isComposer: m.PropTypes.bool,
-        packID: m.PropTypes.string,
-        shown: m.PropTypes.bool
-      },
-      getDefaultProps: function() {
-        return {
-          isComposer: false,
-          packID: null,
-          shown: false
-        };
-      },
-      getInitialState: function() {
-        return {
-          renderStore: function() {
-            return (m.createElement("div", {
-              className: "_5r5e"
-            }, m.createElement(p, {
-              background: "light",
-              size: "large"
-            })));
-          }
-        };
-      },
-      componentDidMount: function() {
-        g.loadModules(["StickerStore.react"], function(x) {
-          this.setState({
-            renderStore: function() {
-              return (m.createElement(x, {
-                currentPackID: this.props.packID,
-                isComposer: this.props.isComposer,
-                onPackSelect: this._packSelected,
-                shown: this.props.shown
-              }));
-            }.bind(this)
-          });
-        }.bind(this));
-      },
-      _packSelected: function(x) {
-        this.setProps({
-          packID: x
+__d("StickerStoreController", ["Bootloader", "DialogFitHeight", "DOM", "LayerAutoFocus", "LayerFadeOnHide", "LayerHideOnEscape", "React", "XUIDialog.react", "XUIDialogBody.react", "XUISpinner.react", "cx", "requestAnimationFrame"], function(keepData, opt_attributes, matcherFunction, execResult, module, opt_keys, exports, dataAndEvents, component, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, doc, type, el, html, positionError, $sanitize) {
+  /**
+   * @param {?} deepDataAndEvents
+   * @param {boolean} textStatus
+   * @return {undefined}
+   */
+  function success(deepDataAndEvents, textStatus) {
+    var e = component.create("div");
+    component.appendContent(document.body, e);
+    t = doc.render(doc.createElement(text, {
+      isComposer : textStatus,
+      packID : deepDataAndEvents,
+      shown : true
+    }), e);
+  }
+  /** @type {number} */
+  var w = 688;
+  /** @type {null} */
+  var t = null;
+  var text = doc.createClass({
+    displayName : "StoreLayer",
+    propTypes : {
+      isComposer : doc.PropTypes.bool,
+      packID : doc.PropTypes.string,
+      shown : doc.PropTypes.bool
+    },
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        isComposer : false,
+        packID : null,
+        shown : false
+      };
+    },
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      return{
+        /**
+         * @return {?}
+         */
+        renderStore : function() {
+          return doc.createElement("div", {
+            className : "_5r5e"
+          }, doc.createElement(html, {
+            background : "light",
+            size : "large"
+          }));
+        }
+      };
+    },
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
+      exports.loadModules(["StickerStore.react"], function(el) {
+        this.setState({
+          renderStore : function() {
+            return doc.createElement(el, {
+              currentPackID : this.props.packID,
+              isComposer : this.props.isComposer,
+              onPackSelect : this._packSelected,
+              shown : this.props.shown
+            });
+          }.bind(this)
         });
-      },
-      _onToggle: function(x) {
-        r(this.setProps.bind(this, {
-          shown: x
-        }, null));
-      },
-      render: function() {
-        return (m.createElement(n, {
-          behaviors: {
-            DialogFitHeight: h,
-            LayerAutoFocus: j,
-            LayerFadeOnHide: k,
-            LayerHideOnEscape: l
-          },
-          onToggle: this._onToggle,
-          shown: this.props.shown,
-          width: s
-        }, m.createElement(o, {
-          className: "_5rq- autofocus"
-        }, this.state.renderStore())));
-      }
-    });
-
-  function v(x, y) {
-    var z = i.create('div');
-    i.appendContent(document.body, z);
-    t = m.render(m.createElement(u, {
-      isComposer: y,
-      packID: x,
-      shown: true
-    }), z);
-  }
-  var w = {
-    showStore: function(x, y) {
-      if (!t) {
-        v(x, !!y);
-      } else t.setProps({
-        shown: true,
-        packID: x,
-        isComposer: !!y
+      }.bind(this));
+    },
+    /**
+     * @param {string} expectedHashCode
+     * @return {undefined}
+     */
+    _packSelected : function(expectedHashCode) {
+      this.setProps({
+        packID : expectedHashCode
       });
+    },
+    /**
+     * @param {?} shown
+     * @return {undefined}
+     */
+    _onToggle : function(shown) {
+      $sanitize(this.setProps.bind(this, {
+        shown : shown
+      }, null));
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      return doc.createElement(type, {
+        behaviors : {
+          DialogFitHeight : dataAndEvents,
+          LayerAutoFocus : deepDataAndEvents,
+          LayerFadeOnHide : ignoreMethodDoesntExist,
+          LayerHideOnEscape : textAlt
+        },
+        onToggle : this._onToggle,
+        shown : this.props.shown,
+        width : w
+      }, doc.createElement(el, {
+        className : "_5rq- autofocus"
+      }, this.state.renderStore()));
+    }
+  });
+  var JsDiff = {
+    /**
+     * @param {?} deepDataAndEvents
+     * @param {boolean} dataAndEvents
+     * @return {undefined}
+     */
+    showStore : function(deepDataAndEvents, dataAndEvents) {
+      if (!t) {
+        success(deepDataAndEvents, !!dataAndEvents);
+      } else {
+        t.setProps({
+          shown : true,
+          packID : deepDataAndEvents,
+          isComposer : !!dataAndEvents
+        });
+      }
     }
   };
-  e.exports = w;
+  module.exports = JsDiff;
 }, null);
-__d("ChatTabMessagesView", ["Animation", "Arbiter", "ArbiterMixin", "BanzaiLogger", "ChatConfig", "ChatConversation.react", "ChatTypingIndicators.react", "ChatWelcomeMessage", "CSS", "DOM", "Event", "MercuryLastMessageIndicator.react", "LiveTimer", "MercuryTypingIndicator", "MercuryViewer", "MercuryMessageStore", "React", "ServerTime", "StickerActions", "StickerState", "StickerStoreController", "Style", "SubscriptionsHandler", "UserAgent_DEPRECATED", "arrayContains", "copyProperties", "getElementPosition", "throttle"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ba, ca, da, ea, fa, ga, ha) {
-  'use strict';
-  var ia = 70,
-    ja = null,
-    ka = 20;
-
-  function la(na) {
-    if (ja === null) {
-      var oa = na.childNodes[0];
-      ba.set(na, 'overflow', 'scroll');
-      ja = oa.clientWidth - ia;
-      ba.set(na, 'overflow', '');
+__d("ChatTabMessagesView", ["Animation", "Arbiter", "ArbiterMixin", "BanzaiLogger", "ChatConfig", "ChatConversation.react", "ChatTypingIndicators.react", "ChatWelcomeMessage", "CSS", "DOM", "Event", "MercuryLastMessageIndicator.react", "LiveTimer", "MercuryTypingIndicator", "MercuryViewer", "MercuryMessageStore", "React", "ServerTime", "StickerActions", "StickerState", "StickerStoreController", "Style", "SubscriptionsHandler", "UserAgent_DEPRECATED", "arrayContains", "copyProperties", "getElementPosition",
+"throttle"], function(opt_attributes, matcherFunction, execResult, opt_keys, module, positionError, a, m, result, logger, $templateCache, name, value, ignoreMethodDoesntExist, loading, deepDataAndEvents, self, template, err, Observable, b, event, renderer, $injector, textAlt, dataAndEvents, keepData, domStyle, MapEditor, bowser, $sanitize, expect, topic, getTime) {
+  /**
+   * @param {?} node
+   * @return {?}
+   */
+  function setup(node) {
+    if (Instance === null) {
+      var text = node.childNodes[0];
+      domStyle.set(node, "overflow", "scroll");
+      /** @type {number} */
+      Instance = text.clientWidth - right;
+      domStyle.set(node, "overflow", "");
     }
-    return ja;
+    return Instance;
   }
-
-  function ma(na, oa, pa, qa, ra, sa, ta, ua) {
-    this.loadingIcon = ra;
-    this.threadID = na;
-    this.sheetController = oa;
-    this.scrollContainer = pa;
-    this.conversationElem = qa;
-    this.tabView = ua;
-    s.restart(x.get() / 1000);
-    this._loadingMoreMessages = false;
-
-    function va() {
-      ma.inform('interaction-with-tab', na);
+  /**
+   * @param {?} selector
+   * @param {?} allBindingsAccessor
+   * @param {?} depMaps
+   * @param {?} rootjQuery
+   * @param {?} opt_setup
+   * @param {?} mojitSpec
+   * @param {EventTarget} view
+   * @param {?} mojitProxy
+   * @return {undefined}
+   */
+  function init(selector, allBindingsAccessor, depMaps, rootjQuery, opt_setup, mojitSpec, view, mojitProxy) {
+    /**
+     * @return {undefined}
+     */
+    function callback() {
+      init.inform("interaction-with-tab", selector);
     }
-    this._subscriptions = new ca();
-    this._subscriptions.addSubscriptions(h.subscribe('overflow-applied-to-body', this.scrollToBottom.bind(this)), q.listen(this.scrollContainer, 'mousedown', va));
-    if (da.firefox()) {
-      var wa = ('WheelEvent' in window) ? 'wheel' : 'DOMMouseScroll';
-      this.scrollContainer.addEventListener(wa, va, false);
-    } else this._subscriptions.addSubscriptions(q.listen(this.scrollContainer, 'mousewheel', va));
-    this._subscriptions.addSubscriptions(q.listen(this.scrollContainer, 'scroll', ha(this.scrolling, 50, this)));
-    if (k.get('chat_react')) {
-      var xa;
-      w.render(w.createElement(m, {
-        threadID: this.threadID,
-        indicatorsWillShow: function() {
-          return xa = this.isScrolledToBottom();
+    this.loadingIcon = opt_setup;
+    this.threadID = selector;
+    this.sheetController = allBindingsAccessor;
+    this.scrollContainer = depMaps;
+    this.conversationElem = rootjQuery;
+    this.tabView = mojitProxy;
+    err.restart($injector.get() / 1E3);
+    /** @type {boolean} */
+    this._loadingMoreMessages = false;
+    this._subscriptions = new MapEditor;
+    this._subscriptions.addSubscriptions(m.subscribe("overflow-applied-to-body", this.scrollToBottom.bind(this)), self.listen(this.scrollContainer, "mousedown", callback));
+    if (bowser.firefox()) {
+      /** @type {string} */
+      var wheelEvent = "WheelEvent" in window ? "wheel" : "DOMMouseScroll";
+      this.scrollContainer.addEventListener(wheelEvent, callback, false);
+    } else {
+      this._subscriptions.addSubscriptions(self.listen(this.scrollContainer, "mousewheel", callback));
+    }
+    this._subscriptions.addSubscriptions(self.listen(this.scrollContainer, "scroll", getTime(this.scrolling, 50, this)));
+    if ($templateCache.get("chat_react")) {
+      var scrollToBottom;
+      renderer.render(renderer.createElement(value, {
+        threadID : this.threadID,
+        indicatorsWillShow : function() {
+          return scrollToBottom = this.isScrolledToBottom();
         }.bind(this),
-        indicatorsDidShow: function() {
-          return xa && this.scrollToBottom(true);
+        indicatorsDidShow : function() {
+          return scrollToBottom && this.scrollToBottom(true);
         }.bind(this)
-      }), ta);
-    } else this.typingIndicator = new t(this.threadID, ta, this);
-    var ya;
-    this.lastMessageIndicatorNode = sa;
-    this.lastMessageIndicator = w.render(w.createElement(r, {
-      threadID: this.threadID,
-      hideTyping: true,
-      indicatorWillShow: function() {
-        return ya = this.isScrolledToBottom();
+      }), view);
+    } else {
+      this.typingIndicator = new Observable(this.threadID, view, this);
+    }
+    var isScrolledToBottom;
+    this.lastMessageIndicatorNode = mojitSpec;
+    this.lastMessageIndicator = renderer.render(renderer.createElement(template, {
+      threadID : this.threadID,
+      hideTyping : true,
+      indicatorWillShow : function() {
+        return isScrolledToBottom = this.isScrolledToBottom();
       }.bind(this),
-      indicatorDidShow: function() {
-        return ya && this.scrollToBottom(true);
+      indicatorDidShow : function() {
+        return isScrolledToBottom && this.scrollToBottom(true);
       }.bind(this)
     }), this.lastMessageIndicatorNode);
     this.initializeConversation();
   }
-  fa(ma, i);
-  fa(ma.prototype, {
-    initializeConversation: function() {
-      this._store = new v(this.threadID);
-      this._conversation = w.render(w.createElement(l, {
-        maxBubbleWidth: la(this.scrollContainer),
-        messages: [],
-        onImageLoad: function(na) {
-          var oa = this.scrollContainer,
-            pa = oa.scrollTop + oa.clientHeight;
-          if (pa + na.offsetHeight >= oa.scrollHeight) this.scrollToBottom();
+  /** @type {number} */
+  var right = 70;
+  /** @type {null} */
+  var Instance = null;
+  /** @type {number} */
+  var fx = 20;
+  expect(init, result);
+  expect(init.prototype, {
+    /**
+     * @return {undefined}
+     */
+    initializeConversation : function() {
+      this._store = new event(this.threadID);
+      this._conversation = renderer.render(renderer.createElement(name, {
+        maxBubbleWidth : setup(this.scrollContainer),
+        messages : [],
+        onImageLoad : function(el) {
+          var elem = this.scrollContainer;
+          var startTopScroll = elem.scrollTop + elem.clientHeight;
+          if (startTopScroll + el.offsetHeight >= elem.scrollHeight) {
+            this.scrollToBottom();
+          }
         }.bind(this),
-        onStickerClick: this._onStickerClick.bind(this),
-        onCallLinkClick: function(na, oa, pa) {
-          ma.inform('video-call-clicked', {
-            userID: na,
-            threadID: oa,
-            clickSource: pa
+        onStickerClick : this._onStickerClick.bind(this),
+        /**
+         * @param {string} userID
+         * @param {?} dataAndEvents
+         * @param {?} deepDataAndEvents
+         * @return {undefined}
+         */
+        onCallLinkClick : function(userID, dataAndEvents, deepDataAndEvents) {
+          init.inform("video-call-clicked", {
+            userID : userID,
+            threadID : dataAndEvents,
+            clickSource : deepDataAndEvents
           });
         }
       }), this.conversationElem);
-      this._subscriptions.addSubscriptions(this._store.subscribe(function(na) {
-        if (na.eventType == v.MESSAGES_RECEIVED && na.allFromOthers && !this.isScrolledToBottom()) {
+      this._subscriptions.addSubscriptions(this._store.subscribe(function(handler) {
+        if (handler.eventType == event.MESSAGES_RECEIVED && (handler.allFromOthers && !this.isScrolledToBottom())) {
           this.sheetController.openNewMessagesSheet();
+          /** @type {boolean} */
           this._newMessagesSheetOpened = true;
         }
-        if (na.eventType == v.MESSAGES_REORDERED) {
+        if (handler.eventType == event.MESSAGES_REORDERED) {
+          /** @type {boolean} */
           this._loadingMoreMessages = false;
-          o.hide(this.loadingIcon);
+          loading.hide(this.loadingIcon);
         }
-        var oa = this.isScrolledToBottom(),
-          pa = this._getLoadingHeight(),
-          qa = this.scrollContainer.scrollHeight,
-          ra = this.scrollContainer.scrollTop,
-          sa = na.messages,
-          ta = n.getWelcomeMessage(this.threadID);
-        if (ta) sa.push(ta);
+        var _shouldScrollToBottom = this.isScrolledToBottom();
+        var viewHeight = this._getLoadingHeight();
+        var scrollHeight = this.scrollContainer.scrollHeight;
+        var scrollTop = this.scrollContainer.scrollTop;
+        var msgs = handler.messages;
+        var copies = ignoreMethodDoesntExist.getWelcomeMessage(this.threadID);
+        if (copies) {
+          msgs.push(copies);
+        }
         this._conversation.setProps({
-          messages: sa
+          messages : msgs
         }, function() {
-          if (oa || this._shouldScrollToBottom) {
+          if (_shouldScrollToBottom || this._shouldScrollToBottom) {
             this.scrollToBottom();
             this.setShouldScrollToBottom(false);
-          } else if (na.eventType == v.MESSAGES_REORDERED) this.scrollToPosition(this.scrollContainer.scrollHeight - qa - pa + ra);
+          } else {
+            if (handler.eventType == event.MESSAGES_REORDERED) {
+              this.scrollToPosition(this.scrollContainer.scrollHeight - scrollHeight - viewHeight + scrollTop);
+            }
+          }
         }.bind(this));
         this.lastMessageIndicator.setProps({
-          lastMessage: sa.length > 0 ? sa[sa.length - 1] : null
+          lastMessage : msgs.length > 0 ? msgs[msgs.length - 1] : null
         });
-        if (na.eventType == v.MESSAGES_RECEIVED && this._shouldShowStickerReplyNUX(sa) && this.tabView && this.tabView.isFocused()) this.tabView.showStickerReplyNUX();
-        if (na.eventType == v.MESSAGES_CHANGED) this._checkToAnimateSticker();
+        if (handler.eventType == event.MESSAGES_RECEIVED && (this._shouldShowStickerReplyNUX(msgs) && (this.tabView && this.tabView.isFocused()))) {
+          this.tabView.showStickerReplyNUX();
+        }
+        if (handler.eventType == event.MESSAGES_CHANGED) {
+          this._checkToAnimateSticker();
+        }
       }.bind(this)));
     },
-    setShouldScrollToBottom: function(na) {
-      this._shouldScrollToBottom = na;
+    /**
+     * @param {?} recurring
+     * @return {undefined}
+     */
+    setShouldScrollToBottom : function(recurring) {
+      this._shouldScrollToBottom = recurring;
     },
-    scrolling: function() {
+    /**
+     * @return {undefined}
+     */
+    scrolling : function() {
       this._checkToAnimateSticker();
-      if (this.isScrolledNearTop() && !this._loadingMoreMessages && !this.isScrolledToBottom() && !this.tabView._isDragDropActive)
+      if (this.isScrolledNearTop() && (!this._loadingMoreMessages && (!this.isScrolledToBottom() && !this.tabView._isDragDropActive))) {
         if (this._store.fetchMoreMessages()) {
-          o.show(this.loadingIcon);
+          loading.show(this.loadingIcon);
+          /** @type {boolean} */
           this._loadingMoreMessages = true;
         }
-      if (!this._newMessagesSheetOpened) return;
+      }
+      if (!this._newMessagesSheetOpened) {
+        return;
+      }
       if (this.isScrolledToBottom()) {
         this.sheetController.closeNewMessagesSheet();
+        /** @type {boolean} */
         this._newMessagesSheetOpened = false;
       }
     },
-    getScrollTop: function() {
+    /**
+     * @return {?}
+     */
+    getScrollTop : function() {
       return this.scrollContainer && this.scrollContainer.scrollTop;
     },
-    destroy: function() {
-      p.scry(this.conversationElem, '.stickerContainer').forEach(function(na) {
-        return w.unmountComponentAtNode(na);
+    /**
+     * @return {undefined}
+     */
+    destroy : function() {
+      deepDataAndEvents.scry(this.conversationElem, ".stickerContainer").forEach(function(template) {
+        return renderer.unmountComponentAtNode(template);
       });
-      w.unmountComponentAtNode(this.conversationElem);
-      this._subscriptions && this._subscriptions.release();
-      w.unmountComponentAtNode(this.lastMessageIndicatorNode);
+      renderer.unmountComponentAtNode(this.conversationElem);
+      if (this._subscriptions) {
+        this._subscriptions.release();
+      }
+      renderer.unmountComponentAtNode(this.lastMessageIndicatorNode);
       delete this.lastMessageIndicator;
-      this._store && this._store.destroy();
+      if (this._store) {
+        this._store.destroy();
+      }
+      /** @type {boolean} */
       this.destroyed = true;
     },
-    _getLoadingHeight: function() {
+    /**
+     * @return {?}
+     */
+    _getLoadingHeight : function() {
       return this.loadingHeight || this.loadingIcon.clientHeight;
     },
-    _shouldShowStickerReplyNUX: function(na) {
-      if (!z.shouldShowStickerReplyNUX() || !na.length) return false;
-      var oa = na[na.length - 1];
-      if (oa.author === u.getID()) return false;
-      if (oa.has_attachment) return oa.attachments.some(function(pa) {
-        return pa.attach_type === 'sticker';
-      });
+    /**
+     * @param {(Array|number)} items
+     * @return {?}
+     */
+    _shouldShowStickerReplyNUX : function(items) {
+      if (!dataAndEvents.shouldShowStickerReplyNUX() || !items.length) {
+        return false;
+      }
+      var options = items[items.length - 1];
+      if (options.author === b.getID()) {
+        return false;
+      }
+      if (options.has_attachment) {
+        return options.attachments.some(function(dataAndEvents) {
+          return dataAndEvents.attach_type === "sticker";
+        });
+      }
       return false;
     },
-    isScrolledToBottom: function(na) {
-      var oa = this.scrollContainer;
-      na = na || ka;
-      return oa.scrollTop + oa.clientHeight >= oa.scrollHeight - na;
+    /**
+     * @param {(Object|number|string)} type
+     * @return {?}
+     */
+    isScrolledToBottom : function(type) {
+      var body = this.scrollContainer;
+      type = type || fx;
+      return body.scrollTop + body.clientHeight >= body.scrollHeight - type;
     },
-    isScrolledNearTop: function() {
+    /**
+     * @return {?}
+     */
+    isScrolledNearTop : function() {
       return this.scrollContainer.scrollTop < this.scrollContainer.clientHeight;
     },
-    scrollToBottom: function(na) {
-      this.scrollToPosition(this.scrollContainer.scrollHeight, na);
+    /**
+     * @param {boolean} deepDataAndEvents
+     * @return {undefined}
+     */
+    scrollToBottom : function(deepDataAndEvents) {
+      this.scrollToPosition(this.scrollContainer.scrollHeight, deepDataAndEvents);
     },
-    scrollToPosition: function(na, oa) {
-      this._scrollTopAnimation && this._scrollTopAnimation.stop();
-      if (oa === true) {
-        this._scrollTopAnimation = (new g(this.scrollContainer)).to('scrollTop', na).ease(g.ease.end).duration(400).go();
-      } else this.scrollContainer.scrollTop = na;
+    /**
+     * @param {?} immediate
+     * @param {boolean} deepDataAndEvents
+     * @return {undefined}
+     */
+    scrollToPosition : function(immediate, deepDataAndEvents) {
+      if (this._scrollTopAnimation) {
+        this._scrollTopAnimation.stop();
+      }
+      if (deepDataAndEvents === true) {
+        this._scrollTopAnimation = (new a(this.scrollContainer)).to("scrollTop", immediate).ease(a.ease.end).duration(400).go();
+      } else {
+        this.scrollContainer.scrollTop = immediate;
+      }
     },
-    _onStickerClick: function(na, oa) {
-      if (!na) return;
-      j.log('StickersLoggerConfig', {
-        event: 'click_sticker',
-        packid: na,
-        stickerid: oa
+    /**
+     * @param {null} deepDataAndEvents
+     * @param {?} ignoreMethodDoesntExist
+     * @return {undefined}
+     */
+    _onStickerClick : function(deepDataAndEvents, ignoreMethodDoesntExist) {
+      if (!deepDataAndEvents) {
+        return;
+      }
+      logger.log("StickersLoggerConfig", {
+        event : "click_sticker",
+        packid : deepDataAndEvents,
+        stickerid : ignoreMethodDoesntExist
       });
-      var pa = this.tabView;
-      z.onTrayDataReady(function() {
-        if (ea(z.getPackIDsInTray(), na)) {
-          var qa = z.getPack(na);
-          if (qa && qa.isPromoted) y.addPack(na);
-          pa.setStickersFlyoutPackID(na);
-        } else aa.showStore(na);
+      var tabView = this.tabView;
+      dataAndEvents.onTrayDataReady(function() {
+        if ($sanitize(dataAndEvents.getPackIDsInTray(), deepDataAndEvents)) {
+          var selector = dataAndEvents.getPack(deepDataAndEvents);
+          if (selector && selector.isPromoted) {
+            textAlt.addPack(deepDataAndEvents);
+          }
+          tabView.setStickersFlyoutPackID(deepDataAndEvents);
+        } else {
+          keepData.showStore(deepDataAndEvents);
+        }
       });
     },
-    _checkToAnimateSticker: function() {
-      var na = ga(this.scrollContainer);
-      h.inform('chatScrolled/' + this.threadID, {
-        scrollTop: this.scrollContainer.scrollTop,
-        top: na.y,
-        viewHeight: na.height
+    /**
+     * @return {undefined}
+     */
+    _checkToAnimateSticker : function() {
+      var out = topic(this.scrollContainer);
+      m.inform("chatScrolled/" + this.threadID, {
+        scrollTop : this.scrollContainer.scrollTop,
+        top : out.y,
+        viewHeight : out.height
       });
     },
-    setNewThreadID: function(na) {
-      this._store.setNewThreadID(na);
+    /**
+     * @param {?} deepDataAndEvents
+     * @return {undefined}
+     */
+    setNewThreadID : function(deepDataAndEvents) {
+      this._store.setNewThreadID(deepDataAndEvents);
     }
   });
-  e.exports = ma;
+  /** @type {function (?, ?, ?, ?, ?, ?, EventTarget, ?): undefined} */
+  module.exports = init;
 }, null);
-__d("MessagesEmoticons.react", ["Grid.react", "React", "cx", "emptyFunction", "fbt"], function(a, b, c, d, e, f, g, h, i, j, k) {
-  var l = g.GridItem,
-    m = 8,
-    n = {
-      smile: "smile",
-      frown: "frown",
-      tongue: "tongue",
-      grin: "grin",
-      gasp: "gasp",
-      wink: "wink",
-      pacman: "pacman",
-      grumpy: "grumpy",
-      unsure: "unsure",
-      cry: "cry",
-      kiki: "kiki",
-      glasses: "glasses",
-      sunglasses: "sunglasses",
-      heart: "heart",
-      devil: "devil",
-      angel: "angel",
-      squint: "squint",
-      confused: "confused",
-      upset: "upset",
-      colonthree: "colonthree",
-      like: "like"
+__d("MessagesEmoticons.react", ["Grid.react", "React", "cx", "emptyFunction", "fbt"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, tag, self, matcherFunction, dataAndEvents, execResult) {
+  var type = tag.GridItem;
+  /** @type {number} */
+  var cols = 8;
+  var variables = {
+    smile : "smile",
+    frown : "frown",
+    tongue : "tongue",
+    grin : "grin",
+    gasp : "gasp",
+    wink : "wink",
+    pacman : "pacman",
+    grumpy : "grumpy",
+    unsure : "unsure",
+    cry : "cry",
+    kiki : "kiki",
+    glasses : "glasses",
+    sunglasses : "sunglasses",
+    heart : "heart",
+    devil : "devil",
+    angel : "angel",
+    squint : "squint",
+    confused : "confused",
+    upset : "upset",
+    colonthree : "colonthree",
+    like : "like"
+  };
+  var JsDiff = self.createClass({
+    displayName : "MessagesEmoticons",
+    propTypes : {
+      onEmoticonSelect : self.PropTypes.func
     },
-    o = h.createClass({
-      displayName: "MessagesEmoticons",
-      propTypes: {
-        onEmoticonSelect: h.PropTypes.func
-      },
-      getDefaultProps: function() {
-        return {
-          onEmoticonSelect: j
-        };
-      },
-      getEmoticons: function() {
-        return Object.keys(n).map(function(p) {
-          return (h.createElement(l, {
-            key: p
-          }, h.createElement("div", {
-            className: "panelCell"
-          }, h.createElement("a", {
-            "aria-label": n[p],
-            className: 'emoticon emoticon_' + p,
-            onClick: function() {
-              return this.props.onEmoticonSelect(p);
-            }.bind(this)
-          }))));
-        }.bind(this));
-      },
-      render: function() {
-        return (h.createElement("div", {
-          className: "emoticonsTable"
-        }, h.createElement(g, {
-          cols: m,
-          alignv: "middle",
-          alignh: "center",
-          spacing: "pam"
-        }, this.getEmoticons())));
-      }
-    });
-  e.exports = o;
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        onEmoticonSelect : dataAndEvents
+      };
+    },
+    /**
+     * @return {?}
+     */
+    getEmoticons : function() {
+      return Object.keys(variables).map(function(expectedHashCode) {
+        return self.createElement(type, {
+          key : expectedHashCode
+        }, self.createElement("div", {
+          className : "panelCell"
+        }, self.createElement("a", {
+          "aria-label" : variables[expectedHashCode],
+          className : "emoticon emoticon_" + expectedHashCode,
+          onClick : function() {
+            return this.props.onEmoticonSelect(expectedHashCode);
+          }.bind(this)
+        })));
+      }.bind(this));
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      return self.createElement("div", {
+        className : "emoticonsTable"
+      }, self.createElement(tag, {
+        cols : cols,
+        alignv : "middle",
+        alignh : "center",
+        spacing : "pam"
+      }, this.getEmoticons()));
+    }
+  });
+  module.exports = JsDiff;
 }, null);
-__d("MercuryDeliveryState", ["MercuryConfig", "MercuryIDs", "MercuryServerRequests", "MercurySingletonMixin", "MercuryThreadInformer", "PresencePrivacy", "UserActivity", "debounceAcrossTransitions"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n) {
-  'use strict';
-  var o = g.delivery_timeout || 120000;
-
-  function p(q) {
-    this.$MercuryDeliveryState0 = q;
-    this.$MercuryDeliveryState1 = i.getForFBID(this.$MercuryDeliveryState0);
-    this.$MercuryDeliveryState2 = k.getForFBID(this.$MercuryDeliveryState0);
+__d("MercuryDeliveryState", ["MercuryConfig", "MercuryIDs", "MercuryServerRequests", "MercurySingletonMixin", "MercuryThreadInformer", "PresencePrivacy", "UserActivity", "debounceAcrossTransitions"], function(textAlt, keepData, opt_attributes, matcherFunction, module, execResult, dataAndEvents, deck, deepDataAndEvents, map, ignoreMethodDoesntExist, ret, exports, cb) {
+  /**
+   * @param {?} require
+   * @return {undefined}
+   */
+  function game(require) {
+    this.$MercuryDeliveryState0 = require;
+    this.$MercuryDeliveryState1 = deepDataAndEvents.getForFBID(this.$MercuryDeliveryState0);
+    this.$MercuryDeliveryState2 = ignoreMethodDoesntExist.getForFBID(this.$MercuryDeliveryState0);
+    /** @type {Array} */
     this.$MercuryDeliveryState3 = [];
-    if (!g.ChatWebDRGK) return;
-    this.$MercuryDeliveryState2.subscribe('messages-received', this.$MercuryDeliveryState4.bind(this));
-    m.subscribe(n(this.$MercuryDeliveryState5, 300, this));
+    if (!dataAndEvents.ChatWebDRGK) {
+      return;
+    }
+    this.$MercuryDeliveryState2.subscribe("messages-received", this.$MercuryDeliveryState4.bind(this));
+    exports.subscribe(cb(this.$MercuryDeliveryState5, 300, this));
   }
-  p.prototype.$MercuryDeliveryState4 = function(q, r) {
-    for (var s in r) {
-      var t = r[s];
-      t.forEach(function(u) {
-        if (this.$MercuryDeliveryState7(u)) this.$MercuryDeliveryState3.push(u);
+  var flag = dataAndEvents.delivery_timeout || 12E4;
+  /**
+   * @param {?} dataAndEvents
+   * @param {Object} map
+   * @return {undefined}
+   */
+  game.prototype.$MercuryDeliveryState4 = function(dataAndEvents, map) {
+    var letter;
+    for (letter in map) {
+      var value = map[letter];
+      value.forEach(function(returnVal) {
+        if (this.$MercuryDeliveryState7(returnVal)) {
+          this.$MercuryDeliveryState3.push(returnVal);
+        }
       }.bind(this));
     }
-    if (m.isActive(o)) this.$MercuryDeliveryState5();
+    if (exports.isActive(flag)) {
+      this.$MercuryDeliveryState5();
+    }
   };
-  p.prototype.$MercuryDeliveryState5 = function() {
-    if (this.$MercuryDeliveryState3.length === 0) return;
-    var q = this.$MercuryDeliveryState3.filter(this.$MercuryDeliveryState7, this).map(function(r) {
-      return r.message_id;
+  /**
+   * @return {undefined}
+   */
+  game.prototype.$MercuryDeliveryState5 = function() {
+    if (this.$MercuryDeliveryState3.length === 0) {
+      return;
+    }
+    var r20 = this.$MercuryDeliveryState3.filter(this.$MercuryDeliveryState7, this).map(function(user) {
+      return user.message_id;
     });
-    if (q) this.$MercuryDeliveryState1.sendDeliveryReceipts(q);
+    if (r20) {
+      this.$MercuryDeliveryState1.sendDeliveryReceipts(r20);
+    }
+    /** @type {Array} */
     this.$MercuryDeliveryState3 = [];
   };
-  p.prototype.$MercuryDeliveryState7 = function(q) {
-    var r = h.getUserIDFromParticipantID(q.author);
-    if (r === this.$MercuryDeliveryState0) return false;
-    if (!q.is_unread) return false;
-    if (!l.allows(r)) return false;
+  /**
+   * @param {Object} data
+   * @return {?}
+   */
+  game.prototype.$MercuryDeliveryState7 = function(data) {
+    var rreturn = deck.getUserIDFromParticipantID(data.author);
+    if (rreturn === this.$MercuryDeliveryState0) {
+      return false;
+    }
+    if (!data.is_unread) {
+      return false;
+    }
+    if (!ret.allows(rreturn)) {
+      return false;
+    }
     return true;
   };
-  Object.assign(p, j);
-  e.exports = p;
+  Object.assign(game, map);
+  /** @type {function (?): undefined} */
+  module.exports = game;
 }, null);
-__d("MercuryStateCheck", ["Arbiter", "ChannelConstants", "MercuryFolders", "MessagingTag", "URI", "copyProperties", "MercuryServerRequests"], function(a, b, c, d, e, f, g, h, i, j, k, l) {
-  var m = b('MercuryServerRequests').get(),
-    n = l(new g(), {
-      initialize: function() {
-        g.subscribe(h.ON_INVALID_HISTORY, o);
-        d(['ChannelConnection'], function(p) {
-          p.subscribe(p.CONNECTED, function(q, r) {
-            if (!r.init) o();
-          });
-        });
-      }
-    });
-
-  function o() {
-    var p;
-    if (k.getRequestURI().getPath().search(/messages/) !== -1) {
-      p = i.getSupportedFolders();
-    } else p = [j.INBOX];
-    m.fetchMissedMessages(p);
+__d("MercuryStateCheck", ["Arbiter", "ChannelConstants", "MercuryFolders", "MessagingTag", "URI", "copyProperties", "MercuryServerRequests"], function(ignoreMethodDoesntExist, nock, textAlt, next, module, keepData, _this, req, dataAndEvents, deepDataAndEvents, data, express) {
+  /**
+   * @return {undefined}
+   */
+  function create() {
+    var rreturn;
+    if (data.getRequestURI().getPath().search(/messages/) !== -1) {
+      rreturn = dataAndEvents.getSupportedFolders();
+    } else {
+      /** @type {Array} */
+      rreturn = [deepDataAndEvents.INBOX];
+    }
+    ret.fetchMissedMessages(rreturn);
   }
-  n.initialize();
-  e.exports = n;
+  var ret = nock("MercuryServerRequests").get();
+  var app = express(new _this, {
+    /**
+     * @return {undefined}
+     */
+    initialize : function() {
+      _this.subscribe(req.ON_INVALID_HISTORY, create);
+      next(["ChannelConnection"], function(self) {
+        self.subscribe(self.CONNECTED, function(dataAndEvents, loginController) {
+          if (!loginController.init) {
+            create();
+          }
+        });
+      });
+    }
+  });
+  app.initialize();
+  module.exports = app;
 }, null);
-__d("MercuryReadOnlyReason", ["React", "fbt"], function(a, b, c, d, e, f, g, h) {
-  var i = {
-    getReason: function(j) {
-      if (j.has_email_participant) {
-        return (h._("Sorry, this conversation isn't active anymore because messages can no longer be sent to email addresses. Messages sent to facebook.com email addresses will now be forwarded to primary email addresses, so you can continue this conversation over email. {Learn more}.", [h.param("Learn more", g.createElement("a", {
-          href: "/help/224049364288051"
-        }, "Learn more"))]));
-      } else return ("You cannot reply to this conversation.");
+__d("MercuryReadOnlyReason", ["React", "fbt"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, dom, item) {
+  var JsDiff = {
+    /**
+     * @param {?} reason
+     * @return {?}
+     */
+    getReason : function(reason) {
+      if (reason.has_email_participant) {
+        return item._("Sorry, this conversation isn't active anymore because messages can no longer be sent to email addresses. Messages sent to facebook.com email addresses will now be forwarded to primary email addresses, so you can continue this conversation over email. {Learn more}.", [item.param("Learn more", dom.createElement("a", {
+          href : "/help/224049364288051"
+        }, "Learn more"))]);
+      } else {
+        return "You cannot reply to this conversation.";
+      }
     }
   };
-  e.exports = i;
+  module.exports = JsDiff;
 }, null);
-__d("MercurySeenByAll", ["CSS", "DataStore", "MercuryDelayedRoger", "DOM", "MercuryIDs", "MercuryViewer", "MercuryThreads"], function(a, b, c, d, e, f, g, h, i, j, k, l) {
-  var m = b('MercuryThreads').get(),
-    n = {},
-    o = {
-      updateOnSeenChange: function(q, r, s) {
-        n[q.tagName] = true;
-        h.set(q, 'thread-id', r.thread_id);
-        g.addClass(q, 'seenByListener');
-        p(q, r, s);
-      }
-    };
-
-  function p(q, r, s) {
-    var t = null;
-    if (s) {
-      t = k.getParticipantIDFromUserID(s);
-    } else t = l.getID();
-    var u = r.participants.filter(function(w) {
-        return w !== t;
-      }),
-      v = r.participants.length > 0 && r.participants[0] === t;
-    g.conditionClass(q, 'repliedLast', v);
-    g.conditionClass(q, 'seenByAll', v && i.getSeenBy(r.thread_id).length === u.length);
+__d("MercurySeenByAll", ["CSS", "DataStore", "MercuryDelayedRoger", "DOM", "MercuryIDs", "MercuryViewer", "MercuryThreads"], function(dataAndEvents, nock, deepDataAndEvents, ignoreMethodDoesntExist, module, textAlt, b, acc, exports, test, $templateCache, a) {
+  /**
+   * @param {(Node|string)} s
+   * @param {Function} obj
+   * @param {?} value
+   * @return {undefined}
+   */
+  function getter(s, obj, value) {
+    /** @type {null} */
+    var target = null;
+    if (value) {
+      target = $templateCache.getParticipantIDFromUserID(value);
+    } else {
+      target = a.getID();
+    }
+    var keys = obj.participants.filter(function(related) {
+      return related !== target;
+    });
+    /** @type {boolean} */
+    var end = obj.participants.length > 0 && obj.participants[0] === target;
+    b.conditionClass(s, "repliedLast", end);
+    b.conditionClass(s, "seenByAll", end && exports.getSeenBy(obj.thread_id).length === keys.length);
   }
-  i.subscribe('state-changed', function(q, r) {
-    for (var s in n) {
-      var t = j.scry(document.body, s + '.seenByListener');
-      for (var u = 0; u < t.length; u++) {
-        var v = t[u],
-          w = h.get(v, 'thread-id');
-        if (r[w]) m.getThreadMeta(w, function(x) {
-          p(v, x);
-        });
+  var selfObj = nock("MercuryThreads").get();
+  var result = {};
+  var JsDiff = {
+    /**
+     * @param {Node} node
+     * @param {Function} s
+     * @param {?} isXML
+     * @return {undefined}
+     */
+    updateOnSeenChange : function(node, s, isXML) {
+      /** @type {boolean} */
+      result[node.tagName] = true;
+      acc.set(node, "thread-id", s.thread_id);
+      b.addClass(node, "seenByListener");
+      getter(node, s, isXML);
+    }
+  };
+  exports.subscribe("state-changed", function(dataAndEvents, $cookies) {
+    var id;
+    for (id in result) {
+      var codeSegments = test.scry(document.body, id + ".seenByListener");
+      /** @type {number} */
+      var i = 0;
+      for (;i < codeSegments.length;i++) {
+        var node = codeSegments[i];
+        var key = acc.get(node, "thread-id");
+        if ($cookies[key]) {
+          selfObj.getThreadMeta(key, function(walkers) {
+            getter(node, walkers);
+          });
+        }
       }
     }
   });
-  e.exports = o;
+  module.exports = JsDiff;
 }, null);
-__d("MercuryThreadMetadataRenderer", ["CSS", "DOM", "Emoji", "HTML", "JSLogger", "MercuryAttachmentType", "MercuryIDs", "MercuryMessageSourceTags", "MercurySingletonMixin", "MercuryThreadImage.react", "MercuryThreadMetadataRawRenderer", "MercuryThreadTitle.react", "MercuryParticipants", "React", "MercurySeenByAll", "MercuryServerRequests", "Style", "MercuryThreads", "Tooltip", "URI", "WebMessengerThreadPermalinks", "arrayContains", "createArrayFromMixed", "copyProperties", "cx", "formatDate", "fbt"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ba, ca, da, ea, fa, ga) {
-  var ha = k.create('wm_timestamp');
-
-  function ia(na) {
-    this._fbid = na;
-    this._serverRequests = v.getForFBID(na);
-    this._threads = x.getForFBID(na);
+__d("MercuryThreadMetadataRenderer", ["CSS", "DOM", "Emoji", "HTML", "JSLogger", "MercuryAttachmentType", "MercuryIDs", "MercuryMessageSourceTags", "MercurySingletonMixin", "MercuryThreadImage.react", "MercuryThreadMetadataRawRenderer", "MercuryThreadTitle.react", "MercuryParticipants", "React", "MercurySeenByAll", "MercuryServerRequests", "Style", "MercuryThreads", "Tooltip", "URI", "WebMessengerThreadPermalinks", "arrayContains", "createArrayFromMixed", "copyProperties", "cx", "formatDate", "fbt"],
+function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, $sanitize, module, keepData, Dom, self, meta, String, activator, handleObj, notifications, stats, name, el, handle, text, res, doc, require, exp, s, r, data_priv, Dialog, jQuery, cb, ensureCallback, defineProperty, dataAndEvents, printer, $) {
+  /**
+   * @param {?} o
+   * @return {undefined}
+   */
+  function Type(o) {
+    this._fbid = o;
+    this._serverRequests = exp.getForFBID(o);
+    this._threads = r.getForFBID(o);
   }
-  da(ia, o);
-  da(ia.prototype, {
-    renderTimestamp: function(na, oa, pa, qa) {
-      if (qa) {
-        if (!oa) {
-          ha.warn('no_title');
-          oa = (new Date(qa)).toLocaleDateString();
-        }
-        na.setAttribute('title', oa);
-        na.setAttribute('data-utime', qa / 1000);
-        if (!pa) {
-          ha.warn('no_display');
-          pa = fa(new Date(qa), 'g:ia');
-        }
-        h.setContent(na, pa);
-        g.show(na);
-      }
-    },
-    renderMessageSourceTags: function(na, oa, pa, qa) {
-      var ra = '',
-        sa = '',
-        ta = '';
-      if (ba(pa, n.MESSENGER)) {
-        ra = "Sent from Messenger";
-        sa = new z('/mobile/messenger');
-        ta = "_9g";
-      } else if (ba(pa, n.MOBILE)) {
-        ra = "Sent from Mobile";
-        sa = new z('/mobile/');
-        ta = "_9j";
-      } else if (ba(pa, n.CHAT)) {
-        ra = "Sent from chat";
-        ta = "_9h";
-      } else if (ba(pa, n.EMAIL)) {
-        if (qa) {
-          ra = ga._("Sent from {email}", [ga.param("email", qa)]);
-        } else ra = "Sent from email";
-        ta = "_9i";
-      }
-      if (ta) {
-        y.set(na, ra);
-        g.addClass(oa, ta);
-        if (sa) {
-          na.setAttribute('href', sa);
-        } else na.removeAttribute('href');
-      } else g.hide(na);
-    },
-    renderMessageLocation: function(na, oa, pa) {
-      var qa = z('/ajax/messaging/hovercard/map.php').setQueryData(pa);
-      na.setAttribute('data-hovercard', qa);
-      g.removeClass(na, "_b9");
-      g.show(oa);
-    },
-    renderSpoofWarning: function(na, oa, pa) {
-      if (oa) {
-        g.addClass(na, "_sa");
-        y.set(na, ga._("Unable to confirm {name_or_email} as the sender.", [ga.param("name_or_email", pa.name)]));
-      }
-    },
-    renderChatSpoofWarning: function(na, oa, pa) {
-      if (oa) h.appendContent(na, ga._("Unable to confirm {name_or_email} as the sender.", [ga.param("name_or_email", pa.name)]));
-    },
-    renderCoreThreadlist: function(na, oa, pa, qa, ra) {
-      qa = qa || {};
-      this.renderThreadImage(na, oa.getNode('image'));
-      var sa = oa.getNode('accessibleName'),
-        ta = [oa.getNode('name')];
-      if (sa) ta.push(sa);
-      ma(this, na, ta, qa);
-      if (na.folder && ra) la(oa.getNode('folderBadge'), na.folder);
-      var ua = oa.getNode('timestamp');
-      this.renderTimestamp(ua, na.timestamp_absolute, na.timestamp_relative, na.timestamp);
-      this.renderSnippet(na, oa.getNode('snippet'));
-      ka(oa, na);
-      pa(oa, na);
-    },
-    renderAndSeparatedParticipantList: function(na, oa, pa) {
-      pa = pa || {};
-      pa.last_separator_uses_and = true;
-      this._threads.getThreadMeta(na, function(qa) {
-        ma(this, qa, oa, pa);
-      }.bind(this));
-    },
-    renderSnippet: function(na, oa) {
-      var pa = false,
-        qa = h.create('span');
-      g.addClass(qa, 'MercuryRepliedIndicator');
-      h.appendContent(oa, qa);
-      u.updateOnSeenChange(qa, na, this._fbid);
-      var ra = na.snippet;
-      if (ra) {
-        if (na.snippet_has_attachment) h.appendContent(oa, h.create('span', {
-          className: 'MercuryAttachmentIndicator'
-        }));
-        if (na.is_forwarded_snippet) h.appendContent(oa, h.create('strong', {
-          className: "_55q_"
-        }, "Forwarded Message:"));
-        if (ra.substr(0, 4) == '?OTR') {
-          ra = "[encrypted message]";
-        } else ra = ra.replace(/\r\n|[\r\n]/g, " ");
-        ra = j(i.htmlEmojiAndEmote(ra));
-      } else {
-        if (na.is_forwarded_snippet) h.appendContent(oa, h.create('strong', {
-          className: "_55q_"
-        }, "Forwarded Message"));
-        if (na.snippet_has_attachment && na.snippet_attachments && na.snippet_attachments.length) {
-          pa = true;
-          ra = h.create('span');
-          d(['MercuryAttachmentSnippet.react'], function(ua) {
-            t.render(t.createElement(ua, {
-              thread: na,
-              viewer: this._fbid
-            }), ra);
-          }.bind(this));
-        }
-      }
-      var sa = na.participants.length;
-      if (na.is_subscribed) sa--;
-      var ta = na.snippet_sender;
-      if (!pa && ta && m.getParticipantIDFromUserID(this._fbid) != ta && sa > 1) {
-        s.get(ta, function(ua) {
-          if (ua.short_name) {
-            h.appendContent(oa, ga._("{name}: {conversation_snippet}", [ga.param("name", ua.short_name), ga.param("conversation_snippet", ra)]));
-          } else h.appendContent(oa, ra);
-        });
-      } else h.appendContent(oa, ra);
-    },
-    renderWebMessengerLink: function(na, oa, pa, qa) {
-      aa.getThreadURI(na, function(ra) {
-        oa.setAttribute('href', ra);
-        pa && pa();
-      }, qa);
-    },
-    renderThreadImage: function(na, oa) {
-      t.render(t.createElement(p, {
-        thread: na,
-        viewer: this._fbid
-      }), oa);
-    },
-    renderParticipantList: function(na, oa, pa, qa) {
-      return q.renderRawParticipantList(this._serverRequests.getServerThreadIDNow(na), oa, pa, qa);
-    },
-    renderThreadNameAndParticipantList: function(na, oa, pa, qa) {
-      var ra = q.renderRawParticipantList(this._serverRequests.getServerThreadIDNow(na), oa, pa, qa),
-        sa = this._threads.getThreadMetaNow(na);
-      if (!sa.name) return ra;
-      return ga._("{conversation_name} [with {participant_list}]", [ga.param("conversation_name", sa.name), ga.param("participant_list", ra)]);
-    },
-    renderParticipantCount: function(na, oa) {
-      return q.renderRawParticipantCount(oa);
+  /**
+   * @param {Object} keepData
+   * @return {?}
+   */
+  function remove(keepData) {
+    if (!keepData.snippet_attachments) {
+      return[];
     }
-  });
-
-  function ja(na) {
-    if (!na.snippet_attachments) return [];
-    return na.snippet_attachments.filter(function(oa) {
-      return oa.attach_type === l.PHOTO;
+    return keepData.snippet_attachments.filter(function(handler) {
+      return handler.attach_type === handleObj.PHOTO;
     });
   }
-
-  function ka(na, oa) {
-    var pa = ja(oa);
-    if (pa.length === 0) return;
-    var qa = pa[0].thumbnail_url;
-    if (!qa) return;
-    var ra = (pa.length == 1) ? 'snippet-thumbnail-single' : 'snippet-thumbnail-multiple',
-      sa = na.getNode(ra);
-    if (!sa) return;
-    var ta = h.find(sa, 'i');
-    w.set(ta, 'background-image', 'url(' + qa + ')');
-    g.show(sa);
+  /**
+   * @param {Object} dom
+   * @param {Object} key
+   * @return {undefined}
+   */
+  function done(dom, key) {
+    var bkey = remove(key);
+    if (bkey.length === 0) {
+      return;
+    }
+    var thumbnail_url = bkey[0].thumbnail_url;
+    if (!thumbnail_url) {
+      return;
+    }
+    /** @type {string} */
+    var Events = bkey.length == 1 ? "snippet-thumbnail-single" : "snippet-thumbnail-multiple";
+    var e = dom.getNode(Events);
+    if (!e) {
+      return;
+    }
+    var m = self.find(e, "i");
+    s.set(m, "background-image", "url(" + thumbnail_url + ")");
+    Dom.show(e);
   }
-
-  function la(na, oa) {
-    ca(na).forEach(function(pa) {
-      h.setContent(pa, oa);
+  /**
+   * @param {?} fn
+   * @param {?} data
+   * @return {undefined}
+   */
+  function after(fn, data) {
+    ensureCallback(fn).forEach(function(newContent) {
+      self.setContent(newContent, data);
     });
   }
-
-  function ma(na, oa, pa, qa) {
-    pa = ca(pa);
-    var ra = na._fbid;
-    if (oa.name) {
-      pa.forEach(function(ta) {
-        t.render(t.createElement(r, {
-          thread: oa,
-          viewer: ra,
-          showUnreadCount: !!qa.show_unread_count
-        }), ta);
+  /**
+   * @param {?} elem
+   * @param {Function} data
+   * @param {(Array|string)} callback
+   * @param {Object} attributes
+   * @return {undefined}
+   */
+  function run(elem, data, callback, attributes) {
+    callback = ensureCallback(callback);
+    var nType = elem._fbid;
+    if (data.name) {
+      callback.forEach(function(fn) {
+        doc.render(doc.createElement(text, {
+          /** @type {Function} */
+          thread : data,
+          viewer : nType,
+          showUnreadCount : !!attributes.show_unread_count
+        }), fn);
       });
       return;
     }
-    var sa = oa.participants;
-    if (oa.participants.length > 1) sa = oa.participants.filter(function(ta) {
-      return ta != m.getParticipantIDFromUserID(ra);
-    });
-    s.getMulti(sa, function(ta) {
-      q.renderParticipantListWithNoThreadName(na._serverRequests.getServerThreadIDNow(oa.thread_id), oa, sa, ta, pa, qa);
+    var fields = data.participants;
+    if (data.participants.length > 1) {
+      fields = data.participants.filter(function(dataAndEvents) {
+        return dataAndEvents != notifications.getParticipantIDFromUserID(nType);
+      });
+    }
+    res.getMulti(fields, function(message) {
+      handle.renderParticipantListWithNoThreadName(elem._serverRequests.getServerThreadIDNow(data.thread_id), data, fields, message, callback, attributes);
     });
   }
-  e.exports = ia;
+  var $log = activator.create("wm_timestamp");
+  defineProperty(Type, name);
+  defineProperty(Type.prototype, {
+    /**
+     * @param {Element} el
+     * @param {Text} idx
+     * @param {Text} funcToCall
+     * @param {number} val
+     * @return {undefined}
+     */
+    renderTimestamp : function(el, idx, funcToCall, val) {
+      if (val) {
+        if (!idx) {
+          $log.warn("no_title");
+          /** @type {string} */
+          idx = (new Date(val)).toLocaleDateString();
+        }
+        el.setAttribute("title", idx);
+        el.setAttribute("data-utime", val / 1E3);
+        if (!funcToCall) {
+          $log.warn("no_display");
+          funcToCall = printer(new Date(val), "g:ia");
+        }
+        self.setContent(el, funcToCall);
+        Dom.show(el);
+      }
+    },
+    /**
+     * @param {Element} node
+     * @param {?} v
+     * @param {?} outErr
+     * @param {?} traditional
+     * @return {undefined}
+     */
+    renderMessageSourceTags : function(node, v, outErr, traditional) {
+      /** @type {string} */
+      var pdataOld = "";
+      /** @type {string} */
+      var d = "";
+      /** @type {string} */
+      var newClassName = "";
+      if (cb(outErr, stats.MESSENGER)) {
+        /** @type {string} */
+        pdataOld = "Sent from Messenger";
+        d = new Dialog("/mobile/messenger");
+        /** @type {string} */
+        newClassName = "_9g";
+      } else {
+        if (cb(outErr, stats.MOBILE)) {
+          /** @type {string} */
+          pdataOld = "Sent from Mobile";
+          d = new Dialog("/mobile/");
+          /** @type {string} */
+          newClassName = "_9j";
+        } else {
+          if (cb(outErr, stats.CHAT)) {
+            /** @type {string} */
+            pdataOld = "Sent from chat";
+            /** @type {string} */
+            newClassName = "_9h";
+          } else {
+            if (cb(outErr, stats.EMAIL)) {
+              if (traditional) {
+                pdataOld = $._("Sent from {email}", [$.param("email", traditional)]);
+              } else {
+                /** @type {string} */
+                pdataOld = "Sent from email";
+              }
+              /** @type {string} */
+              newClassName = "_9i";
+            }
+          }
+        }
+      }
+      if (newClassName) {
+        data_priv.set(node, pdataOld);
+        Dom.addClass(v, newClassName);
+        if (d) {
+          node.setAttribute("href", d);
+        } else {
+          node.removeAttribute("href");
+        }
+      } else {
+        Dom.hide(node);
+      }
+    },
+    /**
+     * @param {Element} img
+     * @param {?} node
+     * @param {?} opt_query
+     * @return {undefined}
+     */
+    renderMessageLocation : function(img, node, opt_query) {
+      var altTxt = Dialog("/ajax/messaging/hovercard/map.php").setQueryData(opt_query);
+      img.setAttribute("data-hovercard", altTxt);
+      Dom.removeClass(img, "_b9");
+      Dom.show(node);
+    },
+    /**
+     * @param {?} node
+     * @param {?} dataAndEvents
+     * @param {Function} s
+     * @return {undefined}
+     */
+    renderSpoofWarning : function(node, dataAndEvents, s) {
+      if (dataAndEvents) {
+        Dom.addClass(node, "_sa");
+        data_priv.set(node, $._("Unable to confirm {name_or_email} as the sender.", [$.param("name_or_email", s.name)]));
+      }
+    },
+    /**
+     * @param {?} newContent
+     * @param {?} dataAndEvents
+     * @param {Function} s
+     * @return {undefined}
+     */
+    renderChatSpoofWarning : function(newContent, dataAndEvents, s) {
+      if (dataAndEvents) {
+        self.appendContent(newContent, $._("Unable to confirm {name_or_email} as the sender.", [$.param("name_or_email", s.name)]));
+      }
+    },
+    /**
+     * @param {Object} p
+     * @param {Object} self
+     * @param {?} a
+     * @param {Object} attributes
+     * @param {?} optClass
+     * @return {undefined}
+     */
+    renderCoreThreadlist : function(p, self, a, attributes, optClass) {
+      attributes = attributes || {};
+      this.renderThreadImage(p, self.getNode("image"));
+      var copies = self.getNode("accessibleName");
+      /** @type {Array} */
+      var out = [self.getNode("name")];
+      if (copies) {
+        out.push(copies);
+      }
+      run(this, p, out, attributes);
+      if (p.folder && optClass) {
+        after(self.getNode("folderBadge"), p.folder);
+      }
+      var failuresLink = self.getNode("timestamp");
+      this.renderTimestamp(failuresLink, p.timestamp_absolute, p.timestamp_relative, p.timestamp);
+      this.renderSnippet(p, self.getNode("snippet"));
+      done(self, p);
+      a(self, p);
+    },
+    /**
+     * @param {?} deepDataAndEvents
+     * @param {(Array|string)} finished
+     * @param {Object} attributes
+     * @return {undefined}
+     */
+    renderAndSeparatedParticipantList : function(deepDataAndEvents, finished, attributes) {
+      attributes = attributes || {};
+      /** @type {boolean} */
+      attributes.last_separator_uses_and = true;
+      this._threads.getThreadMeta(deepDataAndEvents, function(done) {
+        run(this, done, finished, attributes);
+      }.bind(this));
+    },
+    /**
+     * @param {Function} data
+     * @param {?} newContent
+     * @return {undefined}
+     */
+    renderSnippet : function(data, newContent) {
+      /** @type {boolean} */
+      var recordType = false;
+      var p = self.create("span");
+      Dom.addClass(p, "MercuryRepliedIndicator");
+      self.appendContent(newContent, p);
+      require.updateOnSeenChange(p, data, this._fbid);
+      var content = data.snippet;
+      if (content) {
+        if (data.snippet_has_attachment) {
+          self.appendContent(newContent, self.create("span", {
+            className : "MercuryAttachmentIndicator"
+          }));
+        }
+        if (data.is_forwarded_snippet) {
+          self.appendContent(newContent, self.create("strong", {
+            className : "_55q_"
+          }, "Forwarded Message:"));
+        }
+        if (content.substr(0, 4) == "?OTR") {
+          /** @type {string} */
+          content = "[encrypted message]";
+        } else {
+          content = content.replace(/\r\n|[\r\n]/g, " ");
+        }
+        content = String(meta.htmlEmojiAndEmote(content));
+      } else {
+        if (data.is_forwarded_snippet) {
+          self.appendContent(newContent, self.create("strong", {
+            className : "_55q_"
+          }, "Forwarded Message"));
+        }
+        if (data.snippet_has_attachment && (data.snippet_attachments && data.snippet_attachments.length)) {
+          /** @type {boolean} */
+          recordType = true;
+          content = self.create("span");
+          $sanitize(["MercuryAttachmentSnippet.react"], function(el) {
+            doc.render(doc.createElement(el, {
+              /** @type {Function} */
+              thread : data,
+              viewer : this._fbid
+            }), content);
+          }.bind(this));
+        }
+      }
+      var cnl = data.participants.length;
+      if (data.is_subscribed) {
+        cnl--;
+      }
+      var key = data.snippet_sender;
+      if (!recordType && (key && (notifications.getParticipantIDFromUserID(this._fbid) != key && cnl > 1))) {
+        res.get(key, function(y) {
+          if (y.short_name) {
+            self.appendContent(newContent, $._("{name}: {conversation_snippet}", [$.param("name", y.short_name), $.param("conversation_snippet", content)]));
+          } else {
+            self.appendContent(newContent, content);
+          }
+        });
+      } else {
+        self.appendContent(newContent, content);
+      }
+    },
+    /**
+     * @param {?} fn2
+     * @param {Element} div
+     * @param {?} $sanitize
+     * @param {?} deepDataAndEvents
+     * @return {undefined}
+     */
+    renderWebMessengerLink : function(fn2, div, $sanitize, deepDataAndEvents) {
+      jQuery.getThreadURI(fn2, function(prevValue) {
+        div.setAttribute("href", prevValue);
+        if ($sanitize) {
+          $sanitize();
+        }
+      }, deepDataAndEvents);
+    },
+    /**
+     * @param {Object} charsetPart
+     * @param {?} fn
+     * @return {undefined}
+     */
+    renderThreadImage : function(charsetPart, fn) {
+      doc.render(doc.createElement(el, {
+        thread : charsetPart,
+        viewer : this._fbid
+      }), fn);
+    },
+    /**
+     * @param {?} deepDataAndEvents
+     * @param {Object} data
+     * @param {number} dataName
+     * @param {Object} walkers
+     * @return {?}
+     */
+    renderParticipantList : function(deepDataAndEvents, data, dataName, walkers) {
+      return handle.renderRawParticipantList(this._serverRequests.getServerThreadIDNow(deepDataAndEvents), data, dataName, walkers);
+    },
+    /**
+     * @param {?} angle
+     * @param {Object} data
+     * @param {number} callback
+     * @param {Object} obj
+     * @return {?}
+     */
+    renderThreadNameAndParticipantList : function(angle, data, callback, obj) {
+      var key = handle.renderRawParticipantList(this._serverRequests.getServerThreadIDNow(angle), data, callback, obj);
+      var s = this._threads.getThreadMetaNow(angle);
+      if (!s.name) {
+        return key;
+      }
+      return $._("{conversation_name} [with {participant_list}]", [$.param("conversation_name", s.name), $.param("participant_list", key)]);
+    },
+    /**
+     * @param {?} dataAndEvents
+     * @param {Object} opt_attributes
+     * @return {?}
+     */
+    renderParticipantCount : function(dataAndEvents, opt_attributes) {
+      return handle.renderRawParticipantCount(opt_attributes);
+    }
+  });
+  /** @type {function (?): undefined} */
+  module.exports = Type;
 }, null);
-__d("MercurySheetPolicy", [], function(a, b, c, d, e, f) {
-  var g = {
-    canReplaceOpenSheet: function(h, i) {
-      if (h.isSheetWithInput && h.isSheetWithInput()) return i.getType() != h.getType() && i.isSheetWithInput && i.isSheetWithInput();
-      if (h.getType() == i.getType()) return false;
-      if (h.isPermanent() && !i.isPermanent()) return false;
+__d("MercurySheetPolicy", [], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData) {
+  var JsDiff = {
+    /**
+     * @param {?} navi
+     * @param {Object} i
+     * @return {?}
+     */
+    canReplaceOpenSheet : function(navi, i) {
+      if (navi.isSheetWithInput && navi.isSheetWithInput()) {
+        return i.getType() != navi.getType() && (i.isSheetWithInput && i.isSheetWithInput());
+      }
+      if (navi.getType() == i.getType()) {
+        return false;
+      }
+      if (navi.isPermanent() && !i.isPermanent()) {
+        return false;
+      }
       return true;
     }
   };
-  e.exports = g;
+  module.exports = JsDiff;
 }, null);
-__d("MercurySheetView", ["Animation", "ArbiterMixin", "MercurySheetPolicy", "CSS", "DOM", "Style", "MercurySheetTemplates", "Vector", "copyProperties", "cx", "setTimeoutAcrossTransitions"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) {
-  var r = 5000,
-    s = function(t, u, v) {
-      this._threadID = t;
-      this._rootElement = u;
-      this._tabMainElement = v;
-      this._openSheet = null;
-    };
-  o(s.prototype, h, {
-    destroy: function() {
-      k.empty(this._rootElement);
+__d("MercurySheetView", ["Animation", "ArbiterMixin", "MercurySheetPolicy", "CSS", "DOM", "Style", "MercurySheetTemplates", "Vector", "copyProperties", "cx", "setTimeoutAcrossTransitions"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, node, IOStream, compiled, s, d, domStyle, dataAndEvents, Css, declare, matcherFunction, $) {
+  /** @type {number} */
+  var event = 5E3;
+  /**
+   * @param {?} o
+   * @param {?} tileHeight
+   * @param {?} book
+   * @return {undefined}
+   */
+  var Type = function(o, tileHeight, book) {
+    this._threadID = o;
+    this._rootElement = tileHeight;
+    this._tabMainElement = book;
+    /** @type {null} */
+    this._openSheet = null;
+  };
+  declare(Type.prototype, IOStream, {
+    /**
+     * @return {undefined}
+     */
+    destroy : function() {
+      d.empty(this._rootElement);
     },
-    _openCommon: function(t, u) {
-      if (this._openSheet && !i.canReplaceOpenSheet(this._openSheet, t)) {
-        if (t.couldNotReplace) t.couldNotReplace();
+    /**
+     * @param {string} context
+     * @param {boolean} recurring
+     * @return {undefined}
+     */
+    _openCommon : function(context, recurring) {
+      if (this._openSheet && !compiled.canReplaceOpenSheet(this._openSheet, context)) {
+        if (context.couldNotReplace) {
+          context.couldNotReplace();
+        }
         return;
       }
       this.clear(function() {
-        this._openSheet = t;
-        var v = m[':fb:mercury:tab-sheet:loading'].build().getRoot();
-        k.setContent(this._rootElement, v);
-        j.show(v);
-        j.show(this._rootElement);
-        t.render();
-        if (u) {
-          j.addClass(this._tabMainElement, 'sheetSlide');
-          j.addClass(this._tabMainElement, "_1sk4");
-          var w = n.getElementDimensions(this._rootElement).y;
-          l.set(this._rootElement, 'bottom', w + 'px');
+        /** @type {string} */
+        this._openSheet = context;
+        var args = dataAndEvents[":fb:mercury:tab-sheet:loading"].build().getRoot();
+        d.setContent(this._rootElement, args);
+        s.show(args);
+        s.show(this._rootElement);
+        context.render();
+        if (recurring) {
+          s.addClass(this._tabMainElement, "sheetSlide");
+          s.addClass(this._tabMainElement, "_1sk4");
+          var pos = Css.getElementDimensions(this._rootElement).y;
+          domStyle.set(this._rootElement, "bottom", pos + "px");
           this.resize();
-          this._animation = new g(this._rootElement).to('bottom', 0).duration(150).ease(g.ease.both).ondone(function() {
-            j.removeClass(this._tabMainElement, 'sheetSlide');
-            j.removeClass(this._tabMainElement, "_1sk4");
+          this._animation = (new node(this._rootElement)).to("bottom", 0).duration(150).ease(node.ease.both).ondone(function() {
+            s.removeClass(this._tabMainElement, "sheetSlide");
+            s.removeClass(this._tabMainElement, "_1sk4");
             this.resize();
           }.bind(this)).go();
-        } else this.resize();
-        if (!t.isPermanent()) {
-          var x = r;
-          if (t.getCloseTimeout) x = t.getCloseTimeout();
-          var y = this.getAutoCloseCallback(t);
-          this._sheetCloseHandler = q(this.close.bind(this, t, y), x);
-          if (t.timeoutCanBeReset) t.setResetTimeoutCallback(this.resetTimeout.bind(this));
+        } else {
+          this.resize();
+        }
+        if (!context.isPermanent()) {
+          /** @type {number} */
+          var originalEvent = event;
+          if (context.getCloseTimeout) {
+            originalEvent = context.getCloseTimeout();
+          }
+          var type = this.getAutoCloseCallback(context);
+          this._sheetCloseHandler = $(this.close.bind(this, context, type), originalEvent);
+          if (context.timeoutCanBeReset) {
+            context.setResetTimeoutCallback(this.resetTimeout.bind(this));
+          }
         }
       }.bind(this));
     },
-    getAutoCloseCallback: function(t) {
-      if (!t.autoCloseCallback) return null;
-      return t.autoCloseCallback.bind(t);
+    /**
+     * @param {?} method
+     * @return {?}
+     */
+    getAutoCloseCallback : function(method) {
+      if (!method.autoCloseCallback) {
+        return null;
+      }
+      return method.autoCloseCallback.bind(method);
     },
-    resetTimeout: function(t, u) {
+    /**
+     * @param {?} id
+     * @param {?} shim
+     * @return {undefined}
+     */
+    resetTimeout : function(id, shim) {
       clearTimeout(this._sheetCloseHandler);
-      var v = this.getAutoCloseCallback(t);
-      this._sheetCloseHandler = q(this.close.bind(this, t, v), u);
+      var img = this.getAutoCloseCallback(id);
+      this._sheetCloseHandler = $(this.close.bind(this, id, img), shim);
     },
-    set: function(t) {
-      return this._openCommon(t, false);
+    /**
+     * @param {?} className
+     * @return {?}
+     */
+    set : function(className) {
+      return this._openCommon(className, false);
     },
-    open: function(t) {
-      return this._openCommon(t, true);
+    /**
+     * @param {number} expectedHashCode
+     * @return {?}
+     */
+    open : function(expectedHashCode) {
+      return this._openCommon(expectedHashCode, true);
     },
-    close: function(t, u) {
-      if (this._openSheet != t) return;
-      if (!this._openSheet) {
-        u && u();
+    /**
+     * @param {number} expectedHashCode
+     * @param {number} callback
+     * @return {undefined}
+     */
+    close : function(expectedHashCode, callback) {
+      if (this._openSheet != expectedHashCode) {
         return;
       }
-      if (this._animation) this._animation.stop();
+      if (!this._openSheet) {
+        if (callback) {
+          callback();
+        }
+        return;
+      }
+      if (this._animation) {
+        this._animation.stop();
+      }
       if (this._sheetCloseHandler) {
         clearTimeout(this._sheetCloseHandler);
+        /** @type {null} */
         this._sheetCloseHandler = null;
       }
-      j.addClass(this._tabMainElement, 'sheetSlide');
-      j.addClass(this._tabMainElement, "_1sk4");
-      var v = n.getElementDimensions(this._rootElement).y;
+      s.addClass(this._tabMainElement, "sheetSlide");
+      s.addClass(this._tabMainElement, "_1sk4");
+      var topOffset = Css.getElementDimensions(this._rootElement).y;
       this.resize();
-      this._animation = new g(this._rootElement).to('bottom', v + 'px').duration(100).ease(g.ease.begin).ondone(function() {
-        k.empty(this._rootElement);
-        j.hide(this._rootElement);
-        j.removeClass(this._tabMainElement, 'sheetSlide');
-        j.removeClass(this._tabMainElement, "_1sk4");
+      this._animation = (new node(this._rootElement)).to("bottom", topOffset + "px").duration(100).ease(node.ease.begin).ondone(function() {
+        d.empty(this._rootElement);
+        s.hide(this._rootElement);
+        s.removeClass(this._tabMainElement, "sheetSlide");
+        s.removeClass(this._tabMainElement, "_1sk4");
+        /** @type {null} */
         this._openSheet = null;
         this.resize();
-        u && u();
+        if (callback) {
+          callback();
+        }
       }.bind(this)).go();
     },
-    clear: function(t) {
-      this.close(this._openSheet, t);
+    /**
+     * @param {?} objId
+     * @return {undefined}
+     */
+    clear : function(objId) {
+      this.close(this._openSheet, objId);
     },
-    resize: function() {
-      this.inform('resize');
+    /**
+     * @return {undefined}
+     */
+    resize : function() {
+      this.inform("resize");
     }
   });
-  e.exports = s;
+  /** @type {function (?, ?, ?): undefined} */
+  module.exports = Type;
 }, null);
-__d("Token", ["CSS", "DataStore", "DOM", "Locale", "UnicodeBidi", "fbt"], function(a, b, c, d, e, f, g, h, i, j, k, l) {
-  function m(n, o) {
-    "use strict";
-    this.info = n;
-    this.paramName = o;
+__d("Token", ["CSS", "DataStore", "DOM", "Locale", "UnicodeBidi", "fbt"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, el, listener, dojo, methods, dataAndEvents, self) {
+  /**
+   * @param {Object} info
+   * @param {string} obj
+   * @return {undefined}
+   */
+  function _(info, obj) {
+    /** @type {Object} */
+    this.info = info;
+    /** @type {string} */
+    this.paramName = obj;
   }
-  m.prototype.getInfo = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  _.prototype.getInfo = function() {
     return this.info;
   };
-  m.prototype.getText = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  _.prototype.getText = function() {
     return this.info.text;
   };
-  m.prototype.getValue = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  _.prototype.getValue = function() {
     return this.info.uid;
   };
-  m.prototype.isFreeform = function() {
-    "use strict";
-    return !!this.info.freeform;
+  /**
+   * @return {?}
+   */
+  _.prototype.isFreeform = function() {
+    return!!this.info.freeform;
   };
-  m.prototype.setSelected = function(n) {
-    "use strict";
-    g.conditionClass(this.getElement(), 'uiTokenSelected', n);
+  /**
+   * @param {?} index
+   * @return {?}
+   */
+  _.prototype.setSelected = function(index) {
+    el.conditionClass(this.getElement(), "uiTokenSelected", index);
     return this;
   };
-  m.prototype.getElement = function() {
-    "use strict";
-    if (!this.element) this.setElement(this.createElement());
+  /**
+   * @return {?}
+   */
+  _.prototype.getElement = function() {
+    if (!this.element) {
+      this.setElement(this.createElement());
+    }
     return this.element;
   };
-  m.prototype.setElement = function(n) {
-    "use strict";
-    h.set(n, 'Token', this);
-    this.element = n;
+  /**
+   * @param {?} element
+   * @return {?}
+   */
+  _.prototype.setElement = function(element) {
+    listener.set(element, "Token", this);
+    this.element = element;
     return this;
   };
-  m.prototype.isRemovable = function() {
-    "use strict";
-    return g.hasClass(this.element, 'removable');
+  /**
+   * @return {?}
+   */
+  _.prototype.isRemovable = function() {
+    return el.hasClass(this.element, "removable");
   };
-  m.prototype.getTextDirection = function() {
-    "use strict";
-    var n = k.isDirectionRTL(this.getText()),
-      o = j.isRTL();
-    if (n && !o) return 'rtl';
-    if (!n && o) return 'ltr';
+  /**
+   * @return {?}
+   */
+  _.prototype.getTextDirection = function() {
+    var f1SpecialConvert = dataAndEvents.isDirectionRTL(this.getText());
+    var f2SpecialConvert = methods.isRTL();
+    if (f1SpecialConvert && !f2SpecialConvert) {
+      return "rtl";
+    }
+    if (!f1SpecialConvert && f2SpecialConvert) {
+      return "ltr";
+    }
     return null;
   };
-  m.prototype.createElement = function(n, o) {
-    "use strict";
-    var p = this.paramName,
-      q = this.getText(),
-      r = this.getValue(),
-      s = i.create('a', {
-        href: '#',
-        'aria-label': l._("Remove {item}", [l.param("item", q)]),
-        className: 'remove uiCloseButton uiCloseButtonSmall'
-      });
-    if (n) g.addClass(s, 'uiCloseButtonSmallGray');
-    var t = i.create('input', {
-        type: 'hidden',
-        value: r,
-        name: p + '[]',
-        autocomplete: 'off'
-      }),
-      u = i.create('input', {
-        type: 'hidden',
-        value: q,
-        name: 'text_' + p + '[]',
-        autocomplete: 'off'
-      }),
-      v = {
-        className: 'removable uiToken'
-      },
-      w = this.getTextDirection();
-    if (w !== null) v.dir = w;
-    var x = i.create('span', v, [q, t, u, s]);
-    if (n) g.addClass(x, 'uiTokenGray');
-    if (o) {
-      var y = i.create('i', {
-        className: o
-      });
-      i.prependContent(x, y);
+  /**
+   * @param {string} type
+   * @param {?} expectedHashCode
+   * @return {?}
+   */
+  _.prototype.createElement = function(type, expectedHashCode) {
+    var i = this.paramName;
+    var fn = this.getText();
+    var val = this.getValue();
+    var id = dojo.create("a", {
+      href : "#",
+      "aria-label" : self._("Remove {item}", [self.param("item", fn)]),
+      className : "remove uiCloseButton uiCloseButtonSmall"
+    });
+    if (type) {
+      el.addClass(id, "uiCloseButtonSmallGray");
     }
-    return x;
+    var matched = dojo.create("input", {
+      type : "hidden",
+      value : val,
+      name : i + "[]",
+      autocomplete : "off"
+    });
+    var output = dojo.create("input", {
+      type : "hidden",
+      value : fn,
+      name : "text_" + i + "[]",
+      autocomplete : "off"
+    });
+    var options = {
+      className : "removable uiToken"
+    };
+    var dir = this.getTextDirection();
+    if (dir !== null) {
+      options.dir = dir;
+    }
+    var node = dojo.create("span", options, [fn, matched, output, id]);
+    if (type) {
+      el.addClass(node, "uiTokenGray");
+    }
+    if (expectedHashCode) {
+      var c = dojo.create("i", {
+        className : expectedHashCode
+      });
+      dojo.prependContent(node, c);
+    }
+    return node;
   };
-  e.exports = m;
+  /** @type {function (Object, string): undefined} */
+  module.exports = _;
 }, null);
-__d("WeakToken", ["CSS", "Token"], function(a, b, c, d, e, f, g, h) {
-  for (var i in h)
-    if (h.hasOwnProperty(i)) k[i] = h[i];
-  var j = h === null ? null : h.prototype;
-  k.prototype = Object.create(j);
-  k.prototype.constructor = k;
-  k.__superConstructor__ = h;
-
-  function k() {
-    "use strict";
-    if (h !== null) h.apply(this, arguments);
+__d("WeakToken", ["CSS", "Token"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, module, keepData, element, b) {
+  /**
+   * @return {undefined}
+   */
+  function a() {
+    if (b !== null) {
+      b.apply(this, arguments);
+    }
   }
-  k.prototype.createElement = function() {
-    "use strict";
-    var l = j.createElement.call(this, true, 'UFIWeakReferenceIcon');
-    g.addClass(l, 'uiTokenWeakReference');
-    return l;
+  var i;
+  for (i in b) {
+    if (b.hasOwnProperty(i)) {
+      a[i] = b[i];
+    }
+  }
+  var parent = b === null ? null : b.prototype;
+  /** @type {Object} */
+  a.prototype = Object.create(parent);
+  /** @type {function (): undefined} */
+  a.prototype.constructor = a;
+  /** @type {(Object|string)} */
+  a.__superConstructor__ = b;
+  /**
+   * @return {?}
+   */
+  a.prototype.createElement = function() {
+    var activeClassName = parent.createElement.call(this, true, "UFIWeakReferenceIcon");
+    element.addClass(activeClassName, "uiTokenWeakReference");
+    return activeClassName;
   };
-  e.exports = k;
+  /** @type {function (): undefined} */
+  module.exports = a;
 }, null);
-__d("Tokenizer", ["Arbiter", "ArbiterMixin", "CSS", "DataStore", "DOM", "DOMQuery", "Event", "Focus", "Input", "Keys", "Parent", "StickyPlaceholderInput", "Style", "TextMetrics", "Token", "UserAgent_DEPRECATED", "WeakToken", "copyProperties", "createObjectFrom", "emptyFunction", "mixin"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa) {
-  var ba = 20,
-    ca = aa(h);
-  for (var da in ca)
-    if (ca.hasOwnProperty(da)) fa[da] = ca[da];
-  var ea = ca === null ? null : ca.prototype;
-  fa.prototype = Object.create(ea);
-  fa.prototype.constructor = fa;
-  fa.__superConstructor__ = ca;
-
-  function fa(ga, ha, ia) {
-    "use strict";
-    this.element = ga;
-    this.typeahead = ha;
-    this.input = ha.getCore().getElement();
-    if (ia) this.init(ia.tokenarea, ia.param_name, ia.initial_info, ia.options);
-    j.set(this.element, 'Tokenizer', this);
+__d("Tokenizer", ["Arbiter", "ArbiterMixin", "CSS", "DataStore", "DOM", "DOMQuery", "Event", "Focus", "Input", "Keys", "Parent", "StickyPlaceholderInput", "Style", "TextMetrics", "Token", "UserAgent_DEPRECATED", "WeakToken", "copyProperties", "createObjectFrom", "emptyFunction", "mixin"], function(dataAndEvents, deepDataAndEvents, ignoreMethodDoesntExist, textAlt, context, keepData, m, data, $animate, div, first, range, handler, input, dust, keys, util, t, domStyle, State, Socket, bowser, Dialog,
+fn, indexOf, init, fun) {
+  /**
+   * @param {HTMLElement} obj
+   * @param {Object} err
+   * @param {Element} params
+   * @return {undefined}
+   */
+  function self(obj, err, params) {
+    /** @type {HTMLElement} */
+    this.element = obj;
+    /** @type {Object} */
+    this.typeahead = err;
+    this.input = err.getCore().getElement();
+    if (params) {
+      this.init(params.tokenarea, params.param_name, params.initial_info, params.options);
+    }
+    div.set(this.element, "Tokenizer", this);
   }
-  fa.prototype.init = function(ga, ha, ia, ja) {
-    "use strict";
+  /** @type {number} */
+  var trie = 20;
+  var tmp = fun(data);
+  var p;
+  for (p in tmp) {
+    if (tmp.hasOwnProperty(p)) {
+      self[p] = tmp[p];
+    }
+  }
+  var parent = tmp === null ? null : tmp.prototype;
+  /** @type {Object} */
+  self.prototype = Object.create(parent);
+  /** @type {function (HTMLElement, Object, Element): undefined} */
+  self.prototype.constructor = self;
+  self.__superConstructor__ = tmp;
+  /**
+   * @param {?} target
+   * @param {string} allBindingsAccessor
+   * @param {Array} models
+   * @param {?} selector
+   * @return {undefined}
+   */
+  self.prototype.init = function(target, allBindingsAccessor, models, selector) {
     this._handleEvents = this.handleEvents.bind(this);
-    this.init = z;
-    this.setTokenarea(ga);
-    this.paramName = ha;
-    if (!this.placeholder) this.placeholder = this.input.getAttribute('data-placeholder') || this.input.getAttribute('placeholder') || '';
-    x(this, ja || {});
+    /** @type {(RegExp|string)} */
+    this.init = init;
+    this.setTokenarea(target);
+    /** @type {string} */
+    this.paramName = allBindingsAccessor;
+    if (!this.placeholder) {
+      this.placeholder = this.input.getAttribute("data-placeholder") || (this.input.getAttribute("placeholder") || "");
+    }
+    fn(this, selector || {});
     this.initEvents();
     this.initTypeahead();
-    this.reset(ia);
+    this.reset(models);
     this.initBehaviors();
     setTimeout(this.adjustWidth.bind(this), 0);
-    g.inform('Tokenizer/init', this, g.BEHAVIOR_PERSISTENT);
-    this.inform('init', {
-      tokens: this.getTokens()
+    m.inform("Tokenizer/init", this, m.BEHAVIOR_PERSISTENT);
+    this.inform("init", {
+      tokens : this.getTokens()
     });
   };
-  fa.prototype.reset = function(ga) {
-    "use strict";
+  /**
+   * @param {Array} models
+   * @return {undefined}
+   */
+  self.prototype.reset = function(models) {
+    /** @type {Array} */
     this.tokens = [];
     this.unique = {};
-    if (ga) {
-      this.populate(ga);
-    } else k.empty(this.tokenarea);
+    if (models) {
+      this.populate(models);
+    } else {
+      first.empty(this.tokenarea);
+    }
     this.updateTokenarea();
   };
-  fa.prototype.populate = function(ga) {
-    "use strict";
-    var ha = [];
-    this.tokens = this.getTokenElements().map(function(ia, ja) {
-      var ka = ga[ja];
-      ha.push(this._tokenKey(ka));
-      return this.createToken(ka, ia);
+  /**
+   * @param {Array} options
+   * @return {undefined}
+   */
+  self.prototype.populate = function(options) {
+    /** @type {Array} */
+    var output = [];
+    this.tokens = this.getTokenElements().map(function(classesToRemove, flag) {
+      var val = options[flag];
+      output.push(this._tokenKey(val));
+      return this.createToken(val, classesToRemove);
     }, this);
-    this.unique = y(ha, this.tokens);
+    this.unique = indexOf(output, this.tokens);
   };
-  fa.prototype.setTokenarea = function(ga) {
-    "use strict";
+  /**
+   * @param {?} target
+   * @return {undefined}
+   */
+  self.prototype.setTokenarea = function(target) {
+    /** @type {boolean} */
     var ha = !this.tokenarea;
-    if (ga !== this.tokenarea) {
+    if (target !== this.tokenarea) {
       if (this.tokenarea) {
-        k.remove(this.tokenarea);
-        for (var ia in this._tokenareaListeners) this._tokenareaListeners[ia].remove();
+        first.remove(this.tokenarea);
+        var prefixed;
+        for (prefixed in this._tokenareaListeners) {
+          this._tokenareaListeners[prefixed].remove();
+        }
       }
-      this._tokenareaListeners = m.listen(ga, {
-        click: this._handleEvents,
-        keydown: this._handleEvents
+      this._tokenareaListeners = handler.listen(target, {
+        click : this._handleEvents,
+        keydown : this._handleEvents
       });
-      this.tokenarea = ga;
+      this.tokenarea = target;
     }
-    if (!ha) this.updateTokenarea();
+    if (!ha) {
+      this.updateTokenarea();
+    }
   };
-  fa.prototype.getElement = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  self.prototype.getElement = function() {
     return this.element;
   };
-  fa.prototype.getTypeahead = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  self.prototype.getTypeahead = function() {
     return this.typeahead;
   };
-  fa.prototype.getInput = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  self.prototype.getInput = function() {
     return this.input;
   };
-  fa.prototype.initBehaviors = function() {
-    "use strict";
+  /**
+   * @return {undefined}
+   */
+  self.prototype.initBehaviors = function() {
     this.behaviors = this.behaviors || [];
     if (this.behaviors instanceof Array) {
-      this.behaviors.forEach(function(ia) {
-        ia.behavior(this, ia.config);
+      this.behaviors.forEach(function(options) {
+        options.behavior(this, options.config);
       }.bind(this));
-    } else
-      for (var ga in (this.behaviors || {})) {
-        var ha = window.TokenizerBehaviors && window.TokenizerBehaviors[ga];
-        ha.call(null, this, this.behaviors[ga]);
+    } else {
+      var name;
+      for (name in this.behaviors || {}) {
+        var callback = window.TokenizerBehaviors && window.TokenizerBehaviors[name];
+        callback.call(null, this, this.behaviors[name]);
       }
-  };
-  fa.prototype.initTypeahead = function() {
-    "use strict";
-    var ga = this.typeahead.getCore();
-    ga.resetOnSelect = true;
-    ga.setValueOnSelect = false;
-    ga.preventFocusChangeOnTab = true;
-    if (this.inline) {
-      var ha = this.typeahead.getView();
-      i.addClass(ha.getElement(), 'uiInlineTokenizerView');
     }
-    this.typeahead.subscribe('select', function(ia, ja) {
-      return this.handleSelect(ja);
-    }.bind(this));
-    this.typeahead.subscribe('blur', this.handleBlur.bind(this));
   };
-  fa.prototype.handleBlur = function(event) {
-    "use strict";
-    this.inform('blur', {
-      event: event
+  /**
+   * @return {undefined}
+   */
+  self.prototype.initTypeahead = function() {
+    var resetOnSelect = this.typeahead.getCore();
+    /** @type {boolean} */
+    resetOnSelect.resetOnSelect = true;
+    /** @type {boolean} */
+    resetOnSelect.setValueOnSelect = false;
+    /** @type {boolean} */
+    resetOnSelect.preventFocusChangeOnTab = true;
+    if (this.inline) {
+      var first = this.typeahead.getView();
+      $animate.addClass(first.getElement(), "uiInlineTokenizerView");
+    }
+    this.typeahead.subscribe("select", function(dataAndEvents, completeEvent) {
+      return this.handleSelect(completeEvent);
+    }.bind(this));
+    this.typeahead.subscribe("blur", this.handleBlur.bind(this));
+  };
+  /**
+   * @param {string} e
+   * @return {undefined}
+   */
+  self.prototype.handleBlur = function(e) {
+    this.inform("blur", {
+      event : e
     });
     this.updatePlaceholder();
   };
-  fa.prototype.handleSelect = function(ga) {
-    "use strict";
-    var ha = ga.selected;
-    if ('uid' in ha) {
+  /**
+   * @param {Node} e
+   * @return {undefined}
+   */
+  self.prototype.handleSelect = function(e) {
+    var object = e.selected;
+    if ("uid" in object) {
       this.updateInput();
-      this.addToken(this.createToken(ha));
+      this.addToken(this.createToken(object));
     }
   };
-  fa.prototype.initEvents = function() {
-    "use strict";
-    var ga = v.firefox() < 4 ? 'keypress' : 'keydown';
-    m.listen(this.input, 'paste', this.paste.bind(this));
-    m.listen(this.input, ga, this.keydown.bind(this));
+  /**
+   * @return {undefined}
+   */
+  self.prototype.initEvents = function() {
+    /** @type {string} */
+    var event = bowser.firefox() < 4 ? "keypress" : "keydown";
+    handler.listen(this.input, "paste", this.paste.bind(this));
+    handler.listen(this.input, event, this.keydown.bind(this));
   };
-  fa.prototype.handleEvents = function(event) {
-    "use strict";
-    var ga = event.getTarget(),
-      ha = ga && this.getTokenElementFromTarget(ga);
-    if (!ha) return;
-    if (event.type != 'keydown' || m.getKeyCode(event) == p.RETURN) this.processEvents(event, ga, ha);
+  /**
+   * @param {Event} e
+   * @return {undefined}
+   */
+  self.prototype.handleEvents = function(e) {
+    var count = e.getTarget();
+    var followingChild = count && this.getTokenElementFromTarget(count);
+    if (!followingChild) {
+      return;
+    }
+    if (e.type != "keydown" || handler.getKeyCode(e) == keys.RETURN) {
+      this.processEvents(e, count, followingChild);
+    }
   };
-  fa.prototype.processEvents = function(event, ga, ha) {
-    "use strict";
-    if (q.byClass(ga, 'remove')) {
-      var ia = ha.nextSibling;
-      ia = ia && l.scry(ha.nextSibling, '.remove')[0];
-      var ja = this.getTokenFromElement(ha);
-      ja = this.addTokenData(ja, ga);
-      this.removeToken(ja);
-      this.focusOnTokenRemoval(event, ia);
+  /**
+   * @param {Event} event
+   * @param {?} params
+   * @param {HTMLElement} node
+   * @return {undefined}
+   */
+  self.prototype.processEvents = function(event, params, node) {
+    if (util.byClass(params, "remove")) {
+      var s = node.nextSibling;
+      s = s && range.scry(node.nextSibling, ".remove")[0];
+      var events = this.getTokenFromElement(node);
+      events = this.addTokenData(events, params);
+      this.removeToken(events);
+      this.focusOnTokenRemoval(event, s);
       event.kill();
     }
   };
-  fa.prototype.focusOnTokenRemoval = function(event, ga) {
-    "use strict";
-    n.set(event.type == 'keydown' && ga || this.input);
+  /**
+   * @param {Event} event
+   * @param {boolean} v02
+   * @return {undefined}
+   */
+  self.prototype.focusOnTokenRemoval = function(event, v02) {
+    input.set(event.type == "keydown" && v02 || this.input);
   };
-  fa.prototype.addTokenData = function(ga, ha) {
-    "use strict";
-    return ga;
+  /**
+   * @param {?} keepData
+   * @param {?} startArray
+   * @return {?}
+   */
+  self.prototype.addTokenData = function(keepData, startArray) {
+    return keepData;
   };
-  fa.prototype.keydown = function(event) {
-    "use strict";
-    this.inform('keydown', {
-      event: event
+  /**
+   * @param {string} e
+   * @return {undefined}
+   */
+  self.prototype.keydown = function(e) {
+    this.inform("keydown", {
+      event : e
     });
-    var ga = m.getKeyCode(event),
-      ha = this.input;
-    if (this.inline && ga == p.BACKSPACE && o.isEmpty(ha)) {
-      var ia = this.getLastToken();
-      if (ia && ia.isRemovable()) this.removeToken(ia);
+    var key = handler.getKeyCode(e);
+    var str = this.input;
+    if (this.inline && (key == keys.BACKSPACE && dust.isEmpty(str))) {
+      var camelKey = this.getLastToken();
+      if (camelKey && camelKey.isRemovable()) {
+        this.removeToken(camelKey);
+      }
     }
     this.updateInput();
   };
-  fa.prototype.paste = function(event) {
-    "use strict";
-    this.inform('paste', {
-      event: event
+  /**
+   * @param {string} e
+   * @return {undefined}
+   */
+  self.prototype.paste = function(e) {
+    this.inform("paste", {
+      event : e
     });
     this.updateInput(true);
   };
-  fa.prototype.focusInput = function() {
-    "use strict";
-    n.set(this.input);
+  /**
+   * @return {undefined}
+   */
+  self.prototype.focusInput = function() {
+    input.set(this.input);
   };
-  fa.prototype.updateInput = function(ga) {
-    "use strict";
-    if (!this.inline) return;
+  /**
+   * @param {boolean} dataAndEvents
+   * @return {undefined}
+   */
+  self.prototype.updateInput = function(dataAndEvents) {
+    if (!this.inline) {
+      return;
+    }
     setTimeout(function() {
       this.adjustWidth(this.input.value);
-      if (ga) this.input.value = this.input.value;
+      if (dataAndEvents) {
+        this.input.value = this.input.value;
+      }
     }.bind(this), 20);
-    r.setPlaceholderText(this.input, '');
-    this.inform('resize');
+    t.setPlaceholderText(this.input, "");
+    this.inform("resize");
   };
-  fa.prototype.setPlaceholder = function(ga) {
-    "use strict";
-    this.placeholder = ga;
-    if (this.stickyPlaceholder) r.setPlaceholderText(this.input, ga);
+  /**
+   * @param {?} string
+   * @return {undefined}
+   */
+  self.prototype.setPlaceholder = function(string) {
+    this.placeholder = string;
+    if (this.stickyPlaceholder) {
+      t.setPlaceholderText(this.input, string);
+    }
     this.updatePlaceholder();
   };
-  fa.prototype.updatePlaceholder = function() {
-    "use strict";
-    if (!this.inline || this.input.value) return;
-    var ga = !this.tokens.length,
-      ha = '';
-    if (ga || this.stickyPlaceholder) {
-      this.adjustWidth(this.placeholder);
-      ha = this.placeholder;
-    } else this.adjustWidth(this.input.value);
-    r.setPlaceholderText(this.input, ha);
-  };
-  fa.prototype.adjustWidth = function(ga) {
-    "use strict";
-    if (!this.inline || !this._getIsInDOM()) return;
-    if (!ga && this.input.value === '') ga = this.placeholder;
-    var ha = ba;
-    if (ga !== this.placeholder || !this.getTokens().length || this.stickyPlaceholder) {
-      var ia = s.getFloat(this.getElement(), 'width'),
-        ja = this._getMetrics().measure(ga);
-      ha = ja.width + this._getWidthOffset() + 10;
-      ha = (ha >= ia) ? ia : ha;
+  /**
+   * @return {undefined}
+   */
+  self.prototype.updatePlaceholder = function() {
+    if (!this.inline || this.input.value) {
+      return;
     }
-    s.set(this.input, 'width', ha + 'px');
-    this.inform('resize');
-    g.inform('reflow');
+    /** @type {boolean} */
+    var stickyPlaceholder = !this.tokens.length;
+    /** @type {string} */
+    var text = "";
+    if (stickyPlaceholder || this.stickyPlaceholder) {
+      this.adjustWidth(this.placeholder);
+      text = this.placeholder;
+    } else {
+      this.adjustWidth(this.input.value);
+    }
+    t.setPlaceholderText(this.input, text);
   };
-  fa.prototype.getToken = function(ga) {
-    "use strict";
-    return this.unique[ga] || null;
+  /**
+   * @param {Object} text
+   * @return {undefined}
+   */
+  self.prototype.adjustWidth = function(text) {
+    if (!this.inline || !this._getIsInDOM()) {
+      return;
+    }
+    if (!text && this.input.value === "") {
+      text = this.placeholder;
+    }
+    /** @type {number} */
+    var pos = trie;
+    if (text !== this.placeholder || (!this.getTokens().length || this.stickyPlaceholder)) {
+      var npos = domStyle.getFloat(this.getElement(), "width");
+      var code = this._getMetrics().measure(text);
+      pos = code.width + this._getWidthOffset() + 10;
+      pos = pos >= npos ? npos : pos;
+    }
+    domStyle.set(this.input, "width", pos + "px");
+    this.inform("resize");
+    m.inform("reflow");
   };
-  fa.prototype.getTokens = function() {
-    "use strict";
+  /**
+   * @param {?} index
+   * @return {?}
+   */
+  self.prototype.getToken = function(index) {
+    return this.unique[index] || null;
+  };
+  /**
+   * @return {?}
+   */
+  self.prototype.getTokens = function() {
     return this.tokens || [];
   };
-  fa.prototype.getTokenElements = function() {
-    "use strict";
-    return l.scry(this.tokenarea, 'span.uiToken');
+  /**
+   * @return {?}
+   */
+  self.prototype.getTokenElements = function() {
+    return range.scry(this.tokenarea, "span.uiToken");
   };
-  fa.prototype.getTokenElementFromTarget = function(ga) {
-    "use strict";
-    return q.byClass(ga, 'uiToken');
+  /**
+   * @param {?} params
+   * @return {?}
+   */
+  self.prototype.getTokenElementFromTarget = function(params) {
+    return util.byClass(params, "uiToken");
   };
-  fa.prototype.getTokenFromElement = function(ga) {
-    "use strict";
-    return j.get(ga, 'Token');
+  /**
+   * @param {Object} key
+   * @return {?}
+   */
+  self.prototype.getTokenFromElement = function(key) {
+    return div.get(key, "Token");
   };
-  fa.prototype.getTokenValues = function() {
-    "use strict";
-    if (!this.tokens) return [];
-    return this.tokens.map(function(ga) {
-      return ga.getValue();
+  /**
+   * @return {?}
+   */
+  self.prototype.getTokenValues = function() {
+    if (!this.tokens) {
+      return[];
+    }
+    return this.tokens.map(function(res) {
+      return res.getValue();
     });
   };
-  fa.prototype.getFirstToken = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  self.prototype.getFirstToken = function() {
     return this.tokens[0] || null;
   };
-  fa.prototype.getLastToken = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  self.prototype.getLastToken = function() {
     return this.tokens[this.tokens.length - 1] || null;
   };
-  fa.prototype.hasMaxTokens = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  self.prototype.hasMaxTokens = function() {
     return this.maxTokens && this.maxTokens <= this.tokens.length;
   };
-  fa.prototype.createToken = function(ga, ha) {
-    "use strict";
-    var ia = this.getToken(this._tokenKey(ga));
-    if (!ia) ia = ga.weak_reference ? new w(ga, this.paramName) : new u(ga, this.paramName);
-    ha && ia.setElement(ha);
-    return ia;
-  };
-  fa.prototype.addToken = function(ga) {
-    "use strict";
-    if (this.hasMaxTokens()) return;
-    var ha = this._tokenKey(ga.getInfo());
-    if (ha in this.unique) return;
-    this.unique[ha] = ga;
-    this.tokens.push(ga);
-    this.insertToken(ga);
-    this.updateTokenarea();
-    this.inform('addToken', ga);
-    this.inform('changeTokens');
-    g.inform('Form/change', {
-      node: this.element
-    });
-  };
-  fa.prototype.insertToken = function(ga) {
-    "use strict";
-    k.appendContent(this.tokenarea, ga.getElement());
-  };
-  fa.prototype.removeToken = function(ga) {
-    "use strict";
-    if (!ga) return;
-    var ha = this.tokens.indexOf(ga);
-    if (ha < 0) return;
-    this.tokens.splice(this.tokens.indexOf(ga), 1);
-    delete this.unique[this._tokenKey(ga.getInfo())];
-    k.remove(ga.getElement());
-    this.updateTokenarea();
-    this.inform('removeToken', ga);
-    this.inform('changeTokens');
-    g.inform('Form/change', {
-      node: this.element
-    });
-  };
-  fa.prototype.removeAllTokens = function() {
-    "use strict";
-    this.reset();
-    this.inform('changeTokens');
-    this.inform('removeAllTokens');
-  };
-  fa.prototype.updateTokenarea = function() {
-    "use strict";
-    var ga = this.typeahead.getCore(),
-      ha = this.getTokenValues();
-    if (this.excludeDuplicates) {
-      this._exclusions || (this._exclusions = ga.getExclusions());
-      ga.setExclusions(ha.concat(this._exclusions));
+  /**
+   * @param {string} opts
+   * @param {?} element
+   * @return {?}
+   */
+  self.prototype.createToken = function(opts, element) {
+    var video = this.getToken(this._tokenKey(opts));
+    if (!video) {
+      video = opts.weak_reference ? new Dialog(opts, this.paramName) : new Socket(opts, this.paramName);
     }
-    ga.setEnabled(!this.hasMaxTokens());
+    if (element) {
+      video.setElement(element);
+    }
+    return video;
+  };
+  /**
+   * @param {?} token
+   * @return {undefined}
+   */
+  self.prototype.addToken = function(token) {
+    if (this.hasMaxTokens()) {
+      return;
+    }
+    var cleaned = this._tokenKey(token.getInfo());
+    if (cleaned in this.unique) {
+      return;
+    }
+    this.unique[cleaned] = token;
+    this.tokens.push(token);
+    this.insertToken(token);
+    this.updateTokenarea();
+    this.inform("addToken", token);
+    this.inform("changeTokens");
+    m.inform("Form/change", {
+      node : this.element
+    });
+  };
+  /**
+   * @param {?} element
+   * @return {undefined}
+   */
+  self.prototype.insertToken = function(element) {
+    first.appendContent(this.tokenarea, element.getElement());
+  };
+  /**
+   * @param {?} key
+   * @return {undefined}
+   */
+  self.prototype.removeToken = function(key) {
+    if (!key) {
+      return;
+    }
+    var camelKey = this.tokens.indexOf(key);
+    if (camelKey < 0) {
+      return;
+    }
+    this.tokens.splice(this.tokens.indexOf(key), 1);
+    delete this.unique[this._tokenKey(key.getInfo())];
+    first.remove(key.getElement());
+    this.updateTokenarea();
+    this.inform("removeToken", key);
+    this.inform("changeTokens");
+    m.inform("Form/change", {
+      node : this.element
+    });
+  };
+  /**
+   * @return {undefined}
+   */
+  self.prototype.removeAllTokens = function() {
+    this.reset();
+    this.inform("changeTokens");
+    this.inform("removeAllTokens");
+  };
+  /**
+   * @return {undefined}
+   */
+  self.prototype.updateTokenarea = function() {
+    var disabledButton = this.typeahead.getCore();
+    var l = this.getTokenValues();
+    if (this.excludeDuplicates) {
+      if (!this._exclusions) {
+        this._exclusions = disabledButton.getExclusions();
+      }
+      disabledButton.setExclusions(l.concat(this._exclusions));
+    }
+    disabledButton.setEnabled(!this.hasMaxTokens());
     this.updateTokenareaVisibility();
     this.updatePlaceholder();
-    this.inform('resize');
-    g.inform('reflow');
+    this.inform("resize");
+    m.inform("reflow");
   };
-  fa.prototype.updateTokenareaVisibility = function() {
-    "use strict";
-    i.conditionShow(this.tokenarea, this.tokens.length !== 0);
+  /**
+   * @return {undefined}
+   */
+  self.prototype.updateTokenareaVisibility = function() {
+    $animate.conditionShow(this.tokenarea, this.tokens.length !== 0);
   };
-  fa.prototype._tokenKey = function(ga) {
-    "use strict";
-    return ga.uid + (ga.freeform ? ':' : '');
+  /**
+   * @param {Object} opts
+   * @return {?}
+   */
+  self.prototype._tokenKey = function(opts) {
+    return opts.uid + (opts.freeform ? ":" : "");
   };
-  fa.prototype._getWidthOffset = function() {
-    "use strict";
+  /**
+   * @return {?}
+   */
+  self.prototype._getWidthOffset = function() {
     if (this._widthOffset === null) {
-      var ga = this.input.clientWidth,
-        ha = s.getFloat(this.input, 'width');
-      if (ga == ha) {
-        this._widthOffset = s.getFloat(this.input, 'paddingLeft') + s.getFloat(this.input, 'paddingRight');
-      } else this._widthOffset = 0;
+      var value = this.input.clientWidth;
+      var object = domStyle.getFloat(this.input, "width");
+      if (value == object) {
+        this._widthOffset = domStyle.getFloat(this.input, "paddingLeft") + domStyle.getFloat(this.input, "paddingRight");
+      } else {
+        /** @type {number} */
+        this._widthOffset = 0;
+      }
     }
     return this._widthOffset;
   };
-  fa.prototype._getMetrics = function() {
-    "use strict";
-    if (!this._metrics) this._metrics = new t(this.input, this.inline);
+  /**
+   * @return {?}
+   */
+  self.prototype._getMetrics = function() {
+    if (!this._metrics) {
+      this._metrics = new State(this.input, this.inline);
+    }
     return this._metrics;
   };
-  fa.prototype._getIsInDOM = function() {
-    "use strict";
-    return this._isInDOM || (this._isInDOM = l.contains(document.body, this.input));
+  /**
+   * @return {?}
+   */
+  self.prototype._getIsInDOM = function() {
+    return this._isInDOM || (this._isInDOM = range.contains(document.body, this.input));
   };
-  fa.getInstance = function(ga) {
-    "use strict";
-    var ha = q.byClass(ga, 'uiTokenizer');
-    return ha ? j.get(ha, 'Tokenizer') : null;
+  /**
+   * @param {?} item
+   * @return {?}
+   */
+  self.getInstance = function(item) {
+    var prop = util.byClass(item, "uiTokenizer");
+    return prop ? div.get(prop, "Tokenizer") : null;
   };
-  fa.init = function(ga, ha) {
-    "use strict";
-    ga.init(ha.tokenarea, ha.param_name, ha.initial_info, ha.options);
+  /**
+   * @param {Object} target
+   * @param {Element} options
+   * @return {undefined}
+   */
+  self.init = function(target, options) {
+    target.init(options.tokenarea, options.param_name, options.initial_info, options.options);
   };
-  x(fa.prototype, {
-    inline: false,
-    maxTokens: null,
-    excludeDuplicates: true,
-    placeholder: '',
-    _widthOffset: null,
-    _metrics: null
+  fn(self.prototype, {
+    inline : false,
+    maxTokens : null,
+    excludeDuplicates : true,
+    placeholder : "",
+    _widthOffset : null,
+    _metrics : null
   });
-  e.exports = fa;
+  /** @type {function (HTMLElement, Object, Element): undefined} */
+  context.exports = self;
 }, null);
-__d("MercuryTypeahead", ["Event", "ArbiterMixin", "DOM", "DOMDimensions", "Input", "Keys", "MercuryTypeaheadTemplates", "Tokenizer", "Typeahead", "TypeaheadCore", "copyProperties", "cx"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) {
-  var s = function(t, u) {
+__d("MercuryTypeahead", ["Event", "ArbiterMixin", "DOM", "DOMDimensions", "Input", "Keys", "MercuryTypeaheadTemplates", "Tokenizer", "Typeahead", "TypeaheadCore", "copyProperties", "cx"], function(ignoreMethodDoesntExist, textAlt, keepData, opt_attributes, module, matcherFunction, Event, r, self, s, assert, keys, dataAndEvents, animate, Benchmark, ctor, createObject, deepDataAndEvents) {
+  /**
+   * @param {?} value
+   * @param {?} view
+   * @return {undefined}
+   */
+  var constructor = function(value, view) {
+    /** @type {null} */
     this._domElement = null;
+    /** @type {null} */
     this._typeahead = null;
+    /** @type {null} */
     this._tokenizer = null;
-    this._placeholder = '';
+    /** @type {string} */
+    this._placeholder = "";
+    /** @type {Array} */
     this._exclusions = [];
+    /** @type {null} */
     this._viewNodeOrID = null;
     this._viewOptions = {
-      renderer: 'compact',
-      autoSelect: true
+      renderer : "compact",
+      autoSelect : true
     };
+    /** @type {Array} */
     this._tokenizerBehaviors = [];
+    /** @type {null} */
     this._heightPrev = null;
-    this._dataSource = t;
-    this._view = u;
+    this._dataSource = value;
+    this._view = view;
   };
-  q(s.prototype, h);
-  q(s.prototype, {
-    setPlaceholder: function(t) {
-      this._placeholder = t;
+  createObject(constructor.prototype, r);
+  createObject(constructor.prototype, {
+    /**
+     * @param {?} string
+     * @return {?}
+     */
+    setPlaceholder : function(string) {
+      this._placeholder = string;
       return this;
     },
-    setExcludedParticipantsFromThreadMeta: function(t) {
-      if (!t) return;
-      if (!t.former_participants) {
-        this.setExcludedParticipants(t.participants);
+    /**
+     * @param {?} data
+     * @return {undefined}
+     */
+    setExcludedParticipantsFromThreadMeta : function(data) {
+      if (!data) {
         return;
       }
-      var u = t.former_participants.filter(function(v) {
-        return v.is_friend === false;
-      }).map(function(v) {
-        return v.id;
+      if (!data.former_participants) {
+        this.setExcludedParticipants(data.participants);
+        return;
+      }
+      var r = data.former_participants.filter(function(dataAndEvents) {
+        return dataAndEvents.is_friend === false;
+      }).map(function(ignores) {
+        return ignores.id;
       });
-      this.setExcludedParticipants(u.concat(t.participants));
+      this.setExcludedParticipants(r.concat(data.participants));
     },
-    setExcludedParticipants: function(t) {
+    /**
+     * @param {Array} failures
+     * @return {?}
+     */
+    setExcludedParticipants : function(failures) {
+      /** @type {Array} */
       this._exclusions = [];
-      t.forEach(function(u) {
-        var v = u.indexOf(':');
-        if (u.substr(0, v) == 'fbid') this._exclusions.push(u.substr(v + 1));
+      failures.forEach(function(part) {
+        var index = part.indexOf(":");
+        if (part.substr(0, index) == "fbid") {
+          this._exclusions.push(part.substr(index + 1));
+        }
       }.bind(this));
       return this;
     },
-    setViewNodeID: function(t) {
-      this._viewNodeOrID = t;
+    /**
+     * @param {?} dataAndEvents
+     * @return {undefined}
+     */
+    setViewNodeID : function(dataAndEvents) {
+      this._viewNodeOrID = dataAndEvents;
     },
-    setViewNode: function(t) {
-      this._viewNodeOrID = t;
+    /**
+     * @param {?} first
+     * @return {undefined}
+     */
+    setViewNode : function(first) {
+      this._viewNodeOrID = first;
     },
-    setFullWidthView: function(t) {
-      var u = i.create('div', {
-        className: "_4ck uiTypeaheadView"
+    /**
+     * @param {?} newContent
+     * @return {undefined}
+     */
+    setFullWidthView : function(newContent) {
+      var results = self.create("div", {
+        className : "_4ck uiTypeaheadView"
       });
-      i.setContent(t, u);
-      this.setViewNode(u);
+      self.setContent(newContent, results);
+      this.setViewNode(results);
     },
-    setViewOption: function(t, u) {
-      this._viewOptions[t] = u;
+    /**
+     * @param {?} i
+     * @param {?} offsetPosition
+     * @return {undefined}
+     */
+    setViewOption : function(i, offsetPosition) {
+      this._viewOptions[i] = offsetPosition;
     },
-    addTokenizerBehavior: function(t) {
-      this._tokenizerBehaviors.push(t);
+    /**
+     * @param {?} spaceName
+     * @return {undefined}
+     */
+    addTokenizerBehavior : function(spaceName) {
+      this._tokenizerBehaviors.push(spaceName);
     },
-    build: function(t) {
-      if (this._domElement) return;
-      var u = m[':fb:mercury:tokenizer'].build(),
-        v = m[':fb:mercury:typeahead'].build();
-      this._domElement = u.getRoot();
-      i.appendContent(this._domElement, v.getRoot());
-      var w = v.getNode('textfield');
-      k.setPlaceholder(w, this._placeholder);
-      w.setAttribute('data-placeholder', this._placeholder);
-      this._input = w;
-      var x = {
-          node_id: this._viewNodeOrID,
-          ctor: this._view,
-          options: this._viewOptions
-        },
-        y = {
-          ctor: p,
-          options: {
-            setValueOnSelect: true
-          }
-        };
-      this._typeahead = new o(this._dataSource, x, y, v.getRoot());
-      this._typeahead.init();
-      var z = {
-        inline: true,
-        behaviors: this._tokenizerBehaviors
+    /**
+     * @param {?} task
+     * @return {undefined}
+     */
+    build : function(task) {
+      if (this._domElement) {
+        return;
+      }
+      var store = dataAndEvents[":fb:mercury:tokenizer"].build();
+      var fs = dataAndEvents[":fb:mercury:typeahead"].build();
+      this._domElement = store.getRoot();
+      self.appendContent(this._domElement, fs.getRoot());
+      var input = fs.getNode("textfield");
+      assert.setPlaceholder(input, this._placeholder);
+      input.setAttribute("data-placeholder", this._placeholder);
+      this._input = input;
+      var fn = {
+        node_id : this._viewNodeOrID,
+        ctor : this._view,
+        options : this._viewOptions
       };
-      this._tokenizer = new n(this._domElement, this._typeahead);
-      this._tokenizer.init(u.getNode('tokenarea'), 'participants', [], z);
-      this._tokenizer.subscribe(['addToken', 'removeToken', 'removeAllTokens'], this._tokensChanged.bind(this));
-      this._tokenizer.subscribe('resize', function() {
-        this.inform('resize');
+      var options = {
+        ctor : ctor,
+        options : {
+          setValueOnSelect : true
+        }
+      };
+      this._typeahead = new Benchmark(this._dataSource, fn, options, fs.getRoot());
+      this._typeahead.init();
+      var until = {
+        inline : true,
+        behaviors : this._tokenizerBehaviors
+      };
+      this._tokenizer = new animate(this._domElement, this._typeahead);
+      this._tokenizer.init(store.getNode("tokenarea"), "participants", [], until);
+      this._tokenizer.subscribe(["addToken", "removeToken", "removeAllTokens"], this._tokensChanged.bind(this));
+      this._tokenizer.subscribe("resize", function() {
+        this.inform("resize");
       }.bind(this));
-      g.listen(w, 'focus', function() {
+      Event.listen(input, "focus", function() {
         this._resetDataSource();
         this._typeahead.init();
       }.bind(this));
-      g.listen(this._domElement, 'click', this.focus.bind(this));
-      g.listen(w, 'keydown', this.keydown.bind(this));
-      this._heightPrev = j.getElementDimensions(this._domElement).height;
+      Event.listen(this._domElement, "click", this.focus.bind(this));
+      Event.listen(input, "keydown", this.keydown.bind(this));
+      this._heightPrev = s.getElementDimensions(this._domElement).height;
     },
-    getElement: function() {
+    /**
+     * @return {?}
+     */
+    getElement : function() {
       return this._domElement;
     },
-    getSelectedParticipantIDs: function() {
-      var t = [];
-      if (this._tokenizer)(this._tokenizer.getTokenValues() || []).forEach(function(u) {
-        t.push('fbid:' + u);
-      });
-      return t;
+    /**
+     * @return {?}
+     */
+    getSelectedParticipantIDs : function() {
+      /** @type {Array} */
+      var string = [];
+      if (this._tokenizer) {
+        (this._tokenizer.getTokenValues() || []).forEach(function(json) {
+          string.push("fbid:" + json);
+        });
+      }
+      return string;
     },
-    getTokens: function() {
-      var t = [];
-      if (this._tokenizer) t = this._tokenizer.getTokens();
-      return t;
+    /**
+     * @return {?}
+     */
+    getTokens : function() {
+      /** @type {Array} */
+      var result = [];
+      if (this._tokenizer) {
+        result = this._tokenizer.getTokens();
+      }
+      return result;
     },
-    getTokenizer: function() {
+    /**
+     * @return {?}
+     */
+    getTokenizer : function() {
       return this._tokenizer;
     },
-    keydown: function(event) {
-      if (this._tokenizer.inline && event.keyCode == l.ESC) {
-        if (k.isEmpty(this._input)) {
-          var t = this._tokenizer.getLastToken();
-          if (t && t.isRemovable()) this._tokenizer.removeToken(t);
-        } else this._typeahead.getCore().reset();
+    /**
+     * @param {Object} e
+     * @return {?}
+     */
+    keydown : function(e) {
+      if (this._tokenizer.inline && e.keyCode == keys.ESC) {
+        if (assert.isEmpty(this._input)) {
+          var camelKey = this._tokenizer.getLastToken();
+          if (camelKey && camelKey.isRemovable()) {
+            this._tokenizer.removeToken(camelKey);
+          }
+        } else {
+          this._typeahead.getCore().reset();
+        }
         return false;
       }
-      if (k.isEmpty(this._input) && this._tokenizer.inline && event.keyCode === l.RETURN) {
-        event.preventDefault();
-        return this.inform('tokens-return');
+      if (assert.isEmpty(this._input) && (this._tokenizer.inline && e.keyCode === keys.RETURN)) {
+        e.preventDefault();
+        return this.inform("tokens-return");
       }
     },
-    reset: function() {
-      this._tokenizer && this._tokenizer.removeAllTokens();
-      this._typeahead && this._typeahead.getCore().reset();
+    /**
+     * @return {undefined}
+     */
+    reset : function() {
+      if (this._tokenizer) {
+        this._tokenizer.removeAllTokens();
+      }
+      if (this._typeahead) {
+        this._typeahead.getCore().reset();
+      }
     },
-    focus: function() {
-      this._tokenizer && this._tokenizer.focusInput();
+    /**
+     * @return {undefined}
+     */
+    focus : function() {
+      if (this._tokenizer) {
+        this._tokenizer.focusInput();
+      }
     },
-    getTypeahead: function() {
+    /**
+     * @return {?}
+     */
+    getTypeahead : function() {
       return this._typeahead;
     },
-    _resetDataSource: function() {
+    /**
+     * @return {undefined}
+     */
+    _resetDataSource : function() {
       this._dataSource.setExclusions(this._exclusions);
     },
-    _tokensChanged: function() {
-      this.inform('tokens-changed');
+    /**
+     * @return {undefined}
+     */
+    _tokensChanged : function() {
+      this.inform("tokens-changed");
     }
   });
-  e.exports = s;
+  /** @type {function (?, ?): undefined} */
+  module.exports = constructor;
 }, null);
-__d("StickerSearch", ["StickerServerRequests"], function(a, b, c, d, e, f, g) {
-  'use strict';
-  var h, i, j = {},
-    k = {
-      requestStickersForQuery: function(l, m) {
-        h = l;
-        g.getStickersForQuery(l, function(n) {
-          return h === l && m(n.payload);
-        });
-      },
-      prepareTagsData: function() {
-        if (!i) i = g.fetchTagData(function(l) {
-          j = l;
-        });
-        return i;
-      },
-      getTagByName: function(l) {
-        return j[l];
-      },
-      getTagsIndex: function() {
-        return j;
-      }
-    };
-  e.exports = k;
-}, null);
-__d("StickersFlyoutPackSelector.react", ["Animation", "ImmutableObject", "Locale", "React", "Image.react", "StickerActions", "StickerConfig", "StickerConstants", "StickerInterfaces", "StickerState", "StickerStoreController", "XUIBadge.react", "cx", "emptyFunction", "fbt", "ix", "getObjectValues"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w) {
-  'use strict';
-  var x = 4,
-    y = 200,
-    z = "Sticker Store",
-    aa = j.createClass({
-      displayName: "StickersFlyoutPackSelector",
-      propTypes: {
-        stickerInterface: j.PropTypes.oneOf(w(o)),
-        numNewPacks: j.PropTypes.number,
-        packs: j.PropTypes.arrayOf(j.PropTypes.instanceOf(h)).isRequired,
-        onPackClick: j.PropTypes.func,
-        selectedPackID: j.PropTypes.string,
-        resetTagSelectorFunc: j.PropTypes.func
-      },
-      getInitialState: function() {
-        return {
-          animating: false,
-          page: 0
-        };
-      },
-      getDefaultProps: function() {
-        return {
-          stickerInterface: o.MESSAGES,
-          numNewPacks: 0
-        };
-      },
-      shouldComponentUpdate: function(ca, da) {
-        return !da.animating;
-      },
-      onFlyoutShown: function() {
-        if (this.props.packs.length > 0) {
-          var ca = this._calculatePageForPack(this.props.selectedPackID);
-          if (this.state.page !== ca) this._setPage(ca, 0);
-        }
-      },
-      _calculatePageForPack: function(ca) {
-        for (var da = 0; da < this.props.packs.length; da++)
-          if (this.props.packs[da].id == ca) return da <= x ? 0 : Math.floor((da - 1) / x);
-        return 0;
-      },
-      _setPage: function(ca, da) {
-        if (this.state.animating) return;
-        this.setState({
-          animating: true,
-          page: ca
-        }, function() {
-          var ea = this.refs.positioner.getDOMNode(),
-            fa = this._calculatePosition(ca);
-          new g(ea).to(fa.reference, fa.offset + 'px').ondone(function() {
-            return this.setState({
-              animating: false
-            });
-          }.bind(this)).duration(da).go();
-        });
-      },
-      _calculatePosition: function(ca) {
-        var da = this.refs.positioner.getDOMNode(),
-          ea = da.childNodes[ca].offsetLeft;
-        if (i.isRTL()) {
-          var fa = da.offsetWidth,
-            ga = da.childNodes[ca].offsetWidth;
-          return {
-            reference: 'right',
-            offset: ea + ga - fa
-          };
-        }
-        return {
-          reference: 'left',
-          offset: -ea
-        };
-      },
-      _numPages: function() {
-        return Math.max(1, Math.ceil((this.props.packs.length - 1) / x));
-      },
-      _canGoPrev: function() {
-        return this.state.page > 0;
-      },
-      _canGoNext: function() {
-        return this.state.page + 1 < this._numPages();
-      },
-      _goPrev: function() {
-        this._canGoPrev() && this._setPage(this.state.page - 1, y);
-      },
-      _goNext: function() {
-        this._canGoNext() && this._setPage(this.state.page + 1, y);
-      },
-      _openStore: function() {
-        l.resetNumNewPacks();
-        var ca = this.props.stickerInterface == o.COMPOSER;
-        q.showStore(null, ca);
-      },
-      render: function() {
-        return (j.createElement("div", {
-          className: "_5r85"
-        }, this._renderStoreButton(), this._renderPrevArrow(), this._renderNextArrow(), j.createElement("div", {
-          className: "_5r88"
-        }, j.createElement("div", {
-          className: "_5r89",
-          ref: "positioner"
-        }, this._renderPages()))));
-      },
-      _selectPack: function(ca) {
-        var da = p.getPack(ca);
-        if (da && da.isPromoted) l.addPack(ca);
-        if (ca === n.SEARCH_PACK_ID) this.props.resetTagSelectorFunc();
-        if (this.props.onPackClick) {
-          this.props.onPackClick(ca);
-        } else l.selectPack(ca);
-      },
-      _renderPages: function() {
-        var ca = this.props.packs.map(function(ga, ha) {
-            return j.createElement(ba, {
-              key: ga.id,
-              onClick: function() {
-                return this._selectPack(ga.id);
-              }.bind(this),
-              pack: ga,
-              selected: this.props.selectedPackID === ga.id,
-              index: ha,
-              isComments: this.props.stickerInterface == o.COMMENTS
-            });
-          }.bind(this)),
-          da = [];
-        for (var ea = 0; ea < ca.length; ea += x) {
-          var fa = ea;
-          ea === 0 && ea++;
-          da.push(j.createElement("div", {
-            className: "_5r81",
-            key: ea
-          }, ca.slice(fa, ea + x)));
-        }
-        return da;
-      },
-      _renderStoreButton: function() {
-        return (j.createElement("a", {
-          "aria-label": z,
-          className: "_5r86 rfloat",
-          "data-hover": "tooltip",
-          onClick: this._openStore
-        }, j.createElement(k, {
-          className: "_5r87",
-          src: v('/images/messaging/stickers/selector/sticker_store.png')
-        }), this._renderJewel()));
-      },
-      _renderJewel: function() {
-        var ca = this.props.numNewPacks;
-        if (!ca) return null;
-        return (j.createElement(r, {
-          className: "rfloat _3fhs",
-          count: ca,
-          maxcount: 9,
-          type: "special"
-        }));
-      },
-      _renderPrevArrow: function() {
-        if (!this._canGoPrev()) return null;
-        var ca = i.isRTL() ? v('/images/messaging/stickers/selector/right.png') : v('/images/messaging/stickers/selector/left.png');
-        return (j.createElement("a", {
-          className: (("_37wu") + (' ' + "lfloat")),
-          onClick: this._goPrev
-        }, j.createElement(k, {
-          className: "_5r84",
-          src: ca
-        })));
-      },
-      _renderNextArrow: function() {
-        if (!this._canGoNext()) return null;
-        var ca = i.isRTL() ? v('/images/messaging/stickers/selector/left.png') : v('/images/messaging/stickers/selector/right.png');
-        return (j.createElement("a", {
-          className: (("_37wv") + (' ' + "rfloat")),
-          onClick: this._goNext
-        }, j.createElement(k, {
-          className: "_5r84",
-          src: ca
-        })));
-      }
-    }),
-    ba = j.createClass({
-      displayName: "PackIcon",
-      propTypes: {
-        index: j.PropTypes.number,
-        isComments: j.PropTypes.bool,
-        onClick: j.PropTypes.func,
-        pack: j.PropTypes.instanceOf(h).isRequired,
-        selected: j.PropTypes.bool
-      },
-      getDefaultProps: function() {
-        return {
-          isComments: false,
-          onClick: t
-        };
-      },
-      _getPackIcon: function(ca) {
-        if (ca.id == n.SEARCH_PACK_ID) return v('/images/messaging/stickers/icons/search.png');
-        if (ca.id == n.MRU_STICKER_PACK) return v('/images/messaging/stickers/icons/recent.png');
-        if (ca.id == n.EMOTICON_PACK_ID) return v('/images/messaging/stickers/icons/emoji.png');
-        return ca.icon;
-      },
-      render: function() {
-        var ca = this.props.pack,
-          da = m.WebStickerSearch && !m.StickerSearchInRecent ? this.props.index === 1 || this.props.index === 2 : this.props.index === 1,
-          ea = (("_5r8a") + (this.props.selected ? ' ' + "_5r8b" : '') + (ca.id == n.MRU_STICKER_PACK ? ' ' + "_5qcj" : '') + (ca.id == n.SEARCH_PACK_ID ? ' ' + "_5qck" : '') + (da ? ' ' + "_eb3" : '')),
-          fa = this.props.isComments && !ca.isCommentsCapable,
-          ga = "This pack is only available in messages",
-          ha = fa ? t : function() {
-            return this.props.onClick(ca.id);
-          }.bind(this);
-        return (j.createElement("a", {
-          "aria-label": fa ? ga : ca.name,
-          className: ea,
-          "data-id": ca.id,
-          "data-hover": "tooltip",
-          ref: "search_icon",
-          onClick: ha,
-          tabIndex: "0"
-        }, j.createElement(k, {
-          className: ((fa ? "_2ji6" : '') + (' ' + "_5r8c") + (m.WebStickerSearch ? ' ' + "_1viy" : '')),
-          src: this._getPackIcon(ca)
-        })));
-      }
-    });
-  e.exports = aa;
-}, null);
-__d("StickersFlyoutStickerSelector.react", ["BanzaiLogger", "Grid.react", "Image.react", "ScrollableArea.react", "React", "Sticker.react", "StickerConstants", "StickerConfig", "StickerImages", "StickerInterfaces", "StickerSearch", "StickerState", "StickerUtils", "XUISpinner.react", "cx", "debounce", "emptyFunction", "fbt", "getObjectValues", "ix", "throttle"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa) {
-  'use strict';
-  var ba = h.GridItem,
-    ca = 320,
-    da = 278,
-    ea = m.MRU_STICKER_PACK,
-    fa = 44,
-    ga = 112,
-    ha = n.AutoAnimateStickerTray ? 'load_and_hover' : 'hover',
-    ia = v(function(ka, la) {
-      if (!ka) return;
-      g.log('StickersLoggerConfig', {
-        event: 'search_sticker',
-        searchtoken: ka,
-        numsearchresults: la.length
+__d("StickerSearch", ["StickerServerRequests"], function(deepDataAndEvents, ignoreMethodDoesntExist, textAlt, keepData, module, opt_attributes, dataAndEvents) {
+  var h;
+  var prepareTagsData;
+  var old = {};
+  var JsDiff = {
+    /**
+     * @param {?} deepDataAndEvents
+     * @param {Function} cb
+     * @return {undefined}
+     */
+    requestStickersForQuery : function(deepDataAndEvents, cb) {
+      h = deepDataAndEvents;
+      dataAndEvents.getStickersForQuery(deepDataAndEvents, function(msg) {
+        return h === deepDataAndEvents && cb(msg.payload);
       });
-    }, 1000),
-    ja = k.createClass({
-      displayName: "StickersFlyoutStickerSelector",
-      propTypes: {
-        height: k.PropTypes.number,
-        stickerInterface: k.PropTypes.oneOf(y(p)),
-        onQueryResultsFound: k.PropTypes.func,
-        onScroll: k.PropTypes.func,
-        packID: k.PropTypes.string,
-        singleWordTags: k.PropTypes.array,
-        typeaheadTags: k.PropTypes.array,
-        userInput: k.PropTypes.string
-      },
-      getDefaultProps: function() {
-        return {
-          stickerInterface: p.MESSAGES,
-          onScroll: w,
-          shown: false
-        };
-      },
-      getInitialState: function() {
-        return {
-          loading: false,
-          stickers: []
-        };
-      },
-      componentDidMount: function() {
-        if (this.props.packID) {
-          this.requestStickersForPack(this.props.packID);
-          return;
-        }
-        if (this.props.userInput) this.requestStickersForQuery(this.props.userInput);
-      },
-      componentWillReceiveProps: function(ka) {
-        if (ka.packID && ka.packID !== this.props.packID) {
-          this.requestStickersForPack(ka.packID);
-        } else if (ka.userInput !== this.props.userInput) this.requestStickersForQuery(ka.userInput);
-      },
-      requestStickersForQuery: function(ka) {
-        this.setState({
-          loading: true
+    },
+    /**
+     * @return {?}
+     */
+    prepareTagsData : function() {
+      if (!prepareTagsData) {
+        prepareTagsData = dataAndEvents.fetchTagData(function(expr) {
+          old = expr;
         });
-        q.requestStickersForQuery(ka, function(la) {
-          la.map(function(ma) {
-            return o.cacheSticker(ma);
+      }
+      return prepareTagsData;
+    },
+    /**
+     * @param {string} name
+     * @return {?}
+     */
+    getTagByName : function(name) {
+      return old[name];
+    },
+    /**
+     * @return {?}
+     */
+    getTagsIndex : function() {
+      return old;
+    }
+  };
+  module.exports = JsDiff;
+}, null);
+__d("StickersFlyoutPackSelector.react", ["Animation", "ImmutableObject", "Locale", "React", "Image.react", "StickerActions", "StickerConfig", "StickerConstants", "StickerInterfaces", "StickerState", "StickerStoreController", "XUIBadge.react", "cx", "emptyFunction", "fbt", "ix", "getObjectValues"], function(ignoreMethodDoesntExist, textAlt, keepData, opt_attributes, module, matcherFunction, Assertion, logger, methods, self, type, dataAndEvents, buf, act, props, deepDataAndEvents, callback, t, execResult,
+onClick, opt_keys, $sanitize, forOwn) {
+  /** @type {number} */
+  var step = 4;
+  /** @type {number} */
+  var r20 = 200;
+  /** @type {string} */
+  var text = "Sticker Store";
+  var JsDiff = self.createClass({
+    displayName : "StickersFlyoutPackSelector",
+    propTypes : {
+      stickerInterface : self.PropTypes.oneOf(forOwn(props)),
+      numNewPacks : self.PropTypes.number,
+      packs : self.PropTypes.arrayOf(self.PropTypes.instanceOf(logger)).isRequired,
+      onPackClick : self.PropTypes.func,
+      selectedPackID : self.PropTypes.string,
+      resetTagSelectorFunc : self.PropTypes.func
+    },
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      return{
+        animating : false,
+        page : 0
+      };
+    },
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        stickerInterface : props.MESSAGES,
+        numNewPacks : 0
+      };
+    },
+    /**
+     * @param {?} nextState
+     * @param {Object} fieldset
+     * @return {?}
+     */
+    shouldComponentUpdate : function(nextState, fieldset) {
+      return!fieldset.animating;
+    },
+    /**
+     * @return {undefined}
+     */
+    onFlyoutShown : function() {
+      if (this.props.packs.length > 0) {
+        var classNames = this._calculatePageForPack(this.props.selectedPackID);
+        if (this.state.page !== classNames) {
+          this._setPage(classNames, 0);
+        }
+      }
+    },
+    /**
+     * @param {?} itemId
+     * @return {?}
+     */
+    _calculatePageForPack : function(itemId) {
+      /** @type {number} */
+      var i = 0;
+      for (;i < this.props.packs.length;i++) {
+        if (this.props.packs[i].id == itemId) {
+          return i <= step ? 0 : Math.floor((i - 1) / step);
+        }
+      }
+      return 0;
+    },
+    /**
+     * @param {number} i
+     * @param {number} expectedHashCode
+     * @return {undefined}
+     */
+    _setPage : function(i, expectedHashCode) {
+      if (this.state.animating) {
+        return;
+      }
+      this.setState({
+        animating : true,
+        page : i
+      }, function() {
+        var val = this.refs.positioner.getDOMNode();
+        var c = this._calculatePosition(i);
+        (new Assertion(val)).to(c.reference, c.offset + "px").ondone(function() {
+          return this.setState({
+            animating : false
           });
-          if (!this.props.tagChosen) ia(ka, la);
-          if (this.props.stickerInterface == p.COMPOSER) la = la.filter(function(ma) {
-            return ma.isComposerCapable;
+        }.bind(this)).duration(expectedHashCode).go();
+      });
+    },
+    /**
+     * @param {number} i
+     * @return {?}
+     */
+    _calculatePosition : function(i) {
+      var tmp = this.refs.positioner.getDOMNode();
+      var left = tmp.childNodes[i].offsetLeft;
+      if (methods.isRTL()) {
+        var x = tmp.offsetWidth;
+        var width = tmp.childNodes[i].offsetWidth;
+        return{
+          reference : "right",
+          offset : left + width - x
+        };
+      }
+      return{
+        reference : "left",
+        offset : -left
+      };
+    },
+    /**
+     * @return {?}
+     */
+    _numPages : function() {
+      return Math.max(1, Math.ceil((this.props.packs.length - 1) / step));
+    },
+    /**
+     * @return {?}
+     */
+    _canGoPrev : function() {
+      return this.state.page > 0;
+    },
+    /**
+     * @return {?}
+     */
+    _canGoNext : function() {
+      return this.state.page + 1 < this._numPages();
+    },
+    /**
+     * @return {undefined}
+     */
+    _goPrev : function() {
+      if (this._canGoPrev()) {
+        this._setPage(this.state.page - 1, r20);
+      }
+    },
+    /**
+     * @return {undefined}
+     */
+    _goNext : function() {
+      if (this._canGoNext()) {
+        this._setPage(this.state.page + 1, r20);
+      }
+    },
+    /**
+     * @return {undefined}
+     */
+    _openStore : function() {
+      dataAndEvents.resetNumNewPacks();
+      /** @type {boolean} */
+      var node = this.props.stickerInterface == props.COMPOSER;
+      callback.showStore(null, node);
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      return self.createElement("div", {
+        className : "_5r85"
+      }, this._renderStoreButton(), this._renderPrevArrow(), this._renderNextArrow(), self.createElement("div", {
+        className : "_5r88"
+      }, self.createElement("div", {
+        className : "_5r89",
+        ref : "positioner"
+      }, this._renderPages())));
+    },
+    /**
+     * @param {number} expectedHashCode
+     * @return {undefined}
+     */
+    _selectPack : function(expectedHashCode) {
+      var selector = deepDataAndEvents.getPack(expectedHashCode);
+      if (selector && selector.isPromoted) {
+        dataAndEvents.addPack(expectedHashCode);
+      }
+      if (expectedHashCode === act.SEARCH_PACK_ID) {
+        this.props.resetTagSelectorFunc();
+      }
+      if (this.props.onPackClick) {
+        this.props.onPackClick(expectedHashCode);
+      } else {
+        dataAndEvents.selectPack(expectedHashCode);
+      }
+    },
+    /**
+     * @return {?}
+     */
+    _renderPages : function() {
+      var str = this.props.packs.map(function(pack, idx) {
+        return self.createElement(template, {
+          key : pack.id,
+          onClick : function() {
+            return this._selectPack(pack.id);
+          }.bind(this),
+          pack : pack,
+          selected : this.props.selectedPackID === pack.id,
+          index : idx,
+          isComments : this.props.stickerInterface == props.COMMENTS
+        });
+      }.bind(this));
+      /** @type {Array} */
+      var fragment = [];
+      /** @type {number} */
+      var i = 0;
+      for (;i < str.length;i += step) {
+        /** @type {number} */
+        var start = i;
+        if (i === 0) {
+          i++;
+        }
+        fragment.push(self.createElement("div", {
+          className : "_5r81",
+          key : i
+        }, str.slice(start, i + step)));
+      }
+      return fragment;
+    },
+    /**
+     * @return {?}
+     */
+    _renderStoreButton : function() {
+      return self.createElement("a", {
+        "aria-label" : text,
+        className : "_5r86 rfloat",
+        "data-hover" : "tooltip",
+        onClick : this._openStore
+      }, self.createElement(type, {
+        className : "_5r87",
+        src : $sanitize("/images/messaging/stickers/selector/sticker_store.png")
+      }), this._renderJewel());
+    },
+    /**
+     * @return {?}
+     */
+    _renderJewel : function() {
+      var len = this.props.numNewPacks;
+      if (!len) {
+        return null;
+      }
+      return self.createElement(t, {
+        className : "rfloat _3fhs",
+        count : len,
+        maxcount : 9,
+        type : "special"
+      });
+    },
+    /**
+     * @return {?}
+     */
+    _renderPrevArrow : function() {
+      if (!this._canGoPrev()) {
+        return null;
+      }
+      var srcTerminal = methods.isRTL() ? $sanitize("/images/messaging/stickers/selector/right.png") : $sanitize("/images/messaging/stickers/selector/left.png");
+      return self.createElement("a", {
+        className : "_37wu" + (" " + "lfloat"),
+        onClick : this._goPrev
+      }, self.createElement(type, {
+        className : "_5r84",
+        src : srcTerminal
+      }));
+    },
+    /**
+     * @return {?}
+     */
+    _renderNextArrow : function() {
+      if (!this._canGoNext()) {
+        return null;
+      }
+      var srcTerminal = methods.isRTL() ? $sanitize("/images/messaging/stickers/selector/left.png") : $sanitize("/images/messaging/stickers/selector/right.png");
+      return self.createElement("a", {
+        className : "_37wv" + (" " + "rfloat"),
+        onClick : this._goNext
+      }, self.createElement(type, {
+        className : "_5r84",
+        src : srcTerminal
+      }));
+    }
+  });
+  var template = self.createClass({
+    displayName : "PackIcon",
+    propTypes : {
+      index : self.PropTypes.number,
+      isComments : self.PropTypes.bool,
+      onClick : self.PropTypes.func,
+      pack : self.PropTypes.instanceOf(logger).isRequired,
+      selected : self.PropTypes.bool
+    },
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        isComments : false,
+        onClick : onClick
+      };
+    },
+    /**
+     * @param {Object} item
+     * @return {?}
+     */
+    _getPackIcon : function(item) {
+      if (item.id == act.SEARCH_PACK_ID) {
+        return $sanitize("/images/messaging/stickers/icons/search.png");
+      }
+      if (item.id == act.MRU_STICKER_PACK) {
+        return $sanitize("/images/messaging/stickers/icons/recent.png");
+      }
+      if (item.id == act.EMOTICON_PACK_ID) {
+        return $sanitize("/images/messaging/stickers/icons/emoji.png");
+      }
+      return item.icon;
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var file = this.props.pack;
+      /** @type {boolean} */
+      var charset = buf.WebStickerSearch && !buf.StickerSearchInRecent ? this.props.index === 1 || this.props.index === 2 : this.props.index === 1;
+      /** @type {string} */
+      var cls = "_5r8a" + (this.props.selected ? " " + "_5r8b" : "") + (file.id == act.MRU_STICKER_PACK ? " " + "_5qcj" : "") + (file.id == act.SEARCH_PACK_ID ? " " + "_5qck" : "") + (charset ? " " + "_eb3" : "");
+      var name = this.props.isComments && !file.isCommentsCapable;
+      /** @type {string} */
+      var moduleMap = "This pack is only available in messages";
+      var eventName = name ? onClick : function() {
+        return this.props.onClick(file.id);
+      }.bind(this);
+      return self.createElement("a", {
+        "aria-label" : name ? moduleMap : file.name,
+        className : cls,
+        "data-id" : file.id,
+        "data-hover" : "tooltip",
+        ref : "search_icon",
+        onClick : eventName,
+        tabIndex : "0"
+      }, self.createElement(type, {
+        className : (name ? "_2ji6" : "") + (" " + "_5r8c") + (buf.WebStickerSearch ? " " + "_1viy" : ""),
+        src : this._getPackIcon(file)
+      }));
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("StickersFlyoutStickerSelector.react", ["BanzaiLogger", "Grid.react", "Image.react", "ScrollableArea.react", "React", "Sticker.react", "StickerConstants", "StickerConfig", "StickerImages", "StickerInterfaces", "StickerSearch", "StickerState", "StickerUtils", "XUISpinner.react", "cx", "debounce", "emptyFunction", "fbt", "getObjectValues", "ix", "throttle"], function(dataAndEvents, deepDataAndEvents, opt_attributes, matcherFunction, module, execResult, logger, elem, type, attribute, self, label,
+a, ignoreMethodDoesntExist, console, props, textAlt, goog, $img, t, opt_keys, require, keepData, positionError, forOwn, done, proxy) {
+  var nodeType = elem.GridItem;
+  /** @type {number} */
+  var height = 320;
+  /** @type {number} */
+  var w = 278;
+  var al = a.MRU_STICKER_PACK;
+  /** @type {number} */
+  var ypadding = 44;
+  /** @type {number} */
+  var footerHeight = 112;
+  /** @type {string} */
+  var id = ignoreMethodDoesntExist.AutoAnimateStickerTray ? "load_and_hover" : "hover";
+  var getActual = require(function(dataAndEvents, newlines) {
+    if (!dataAndEvents) {
+      return;
+    }
+    logger.log("StickersLoggerConfig", {
+      event : "search_sticker",
+      searchtoken : dataAndEvents,
+      numsearchresults : newlines.length
+    });
+  }, 1E3);
+  var JsDiff = self.createClass({
+    displayName : "StickersFlyoutStickerSelector",
+    propTypes : {
+      height : self.PropTypes.number,
+      stickerInterface : self.PropTypes.oneOf(forOwn(props)),
+      onQueryResultsFound : self.PropTypes.func,
+      onScroll : self.PropTypes.func,
+      packID : self.PropTypes.string,
+      singleWordTags : self.PropTypes.array,
+      typeaheadTags : self.PropTypes.array,
+      userInput : self.PropTypes.string
+    },
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        stickerInterface : props.MESSAGES,
+        onScroll : keepData,
+        shown : false
+      };
+    },
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      return{
+        loading : false,
+        stickers : []
+      };
+    },
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
+      if (this.props.packID) {
+        this.requestStickersForPack(this.props.packID);
+        return;
+      }
+      if (this.props.userInput) {
+        this.requestStickersForQuery(this.props.userInput);
+      }
+    },
+    /**
+     * @param {?} nextProps
+     * @return {undefined}
+     */
+    componentWillReceiveProps : function(nextProps) {
+      if (nextProps.packID && nextProps.packID !== this.props.packID) {
+        this.requestStickersForPack(nextProps.packID);
+      } else {
+        if (nextProps.userInput !== this.props.userInput) {
+          this.requestStickersForQuery(nextProps.userInput);
+        }
+      }
+    },
+    /**
+     * @param {?} deepDataAndEvents
+     * @return {undefined}
+     */
+    requestStickersForQuery : function(deepDataAndEvents) {
+      this.setState({
+        loading : true
+      });
+      textAlt.requestStickersForQuery(deepDataAndEvents, function(expectedHashCode) {
+        expectedHashCode.map(function(initial) {
+          return console.cacheSticker(initial);
+        });
+        if (!this.props.tagChosen) {
+          getActual(deepDataAndEvents, expectedHashCode);
+        }
+        if (this.props.stickerInterface == props.COMPOSER) {
+          expectedHashCode = expectedHashCode.filter(function(dataAndEvents) {
+            return dataAndEvents.isComposerCapable;
           });
-          if (this.props.stickerInterface == p.COMMENTS) la = la.filter(function(ma) {
-            return ma.isCommentsCapable;
+        }
+        if (this.props.stickerInterface == props.COMMENTS) {
+          expectedHashCode = expectedHashCode.filter(function(dataAndEvents) {
+            return dataAndEvents.isCommentsCapable;
           });
-          if (this.props.stickerInterface == p.MESSAGES) la = la.filter(function(ma) {
-            return ma.isMessengerCapable;
+        }
+        if (this.props.stickerInterface == props.MESSAGES) {
+          expectedHashCode = expectedHashCode.filter(function(dataAndEvents) {
+            return dataAndEvents.isMessengerCapable;
           });
+        }
+        if (this.isMounted()) {
+          this.setState({
+            loading : false,
+            stickers : expectedHashCode
+          });
+          if (ignoreMethodDoesntExist.EnterToSendSticker) {
+            if (this.props.onQueryResultsFound) {
+              this.props.onQueryResultsFound(expectedHashCode);
+            }
+          }
+        }
+      }.bind(this));
+    },
+    /**
+     * @param {(Object|string)} dep
+     * @return {undefined}
+     */
+    requestStickersForPack : function(dep) {
+      this.setState({
+        loading : true
+      });
+      console.requestStickersForPack(dep, a.TRAY_SIZE, function(tokens) {
+        if (dep == al) {
+          tokens = goog.getMRUStickerPack(tokens);
+          if (this.props.stickerInterface == props.COMPOSER) {
+            tokens = tokens.filter(function(dataAndEvents) {
+              return dataAndEvents.isComposerCapable;
+            });
+          }
+          if (this.props.stickerInterface == props.COMMENTS) {
+            tokens = tokens.filter(function(dataAndEvents) {
+              return dataAndEvents.isCommentsCapable;
+            });
+          }
+          if (this.props.stickerInterface == props.MESSAGES) {
+            tokens = tokens.filter(function(dataAndEvents) {
+              return dataAndEvents.isMessengerCapable;
+            });
+          }
+        }
+        this.setState({
+          loading : false,
+          stickers : tokens
+        });
+      }.bind(this));
+    },
+    /**
+     * @return {?}
+     */
+    renderStickers : function() {
+      return this.state.stickers.map(function(options) {
+        var coordinates = $img.getScaledDimensions(options.height, options.width, a.TRAY_SIZE);
+        return self.createElement(nodeType, {
+          key : options.id
+        }, self.createElement("div", {
+          className : "_5r8h",
+          "data-id" : options.id
+        }, self.createElement(label, {
+          animationTrigger : id,
+          className : "_5r8i",
+          frameCount : options.frameCount,
+          frameRate : options.frameRate || 83,
+          framesPerCol : options.framesPerCol,
+          framesPerRow : options.framesPerRow,
+          shown : this.props.shown,
+          sourceHeight : coordinates.height,
+          sourceURI : options.sourceURI,
+          sourceWidth : coordinates.width,
+          spriteURI : options.spriteURI,
+          paddedSpriteURI : options.paddedSpriteURI,
+          stickerID : options.id,
+          style : {
+            cursor : "pointer"
+          }
+        })));
+      }.bind(this));
+    },
+    /**
+     * @return {undefined}
+     */
+    _onScroll : function() {
+      var i = this.refs.stickerScrollable;
+      if (i) {
+        var expectedHashCode = i.getArea().getScrollTop();
+        this.props.onScroll(expectedHashCode);
+      }
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      if (this.state.loading) {
+        return self.createElement("div", {
+          className : "_e0r"
+        }, self.createElement(t, {
+          size : "large"
+        }));
+      } else {
+        if (this.state.stickers.length === 0) {
+          /** @type {string} */
+          var mt = (height - ypadding * 2 - footerHeight) / 2 + "px";
+          return self.createElement("div", {
+            className : "_5jdt",
+            style : {
+              marginTop : mt
+            }
+          }, self.createElement(type, {
+            src : done("/images/messaging/stickers/icons/sad_face.png")
+          }), self.createElement("p", null, "No Stickers to Show"));
+        }
+      }
+      return self.createElement(attribute, {
+        ref : "stickerScrollable",
+        height : this.props.height || height,
+        onScroll : proxy(this._onScroll, 200),
+        width : w,
+        fade : true
+      }, self.createElement("div", {
+        className : "_5r8k"
+      }, self.createElement(elem, {
+        cols : 4,
+        fixed : true
+      }, this.renderStickers())));
+    }
+  });
+  module.exports = JsDiff;
+}, null);
+__d("StickersFlyoutTagSelector.react", ["BanzaiLogger", "Grid.react", "ScrollableArea.react", "Parent", "React", "Image.react", "StickerConfig", "StickerConstants", "StickersFlyoutStickerSelector.react", "StickerInterfaces", "StickerSearch", "StickerState", "StickerUtils", "Toggler", "XUIButton.react", "XUICloseButton.react", "XUITextInput.react", "cx", "emptyFunction", "fbt", "getObjectValues"], function(opt_attributes, matcherFunction, execResult, opt_keys, module, positionError, logger, value,
+a, find, dom, n, dataAndEvents, ignoreMethodDoesntExist, o, outErr, gridStore, deepDataAndEvents, _, obj, tr, type, attribute, keepData, textAlt, oFunctionBody, cb) {
+  var name = value.GridItem;
+  /** @type {number} */
+  var h = 320;
+  /** @type {number} */
+  var x2 = 278;
+  /** @type {number} */
+  var y = 44;
+  var JsDiff = dom.createClass({
+    displayName : "StickersFlyoutTagSelector",
+    propTypes : {
+      trigger : dom.PropTypes.string,
+      stickerInterface : dom.PropTypes.oneOf(cb(outErr)),
+      resetTrigger : dom.PropTypes.func,
+      shown : dom.PropTypes.bool,
+      onSelectSticker : dom.PropTypes.func
+    },
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      return{
+        input : "",
+        isScrolling : false,
+        tagChosen : false,
+        matchedStickers : []
+      };
+    },
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        trigger : null,
+        stickerInterface : outErr.MESSAGES,
+        resetTrigger : textAlt,
+        shown : false,
+        onSelectSticker : textAlt
+      };
+    },
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
+      var events = find.byClass(this.getDOMNode(), "uiToggle");
+      if (events) {
+        this._togglerSub = obj.listen("show", events, function() {
           if (this.isMounted()) {
-            this.setState({
-              loading: false,
-              stickers: la
-            });
-            if (n.EnterToSendSticker) this.props.onQueryResultsFound && this.props.onQueryResultsFound(la);
+            this.focusInput();
           }
         }.bind(this));
-      },
-      requestStickersForPack: function(ka) {
-        this.setState({
-          loading: true
-        });
-        o.requestStickersForPack(ka, m.TRAY_SIZE, function(la) {
-          if (ka == ea) {
-            la = r.getMRUStickerPack(la);
-            if (this.props.stickerInterface == p.COMPOSER) la = la.filter(function(ma) {
-              return ma.isComposerCapable;
-            });
-            if (this.props.stickerInterface == p.COMMENTS) la = la.filter(function(ma) {
-              return ma.isCommentsCapable;
-            });
-            if (this.props.stickerInterface == p.MESSAGES) la = la.filter(function(ma) {
-              return ma.isMessengerCapable;
-            });
-          }
-          this.setState({
-            loading: false,
-            stickers: la
-          });
-        }.bind(this));
-      },
-      renderStickers: function() {
-        return this.state.stickers.map(function(ka) {
-          var la = s.getScaledDimensions(ka.height, ka.width, m.TRAY_SIZE);
-          return (k.createElement(ba, {
-            key: ka.id
-          }, k.createElement("div", {
-            className: "_5r8h",
-            "data-id": ka.id
-          }, k.createElement(l, {
-            animationTrigger: ha,
-            className: "_5r8i",
-            frameCount: ka.frameCount,
-            frameRate: ka.frameRate || 83,
-            framesPerCol: ka.framesPerCol,
-            framesPerRow: ka.framesPerRow,
-            shown: this.props.shown,
-            sourceHeight: la.height,
-            sourceURI: ka.sourceURI,
-            sourceWidth: la.width,
-            spriteURI: ka.spriteURI,
-            paddedSpriteURI: ka.paddedSpriteURI,
-            stickerID: ka.id,
-            style: {
-              cursor: 'pointer'
-            }
-          }))));
-        }.bind(this));
-      },
-      _onScroll: function() {
-        var ka = this.refs.stickerScrollable;
-        if (ka) {
-          var la = ka.getArea().getScrollTop();
-          this.props.onScroll(la);
-        }
-      },
-      render: function() {
-        if (this.state.loading) {
-          return (k.createElement("div", {
-            className: "_e0r"
-          }, k.createElement(t, {
-            size: "large"
-          })));
-        } else if (this.state.stickers.length === 0) {
-          var ka = (ca - fa * 2 - ga) / 2 + "px";
-          return (k.createElement("div", {
-            className: "_5jdt",
-            style: {
-              marginTop: ka
-            }
-          }, k.createElement(i, {
-            src: z("/images/messaging/stickers/icons/sad_face.png")
-          }), k.createElement("p", null, "No Stickers to Show")));
-        }
-        return (k.createElement(j, {
-          ref: "stickerScrollable",
-          height: this.props.height || ca,
-          onScroll: aa(this._onScroll, 200),
-          width: da,
-          fade: true
-        }, k.createElement("div", {
-          className: "_5r8k"
-        }, k.createElement(h, {
-          cols: 4,
-          fixed: true
-        }, this.renderStickers()))));
       }
-    });
-  e.exports = ja;
-}, null);
-__d("StickersFlyoutTagSelector.react", ["BanzaiLogger", "Grid.react", "ScrollableArea.react", "Parent", "React", "Image.react", "StickerConfig", "StickerConstants", "StickersFlyoutStickerSelector.react", "StickerInterfaces", "StickerSearch", "StickerState", "StickerUtils", "Toggler", "XUIButton.react", "XUICloseButton.react", "XUITextInput.react", "cx", "emptyFunction", "fbt", "getObjectValues"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa) {
-  'use strict';
-  var ba = h.GridItem,
-    ca = 320,
-    da = 278,
-    ea = 44,
-    fa = k.createClass({
-      displayName: "StickersFlyoutTagSelector",
-      propTypes: {
-        trigger: k.PropTypes.string,
-        stickerInterface: k.PropTypes.oneOf(aa(p)),
-        resetTrigger: k.PropTypes.func,
-        shown: k.PropTypes.bool,
-        onSelectSticker: k.PropTypes.func
-      },
-      getInitialState: function() {
-        return {
-          input: '',
-          isScrolling: false,
-          tagChosen: false,
-          matchedStickers: []
-        };
-      },
-      getDefaultProps: function() {
-        return {
-          trigger: null,
-          stickerInterface: p.MESSAGES,
-          resetTrigger: y,
-          shown: false,
-          onSelectSticker: y
-        };
-      },
-      componentDidMount: function() {
-        var ga = j.byClass(this.getDOMNode(), 'uiToggle');
-        if (ga) this._togglerSub = t.listen('show', ga, function() {
-          this.isMounted() && this.focusInput();
-        }.bind(this));
-        this.focusInput();
-        this.selectTrigger(this.props.trigger);
-      },
-      componentWillUnmount: function() {
-        this._togglerSub && this._togglerSub.unsubscribe();
-      },
-      componentWillReceiveProps: function(ga) {
-        this.selectTrigger(ga.trigger);
-      },
-      focusInput: function() {
-        this.refs.inputField.focusInput && this.refs.inputField.focusInput();
-      },
-      _setMatchedStickers: function(ga) {
-        this.setState({
-          matchedStickers: ga ? ga : []
-        });
-      },
-      _onEnter: function(ga) {
-        ga.preventDefault();
-        ga.stopPropagation();
-        if (!m.EnterToSendSticker) return;
-        var ha = this.state.matchedStickers;
-        if (ha && ha.length === 1) {
-          this.props.onSelectSticker(ha[0].id, ga);
-          this.setState({
-            matchedStickers: []
-          });
-        }
-      },
-      _inputChanged: function(ga) {
-        this.setState({
-          input: ga.target.value,
-          tagChosen: false,
-          isScrolling: false
-        });
-      },
-      _normalizeInput: function(ga) {
-        return ga.trim().replace(/\s+/, ' ').toLowerCase();
-      },
-      _handleResetButtonClick: function(ga) {
-        ga.preventDefault();
-        this.reset();
-      },
-      reset: function() {
-        this.setState(this.getInitialState());
-      },
-      renderContentArea: function() {
-        if (this.state.tagChosen || this._normalizeInput(this.state.input).length > 1) {
-          return this.renderStickers();
-        } else return m.StickerSearchInRecent ? this.renderRecentStickers() : this.renderTags();
-      },
-      render: function() {
-        return (k.createElement("div", {
-          className: (("_217a") + (this.state.isScrolling ? ' ' + "_1hg1" : ''))
-        }, k.createElement("div", {
-          className: "_5jdr"
-        }, k.createElement("span", {
-          className: "_5jds"
-        }), k.createElement(w, {
-          onEnter: this._onEnter,
-          onChange: this._inputChanged,
-          ref: "inputField",
-          placeholder: "Search stickers",
-          value: this.state.input
-        }), k.createElement(v, {
-          size: "small",
-          onClick: this._handleResetButtonClick,
-          className: ((this.state.input.length === 0 ? "hidden_elem" : ''))
-        })), this.renderContentArea()));
-      },
-      selectTag: function(ga) {
-        g.log('StickersLoggerConfig', {
-          event: 'select_tag',
-          tagid: ga.id
-        });
-        this.setState({
-          tagChosen: true,
-          input: s.capitalizeWords(ga.name)
-        });
-        this.focusInput();
-      },
-      selectTrigger: function(ga) {
-        if (ga !== null) {
-          var ha = q.getTagByName(ga);
-          this.setState({
-            tagChosen: true,
-            input: s.capitalizeWords(ha.name)
-          });
-          this.props.resetTrigger();
-        }
-      },
-      _onScroll: function(ga) {
-        this.setState({
-          isScrolling: !!ga
-        });
-      },
-      renderStickers: function() {
-        var ga = this._normalizeInput(this.state.input);
-        return (k.createElement(o, {
-          ref: "selector",
-          height: ca - ea,
-          userInput: ga,
-          onScroll: this._onScroll,
-          stickerInterface: this.props.stickerInterface,
-          tagChosen: this.state.tagChosen,
-          shown: this.props.shown,
-          onQueryResultsFound: this._setMatchedStickers
-        }));
-      },
-      renderRecentStickers: function() {
-        if (this._normalizeInput(this.state.input).length === 1) return k.createElement("div", null);
-        return (k.createElement(o, {
-          ref: "selector",
-          height: ca - ea,
-          packID: n.MRU_STICKER_PACK,
-          onScroll: this._onScroll,
-          stickerInterface: this.props.stickerInterface,
-          shown: this.props.shown
-        }));
-      },
-      renderTags: function() {
-        var ga = r.getFeaturedTags().filter(function(ha) {
-          return ha.sourceURI !== null;
-        }).sort(function(ha, ia) {
-          return ha.order - ia.order;
-        }).map(function(ha, ia) {
-          return k.createElement(ba, {
-            key: ia
-          }, k.createElement("div", {
-            className: (("_t5c") + (ia < 2 ? ' ' + "_1b27" : '') + (ia % 2 === 0 ? ' ' + "_t5d" : '') + (ia % 2 !== 0 ? ' ' + "_t5e" : ''))
-          }, k.createElement(u, {
-            image: k.createElement(l, {
-              src: ha.sourceURI
-            }),
-            label: ha.name,
-            onClick: this.selectTag.bind(this, ha),
-            className: "_5jdu",
-            style: {
-              background: '#' + ha.color_code
-            },
-            disabled: this._normalizeInput(this.state.input).length === 1
-          })));
-        }.bind(this));
-        return (k.createElement(i, {
-          height: ca - ea,
-          width: da - 16,
-          shadow: true,
-          fade: true,
-          className: "_5jei"
-        }, k.createElement(h, {
-          spacing: "pas",
-          cols: 2,
-          fixed: true,
-          ref: "grid"
-        }, ga)));
+      this.focusInput();
+      this.selectTrigger(this.props.trigger);
+    },
+    /**
+     * @return {undefined}
+     */
+    componentWillUnmount : function() {
+      if (this._togglerSub) {
+        this._togglerSub.unsubscribe();
       }
-    });
-  e.exports = fa;
+    },
+    /**
+     * @param {Object} selectedElement
+     * @return {undefined}
+     */
+    componentWillReceiveProps : function(selectedElement) {
+      this.selectTrigger(selectedElement.trigger);
+    },
+    /**
+     * @return {undefined}
+     */
+    focusInput : function() {
+      if (this.refs.inputField.focusInput) {
+        this.refs.inputField.focusInput();
+      }
+    },
+    /**
+     * @param {number} expectedHashCode
+     * @return {undefined}
+     */
+    _setMatchedStickers : function(expectedHashCode) {
+      this.setState({
+        matchedStickers : expectedHashCode ? expectedHashCode : []
+      });
+    },
+    /**
+     * @param {number} event
+     * @return {undefined}
+     */
+    _onEnter : function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!dataAndEvents.EnterToSendSticker) {
+        return;
+      }
+      var last = this.state.matchedStickers;
+      if (last && last.length === 1) {
+        this.props.onSelectSticker(last[0].id, event);
+        this.setState({
+          matchedStickers : []
+        });
+      }
+    },
+    /**
+     * @param {Event} evt
+     * @return {undefined}
+     */
+    _inputChanged : function(evt) {
+      this.setState({
+        input : evt.target.value,
+        tagChosen : false,
+        isScrolling : false
+      });
+    },
+    /**
+     * @param {?} buf
+     * @return {?}
+     */
+    _normalizeInput : function(buf) {
+      return buf.trim().replace(/\s+/, " ").toLowerCase();
+    },
+    /**
+     * @param {number} expectedHashCode
+     * @return {undefined}
+     */
+    _handleResetButtonClick : function(expectedHashCode) {
+      expectedHashCode.preventDefault();
+      this.reset();
+    },
+    /**
+     * @return {undefined}
+     */
+    reset : function() {
+      this.setState(this.getInitialState());
+    },
+    /**
+     * @return {?}
+     */
+    renderContentArea : function() {
+      if (this.state.tagChosen || this._normalizeInput(this.state.input).length > 1) {
+        return this.renderStickers();
+      } else {
+        return dataAndEvents.StickerSearchInRecent ? this.renderRecentStickers() : this.renderTags();
+      }
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      return dom.createElement("div", {
+        className : "_217a" + (this.state.isScrolling ? " " + "_1hg1" : "")
+      }, dom.createElement("div", {
+        className : "_5jdr"
+      }, dom.createElement("span", {
+        className : "_5jds"
+      }), dom.createElement(attribute, {
+        onEnter : this._onEnter,
+        onChange : this._inputChanged,
+        ref : "inputField",
+        placeholder : "Search stickers",
+        value : this.state.input
+      }), dom.createElement(type, {
+        size : "small",
+        onClick : this._handleResetButtonClick,
+        className : this.state.input.length === 0 ? "hidden_elem" : ""
+      })), this.renderContentArea());
+    },
+    /**
+     * @param {Object} tag
+     * @return {undefined}
+     */
+    selectTag : function(tag) {
+      logger.log("StickersLoggerConfig", {
+        event : "select_tag",
+        tagid : tag.id
+      });
+      this.setState({
+        tagChosen : true,
+        input : _.capitalizeWords(tag.name)
+      });
+      this.focusInput();
+    },
+    /**
+     * @param {(Date|string)} data
+     * @return {undefined}
+     */
+    selectTrigger : function(data) {
+      if (data !== null) {
+        var feed = gridStore.getTagByName(data);
+        this.setState({
+          tagChosen : true,
+          input : _.capitalizeWords(feed.name)
+        });
+        this.props.resetTrigger();
+      }
+    },
+    /**
+     * @param {number} expectedHashCode
+     * @return {undefined}
+     */
+    _onScroll : function(expectedHashCode) {
+      this.setState({
+        isScrolling : !!expectedHashCode
+      });
+    },
+    /**
+     * @return {?}
+     */
+    renderStickers : function() {
+      var userInput = this._normalizeInput(this.state.input);
+      return dom.createElement(o, {
+        ref : "selector",
+        height : h - y,
+        userInput : userInput,
+        onScroll : this._onScroll,
+        stickerInterface : this.props.stickerInterface,
+        tagChosen : this.state.tagChosen,
+        shown : this.props.shown,
+        onQueryResultsFound : this._setMatchedStickers
+      });
+    },
+    /**
+     * @return {?}
+     */
+    renderRecentStickers : function() {
+      if (this._normalizeInput(this.state.input).length === 1) {
+        return dom.createElement("div", null);
+      }
+      return dom.createElement(o, {
+        ref : "selector",
+        height : h - y,
+        packID : ignoreMethodDoesntExist.MRU_STICKER_PACK,
+        onScroll : this._onScroll,
+        stickerInterface : this.props.stickerInterface,
+        shown : this.props.shown
+      });
+    },
+    /**
+     * @return {?}
+     */
+    renderTags : function() {
+      var MSG_VISUAL_EDITOR = deepDataAndEvents.getFeaturedTags().filter(function(dataAndEvents) {
+        return dataAndEvents.sourceURI !== null;
+      }).sort(function(a, b) {
+        return a.order - b.order;
+      }).map(function(item, index) {
+        return dom.createElement(name, {
+          key : index
+        }, dom.createElement("div", {
+          className : "_t5c" + (index < 2 ? " " + "_1b27" : "") + (index % 2 === 0 ? " " + "_t5d" : "") + (index % 2 !== 0 ? " " + "_t5e" : "")
+        }, dom.createElement(tr, {
+          image : dom.createElement(n, {
+            src : item.sourceURI
+          }),
+          label : item.name,
+          onClick : this.selectTag.bind(this, item),
+          className : "_5jdu",
+          style : {
+            background : "#" + item.color_code
+          },
+          disabled : this._normalizeInput(this.state.input).length === 1
+        })));
+      }.bind(this));
+      return dom.createElement(a, {
+        height : h - y,
+        width : x2 - 16,
+        shadow : true,
+        fade : true,
+        className : "_5jei"
+      }, dom.createElement(value, {
+        spacing : "pas",
+        cols : 2,
+        fixed : true,
+        ref : "grid"
+      }, MSG_VISUAL_EDITOR));
+    }
+  });
+  module.exports = JsDiff;
 }, null);
-__d("StickersFlyout.react", ["BanzaiLogger", "Event", "Keys", "MessagesEmoticons.react", "Parent", "ReactComponentWithPureRenderMixin", "React", "StickersFlyoutPackSelector.react", "StickersFlyoutStickerSelector.react", "StickerActions", "StickerConstants", "StickerConfig", "StickersFlyoutTagSelector.react", "StickerInterfaces", "StickerState", "SubscriptionsHandler", "Toggler", "XUISpinner.react", "arrayContains", "cx", "getObjectValues"], function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, aa) {
-  'use strict';
-  var ba = q.SEARCH_PACK_ID,
-    ca = m.createClass({
-      displayName: "StickersFlyout",
-      mixins: [l],
-      propTypes: {
-        stickerInterface: m.PropTypes.oneOf(aa(t)),
-        onStickerSelect: m.PropTypes.func.isRequired,
-        onEmoticonSelect: m.PropTypes.func,
-        onShown: m.PropTypes.func,
-        onHidden: m.PropTypes.func,
-        onEscKeyDown: m.PropTypes.func,
-        onPackSelect: m.PropTypes.func,
-        packID: m.PropTypes.string,
-        shown: m.PropTypes.bool,
-        trigger: m.PropTypes.string
-      },
-      getDefaultProps: function() {
-        return {
-          stickerInterface: t.MESSAGES,
-          packID: u.getTrayPackID(),
-          shown: false,
-          trigger: null
-        };
-      },
-      getInitialState: function() {
-        return {
-          dataReady: false,
-          numNewPacks: 0,
-          shown: false
-        };
-      },
-      componentDidMount: function() {
-        if (r.LoadStickerEarly && !this.state.dataReady) this.loadTrayData();
-        this._toggle = k.byClass(this.getDOMNode(), 'uiToggle');
-        this._subscriptions = new v();
-        if (this._toggle) {
-          this._subscriptions.addSubscriptions(w.listen('show', this._toggle, this._onShownWrapper), w.listen('hide', this._toggle, this._onHidden));
-        } else if (!r.LoadStickerEarly && this.props.shown && !this.state.dataReady) this.loadTrayData();
-        this._subscriptions.addSubscriptions(h.listen(this.getDOMNode(), 'keydown', this._onKeyDown), u.addListener(u.PACKS_CHANGED, this.packsUpdated), u.addListener(u.NUM_NEW_PACKS_CHANGED, function(da) {
-          this.setState({
-            numNewPacks: da
-          });
-        }.bind(this)));
-      },
-      _onShownWrapper: function() {
-        if (this.props.onShown) {
-          this.props.onShown(this._onShown);
-        } else this._onShown();
-      },
-      _onShown: function() {
-        g.log('StickersLoggerConfig', {
-          event: 'open_tray'
-        });
-        if (!r.LoadStickerEarly && !this.state.dataReady) this.loadTrayData();
-        if (this.props.packID === ba) this.refs.tagSelector && this.refs.tagSelector.focusInput();
-        this.refs.packSelector.onFlyoutShown();
-        this.setState({
-          shown: true
-        });
-      },
-      _onHidden: function() {
-        this.resetTagSelector();
-        this.props.onHidden && this.props.onHidden();
-        this.setState({
-          shown: false
-        });
-      },
-      componentWillUnmount: function() {
-        this._subscriptions.release();
-      },
-      componentWillReceiveProps: function(da) {
-        if (!this.state.dataReady && da.shown) this.loadTrayData();
-      },
-      componentDidUpdate: function(da) {
-        if (!da.shown && this.props.shown) {
-          this._onShown();
-        } else if (da.shown && !this.props.shown) this._onHidden();
-      },
-      _onKeyDown: function(event) {
-        if (event.keyCode === i.ESC && this.props.onEscKeyDown) {
-          this.props.onEscKeyDown();
-          event.kill();
+__d("StickersFlyout.react", ["BanzaiLogger", "Event", "Keys", "MessagesEmoticons.react", "Parent", "ReactComponentWithPureRenderMixin", "React", "StickersFlyoutPackSelector.react", "StickersFlyoutStickerSelector.react", "StickerActions", "StickerConstants", "StickerConfig", "StickersFlyoutTagSelector.react", "StickerInterfaces", "StickerState", "SubscriptionsHandler", "Toggler", "XUISpinner.react", "arrayContains", "cx", "getObjectValues"], function(dataAndEvents, opt_attributes, matcherFunction,
+execResult, module, opt_keys, logger, testPage, keys, tr, fire, keepData, dom, type, value, results, depMap, deepDataAndEvents, attribute, props, win, ignoreMethodDoesntExist, content, a, $sanitize, textAlt, forOwn) {
+  var depId = depMap.SEARCH_PACK_ID;
+  var JsDiff = dom.createClass({
+    displayName : "StickersFlyout",
+    mixins : [keepData],
+    propTypes : {
+      stickerInterface : dom.PropTypes.oneOf(forOwn(props)),
+      onStickerSelect : dom.PropTypes.func.isRequired,
+      onEmoticonSelect : dom.PropTypes.func,
+      onShown : dom.PropTypes.func,
+      onHidden : dom.PropTypes.func,
+      onEscKeyDown : dom.PropTypes.func,
+      onPackSelect : dom.PropTypes.func,
+      packID : dom.PropTypes.string,
+      shown : dom.PropTypes.bool,
+      trigger : dom.PropTypes.string
+    },
+    /**
+     * @return {?}
+     */
+    getDefaultProps : function() {
+      return{
+        stickerInterface : props.MESSAGES,
+        packID : win.getTrayPackID(),
+        shown : false,
+        trigger : null
+      };
+    },
+    /**
+     * @return {?}
+     */
+    getInitialState : function() {
+      return{
+        dataReady : false,
+        numNewPacks : 0,
+        shown : false
+      };
+    },
+    /**
+     * @return {undefined}
+     */
+    componentDidMount : function() {
+      if (deepDataAndEvents.LoadStickerEarly && !this.state.dataReady) {
+        this.loadTrayData();
+      }
+      this._toggle = fire.byClass(this.getDOMNode(), "uiToggle");
+      this._subscriptions = new ignoreMethodDoesntExist;
+      if (this._toggle) {
+        this._subscriptions.addSubscriptions(content.listen("show", this._toggle, this._onShownWrapper), content.listen("hide", this._toggle, this._onHidden));
+      } else {
+        if (!deepDataAndEvents.LoadStickerEarly && (this.props.shown && !this.state.dataReady)) {
+          this.loadTrayData();
         }
-      },
-      resetTagSelector: function() {
-        this.refs.tagSelector && this.refs.tagSelector.reset();
-      },
-      loadTrayData: function() {
-        u.onTrayDataReady(function() {
-          var da = u.getNumNewPacks();
-          this.setState({
-            dataReady: true,
-            numNewPacks: da
-          });
-          var ea = u.getPacksInTray()[0].id,
-            fa = this.props.packID;
-          if (!fa || !y(u.getPackIDsInTray(), fa)) {
-            p.selectPack(ea, true);
-            this.props.onPackSelect && this.props.onPackSelect(ea);
+      }
+      this._subscriptions.addSubscriptions(testPage.listen(this.getDOMNode(), "keydown", this._onKeyDown), win.addListener(win.PACKS_CHANGED, this.packsUpdated), win.addListener(win.NUM_NEW_PACKS_CHANGED, function(dataAndEvents) {
+        this.setState({
+          numNewPacks : dataAndEvents
+        });
+      }.bind(this)));
+    },
+    /**
+     * @return {undefined}
+     */
+    _onShownWrapper : function() {
+      if (this.props.onShown) {
+        this.props.onShown(this._onShown);
+      } else {
+        this._onShown();
+      }
+    },
+    /**
+     * @return {undefined}
+     */
+    _onShown : function() {
+      logger.log("StickersLoggerConfig", {
+        event : "open_tray"
+      });
+      if (!deepDataAndEvents.LoadStickerEarly && !this.state.dataReady) {
+        this.loadTrayData();
+      }
+      if (this.props.packID === depId) {
+        if (this.refs.tagSelector) {
+          this.refs.tagSelector.focusInput();
+        }
+      }
+      this.refs.packSelector.onFlyoutShown();
+      this.setState({
+        shown : true
+      });
+    },
+    /**
+     * @return {undefined}
+     */
+    _onHidden : function() {
+      this.resetTagSelector();
+      if (this.props.onHidden) {
+        this.props.onHidden();
+      }
+      this.setState({
+        shown : false
+      });
+    },
+    /**
+     * @return {undefined}
+     */
+    componentWillUnmount : function() {
+      this._subscriptions.release();
+    },
+    /**
+     * @param {?} msg
+     * @return {undefined}
+     */
+    componentWillReceiveProps : function(msg) {
+      if (!this.state.dataReady && msg.shown) {
+        this.loadTrayData();
+      }
+    },
+    /**
+     * @param {?} msg
+     * @return {undefined}
+     */
+    componentDidUpdate : function(msg) {
+      if (!msg.shown && this.props.shown) {
+        this._onShown();
+      } else {
+        if (msg.shown && !this.props.shown) {
+          this._onHidden();
+        }
+      }
+    },
+    /**
+     * @param {?} event
+     * @return {undefined}
+     */
+    _onKeyDown : function(event) {
+      if (event.keyCode === keys.ESC && this.props.onEscKeyDown) {
+        this.props.onEscKeyDown();
+        event.kill();
+      }
+    },
+    /**
+     * @return {undefined}
+     */
+    resetTagSelector : function() {
+      if (this.refs.tagSelector) {
+        this.refs.tagSelector.reset();
+      }
+    },
+    /**
+     * @return {undefined}
+     */
+    loadTrayData : function() {
+      win.onTrayDataReady(function() {
+        var numNewPacks = win.getNumNewPacks();
+        this.setState({
+          dataReady : true,
+          numNewPacks : numNewPacks
+        });
+        var expectedHashCode = win.getPacksInTray()[0].id;
+        var innerHTML = this.props.packID;
+        if (!innerHTML || !$sanitize(win.getPackIDsInTray(), innerHTML)) {
+          results.selectPack(expectedHashCode, true);
+          if (this.props.onPackSelect) {
+            this.props.onPackSelect(expectedHashCode);
           }
-        }.bind(this));
-      },
-      _isShown: function() {
-        return this._toggle ? this.state.shown : this.props.shown;
-      },
-      loadPack: function() {
-        if (!this.state.dataReady) return (m.createElement("div", {
-          className: "_e0r"
-        }, m.createElement(x, {
-          size: "large"
-        })));
-        if (this.props.packID === q.EMOTICON_PACK_ID) return (m.createElement("div", {
-          className: "_5r8l",
-          "data-id": this.props.packID
-        }, m.createElement(j, {
-          onEmoticonSelect: this.props.onEmoticonSelect
-        })));
-        if (this.props.packID === ba && r.WebStickerSearch) return (m.createElement("div", {
-          className: "_5r8l"
-        }, m.createElement(s, {
-          ref: "tagSelector",
-          className: "fbStickersFlyoutTagSelector",
-          trigger: this.props.trigger,
-          resetTrigger: function() {
+        }
+      }.bind(this));
+    },
+    /**
+     * @return {?}
+     */
+    _isShown : function() {
+      return this._toggle ? this.state.shown : this.props.shown;
+    },
+    /**
+     * @return {?}
+     */
+    loadPack : function() {
+      if (!this.state.dataReady) {
+        return dom.createElement("div", {
+          className : "_e0r"
+        }, dom.createElement(a, {
+          size : "large"
+        }));
+      }
+      if (this.props.packID === depMap.EMOTICON_PACK_ID) {
+        return dom.createElement("div", {
+          className : "_5r8l",
+          "data-id" : this.props.packID
+        }, dom.createElement(tr, {
+          onEmoticonSelect : this.props.onEmoticonSelect
+        }));
+      }
+      if (this.props.packID === depId && deepDataAndEvents.WebStickerSearch) {
+        return dom.createElement("div", {
+          className : "_5r8l"
+        }, dom.createElement(attribute, {
+          ref : "tagSelector",
+          className : "fbStickersFlyoutTagSelector",
+          trigger : this.props.trigger,
+          resetTrigger : function() {
             return this.setProps({
-              trigger: null
+              trigger : null
             });
           }.bind(this),
-          stickerInterface: this.props.stickerInterface,
-          shown: this._isShown(),
-          onSelectSticker: this.onSelectSticker
-        })));
-        return (m.createElement("div", {
-          className: "_5r8l",
-          "data-id": this.props.packID
-        }, m.createElement(o, {
-          ref: "selector",
-          packID: this.props.packID,
-          stickerInterface: this.props.stickerInterface,
-          shown: this._isShown()
-        })));
-      },
-      packsUpdated: function() {
-        var da = u.getPackIDsInTray();
-        if (!y(da, this.props.packID)) {
-          p.selectPack(da[0]);
-          return;
-        }
-        this.forceUpdate(null);
-      },
-      onSelectSticker: function(da, event) {
-        if (da) {
-          u.updateRecentlyUsed(da);
-          this.props.onStickerSelect(da, event);
-          if (r.PromotePackFromSearch && this.props.packID === q.SEARCH_PACK_ID) u.promotePackSentFromSearch(da);
-          u.clearShowStickerReplyNUX();
-        }
-      },
-      selectedSticker: function(event) {
-        var da = k.byClass(event.target, "_5r8h");
-        if (da) {
-          var ea = da.getAttribute('data-id');
-          this.onSelectSticker(ea, event);
-        }
-      },
-      render: function() {
-        var da;
-        if (this.props.stickerInterface == t.COMPOSER) {
-          da = u.getPacksInComposerTray();
-        } else if (this.props.stickerInterface == t.COMMENTS) {
-          da = u.getPacksInCommentsTray();
-        } else if (this.props.stickerInterface == t.MESSAGES) da = u.getPacksInTray();
-        return (m.createElement("div", {
-          className: "_5r8f"
-        }, m.createElement("div", {
-          className: "_5r8e"
-        }, m.createElement(n, {
-          ref: "packSelector",
-          numNewPacks: this.state.numNewPacks,
-          onPackClick: this.props.onPackSelect,
-          selectedPackID: this.props.packID,
-          packs: da,
-          stickerInterface: this.props.stickerInterface,
-          resetTagSelectorFunc: this.resetTagSelector
-        })), m.createElement("div", {
-          className: "_5r8m",
-          onClick: this.selectedSticker
-        }, this.loadPack())));
+          stickerInterface : this.props.stickerInterface,
+          shown : this._isShown(),
+          onSelectSticker : this.onSelectSticker
+        }));
       }
-    });
-  e.exports = ca;
+      return dom.createElement("div", {
+        className : "_5r8l",
+        "data-id" : this.props.packID
+      }, dom.createElement(value, {
+        ref : "selector",
+        packID : this.props.packID,
+        stickerInterface : this.props.stickerInterface,
+        shown : this._isShown()
+      }));
+    },
+    /**
+     * @return {undefined}
+     */
+    packsUpdated : function() {
+      var value = win.getPackIDsInTray();
+      if (!$sanitize(value, this.props.packID)) {
+        results.selectPack(value[0]);
+        return;
+      }
+      this.forceUpdate(null);
+    },
+    /**
+     * @param {number} expectedHashCode
+     * @param {number} value
+     * @return {undefined}
+     */
+    onSelectSticker : function(expectedHashCode, value) {
+      if (expectedHashCode) {
+        win.updateRecentlyUsed(expectedHashCode);
+        this.props.onStickerSelect(expectedHashCode, value);
+        if (deepDataAndEvents.PromotePackFromSearch && this.props.packID === depMap.SEARCH_PACK_ID) {
+          win.promotePackSentFromSearch(expectedHashCode);
+        }
+        win.clearShowStickerReplyNUX();
+      }
+    },
+    /**
+     * @param {number} expectedHashCode
+     * @return {undefined}
+     */
+    selectedSticker : function(expectedHashCode) {
+      var elem = fire.byClass(expectedHashCode.target, "_5r8h");
+      if (elem) {
+        var dataID = elem.getAttribute("data-id");
+        this.onSelectSticker(dataID, expectedHashCode);
+      }
+    },
+    /**
+     * @return {?}
+     */
+    render : function() {
+      var packs;
+      if (this.props.stickerInterface == props.COMPOSER) {
+        packs = win.getPacksInComposerTray();
+      } else {
+        if (this.props.stickerInterface == props.COMMENTS) {
+          packs = win.getPacksInCommentsTray();
+        } else {
+          if (this.props.stickerInterface == props.MESSAGES) {
+            packs = win.getPacksInTray();
+          }
+        }
+      }
+      return dom.createElement("div", {
+        className : "_5r8f"
+      }, dom.createElement("div", {
+        className : "_5r8e"
+      }, dom.createElement(type, {
+        ref : "packSelector",
+        numNewPacks : this.state.numNewPacks,
+        onPackClick : this.props.onPackSelect,
+        selectedPackID : this.props.packID,
+        packs : packs,
+        stickerInterface : this.props.stickerInterface,
+        resetTagSelectorFunc : this.resetTagSelector
+      })), dom.createElement("div", {
+        className : "_5r8m",
+        onClick : this.selectedSticker
+      }, this.loadPack()));
+    }
+  });
+  module.exports = JsDiff;
 }, null);
