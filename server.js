@@ -2,7 +2,7 @@ var login = require("./facebook-chat-api");
 var bot = require("./bot");
 
 
-login('config.json', function(api) {
+login(function(api) {
   api.listen(function(message, closeConnection) {
     console.log(message);
 

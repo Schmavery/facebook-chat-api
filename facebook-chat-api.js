@@ -463,8 +463,15 @@ function _login(email, password, callback) {
 }
 
 function login(filename, cb) {
-  var obj = JSON.parse(fs.readFileSync(filename, 'utf8'));
-  if(!obj.email || !obj.password) throw filename + " has to be a valid json with an email field and a password field";
+  var obj = {};
+  if(typeof filename === 'function') {
+    obj.email = process.env.MARC_ZUCKERBOT_EMAIL;
+    obj.password = process.env.MARC_ZUCKERBOT_PASSWORD;
+    cb = filename;
+  } else {
+    obj = JSON.parse(fs.readFileSync(filename, 'utf8'));
+    if(!obj.email || !obj.password) throw filename + " has to be a valid json with an email field and a password field";
+  }
 
   return _login(obj.email, obj.password, cb);
 }
