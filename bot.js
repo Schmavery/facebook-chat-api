@@ -19,20 +19,12 @@ var read = function(message, username, chatid, otherUsernames) {
     currentChat = chat;
     currentUsername = username.toLowerCase();
     currentOtherUsernames = otherUsernames;
-    var textFunctions = [salute, weekendText, addScore, score, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendStickerBigSmall, staticText, reminders];
+    var textFunctions = [salute, weekendText, addScore, score, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendStickerBigSmall, staticText, reminders, goodnight];
     for (var i = 0; i < textFunctions.length; i++) {
         var res = textFunctions[i](message);
         if (res) return res;
     }
     return {};
-};
-
-var goodnight = function(msg) {
-  var myRegexp = /(goodnight marc)/i;
-  var match = myRegexp.exec(msg);
-  if(!match || match.length === 0) return;
-
-  process.exit(1);
 };
 
 var reminders = function(msg) {
