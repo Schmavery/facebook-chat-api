@@ -19,7 +19,7 @@ var read = function(message, username, chatid, otherUsernames) {
     currentChat = chat;
     currentUsername = username.toLowerCase();
     currentOtherUsernames = otherUsernames;
-    var textFunctions = [salute, weekendText, addScore, score, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendStickerBigSmall, staticText, reminders, goodnight];
+    var textFunctions = [salute, weekendText, addScore, score, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendStickerBigSmall, staticText, reminders];
     for (var i = 0; i < textFunctions.length; i++) {
         var res = textFunctions[i](message);
         if (res) return res;
@@ -43,7 +43,7 @@ var staticText = function(msg) {
         [[/(hey marc$|marc\?)/i],["Sup", "Hey :D", "hey", "Me?", "yes?"]],
         [[/(sup|wassup|what's up|how are you)/i], ["I'm tired", "Not much, you?", "Meh...", "I'm great, how about you?", "What's up with you?", "Nothing much, you?"]],
         [[/(who made you|who's your creator|where do you come from)/i], ["I'm a long story... About 24h long.", "I'm not too sure", "I never really asked myself this question."]],
-        [[/(\/sayit)/i], ["David's an idiot", "Ben's an idiot", "Maude's an idiot", "Avery's an idiot"]]
+        [[/(\/sayit)/i], ["David's an idiot"]]
     ];
     for (var i = 0; i < possibilities.length; i++) {
         var possibleMatches = possibilities[i][0];
