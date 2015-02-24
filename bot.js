@@ -158,7 +158,7 @@ var bees = function(msg) {
 };
 
 var sexxiBatman = function(msg) {
-    if (msg.match(/[Ww]anna make some trouble[\s\t]*\?/)) {
+    if (msg.match(/[Ww]anna make some trouble[\s\t]*/)) {
         return {text: "http://99gifs.com/-img/514e8830afa96f09940128f8.gif"};
     }
 };
@@ -175,8 +175,29 @@ var xkcdSearch = function(msg) {
     var match = myRegexp.exec(msg);
     if (!match || match.length < 1) return;
     var search = match[1].trim().toLowerCase().replace(/ /g, "+");
-    var searchUrl = "http://www.ohnorobot.com/index.pl?s=" + search + "&lucky=Let+the+Robot+Decide%21&comic=56";
-    return {text: searchUrl};
+    var searchUrl = "http://derp.co.uk/xkcd/page?q=" + search + "&search=Search";
+    return {text: "Find relevant xkcds here: " + searchUrl};
+
+    // var searchUrl = "http://derp.co.uk/xkcd/page?q=" + search + "&search=Search"
+    
+    // var options = {
+    //     host: 'derp.co.uk',
+    //     port: 80,
+    //     path: 'xkcd/page?q=' + search + "&search=Search"
+    // };
+
+    // var sequence = Futures.sequence();
+
+    // sequence.then(function(next) {
+    //     http.get(options, function(data) {
+    //         console.log(data);
+    //         //return data;
+    //     }).on('error', function(error) {
+    //         console.log("ERROR");
+    //         //return "Error obtaining relevant xkcd";
+    //     });
+    // });
+
     //http://www.ohnorobot.com/index.pl?s=exploits+of+a+mom&lucky=Let+the+Robot+Decide%21&comic=56
 };
 
@@ -208,6 +229,36 @@ var xkcdSearch = function(msg) {
 //     }
 //     return {text: data};
 // };
+
+var giphySearch = function(msg) {
+    var data = "";
+    if(msg.indexOf("giphy") > -1) {
+        var strippedString = msg.replace(/^\s+|\s+$/g, '');
+        strippedString = strippedString.replace("giphy", '');
+
+        var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag='+strippedString, false);
+
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 400){
+                data = JSON.parse(request.responseText).data.image_url;
+                console.log(data);
+                return data;
+            } else {
+                return "No gif for this search result.";
+            }
+        };
+
+        request.onerror = function() {
+            console.log('Connection error');
+        };
+
+        request.send(null);
+        console.log("request sent");
+    }
+};
+>>>>>>> Stashed changes
 
 var arbitraryLists = function (msg) {
   var myRegexp = /^\/(list\s*.*)/i;
