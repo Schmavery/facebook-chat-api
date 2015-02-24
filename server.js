@@ -1,6 +1,10 @@
 var login = require("./facebook-chat-api");
 var bot = require("./bot");
 
+// Little binding to prevent heroku from complaining about port binding
+var http = require('http');
+http.createServer(function (req, res) {
+}).listen(process.env.PORT || 5000);
 
 login(function(api) {
   api.listen(function(message, closeConnection) {
