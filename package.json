@@ -1,5 +1,5 @@
 {
-  "name": "Facebook Chat API",
+  "name": "facebook-chat-api",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -12,9 +12,10 @@
   "dependencies": {
     "cheerio": "^0.18.0",
     "chrono-node": "^1.0.3",
+    "nosqlite": "git://github.com/bsansouci/nosqlite.git",
     "request": "^2.53.0"
   },
   "engines": {
     "node": "0.12.x"
-  },
+  }
 }

@@ -3,3 +3,4 @@ config.json
 facebook
 index-marc.html
 facebook-chat-api-testing.js
+bot-data/**/*

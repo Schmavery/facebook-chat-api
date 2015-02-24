@@ -139,6 +139,8 @@ function _login(email, password, callback) {
           console.log(form);
           time.reportPullSent();
           _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
+            if(err) throw err;
+            if(!html) throw "html was null after request to https://0-edge-chat.facebook.com/pull with form " + JSON.stringify(form);
 
             time.reportPullReturned();
             var strData = makeParsable(html);

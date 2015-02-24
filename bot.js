@@ -1,47 +1,59 @@
 // hashmap: chatid -> hashmap: username -> score
 var chrono = require('chrono-node');
-
-var chats = {};
+var connection = new(require('nosqlite').Connection)('bot-data');
+var db = connection.database('bot');
+// Sync
+if (!db.existsSync()) {
+  db.createSync();
+}
+var chats = db.getSync('bot') || {_id: 'bot'};
 var currentUsername;
 var currentChat;
 var currentOtherUsernames;
 
 // messages, username, chat id are Strings, otherUsernmaes is array of Strings
 var read = function(message, username, chatid, otherUsernames) {
-    var chat = {
-        lists: {},
-        scores: {}
-    };
+  // Default chat object or existing one
+  // And set the global object
+  currentChat = chats[chatid] = chats[chatid] || {
+    lists: {},
+    scores: {}
+  };
 
-    if (!chats[chatid]) chats[chatid] = chat;
-    else chat = chats[chatid];
-
-    currentChat = chat;
-    currentUsername = username.toLowerCase();
-    currentOtherUsernames = otherUsernames;
-    var textFunctions = [salute, weekendText, addScore, score, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendStickerBigSmall, staticText, reminders];
-    for (var i = 0; i < textFunctions.length; i++) {
-        var res = textFunctions[i](message);
-        if (res) return res;
-    }
-    return {};
+  currentUsername = username.toLowerCase();
+  currentOtherUsernames = otherUsernames;
+  var textFunctions = [salute, weekendText, addScore, score, sexxiBatman, bees, ping, xkcdSearch, albert, arbitraryLists, slap, topScore, chatbot, sendStickerBigSmall, staticText, reminders];
+  for (var i = 0; i < textFunctions.length; i++) {
+      var res = textFunctions[i](message);
+      if (res) {
+        // Async saving to DB
+        db.post(chats, function (err, id) {
+          if (err) return console.log(err);
+          console.log("Saved ", id);
+        });
+        return res;
+      }
+  }
+  return {};
 };
 
 var reminders = function(msg) {
-  var myRegexp = /hey marc,? (.*)/i;
+  var myRegexp = /\/remind(.*)/i;
   var match = myRegexp.exec(msg);
   if(!match || match.length === 0) return;
   var rest = match[1].trim();
   console.log(rest);
   var ret = chrono.parse(rest);
+  if(ret.length === 0) return;
+
   console.log(ret);
-  return {text: JSON.stringify(ret[0].start.date())};
+  return {text: "Reminder at: " + ret[0].start.date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " --> '" + rest.replace(ret[0].text, '')+'\''};
 };
 
 var staticText = function(msg) {
     var possibilities = [
         [[/(hey marc$|marc\?)/i],["Sup", "Hey :D", "hey", "Me?", "yes?"]],
-        [[/(sup|wassup|what's up|how are you)/i], ["I'm tired", "Not much, you?", "Meh...", "I'm great, how about you?", "What's up with you?", "Nothing much, you?"]],
+        [[/(sup|wassup|what's up|how are you)\??$/i], ["I'm tired", "Not much, you?", "Meh...", "I'm great, how about you?", "What's up with you?", "Nothing much, you?"]],
         [[/(who made you|who's your creator|where do you come from)/i], ["I'm a long story... About 24h long.", "I'm not too sure", "I never really asked myself this question."]],
         [[/(\/sayit)/i], ["David's an idiot"]]
     ];
@@ -87,7 +99,7 @@ var slap = function(msg) {
 
     var arr = match[1].trim().toLowerCase();
     var list = arr.split(/\s+/);
-    if(list.length === 1) return currentOtherUsernames[~~(currentOtherUsernames.length * Math.random())] + " just got slapped.";
+    if(list.length === 1) return {text: currentOtherUsernames[~~(currentOtherUsernames.length * Math.random())] + " just got slapped."};
 
     var name = list[1];
     if(name === "me") return {text: currentUsername + " just go slapped." + (Math.random() > 0.5 ? " Hard.": "")};
@@ -113,12 +125,12 @@ var addScore = function(msg) {
 
     if (name === currentUsername) {
       name = name.charAt(0).toUpperCase() + name.slice(1);
-        return (name + ", you can't upvote yourself -_- ");
+        return {text: name + ", you can't upvote yourself -_- "};
     }
     if (contains(currentOtherUsernames, name)) {
         var score = (currentChat.scores[name] ? currentChat.scores[name] : 0) + 1;
         currentChat.scores[name] = score;
-        return name + "'s score is now " + score;
+        return {text: name + "'s score is now " + score};
     }
 };
 
@@ -137,8 +149,10 @@ var score = function(msg) {
     var match = myRegexp.exec(msg);
     if (!match || match.length < 1) return;
     var name = match[1].trim().toLowerCase();
-    if (name.length < 1) {name = currentUsername;}
-    if (!contains(currentOtherUsernames, name)) {return "who?";}
+    if (name.length < 1 || name === "me") name = currentUsername;
+
+    if (!contains(currentOtherUsernames, name)) return {text: "who?"};
+
     var pts = currentChat.scores[name] ? currentChat.scores[name] : 0;
     return {text: ("" + name + " has " + pts + " points")};
 };
@@ -179,7 +193,7 @@ var xkcdSearch = function(msg) {
     return {text: "Find relevant xkcds here: " + searchUrl};
 
     // var searchUrl = "http://derp.co.uk/xkcd/page?q=" + search + "&search=Search"
-    
+
     // var options = {
     //     host: 'derp.co.uk',
     //     port: 80,
@@ -244,9 +258,9 @@ var giphySearch = function(msg) {
             if (request.status >= 200 && request.status < 400){
                 data = JSON.parse(request.responseText).data.image_url;
                 console.log(data);
-                return data;
+                return {text: data};
             } else {
-                return "No gif for this search result.";
+                return {text: "No gif for this search result."};
             }
         };
 
