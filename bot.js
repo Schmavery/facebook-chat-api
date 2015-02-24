@@ -1,13 +1,12 @@
 // hashmap: chatid -> hashmap: username -> score
 var chrono = require('chrono-node');
-var connection = new(require('nosqlite').Connection)('bot-data');
-var db = connection.database('bot');
-// Sync
-if (!db.existsSync()) {
-  db.createSync();
-}
+var Firebase = require("firebase");
 
-var chats = db.getSync('bot') || {_id: 'bot'};
+var db = {};
+if(process.env.MARC_ZUCKERBOT_FIREBASE) db = new Firebase(process.env.MARC_ZUCKERBOT_FIREBASE);
+
+var chats = {};
+
 var currentUsername;
 var currentChat;
 var currentOtherUsernames;
@@ -27,11 +26,8 @@ var read = function(message, username, chatid, otherUsernames) {
   for (var i = 0; i < textFunctions.length; i++) {
       var res = textFunctions[i](message);
       if (res) {
-        // Async saving to DB
-        db.post(chats, function (err, id) {
-          if (err) return console.log(err);
-          console.log("Saved ", id);
-        });
+        // Async saving to firebase
+        db.set(chats);
         return res;
       }
   }
@@ -353,4 +349,9 @@ function contains(array, obj) {
     return false;
 }
 
-module.exports = read;
+module.exports = function(cb) {
+  db.on('value', function(snapshot) {
+    chats = snapshot.val() || {};
+    cb(read);
+  });
+};

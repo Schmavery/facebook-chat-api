@@ -12,6 +12,7 @@
   "dependencies": {
     "cheerio": "^0.18.0",
     "chrono-node": "^1.0.3",
+    "firebase": "^2.2.1",
     "nosqlite": "git://github.com/bsansouci/nosqlite.git",
     "request": "^2.53.0"
   },
