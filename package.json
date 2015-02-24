@@ -1,17 +1,20 @@
 {
-  "name": "hype",
+  "name": "Facebook Chat API",
   "version": "1.0.0",
   "description": "",
-  "main": "partial.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Avery, David, Maude, Benjamin",
+  "license": "MIT",
   "dependencies": {
     "cheerio": "^0.18.0",
     "chrono-node": "^1.0.3",
     "request": "^2.53.0"
-  }
+  },
+  "engines": {
+    "node": "0.12.x"
+  },
 }
