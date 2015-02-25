@@ -10,10 +10,7 @@ http.createServer(function (req, res) {
 if(!process.env.MARC_ZUCKERBOT_FIREBASE) return console.error("MARC_ZUCKERBOT_FIREBASE env variable isn't set!");
 var db = new Firebase(process.env.MARC_ZUCKERBOT_FIREBASE);
 
-function startBot(api) {
-
-  var chats = {};
-
+function startBot(api, chats) {
   var currentUsername;
   var currentChat;
   var currentOtherUsernames;
@@ -126,20 +123,22 @@ function startBot(api) {
   };
 
   var addScore = function(msg) {
-      var myRegexp = /^(.+)\+\+/i;
-      var match = myRegexp.exec(msg);
-      if (!match || match.length < 1) return;
-      var name = match[1].trim().toLowerCase();
+    var myRegexp = /^(.+)\+\+/i;
+    var match = myRegexp.exec(msg);
+    if (!match || match.length < 1) return;
+    var name = match[1].trim().toLowerCase();
 
-      name = capitalize(name);
-      if (name === currentUsername) {
-        return {text: name + ", you can't upvote yourself -_- "};
-      }
-      if (contains(currentOtherUsernames, name)) {
-        var score = (currentChat.scores[name] ? currentChat.scores[name] : 0) + 1;
-        currentChat.scores[name] = score;
-        return {text: name + "'s score is now " + score + "."};
-      }
+    name = capitalize(name);
+    if (name === currentUsername) {
+      return {text: name + ", you can't upvote yourself -_- "};
+    }
+    if (contains(currentOtherUsernames, name)) {
+      var score = (currentChat.scores[name] ? currentChat.scores[name] : 0) + 1;
+      currentChat.scores[name] = score;
+      return {text: name + "'s score is now " + score + "."};
+    }
+
+    return {text: "Who's " + name + "?"};
   };
 
   var salute = function(msg) {
@@ -237,7 +236,9 @@ function startBot(api) {
 
     var list = match[1].trim().toLowerCase();
     var arr = list.split(/\s+/);
-    if(arr.length === 1) return {text: (Object.keys(currentChat.lists).length > 0 ? "Existing Lists: \n" + Object.keys(currentChat.lists).join("\n") : "No existing list.")};
+    if(arr.length === 1) return {text: (Object.keys(currentChat.lists).length > 0 ? "Existing Lists: \n" + Object.keys(currentChat.lists).map(function(v, i) {
+      return (i + 1) + " - " + v;
+    }).join("\n") : "No existing list.")};
 
     var keyword = arr[1];
     var listName = arr.length > 2 ? arr[2] : "";
@@ -247,9 +248,17 @@ function startBot(api) {
         return {text: "List '" + listName + "' created."};
       }
     } else if (keyword === 'delete') {
+      if(arr.length > 3) {
+        var num = parseInt(arr[3]);
+        if(num - 1 >= currentChat.lists[listName].length || num - 1 < 0) {
+          return {text: "Item " + num + " in list '" + listName + "' doesn't exist."};
+        }
+        currentChat.lists[listName].splice(num - 1, 1);
+        return {text: "Item " + num + " in list '" + listName + "' deleted."};
+      }
       if(listName.length > 0) {
         delete currentChat.lists[listName];
-        return {text: listName + " deleted."};
+        return {text: "List '" + listName + "' deleted."};
       }
     } else if (keyword === 'add') {
       if(listName.length > 0 && arr.length > 3) {
@@ -260,7 +269,7 @@ function startBot(api) {
         return {text: "Added '" + arr.slice(3).join(' ') + "' to " + listName + "."};
       }
     } else if (currentChat.lists[keyword]) {
-      return {text: keyword + ": \n- " + currentChat.lists[keyword].join("\n-")};
+      return {text: keyword + ": \n" + currentChat.lists[keyword].map(function(v, i) {return (i + 1) + " - " + v;}).join("\n")};
     }
 
     return {text: "Usage:\n /list \n /list list-name\n /list new list-name \n /list delete list-name \n /list add list-name new-element"};
@@ -312,7 +321,8 @@ function startBot(api) {
 
 // Main function
 db.once('value', function(snapshot) {
-  chats = snapshot.val() || {};
-
-  login(startBot);
+  var chats = snapshot.val() || {};
+  login(function(api) {
+    startBot(api, chats);
+  });
 });
