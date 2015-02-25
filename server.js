@@ -33,13 +33,13 @@ function startBot(api, chats) {
     currentChat = chats[chatid] = chats[chatid] || {
       lists: {},
       scores: {},
-      firstChat: true
+      existingChat: false
     };
     if(!currentChat.lists) currentChat.lists = {};
     if(!currentChat.scores) currentChat.scores = {};
 
-    if (currentChat.firstChat){
-      currentChat.firstChat = false;
+    if (!currentChat.existingChat){
+      currentChat.existingChat = true;
       api.sendMessage("Hey, type '/help' for some useful commands!", chatid);
     }
 
