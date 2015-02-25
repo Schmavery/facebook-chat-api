@@ -465,6 +465,7 @@ function _login(email, password, callback) {
 function login(filename, cb) {
   var obj = {};
   if(typeof filename === 'function') {
+    if(!process.env.MARC_ZUCKERBOT_EMAIL || !process.env.MARC_ZUCKERBOT_PASSWORD) return console.log("Please define env variables");
     obj.email = process.env.MARC_ZUCKERBOT_EMAIL;
     obj.password = process.env.MARC_ZUCKERBOT_PASSWORD;
     cb = filename;

@@ -16,9 +16,11 @@ var read = function(message, username, chatid, otherUsernames) {
   // Default chat object or existing one
   // And set the global object
   currentChat = chats[chatid] = chats[chatid] || {
-    lists: {__save: true},
-    scores: {__save: true}
+    lists: {},
+    scores: {}
   };
+  if(!currentChat.lists) currentChat.lists = {};
+  if(!currentChat.scores) currentChat.scores = {};
 
   currentUsername = username;
   currentOtherUsernames = otherUsernames;
@@ -127,7 +129,7 @@ var addScore = function(msg) {
     if (contains(currentOtherUsernames, name)) {
       var score = (currentChat.scores[name] ? currentChat.scores[name] : 0) + 1;
       currentChat.scores[name] = score;
-      return {text: name + "'s score is now " + score};
+      return {text: name + "'s score is now " + score + "."};
     }
 };
 
@@ -277,14 +279,14 @@ var arbitraryLists = function (msg) {
 
   var list = match[1].trim().toLowerCase();
   var arr = list.split(/\s+/);
-  if(arr.length === 1) return {text: "Existing Lists: \n" + Object.keys(currentChat.lists).join("\n")};
+  if(arr.length === 1) return {text: (Object.keys(currentChat.lists).length > 0 ? "Existing Lists: \n" + Object.keys(currentChat.lists).join("\n") : "No existing list.")};
 
   var keyword = arr[1];
   var listName = arr.length > 2 ? arr[2] : "";
   if(keyword === 'new') {
     if(listName.length > 0) {
       currentChat.lists[listName] = [];
-      return {text: listName + " created."};
+      return {text: "List '" + listName + "' created."};
     }
   } else if (keyword === 'delete') {
     if(listName.length > 0) {
@@ -297,7 +299,7 @@ var arbitraryLists = function (msg) {
         return {text: "No list of name '"+listName+"' exists."};
       }
       currentChat.lists[listName].push(arr.slice(3).join(' '));
-      return {text: "Added element to " + listName + "."};
+      return {text: "Added '" + arr.slice(3).join(' ') + "' to " + listName + "."};
     }
   } else if (currentChat.lists[keyword]) {
     return {text: keyword + ": \n- " + currentChat.lists[keyword].join("\n-")};
@@ -352,20 +354,6 @@ function contains(array, obj) {
 module.exports = function(cb) {
   db.once('value', function(snapshot) {
     chats = snapshot.val() || {};
-    removeSaves(chats);
     cb(read);
   });
 };
-
-function removeSaves(obj) {
-  if(typeof obj !== 'object') return obj;
-
-  for(var prop in obj) {
-    if(obj.hasOwnProperty(prop)) {
-      if(prop === "__save") delete obj[prop];
-      if(typeof obj[prop] === 'object' && !(obj[prop] instanceof Array))  removeSaves(obj[prop]);
-    }
-  }
-
-  return obj;
-}
