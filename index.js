@@ -58,6 +58,7 @@ function _post(url, jar, form, callback) {
 
 function _login(email, password, callback) {
   var jar = request.jar();
+  console.log("Getting login form data");
   _get("https://www.facebook.com/", jar, function(err, res, html) {
     var $ = cheerio.load(html);
 
@@ -77,22 +78,27 @@ function _login(email, password, callback) {
     form.email = email;
     form.pass = password;
     form.default_persistent = '1';
+
+    console.log("Logging in...");
     _post("https://www.facebook.com/login.php?login_attempt=1", jar, form, function(err, res, html) {
       var cookies = res.headers['set-cookie'] || [];
 
       cookies.map(function (c) {
         jar.setCookie(c, "https://www.facebook.com");
       });
+
       _get(res.headers.location, jar, function(err, res, html) {
+        console.log("Logged in");
+
         var grammar_version = getFrom(html, "grammar_version\":\"", "\"");
 
+        // I swear, this is copy pasted from FB's minified code
         var clientid = (Math.random()*2147483648|0).toString(16);
         var starTime = Date.now();
         var userId = jar.getCookies("https://www.facebook.com").filter(function(val) {
           return val.cookieString().split("=")[0] === "c_user";
         })[0].cookieString().split("=")[1];
         var userChannel = "p_" + userId;
-        var __dyn = '';
         var __rev = getFrom(html, "revision\":",",");
 
         var form = {
@@ -105,8 +111,7 @@ function _login(email, password, callback) {
           state: 'active',
           format: 'json',
           idle: 0,
-          cap: '8',
-          cb:getCB(),
+          cap: '8'
         };
 
         var fb_dtsg = getFrom(html, "name=\"fb_dtsg\" value=\"", "\"");
@@ -133,12 +138,11 @@ function _login(email, password, callback) {
           if(shouldStop) return;
 
           form.wtc = time.doSerialize();
-          form.cb = getCB();
           form.idle = ~~(Date.now()/1000) - prev;
           prev = ~~(Date.now()/1000);
 
-          // console.log(form);
           time.reportPullSent();
+          // TODO: get the right URL to query...
           _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
             if(err) throw err;
             if(!html) throw "html was null after request to https://0-edge-chat.facebook.com/pull with form " + JSON.stringify(form);
@@ -147,12 +151,11 @@ function _login(email, password, callback) {
             var strData = makeParsable(html);
             var info = [];
             try {
-              // console.log("parsing....");
-
               info = strData.map(JSON.parse)[0];
 
-              console.log("Got answer in ", Date.now() - tmpPrev);
-              tmpPrev = Date.now();
+              var now = Date.now();
+              console.log("Got answer in ", now - tmpPrev);
+              tmpPrev = now;
 
               if(info && info.t === 'fullReload') {
                 form.seq = info.seq;
@@ -162,19 +165,15 @@ function _login(email, password, callback) {
                   __req: (reqCounter++).toString(36),
                   __rev: __rev,
                   __a: 1,
-                  __dyn: __dyn
                 };
-                // console.log("Request to sync -->", form4);
                 _get("https://www.facebook.com/notifications/sync/", jar, form4, function(err, res, html) {
                   var cookies = res.headers['set-cookie'] || [];
                   cookies.map(function (c) {
                     jar.setCookie(c, "https://www.facebook.com");
                   });
                   lastSync = Date.now();
-                  // console.log("sync --->", html);
                   var form6 = {
                     __a: 1,
-                    __dyn: __dyn,
                     __user: userId,
                     __req: (reqCounter++).toString(36),
                     __rev: __rev,
@@ -184,10 +183,9 @@ function _login(email, password, callback) {
                     'folders[0]': 'inbox',
                     last_action_timestamp: ~~(Date.now() - 60)
                   };
-                  // console.log("Request to thread_sync");
                   _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
                     console.log("thread sync --->", html);
-                    currentlyRunning = setTimeout(api.listen, 1000, cb);
+                    currentlyRunning = setTimeout(api.listen, 1000, callback);
                   });
                 });
                 return;
@@ -211,11 +209,10 @@ function _login(email, password, callback) {
             } catch (e) {
               console.log("ERROR in listen --> ",e, strData);
               callback({error: e}, null, stopListening);
-              currentlyRunning = setTimeout(api.listen, 200, callback);
+              currentlyRunning = setTimeout(api.listen, Math.random() * 200 + 50, callback);
               return;
             }
-            // console.log("next call in 1000ms");
-            currentlyRunning = setTimeout(api.listen, 200, callback);
+            currentlyRunning = setTimeout(api.listen, Math.random() * 200 + 50, callback);
 
             // If any call to stopListening was made, do not call the callback
             if(shouldStop) return;
@@ -225,16 +222,47 @@ function _login(email, password, callback) {
               for (var i = 0; i < info.ms.length; i++){
                 callback(null, info.ms[i], stopListening);
               }
-              // var form2 = {
-              //   message_ids: []
-              // };
-              // _get("https://www.facebook.com/ajax/mercury/delivery_receipts.php", jar, form2, function(err, res, html) {
-              //   console.log("Deliver receipt -->", html);
-              // });
             }
           });
         };
 
+        api.sendDirectMessage = function(msg, nameOrUserId, callback) {
+          if(typeof nameOrUserId === "number") {
+            return api.sendMessage(msg, nameOrUserId, null, callback);
+          }
+          if(!callback) callback = function() {};
+
+          var form = {
+            value:nameOrUserId.toLowerCase(),
+            viewer:userId,
+            rsp:"search",
+            context:"search",
+            path:"/home.php",
+            request_id:getGUID(),
+            __user:userId,
+            __a:1,
+            __req:(reqCounter++).toString(36),
+            __rev:__rev,
+          };
+
+          _get("https://www.facebook.com/ajax/typeahead/search.php", jar, form, function(err, res, html) {
+            var strData = makeParsable(html);
+            try{
+              var ret = strData.map(JSON.parse);
+              var info = ret[0].payload;
+              if(info.entries[0].type !== "user") {
+                return callback({error: "Couldn't find a user with name " + nameOrUserId + ". Best match: " + info.entries[0].path});
+              }
+
+              // TODO: find the actual best entry
+              var thread_id = info.entries[0].uid;
+              api.sendMessage(msg, thread_id, null, callback);
+            } catch (e) {
+              console.log("ERROR in sendDirectMessage --> ",e, strData);
+              callback({error: e});
+            }
+          });
+        };
 
         api.sendMessage = function(msg, thread_id, sticker_id, callback) {
           if(typeof sticker_id === 'function') {
@@ -278,7 +306,7 @@ function _login(email, password, callback) {
             var strData = makeParsable(html);
             try{
               var ret = strData.map(JSON.parse);
-              form.cb = getCB();
+
               callback(null, {
                 thread_id: ret.thread_fbid,
               });
@@ -295,145 +323,86 @@ function _login(email, password, callback) {
           grammar_version:grammar_version,
           __user:userId,
           __a: "1",
-          __dyn: __dyn,
           __req:(reqCounter++).toString(36),
         };
-        console.log("Logging in...");
+        console.log("Initial requests...");
         console.log("Request to null_state");
         _get("https://www.facebook.com/ajax/browse/null_state.php", jar, form2, function(err, res, html) {
-          var form9 = {
-            'filter[0]':"app",
-            'filter[1]':"page",
-            'filter[2]':"group",
-            'filter[3]':"friendlist",
-            context:"facebar",
-            viewer:userId,
-            token:"v7",
-            lazy:"1",
-            request_id:getGUID(),
-            __user:userId,
-            __a:"1",
-            __dyn:__dyn,
-            __req:(reqCounter++).toString(36),
-            __rev:__rev
+          console.log("Request to reconnect");
+          var form3 = {
+            __user: userId,
+            __req: (reqCounter++).toString(36),
+            __a: 1,
+            __rev: __rev,
+            reason: 6,
+            fb_dtsg: fb_dtsg
           };
-          console.log("Request to bootstrap 1");
-          _get("https://www.facebook.com/ajax/typeahead/search/facebar/bootstrap/", jar, form9, function(err, res, html) {
-            console.log("Response -->", html);
-            var form10 = {
-              'filter[0]':"user",
-              context:"facebar",
-              viewer:userId,
-              token:"v7",
-              lazy:"1",
-              request_id:getGUID(),
-              __user:userId,
-              __a:"1",
-              __dyn:__dyn,
-              __req:(reqCounter++).toString(36),
-              __rev:__rev
-            };
-            console.log("Request to bootstrap 2");
-            _get("https://www.facebook.com/ajax/typeahead/search/facebar/bootstrap/", jar, form10, function(err, res, html) {
-              console.log("Response -->", html);
-              // console.log("--->", html);
-              console.log("Request to reconnect");
-              var form3 = {
-                __user: userId,
-                __req: (reqCounter++).toString(36),
-                __a: 1,
-                __dyn: __dyn,
-                __rev: __rev,
-                reason: 6,
-                fb_dtsg: fb_dtsg
-              };
-              _get("https://www.facebook.com/ajax/presence/reconnect.php", jar, form3, function(err, res, html) {
-                var cookies = res.headers['set-cookie'] || [];
-                cookies.map(function (c) {
-                  jar.setCookie(c, "https://www.facebook.com");
-                });
+          _get("https://www.facebook.com/ajax/presence/reconnect.php", jar, form3, function(err, res, html) {
+            var cookies = res.headers['set-cookie'] || [];
+            cookies.map(function (c) {
+              jar.setCookie(c, "https://www.facebook.com");
+            });
 
-                console.log("--->", html);
-                console.log("Request to imps_logging");
-                var form7 = {
+            // console.log("--->", html);
+            time.reportPullSent();
+            console.log("Request to pull 1");
+            _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
+              // console.log("--->", html);
+              time.reportPullReturned();
+              form.wtc = time.doSerialize();
+              var strData = makeParsable(html);
+              try {
+                var info = strData.map(JSON.parse);
+
+                form.sticky_token = info[0].lb_info.sticky;
+                form.sticky_pool = info[0].lb_info.pool;
+              } catch (e) {
+                console.log("ERROR in init --> ",e, strData);
+                callback({error: e});
+              }
+              console.log("Request to pull 2");
+              _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
+                // console.log("--->", html);
+                time.reportPullReturned();
+                form.wtc = time.doSerialize();
+                var form4 = {
+                  lastSync:~~(Date.now()/1000 - 60),
                   __user: userId,
                   __req: (reqCounter++).toString(36),
-                  __a: 1,
-                  __dyn: __dyn,
-                  __rev: __rev,
-                  sorted_list: "1341803147,100001056938824,1313708707,100000008241605",
-                  source: "periodical_imps",
-                  list_availability: "2,2,2,2",
-                  ttstamp: ttstamp,
-                  fb_dtsg: fb_dtsg
+                  __a: '1',
+                  __rev: __rev
                 };
-                _post("https://www.facebook.com/ajax/chat/imps_logging.php", jar, form7, function(err, res, html) {
-                  console.log("imps_logging --->", html);
-                  time.reportPullSent();
-                  console.log("Request to pull 1 -->", form);
-                  _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
-                    // console.log("--->", html);
-                    time.reportPullReturned();
-                    form.wtc = time.doSerialize();
-                    var strData = makeParsable(html);
-                    console.log(strData);
-                    try {
-                      var info = strData.map(JSON.parse);
+                console.log("Request to sync");
+                _get("https://www.facebook.com/notifications/sync", jar, form4, function(err, res, html) {
+                  // console.log("sync --->", html);
+                  var strData = makeParsable(html);
+                  var lastSync = strData.map(JSON.parse)[0].payload.lastSync;
 
-                      form.sticky_token = info[0].lb_info.sticky;
-                      form.sticky_pool = info[0].lb_info.pool;
-                    } catch (e) {
-                      console.log("ERROR in init --> ",e, strData);
-                      callback({error: e});
-                    }
-                    console.log("Request to pull 2 --->", form);
-                    _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
-                      console.log("--->", html);
-                      time.reportPullReturned();
-                      form.wtc = time.doSerialize();
-                      var form4 = {
-                        lastSync:~~(Date.now()/1000 - 60),
-                        __user: userId,
-                        __req: (reqCounter++).toString(36),
-                        __a: '1',
-                        __dyn: __dyn,
-                        __rev: __rev
-                      };
-                      console.log("Request to sync");
-                      _get("https://www.facebook.com/notifications/sync", jar, form4, function(err, res, html) {
-                        console.log("sync --->", html);
-                        var strData = makeParsable(html);
-                        var lastSync = strData.map(JSON.parse)[0].payload.lastSync;
+                  var cookies = res.headers['set-cookie'] || [];
+                  cookies.map(function (c) {
+                    jar.setCookie(c, "https://www.facebook.com");
+                  });
 
-                        var cookies = res.headers['set-cookie'] || [];
-                        cookies.map(function (c) {
-                          jar.setCookie(c, "https://www.facebook.com");
-                        });
-                        form.cb = getCB();
-                        var form6 = {
-                          __user: userId,
-                          __req: (reqCounter++).toString(36),
-                          __dyn: __dyn,
-                          __a: '1',
-                          __rev: __rev,
-                          fb_dtsg: fb_dtsg,
-                          ttstamp: ttstamp,
-                          client: 'mercury',
-                          'folders[0]': 'inbox',
-                          last_action_timestamp: "0"
-                        };
-                        console.log("Request to thread_sync", form6);
-                        _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
-                          var cookies = res.headers['set-cookie'] || [];
-                          cookies.map(function (c) {
-                            jar.setCookie(c, "https://www.facebook.com");
-                          });
-                          console.log("thread sync --->", html);
-                          console.log("Logged in!");
-                          callback(null, api);
-                        });
-                      });
+                  var form6 = {
+                    __user: userId,
+                    __req: (reqCounter++).toString(36),
+                    __a: '1',
+                    __rev: __rev,
+                    fb_dtsg: fb_dtsg,
+                    ttstamp: ttstamp,
+                    client: 'mercury',
+                    'folders[0]': 'inbox',
+                    last_action_timestamp: "0"
+                  };
+                  console.log("Request to thread_sync");
+                  _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
+                    var cookies = res.headers['set-cookie'] || [];
+                    cookies.map(function (c) {
+                      jar.setCookie(c, "https://www.facebook.com");
                     });
+                    // console.log("thread sync --->", html);
+                    console.log("Logged in!");
+                    callback(null, api);
                   });
                 });
               });
@@ -445,19 +414,19 @@ function _login(email, password, callback) {
   });
 }
 
-function login(filename, cb) {
+function login(filename, callback) {
   var obj = {};
   if(typeof filename === 'function') {
     if(!process.env.FB_LOGIN_EMAIL || !process.env.FB_LOGIN_PASSWORD) return console.log("Please define env variables");
     obj.email = process.env.FB_LOGIN_EMAIL;
     obj.password = process.env.FB_LOGIN_PASSWORD;
-    cb = filename;
+    callback = filename;
   } else {
     obj = JSON.parse(fs.readFileSync(filename, 'utf8'));
     if(!obj.email || !obj.password) throw filename + " has to be a valid json with an email field and a password field";
   }
 
-  return _login(obj.email, obj.password, cb);
+  return _login(obj.email, obj.password, callback);
 }
 module.exports = login;
 
@@ -491,11 +460,6 @@ function getGUID() {
   });
   return id;
 }
-
-function getCB() {
-  return (1048576 * Math.random() | 0).toString(36);
-}
-
 
 function formatMessage(m) {
   var originalMessage = m.message ? m.message : m;
