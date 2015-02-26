@@ -121,7 +121,7 @@ login('config.json', function(err, api) {
 <a name="sendDirectMessage" />
 ### api.sendDirectMessage(message, nameOrUserId, callback)
 
-__Warning__: This function is ambiguous. It'll send messages to facebook's best match when searching for a person called `nameOrUserId`. If all the returned matches aren't people (pages, events etc...), `sendDirectMessage` will call the callback with an error. 
+__Warning__: This function is ambiguous. It'll send messages to facebook's best match when searching for a person called `nameOrUserId`. If all the returned matches aren't people (pages, events etc...), `sendDirectMessage` will call the callback with an error. For this reason, the callback is required.
 
 Similar to `sendMessage` but if `nameOrUserId` is a string, it will query Facebook's search engine to find the person that matches the closest the given name. 'the closest' means that given what facebook knows about you, it'll give priority to friends and friends of friends etc... If `nameOrUserId` is a number, it'll just call `sendMessage`.
 
@@ -173,6 +173,8 @@ login('config.json', function(err, api) {
 ---------------------------------------
 
 <a name="sendDirectSticker" />
-### api.sendDirectSticker(sticker_id, nameOrUserId, [callback])
+### api.sendDirectSticker(sticker_id, nameOrUserId, callback)
+
+__Warning__: This function is also ambiguous ([look at `sendDirectMessage`](#sendDirectMessage)) and therefore a callback is required.
 
 Same as sendDirectMessage but for stickers.

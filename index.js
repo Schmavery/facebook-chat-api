@@ -258,10 +258,11 @@ function _login(email, password, callback) {
         };
 
         api.sendDirectMessage = function(msg, nameOrUserId, callback) {
+          if(!callback) throw new Error("Callback is required for sendDirectMessage");
+
           if(typeof nameOrUserId === "number") {
             return api.sendMessage(msg, nameOrUserId, callback);
           }
-          if(!callback) callback = function() {};
 
           api.getUserId(nameOrUserId, function(err, data) {
             if(err) return callback(err);
@@ -273,10 +274,11 @@ function _login(email, password, callback) {
         };
 
         api.sendDirectSticker = function(sticker_id, nameOrUserId, callback) {
+          if(!callback) throw new Error("Callback is required for sendDirectSticker");
+
           if(typeof nameOrUserId === "number") {
             return api.sendSticker(sticker_id, nameOrUserId, callback);
           }
-          if(!callback) callback = function() {};
 
           api.getUserId(nameOrUserId, function(err, data) {
             if(err) return callback(err);
