@@ -43,7 +43,7 @@ If it fails, callback will be called with an error object.
 __Arguments__
 
 * `filename` - An optional filename to be open and parsed as a JSON. Must be a [valid JSON format](http://jsonlint.com). Must contain at least two fields: email and password.
-* `callback(err, api)` - A callback called when login is done (successful or not). `err` is an object containing a field `error`. `api` is an object with 
+* `callback(err, api)` - A callback called when login is done (successful or not). `err` is an object containing a field `error`.
 
 __Example__
 
