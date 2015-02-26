@@ -117,9 +117,11 @@ function _login(email, password, callback) {
         ttstamp += '2';
 
         var api = {};
-        var shouldStop = false;
-        var stop = function() {
+        var shouldStopListening = false;
+        var currentlyRunning = null;
+        var stopListening = function() {
           shouldStop = true;
+          if(currentlyRunning) clearTimeout(currentlyRunning);
         };
 
         var prev = Date.now();
@@ -127,7 +129,7 @@ function _login(email, password, callback) {
         var lastSync = Date.now();
         var reqCounter = 1;
 
-        api.listen = function(cb) {
+        api.listen = function(callback) {
           if(shouldStop) return;
 
           form.wtc = time.doSerialize();
@@ -187,7 +189,7 @@ function _login(email, password, callback) {
                   // console.log("Request to thread_sync");
                   _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
                     console.log("thread sync --->", html);
-                    currentlyRunning = setTimeout(api.listen, 5000, cb);
+                    currentlyRunning = setTimeout(api.listen, 1000, cb);
                   });
                 });
                 return;
@@ -209,17 +211,21 @@ function _login(email, password, callback) {
               if(info.seq) form.seq = info.seq;
               if(info.tr) form.traceid = info.tr;
             } catch (e) {
-              console.log("ERROR --> ",e, strData);
-              currentlyRunning = setTimeout(api.listen, 1000, cb);
+              console.log("ERROR in listen --> ",e, strData);
+              callback({error: e}, null, stopListening);
+              currentlyRunning = setTimeout(api.listen, 200, callback);
               return;
             }
             // console.log("next call in 1000ms");
-            currentlyRunning = setTimeout(api.listen, 1000, cb);
+            currentlyRunning = setTimeout(api.listen, 200, callback);
+
+            // If any call to stopListening was made, do not call the callback
+            if(shouldStop) return;
 
             if(info.ms) {
               // Send all messages to the callback
               for (var i = 0; i < info.ms.length; i++){
-                cb(info.ms[i], stop);
+                callback(null, info.ms[i], stopListening);
               }
               // var form2 = {
               //   message_ids: []
@@ -232,12 +238,12 @@ function _login(email, password, callback) {
         };
 
 
-        api.sendMessage = function(msg, thread_id, sticker_id, cb) {
+        api.sendMessage = function(msg, thread_id, sticker_id, callback) {
           if(typeof sticker_id === 'function') {
-            cb = sticker_id;
+            callback = sticker_id;
             sticker_id = null;
           }
-          if(!cb) cb = function() {};
+          if(!callback) callback = function() {};
 
           var timestamp = Date.now();
 
@@ -275,15 +281,12 @@ function _login(email, password, callback) {
             try{
               var ret = strData.map(JSON.parse);
               form.cb = getCB();
-              // console.log("Request to active_ping");
-              // _get("https://0-edge-chat.facebook.com/active_ping", jar, form, function(err, res, html) {
-              //   console.log("active ping back --->", html);
-              // });
-              cb({
-                thread_id: ret.thread_fbid, // LOL
+              callback(null, {
+                thread_id: ret.thread_fbid,
               });
             } catch (e) {
-              console.log("ERROR", e, html);
+              console.log("ERROR in sendMessage --> ",e, strData);
+              callback({error: e});
             }
           });
         };
@@ -383,6 +386,7 @@ function _login(email, password, callback) {
                       form.sticky_pool = info[0].lb_info.pool;
                     } catch (e) {
                       console.log("ERROR in init --> ",e, strData);
+                      callback({error: e});
                     }
                     console.log("Request to pull 2 --->", form);
                     _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
@@ -428,7 +432,7 @@ function _login(email, password, callback) {
                           });
                           console.log("thread sync --->", html);
                           console.log("Logged in!");
-                          callback(api);
+                          callback(null, api);
                         });
                       });
                     });
@@ -446,9 +450,9 @@ function _login(email, password, callback) {
 function login(filename, cb) {
   var obj = {};
   if(typeof filename === 'function') {
-    if(!process.env.BOT_EMAIL || !process.env.BOT_PASSWORD) return console.log("Please define env variables");
-    obj.email = process.env.BOT_EMAIL;
-    obj.password = process.env.BOT_PASSWORD;
+    if(!process.env.FB_LOGIN_EMAIL || !process.env.FB_LOGIN_PASSWORD) return console.log("Please define env variables");
+    obj.email = process.env.FB_LOGIN_EMAIL;
+    obj.password = process.env.FB_LOGIN_PASSWORD;
     cb = filename;
   } else {
     obj = JSON.parse(fs.readFileSync(filename, 'utf8'));
