@@ -29,7 +29,7 @@ login("config.json", function(err, api) {
 * [`api.sendDirectMessage`](#sendDirectMessage)
 * [`api.sendDirectSticker`](#sendDirectSticker)
 
-<a name="each" />
+<a name="login" />
 ### login([filename], callback)
 
 This function is returned by require(...) and is the main entry point to the API. 
