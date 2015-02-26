@@ -226,14 +226,9 @@ function _login(email, password, callback) {
           });
         };
 
-        api.sendDirectMessage = function(msg, nameOrUserId, callback) {
-          if(typeof nameOrUserId === "number") {
-            return api.sendMessage(msg, nameOrUserId, null, callback);
-          }
-          if(!callback) callback = function() {};
-
+        api.getUserId = function(name, callback) {
           var form = {
-            value:nameOrUserId.toLowerCase(),
+            value:name.toLowerCase(),
             viewer:userId,
             rsp:"search",
             context:"search",
@@ -251,12 +246,10 @@ function _login(email, password, callback) {
               var ret = strData.map(JSON.parse);
               var info = ret[0].payload;
               if(info.entries[0].type !== "user") {
-                return callback({error: "Couldn't find a user with name " + nameOrUserId + ". Best match: " + info.entries[0].path});
+                return callback({error: "Couldn't find a user with name " + name + ". Best match: " + info.entries[0].path});
               }
 
-              // TODO: find the actual best entry
-              var thread_id = info.entries[0].uid;
-              api.sendMessage(msg, thread_id, null, callback);
+              callback(null, info);
             } catch (e) {
               console.log("ERROR in sendDirectMessage --> ",e, strData);
               callback({error: e});
@@ -264,11 +257,83 @@ function _login(email, password, callback) {
           });
         };
 
-        api.sendMessage = function(msg, thread_id, sticker_id, callback) {
-          if(typeof sticker_id === 'function') {
-            callback = sticker_id;
-            sticker_id = null;
+        api.sendDirectMessage = function(msg, nameOrUserId, callback) {
+          if(typeof nameOrUserId === "number") {
+            return api.sendMessage(msg, nameOrUserId, callback);
           }
+          if(!callback) callback = function() {};
+
+          api.getUserId(nameOrUserId, function(err, data) {
+            if(err) return callback(err);
+
+            // TODO: find the actual best entry
+            var thread_id = data.entries[0].uid;
+            api.sendMessage(msg, thread_id, callback);
+          });
+        };
+
+        api.sendDirectSticker = function(sticker_id, nameOrUserId, callback) {
+          if(typeof nameOrUserId === "number") {
+            return api.sendSticker(sticker_id, nameOrUserId, callback);
+          }
+          if(!callback) callback = function() {};
+
+          api.getUserId(nameOrUserId, function(err, data) {
+            if(err) return callback(err);
+
+            // TODO: find the actual best entry
+            var thread_id = data.entries[0].uid;
+            api.sendSticker(sticker_id, thread_id, callback);
+          });
+        };
+
+        api.sendSticker = function(sticker_id, thread_id, callback) {
+          if(!callback) callback = function() {};
+          var timestamp = Date.now();
+
+          var form = {
+            client: "mercury",
+            __user: userId,
+            fb_dtsg: fb_dtsg,
+            ttstamp: ttstamp,
+            __req: (reqCounter++).toString(36),
+            'message_batch[0][action_type]':'ma-type:user-generated-message',
+            'message_batch[0][author]':'fbid:' + userId,
+            'message_batch[0][timestamp]':timestamp,
+            'message_batch[0][timestamp_absolute]':"Today",
+            'message_batch[0][timestamp_relative]':'18:17',
+            'message_batch[0][timestamp_time_passed]':'0',
+            'message_batch[0][is_unread]':false,
+            'message_batch[0][is_cleared]':false,
+            'message_batch[0][is_forward]':false,
+            'message_batch[0][is_filtered_content]':false,
+            'message_batch[0][is_spoof_warning]':false,
+            'message_batch[0][source]':'source:chat:web',
+            'message_batch[0][source_tags][0]':'source:chat',
+            'message_batch[0][body]':"",
+            'message_batch[0][html_body]':false,
+            'message_batch[0][ui_push_phase]':'V3',
+            'message_batch[0][status]':'0',
+            'message_batch[0][message_id]':generateMessageID(clientid),
+            'message_batch[0][manual_retry_cnt]':'0',
+            'message_batch[0][thread_fbid]':thread_id,
+            'message_batch[0][sticker_id]':sticker_id,
+            'message_batch[0][has_attachment]': true
+          };
+
+          _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
+            var strData = makeParsable(html);
+            try{
+              var ret = strData.map(JSON.parse);
+              callback();
+            } catch (e) {
+              console.log("ERROR in sendSticker --> ",e, strData);
+              callback({error: e});
+            }
+          });
+        };
+
+        api.sendMessage = function(msg, thread_id, callback) {
           if(!callback) callback = function() {};
 
           var timestamp = Date.now();
@@ -299,17 +364,14 @@ function _login(email, password, callback) {
             'message_batch[0][message_id]':generateMessageID(clientid),
             'message_batch[0][manual_retry_cnt]':'0',
             'message_batch[0][thread_fbid]':thread_id,
-            'message_batch[0][sticker_id]':sticker_id,
-            'message_batch[0][has_attachment]':!!sticker_id
+            'message_batch[0][has_attachment]':false
           };
           _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
             var strData = makeParsable(html);
             try{
               var ret = strData.map(JSON.parse);
 
-              callback(null, {
-                thread_id: ret.thread_fbid,
-              });
+              callback();
             } catch (e) {
               console.log("ERROR in sendMessage --> ",e, strData);
               callback({error: e});

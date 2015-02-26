@@ -92,13 +92,13 @@ login('config.json', function(err, api) {
 ---------------------------------------
 
 <a name="sendMessage" />
-### api.sendMessage(message, thread_id, [sticker_id, callback])
+### api.sendMessage(message, thread_id, [callback])
 
-Sends the given message to the thread_id. If given a sticker_id, it'll send the sticker instead of the message. 
+Sends the given message to the thread_id.
 
 __Arguments__
 
-* `message` - A string being the message to be sent to the given thread_id
+* `message` - A string being the message to be sent to the given thread_id.
 * `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation. 
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
 
@@ -120,7 +120,7 @@ login('config.json', function(err, api) {
 <a name="sendDirectMessage" />
 ### api.sendDirectMessage(message, nameOrUserId, callback)
 
-Similar to sendMessage but if `nameOrUserId` is a string, it will query Facebook's search engine to find the person that matches the closest the given name. 'the closest' means that given what facebook knows about you, it'll give priority to friends and friends of friends etc... If `nameOrUserId` is a number, it'll just call sendMessage.
+Similar to `sendMessage` but if `nameOrUserId` is a string, it will query Facebook's search engine to find the person that matches the closest the given name. 'the closest' means that given what facebook knows about you, it'll give priority to friends and friends of friends etc... If `nameOrUserId` is a number, it'll just call `sendMessage`.
 
 __Arguments__
 
@@ -140,3 +140,35 @@ login('config.json', function(err, api) {
     });
 });
 ```
+
+---------------------------------------
+
+<a name="sendSticker" />
+### api.sendSticker(sticker_id, thread_id, [callback])
+
+Sends the given sticker_id to the thread_id.
+
+__Arguments__
+
+* `sticker_id` - A string or number representing the sticker to be sent to the given thread_id.
+* `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation. 
+* `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
+
+__Tip__: to find your own ID, go to your own profile on Facebook and replace 'www' by 'graph' in the URL.
+
+__Example__
+
+```js
+login('config.json', function(err, api) {
+    if(err) return console.error(err);
+    
+    var yourID = 0000000000000;
+    api.sendMessage(767334526626290, yourID);
+});
+
+---------------------------------------
+
+<a name="sendDirectSticker" />
+### api.sendDirectSticker(sticker_id, nameOrUserId, [callback])
+
+Same as sendDirectMessage but for stickers.
