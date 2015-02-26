@@ -2,7 +2,6 @@ var request = require("request").defaults({jar: true});
 var cheerio = require("cheerio");
 var fs = require("fs");
 var time = require("./time");
-var helperFunctions = require("./helperFunctions");
 
 function _get(url, jar, qs, callback) {
   if(typeof qs === 'function') {
@@ -240,8 +239,6 @@ function _login(email, password, callback) {
           }
           if(!cb) cb = function() {};
 
-          var tmp = {};
-          helperFunctions.normalizeNewMessage(tmp, userId, clientid);
           var timestamp = Date.now();
 
           var form = {
@@ -251,9 +248,9 @@ function _login(email, password, callback) {
             ttstamp: ttstamp,
             __req: (reqCounter++).toString(36),
             'message_batch[0][action_type]':'ma-type:user-generated-message',
-            'message_batch[0][author]':tmp.author,
+            'message_batch[0][author]':'fbid:' + userId,
             'message_batch[0][timestamp]':timestamp,
-            'message_batch[0][timestamp_absolute]':tmp.timestamp_absolute,
+            'message_batch[0][timestamp_absolute]':"Today",
             'message_batch[0][timestamp_relative]':'18:17',
             'message_batch[0][timestamp_time_passed]':'0',
             'message_batch[0][is_unread]':false,
@@ -267,7 +264,7 @@ function _login(email, password, callback) {
             'message_batch[0][html_body]':false,
             'message_batch[0][ui_push_phase]':'V3',
             'message_batch[0][status]':'0',
-            'message_batch[0][message_id]':tmp.message_id,
+            'message_batch[0][message_id]':generateMessageID(clientid),
             'message_batch[0][manual_retry_cnt]':'0',
             'message_batch[0][thread_fbid]':thread_id,
             'message_batch[0][sticker_id]':sticker_id,
@@ -410,45 +407,29 @@ function _login(email, password, callback) {
                         cookies.map(function (c) {
                           jar.setCookie(c, "https://www.facebook.com");
                         });
-                        // var form5 = {
-                        //   __user: userId,
-                        //   __req: (reqCounter++).toString(36),
-                        //   fb_dtsg: fb_dtsg,
-                        //   ttstamp: ttstamp,
-                        //   ph: "V3",
-                        //   ts: Date.now()
-                        // };
-                        // console.log("Request to bz");
-                        // _post("https://www.facebook.com/ajax/bz", jar, form5, function(err, res, html) {
-                          // console.log("bz --->", html);
-                          form.cb = getCB();
-                          // console.log("Request to active_ping");
-                          // _get("https://0-edge-chat.facebook.com/active_ping", jar, form, function(err, res, html) {
-                            var form6 = {
-                              __user: userId,
-                              __req: (reqCounter++).toString(36),
-                              __dyn: __dyn,
-                              __a: '1',
-                              __rev: __rev,
-                              fb_dtsg: fb_dtsg,
-                              ttstamp: ttstamp,
-                              client: 'mercury',
-                              'folders[0]': 'inbox',
-                              last_action_timestamp: "0"
-                            };
-
-                            console.log("Request to thread_sync", form6);
-                            _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
-                              var cookies = res.headers['set-cookie'] || [];
-                              cookies.map(function (c) {
-                                jar.setCookie(c, "https://www.facebook.com");
-                              });
-                              console.log("thread sync --->", html);
-                              console.log("Logged in!");
-                              callback(api);
-                            });
-                          // });
-                        // });
+                        form.cb = getCB();
+                        var form6 = {
+                          __user: userId,
+                          __req: (reqCounter++).toString(36),
+                          __dyn: __dyn,
+                          __a: '1',
+                          __rev: __rev,
+                          fb_dtsg: fb_dtsg,
+                          ttstamp: ttstamp,
+                          client: 'mercury',
+                          'folders[0]': 'inbox',
+                          last_action_timestamp: "0"
+                        };
+                        console.log("Request to thread_sync", form6);
+                        _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
+                          var cookies = res.headers['set-cookie'] || [];
+                          cookies.map(function (c) {
+                            jar.setCookie(c, "https://www.facebook.com");
+                          });
+                          console.log("thread sync --->", html);
+                          console.log("Logged in!");
+                          callback(api);
+                        });
                       });
                     });
                   });
@@ -465,9 +446,9 @@ function _login(email, password, callback) {
 function login(filename, cb) {
   var obj = {};
   if(typeof filename === 'function') {
-    if(!process.env.MARC_ZUCKERBOT_EMAIL || !process.env.MARC_ZUCKERBOT_PASSWORD) return console.log("Please define env variables");
-    obj.email = process.env.MARC_ZUCKERBOT_EMAIL;
-    obj.password = process.env.MARC_ZUCKERBOT_PASSWORD;
+    if(!process.env.BOT_EMAIL || !process.env.BOT_PASSWORD) return console.log("Please define env variables");
+    obj.email = process.env.BOT_EMAIL;
+    obj.password = process.env.BOT_PASSWORD;
     cb = filename;
   } else {
     obj = JSON.parse(fs.readFileSync(filename, 'utf8'));
@@ -477,6 +458,21 @@ function login(filename, cb) {
   return _login(obj.email, obj.password, cb);
 }
 module.exports = login;
+
+
+
+/**
+ *
+ * ============= Helper functions =================
+ *
+ */
+
+function generateMessageID(clientID) {
+  var k = Date.now();
+  var l = Math.floor(Math.random() * 4294967295);
+  var m = clientID;
+  return ("<" + k + ":" + l + "-" + m + "@mail.projektitan.com>");
+}
 
 function getGUID() {
   /** @type {number} */
