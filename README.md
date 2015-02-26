@@ -27,6 +27,7 @@ login("config.json", function(err, api) {
 * [`api.listen`](#listen)
 * [`api.sendMessage`](#sendMessage)
 * [`api.sendDirectMessage`](#sendDirectMessage)
+* [`api.sendDirectSticker`](#sendDirectSticker)
 
 <a name="each" />
 ### login([filename], callback)
@@ -167,6 +168,7 @@ login('config.json', function(err, api) {
 });
 
 ---------------------------------------
+```
 
 <a name="sendDirectSticker" />
 ### api.sendDirectSticker(sticker_id, nameOrUserId, [callback])
