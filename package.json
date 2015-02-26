@@ -1,11 +1,23 @@
 {
   "name": "facebook-chat-api",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Facebook chat API that doesn't rely on XMPP.  Will NOT be deprecated April 30th 2015.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Schmavery/facebook-chat-api.git"
+  },
+  "keywords": [
+    "facebook",
+    "chat",
+    "api"
+  ],
+  "bugs": {
+    "url": "https://github.com/Schmavery/facebook-chat-api.git/issues"
   },
   "author": "Avery, David, Maude, Benjamin",
   "license": "MIT",
