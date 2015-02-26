@@ -151,9 +151,7 @@ function _login(email, password, callback) {
 
               info = strData.map(JSON.parse)[0];
 
-              if(Date.now() - tmpPrev < 1000) {
-                console.log('Going too fast ------------> ', info);
-              }
+              console.log("Got answer in ", Date.now() - tmpPrev);
               tmpPrev = Date.now();
 
               if(info && info.t === 'fullReload') {
