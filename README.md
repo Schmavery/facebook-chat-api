@@ -2,12 +2,12 @@
 
 ## Install:
 ```bash
-npm i
+npm install facebook-chat-api
 ```
 
 ## Usage:
 ```javascript
-var login = require("./facebook-chat-api");
+var login = require("facebook-chat-api");
 
 // Create simple echo bot
 login("config.json", function(api) {
