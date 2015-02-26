@@ -166,9 +166,9 @@ login('config.json', function(err, api) {
     var yourID = 0000000000000;
     api.sendMessage(767334526626290, yourID);
 });
+```
 
 ---------------------------------------
-```
 
 <a name="sendDirectSticker" />
 ### api.sendDirectSticker(sticker_id, nameOrUserId, [callback])
