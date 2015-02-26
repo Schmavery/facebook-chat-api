@@ -117,7 +117,7 @@ function _login(email, password, callback) {
         ttstamp += '2';
 
         var api = {};
-        var shouldStopListening = false;
+        var shouldStop = false;
         var currentlyRunning = null;
         var stopListening = function() {
           shouldStop = true;
