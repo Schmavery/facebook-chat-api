@@ -355,6 +355,7 @@ function _login(email, password, callback) {
         };
 
         api.markAsRead = function(thread_id, callback) {
+          if(!callback) callback = function() {};
           var form = {
             __user: userId,
             fb_dtsg: fb_dtsg,
