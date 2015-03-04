@@ -197,6 +197,25 @@ function _login(email, password, callback) {
                           v.event === 'deliver' &&
                           v.message.sender_fbid.toString() !== userId;
                 });
+
+                // Send deliveryReceipt notification to the server
+                var formDeliveryReceipt = {
+                  __a: 1,
+                  __user: userId,
+                  __req: (reqCounter++).toString(36),
+                  __rev: __rev,
+                  fb_dtsg: fb_dtsg,
+                  ttstamp: ttstamp,
+                };
+                for (var i = 0; i < info.ms.length; i++) {
+                  if(info.ms[i].message && info.ms[i].message.mid) formDeliveryReceipt["[" + i + "]"] = info.ms[i].message.mid;
+                }
+
+                // If there's at least one, we do the post request
+                if(formDeliveryReceipt["[0]"]) {
+                  _post("https://www.facebook.com/ajax/mercury/delivery_receipts.php", jar, formDeliveryReceipt, function(err, res, html) {
+                  });
+                }
                 info.ms = info.ms.map(formatMessage);
                 info.ms.sort(function(a, b) {
                   return a.timestamp - b.timestamp;
@@ -335,11 +354,39 @@ function _login(email, password, callback) {
           });
         };
 
+        api.markAsRead = function(thread_id, callback) {
+          var form = {
+            __user: userId,
+            fb_dtsg: fb_dtsg,
+            ttstamp: ttstamp,
+            __req: (reqCounter++).toString(36),
+          };
+
+          form["ids[" + thread_id + "]"] = true;
+
+          _post("https://www.facebook.com/ajax/mercury/change_read_status.php", jar, form, function(err, res, html) {
+            var cookies = res.headers['set-cookie'] || [];
+            cookies.map(function (c) {
+              jar.setCookie(c, "https://www.facebook.com");
+            });
+
+            var strData = makeParsable(html);
+            try{
+              var ret = strData.map(JSON.parse);
+
+              callback();
+            } catch (e) {
+              console.log("ERROR in markAsRead --> ",e, strData);
+              callback({error: e});
+            }
+          });
+        };
+
         api.sendMessage = function(msg, thread_id, callback) {
           if(!callback) callback = function() {};
 
           var timestamp = Date.now();
-
+          var d = new Date();
           var form = {
             client: "mercury",
             __user: userId,
@@ -350,7 +397,7 @@ function _login(email, password, callback) {
             'message_batch[0][author]':'fbid:' + userId,
             'message_batch[0][timestamp]':timestamp,
             'message_batch[0][timestamp_absolute]':"Today",
-            'message_batch[0][timestamp_relative]':'18:17',
+            'message_batch[0][timestamp_relative]':d.getHours() + ":" + padZeros(d.getMinutes()),
             'message_batch[0][timestamp_time_passed]':'0',
             'message_batch[0][is_unread]':false,
             'message_batch[0][is_cleared]':false,
@@ -368,6 +415,7 @@ function _login(email, password, callback) {
             'message_batch[0][thread_fbid]':thread_id,
             'message_batch[0][has_attachment]':false
           };
+
           _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
             var strData = makeParsable(html);
             try{
@@ -465,7 +513,7 @@ function _login(email, password, callback) {
                       jar.setCookie(c, "https://www.facebook.com");
                     });
                     // console.log("thread sync --->", html);
-                    console.log("Logged in!");
+                    console.log("Done loading.");
                     callback(null, api);
                   });
                 });
@@ -495,12 +543,18 @@ function login(filename, callback) {
 module.exports = login;
 
 
-
 /**
  *
  * ============= Helper functions =================
  *
  */
+
+function padZeros(val, len) {
+    val = String(val);
+    len = len || 2;
+    while (val.length < len) val = "0" + val;
+    return val;
+}
 
 function generateMessageID(clientID) {
   var k = Date.now();
@@ -530,6 +584,7 @@ function formatMessage(m) {
 
   return {
     sender_name: originalMessage.sender_name,
+    sender_id: originalMessage.sender_fbid,
     participant_names: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
     body: originalMessage.body,
     thread_id: originalMessage.tid ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid

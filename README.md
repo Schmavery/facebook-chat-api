@@ -175,6 +175,6 @@ login('config.json', function(err, api) {
 <a name="sendDirectSticker" />
 ### api.sendDirectSticker(sticker_id, nameOrUserId, callback)
 
-__Warning__: This function is also ambiguous ([look at `sendDirectMessage`](#sendDirectMessage)) and therefore a callback is required.
+__Warning__: This function is also ambiguous (look at [`sendDirectMessage`](#sendDirectMessage)) and therefore a callback is required.
 
 Same as sendDirectMessage but for stickers.
