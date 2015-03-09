@@ -587,6 +587,7 @@ function formatMessage(m) {
     sender_name: originalMessage.sender_name,
     sender_id: originalMessage.sender_fbid,
     participant_names: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
+    participant_ids: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids : [originalMessage.sender_fbid]),
     body: originalMessage.body,
     thread_id: originalMessage.tid ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid
   };
