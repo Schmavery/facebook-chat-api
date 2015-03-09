@@ -1,6 +1,8 @@
 # Facebook Chat API
 The Official Facebook Chat API uses XMPP and is going to be deprecated as of April 30th 2015. This is a non-official API that doesn't use XMPP.
 
+_Side note_: if you want a larger example you should head over to [Marc Zuckerbot](https://github.com/bsansouci/marc-zuckerbot)
+
 ## Install
 ```bash
 npm install facebook-chat-api
@@ -25,7 +27,9 @@ login("config.json", function(err, api) {
 ## Documentation
 * [`login`](#login)
 * [`api.listen`](#listen)
+* [`api.getUserId`](#getUserId)
 * [`api.sendMessage`](#sendMessage)
+* [`api.sendSticker`](#sendSticker)
 * [`api.sendDirectMessage`](#sendDirectMessage)
 * [`api.sendDirectSticker`](#sendDirectSticker)
 
@@ -66,6 +70,8 @@ __Arguments__
 
 * `callback(error, message, stopListening)` - A callback called everytime the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. `error` is an object contain a field error being the error thrown if anything happens inside listen. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. `message` is an object with 4 fields:
     - `sender_name` - First and last name of the person who just sent the message.
+    - `sender_id` - The id of the person who sent the message in the chat with thread_id.
+    - `participant_ids` - An array containing the ids of everyone in the thread (you included).
     - `participant_names` - An array containing only the first names of the other participants in the thread (you included).
     - `body` - The string corresponding to the message that was just received.
     - `thread_id` - The thread_id representing the thread in which the message was sent.
@@ -91,6 +97,62 @@ login('config.json', function(err, api) {
 ```
 
 ---------------------------------------
+
+<a name="getUserId" />
+### api.getUserId(name, callback)
+
+Given a person's full name will do a Facebook Graph search and return all the ids ordered by however Facebook wants to order them.
+
+__Arguments__
+
+* `name` - A string being the name of the person you're looking for.
+* `callback(err, obj)` - A callback called when the search is done (either with an error or with the resulting object). `obj` contains and array called entries which contains all the users that facebook graph search found, ordered by "importance".
+
+__Example__
+
+```js
+login('config.json', function(err, api) {
+    if(err) return console.error(err);
+    
+    api.getUserId("Marc Zuckerbot", function(err, data) {
+        if(err) return callback(err);
+        
+        // Send the message to the best match (best by Facebook's criteria)
+        var thread_id = data.entries[0].uid;
+        api.sendMessage(msg, thread_id);
+    });
+});
+```
+
+---------------------------------------
+
+<a name="markAsRead" />
+### api.markAsRead(thread_id, callback)
+
+Given a thread_id will mark all the unread messages as read. Facebook will take a couple of seconds to show that you've read the messages.
+
+__Arguments__
+
+* `thread_id` - The id of the thread in which you want to mark the messages as read.
+* `callback(err)` - A callback called when the operation is done maybe with an object representing an error.
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login("config.json", function(err, api) {
+    if(err) return console.error(err);
+  
+    api.listen(function callback(err, message) {
+        // Marks message as read immediately after they're sent
+        api.markAsRead(message.thread_id);
+    });
+});
+```
+
+---------------------------------------
+
 
 <a name="sendMessage" />
 ### api.sendMessage(message, thread_id, [callback])
