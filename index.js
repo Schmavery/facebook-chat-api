@@ -18,11 +18,11 @@ function _get(url, jar, qs, callback) {
   var op = {
     headers: {
       'Content-Type' : 'application/x-www-form-urlencoded',
-      Referer: 'https://www.facebook.com/',
-      Host: url.replace('https://', '').split("/")[0],
-      Origin: 'https://www.facebook.com',
-      "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18",
-      Connection: 'keep-alive',
+      'Referer' : 'https://www.facebook.com/',
+      'Host' : url.replace('https://', '').split("/")[0],
+      'Origin' : 'https://www.facebook.com',
+      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18',
+      'Connection' : 'keep-alive',
     },
     timeout: 60000,
     qs: qs,
@@ -39,11 +39,11 @@ function _post(url, jar, form, callback) {
   var op = {
     headers: {
       'Content-Type' : 'application/x-www-form-urlencoded',
-      Referer: 'https://www.facebook.com/',
-      Origin: 'https://www.facebook.com',
-      Host: url.replace('https://', '').split("/")[0],
-      "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18",
-      Connection: 'keep-alive',
+      'Referer' : 'https://www.facebook.com/',
+      'Origin' : 'https://www.facebook.com',
+      'Host' : url.replace('https://', '').split("/")[0],
+      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18',
+      'Connection' : 'keep-alive',
     },
     timeout: 60000,
     url: url,
@@ -102,16 +102,16 @@ function _login(email, password, callback) {
         var __rev = getFrom(html, "revision\":",",");
 
         var form = {
-          channel: userChannel,
-          seq: 0,
-          partition: '-2',
-          clientid: clientid,
-          viewer_uid: userId,
-          uid: userId,
-          state: 'active',
-          format: 'json',
-          idle: 0,
-          cap: '8'
+          'channel' : userChannel,
+          'seq' : '0',
+          'partition' : '-2',
+          'clientid' : clientid,
+          'viewer_uid' : userId,
+          'uid' : userId,
+          'state' : 'active',
+          'format' : 'json',
+          'idle' : 0,
+          'cap' : '8'
         };
 
         var fb_dtsg = getFrom(html, "name=\"fb_dtsg\" value=\"", "\"");
@@ -160,11 +160,11 @@ function _login(email, password, callback) {
               if(info && info.t === 'fullReload') {
                 form.seq = info.seq;
                 var form4 = {
-                  lastSync:~~(lastSync/1000),
-                  __user: userId,
-                  __req: (reqCounter++).toString(36),
-                  __rev: __rev,
-                  __a: 1,
+                  'lastSync' : ~~(lastSync/1000),
+                  '__user' : userId,
+                  '__req' : (reqCounter++).toString(36),
+                  '__rev' : __rev,
+                  '__a' : '1',
                 };
                 _get("https://www.facebook.com/notifications/sync/", jar, form4, function(err, res, html) {
                   var cookies = res.headers['set-cookie'] || [];
@@ -173,15 +173,15 @@ function _login(email, password, callback) {
                   });
                   lastSync = Date.now();
                   var form6 = {
-                    __a: 1,
-                    __user: userId,
-                    __req: (reqCounter++).toString(36),
-                    __rev: __rev,
-                    fb_dtsg: fb_dtsg,
-                    ttstamp: ttstamp,
-                    client: 'mercury',
+                    '__a' : '1',
+                    '__user' : userId,
+                    '__req' : (reqCounter++).toString(36),
+                    '__rev' : __rev,
+                    'fb_dtsg' : fb_dtsg,
+                    'ttstamp' : ttstamp,
+                    'client' : 'mercury',
                     'folders[0]': 'inbox',
-                    last_action_timestamp: ~~(Date.now() - 60)
+                    'last_action_timestamp' : ~~(Date.now() - 60)
                   };
                   _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
                     console.log("thread sync --->", html);
@@ -200,12 +200,12 @@ function _login(email, password, callback) {
 
                 // Send deliveryReceipt notification to the server
                 var formDeliveryReceipt = {
-                  __a: 1,
-                  __user: userId,
-                  __req: (reqCounter++).toString(36),
-                  __rev: __rev,
-                  fb_dtsg: fb_dtsg,
-                  ttstamp: ttstamp,
+                  '__a' : '1',
+                  '__user' : userId,
+                  '__req' : (reqCounter++).toString(36),
+                  '__rev' : __rev,
+                  'fb_dtsg' : fb_dtsg,
+                  'ttstamp' : ttstamp,
                 };
                 for (var i = 0; i < info.ms.length; i++) {
                   if(info.ms[i].message && info.ms[i].message.mid) formDeliveryReceipt["[" + i + "]"] = info.ms[i].message.mid;
@@ -247,16 +247,16 @@ function _login(email, password, callback) {
 
         api.getUserId = function(name, callback) {
           var form = {
-            value:name.toLowerCase(),
-            viewer:userId,
-            rsp:"search",
-            context:"search",
-            path:"/home.php",
-            request_id:getGUID(),
-            __user:userId,
-            __a:1,
-            __req:(reqCounter++).toString(36),
-            __rev:__rev,
+            'value' : name.toLowerCase(),
+            'viewer' : userId,
+            'rsp' : "search",
+            'context' : "search",
+            'path' : "/home.php",
+            'request_id' : getGUID(),
+            '__user' : userId,
+            '__a' : '1',
+            '__req' : (reqCounter++).toString(36),
+            '__rev' : __rev,
           };
 
           _get("https://www.facebook.com/ajax/typeahead/search.php", jar, form, function(err, res, html) {
@@ -311,35 +311,35 @@ function _login(email, password, callback) {
         api.sendSticker = function(sticker_id, thread_id, callback) {
           if(!callback) callback = function() {};
           var timestamp = Date.now();
-
+          var d = new Date();
           var form = {
-            client: "mercury",
-            __user: userId,
-            fb_dtsg: fb_dtsg,
-            ttstamp: ttstamp,
-            __req: (reqCounter++).toString(36),
-            'message_batch[0][action_type]':'ma-type:user-generated-message',
-            'message_batch[0][author]':'fbid:' + userId,
-            'message_batch[0][timestamp]':timestamp,
-            'message_batch[0][timestamp_absolute]':"Today",
-            'message_batch[0][timestamp_relative]':'18:17',
-            'message_batch[0][timestamp_time_passed]':'0',
-            'message_batch[0][is_unread]':false,
-            'message_batch[0][is_cleared]':false,
-            'message_batch[0][is_forward]':false,
-            'message_batch[0][is_filtered_content]':false,
-            'message_batch[0][is_spoof_warning]':false,
-            'message_batch[0][source]':'source:chat:web',
-            'message_batch[0][source_tags][0]':'source:chat',
-            'message_batch[0][body]':"",
-            'message_batch[0][html_body]':false,
-            'message_batch[0][ui_push_phase]':'V3',
-            'message_batch[0][status]':'0',
-            'message_batch[0][message_id]':generateMessageID(clientid),
-            'message_batch[0][manual_retry_cnt]':'0',
-            'message_batch[0][thread_fbid]':thread_id,
-            'message_batch[0][sticker_id]':sticker_id,
-            'message_batch[0][has_attachment]': true
+            'client' : 'mercury',
+            '__user' : userId,
+            'fb_dtsg' : fb_dtsg,
+            'ttstamp' : ttstamp,
+            '__req' : (reqCounter++).toString(36),
+            'message_batch[0][action_type]' : 'ma-type:user-generated-message',
+            'message_batch[0][author]' : 'fbid:' + userId,
+            'message_batch[0][timestamp]' : timestamp,
+            'message_batch[0][timestamp_absolute]' : 'Today',
+            'message_batch[0][timestamp_relative]' : d.getHours() + ":" + padZeros(d.getMinutes()),
+            'message_batch[0][timestamp_time_passed]' : '0',
+            'message_batch[0][is_unread]' : false,
+            'message_batch[0][is_cleared]' : false,
+            'message_batch[0][is_forward]' : false,
+            'message_batch[0][is_filtered_content]' : false,
+            'message_batch[0][is_spoof_warning]' : false,
+            'message_batch[0][source]' : 'source:chat:web',
+            'message_batch[0][source_tags][0]' : 'source:chat',
+            'message_batch[0][body]' : '',
+            'message_batch[0][html_body]' : false,
+            'message_batch[0][ui_push_phase]' : 'V3',
+            'message_batch[0][status]' : '0',
+            'message_batch[0][message_id]' : generateMessageID(clientid),
+            'message_batch[0][manual_retry_cnt]' : '0',
+            'message_batch[0][thread_fbid]' : thread_id,
+            'message_batch[0][sticker_id]' : sticker_id,
+            'message_batch[0][has_attachment]' : true
           };
 
           _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
@@ -389,32 +389,32 @@ function _login(email, password, callback) {
           var timestamp = Date.now();
           var d = new Date();
           var form = {
-            client: "mercury",
-            __user: userId,
-            fb_dtsg: fb_dtsg,
-            ttstamp: ttstamp,
-            __req: (reqCounter++).toString(36),
-            'message_batch[0][action_type]':'ma-type:user-generated-message',
-            'message_batch[0][author]':'fbid:' + userId,
-            'message_batch[0][timestamp]':timestamp,
-            'message_batch[0][timestamp_absolute]':"Today",
-            'message_batch[0][timestamp_relative]':d.getHours() + ":" + padZeros(d.getMinutes()),
-            'message_batch[0][timestamp_time_passed]':'0',
-            'message_batch[0][is_unread]':false,
-            'message_batch[0][is_cleared]':false,
-            'message_batch[0][is_forward]':false,
-            'message_batch[0][is_filtered_content]':false,
-            'message_batch[0][is_spoof_warning]':false,
-            'message_batch[0][source]':'source:chat:web',
-            'message_batch[0][source_tags][0]':'source:chat',
-            'message_batch[0][body]':msg,
-            'message_batch[0][html_body]':false,
-            'message_batch[0][ui_push_phase]':'V3',
-            'message_batch[0][status]':'0',
-            'message_batch[0][message_id]':generateMessageID(clientid),
-            'message_batch[0][manual_retry_cnt]':'0',
-            'message_batch[0][thread_fbid]':thread_id,
-            'message_batch[0][has_attachment]':false
+            'client' : 'mercury',
+            '__user' : userId,
+            'fb_dtsg' : fb_dtsg,
+            'ttstamp' : ttstamp,
+            '__req' : (reqCounter++).toString(36),
+            'message_batch[0][action_type]' : 'ma-type:user-generated-message',
+            'message_batch[0][author]' : 'fbid:' + userId,
+            'message_batch[0][timestamp]' : timestamp,
+            'message_batch[0][timestamp_absolute]' : 'Today',
+            'message_batch[0][timestamp_relative]' : d.getHours() + ":" + padZeros(d.getMinutes()),
+            'message_batch[0][timestamp_time_passed]' : '0',
+            'message_batch[0][is_unread]' : false,
+            'message_batch[0][is_cleared]' : false,
+            'message_batch[0][is_forward]' : false,
+            'message_batch[0][is_filtered_content]' : false,
+            'message_batch[0][is_spoof_warning]' : false,
+            'message_batch[0][source]' : 'source:chat:web',
+            'message_batch[0][source_tags][0]' : 'source:chat',
+            'message_batch[0][body]' : msg,
+            'message_batch[0][html_body]' : false,
+            'message_batch[0][ui_push_phase]' : 'V3',
+            'message_batch[0][status]' : '0',
+            'message_batch[0][message_id]' : generateMessageID(clientid),
+            'message_batch[0][manual_retry_cnt]' : '0',
+            'message_batch[0][thread_fbid]' : thread_id,
+            'message_batch[0][has_attachment]' : false
           };
 
           _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
@@ -433,22 +433,22 @@ function _login(email, password, callback) {
         time.initialize();
 
         var form2 = {
-          grammar_version:grammar_version,
-          __user:userId,
-          __a: "1",
-          __req:(reqCounter++).toString(36),
+          'grammar_version' : grammar_version,
+          '__user' : userId,
+          '__a' : '1',
+          '__req' : (reqCounter++).toString(36),
         };
         console.log("Initial requests...");
         console.log("Request to null_state");
         _get("https://www.facebook.com/ajax/browse/null_state.php", jar, form2, function(err, res, html) {
           console.log("Request to reconnect");
           var form3 = {
-            __user: userId,
-            __req: (reqCounter++).toString(36),
-            __a: 1,
-            __rev: __rev,
-            reason: 6,
-            fb_dtsg: fb_dtsg
+            '__user' : userId,
+            '__req' : (reqCounter++).toString(36),
+            '__a' : '1',
+            '__rev' : __rev,
+            'reason' : '6',
+            'fb_dtsg' : fb_dtsg
           };
           _get("https://www.facebook.com/ajax/presence/reconnect.php", jar, form3, function(err, res, html) {
             var cookies = res.headers['set-cookie'] || [];
@@ -456,11 +456,9 @@ function _login(email, password, callback) {
               jar.setCookie(c, "https://www.facebook.com");
             });
 
-            // console.log("--->", html);
             time.reportPullSent();
             console.log("Request to pull 1");
             _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
-              // console.log("--->", html);
               time.reportPullReturned();
               form.wtc = time.doSerialize();
               var strData = makeParsable(html);
@@ -475,19 +473,17 @@ function _login(email, password, callback) {
               }
               console.log("Request to pull 2");
               _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
-                // console.log("--->", html);
                 time.reportPullReturned();
                 form.wtc = time.doSerialize();
                 var form4 = {
-                  lastSync:~~(Date.now()/1000 - 60),
-                  __user: userId,
-                  __req: (reqCounter++).toString(36),
-                  __a: '1',
-                  __rev: __rev
+                  'lastSync' : ~~(Date.now()/1000 - 60),
+                  '__user' : userId,
+                  '__req' : (reqCounter++).toString(36),
+                  '__a' : '1',
+                  '__rev' : __rev
                 };
                 console.log("Request to sync");
                 _get("https://www.facebook.com/notifications/sync", jar, form4, function(err, res, html) {
-                  // console.log("sync --->", html);
                   var strData = makeParsable(html);
                   var lastSync = strData.map(JSON.parse)[0].payload.lastSync;
 
@@ -497,15 +493,15 @@ function _login(email, password, callback) {
                   });
 
                   var form6 = {
-                    __user: userId,
-                    __req: (reqCounter++).toString(36),
-                    __a: '1',
-                    __rev: __rev,
-                    fb_dtsg: fb_dtsg,
-                    ttstamp: ttstamp,
-                    client: 'mercury',
+                    '__user' : userId,
+                    '__req' : (reqCounter++).toString(36),
+                    '__a' : '1',
+                    '__rev' : __rev,
+                    'fb_dtsg' : fb_dtsg,
+                    'ttstamp' : ttstamp,
+                    'client' : 'mercury',
                     'folders[0]': 'inbox',
-                    last_action_timestamp: "0"
+                    'last_action_timestamp' : '0'
                   };
                   console.log("Request to thread_sync");
                   _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
@@ -513,7 +509,6 @@ function _login(email, password, callback) {
                     cookies.map(function (c) {
                       jar.setCookie(c, "https://www.facebook.com");
                     });
-                    // console.log("thread sync --->", html);
                     console.log("Done loading.");
                     callback(null, api);
                   });
