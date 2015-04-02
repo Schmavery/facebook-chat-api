@@ -72,10 +72,11 @@ __Arguments__
 * `callback(error, message, stopListening)` - A callback called everytime the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. `error` is an object contain a field error being the error thrown if anything happens inside listen. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. `message` is an object with 4 fields:
     - `sender_name` - First and last name of the person who just sent the message.
     - `sender_id` - The id of the person who sent the message in the chat with thread_id.
-    - `participant_ids` - An array containing the ids of everyone in the thread (you included).
-    - `participant_names` - An array containing only the first names of the other participants in the thread (you included).
+    - `participant_ids` - An array containing the ids of everyone in the thread (sender included).
+    - `participant_names` - An array containing only the first names of the other participants in the thread (sender included).
     - `body` - The string corresponding to the message that was just received.
     - `thread_id` - The thread_id representing the thread in which the message was sent.
+    - `coordinates` - An object containing `latitude`, `longitude`, and `accuracy`.
 
 __Example__
 
