@@ -28,6 +28,7 @@ login("config.json", function(err, api) {
 * [`login`](#login)
 * [`api.listen`](#listen)
 * [`api.getUserId`](#getUserId)
+* [`api.markAsRead`](#markAsRead)
 * [`api.sendMessage`](#sendMessage)
 * [`api.sendSticker`](#sendSticker)
 * [`api.sendDirectMessage`](#sendDirectMessage)
