@@ -386,6 +386,7 @@ function _login(email, password, callback) {
 
         api.sendMessage = function(msg, thread_id, callback) {
           if(!callback) callback = function() {};
+          if(typeof msg !== "string") return callback({error: "Message should be of type string and not " + typeof msg + "."});
 
           var timestamp = Date.now();
           var d = new Date();
@@ -408,7 +409,7 @@ function _login(email, password, callback) {
             'message_batch[0][is_spoof_warning]' : false,
             'message_batch[0][source]' : 'source:chat:web',
             'message_batch[0][source_tags][0]' : 'source:chat',
-            'message_batch[0][body]' : msg,
+            'message_batch[0][body]' : msg ? msg.toString() : "",
             'message_batch[0][html_body]' : false,
             'message_batch[0][ui_push_phase]' : 'V3',
             'message_batch[0][status]' : '0',
@@ -585,7 +586,8 @@ function formatMessage(m) {
     participant_names: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
     participant_ids: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids : [originalMessage.sender_fbid]),
     body: originalMessage.body,
-    thread_id: originalMessage.tid ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid
+    thread_id: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
+    location: originalMessage.coordinates ? originalMessage.coordinates : null
   };
 }
 
