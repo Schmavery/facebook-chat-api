@@ -33,6 +33,7 @@ login("config.json", function(err, api) {
 * [`api.sendSticker`](#sendSticker)
 * [`api.sendDirectMessage`](#sendDirectMessage)
 * [`api.sendDirectSticker`](#sendDirectSticker)
+* [`api.setTitle`](#setTitle)
 
 <a name="login" />
 ### login([filename], callback)
@@ -242,3 +243,19 @@ login('config.json', function(err, api) {
 __Warning__: This function is also ambiguous (look at [`sendDirectMessage`](#sendDirectMessage)) and therefore a callback is required.
 
 Same as sendDirectMessage but for stickers.
+
+---------------------------------------
+
+<a name="setTitle" />
+### api.setTitle(newTitle, thread_id, callback)
+
+Sets the title of the group chat with thread id thread_id to newTitle.
+
+Note: This will not work if the thread id corresponds to a single-user chat or
+if the bot is not in the group chat.
+
+__Arguments__
+
+* `newTitle` - A string representing the new title.
+* `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation. 
+* `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
