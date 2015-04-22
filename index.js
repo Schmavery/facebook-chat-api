@@ -311,14 +311,20 @@ function _login(email, password, callback) {
 
         api.sendSticker = function(sticker_id, thread_id, callback) {
           if(!callback) callback = function() {};
+          if (typeof sticker_id !== "number" && typeof sticker_id !== "string") 
+            return callback({error: "Sticker_id should be of type number or string and not " + typeof msg + "."}); 
+          if (typeof thread_id !== "number" && typeof thread_id !== "string") 
+            return callback({error: "Thread_id should be of type number or string and not " + typeof msg + "."}); 
           var timestamp = Date.now();
           var d = new Date();
           var form = {
             'client' : 'mercury',
-            '__user' : userId,
             'fb_dtsg' : fb_dtsg,
             'ttstamp' : ttstamp,
+            '__a' : '1',
             '__req' : (reqCounter++).toString(36),
+            '__rev' : __rev,
+            '__user' : userId,
             'message_batch[0][action_type]' : 'ma-type:user-generated-message',
             'message_batch[0][author]' : 'fbid:' + userId,
             'message_batch[0][timestamp]' : timestamp,
@@ -340,21 +346,53 @@ function _login(email, password, callback) {
             'message_batch[0][manual_retry_cnt]' : '0',
             'message_batch[0][thread_fbid]' : thread_id,
             'message_batch[0][sticker_id]' : sticker_id,
-            'message_batch[0][has_attachment]' : true
+            'message_batch[0][has_attachment]' : true,
+            'message_batch[0][client_thread_id]' : "user:"+thread_id,
+            'message_batch[0][signatureID]' : getSignatureId()
           };
           _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
             var strData = makeParsable(html);
-            console.log (err, html, html.length);
-            if (!err && html.length === 0){
-              return callback({error: "Could not send sticker."});
-            }
+            var ret;
             try{
-              var ret = strData.map(JSON.parse);
+              ret = strData.map(JSON.parse)[0];
             } catch (e) {
               console.error("ERROR in sendSticker --> ",e, strData);
               return callback({error: e});
             }
-            callback();
+
+            if (!ret){
+              callback({error: "Send sticker failed."});
+            } else if (ret.error){
+              if (ret.error == 1545012){
+                console.log("Second call, creating chat");
+                // Try to create new chat.
+                form.__req = (reqCounter++).toString(36);
+                form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
+                form['message_batch[0][specific_to_list][1]'] = "fbid:"+userId;
+                _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
+                  var strData = makeParsable(html);
+                  var ret;
+                  try{
+                    ret = strData.map(JSON.parse)[0];
+                  } catch (e) {
+                    console.error("ERROR in sendSticker --> ",e, strData);
+                    return callback({error: e});
+                  }
+
+                  if (!ret){
+                    callback({error: "Send sticker failed."});
+                  } else if (ret.error){
+                    callback({error: ret});
+                  } else {
+                    callback();
+                  }
+                });
+                return;
+              }
+              callback({error: ret});
+            } else {
+              callback();
+            }
           });
         };
 
@@ -448,15 +486,19 @@ function _login(email, password, callback) {
         api.sendMessage = function(msg, thread_id, callback) {
           if(!callback) callback = function() {};
           if(typeof msg !== "string") return callback({error: "Message should be of type string and not " + typeof msg + "."});
+          if (typeof thread_id !== "number" && typeof thread_id !== "string") 
+            return callback({error: "Thread_id should be of type number or string and not " + typeof msg + "."}); 
 
           var timestamp = Date.now();
           var d = new Date();
           var form = {
             'client' : 'mercury',
-            '__user' : userId,
             'fb_dtsg' : fb_dtsg,
             'ttstamp' : ttstamp,
+            '__a' : '1',
             '__req' : (reqCounter++).toString(36),
+            '__rev' : __rev,
+            '__user' : userId,
             'message_batch[0][action_type]' : 'ma-type:user-generated-message',
             'message_batch[0][author]' : 'fbid:' + userId,
             'message_batch[0][timestamp]' : timestamp,
@@ -477,7 +519,9 @@ function _login(email, password, callback) {
             'message_batch[0][message_id]' : generateMessageID(clientid),
             'message_batch[0][manual_retry_cnt]' : '0',
             'message_batch[0][thread_fbid]' : thread_id,
-            'message_batch[0][has_attachment]' : false
+            'message_batch[0][has_attachment]' : false,
+            'message_batch[0][client_thread_id]' : "user:"+thread_id,
+            'message_batch[0][signatureID]' : getSignatureId(),
           };
 
           _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
@@ -490,9 +534,35 @@ function _login(email, password, callback) {
               return callback({error: e});
             }
 
-            if (!ret ){
+            if (!ret){
               callback({error: "Send message failed."});
             } else if (ret.error){
+              if (ret.error == 1545012){
+                console.log("Second call, creating chat");
+                // Try to create new chat.
+                form.__req = (reqCounter++).toString(36);
+                form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
+                form['message_batch[0][specific_to_list][1]'] = "fbid:"+userId;
+                _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
+                  var strData = makeParsable(html);
+                  var ret;
+                  try{
+                    ret = strData.map(JSON.parse)[0];
+                  } catch (e) {
+                    console.error("ERROR in sendMessage --> ",e, strData);
+                    return callback({error: e});
+                  }
+
+                  if (!ret){
+                    callback({error: "Send message failed."});
+                  } else if (ret.error){
+                    callback({error: ret});
+                  } else {
+                    callback();
+                  }
+                });
+                return;
+              }
               callback({error: ret});
             } else {
               callback();
@@ -682,3 +752,8 @@ function arrayToObject (arr, getKey, getValue) {
     return acc;
   }, {});
 }
+
+function getSignatureId(){
+  return Math.floor(Math.random() * 2147483648).toString(16);
+}
+
