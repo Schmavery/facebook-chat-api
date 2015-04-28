@@ -456,6 +456,47 @@ function _login(email, password, callback) {
           });
         };
 
+        api.getThreadList = function(start, end, callback) {
+          if(!callback) callback = function() {};
+
+          if (end <= start) end = start + 20;
+
+          var form = {
+            '__req' : (reqCounter++).toString(36),
+            '__rev' : __rev,
+            '__user' : userId,
+            '__a' : '1',
+            'client' : 'mercury',
+            'fb_dtsg' : fb_dtsg,
+            'ttstamp' : ttstamp,
+            'inbox[offset]' : start,
+            'inbox[limit]' : end
+          };
+
+          _post("https://www.facebook.com/ajax/mercury/threadlist_info.php", jar, form, function(err, res, html) {
+            var strData = makeParsable(html);
+            var ret;
+            try{
+              ret = strData.map(JSON.parse);
+              if (ret instanceof Array){
+                ret = ret[0];
+              }
+            } catch (e) {
+              log.error("ERROR in setTitle --> ",e, strData);
+              callback({error: e});
+            }
+
+            if (ret.error && ret.error === 1545012){
+              callback({error: "Cannot change chat title: Not member of chat."});
+            } else if (ret.error && ret.error === 1545003){
+              callback({error: "Cannot set title of single-user chat."});
+            } else if (ret.error) {
+              callback({error: ret});
+            } else callback(null, ret.payload.threads);
+          });
+        };
+
+
         api.markAsRead = function(thread_id, callback) {
           if(!callback) callback = function() {};
           var form = {
