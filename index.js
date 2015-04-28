@@ -1,5 +1,6 @@
 var request = require("request").defaults({jar: true});
 var cheerio = require("cheerio");
+var log = require("npmlog");
 var fs = require("fs");
 var time = require("./time");
 
@@ -10,7 +11,7 @@ function _get(url, jar, qs, callback) {
   }
   for(var prop in qs) {
     if(typeof qs[prop] === "object") {
-      console.error("You probably shouldn't pass an object inside the form at property", prop, qs);
+      log.error("You probably shouldn't pass an object inside the form at property", prop, qs);
       continue;
     }
     qs[prop] = qs[prop].toString();
@@ -58,7 +59,7 @@ function _post(url, jar, form, callback) {
 
 function _login(email, password, callback) {
   var jar = request.jar();
-  console.log("Getting login form data");
+  log.info("Getting login form data");
   _get("https://www.facebook.com/", jar, function(err, res, html) {
     var $ = cheerio.load(html);
 
@@ -79,7 +80,7 @@ function _login(email, password, callback) {
     form.pass = password;
     form.default_persistent = '1';
 
-    console.log("Logging in...");
+    log.info("Logging in...");
     _post("https://www.facebook.com/login.php?login_attempt=1", jar, form, function(err, res, html) {
       var cookies = res.headers['set-cookie'] || [];
 
@@ -89,7 +90,7 @@ function _login(email, password, callback) {
 
       if (!res.headers.location) return callback({error: "Wrong username/password."});
       _get(res.headers.location, jar, function(err, res, html) {
-        console.log("Logged in");
+        log.info("Logged in");
 
         var grammar_version = getFrom(html, "grammar_version\":\"", "\"");
 
@@ -155,7 +156,7 @@ function _login(email, password, callback) {
               info = strData.map(JSON.parse)[0];
 
               var now = Date.now();
-              console.log("Got answer in ", now - tmpPrev);
+              log.info("Got answer in ", now - tmpPrev);
               tmpPrev = now;
 
               if(info && info.t === 'fullReload') {
@@ -185,7 +186,7 @@ function _login(email, password, callback) {
                     'last_action_timestamp' : ~~(Date.now() - 60)
                   };
                   _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
-                    console.log("thread sync --->", html);
+                    log.info("thread sync --->", html);
                     currentlyRunning = setTimeout(api.listen, 1000, callback);
                   });
                 });
@@ -227,7 +228,7 @@ function _login(email, password, callback) {
               if(info.seq) form.seq = info.seq;
               if(info.tr) form.traceid = info.tr;
             } catch (e) {
-              console.error("ERROR in listen --> ",e, strData);
+              log.error("ERROR in listen --> ",e, strData);
               callback({error: e}, null, stopListening);
               currentlyRunning = setTimeout(api.listen, Math.random() * 200 + 50, callback);
               return;
@@ -271,7 +272,7 @@ function _login(email, password, callback) {
 
               callback(null, info);
             } catch (e) {
-              console.error("ERROR in sendDirectMessage --> ",e, strData);
+              log.error("ERROR in sendDirectMessage --> ",e, strData);
               callback({error: e});
             }
           });
@@ -356,7 +357,7 @@ function _login(email, password, callback) {
             try{
               ret = strData.map(JSON.parse)[0];
             } catch (e) {
-              console.error("ERROR in sendSticker --> ",e, strData);
+              log.error("ERROR in sendSticker --> ",e, strData);
               return callback({error: e});
             }
 
@@ -364,7 +365,7 @@ function _login(email, password, callback) {
               callback({error: "Send sticker failed."});
             } else if (ret.error){
               if (ret.error == 1545012){
-                console.log("Second call, creating chat");
+                log.error("Second call, creating chat");
                 // Try to create new chat.
                 form.__req = (reqCounter++).toString(36);
                 form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
@@ -375,7 +376,7 @@ function _login(email, password, callback) {
                   try{
                     ret = strData.map(JSON.parse)[0];
                   } catch (e) {
-                    console.error("ERROR in sendSticker --> ",e, strData);
+                    log.info("ERROR in sendSticker --> ",e, strData);
                     return callback({error: e});
                   }
 
@@ -441,7 +442,7 @@ function _login(email, password, callback) {
                 ret = ret[0];
               }
             } catch (e) {
-              console.error("ERROR in setTitle --> ",e, strData);
+              log.error("ERROR in setTitle --> ",e, strData);
               callback({error: e});
             }
 
@@ -476,7 +477,7 @@ function _login(email, password, callback) {
             try{
               var ret = strData.map(JSON.parse);
             } catch (e) {
-              console.error("ERROR in markAsRead --> ",e, strData);
+              log.error("ERROR in markAsRead --> ",e, strData);
               return callback({error: e});
             }
               callback();
@@ -530,7 +531,7 @@ function _login(email, password, callback) {
             try{
               ret = strData.map(JSON.parse)[0];
             } catch (e) {
-              console.error("ERROR in sendMessage --> ",e, strData);
+              log.error("ERROR in sendMessage --> ",e, strData);
               return callback({error: e});
             }
 
@@ -538,7 +539,7 @@ function _login(email, password, callback) {
               callback({error: "Send message failed."});
             } else if (ret.error){
               if (ret.error == 1545012){
-                console.log("Second call, creating chat");
+                log.info("Second call, creating chat");
                 // Try to create new chat.
                 form.__req = (reqCounter++).toString(36);
                 form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
@@ -549,7 +550,7 @@ function _login(email, password, callback) {
                   try{
                     ret = strData.map(JSON.parse)[0];
                   } catch (e) {
-                    console.error("ERROR in sendMessage --> ",e, strData);
+                    log.error("ERROR in sendMessage --> ",e, strData);
                     return callback({error: e});
                   }
 
@@ -578,10 +579,10 @@ function _login(email, password, callback) {
           '__a' : '1',
           '__req' : (reqCounter++).toString(36),
         };
-        console.log("Initial requests...");
-        console.log("Request to null_state");
+        log.info("Initial requests...");
+        log.info("Request to null_state");
         _get("https://www.facebook.com/ajax/browse/null_state.php", jar, form2, function(err, res, html) {
-          console.log("Request to reconnect");
+          log.info("Request to reconnect");
           var form3 = {
             '__user' : userId,
             '__req' : (reqCounter++).toString(36),
@@ -597,7 +598,7 @@ function _login(email, password, callback) {
             });
 
             time.reportPullSent();
-            console.log("Request to pull 1");
+            log.info("Request to pull 1");
             _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
               time.reportPullReturned();
               form.wtc = time.doSerialize();
@@ -608,10 +609,10 @@ function _login(email, password, callback) {
                 form.sticky_token = info[0].lb_info.sticky;
                 form.sticky_pool = info[0].lb_info.pool;
               } catch (e) {
-                console.error("ERROR in init --> ",e, strData);
+                log.error("ERROR in init --> ",e, strData);
                 callback({error: e});
               }
-              console.log("Request to pull 2");
+              log.info("Request to pull 2");
               _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
                 time.reportPullReturned();
                 form.wtc = time.doSerialize();
@@ -622,7 +623,7 @@ function _login(email, password, callback) {
                   '__a' : '1',
                   '__rev' : __rev
                 };
-                console.log("Request to sync");
+                log.info("Request to sync");
                 _get("https://www.facebook.com/notifications/sync", jar, form4, function(err, res, html) {
                   var strData = makeParsable(html);
                   var lastSync = strData.map(JSON.parse)[0].payload.lastSync;
@@ -643,13 +644,13 @@ function _login(email, password, callback) {
                     'folders[0]': 'inbox',
                     'last_action_timestamp' : '0'
                   };
-                  console.log("Request to thread_sync");
+                  log.info("Request to thread_sync");
                   _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
                     var cookies = res.headers['set-cookie'] || [];
                     cookies.map(function (c) {
                       jar.setCookie(c, "https://www.facebook.com");
                     });
-                    console.log("Done loading.");
+                    log.info("Done loading.");
                     callback(null, api);
                   });
                 });

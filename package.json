@@ -23,6 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "cheerio": "^0.18.0",
+    "npmlog": "^1.2.0",
     "request": "^2.53.0"
   },
   "engines": {
