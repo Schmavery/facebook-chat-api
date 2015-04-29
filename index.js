@@ -135,7 +135,12 @@ function _login(email, password, callback) {
         var prev = Date.now();
         var tmpPrev = Date.now();
         var lastSync = Date.now();
-        var reqCounter = 1;
+        var getReq = (function() {
+          var reqCounter = 1;
+          return function() {
+            return (reqCounter++).toString(36);
+          };
+        })();
 
         api.listen = function(callback) {
           if(shouldStop) return;
@@ -165,7 +170,7 @@ function _login(email, password, callback) {
                 var form4 = {
                   'lastSync' : ~~(lastSync/1000),
                   '__user' : userId,
-                  '__req' : (reqCounter++).toString(36),
+                  '__req' : getReq(),
                   '__rev' : __rev,
                   '__a' : '1',
                 };
@@ -178,7 +183,7 @@ function _login(email, password, callback) {
                   var form6 = {
                     '__a' : '1',
                     '__user' : userId,
-                    '__req' : (reqCounter++).toString(36),
+                    '__req' : getReq(),
                     '__rev' : __rev,
                     'fb_dtsg' : fb_dtsg,
                     'ttstamp' : ttstamp,
@@ -205,7 +210,7 @@ function _login(email, password, callback) {
                 var formDeliveryReceipt = {
                   '__a' : '1',
                   '__user' : userId,
-                  '__req' : (reqCounter++).toString(36),
+                  '__req' : getReq(),
                   '__rev' : __rev,
                   'fb_dtsg' : fb_dtsg,
                   'ttstamp' : ttstamp,
@@ -258,7 +263,7 @@ function _login(email, password, callback) {
             'request_id' : getGUID(),
             '__user' : userId,
             '__a' : '1',
-            '__req' : (reqCounter++).toString(36),
+            '__req' : getReq(),
             '__rev' : __rev,
           };
 
@@ -324,7 +329,7 @@ function _login(email, password, callback) {
             'fb_dtsg' : fb_dtsg,
             'ttstamp' : ttstamp,
             '__a' : '1',
-            '__req' : (reqCounter++).toString(36),
+            '__req' : getReq(),
             '__rev' : __rev,
             '__user' : userId,
             'message_batch[0][action_type]' : 'ma-type:user-generated-message',
@@ -368,7 +373,7 @@ function _login(email, password, callback) {
               if (ret.error == 1545012){
                 log.error("Second call, creating chat");
                 // Try to create new chat.
-                form.__req = (reqCounter++).toString(36);
+                form.__req = getReq();
                 form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
                 form['message_batch[0][specific_to_list][1]'] = "fbid:"+userId;
                 _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
@@ -403,7 +408,7 @@ function _login(email, password, callback) {
           var timestamp = Date.now();
           var d = new Date();
           var form = {
-            '__req' : (reqCounter++).toString(36),
+            '__req' : getReq(),
             '__rev' : __rev,
             '__user' : userId,
             '__a' : '1',
@@ -463,7 +468,7 @@ function _login(email, password, callback) {
           if (end <= start) end = start + 20;
 
           var form = {
-            '__req' : (reqCounter++).toString(36),
+            '__req' : getReq(),
             '__rev' : __rev,
             '__user' : userId,
             '__a' : '1',
@@ -504,7 +509,7 @@ function _login(email, password, callback) {
             __user: userId,
             fb_dtsg: fb_dtsg,
             ttstamp: ttstamp,
-            __req: (reqCounter++).toString(36),
+            __req: getReq(),
           };
 
           form["ids[" + thread_id + "]"] = true;
@@ -539,7 +544,7 @@ function _login(email, password, callback) {
             'fb_dtsg' : fb_dtsg,
             'ttstamp' : ttstamp,
             '__a' : '1',
-            '__req' : (reqCounter++).toString(36),
+            '__req' : getReq(),
             '__rev' : __rev,
             '__user' : userId,
             'message_batch[0][action_type]' : 'ma-type:user-generated-message',
@@ -583,7 +588,7 @@ function _login(email, password, callback) {
               if (ret.error == 1545012){
                 log.info("Second call, creating chat");
                 // Try to create new chat.
-                form.__req = (reqCounter++).toString(36);
+                form.__req = getReq();
                 form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
                 form['message_batch[0][specific_to_list][1]'] = "fbid:"+userId;
                 _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
@@ -617,13 +622,35 @@ function _login(email, password, callback) {
           return access_token;
         };
 
+        api.getUserInfo = function(id, callback) {
+          var form = {
+            "__user":userId,
+            __a:"1",
+            "__req":getReq(),
+            "__rev":__rev,
+            "ids[0]":id,
+          };
+
+          _get("https://www.facebook.com/chat/user_info/", jar, form, function(req, res, html) {
+            var strData = makeParsable(html);
+            var ret;
+            try{
+              ret = strData.map(JSON.parse)[0];
+              callback(null, ret.payload.profiles);
+            } catch (e) {
+              log.error("ERROR in getUserInfo --> ",e, strData);
+              return callback({error: e});
+            }
+          });
+        };
+
         time.initialize();
 
         var form2 = {
           'grammar_version' : grammar_version,
           '__user' : userId,
           '__a' : '1',
-          '__req' : (reqCounter++).toString(36),
+          '__req' : getReq(),
         };
         log.info("Initial requests...");
         log.info("Request to null_state");
@@ -631,7 +658,7 @@ function _login(email, password, callback) {
           log.info("Request to reconnect");
           var form3 = {
             '__user' : userId,
-            '__req' : (reqCounter++).toString(36),
+            '__req' : getReq(),
             '__a' : '1',
             '__rev' : __rev,
             'reason' : '6',
@@ -665,7 +692,7 @@ function _login(email, password, callback) {
                 var form4 = {
                   'lastSync' : ~~(Date.now()/1000 - 60),
                   '__user' : userId,
-                  '__req' : (reqCounter++).toString(36),
+                  '__req' : getReq(),
                   '__a' : '1',
                   '__rev' : __rev
                 };
@@ -681,7 +708,7 @@ function _login(email, password, callback) {
 
                   var form6 = {
                     '__user' : userId,
-                    '__req' : (reqCounter++).toString(36),
+                    '__req' : getReq(),
                     '__a' : '1',
                     '__rev' : __rev,
                     'fb_dtsg' : fb_dtsg,
@@ -727,7 +754,7 @@ function _login(email, password, callback) {
                       "__CONFIRM__":"1",
                       "__user":userId,
                       "__a":"1",
-                      "__req":(reqCounter++).toString(36),
+                      "__req":getReq(),
                       "ttstamp":ttstamp,
                       "__rev":__rev
                     };
