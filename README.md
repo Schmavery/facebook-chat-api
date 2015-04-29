@@ -28,12 +28,15 @@ login("config.json", function(err, api) {
 * [`login`](#login)
 * [`api.listen`](#listen)
 * [`api.getUserId`](#getUserId)
-* [`api.markAsRead`](#markAsRead)
 * [`api.sendMessage`](#sendMessage)
-* [`api.sendSticker`](#sendSticker)
 * [`api.sendDirectMessage`](#sendDirectMessage)
+* [`api.markAsRead`](#markAsRead)
+* [`api.sendSticker`](#sendSticker)
 * [`api.sendDirectSticker`](#sendDirectSticker)
 * [`api.setTitle`](#setTitle)
+* [`api.getUserInfo`](#getUserInfo)
+* [`api.getThreadList`](#getThreadList)
+* [`api.getAccessToken`](#getAccessToken)
 
 <a name="login" />
 ### login([filename], callback)
@@ -129,34 +132,6 @@ login('config.json', function(err, api) {
 
 ---------------------------------------
 
-<a name="markAsRead" />
-### api.markAsRead(thread_id, callback)
-
-Given a thread_id will mark all the unread messages as read. Facebook will take a couple of seconds to show that you've read the messages.
-
-__Arguments__
-
-* `thread_id` - The id of the thread in which you want to mark the messages as read.
-* `callback(err)` - A callback called when the operation is done maybe with an object representing an error.
-
-__Example__
-
-```js
-var login = require("facebook-chat-api");
-
-login("config.json", function(err, api) {
-    if(err) return console.error(err);
-  
-    api.listen(function callback(err, message) {
-        // Marks message as read immediately after they're sent
-        api.markAsRead(message.thread_id);
-    });
-});
-```
-
----------------------------------------
-
-
 <a name="sendMessage" />
 ### api.sendMessage(message, thread_id, [callback])
 
@@ -211,6 +186,33 @@ login('config.json', function(err, api) {
 
 ---------------------------------------
 
+<a name="markAsRead" />
+### api.markAsRead(thread_id, callback)
+
+Given a thread_id will mark all the unread messages as read. Facebook will take a couple of seconds to show that you've read the messages.
+
+__Arguments__
+
+* `thread_id` - The id of the thread in which you want to mark the messages as read.
+* `callback(err)` - A callback called when the operation is done maybe with an object representing an error.
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login("config.json", function(err, api) {
+    if(err) return console.error(err);
+  
+    api.listen(function callback(err, message) {
+        // Marks message as read immediately after they're sent
+        api.markAsRead(message.thread_id);
+    });
+});
+```
+
+---------------------------------------
+
 <a name="sendSticker" />
 ### api.sendSticker(sticker_id, thread_id, [callback])
 
@@ -259,3 +261,70 @@ __Arguments__
 * `newTitle` - A string representing the new title.
 * `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation. 
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
+
+---------------------------------------
+
+<a name="getUserInfo" />
+### api.getUserInfo(ids, callback)
+
+Will get some information about the given users.
+
+__Arguments__
+
+* `ids` - Either a string/number for one ID or an array of strings/numbers for a batched query.
+* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from userId to another object containing the following properties: id, name, firstName, vanity, thumbSrc, uri, gender, type, is_friend, is_birthday, searchTokens, alternateName.
+
+__Example__
+
+```js
+login('config.json', function(err, api) {
+    if(err) return console.error(err);
+    
+    api.getUserInfo([1, 2, 3, 4], function(err, ret) {
+      if(err) return console.error(err);
+
+      for(var prop in ret) {
+        if(ret.hasOwnProperty(prop) && ret[prop].is_birthday) {
+          api.sendMessage("Happy birthday :)", prop);
+        }
+      }
+    });
+});
+```
+
+---------------------------------------
+
+<a name="getThreadList" />
+### api.getThreadList(start, end, callback)
+
+Will return information about threads.
+
+__Arguments__
+
+* `start` - Start index in the list of recently used threads.
+* `end` - End index.
+* `callback(err, arr)` - A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: thread_id, thread_fbid, other_user_fbid, last_action_id, participants, former_participants, name, snippet, snippet_has_attachment, is_forwarded_snippet, snippet_attachments, snippet_sender, unread_count, message_count, image_src, timestamp_absolute, timestamp_datetime, timestamp_relative, timestamp_time_passed, timestamp, server_timestamp, mute_settings, is_canonical_user, is_canonical, canonical_fbid, is_subscribed, root_message_threading_id, folder, is_archived, mode, recipients_loadable, name_conversation_sheet_dismissed, has_email_participant, read_only.
+
+---------------------------------------
+
+<a name="getAccessToken" />
+### api.getAccessToken()
+
+Synchronously returns an access token to the Facebook Graph API.
+
+This is a bit of a hack because it's using the Graph API Explorer's app ID. It has all permissions so drive safely.
+
+__Example__
+
+```js
+var fb = require('fb');
+login('config.json', function(err, api) {
+    if(err) return console.error(err);
+    
+    fb.setAccessToken(api.getAccessToken());
+    fb.api('/me', 'get', function (res) {
+        if(!res || res.error) return console.error(res ? res.error : "error");
+        console.log('me: ', res);
+    });
+});
+```

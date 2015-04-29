@@ -1,0 +1,36 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'start' ]
+2 info using npm@2.7.3
+3 info using node@v0.12.1
+4 verbose node symlink /usr/local/bin/node
+5 verbose run-script [ 'prestart', 'start', 'poststart' ]
+6 info prestart facebook-chat-api@0.1.7
+7 info start facebook-chat-api@0.1.7
+8 verbose unsafe-perm in lifecycle true
+9 info facebook-chat-api@0.1.7 Failed to exec start script
+10 verbose stack Error: facebook-chat-api@0.1.7 start: `node server.js`
+10 verbose stack Exit status 1
+10 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:213:16)
+10 verbose stack     at EventEmitter.emit (events.js:110:17)
+10 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:14:12)
+10 verbose stack     at ChildProcess.emit (events.js:110:17)
+10 verbose stack     at maybeClose (child_process.js:1008:16)
+10 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1080:5)
+11 verbose pkgid facebook-chat-api@0.1.7
+12 verbose cwd /Users/benjamin/Desktop/facebook-chat-api
+13 error Darwin 14.3.0
+14 error argv "node" "/usr/local/bin/npm" "start"
+15 error node v0.12.1
+16 error npm  v2.7.3
+17 error code ELIFECYCLE
+18 error facebook-chat-api@0.1.7 start: `node server.js`
+18 error Exit status 1
+19 error Failed at the facebook-chat-api@0.1.7 start script 'node server.js'.
+19 error This is most likely a problem with the facebook-chat-api package,
+19 error not with npm itself.
+19 error Tell the author that this fails on your system:
+19 error     node server.js
+19 error You can get their info via:
+19 error     npm owner ls facebook-chat-api
+19 error There is likely additional logging output above.
+20 verbose exit [ 1, true ]
