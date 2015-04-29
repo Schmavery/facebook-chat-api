@@ -124,6 +124,7 @@ function _login(email, password, callback) {
         ttstamp += '2';
 
         var api = {};
+        var access_token = "NONE";
         var shouldStop = false;
         var currentlyRunning = null;
         var stopListening = function() {
@@ -312,10 +313,10 @@ function _login(email, password, callback) {
 
         api.sendSticker = function(sticker_id, thread_id, callback) {
           if(!callback) callback = function() {};
-          if (typeof sticker_id !== "number" && typeof sticker_id !== "string") 
-            return callback({error: "Sticker_id should be of type number or string and not " + typeof msg + "."}); 
-          if (typeof thread_id !== "number" && typeof thread_id !== "string") 
-            return callback({error: "Thread_id should be of type number or string and not " + typeof msg + "."}); 
+          if (typeof sticker_id !== "number" && typeof sticker_id !== "string")
+            return callback({error: "Sticker_id should be of type number or string and not " + typeof msg + "."});
+          if (typeof thread_id !== "number" && typeof thread_id !== "string")
+            return callback({error: "Thread_id should be of type number or string and not " + typeof msg + "."});
           var timestamp = Date.now();
           var d = new Date();
           var form = {
@@ -528,8 +529,8 @@ function _login(email, password, callback) {
         api.sendMessage = function(msg, thread_id, callback) {
           if(!callback) callback = function() {};
           if(typeof msg !== "string") return callback({error: "Message should be of type string and not " + typeof msg + "."});
-          if (typeof thread_id !== "number" && typeof thread_id !== "string") 
-            return callback({error: "Thread_id should be of type number or string and not " + typeof msg + "."}); 
+          if (typeof thread_id !== "number" && typeof thread_id !== "string")
+            return callback({error: "Thread_id should be of type number or string and not " + typeof msg + "."});
 
           var timestamp = Date.now();
           var d = new Date();
@@ -612,6 +613,10 @@ function _login(email, password, callback) {
           });
         };
 
+        api.getAccessToken = function() {
+          return access_token;
+        };
+
         time.initialize();
 
         var form2 = {
@@ -691,8 +696,70 @@ function _login(email, password, callback) {
                     cookies.map(function (c) {
                       jar.setCookie(c, "https://www.facebook.com");
                     });
-                    log.info("Done loading.");
-                    callback(null, api);
+
+                    var graphAPIForm = {
+                      "fb_dtsg":fb_dtsg,
+                      "app_id":"145634995501895",
+                      "redirect_uri":"https://www.facebook.com/connect/login_success.html",
+                      "display":"popup",
+                      "access_token":"",
+                      "sdk":"",
+                      "from_post":"1",
+                      "public_info_nux":"1",
+                      "private":"",
+                      "login":"",
+                      "read":"user_about_me,user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,user_birthday,user_education_history,user_events,user_friends,user_games_activity,user_groups,user_hometown,user_likes,user_location,user_managed_groups,user_photos,user_posts,user_relationship_details,user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,public_profile,baseline",
+                      "write": "",
+                      "readwrite":"",
+                      "extended": "",
+                      "social_confirm":"",
+                      "confirm":"",
+                      "seen_scopes":"user_about_me,user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,user_birthday,user_education_history,user_events,user_friends,user_games_activity,user_groups,user_hometown,user_likes,user_location,user_managed_groups,user_photos,user_posts,user_relationship_details,user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,public_profile,baseline",
+                      "auth_type":"",
+                      "auth_token":"",
+                      "auth_nonce":"",
+                      "default_audience":"",
+                      "ref":"Default",
+                      "return_format":"access_token",
+                      "domain":"",
+                      "sso_device":"",
+                      "sheet_name":"initial",
+                      "__CONFIRM__":"1",
+                      "__user":userId,
+                      "__a":"1",
+                      "__req":(reqCounter++).toString(36),
+                      "ttstamp":ttstamp,
+                      "__rev":__rev
+                    };
+                    log.info("Getting read access.");
+                    _post("https://www.facebook.com/v2.3/dialog/oauth/read", jar, graphAPIForm, function(req, res, html) {
+                      graphAPIForm.read = "";
+                      graphAPIForm.write = "publish_actions";
+                      graphAPIForm.seen_scopes = graphAPIForm.write;
+                      graphAPIForm["audience[0][value]"] = 40;
+                      log.info("Getting write access.");
+                      _post("https://www.facebook.com/v2.3/dialog/oauth/write", jar, graphAPIForm, function(req, res, html) {
+                        graphAPIForm.write = "";
+                        graphAPIForm.extended = "ads_management,ads_read,manage_notifications,manage_pages,publish_pages,read_insights,read_page_mailboxes,rsvp_event";
+                        graphAPIForm.seen_scopes = graphAPIForm.extended;
+                        graphAPIForm["audience[0][value]"] = "";
+                        log.info("Getting extended access.");
+                        _post("https://www.facebook.com/v2.3/dialog/oauth/extended", jar, graphAPIForm, function(req, res, html) {
+                          var strData = makeParsable(html);
+                          var ret;
+                          try {
+                            ret = strData.map(JSON.parse)[0];
+                          } catch (e) {
+                            log.error("ERROR in getting extended access --> ",e, strData);
+                            return callback({error: e});
+                          }
+                          access_token = ret.jsmods.require[0][3][0].split("https://www.facebook.com/connect/login_success.html#access_token=")[1].split("&")[0];
+
+                          log.info("Done loading.");
+                          callback(null, api);
+                        });
+                      });
+                    });
                   });
                 });
               });
