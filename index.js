@@ -628,8 +628,12 @@ function _login(email, password, callback) {
             __a:"1",
             "__req":getReq(),
             "__rev":__rev,
-            "ids[0]":id,
           };
+          if(!(id instanceof Array)) id = [id];
+
+          id.map(function(v, i) {
+            form["ids[" + i + "]"] = v;
+          });
 
           _get("https://www.facebook.com/chat/user_info/", jar, form, function(req, res, html) {
             var strData = makeParsable(html);
