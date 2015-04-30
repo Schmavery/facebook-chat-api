@@ -802,16 +802,21 @@ function _login(email, password, callback) {
   });
 }
 
-function login(filename, callback) {
+function login(loginData, callback) {
   var obj = {};
-  if(typeof filename === 'function') {
+  if(typeof loginData === 'function') {
     if(!process.env.FB_LOGIN_EMAIL || !process.env.FB_LOGIN_PASSWORD) return console.error("Please define env variables");
     obj.email = process.env.FB_LOGIN_EMAIL;
     obj.password = process.env.FB_LOGIN_PASSWORD;
-    callback = filename;
+    callback = loginData;
+  } else if (typeof loginData === 'string') {
+    obj = JSON.parse(fs.readFileSync(loginData, 'utf8'));
+    if(!obj.email || !obj.password) throw loginData + " has to be a valid json with an email field and a password field";
+  } else if (typeof loginData === 'object') {
+    if(!obj.email || !obj.password) throw "Invalid JSON passed into login.";
+    else obj = loginData;
   } else {
-    obj = JSON.parse(fs.readFileSync(filename, 'utf8'));
-    if(!obj.email || !obj.password) throw filename + " has to be a valid json with an email field and a password field";
+    throw "Invalid argument passed into login.";
   }
 
   return _login(obj.email, obj.password, callback);
