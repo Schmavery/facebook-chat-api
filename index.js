@@ -83,13 +83,13 @@ function _login(email, password, callback) {
     log.info("Logging in...");
     _post("https://www.facebook.com/login.php?login_attempt=1", jar, form, function(err, res, html) {
       var cookies = res.headers['set-cookie'] || [];
-
       cookies.map(function (c) {
         jar.setCookie(c, "https://www.facebook.com");
       });
 
       if (!res.headers.location) return callback({error: "Wrong username/password."});
       _get(res.headers.location, jar, function(err, res, html) {
+
         log.info("Logged in");
 
         var grammar_version = getFrom(html, "grammar_version\":\"", "\"");
@@ -243,7 +243,6 @@ function _login(email, password, callback) {
 
             // If any call to stopListening was made, do not call the callback
             if(shouldStop) return;
-
             if(info.ms) {
               // Send all messages to the callback
               for (var j = 0; j < info.ms.length; j++){
@@ -568,53 +567,68 @@ function _login(email, password, callback) {
             'message_batch[0][manual_retry_cnt]' : '0',
             'message_batch[0][thread_fbid]' : thread_id,
             'message_batch[0][has_attachment]' : false,
-            'message_batch[0][client_thread_id]' : "user:"+thread_id,
             'message_batch[0][signatureID]' : getSignatureId(),
+            // 'message_batch[0][specific_to_list][0]':'fbid:'+thread_id,
+            // 'message_batch[0][specific_to_list][1]':'fbid:'+userId
           };
 
-          _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
-            var strData = makeParsable(html);
-            var ret;
-            try{
-              ret = strData.map(JSON.parse)[0];
-            } catch (e) {
-              log.error("ERROR in sendMessage --> ",e, strData);
-              return callback({error: e});
+          // We're doing a query to this to check if the given id is the id of
+          // a user or of a group chat. The form will be different depending
+          // on that.
+          api.getUserInfo(thread_id, function(err, res) {
+            // This means that thread_id is the id of a user, and the chat
+            // is a single person chat
+            if(!(res instanceof Array)) {
+              form['message_batch[0][client_thread_id]'] = "user:"+thread_id;
+              form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
+              form['message_batch[0][specific_to_list][1]'] = "fbid:"+userId;
             }
 
-            if (!ret){
-              callback({error: "Send message failed."});
-            } else if (ret.error){
-              if (ret.error == 1545012){
-                log.info("Second call, creating chat");
-                // Try to create new chat.
-                form.__req = getReq();
-                form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
-                form['message_batch[0][specific_to_list][1]'] = "fbid:"+userId;
-                _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
-                  var strData = makeParsable(html);
-                  var ret;
-                  try{
-                    ret = strData.map(JSON.parse)[0];
-                  } catch (e) {
-                    log.error("ERROR in sendMessage --> ",e, strData);
-                    return callback({error: e});
-                  }
+            _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
 
-                  if (!ret){
-                    callback({error: "Send message failed."});
-                  } else if (ret.error){
-                    callback({error: ret});
-                  } else {
-                    callback();
-                  }
-                });
-                return;
+              var strData = makeParsable(html);
+              var ret;
+              try{
+                ret = strData.map(JSON.parse)[0];
+              } catch (e) {
+                log.error("ERROR in sendMessage --> ",e, strData);
+                return callback({error: e});
               }
-              callback({error: ret});
-            } else {
-              callback();
-            }
+
+              if (!ret){
+                callback({error: "Send message failed."});
+              } else if (ret.error){
+                if (ret.error == 1545012){
+                  log.info("Second call, creating chat");
+                  // Try to create new chat.
+                  form.__req = getReq();
+                  form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
+                  form['message_batch[0][specific_to_list][1]'] = "fbid:"+userId;
+                  _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
+                    var strData = makeParsable(html);
+                    var ret;
+                    try{
+                      ret = strData.map(JSON.parse)[0];
+                    } catch (e) {
+                      log.error("ERROR in sendMessage --> ",e, strData);
+                      return callback({error: e});
+                    }
+
+                    if (!ret){
+                      callback({error: "Send message failed."});
+                    } else if (ret.error){
+                      callback({error: ret});
+                    } else {
+                      callback();
+                    }
+                  });
+                  return;
+                }
+                callback({error: ret});
+              } else {
+                callback();
+              }
+            });
           });
         };
 
