@@ -798,7 +798,22 @@ function _login(email, password, callback) {
                             log.error("ERROR in getting extended access --> ",e, strData);
                             return callback({error: e});
                           }
-                          access_token = ret.jsmods.require[0][3][0].split("https://www.facebook.com/connect/login_success.html#access_token=")[1].split("&")[0];
+
+                          access_token = -1;
+                          try {
+                            var tokenArray = ret.jsmods.require;
+                            for (var i = 0; i < tokenArray.length; i++){
+                              if (tokenArray[i][3][0].indexOf("access_token=") != -1){
+                                access_token = tokenArray[i][3][0].split("access_token=")[1].split("&")[0];
+                                break;
+                              }
+                            }
+                          } catch (e) {
+                            access_token = -1;
+                          }
+                          if (access_token === -1){
+                            log.error("Error retrieving access token, continuing...");
+                          }
 
                           log.info("Done loading.");
                           callback(null, api);
