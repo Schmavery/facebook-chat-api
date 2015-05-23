@@ -124,6 +124,9 @@ function _login(email, password, callback) {
         ttstamp += '2';
 
         var api = {};
+        var globalOptions = {
+          selflisten: false
+        };
         var access_token = "NONE";
         var shouldStop = false;
         var currentlyRunning = null;
@@ -141,6 +144,21 @@ function _login(email, password, callback) {
             return (reqCounter++).toString(36);
           };
         })();
+
+        api.setOptions = function(options) {
+          handleOptions(options);
+        }
+
+        function handleOptions(options){
+          if (options.loglevel){
+            log.level = options.loglevel;
+            globalOptions.loglevel = options.loglevel;
+          }
+          if (options.selflisten){
+            globalOptions.selflisten = options.selflisten;
+          }
+        }
+
 
         api.listen = function(callback) {
           if(shouldStop) return;
@@ -203,7 +221,8 @@ function _login(email, password, callback) {
                 info.ms = info.ms.filter(function(v) {
                   return  v.type === 'messaging' &&
                           v.event === 'deliver' &&
-                          v.message.sender_fbid.toString() !== userId;
+                          (globalOptions 
+                           || v.message.sender_fbid.toString() !== userId);
                 });
 
                 // Send deliveryReceipt notification to the server
