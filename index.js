@@ -221,7 +221,7 @@ function _login(email, password, callback) {
                 info.ms = info.ms.filter(function(v) {
                   return  v.type === 'messaging' &&
                           v.event === 'deliver' &&
-                          (globalOptions 
+                          (globalOptions.selflisten
                            || v.message.sender_fbid.toString() !== userId);
                 });
 
