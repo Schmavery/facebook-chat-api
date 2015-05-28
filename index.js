@@ -124,6 +124,9 @@ function _login(email, password, callback) {
         ttstamp += '2';
 
         var api = {};
+        var globalOptions = {
+          selflisten: false
+        };
         var access_token = "NONE";
         var shouldStop = false;
         var currentlyRunning = null;
@@ -141,6 +144,21 @@ function _login(email, password, callback) {
             return (reqCounter++).toString(36);
           };
         })();
+
+        api.setOptions = function(options) {
+          handleOptions(options);
+        }
+
+        function handleOptions(options){
+          if (options.loglevel){
+            log.level = options.loglevel;
+            globalOptions.loglevel = options.loglevel;
+          }
+          if (options.selflisten){
+            globalOptions.selflisten = options.selflisten;
+          }
+        }
+
 
         api.listen = function(callback) {
           if(shouldStop) return;
@@ -203,7 +221,8 @@ function _login(email, password, callback) {
                 info.ms = info.ms.filter(function(v) {
                   return  v.type === 'messaging' &&
                           v.event === 'deliver' &&
-                          v.message.sender_fbid.toString() !== userId;
+                          (globalOptions.selflisten
+                           || v.message.sender_fbid.toString() !== userId);
                 });
 
                 // Send deliveryReceipt notification to the server
@@ -799,9 +818,21 @@ function _login(email, password, callback) {
                             return callback({error: e});
                           }
 
-                          var maybeUrl = ret.jsmods.require[0][3][0].split("https://www.facebook.com/connect/login_success.html#access_token=");
-                          if(maybeUrl.length > 1) access_token = maybeUrl[1].split("&")[0];
-                          else console.error("Couldn't load graph api...");
+                          access_token = -1;
+                          try {
+                            var tokenArray = ret.jsmods.require;
+                            for (var i = 0; i < tokenArray.length; i++){
+                              if (tokenArray[i][3][0].indexOf("access_token=") != -1){
+                                access_token = tokenArray[i][3][0].split("access_token=")[1].split("&")[0];
+                                break;
+                              }
+                            }
+                          } catch (e) {
+                            access_token = -1;
+                          }
+                          if (access_token === -1){
+                            log.error("Error retrieving access token, continuing...");
+                          }
 
                           log.info("Done loading.");
                           callback(null, api);
