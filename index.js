@@ -798,7 +798,10 @@ function _login(email, password, callback) {
                             log.error("ERROR in getting extended access --> ",e, strData);
                             return callback({error: e});
                           }
-                          access_token = ret.jsmods.require[0][3][0].split("https://www.facebook.com/connect/login_success.html#access_token=")[1].split("&")[0];
+
+                          var maybeUrl = ret.jsmods.require[0][3][0].split("https://www.facebook.com/connect/login_success.html#access_token=");
+                          if(maybeUrl.length > 1) access_token = maybeUrl[1].split("&")[0];
+                          else console.error("Couldn't load graph api...");
 
                           log.info("Done loading.");
                           callback(null, api);
@@ -827,7 +830,7 @@ function login(loginData, callback) {
     obj = JSON.parse(fs.readFileSync(loginData, 'utf8'));
     if(!obj.email || !obj.password) throw loginData + " has to be a valid json with an email field and a password field";
   } else if (typeof loginData === 'object') {
-    if(!obj.email || !obj.password) throw "Invalid JSON passed into login.";
+    if(!loginData.email || !loginData.password) throw "Invalid JSON passed into login.";
     else obj = loginData;
   } else {
     throw "Invalid argument passed into login.";
