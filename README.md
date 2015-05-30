@@ -36,6 +36,7 @@ login("config.json", function(err, api) {
 * [`api.sendDirectSticker`](#sendDirectSticker)
 * [`api.setTitle`](#setTitle)
 * [`api.getUserInfo`](#getUserInfo)
+* [`api.getFriendsList`](#getFriendsList)
 * [`api.getThreadList`](#getThreadList)
 * [`api.getAccessToken`](#getAccessToken)
 
@@ -329,6 +330,34 @@ login('config.json', function(err, api) {
         }
       }
     });
+});
+```
+
+---------------------------------------
+
+<a name="getFriendsList" />
+### api.getFriendsList(id, callback)
+
+__Warning__: this function takes a longer time than others to answer because it pulls the friends in batches of 20 (blindly following how the UI pulls the friends list). It might take a couple seconds if you have >1000 friends.
+
+Given the id of a person, will return an array of ids of all its friends.
+
+__Arguments__
+
+* `id` - The id of a person.
+* `callback(err, arr)` - A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array containing all the ids of the person's friends. You can get more information about those people by then calling getUserInfo with the array (this will return faster because it'll be done in one request).
+
+__Example__
+
+```js
+login('config.json', function(err, api) {
+  if(err) return console.error(err);
+  
+  api.getFriendsList(1216678154, function(err, data) {
+    if(err) return console.error(err);
+
+    console.log(data.length);
+  });
 });
 ```
 
