@@ -7,14 +7,14 @@ var time = require("./time");
 function _get(url, jar, qs, callback) {
   if(typeof qs === 'function') {
     callback = qs;
-    qs = {};
+    qs = null;
   }
-  for(var prop in qs) {
-    if(typeof qs[prop] === "object") {
-      log.error("You probably shouldn't pass an object inside the form at property", prop, qs);
-      continue;
+  if(typeof qs === "object") {
+    for(var prop in qs) {
+      if(qs.hasOwnProperty(prop) && typeof qs[prop] === "object") {
+        qs[prop] = JSON.stringify(qs[prop]);
+      }
     }
-    qs[prop] = qs[prop].toString();
   }
   var op = {
     headers: {
@@ -59,6 +59,7 @@ function _post(url, jar, form, callback) {
 
 function _login(email, password, callback) {
   var jar = request.jar();
+
   log.info("Getting login form data");
   _get("https://www.facebook.com/", jar, function(err, res, html) {
     var $ = cheerio.load(html);
@@ -72,6 +73,7 @@ function _login(email, password, callback) {
     arr = arr.filter(function(v) {
       return v.val && v.val.length;
     });
+
     res.headers['set-cookie'].map(function(val) {
       jar.setCookie(val, "https://www.facebook.com");
     });
@@ -89,7 +91,14 @@ function _login(email, password, callback) {
 
       if (!res.headers.location) return callback({error: "Wrong username/password."});
       _get(res.headers.location, jar, function(err, res, html) {
+        if(err) return callback(err);
+        var maybeCookie = jar.getCookies("https://www.facebook.com").filter(function(val) {
+          return val.cookieString().split("=")[0] === "c_user";
+        });
 
+        if(maybeCookie.length === 0) return callback(new Error("Error retrieving userId. This can be caused by a lot of things, including getting blocked by Facebook for logging in from an unknown location. Try logging in with a browser to verify."));
+
+        var userId = maybeCookie[0].cookieString().split("=")[1];
         log.info("Logged in");
 
         var grammar_version = getFrom(html, "grammar_version\":\"", "\"");
@@ -97,9 +106,6 @@ function _login(email, password, callback) {
         // I swear, this is copy pasted from FB's minified code
         var clientid = (Math.random()*2147483648|0).toString(16);
         var starTime = Date.now();
-        var userId = jar.getCookies("https://www.facebook.com").filter(function(val) {
-          return val.cookieString().split("=")[0] === "c_user";
-        })[0].cookieString().split("=")[1];
         var userChannel = "p_" + userId;
         var __rev = getFrom(html, "revision\":",",");
 
@@ -138,12 +144,6 @@ function _login(email, password, callback) {
         var prev = Date.now();
         var tmpPrev = Date.now();
         var lastSync = Date.now();
-        var getReq = (function() {
-          var reqCounter = 1;
-          return function() {
-            return (reqCounter++).toString(36);
-          };
-        })();
 
         api.setOptions = function(options) {
           handleOptions(options);
@@ -158,6 +158,31 @@ function _login(email, password, callback) {
             globalOptions.selflisten = options.selflisten;
           }
         }
+
+        var _mergeWithDefault = (function() {
+          var reqCounter = 1;
+          return function (obj) {
+            var newObj = {
+              __user: userId,
+              __req: (reqCounter++).toString(36),
+              __rev: __rev,
+              __a: 1,
+              fb_dtsg: fb_dtsg,
+              ttstamp: ttstamp,
+            };
+
+            if(!obj) return newObj;
+
+            for(var prop in obj) {
+              if(obj.hasOwnProperty(prop)) {
+                newObj[prop] = obj[prop];
+              }
+            }
+
+            return newObj;
+          };
+        })();
+
 
 
         api.listen = function(callback) {
@@ -177,7 +202,7 @@ function _login(email, password, callback) {
             var strData = makeParsable(html);
             var info = [];
             try {
-              info = strData.map(JSON.parse)[0];
+              info = JSON.parse(strData);
 
               var now = Date.now();
               log.info("Got answer in ", now - tmpPrev);
@@ -185,30 +210,20 @@ function _login(email, password, callback) {
 
               if(info && info.t === 'fullReload') {
                 form.seq = info.seq;
-                var form4 = {
+                var form4 = _mergeWithDefault({
                   'lastSync' : ~~(lastSync/1000),
-                  '__user' : userId,
-                  '__req' : getReq(),
-                  '__rev' : __rev,
-                  '__a' : '1',
-                };
+                });
                 _get("https://www.facebook.com/notifications/sync/", jar, form4, function(err, res, html) {
                   var cookies = res.headers['set-cookie'] || [];
                   cookies.map(function (c) {
                     jar.setCookie(c, "https://www.facebook.com");
                   });
                   lastSync = Date.now();
-                  var form6 = {
-                    '__a' : '1',
-                    '__user' : userId,
-                    '__req' : getReq(),
-                    '__rev' : __rev,
-                    'fb_dtsg' : fb_dtsg,
-                    'ttstamp' : ttstamp,
+                  var form6 = _mergeWithDefault({
                     'client' : 'mercury',
                     'folders[0]': 'inbox',
                     'last_action_timestamp' : ~~(Date.now() - 60)
-                  };
+                  });
                   _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
                     log.info("thread sync --->", html);
                     currentlyRunning = setTimeout(api.listen, 1000, callback);
@@ -226,14 +241,8 @@ function _login(email, password, callback) {
                 });
 
                 // Send deliveryReceipt notification to the server
-                var formDeliveryReceipt = {
-                  '__a' : '1',
-                  '__user' : userId,
-                  '__req' : getReq(),
-                  '__rev' : __rev,
-                  'fb_dtsg' : fb_dtsg,
-                  'ttstamp' : ttstamp,
-                };
+                var formDeliveryReceipt = _mergeWithDefault();
+
                 for (var i = 0; i < info.ms.length; i++) {
                   if(info.ms[i].message && info.ms[i].message.mid) formDeliveryReceipt["[" + i + "]"] = info.ms[i].message.mid;
                 }
@@ -272,24 +281,20 @@ function _login(email, password, callback) {
         };
 
         api.getUserId = function(name, callback) {
-          var form = {
+          var form = _mergeWithDefault({
             'value' : name.toLowerCase(),
             'viewer' : userId,
             'rsp' : "search",
             'context' : "search",
             'path' : "/home.php",
             'request_id' : getGUID(),
-            '__user' : userId,
-            '__a' : '1',
-            '__req' : getReq(),
-            '__rev' : __rev,
-          };
+          });
 
           _get("https://www.facebook.com/ajax/typeahead/search.php", jar, form, function(err, res, html) {
             var strData = makeParsable(html);
             try{
-              var ret = strData.map(JSON.parse);
-              var info = ret[0].payload;
+              var ret = JSON.parse(strData);
+              var info = ret.payload;
               if(info.entries[0].type !== "user") {
                 return callback({error: "Couldn't find a user with name " + name + ". Best match: " + info.entries[0].path});
               }
@@ -342,14 +347,8 @@ function _login(email, password, callback) {
             return callback({error: "Thread_id should be of type number or string and not " + typeof msg + "."});
           var timestamp = Date.now();
           var d = new Date();
-          var form = {
+          var form = _mergeWithDefault({
             'client' : 'mercury',
-            'fb_dtsg' : fb_dtsg,
-            'ttstamp' : ttstamp,
-            '__a' : '1',
-            '__req' : getReq(),
-            '__rev' : __rev,
-            '__user' : userId,
             'message_batch[0][action_type]' : 'ma-type:user-generated-message',
             'message_batch[0][author]' : 'fbid:' + userId,
             'message_batch[0][timestamp]' : timestamp,
@@ -374,12 +373,12 @@ function _login(email, password, callback) {
             'message_batch[0][has_attachment]' : true,
             'message_batch[0][client_thread_id]' : "user:"+thread_id,
             'message_batch[0][signatureID]' : getSignatureId()
-          };
+          });
           _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
             var strData = makeParsable(html);
             var ret;
             try{
-              ret = strData.map(JSON.parse)[0];
+              ret = JSON.parse(strData);
             } catch (e) {
               log.error("ERROR in sendSticker --> ",e, strData);
               return callback({error: e});
@@ -398,7 +397,7 @@ function _login(email, password, callback) {
                   var strData = makeParsable(html);
                   var ret;
                   try{
-                    ret = strData.map(JSON.parse)[0];
+                    ret = JSON.parse(strData);
                   } catch (e) {
                     log.info("ERROR in sendSticker --> ",e, strData);
                     return callback({error: e});
@@ -425,14 +424,8 @@ function _login(email, password, callback) {
           if(!callback) callback = function() {};
           var timestamp = Date.now();
           var d = new Date();
-          var form = {
-            '__req' : getReq(),
-            '__rev' : __rev,
-            '__user' : userId,
-            '__a' : '1',
+          var form = _mergeWithDefault({
             'client' : 'mercury',
-            'fb_dtsg' : fb_dtsg,
-            'ttstamp' : ttstamp,
             'message_batch[0][action_type]' : 'ma-type:log-message',
             'message_batch[0][author]' : 'fbid:' + userId,
             'message_batch[0][thread_id]' : '',
@@ -455,16 +448,13 @@ function _login(email, password, callback) {
             'message_batch[0][thread_fbid]' : thread_id,
             'message_batch[0][log_message_data][name]' : newTitle,
             'message_batch[0][log_message_type]' : 'log:thread-name'
-          };
+          });
 
           _post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
             var strData = makeParsable(html);
             var ret;
             try{
-              ret = strData.map(JSON.parse);
-              if (ret instanceof Array){
-                ret = ret[0];
-              }
+              ret = JSON.parse(strData);
             } catch (e) {
               log.error("ERROR in setTitle --> ",e, strData);
               callback({error: e});
@@ -485,26 +475,17 @@ function _login(email, password, callback) {
 
           if (end <= start) end = start + 20;
 
-          var form = {
-            '__req' : getReq(),
-            '__rev' : __rev,
-            '__user' : userId,
-            '__a' : '1',
+          var form = _mergeWithDefault({
             'client' : 'mercury',
-            'fb_dtsg' : fb_dtsg,
-            'ttstamp' : ttstamp,
             'inbox[offset]' : start,
             'inbox[limit]' : end
-          };
+          });
 
           _post("https://www.facebook.com/ajax/mercury/threadlist_info.php", jar, form, function(err, res, html) {
             var strData = makeParsable(html);
             var ret;
             try{
-              ret = strData.map(JSON.parse);
-              if (ret instanceof Array){
-                ret = ret[0];
-              }
+              ret = JSON.parse(strData);
             } catch (e) {
               log.error("ERROR in setTitle --> ",e, strData);
               callback({error: e});
@@ -523,12 +504,7 @@ function _login(email, password, callback) {
 
         api.markAsRead = function(thread_id, callback) {
           if(!callback) callback = function() {};
-          var form = {
-            __user: userId,
-            fb_dtsg: fb_dtsg,
-            ttstamp: ttstamp,
-            __req: getReq(),
-          };
+          var form = _mergeWithDefault();
 
           form["ids[" + thread_id + "]"] = true;
 
@@ -539,13 +515,13 @@ function _login(email, password, callback) {
             });
 
             var strData = makeParsable(html);
-            try{
-              var ret = strData.map(JSON.parse);
+            try {
+              var ret = JSON.parse(strData);
             } catch (e) {
               log.error("ERROR in markAsRead --> ",e, strData);
               return callback({error: e});
             }
-              callback();
+            callback();
           });
         };
 
@@ -557,14 +533,8 @@ function _login(email, password, callback) {
 
           var timestamp = Date.now();
           var d = new Date();
-          var form = {
+          var form = _mergeWithDefault({
             'client' : 'mercury',
-            'fb_dtsg' : fb_dtsg,
-            'ttstamp' : ttstamp,
-            '__a' : '1',
-            '__req' : getReq(),
-            '__rev' : __rev,
-            '__user' : userId,
             'message_batch[0][action_type]' : 'ma-type:user-generated-message',
             'message_batch[0][author]' : 'fbid:' + userId,
             'message_batch[0][timestamp]' : timestamp,
@@ -587,9 +557,7 @@ function _login(email, password, callback) {
             'message_batch[0][thread_fbid]' : thread_id,
             'message_batch[0][has_attachment]' : false,
             'message_batch[0][signatureID]' : getSignatureId(),
-            // 'message_batch[0][specific_to_list][0]':'fbid:'+thread_id,
-            // 'message_batch[0][specific_to_list][1]':'fbid:'+userId
-          };
+          });
 
           // We're doing a query to this to check if the given id is the id of
           // a user or of a group chat. The form will be different depending
@@ -608,7 +576,7 @@ function _login(email, password, callback) {
               var strData = makeParsable(html);
               var ret;
               try{
-                ret = strData.map(JSON.parse)[0];
+                ret = JSON.parse(strData);
               } catch (e) {
                 log.error("ERROR in sendMessage --> ",e, strData);
                 return callback({error: e});
@@ -627,7 +595,7 @@ function _login(email, password, callback) {
                     var strData = makeParsable(html);
                     var ret;
                     try{
-                      ret = strData.map(JSON.parse)[0];
+                      ret = JSON.parse(strData);
                     } catch (e) {
                       log.error("ERROR in sendMessage --> ",e, strData);
                       return callback({error: e});
@@ -655,52 +623,142 @@ function _login(email, password, callback) {
           return access_token;
         };
 
+        api.getFriendsList = function(id, callback) {
+          if(!id) return log.error("getFriendsList: need id");
+          if(!callback) return log.error("getFriendsList: need callback");
+
+          id = parseInt(id);
+
+          _get("https://www.facebook.com/" + id, jar, function(err, res, html) {
+            if(err) return log.error("_get returned error on https://www.facebook.com/" + id);
+
+            var maybeUrl = getFrom(html, "window.location.replace(\"", "\");").split("\\/").join("/");
+
+            if(maybeUrl.length === 0) return callback({error: "Problem retrieving friends list. Couldn't find redirect url."});
+
+            // Old profiles use profile.php?something=username and not
+            // /username
+            if(maybeUrl.indexOf("profile.php") !== -1) maybeUrl += "&sk=friends";
+            else maybeUrl += "/friends";
+
+            _get(maybeUrl, jar, function(err, res, html) {
+              if(err) {
+                log.error("_get returned error on " + maybeUrl + "/friends");
+                return callback(err);
+              }
+              // Hacky way to remove commented out HTML
+              html = html.split("<!--").join("").split("-->").join("");
+
+              var maybeAllFriends = html.split("AllFriendsAppCollectionPagelet");
+              if(maybeAllFriends.length === 1) maybeAllFriends = html.split("FriendsAppCollectionPagelet");
+              if(maybeAllFriends.length === 1) return log.error("Couldn't find token on page. Assuming you can't access this person's friends: " + id);
+
+              var token = getFrom(maybeAllFriends[1], "\"token\":\"", "\"");
+
+              var $ = cheerio.load(html);
+
+              var friendsList = $(".uiProfileBlockContent div div div a");
+              if(!friendsList) return callback({error: "Couldn't retrieve friends list from " + id + "."});
+
+              var friendsData = [];
+
+              friendsList.map(function(i, v) {
+                var res = null;
+                try {
+                  res = JSON.parse($(v).attr("data-gt"));
+                } catch(e) {
+                  return;
+                }
+                friendsData.push(parseInt(res.engagement.eng_tid));
+              });
+
+              var _getFriendsFromId = function(lastId, cb) {
+                var formFriendsList = _mergeWithDefault({
+                  data: {
+                    collection_token: token,
+                    cursor: new Buffer("0:not_structured:" + lastId).toString('base64'),
+                    tab_key:"friends",
+                    profile_id:id,
+                    overview:false,
+                    sk:"friends"
+                  }
+                });
+
+                _get("https://www.facebook.com/ajax/pagelet/generic.php/AllFriendsAppCollectionPagelet", jar, formFriendsList, function(err, res, html) {
+                  if(err) {
+                    log.error("error at AllFriendsAppCollectionPagelet", err);
+                    return cb(err);
+                  }
+
+                  var strData = makeParsable(html);
+                  var ret;
+                  try{
+                    ret = JSON.parse(strData);
+                  } catch (e) {
+                    log.error("ERROR in getFriendsList --> ", e, strData);
+                    return cb(e);
+                  }
+
+                  var nextBatch = ret.jsmods.require.filter(function(v) {
+                    return v[0] === "AddFriendButton";
+                  }).map(function(v) {
+                    return v[3][1];
+                  });
+
+                  if(nextBatch.length === 0) {
+                    return cb(null, []);
+                  }
+
+                  setTimeout(function() {
+                    _getFriendsFromId(parseInt(nextBatch[nextBatch.length - 1]), function(err, data) {
+                      cb(err, nextBatch.concat(data));
+                    });
+                  }, 100);
+                });
+              };
+
+              var lastId = parseInt(friendsData[friendsData.length-1]);
+
+              _getFriendsFromId(lastId, function(err, data) {
+                callback(err, friendsData.concat(data));
+              });
+            });
+          });
+        };
+
         api.getUserInfo = function(id, callback) {
-          var form = {
-            "__user":userId,
-            __a:"1",
-            "__req":getReq(),
-            "__rev":__rev,
-          };
+          var form = _mergeWithDefault();
           if(!(id instanceof Array)) id = [id];
 
           id.map(function(v, i) {
             form["ids[" + i + "]"] = v;
           });
 
-          _get("https://www.facebook.com/chat/user_info/", jar, form, function(req, res, html) {
+          _get("https://www.facebook.com/chat/user_info/", jar, form, function(err, res, html) {
             var strData = makeParsable(html);
             var ret;
             try{
-              ret = strData.map(JSON.parse)[0];
-              callback(null, ret.payload.profiles);
+              ret = JSON.parse(strData);
             } catch (e) {
-              log.error("ERROR in getUserInfo --> ",e, strData);
-              return callback({error: e});
+              log.error("ERROR in getUserInfo --> ",e, "\nnumber of ids:", id.length, "\n-------- strData --------\n" ,strData);
+              return callback(e);
             }
+            callback(null, ret.payload.profiles);
           });
         };
 
         time.initialize();
 
-        var form2 = {
+        var form2 = _mergeWithDefault({
           'grammar_version' : grammar_version,
-          '__user' : userId,
-          '__a' : '1',
-          '__req' : getReq(),
-        };
+        });
         log.info("Initial requests...");
         log.info("Request to null_state");
         _get("https://www.facebook.com/ajax/browse/null_state.php", jar, form2, function(err, res, html) {
           log.info("Request to reconnect");
-          var form3 = {
-            '__user' : userId,
-            '__req' : getReq(),
-            '__a' : '1',
-            '__rev' : __rev,
-            'reason' : '6',
-            'fb_dtsg' : fb_dtsg
-          };
+          var form3 = _mergeWithDefault({
+            reason: 6,
+          });
           _get("https://www.facebook.com/ajax/presence/reconnect.php", jar, form3, function(err, res, html) {
             var cookies = res.headers['set-cookie'] || [];
             cookies.map(function (c) {
@@ -714,10 +772,10 @@ function _login(email, password, callback) {
               form.wtc = time.doSerialize();
               var strData = makeParsable(html);
               try {
-                var info = strData.map(JSON.parse);
+                var info = JSON.parse(strData);
 
-                form.sticky_token = info[0].lb_info.sticky;
-                form.sticky_pool = info[0].lb_info.pool;
+                form.sticky_token = info.lb_info.sticky;
+                form.sticky_pool = info.lb_info.pool;
               } catch (e) {
                 log.error("ERROR in init --> ",e, strData);
                 callback({error: e});
@@ -726,34 +784,22 @@ function _login(email, password, callback) {
               _get("https://0-edge-chat.facebook.com/pull", jar, form, function(err, res, html) {
                 time.reportPullReturned();
                 form.wtc = time.doSerialize();
-                var form4 = {
+                var form4 = _mergeWithDefault({
                   'lastSync' : ~~(Date.now()/1000 - 60),
-                  '__user' : userId,
-                  '__req' : getReq(),
-                  '__a' : '1',
-                  '__rev' : __rev
-                };
+                });
                 log.info("Request to sync");
                 _get("https://www.facebook.com/notifications/sync", jar, form4, function(err, res, html) {
-                  var strData = makeParsable(html);
-                  var lastSync = strData.map(JSON.parse)[0].payload.lastSync;
 
                   var cookies = res.headers['set-cookie'] || [];
                   cookies.map(function (c) {
                     jar.setCookie(c, "https://www.facebook.com");
                   });
 
-                  var form6 = {
-                    '__user' : userId,
-                    '__req' : getReq(),
-                    '__a' : '1',
-                    '__rev' : __rev,
-                    'fb_dtsg' : fb_dtsg,
-                    'ttstamp' : ttstamp,
+                  var form6 = _mergeWithDefault({
                     'client' : 'mercury',
                     'folders[0]': 'inbox',
                     'last_action_timestamp' : '0'
-                  };
+                  });
                   log.info("Request to thread_sync");
                   _post("https://www.facebook.com/ajax/mercury/thread_sync.php", jar, form, function(err, res, html) {
                     var cookies = res.headers['set-cookie'] || [];
@@ -761,8 +807,7 @@ function _login(email, password, callback) {
                       jar.setCookie(c, "https://www.facebook.com");
                     });
 
-                    var graphAPIForm = {
-                      "fb_dtsg":fb_dtsg,
+                    var graphAPIForm = _mergeWithDefault({
                       "app_id":"145634995501895",
                       "redirect_uri":"https://www.facebook.com/connect/login_success.html",
                       "display":"popup",
@@ -789,30 +834,25 @@ function _login(email, password, callback) {
                       "sso_device":"",
                       "sheet_name":"initial",
                       "__CONFIRM__":"1",
-                      "__user":userId,
-                      "__a":"1",
-                      "__req":getReq(),
-                      "ttstamp":ttstamp,
-                      "__rev":__rev
-                    };
+                    });
                     log.info("Getting read access.");
-                    _post("https://www.facebook.com/v2.3/dialog/oauth/read", jar, graphAPIForm, function(req, res, html) {
+                    _post("https://www.facebook.com/v2.3/dialog/oauth/read", jar, graphAPIForm, function(err, res, html) {
                       graphAPIForm.read = "";
                       graphAPIForm.write = "publish_actions";
                       graphAPIForm.seen_scopes = graphAPIForm.write;
                       graphAPIForm["audience[0][value]"] = 40;
                       log.info("Getting write access.");
-                      _post("https://www.facebook.com/v2.3/dialog/oauth/write", jar, graphAPIForm, function(req, res, html) {
+                      _post("https://www.facebook.com/v2.3/dialog/oauth/write", jar, graphAPIForm, function(err, res, html) {
                         graphAPIForm.write = "";
                         graphAPIForm.extended = "ads_management,ads_read,manage_notifications,manage_pages,publish_pages,read_insights,read_page_mailboxes,rsvp_event";
                         graphAPIForm.seen_scopes = graphAPIForm.extended;
                         graphAPIForm["audience[0][value]"] = "";
                         log.info("Getting extended access.");
-                        _post("https://www.facebook.com/v2.3/dialog/oauth/extended", jar, graphAPIForm, function(req, res, html) {
+                        _post("https://www.facebook.com/v2.3/dialog/oauth/extended", jar, graphAPIForm, function(err, res, html) {
                           var strData = makeParsable(html);
                           var ret;
                           try {
-                            ret = strData.map(JSON.parse)[0];
+                            ret = JSON.parse(strData);
                           } catch (e) {
                             log.error("ERROR in getting extended access --> ",e, strData);
                             return callback({error: e});
@@ -924,15 +964,15 @@ function formatMessage(m) {
 
 function getFrom(str, startToken, endToken) {
   var start = str.indexOf(startToken) + startToken.length;
+  if(start < startToken.length) return "";
+
   var lastHalf = str.substring(start);
   var end = lastHalf.indexOf(endToken);
   return lastHalf.substring(0, end);
 }
 
 function makeParsable(html) {
-  return html.replace(/for\s*\(\s*;\s*;\s*\)\s*;\s*/, "").split("\n").filter(function(v) {
-    return v.length > 0;
-  });
+  return html.replace(/for\s*\(\s*;\s*;\s*\)\s*;\s*/, "");
 }
 
 function arrToForm(form) {
