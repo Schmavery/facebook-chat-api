@@ -340,6 +340,8 @@ login('config.json', function(err, api) {
 
 __Warning__: this function takes a longer time than others to answer because it pulls the friends in batches of 20 (blindly following how the UI pulls the friends list). It might take a couple seconds if you have >1000 friends.
 
+__Warning 2__: this will only work if you're friends with the person or if the person didn't set their friends list as being private information.
+
 Given the id of a person, will return an array of ids of all its friends.
 
 __Arguments__
