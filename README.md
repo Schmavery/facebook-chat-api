@@ -119,9 +119,9 @@ __Arguments__
 
 * `options` - An object containing the new values for the options that you want
   to set.  If the value for an option is unspecified, it is unchanged. The following options are possible.
-    - `loglevel` - The desired logging level as determined by npmlog.  Choose
+    - `logLevel` - The desired logging level as determined by npmlog.  Choose
       from either `"silly"`, `"verbose"`, `"info"`, `"http"`, `"warn"`, `"error"`, or `"silent"`.
-    - `selflisten` - (Default `false`) Set this to `true` if you want your api
+    - `selfListen` - (Default `false`) Set this to `true` if you want your api
       to receive messages from its own account.  This is to be used with
       caution, as it can result in loops (a simple echo bot will send messages
       forever).
@@ -135,8 +135,8 @@ login('config.json', function(err, api) {
     if(err) return console.error(err);
     
     api.setOptions({
-      selflisten: true,
-      loglevel: "silent"
+      selfListen: true,
+      logLevel: "silent"
     });
 
     api.listen(function(err, message, stopListening){

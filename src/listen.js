@@ -86,29 +86,45 @@ module.exports = function(utils, log, mergeWithDefaults, api, ctx) {
         }
 
         if(info.ms) {
-          info.ms = info.ms.filter(function(v) {
-            return  v.type === 'messaging' &&
-                    v.event === 'deliver' &&
-                    (ctx.globalOptions.selflisten
-                     || v.message.sender_fbid.toString() !== ctx.userId);
+          var atLeastOne = false;
+          info.ms.map(function parsePackets(v) {
+            switch (v.type) {
+              case "mercury":
+                if(!ctx.globalOptions.listenEvents) return;
+
+                v.actions.map(function(v2) {
+                  callback(null, utils.formatEvent(v2), stopListening);
+                });
+                break;
+              case "messaging":
+                if(v.event !== "deliver") return;
+
+                if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userId) return;
+
+                atLeastOne = true;
+                callback(null, utils.formatMessage(v), stopListening);
+                break;
+            }
           });
 
-          // Send deliveryReceipt notification to the server
-          var formDeliveryReceipt = mergeWithDefaults();
+          if(atLeastOne) {
+            // Send deliveryReceipt notification to the server
+            var formDeliveryReceipt = mergeWithDefaults();
 
-          for (var i = 0; i < info.ms.length; i++) {
-            if(info.ms[i].message && info.ms[i].message.mid) formDeliveryReceipt["[" + i + "]"] = info.ms[i].message.mid;
-          }
+            for (var i = 0; i < info.ms.length; i++) {
+              if(info.ms[i].message && info.ms[i].message.mid) formDeliveryReceipt["[" + i + "]"] = info.ms[i].message.mid;
+            }
 
-          // If there's at least one, we do the post request
-          if(formDeliveryReceipt["[0]"]) {
-            utils.post("https://www.facebook.com/ajax/mercury/delivery_receipts.php", ctx.jar, formDeliveryReceipt, function(err, res, html) {
-            });
+            // If there's at least one, we do the post request
+            if(formDeliveryReceipt["[0]"]) {
+              utils.post("https://www.facebook.com/ajax/mercury/delivery_receipts.php", ctx.jar, formDeliveryReceipt, function(err, res, html) {
+              });
+            }
           }
-          info.ms = info.ms.map(utils.formatMessage);
-          info.ms.sort(function(a, b) {
-            return a.timestamp - b.timestamp;
-          });
+          // info.ms = info.ms.map(utils.formatMessage);
+          // info.ms.sort(function(a, b) {
+          //   return a.timestamp - b.timestamp;
+          // });
         }
 
 
@@ -116,20 +132,20 @@ module.exports = function(utils, log, mergeWithDefaults, api, ctx) {
         if(info.tr) form.traceid = info.tr;
       } catch (e) {
         log.error("ERROR in listen --> ",e, strData);
-        callback({error: e}, null, stopListening);
+        callback(e, null, stopListening);
         currentlyRunning = setTimeout(api.listen, Math.random() * 200 + 50, callback);
         return;
       }
       currentlyRunning = setTimeout(api.listen, Math.random() * 200 + 50, callback);
 
-      // If any call to stopListening was made, do not call the callback
-      if(shouldStop) return;
-      if(info.ms) {
-        // Send all messages to the callback
-        for (var j = 0; j < info.ms.length; j++){
-          callback(null, info.ms[j], stopListening);
-        }
-      }
+      // // If any call to stopListening was made, do not call the callback
+      // if(shouldStop) return;
+      // if(info.ms) {
+      //   // Send all messages to the callback
+      //   for (var j = 0; j < info.ms.length; j++){
+      //     callback(null, info.ms[j], stopListening);
+      //   }
+      // }
     });
   };
 };

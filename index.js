@@ -53,23 +53,25 @@ function _login(email, password, callback) {
 
         var api = {};
         var globalOptions = {
-          selflisten: false
+          selfListen: false,
+          listenEvents: false
         };
         var access_token = "NONE";
 
-        api.setOptions = function(options) {
-          handleOptions(options);
-        }
+        api.setOptions = function setOptions(options){
+          if (options.hasOwnProperty('logLevel')) {
+            log.level = options.logLevel;
+            globalOptions.logLevel = options.logLevel;
+          }
 
-        function handleOptions(options){
-          if (options.loglevel){
-            log.level = options.loglevel;
-            globalOptions.loglevel = options.loglevel;
+          if (options.hasOwnProperty('selfListen')) {
+            globalOptions.selfListen = options.selfListen;
           }
-          if (options.selflisten){
-            globalOptions.selflisten = options.selflisten;
+
+          if(options.hasOwnProperty('listenEvents')) {
+            globalOptions.listenEvents = options.listenEvents;
           }
-        }
+        };
 
         // All data available to api functions
 

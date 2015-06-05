@@ -96,6 +96,7 @@ function formatMessage(m) {
   var originalMessage = m.message ? m.message : m;
 
   return {
+    type: "message",
     sender_name: originalMessage.sender_name,
     sender_id: originalMessage.sender_fbid,
     participant_names: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
@@ -103,6 +104,17 @@ function formatMessage(m) {
     body: originalMessage.body,
     thread_id: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
     location: originalMessage.coordinates ? originalMessage.coordinates : null
+  };
+}
+
+function formatEvent(m) {
+  return {
+    type: "event",
+    thread_id: m.thread_fbid,
+    log_message_type: m.log_message_type,
+    log_message_data: m.log_message_data,
+    log_message_body: m.log_message_body,
+    author: m.author.split(":")[1]
   };
 }
 
@@ -182,5 +194,6 @@ module.exports = {
   getSignatureId: getSignatureId,
   getJar: request.jar,
   genTimestampRelative: genTimestampRelative,
-  makeMergeWithDefaults: makeMergeWithDefaults
+  makeMergeWithDefaults: makeMergeWithDefaults,
+  formatEvent: formatEvent
 };
