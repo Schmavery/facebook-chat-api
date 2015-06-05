@@ -1,7 +1,10 @@
 /*jslint node: true */
 "use strict";
 
-module.exports = function(utils, log, mergeWithDefaults, api, ctx) {
+var utils = require("../utils");
+var log = require("npmlog");
+
+module.exports = function(mergeWithDefaults, api, ctx) {
   return function sendSticker(sticker_id, thread_id, callback) {
     if(!callback) callback = function() {};
     if (typeof sticker_id !== "number" && typeof sticker_id !== "string")

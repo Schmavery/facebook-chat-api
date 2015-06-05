@@ -1,7 +1,10 @@
 /*jslint node: true */
 "use strict";
 
-module.exports = function(utils, log, mergeWithDefaults, api, ctx) {
+var utils = require("../utils");
+var log = require("npmlog");
+
+module.exports = function(mergeWithDefaults, api, ctx) {
   return function sendMessage(msg, thread_id, callback) {
     if(!callback) callback = function() {};
     if(typeof msg !== "string") return callback({error: "Message should be of type string and not " + typeof msg + "."});

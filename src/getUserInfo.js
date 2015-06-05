@@ -1,7 +1,10 @@
 /*jslint node: true */
 "use strict";
 
-module.exports = function(utils, log, mergeWithDefaults, api, ctx) {
+var utils = require("../utils");
+var log = require("npmlog");
+
+module.exports = function(mergeWithDefaults, api, ctx) {
   return function getUserInfo(id, callback) {
     var form = mergeWithDefaults();
     if(!(id instanceof Array)) id = [id];

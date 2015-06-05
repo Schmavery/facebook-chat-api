@@ -1,7 +1,10 @@
 /*jslint node: true */
 "use strict";
 
-module.exports = function(utils, log, mergeWithDefaults, api, ctx) {
+var utils = require("../utils");
+var log = require("npmlog");
+
+module.exports = function(mergeWithDefaults, api, ctx) {
   return function sendDirectSticker(sticker_id, nameOrUserId, callback) {
     if(!callback) throw new Error("Callback is required for sendDirectSticker");
 

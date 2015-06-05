@@ -2,8 +2,10 @@
 "use strict";
 
 var cheerio = require("cheerio");
+var utils = require("../utils");
+var log = require("npmlog");
 
-module.exports = function(utils, log, mergeWithDefaults, api, ctx) {
+module.exports = function(mergeWithDefaults, api, ctx) {
   return function getFriendsList(id, callback) {
     if(!id) return log.error("getFriendsList: need id");
     if(!callback) return log.error("getFriendsList: need callback");

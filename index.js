@@ -102,7 +102,7 @@ function _login(email, password, callback) {
 
         // Load all api functions in a loop
         apiFuncNames.map(function(v) {
-          api[v] = require('./src/' + v)(utils, log, mergeWithDefaults, api, context);
+          api[v] = require('./src/' + v)(mergeWithDefaults, api, context);
         });
 
         time.initialize();
