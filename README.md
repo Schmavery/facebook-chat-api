@@ -30,15 +30,19 @@ login("config.json", function(err, api) {
 * [`api.setOptions`](#setOptions)
 * [`api.getUserId`](#getUserId)
 * [`api.sendMessage`](#sendMessage)
-* [`api.sendDirectMessage`](#sendDirectMessage)
 * [`api.markAsRead`](#markAsRead)
 * [`api.sendSticker`](#sendSticker)
-* [`api.sendDirectSticker`](#sendDirectSticker)
 * [`api.setTitle`](#setTitle)
 * [`api.getUserInfo`](#getUserInfo)
 * [`api.getFriendsList`](#getFriendsList)
 * [`api.getThreadList`](#getThreadList)
 * [`api.getAccessToken`](#getAccessToken)
+
+## &#9888; Deprecated &#9888;
+* [`api.sendDirectMessage`](#sendDirectMessage)
+* [`api.sendDirectSticker`](#sendDirectSticker)
+
+---------------------------------------
 
 <a name="login" />
 ### login([filename], callback)
@@ -199,34 +203,6 @@ login('config.json', function(err, api) {
 
 ---------------------------------------
 
-<a name="sendDirectMessage" />
-### api.sendDirectMessage(message, nameOrUserId, callback)
-
-__Warning__: This function is ambiguous. It'll send messages to facebook's best match when searching for a person called `nameOrUserId`. If all the returned matches aren't people (pages, events etc...), `sendDirectMessage` will call the callback with an error. For this reason, the callback is required.
-
-Similar to `sendMessage` but if `nameOrUserId` is a string, it will query Facebook's search engine to find the person that matches the closest the given name. 'the closest' means that given what facebook knows about you, it'll give priority to friends and friends of friends etc... If `nameOrUserId` is a number, it'll just call `sendMessage`.
-
-__Arguments__
-
-* `message` - A string being the message to be sent to the given `nameOrUserId`
-* `nameOrUserId` - A string or number representing either a person or a thread. If it's a string, `sendDirectMessage` will do a search for that person's name and will send the given `message` to the closest match.
-* `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `err` might occur if you did a typo in `nameOrUserId` and Facebook didn't return any valid users.  `obj` contains only the thread_id where the message was sent.
-
-__Example__
-
-```js
-login('config.json', function(err, api) {
-    if(err) return console.error(err);
-    
-    var yourName = "Marc Zuckerbot";
-    api.sendDirectMessage("Hey John!", yourName, function(err, data){
-        if(err) console.error(err);
-    });
-});
-```
-
----------------------------------------
-
 <a name="markAsRead" />
 ### api.markAsRead(thread_id, callback)
 
@@ -277,15 +253,6 @@ login('config.json', function(err, api) {
     api.sendMessage(767334526626290, yourID);
 });
 ```
-
----------------------------------------
-
-<a name="sendDirectSticker" />
-### api.sendDirectSticker(sticker_id, nameOrUserId, callback)
-
-__Warning__: This function is also ambiguous (look at [`sendDirectMessage`](#sendDirectMessage)) and therefore a callback is required.
-
-Same as sendDirectMessage but for stickers.
 
 ---------------------------------------
 
@@ -399,3 +366,44 @@ login('config.json', function(err, api) {
     });
 });
 ```
+
+
+
+## Deprecated
+
+---------------------------------------
+
+<a name="sendDirectMessage" />
+### api.sendDirectMessage(message, nameOrUserId, callback)
+
+__Warning__: This function is ambiguous. It'll send messages to facebook's best match when searching for a person called `nameOrUserId`. If all the returned matches aren't people (pages, events etc...), `sendDirectMessage` will call the callback with an error. For this reason, the callback is required.
+
+Similar to `sendMessage` but if `nameOrUserId` is a string, it will query Facebook's search engine to find the person that matches the closest the given name. 'the closest' means that given what facebook knows about you, it'll give priority to friends and friends of friends etc... If `nameOrUserId` is a number, it'll just call `sendMessage`.
+
+__Arguments__
+
+* `message` - A string being the message to be sent to the given `nameOrUserId`
+* `nameOrUserId` - A string or number representing either a person or a thread. If it's a string, `sendDirectMessage` will do a search for that person's name and will send the given `message` to the closest match.
+* `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `err` might occur if you did a typo in `nameOrUserId` and Facebook didn't return any valid users.  `obj` contains only the thread_id where the message was sent.
+
+__Example__
+
+```js
+login('config.json', function(err, api) {
+    if(err) return console.error(err);
+    
+    var yourName = "Marc Zuckerbot";
+    api.sendDirectMessage("Hey John!", yourName, function(err, data){
+        if(err) console.error(err);
+    });
+});
+```
+
+---------------------------------------
+
+<a name="sendDirectSticker" />
+### api.sendDirectSticker(sticker_id, nameOrUserId, callback)
+
+__Warning__: This function is also ambiguous (look at [`sendDirectMessage`](#sendDirectMessage)) and therefore a callback is required.
+
+Same as sendDirectMessage but for stickers.
