@@ -4,13 +4,13 @@
 var utils = require("./utils");
 var cheerio = require("cheerio");
 var log = require("npmlog");
-var fs = require("fs");
 var time = require("./time");
 
 function _login(email, password, callback) {
   var jar = utils.getJar();
 
   log.info("Getting login form data");
+
   utils.get("https://www.facebook.com/", jar, function(err, res, html) {
     var $ = cheerio.load(html);
 
@@ -269,7 +269,7 @@ function login(loginData, callback) {
     obj.password = process.env.FB_LOGIN_PASSWORD;
     callback = loginData;
   } else if (typeof loginData === 'string') {
-    obj = JSON.parse(fs.readFileSync(loginData, 'utf8'));
+    obj = JSON.parse(require("fs").readFileSync(loginData, 'utf8'));
     if(!obj.email || !obj.password) throw loginData + " has to be a valid json with an email field and a password field";
   } else if (typeof loginData === 'object') {
     if(!loginData.email || !loginData.password) throw "Invalid JSON passed into login.";
