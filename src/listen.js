@@ -2,8 +2,10 @@
 "use strict";
 
 var time = require("../time");
+var utils = require("../utils");
+var log = require("npmlog");
 
-module.exports = function(utils, log, mergeWithDefaults, api, ctx) {
+module.exports = function(mergeWithDefaults, api, ctx) {
   var shouldStop = false;
   var currentlyRunning = null;
   var stopListening = function() {

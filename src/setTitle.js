@@ -1,7 +1,10 @@
 /*jslint node: true */
 "use strict";
 
-module.exports = function(utils, log, mergeWithDefaults, api, ctx) {
+var utils = require("../utils");
+var log = require("npmlog");
+
+module.exports = function(mergeWithDefaults, api, ctx) {
   return function setTitle(newTitle, thread_id, callback) {
     if(!callback) callback = function() {};
 
