@@ -75,11 +75,12 @@ login('config.json', function(err, api) {
 <a name="listen" />
 ### api.listen(callback)
 
-Will call callback when a new message it received on this account.
+Will call callback when a new message it received on this account. 
+By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true})`.
 
 __Arguments__
 
-* `callback(error, message, stopListening)` - A callback called everytime the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. `error` is an object contain a field error being the error thrown if anything happens inside listen. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. `message` is an object with 4 fields:
+* `callback(error, message, stopListening)` - A callback called every time the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. `error` is an object contain a field error being the error thrown if anything happens inside listen. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. `message` is an object:
     - `sender_name` - First and last name of the person who just sent the message.
     - `sender_id` - The id of the person who sent the message in the chat with thread_id.
     - `participant_ids` - An array containing the ids of everyone in the thread (sender included).
@@ -87,6 +88,15 @@ __Arguments__
     - `body` - The string corresponding to the message that was just received.
     - `thread_id` - The thread_id representing the thread in which the message was sent.
     - `coordinates` - An object containing `latitude`, `longitude`, and `accuracy`.
+    - `type` - The string `"message"`
+
+If enabled this will also handle events. In this case, `message` will be either a message (see above) or an event object with the following fields:
+    - `type` - The string `"event"`
+    - `thread_id` - The thread_id representing the thread in which the message was sent.
+    - `log_message_type` - String representing the type of event (`"log:thread-name"`, `"log:unsubscribe"`, `"log:subscribe"`, ...)
+    - `log_message_data` - Data relevant to the event.
+    - `log_message_body` - String printed in the chat.
+    - `author` - The person who performed the event.
 
 __Example__
 
@@ -95,15 +105,27 @@ __Example__
 // Will stop when you say '/stop'
 login('config.json', function(err, api) {
     if(err) return console.error(err);
-    
-    api.listen(function(err, message, stopListening){
+
+    api.setOptions({listenEvents: true});
+
+    api.listen(function(err, event, stopListening) {
         if(err) return console.error(err);
-        if(message.body === '/stop') {
-            api.sendMessage("Goodbye...", message.thread_id);
-            return stopListening();
+
+        switch(event.type) {
+          case "message":
+            if(event.body === '/stop') {
+              api.sendMessage("Goodbye...", event.thread_id);
+              return stopListening();
+            }
+            api.markAsRead(event.thread_id, function(err) {
+              if(err) console.log(err);
+            });
+            api.sendMessage("TEST BOT: " + event.body, event.thread_id);
+            break;
+          case "event":
+            console.log(event);
+            break;
         }
-        
-        api.sendMessage(message.body, message.thread_id);
     });
 });
 ```
@@ -125,6 +147,7 @@ __Arguments__
       to receive messages from its own account.  This is to be used with
       caution, as it can result in loops (a simple echo bot will send messages
       forever).
+    - `listenEvents` - (Default `false`) Will make api.listen also handle events.
 
 __Example__
 
