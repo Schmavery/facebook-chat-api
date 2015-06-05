@@ -59,39 +59,7 @@ module.exports = function(utils, log, mergeWithDefaults, api, ctx) {
         if (!ret) return callback({error: "Send message failed."});
         if(ret.error) return callback(ret);
 
-        // if (!ret){
-        //   callback({error: "Send sticker failed."});
-        // } else if (ret.error){
-        //   if (ret.error == 1545012){
-        //     log.error("Second call, creating chat");
-        //     // Try to create new chat.
-        //     form.__req = getReq();
-        //     form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
-        //     form['message_batch[0][specific_to_list][1]'] = "fbid:"+userId;
-        //     utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", jar, form, function(err, res, html) {
-        //       var strData = utils.makeParsable(html);
-        //       var ret;
-        //       try{
-        //         ret = JSON.parse(strData);
-        //       } catch (e) {
-        //         log.info("ERROR in sendSticker --> ",e, strData);
-        //         return callback({error: e});
-        //       }
-
-        //       if (!ret){
-        //         callback({error: "Send sticker failed."});
-        //       } else if (ret.error){
-        //         callback({error: ret});
-        //       } else {
-        //         callback();
-        //       }
-        //     });
-        //     return;
-        //   }
-        //   callback({error: ret});
-        // } else {
-          callback();
-        // }
+        callback();
       });
     });
   };
