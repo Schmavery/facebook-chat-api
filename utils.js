@@ -1,20 +1,17 @@
 /*jslint node: true */
 "use strict";
 
-var request = require("request").defaults({jar: true});
+var request = require("request-promise").defaults({jar: true});
 
-function get(url, jar, qs, callback) {
-  if(typeof qs === 'function') {
-    callback = qs;
-    qs = null;
+function get(url, jar, qs) {
+  // I'm still confused about this
+  if(typeof qs === "object") {
+    for(var prop in qs) {
+      if(qs.hasOwnProperty(prop) && typeof qs[prop] === "object") {
+        qs[prop] = JSON.stringify(qs[prop]);
+      }
+    }
   }
-  // if(typeof qs === "object") {
-  //   for(var prop in qs) {
-  //     if(qs.hasOwnProperty(prop) && typeof qs[prop] === "object") {
-  //       qs[prop] = JSON.stringify(qs[prop]);
-  //     }
-  //   }
-  // }
   var op = {
     headers: {
       'Content-Type' : 'application/x-www-form-urlencoded',
@@ -29,13 +26,16 @@ function get(url, jar, qs, callback) {
     url: url,
     method: "GET",
     jar: jar,
-    gzip: true
+    gzip: true,
+    // request-promise specific options
+    resolveWithFullResponse: true,
+    simple: false
   };
 
-  request(op, callback);
+  return request(op);
 }
 
-function post(url, jar, form, callback) {
+function post(url, jar, form) {
   var op = {
     headers: {
       'Content-Type' : 'application/x-www-form-urlencoded',
@@ -50,17 +50,14 @@ function post(url, jar, form, callback) {
     method: "POST",
     form: form,
     jar: jar,
-    gzip: true
+    gzip: true,
+    // request-promise specific options
+    resolveWithFullResponse: true,
+    simple: false
   };
 
-  request(op, callback);
+  return request(op);
 }
-
-/**
- *
- * ============= Helper functions =================
- *
- */
 
 function padZeros(val, len) {
     val = String(val);
