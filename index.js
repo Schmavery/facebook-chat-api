@@ -147,23 +147,13 @@ function _login(email, password, callback) {
         'idle' : 0,
         'cap' : '8'
       };
-      return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form), ctx, mergeWithDefaults, api, form];
+      return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form).then(utils.parseResponse), ctx, mergeWithDefaults, api, form];
     },
-    function secondPullReq(res, ctx, mergeWithDefaults, api, form) {
-      var html = res.body;
+    function secondPullReq(resData, ctx, mergeWithDefaults, api, form) {
       time.reportPullReturned();
       form.wtc = time.doSerialize();
-
-      // TODO: Put all this inside a .then
-      var strData = utils.makeParsable(html);
-      try {
-        var info = JSON.parse(strData);
-        form.sticky_token = info.lb_info.sticky;
-        form.sticky_pool = info.lb_info.pool;
-      } catch (e) {
-        log.error("ERROR in init --> ",e, strData);
-        return callback(e);
-      }
+      form.sticky_token = resData.lb_info.sticky;
+      form.sticky_pool = resData.lb_info.pool;
 
       log.info("Request to pull 2");
       return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form), ctx, mergeWithDefaults, api];
@@ -232,21 +222,12 @@ function _login(email, password, callback) {
       graphAPIForm.seen_scopes = graphAPIForm.extended;
       graphAPIForm["audience[0][value]"] = "";
       log.info("Getting extended access.");
-      return [utils.post("https://www.facebook.com/v2.3/dialog/oauth/extended", ctx.jar, graphAPIForm), ctx, mergeWithDefaults, api];
+      return [utils.post("https://www.facebook.com/v2.3/dialog/oauth/extended", ctx.jar, graphAPIForm).then(utils.parseResponse), ctx, mergeWithDefaults, api];
     },
-    function done(res, ctx, mergeWithDefaults, api) {
-      var strData = utils.makeParsable(res.body);
-      var ret;
-      try {
-        ret = JSON.parse(strData);
-      } catch (e) {
-        log.error("ERROR in getting extended access --> ",e, strData);
-        return callback({error: e});
-      }
-
+    function done(resData, ctx, mergeWithDefaults, api) {
       ctx.access_token = -1;
       try {
-        var tokenArray = ret.jsmods.require;
+        var tokenArray = resData.jsmods.require;
         for (var i = 0; i < tokenArray.length; i++){
           if (tokenArray[i][3][0].indexOf("access_token=") != -1){
             ctx.access_token = tokenArray[i][3][0].split("access_token=")[1].split("&")[0];
@@ -270,8 +251,13 @@ function _login(email, password, callback) {
     return bluebird.all(prev).then(function(prevResolved) {
       return cur.apply(null, prevResolved);
     });
-  }, []).then(function(api) {
+  }, [])
+  .then(function(api) {
     callback(null, api[0]);
+  })
+  .catch(function(err) {
+    log.error(err);
+    return callback(err);
   });
 }
 
