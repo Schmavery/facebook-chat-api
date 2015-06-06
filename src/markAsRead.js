@@ -11,20 +11,15 @@ module.exports = function(mergeWithDefaults, api, ctx) {
 
     form["ids[" + thread_id + "]"] = true;
 
-    utils.post("https://www.facebook.com/ajax/mercury/change_read_status.php", ctx.jar, form, function(err, res, html) {
-      var cookies = res.headers['set-cookie'] || [];
-      cookies.map(function (c) {
-        jar.setCookie(c, "https://www.facebook.com");
-      });
-
-      var strData = utils.makeParsable(html);
-      try {
-        var ret = JSON.parse(strData);
-      } catch (e) {
-        log.error("ERROR in markAsRead --> ",e, strData);
-        return callback({error: e});
-      }
+    utils.post("https://www.facebook.com/ajax/mercury/change_read_status.php", ctx.jar, form)
+    .then(utils.saveCookies(ctx.jar))
+    .then(utils.parseResponse)
+    .then(function(resData) {
       callback();
+    })
+    .catch(function(err) {
+      log.error("Error in markAsRead", err);
+      return callback(err);
     });
   };
 };

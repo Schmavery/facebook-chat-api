@@ -16,23 +16,20 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'inbox[limit]' : end
     });
 
-    utils.post("https://www.facebook.com/ajax/mercury/threadlist_info.php", ctx.jar, form, function(err, res, html) {
-      var strData = utils.makeParsable(html);
-      var ret;
-      try {
-        ret = JSON.parse(strData);
-      } catch (e) {
-        log.error("ERROR in setTitle --> ", e, strData);
-        callback(e);
-      }
-
-      if (ret.error && ret.error === 1545012){
+    utils.post("https://www.facebook.com/ajax/mercury/threadlist_info.php", ctx.jar, form)
+    .then(utils.parseResponse)
+    .then(function(resData) {
+      if (resData.error && resData.error === 1545012){
         callback({error: "Cannot change chat title: Not member of chat."});
-      } else if (ret.error && ret.error === 1545003){
+      } else if (resData.error && resData.error === 1545003){
         callback({error: "Cannot set title of single-user chat."});
-      } else if (ret.error) {
-        callback(ret);
-      } else callback(null, ret.payload.threads);
+      } else if (resData.error) {
+        callback(resData);
+      } else callback(null, resData.payload.threads);
+    })
+    .catch(function(err) {
+      log.error("Error in getThreadList", err);
+      return callback(err);
     });
   };
 };

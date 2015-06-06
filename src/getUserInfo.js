@@ -15,11 +15,11 @@ module.exports = function(mergeWithDefaults, api, ctx) {
 
     utils.get("https://www.facebook.com/chat/user_info/", ctx.jar, form)
     .then(utils.parseResponse)
-    .then(function(ret) {
-      callback(null, ret.payload.profiles);
+    .then(function(resData) {
+      callback(null, resData.payload.profiles);
     })
     .catch(function(err) {
-      log.error("ERROR in getUserInfo --> ", err);
+      log.error("Error in getUserInfo", err);
       return callback(err);
     });
   };

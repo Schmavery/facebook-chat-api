@@ -12,8 +12,9 @@ module.exports = function(mergeWithDefaults, api, ctx) {
 
     id = parseInt(id);
 
-    utils.get("https://www.facebook.com/" + id, jar, function(err, res, html) {
-      if(err) return log.error("utils.get returned error on https://www.facebook.com/" + id);
+    utils.get("https://www.facebook.com/" + id, ctx.jar)
+    .then(function(res) {
+      var html = res.body;
 
       var maybeUrl = utils.getFrom(html, "window.location.replace(\"", "\");").split("\\/").join("/");
 
@@ -24,13 +25,10 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       if(maybeUrl.indexOf("profile.php") !== -1) maybeUrl += "&sk=friends";
       else maybeUrl += "/friends";
 
-      utils.get(maybeUrl, ctx.jar, function(err, res, html) {
-        if(err) {
-          log.error("utils.get returned error on " + maybeUrl + "/friends");
-          return callback(err);
-        }
+      utils.get(maybeUrl, ctx.jar)
+      .then(function(res) {
         // Hacky way to remove commented out HTML
-        html = html.split("<!--").join("").split("-->").join("");
+        html = res.body.split("<!--").join("").split("-->").join("");
 
         var maybeAllFriends = html.split("AllFriendsAppCollectionPagelet");
         if(maybeAllFriends.length === 1) maybeAllFriends = html.split("FriendsAppCollectionPagelet");
@@ -67,22 +65,10 @@ module.exports = function(mergeWithDefaults, api, ctx) {
             }
           });
 
-          utils.get("https://www.facebook.com/ajax/pagelet/generic.php/AllFriendsAppCollectionPagelet", ctx.jar, formFriendsList, function(err, res, html) {
-            if(err) {
-              log.error("error at AllFriendsAppCollectionPagelet", err);
-              return cb(err);
-            }
-
-            var strData = utils.makeParsable(html);
-            var ret;
-            try{
-              ret = JSON.parse(strData);
-            } catch (e) {
-              log.error("ERROR in getFriendsList --> ", e, strData);
-              return cb(e);
-            }
-
-            var nextBatch = ret.jsmods.require.filter(function(v) {
+          utils.get("https://www.facebook.com/ajax/pagelet/generic.php/AllFriendsAppCollectionPagelet", ctx.jar, formFriendsList)
+          .then(utils.parseResponse)
+          .then(function(resData) {
+            var nextBatch = resData.jsmods.require.filter(function(v) {
               return v[0] === "AddFriendButton";
             }).map(function(v) {
               return v[3][1];
@@ -106,6 +92,10 @@ module.exports = function(mergeWithDefaults, api, ctx) {
           callback(err, friendsData.concat(data));
         });
       });
+    })
+    .catch(function(err) {
+      log.error("Error in getFriendsList", err);
+      return callback(err);
     });
-  }
+  };
 };
