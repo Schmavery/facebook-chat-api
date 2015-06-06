@@ -14,9 +14,10 @@ function _login(email, password, callback) {
   // I'm ignoring them right now just because I need brain power for the rest
   var loginProcess = [
     function getLoginForm() {
-      return [utils.get("https://www.facebook.com/", null), email, password];
+      var jar = utils.getJar();
+      return [utils.get("https://www.facebook.com/", null).then(utils.saveCookies(jar)), email, password, jar];
     },
-    function loginReq(res, email, password) {
+    function loginReq(res, email, password, jar) {
       var html = res.body;
       var $ = cheerio.load(html);
 
@@ -30,25 +31,17 @@ function _login(email, password, callback) {
         return v.val && v.val.length;
       });
 
-      var jar = utils.getJar();
-      res.headers['set-cookie'].map(function(val) {
-        jar.setCookie(val, "https://www.facebook.com");
-      });
       var form = utils.arrToForm(arr);
       form.email = email;
       form.pass = password;
       form.default_persistent = '1';
 
       log.info("Logging in...");
-      return [utils.post("https://www.facebook.com/login.php?login_attempt=1", jar, form), jar];
+      return [utils.post("https://www.facebook.com/login.php?login_attempt=1", jar, form).then(utils.saveCookies(jar)), jar];
     },
     function loadMainPage(res, jar) {
       var html = res.body;
       var headers = res.headers;
-      var cookies = headers['set-cookie'] || [];
-      cookies.map(function (c) {
-        jar.setCookie(c, "https://www.facebook.com");
-      });
 
       if (!headers.location) return callback({error: "Wrong username/password."});
       return [utils.get(headers.location, jar), jar];
@@ -135,14 +128,10 @@ function _login(email, password, callback) {
       var form3 = mergeWithDefaults({
         reason: 6,
       });
-      return [utils.get("https://www.facebook.com/ajax/presence/reconnect.php", ctx.jar, form3), ctx, mergeWithDefaults, api];
+      return [utils.get("https://www.facebook.com/ajax/presence/reconnect.php", ctx.jar, form3).then(utils.saveCookies(ctx.jar)), ctx, mergeWithDefaults, api];
     },
     function firstPullReq(res, ctx, mergeWithDefaults, api) {
       var html = res.body;
-      var cookies = res.headers['set-cookie'] || [];
-      cookies.map(function (c) {
-        ctx.jar.setCookie(c, "https://www.facebook.com");
-      });
 
       time.reportPullSent();
       log.info("Request to pull 1");
@@ -186,28 +175,18 @@ function _login(email, password, callback) {
         'lastSync' : ~~(Date.now()/1000 - 60),
       });
       log.info("Request to sync");
-      return [utils.get("https://www.facebook.com/notifications/sync", ctx.jar, form), ctx, mergeWithDefaults, api];
+      return [utils.get("https://www.facebook.com/notifications/sync", ctx.jar, form).then(utils.saveCookies(ctx.jar)), ctx, mergeWithDefaults, api];
     },
     function threadSyncReq(res, ctx, mergeWithDefaults, api) {
-      var cookies = res.headers['set-cookie'] || [];
-      cookies.map(function (c) {
-        ctx.jar.setCookie(c, "https://www.facebook.com");
-      });
-
       var form = mergeWithDefaults({
         'client' : 'mercury',
         'folders[0]': 'inbox',
         'last_action_timestamp' : '0'
       });
       log.info("Request to thread_sync");
-      return [utils.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form), ctx, mergeWithDefaults, api];
+      return [utils.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form).then(utils.saveCookies(ctx.jar)), ctx, mergeWithDefaults, api];
     },
     function graphAPIReadReq(res, ctx, mergeWithDefaults, api) {
-      var cookies = res.headers['set-cookie'] || [];
-      cookies.map(function (c) {
-        ctx.jar.setCookie(c, "https://www.facebook.com");
-      });
-
       var graphAPIForm = mergeWithDefaults({
         "app_id":"145634995501895",
         "redirect_uri":"https://www.facebook.com/connect/login_success.html",

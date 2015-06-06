@@ -185,6 +185,16 @@ function parseResponse(res) {
   });
 }
 
+function saveCookies(jar) {
+  return function(res) {
+    var cookies = res.headers['set-cookie'] || [];
+    cookies.map(function (c) {
+      jar.setCookie(c, "https://www.facebook.com");
+    });
+    return res;
+  };
+}
+
 module.exports = {
   get: get,
   post: post,
@@ -199,5 +209,6 @@ module.exports = {
   genTimestampRelative: genTimestampRelative,
   makeMergeWithDefaults: makeMergeWithDefaults,
   formatEvent: formatEvent,
-  parseResponse: parseResponse
+  parseResponse: parseResponse,
+  saveCookies: saveCookies
 };
