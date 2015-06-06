@@ -1,6 +1,6 @@
 /*jslint node: true */
 "use strict";
-
+var bluebird = require("bluebird");
 var request = require("request-promise").defaults({jar: true});
 
 function get(url, jar, qs) {
@@ -179,6 +179,12 @@ function makeMergeWithDefaults(html, userId) {
   };
 }
 
+function parseResponse(res) {
+  return bluebird.try(function() {
+    return JSON.parse(makeParsable(res.body));
+  });
+}
+
 module.exports = {
   get: get,
   post: post,
@@ -192,5 +198,6 @@ module.exports = {
   getJar: request.jar,
   genTimestampRelative: genTimestampRelative,
   makeMergeWithDefaults: makeMergeWithDefaults,
-  formatEvent: formatEvent
+  formatEvent: formatEvent,
+  parseResponse: parseResponse
 };

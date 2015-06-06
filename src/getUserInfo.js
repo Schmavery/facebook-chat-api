@@ -13,16 +13,14 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       form["ids[" + i + "]"] = v;
     });
 
-    utils.get("https://www.facebook.com/chat/user_info/", ctx.jar, form, function(err, res, html) {
-      var strData = utils.makeParsable(html);
-      var ret;
-      try{
-        ret = JSON.parse(strData);
-      } catch (e) {
-        log.error("ERROR in getUserInfo --> ",e, "\nnumber of ids:", id.length, "\n-------- strData --------\n" ,strData);
-        return callback(e);
-      }
+    utils.get("https://www.facebook.com/chat/user_info/", ctx.jar, form)
+    .then(utils.parseResponse)
+    .then(function(ret) {
       callback(null, ret.payload.profiles);
+    })
+    .catch(function(err) {
+      log.error("ERROR in getUserInfo --> ", err);
+      return callback(err);
     });
   };
 };

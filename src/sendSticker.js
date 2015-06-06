@@ -49,20 +49,17 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         form['message_batch[0][specific_to_list][1]'] = "fbid:"+ctx.userId;
       }
 
-      utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form, function(err, res, html) {
-        var strData = utils.makeParsable(html);
-        var ret;
-        try {
-          ret = JSON.parse(strData);
-        } catch (e) {
-          log.error("ERROR in sendSticker --> ",e, strData);
-          return callback({error: e});
-        }
-
+      utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
+      .then(utils.parseResponse)
+      .then(function(ret) {
         if (!ret) return callback({error: "Send message failed."});
         if(ret.error) return callback(ret);
 
         callback();
+      })
+      .catch(function(err) {
+        log.error("ERROR in sendSticker --> ", err);
+        return callback(err);
       });
     });
   };
