@@ -41,40 +41,29 @@ module.exports = function(mergeWithDefaults, api, ctx) {
 
     // TODO: get the right URL to query...
     utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
-    .then(function(res) {
-      var html = res.body;
-      if(!html) throw "html was null after request to https://0-edge-chat.facebook.com/pull with form " + JSON.stringify(form);
-
-      time.reportPullReturned();
-      var strData = utils.makeParsable(html);
-      var info = null;
-
-      info = JSON.parse(strData);
-
+    .then(utils.parseResponse)
+    .then(function(resData) {
       var now = Date.now();
       log.info("Got answer in ", now - tmpPrev);
       tmpPrev = now;
 
-      if(info && info.t === "lb") {
+      if(resData && resData.t === "lb") {
         time.reportPullReturned();
         form.wtc = time.doSerialize();
-        form.sticky_token = info.lb_info.sticky;
-        form.sticky_pool = info.lb_info.pool;
+        form.sticky_token = resData.lb_info.sticky;
+        form.sticky_pool = resData.lb_info.pool;
       }
 
-      if(info && info.t === 'fullReload') {
-        form.seq = info.seq;
+      if(resData && resData.t === 'fullReload') {
+        form.seq = resData.seq;
         delete form.sticky_pool;
         delete form.sticky_token;
         var form4 = mergeWithDefaults({
           'lastSync' : ~~(lastSync/1000),
         });
         utils.get("https://www.facebook.com/notifications/sync/", ctx.jar, form4)
+        .then(utils.saveCookies(ctx.jar))
         .then(function(res) {
-          var cookies = res.headers['set-cookie'] || [];
-          cookies.map(function (c) {
-            ctx.jar.setCookie(c, "https://www.facebook.com");
-          });
           lastSync = Date.now();
           var form6 = mergeWithDefaults({
             'client' : 'mercury',
@@ -90,9 +79,9 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         return;
       }
 
-      if(info.ms) {
+      if(resData.ms) {
         var atLeastOne = false;
-        info.ms.sort(function(a, b) {
+        resData.ms.sort(function(a, b) {
           return a.timestamp - b.timestamp;
         }).map(function parsePackets(v) {
           switch (v.type) {
@@ -118,8 +107,8 @@ module.exports = function(mergeWithDefaults, api, ctx) {
           // Send deliveryReceipt notification to the server
           var formDeliveryReceipt = mergeWithDefaults();
 
-          for (var i = 0; i < info.ms.length; i++) {
-            if(info.ms[i].message && info.ms[i].message.mid) formDeliveryReceipt["[" + i + "]"] = info.ms[i].message.mid;
+          for (var i = 0; i < resData.ms.length; i++) {
+            if(resData.ms[i].message && resData.ms[i].message.mid) formDeliveryReceipt["[" + i + "]"] = resData.ms[i].message.mid;
           }
 
           // If there's at least one, we do the post request
@@ -127,18 +116,14 @@ module.exports = function(mergeWithDefaults, api, ctx) {
             utils.post("https://www.facebook.com/ajax/mercury/delivery_receipts.php", ctx.jar, formDeliveryReceipt);
           }
         }
-        // info.ms = info.ms.map(utils.formatMessage);
-        // info.ms.sort(function(a, b) {
-        //   return a.timestamp - b.timestamp;
-        // });
       }
 
-
-      if(info.seq) form.seq = info.seq;
-      if(info.tr) form.traceid = info.tr;
+      if(resData.seq) form.seq = resData.seq;
+      if(resData.tr) form.traceid = resData.tr;
       currentlyRunning = setTimeout(api.listen, Math.random() * 200 + 50, callback);
 
-    }).catch(function(err) {
+    })
+    .catch(function(err) {
       log.error("ERROR in listen --> ", err);
       callback(err, null, stopListening);
       currentlyRunning = setTimeout(api.listen, Math.random() * 200 + 50, callback);
