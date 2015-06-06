@@ -1,7 +1,6 @@
 /*jslint node: true */
 "use strict";
 
-var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
