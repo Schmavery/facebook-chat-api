@@ -86,6 +86,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         }).map(function parsePackets(v) {
           switch (v.type) {
             case "mercury":
+              if(ctx.globalOptions.pageId) return;
               if(!ctx.globalOptions.listenEvents) return;
 
               v.actions.map(function(v2) {
@@ -93,10 +94,15 @@ module.exports = function(mergeWithDefaults, api, ctx) {
               });
               break;
             case "messaging":
+              if(ctx.globalOptions.pageId) return;
               if(v.event !== "deliver") return;
-
-              if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userId) return;
-
+              if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userId.toString()) return;
+              atLeastOne = true;
+              callback(null, utils.formatMessage(v), stopListening);
+            case "pages_messaging":
+              if(!ctx.globalOptions.pageId) return;
+              if(v.event !== "deliver") return;
+              if(!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userId.toString() || v.message.sender_fbid.toString() === ctx.globalOptions.pageId.toString())) return;
               atLeastOne = true;
               callback(null, utils.formatMessage(v), stopListening);
               break;

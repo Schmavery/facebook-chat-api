@@ -49,6 +49,18 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         form['message_batch[0][specific_to_list][1]'] = "fbid:"+ctx.userId;
       }
 
+      if(ctx.globalOptions.pageId) {
+        form['message_batch[0][author]'] = "fbid:" + ctx.globalOptions.pageId;
+        form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.globalOptions.pageId;
+        form['message_batch[0][creator_info][creatorID]'] = ctx.userId;
+        form['message_batch[0][creator_info][creatorType]'] = "direct_admin";
+        // form['message_batch[0][creator_info][creatorName]'] = Marc Zuckerbot
+        form['message_batch[0][creator_info][labelType]'] = "sent_message";
+        form['message_batch[0][creator_info][pageID]'] = ctx.globalOptions.pageId;
+        form['request_user_id'] = ctx.globalOptions.pageId;
+        form['message_batch[0][creator_info][profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userId;
+      }
+
       utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {

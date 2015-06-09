@@ -152,6 +152,7 @@ __Arguments__
       caution, as it can result in loops (a simple echo bot will send messages
       forever).
     - `listenEvents` - (Default `false`) Will make api.listen also handle events.
+    - `pageId` - (Default empty) Makes listen only receive messages through the page specified by that ID. Also makes sendMessage and sendSticker send from the page.
 
 __Example__
 

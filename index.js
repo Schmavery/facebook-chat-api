@@ -78,6 +78,10 @@ function _login(email, password, callback) {
         if(options.hasOwnProperty('listenEvents')) {
           globalOptions.listenEvents = options.listenEvents;
         }
+
+        if(options.hasOwnProperty('pageId')) {
+          globalOptions.pageId = options.pageId;
+        }
       };
 
       // All data available to api functions
