@@ -41,30 +41,17 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       form['message_batch[0][log_message_data][added_participants]['+i+']'] = 'fbid:' + user_id[i];
     }
 
-    // We're doing a query to this to check if the given id is the id of
-    // a user or of a group chat. The form will be different depending
-    // on that.
-    //api.getUserInfo(thread_id, function(err, res) {
-    //  // This means that thread_id is the id of a user, and the chat
-    //  // is a single person chat
-    //  if(!(res instanceof Array)) {
-    //    form['message_batch[0][client_thread_id]'] = "user:"+thread_id;
-    //    form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
-    //    form['message_batch[0][specific_to_list][1]'] = "fbid:"+ctx.userId;
-    //  }
+    utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
+    .then(utils.parseResponse)
+    .then(function(resData) {
+      if (!resData) return callback({error: "Add to group failed."});
+      if(resData.error) return callback(resData);
 
-      utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
-      .then(utils.parseResponse)
-      .then(function(resData) {
-        if (!resData) return callback({error: "Add to group failed."});
-        if(resData.error) return callback(resData);
-
-        callback();
-      })
-      .catch(function(err) {
-        log.error("ERROR in addUserToGroup --> ", err);
-        return callback(err);
-      });
-    // });
+      callback();
+    })
+    .catch(function(err) {
+      log.error("ERROR in addUserToGroup --> ", err);
+      return callback(err);
+    });
   };
 };

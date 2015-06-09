@@ -82,25 +82,25 @@ By default this won't receive events (joining/leaving a chat, title change etc..
 
 __Arguments__
 
-* `callback(error, message, stopListening)` - A callback called every time the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. `message` is an object containing the following fields:
-    - `sender_name` - First and last name of the person who just sent the message.
-    - `sender_id` - The id of the person who sent the message in the chat with thread_id.
-    - `participant_ids` - An array containing the ids of everyone in the thread (sender included).
-    - `participant_names` - An array containing only the first names of the other participants in the thread (sender included).
-    - `body` - The string corresponding to the message that was just received.
-    - `thread_id` - The thread_id representing the thread in which the message was sent.
-    - `coordinates` - An object containing `latitude`, `longitude`, and `accuracy`.
-    - `type` - The string `"message"` or `"sticker"`
+- `callback(error, message, stopListening)` - A callback called every time the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. `message` is an object containing the following fields:
+    * `sender_name` - First and last name of the person who just sent the message.
+    * `sender_id` - The id of the person who sent the message in the chat with thread_id.
+    * `participant_ids` - An array containing the ids of everyone in the thread (sender included).
+    * `participant_names` - An array containing only the first names of the other participants in the thread (sender included).
+    * `body` - The string corresponding to the message that was just received.
+    * `thread_id` - The thread_id representing the thread in which the message was sent.
+    * `coordinates` - An object containing `latitude`, `longitude`, and `accuracy`.
+    * `type` - The string `"message"` or `"sticker"`
 
 If `type` is `"sticker"` there will be a `sticker_id` and `sticker_url` field instead of `body`.
 
-If enabled this will also handle events. In this case, `message` will be either a message (see above) or an event object with the following fields:
-    - `type` - The string `"event"`
-    - `thread_id` - The thread_id representing the thread in which the message was sent.
-    - `log_message_type` - String representing the type of event (`"log:thread-name"`, `"log:unsubscribe"`, `"log:subscribe"`, ...)
-    - `log_message_data` - Data relevant to the event.
-    - `log_message_body` - String printed in the chat.
-    - `author` - The person who performed the event.
+If enabled this will also handle events. In this case, `message` will be either a message (see above) or an event object with the following fields
+- `type` - The string `"event"`
+- `thread_id` - The thread_id representing the thread in which the message was sent.
+- `log_message_type` - String representing the type of event (`"log:thread-name"`, `"log:unsubscribe"`, `"log:subscribe"`, ...)
+- `log_message_data` - Data relevant to the event.
+- `log_message_body` - String printed in the chat.
+- `author` - The person who performed the event.
 
 __Example__
 
@@ -231,7 +231,7 @@ login('config.json', function(err, api) {
 ---------------------------------------
 
 <a name="markAsRead" />
-### api.markAsRead(thread_id, callback)
+### api.markAsRead(thread\_id, callback)
 
 Given a thread_id will mark all the unread messages as read. Facebook will take a couple of seconds to show that you've read the messages.
 
@@ -258,7 +258,7 @@ login("config.json", function(err, api) {
 ---------------------------------------
 
 <a name="sendSticker" />
-### api.sendSticker(sticker_id, thread_id, [callback])
+### api.sendSticker(sticker\_id, thread\_id, [callback])
 
 Sends the given sticker_id to the thread_id.
 
@@ -284,7 +284,7 @@ login('config.json', function(err, api) {
 ---------------------------------------
 
 <a name="setTitle" />
-### api.setTitle(newTitle, thread_id, callback)
+### api.setTitle(newTitle, thread_id, [callback])
 
 Sets the title of the group chat with thread id thread_id to newTitle.
 
@@ -398,7 +398,7 @@ login('config.json', function(err, api) {
 ---------------------------------------
 
 <a name="addUserToGroup" />
-### api.addUserToGroup()
+### api.addUserToGroup(user\_id, thread\_id, [callback])
 
 Adds a user (or array of users) to a group chat.
 
@@ -411,7 +411,7 @@ __Arguments__
 ---------------------------------------
 
 <a name="removeUserFromGroup" />
-### api.removeUserFromGroup()
+### api.removeUserFromGroup(user\_id, thread\_id, [callback])
 
 Removes a user from a group chat.
 
