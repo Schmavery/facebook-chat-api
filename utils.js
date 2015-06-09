@@ -86,7 +86,7 @@ function getGUID() {
 function formatMessage(m) {
   var originalMessage = m.message ? m.message : m;
 
-  return {
+  var obj = {
     type: "message",
     sender_name: originalMessage.sender_name,
     sender_id: originalMessage.sender_fbid,
@@ -96,6 +96,20 @@ function formatMessage(m) {
     thread_id: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
     location: originalMessage.coordinates ? originalMessage.coordinates : null
   };
+  
+  if (originalMessage.attachments){
+    for (var i = 0; i < originalMessage.attachments.length; i++){
+      if (originalMessage.attachments[i].attach_type == "sticker"){
+        obj.type = "sticker";
+        delete obj.body;
+		obj.sticker_id = originalMessage.attachments[i].metadata.stickerID;
+		obj.sticker_url = originalMessage.attachments[i].url;
+        break;
+	  }
+    }
+  }
+
+  return obj;
 }
 
 function formatEvent(m) {
