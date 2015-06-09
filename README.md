@@ -37,6 +37,8 @@ login("config.json", function(err, api) {
 * [`api.getFriendsList`](#getFriendsList)
 * [`api.getThreadList`](#getThreadList)
 * [`api.getAccessToken`](#getAccessToken)
+* [`api.addUserToGroup`](#addUserToGroup)
+* [`api.removeUserFromGroup`](#removeUserFromGroup)
 
 ## &#9888; Deprecated &#9888;
 * [`api.sendDirectMessage`](#sendDirectMessage)
@@ -391,6 +393,31 @@ login('config.json', function(err, api) {
 ```
 
 
+---------------------------------------
+
+<a name="addUserToGroup" />
+### api.addUserToGroup()
+
+Adds a user (or array of users) to a group chat.
+
+__Arguments__
+
+* `user_id` - User ID or array of user IDs.
+* `thread_id` - Group chat ID.
+* `callback(err)` - A callback called when the query is done (either with an error or with no arguments).
+
+---------------------------------------
+
+<a name="removeUserFromGroup" />
+### api.removeUserFromGroup()
+
+Removes a user from a group chat.
+
+__Arguments__
+
+* `user_id` - User ID.
+* `thread_id` - Group chat ID.
+* `callback(err)` - A callback called when the query is done (either with an error or with no arguments).
 
 ## Deprecated
 
