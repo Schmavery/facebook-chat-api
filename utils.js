@@ -1,7 +1,7 @@
 /*jslint node: true */
 "use strict";
 var bluebird = require("bluebird");
-var request = require("request-promise").defaults({jar: true});
+var request = bluebird.promisify(require("request").defaults({jar: true}));
 
 function get(url, jar, qs) {
   // I'm still confused about this
@@ -26,13 +26,10 @@ function get(url, jar, qs) {
     url: url,
     method: "GET",
     jar: jar,
-    gzip: true,
-    // request-promise specific options
-    resolveWithFullResponse: true,
-    simple: false
+    gzip: true
   };
 
-  return request(op);
+  return request(op).then(function(res) {return res[0];});
 }
 
 function post(url, jar, form) {
@@ -50,13 +47,10 @@ function post(url, jar, form) {
     method: "POST",
     form: form,
     jar: jar,
-    gzip: true,
-    // request-promise specific options
-    resolveWithFullResponse: true,
-    simple: false
+    gzip: true
   };
 
-  return request(op);
+  return request(op).then(function(res) {return res[0];});
 }
 
 function padZeros(val, len) {

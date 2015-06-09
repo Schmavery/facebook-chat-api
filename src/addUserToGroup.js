@@ -12,7 +12,6 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     if (!(user_id instanceof Array))
       user_id = [user_id];
 
-
     var form = mergeWithDefaults({
       'client' : 'mercury',
       'message_batch[0][action_type]' : 'ma-type:log-message',
@@ -66,6 +65,6 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         log.error("ERROR in sendMessage --> ", err);
         return callback(err);
       });
-    });
+    // });
   };
 };
