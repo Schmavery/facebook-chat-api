@@ -104,7 +104,8 @@ function _login(email, password, callback) {
         'getAccessToken',
         'getFriendsList',
         'getUserInfo',
-		    'addUserToGroup'];
+        'removeUserFromGroup',
+        'addUserToGroup'];
 
       var mergeWithDefaults = utils.makeMergeWithDefaults(html, userId);
 

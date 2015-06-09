@@ -8,7 +8,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
   return function addUserToGroup(user_id, thread_id, callback) {
     if(!callback) callback = function() {};
     if (typeof thread_id !== "number" && typeof thread_id !== "string")
-      return callback({error: "Thread_id should be of type number or string and not " + typeof msg + "."});
+      return callback({error: "Thread_id should be of type number or string and not " + typeof thread_id + "."});
     if (!(user_id instanceof Array))
       user_id = [user_id];
 
@@ -56,13 +56,13 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {
-        if (!resData) return callback({error: "Send message failed."});
+        if (!resData) return callback({error: "Add to group failed."});
         if(resData.error) return callback(resData);
 
         callback();
       })
       .catch(function(err) {
-        log.error("ERROR in sendMessage --> ", err);
+        log.error("ERROR in addUserToGroup --> ", err);
         return callback(err);
       });
     // });

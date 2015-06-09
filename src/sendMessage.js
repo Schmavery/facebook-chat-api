@@ -9,7 +9,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     if(!callback) callback = function() {};
     if(typeof msg !== "string") return callback({error: "Message should be of type string and not " + typeof msg + "."});
     if(typeof thread_id !== "number" && typeof thread_id !== "string")
-      return callback({error: "Thread_id should be of type number or string and not " + typeof msg + "."});
+      return callback({error: "Thread_id should be of type number or string and not " + typeof thread_id + "."});
 
     var form = mergeWithDefaults({
       'client' : 'mercury',
