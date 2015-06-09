@@ -82,7 +82,7 @@ By default this won't receive events (joining/leaving a chat, title change etc..
 
 __Arguments__
 
-* `callback(error, message, stopListening)` - A callback called every time the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. `error` is an object contain a field error being the error thrown if anything happens inside listen. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. `message` is an object:
+* `callback(error, message, stopListening)` - A callback called every time the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. `message` is an object containing the following fields:
     - `sender_name` - First and last name of the person who just sent the message.
     - `sender_id` - The id of the person who sent the message in the chat with thread_id.
     - `participant_ids` - An array containing the ids of everyone in the thread (sender included).
@@ -90,7 +90,9 @@ __Arguments__
     - `body` - The string corresponding to the message that was just received.
     - `thread_id` - The thread_id representing the thread in which the message was sent.
     - `coordinates` - An object containing `latitude`, `longitude`, and `accuracy`.
-    - `type` - The string `"message"`
+    - `type` - The string `"message"` or `"sticker"`
+
+If `type` is `"sticker"` there will be a `sticker_id` and `sticker_url` field instead of `body`.
 
 If enabled this will also handle events. In this case, `message` will be either a message (see above) or an event object with the following fields:
     - `type` - The string `"event"`
