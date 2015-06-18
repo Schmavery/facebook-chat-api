@@ -137,27 +137,27 @@ function _login(email, password, callback) {
       return [utils.get("https://www.facebook.com/ajax/presence/reconnect.php", ctx.jar, form3).then(utils.saveCookies(ctx.jar)), ctx, mergeWithDefaults, api];
     },
     function firstPullReq(res, ctx, mergeWithDefaults, api) {
-      var html = res.body;
-
       time.reportPullSent();
-      log.info("Request to pull 1");
+      log.info('Request to pull 1');
       var form = {
-        'channel' : "p_" + ctx.userId,
-        'seq' : '0',
-        'partition' : '-2',
+        'channel' : 'p_' + ctx.userId,
+        'seq' : 0,
+        'partition' : -2,
         'clientid' : ctx.clientid,
         'viewer_uid' : ctx.userId,
         'uid' : ctx.userId,
         'state' : 'active',
-        'format' : 'json',
         'idle' : 0,
-        'cap' : '8'
+        'cap' : 8,
+        'msgs_recv':0
       };
       return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form).then(utils.parseResponse), ctx, mergeWithDefaults, api, form];
     },
     function secondPullReq(resData, ctx, mergeWithDefaults, api, form) {
       time.reportPullReturned();
       form.wtc = time.doSerialize();
+      if (resData.t !== 'lb') throw new Error("Bad response from pull 1");
+
       form.sticky_token = resData.lb_info.sticky;
       form.sticky_pool = resData.lb_info.pool;
 

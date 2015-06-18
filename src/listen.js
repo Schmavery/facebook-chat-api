@@ -5,6 +5,8 @@ var time = require("../time");
 var utils = require("../utils");
 var log = require("npmlog");
 
+var msgs_recv = 0;
+
 module.exports = function(mergeWithDefaults, api, ctx) {
   var shouldStop = false;
   var currentlyRunning = null;
@@ -18,16 +20,16 @@ module.exports = function(mergeWithDefaults, api, ctx) {
   var lastSync = Date.now();
 
   var form = {
-    'channel' : "p_" + ctx.userId,
+    'channel' : 'p_' + ctx.userId,
     'seq' : '0',
     'partition' : '-2',
     'clientid' : ctx.clientid,
     'viewer_uid' : ctx.userId,
     'uid' : ctx.userId,
     'state' : 'active',
-    'format' : 'json',
     'idle' : 0,
-    'cap' : '8'
+    'cap' : '8',
+    'msgs_recv':msgs_recv
   };
 
   return function listen(callback) {
@@ -80,6 +82,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       }
 
       if(resData.ms) {
+        msgs_recv += resData.ms.length;
         var atLeastOne = false;
         resData.ms.sort(function(a, b) {
           return a.timestamp - b.timestamp;
