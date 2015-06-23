@@ -91,9 +91,11 @@ module.exports = function(mergeWithDefaults, api, ctx) {
             case "mercury":
               if(ctx.globalOptions.pageId) return;
               if(!ctx.globalOptions.listenEvents) return;
-
               v.actions.map(function(v2) {
-                callback(null, utils.formatEvent(v2), stopListening);
+                var formattedEvent = utils.formatEvent(v2);
+                if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userId.toString()) return;
+
+                callback(null, formattedEvent, stopListening);
               });
               break;
             case "messaging":
