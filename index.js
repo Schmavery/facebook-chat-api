@@ -232,7 +232,7 @@ function _login(email, password, loginOptions, callback) {
       log.info("Getting extended access.");
       return [utils.post("https://www.facebook.com/v2.3/dialog/oauth/extended", ctx.jar, graphAPIForm).then(utils.parseResponse), ctx, mergeWithDefaults, api];
     },
-    function done(resData, ctx, mergeWithDefaults, api) {
+    function almostDone(resData, ctx, mergeWithDefaults, api) {
       ctx.access_token = -1;
       try {
         var tokenArray = resData.jsmods.require;
@@ -249,7 +249,19 @@ function _login(email, password, loginOptions, callback) {
         log.error("Error retrieving access token, continuing...");
       }
 
+      if(!ctx.globalOptions.pageId) return [null, ctx, mergeWithDefaults, api];
+
       // Return a promise maybe?
+      return [utils.get('https://www.facebook.com/'+ctx.globalOptions.pageId+'/messages/?section=messages&subsection=inbox', ctx.jar), ctx, mergeWithDefaults, api];
+    },
+    function maybePageLogin(resData, ctx, mergeWithDefaults, api) {
+      if(!resData) return [api];
+
+      var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/www.facebook.com\\', '");').split('\\').join('');
+      url = url.substring(0, url.length - 1);
+      return [utils.get('https://www.facebook.com' + url, ctx.jar), api];
+    },
+    function done(resData, api) {
       log.info("Done loading.");
       return [api];
     }

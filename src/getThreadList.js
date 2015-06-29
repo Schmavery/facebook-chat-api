@@ -16,6 +16,8 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'inbox[limit]' : end
     });
 
+    if(ctx.globalOptions.pageId) form.request_user_id = ctx.globalOptions.pageId;
+
     utils.post("https://www.facebook.com/ajax/mercury/threadlist_info.php", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
