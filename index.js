@@ -7,7 +7,7 @@ var log = require("npmlog");
 var time = require("./time");
 var bluebird = require("bluebird");
 
-function _login(email, password, callback) {
+function _login(email, password, loginOptions, callback) {
   log.info("Getting login form data");
 
   // Todo add catch/finally or error handlers
@@ -63,7 +63,7 @@ function _login(email, password, callback) {
         selfListen: false,
         listenEvents: false
       };
-      var access_token = "NONE";
+      var access_token = 'NONE';
 
       api.setOptions = function setOptions(options){
         if (options.hasOwnProperty('logLevel')) {
@@ -83,6 +83,8 @@ function _login(email, password, callback) {
           globalOptions.pageId = options.pageId;
         }
       };
+
+      api.setOptions(loginOptions);
 
       // All data available to api functions
 
@@ -267,24 +269,13 @@ function _login(email, password, callback) {
   });
 }
 
-function login(loginData, callback) {
-  var obj = {};
-  if(typeof loginData === 'function') {
-    if(!process.env.FB_LOGIN_EMAIL || !process.env.FB_LOGIN_PASSWORD) return log.error("Please define env variables");
-    obj.email = process.env.FB_LOGIN_EMAIL;
-    obj.password = process.env.FB_LOGIN_PASSWORD;
-    callback = loginData;
-  } else if (typeof loginData === 'string') {
-    obj = JSON.parse(require("fs").readFileSync(loginData, 'utf8'));
-    if(!obj.email || !obj.password) throw loginData + " has to be a valid json with an email field and a password field";
-  } else if (typeof loginData === 'object') {
-    if(!loginData.email || !loginData.password) throw "Invalid JSON passed into login.";
-    else obj = loginData;
-  } else {
-    throw "Invalid argument passed into login.";
+function login(loginData, options, callback) {
+  if(typeof options === 'function') {
+    callback = options;
+    options = {};
   }
 
-  return _login(obj.email, obj.password, callback);
+  return _login(loginData.email, loginData.password, options, callback);
 }
 
 module.exports = login;
