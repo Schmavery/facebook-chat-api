@@ -108,6 +108,8 @@ module.exports = function(mergeWithDefaults, api, ctx) {
               if(!ctx.globalOptions.pageId) return;
               if(v.event !== "deliver") return;
               if(!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userId.toString() || v.message.sender_fbid.toString() === ctx.globalOptions.pageId.toString())) return;
+              if(v.realtime_viewer_fbid !== ctx.globalOptions.pageId) return;
+
               atLeastOne = true;
               callback(null, utils.formatMessage(v), stopListening);
               break;
