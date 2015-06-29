@@ -47,11 +47,11 @@ login("config.json", function(err, api) {
 ---------------------------------------
 
 <a name="login" />
-### login([filename], callback)
+### login(emailAndPassword, [options], callback)
 
 This function is returned by require(...) and is the main entry point to the API. 
 
-Logs into facebook given the right credentials. If a filename is given as first argument, login will open the file and parse it as a JSON with two values: email and password. If no filename is given, login will use the environment variables FB_LOGIN_EMAIL and FB_LOGIN_PASSWORD. 
+Logs into facebook given the right credentials.
 
 If it succeeds, callback will be called with a null object (for potential errors) and with an object containing all the available functions.
 
@@ -59,7 +59,8 @@ If it fails, callback will be called with an error object.
 
 __Arguments__
 
-* `filename` - An optional filename to be open and parsed as a JSON. Must be a [valid JSON format](http://jsonlint.com). Must contain at least two fields: email and password.
+* `emailAndPassword` - An object containing the fields `email` and `password` used to login.
+* `options` - An object representing options to use when logging in (as described in [api.setOptions](#setOptions)).
 * `callback(err, api)` - A callback called when login is done (successful or not). `err` is an object containing a field `error`.
 
 __Example__
