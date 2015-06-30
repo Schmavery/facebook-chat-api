@@ -255,7 +255,7 @@ function _login(email, password, loginOptions, callback) {
       return [utils.get('https://www.facebook.com/'+ctx.globalOptions.pageId+'/messages/?section=messages&subsection=inbox', ctx.jar), ctx, mergeWithDefaults, api];
     },
     function maybePageLogin(resData, ctx, mergeWithDefaults, api) {
-      if(!resData) return [api];
+      if(!resData) return [null, api];
 
       var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/www.facebook.com\\', '");').split('\\').join('');
       url = url.substring(0, url.length - 1);
