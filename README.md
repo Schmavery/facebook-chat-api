@@ -185,7 +185,7 @@ Given a person's full name will do a Facebook Graph search and return all the id
 __Arguments__
 
 * `name` - A string being the name of the person you're looking for.
-* `callback(err, obj)` - A callback called when the search is done (either with an error or with the resulting object). `obj` contains and array called entries which contains all the users that facebook graph search found, ordered by "importance".
+* `callback(err, obj)` - A callback called when the search is done (either with an error or with the resulting object). `obj` is an array which contains all of the users that facebook graph search found, ordered by "importance".
 
 __Example__
 

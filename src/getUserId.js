@@ -22,7 +22,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       if(resData.payload.entries[0].type !== "user") {
         return callback({error: "Couldn't find a user with name " + name + ". Best match: " + resData.payload.entries[0].path});
       }
-      callback(null, resData);
+      callback(null, resData.payload.entries);
     })
     .catch(function(err) {
       log.error("Error in getUserId", err);
