@@ -11,15 +11,21 @@ npm install facebook-chat-api
 ## Example Usage
 ```javascript
 var login = require("facebook-chat-api");
+var fs = require("fs");
 
 // Create simple echo bot
-login("config.json", function(err, api) {
-    if(err) return console.error(err);
-  
-    api.listen(function callback(err, message) {
-        api.sendMessage(message.body, message.thread_id);
-    });
-});
+fs.readFile('config.json', function(err, data){
+	var json = JSON.parse(data)
+
+	login(json, function(err, api) {
+	    if(err) return console.error(err);
+	    
+	    api.listen(function callback(err, message) {
+	        api.sendMessage(message.body, message.thread_id);
+	    });
+	});
+})
+
 
 ```
 
