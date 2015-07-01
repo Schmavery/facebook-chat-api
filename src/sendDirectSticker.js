@@ -17,7 +17,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       if(err) return callback(err);
 
       // TODO: find the actual best entry
-      var thread_id = data.entries[0].uid;
+      var thread_id = data[0].uid;
       api.sendSticker(sticker_id, thread_id, callback);
     });
   };
