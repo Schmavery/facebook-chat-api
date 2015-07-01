@@ -197,7 +197,7 @@ login('config.json', function(err, api) {
         if(err) return callback(err);
         
         // Send the message to the best match (best by Facebook's criteria)
-        var thread_id = data.payload.entries[0].uid;
+        var thread_id = data[0].uid;
         api.sendMessage(msg, thread_id);
     });
 });
