@@ -17,7 +17,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       if(err) return callback(err);
 
       // TODO: find the actual best entry
-      var thread_id = data.payload.entries[0].uid;
+      var thread_id = data[0].uid;
       api.sendMessage(msg, thread_id, callback);
     });
   };
