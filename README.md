@@ -13,13 +13,14 @@ npm install facebook-chat-api
 var login = require("facebook-chat-api");
 
 // Create simple echo bot
-login("config.json", function(err, api) {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
-  
+    
     api.listen(function callback(err, message) {
         api.sendMessage(message.body, message.thread_id);
     });
 });
+
 
 ```
 
@@ -66,7 +67,7 @@ __Arguments__
 __Example__
 
 ```js
-login('config.json', function(err, api) {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
     // Here you can use the api
 });
@@ -108,7 +109,8 @@ __Example__
 ```js
 // Simple echo bot. He'll repeat anything that you say.
 // Will stop when you say '/stop'
-login('config.json', function(err, api) {
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
 
     api.setOptions({listenEvents: true});
@@ -160,7 +162,7 @@ __Example__
 ```js
 // Simple echo bot. This will send messages forever.
 
-login('config.json', function(err, api) {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
     
     api.setOptions({
@@ -186,19 +188,19 @@ Given a person's full name will do a Facebook Graph search and return all the id
 __Arguments__
 
 * `name` - A string being the name of the person you're looking for.
-* `callback(err, obj)` - A callback called when the search is done (either with an error or with the resulting object). `obj` contains and array called entries which contains all the users that facebook graph search found, ordered by "importance".
+* `callback(err, obj)` - A callback called when the search is done (either with an error or with the resulting object). `obj` is an array which contains all of the users that facebook graph search found, ordered by "importance".
 
 __Example__
 
 ```js
-login('config.json', function(err, api) {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
     
     api.getUserId("Marc Zuckerbot", function(err, data) {
         if(err) return callback(err);
         
         // Send the message to the best match (best by Facebook's criteria)
-        var thread_id = data.entries[0].uid;
+        var thread_id = data[0].uid;
         api.sendMessage(msg, thread_id);
     });
 });
@@ -222,7 +224,7 @@ __Tip__: to find your own ID, go to your own profile on Facebook and replace 'ww
 __Example__
 
 ```js
-login('config.json', function(err, api) {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
     
     var yourID = 0000000000000;
@@ -247,7 +249,7 @@ __Example__
 ```js
 var login = require("facebook-chat-api");
 
-login("config.json", function(err, api) {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
   
     api.listen(function callback(err, message) {
@@ -275,7 +277,7 @@ __Tip__: to find your own ID, go to your own profile on Facebook and replace 'ww
 __Example__
 
 ```js
-login('config.json', function(err, api) {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
     
     var yourID = 0000000000000;
@@ -314,7 +316,7 @@ __Arguments__
 __Example__
 
 ```js
-login('config.json', function(err, api) {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
     
     api.getUserInfo([1, 2, 3, 4], function(err, ret) {
@@ -348,7 +350,7 @@ __Arguments__
 __Example__
 
 ```js
-login('config.json', function(err, api) {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
   if(err) return console.error(err);
   
   api.getFriendsList(1216678154, function(err, data) {
@@ -385,7 +387,8 @@ __Example__
 
 ```js
 var fb = require('fb');
-login('config.json', function(err, api) {
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
     
     fb.setAccessToken(api.getAccessToken());
@@ -443,7 +446,7 @@ __Arguments__
 __Example__
 
 ```js
-login('config.json', function(err, api) {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
     
     var yourName = "Marc Zuckerbot";

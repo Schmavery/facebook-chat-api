@@ -18,10 +18,11 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     utils.get("https://www.facebook.com/ajax/typeahead/search.php", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
-      if(resData.entries[0].type !== "user") {
-        return callback({error: "Couldn't find a user with name " + name + ". Best match: " + resData.entries[0].path});
+
+      if(resData.payload.entries[0].type !== "user") {
+        return callback({error: "Couldn't find a user with name " + name + ". Best match: " + resData.payload.entries[0].path});
       }
-      callback(null, resData);
+      callback(null, resData.payload.entries);
     })
     .catch(function(err) {
       log.error("Error in getUserId", err);
