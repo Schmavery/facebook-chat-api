@@ -12,6 +12,8 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     if (typeof thread_id !== "number" && typeof thread_id !== "string")
       return callback({error: "Thread_id should be of type number or string and not " + typeof thread_id + "."});
 
+    var messageAndThreadID = utils.generateMessageID(ctx.clientid);
+
     var form = mergeWithDefaults({
       'client' : 'mercury',
       'message_batch[0][action_type]' : 'ma-type:user-generated-message',
@@ -31,7 +33,8 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'message_batch[0][html_body]' : false,
       'message_batch[0][ui_push_phase]' : 'V3',
       'message_batch[0][status]' : '0',
-      'message_batch[0][message_id]' : utils.generateMessageID(ctx.clientid),
+      'message_batch[0][threading_id]' : messageAndThreadID,
+      'message_batch[0][message_id]' : messageAndThreadID,
       'message_batch[0][manual_retry_cnt]' : '0',
       'message_batch[0][thread_fbid]' : thread_id,
       'message_batch[0][sticker_id]' : sticker_id,
@@ -64,7 +67,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {
-        if (!resData) return callback({error: "Send message failed."});
+        if (!resData) return callback({error: "Send sticker failed."});
         if(resData.error) return callback(resData);
 
         callback();
