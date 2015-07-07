@@ -2,9 +2,11 @@
 "use strict";
 
 var utils = require("./utils");
+var time = require("./time");
+var solveAndUpdateForm = require('./qsstamp');
+
 var cheerio = require("cheerio");
 var log = require("npmlog");
-var time = require("./time");
 var bluebird = require("bluebird");
 
 function _login(email, password, loginOptions, callback) {
@@ -20,9 +22,10 @@ function _login(email, password, loginOptions, callback) {
     function loginReq(res, email, password, jar) {
       var html = res.body;
       var $ = cheerio.load(html);
-
+      require("fs").writeFileSync("login.html", html);
       var arr = [];
 
+      // This will be empty, but just to be sure we leave it
       $("#login_form input").map(function(i, v){
         arr.push({val: $(v).val(), name: $(v).attr("name")});
       });
@@ -32,15 +35,23 @@ function _login(email, password, loginOptions, callback) {
       });
 
       var form = utils.arrToForm(arr);
+      form.lsd = utils.getFrom(html, "[\"LSD\",[],{\"token\":\"", "\"}")
+      form.lgndim = new Buffer("{\"w\":1440,\"h\":900,\"aw\":1440,\"ah\":834,\"c\":24}").toString('base64');
       form.email = email;
       form.pass = password;
-      form.default_persistent = '1';
+      form.default_persistent = '0';
+      form.lgnrnd = utils.getFrom(html, "name=\"lgnrnd\" value=\"", "\"");
+      form.locale = 'en_US';
+      form.timezone = '240';
+      form.lgnjs = ~~(Date.now() / 1000);
+      form.qsstamp = solveAndUpdateForm.apply(null, JSON.parse(utils.getFrom(html, "\"solveAndUpdateForm\",", "]") + "]"));
 
       log.info("Logging in...");
       return [utils.post("https://www.facebook.com/login.php?login_attempt=1", jar, form).then(utils.saveCookies(jar)), jar];
     },
     function loadMainPage(res, jar) {
       var html = res.body;
+      require("fs").writeFileSync("index.html", html);
       var headers = res.headers;
 
       if (!headers.location) return callback({error: "Wrong username/password."});
@@ -275,10 +286,10 @@ function _login(email, password, loginOptions, callback) {
   .then(function(api) {
     callback(null, api[0]);
   })
-  .catch(function(err) {
-    log.error(err);
-    return callback(err);
-  });
+  // .catch(function(err) {
+  //   log.error(err);
+  //   return callback(err);
+  // });
 }
 
 function login(loginData, options, callback) {
