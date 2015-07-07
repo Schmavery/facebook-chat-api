@@ -3,7 +3,6 @@
 
 var utils = require("./utils");
 var time = require("./time");
-var solveAndUpdateForm = require('./qsstamp');
 
 var cheerio = require("cheerio");
 var log = require("npmlog");
@@ -44,7 +43,16 @@ function _login(email, password, loginOptions, callback) {
       form.locale = 'en_US';
       form.timezone = '240';
       form.lgnjs = ~~(Date.now() / 1000);
-      form.qsstamp = solveAndUpdateForm.apply(null, JSON.parse(utils.getFrom(html, "\"solveAndUpdateForm\",", "]") + "]"));
+
+
+      // Getting cookies from the HTML page... (kill me now plz)
+      // ---------- Very Hacky Part Starts -----------------
+      var willBeCookies = html.split("\"_js_");
+      willBeCookies.slice(1).map(function(val) {
+        var cookieData = JSON.parse("[\"" + utils.getFrom(val, "", "]") + "]");
+        jar.setCookie(utils.formatCookie(cookieData), "https://www.facebook.com");
+      });
+      // ---------- Very Hacky Part Ends -----------------
 
       log.info("Logging in...");
       return [utils.post("https://www.facebook.com/login.php?login_attempt=1", jar, form).then(utils.saveCookies(jar)), jar];

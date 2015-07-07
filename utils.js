@@ -205,6 +205,25 @@ function saveCookies(jar) {
   };
 }
 
+var NUM_TO_MONTH = [
+  'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'
+];
+var NUM_TO_DAY = [
+  'Sun','Mon','Tue','Wed','Thu','Fri','Sat'
+];
+function formatDate(date) {
+  var d = date.getUTCDate(); d = d >= 10 ? d : '0'+d;
+  var h = date.getUTCHours(); h = h >= 10 ? h : '0'+h;
+  var m = date.getUTCMinutes(); m = m >= 10 ? m : '0'+m;
+  var s = date.getUTCSeconds(); s = s >= 10 ? s : '0'+s;
+  return NUM_TO_DAY[date.getUTCDay()] + ', ' +
+    d+' '+ NUM_TO_MONTH[date.getUTCMonth()] +' '+ date.getUTCFullYear() +' '+
+    h+':'+m+':'+s+' GMT';
+}
+function formatCookie(arr) {
+  return arr[0]+"="+arr[1]+"; " + (arr[2] !== 0 ? "expires=" + formatDate(new Date(arr[2])) + "; " : "") + "path=" + arr[3] + ";";
+}
+
 module.exports = {
   get: get,
   post: post,
@@ -220,5 +239,6 @@ module.exports = {
   makeMergeWithDefaults: makeMergeWithDefaults,
   formatEvent: formatEvent,
   parseResponse: parseResponse,
-  saveCookies: saveCookies
+  saveCookies: saveCookies,
+  formatCookie: formatCookie
 };
