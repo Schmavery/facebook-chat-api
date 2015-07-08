@@ -106,6 +106,13 @@ function formatMessage(m) {
         obj.sticker_url = originalMessage.attachments[i].url;
         break;
       }
+      if (originalMessage.attachments[i].attach_type === "file"){
+        obj.type = "file";
+        delete obj.body;
+        obj.name = originalMessage.attachments[i].name;
+        obj.file_url = originalMessage.attachments[i].url;
+        break;
+      }
     }
   }
 
