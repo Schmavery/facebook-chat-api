@@ -21,7 +21,6 @@ function _login(email, password, loginOptions, callback) {
     function loginReq(res, email, password, jar) {
       var html = res.body;
       var $ = cheerio.load(html);
-      require("fs").writeFileSync("login.html", html);
       var arr = [];
 
       // This will be empty, but just to be sure we leave it
@@ -59,7 +58,6 @@ function _login(email, password, loginOptions, callback) {
     },
     function loadMainPage(res, jar) {
       var html = res.body;
-      require("fs").writeFileSync("index.html", html);
       var headers = res.headers;
 
       if (!headers.location) return callback({error: "Wrong username/password."});
