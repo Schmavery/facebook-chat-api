@@ -118,6 +118,8 @@ function formatMessage(m) {
         delete obj.body;
         obj.name = originalMessage.attachments[i].name;
         obj.hires_url = originalMessage.attachments[i].hires_url;
+        obj.thumbnail_url = originalMessage.attachments[i].thumbnail_url;
+        obj.preview_url = originalMessage.attachments[i].preview_url
         break;
       }
       if (originalMessage.attachments[i].attach_type === "animated_image"){
@@ -125,6 +127,7 @@ function formatMessage(m) {
         delete obj.body;
         obj.name = originalMessage.attachments[i].name;
         obj.url = originalMessage.attachments[i].url;
+        obj.preview_url = originalMessage.attachments[i].preview_url;
         break;
       }
     }
