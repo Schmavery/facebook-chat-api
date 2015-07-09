@@ -106,6 +106,30 @@ function formatMessage(m) {
         obj.sticker_url = originalMessage.attachments[i].url;
         break;
       }
+      if (originalMessage.attachments[i].attach_type === "file"){
+        obj.type = "file";
+        delete obj.body;
+        obj.name = originalMessage.attachments[i].name;
+        obj.file_url = originalMessage.attachments[i].url;
+        break;
+      }
+      if (originalMessage.attachments[i].attach_type === "photo"){
+        obj.type = "photo";
+        delete obj.body;
+        obj.name = originalMessage.attachments[i].name;
+        obj.hires_url = originalMessage.attachments[i].hires_url;
+        obj.thumbnail_url = originalMessage.attachments[i].thumbnail_url;
+        obj.preview_url = originalMessage.attachments[i].preview_url
+        break;
+      }
+      if (originalMessage.attachments[i].attach_type === "animated_image"){
+        obj.type = "animated_image";
+        delete obj.body;
+        obj.name = originalMessage.attachments[i].name;
+        obj.url = originalMessage.attachments[i].url;
+        obj.preview_url = originalMessage.attachments[i].preview_url;
+        break;
+      }
     }
   }
 
