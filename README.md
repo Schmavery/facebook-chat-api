@@ -93,9 +93,12 @@ __Arguments__
     * `body` - The string corresponding to the message that was just received.
     * `thread_id` - The thread_id representing the thread in which the message was sent.
     * `coordinates` - An object containing `latitude`, `longitude`, and `accuracy`.
-    * `type` - The string `"message"` or `"sticker"`
+    * `type` - The string `"message"`, `"sticker"`, `"file"`, `"photo"`, `"animated_image"`, or `"event"` (if applicable, see below).
 
 If `type` is `"sticker"` there will be a `sticker_id` and `sticker_url` field instead of `body`.
+If `type` is `file` there will be a `name` and a `file_url` instead of `body`.
+If `type` is `photo` there will be `name`,`hires_url`, `thumbnail_url`, and `preview_url` instead of `body`.
+If `type` is `animated_image` there will be `name`, `url`, and `preview_url`  instead of `body`.
 
 If enabled this will also handle events. In this case, `message` will be either a message (see above) or an event object with the following fields
 - `type` - The string `"event"`
