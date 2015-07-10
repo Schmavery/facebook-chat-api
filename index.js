@@ -128,7 +128,8 @@ function _login(email, password, loginOptions, callback) {
         'getFriendsList',
         'getUserInfo',
         'removeUserFromGroup',
-        'addUserToGroup'];
+        'addUserToGroup',
+        'typing'];
 
       var mergeWithDefaults = utils.makeMergeWithDefaults(html, userId);
 
