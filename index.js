@@ -129,7 +129,7 @@ function _login(email, password, loginOptions, callback) {
         'getUserInfo',
         'removeUserFromGroup',
         'addUserToGroup',
-        'typing'];
+        'sendTypingIndicator'];
 
       var mergeWithDefaults = utils.makeMergeWithDefaults(html, userId);
 
