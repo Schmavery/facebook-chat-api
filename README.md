@@ -31,6 +31,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 * [`api.listen`](#listen)
 * [`api.setOptions`](#setOptions)
 * [`api.getUserId`](#getUserId)
+* [`api.getCurrentUserId`](#getCurrentUserId)
 * [`api.sendMessage`](#sendMessage)
 * [`api.markAsRead`](#markAsRead)
 * [`api.sendSticker`](#sendSticker)
@@ -213,6 +214,13 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     });
 });
 ```
+
+---------------------------------------
+
+<a name="getCurrentUserId" />
+### api.getCurrentUserId()
+
+Returns the currently logged-in user's Facebook user ID.
 
 ---------------------------------------
 

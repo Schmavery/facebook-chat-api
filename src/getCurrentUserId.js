@@ -2,7 +2,7 @@
 "use strict";
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function getCurentUserId(callback) {
+  return function getCurrentUserId(callback) {
     return ctx.userId;
   };
 };
