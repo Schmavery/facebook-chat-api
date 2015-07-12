@@ -129,7 +129,8 @@ function _login(email, password, loginOptions, callback) {
         'getUserInfo',
         'removeUserFromGroup',
         'addUserToGroup',
-        'sendTypingIndicator'];
+        'sendTypingIndicator',
+        'getCurrentUserId'];
 
       var mergeWithDefaults = utils.makeMergeWithDefaults(html, userId);
 
