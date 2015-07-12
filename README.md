@@ -41,6 +41,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 * [`api.getAccessToken`](#getAccessToken)
 * [`api.addUserToGroup`](#addUserToGroup)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
+* [`api.sendTypingIndicator`](#sendTypingIndicator)
 
 ## &#9888; Deprecated &#9888;
 * [`api.sendDirectMessage`](#sendDirectMessage)
@@ -432,6 +433,18 @@ __Arguments__
 * `user_id` - User ID.
 * `thread_id` - Group chat ID.
 * `callback(err)` - A callback called when the query is done (either with an error or with no arguments).
+
+---------------------------------------
+
+<a name="sendTypingIndicator" />
+### api.sendTypingIndicator(thread\_id, [callback])
+
+Sends a "USERNAME is typing" indicator to other members of the thread indicated by thread\_id.  This indication will disappear after 30 second or when the `end` function is called.
+
+__Arguments__
+
+* `thread_id` - Group chat ID.
+* `callback(err, end)` - A callback called when the query is done (either with an error or with null followed by a function `end` described above).
 
 ## Deprecated
 
