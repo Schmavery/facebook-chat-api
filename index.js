@@ -130,7 +130,8 @@ function _login(email, password, loginOptions, callback) {
         'removeUserFromGroup',
         'addUserToGroup',
         'sendTypingIndicator',
-        'getCurrentUserId'];
+        'getCurrentUserId',
+        'uploadAttachment'];
 
       var mergeWithDefaults = utils.makeMergeWithDefaults(html, userId);
 

@@ -2,6 +2,26 @@
 "use strict";
 var bluebird = require("bluebird");
 var request = bluebird.promisify(require("request").defaults({jar: true}));
+var stream = require('stream');
+
+function getHeaders(url) {
+  var headers = {
+    'Content-Type' : 'application/x-www-form-urlencoded',
+    'Referer' : 'https://www.facebook.com/',
+    'Host' : url.replace('https://', '').split("/")[0],
+    'Origin' : 'https://www.facebook.com',
+    'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18',
+    'Connection' : 'keep-alive',
+  };
+
+  return headers
+}
+
+function isReadableStream(obj) {
+  return obj instanceof stream.Stream &&
+    typeof (obj._read === 'function') &&
+    typeof (obj._readableState === 'object');
+}
 
 function get(url, jar, qs) {
   // I'm still confused about this
@@ -13,14 +33,7 @@ function get(url, jar, qs) {
     }
   }
   var op = {
-    headers: {
-      'Content-Type' : 'application/x-www-form-urlencoded',
-      'Referer' : 'https://www.facebook.com/',
-      'Host' : url.replace('https://', '').split("/")[0],
-      'Origin' : 'https://www.facebook.com',
-      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18',
-      'Connection' : 'keep-alive',
-    },
+    headers: getHeaders(url),
     timeout: 60000,
     qs: qs,
     url: url,
@@ -34,18 +47,29 @@ function get(url, jar, qs) {
 
 function post(url, jar, form) {
   var op = {
-    headers: {
-      'Content-Type' : 'application/x-www-form-urlencoded',
-      'Referer' : 'https://www.facebook.com/',
-      'Origin' : 'https://www.facebook.com',
-      'Host' : url.replace('https://', '').split("/")[0],
-      'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18',
-      'Connection' : 'keep-alive',
-    },
+    headers: getHeaders(url),
     timeout: 60000,
     url: url,
     method: "POST",
     form: form,
+    jar: jar,
+    gzip: true
+  };
+
+  return request(op).then(function(res) {return res[0];});
+}
+
+function postFormData(url, jar, form, qs) {
+  var headers = getHeaders(url);
+  headers['Content-Type'] = 'multipart/form-data';
+
+  var op = {
+    headers: headers,
+    timeout: 60000,
+    url: url,
+    method: "POST",
+    formData: form,
+    qs: qs,
     jar: jar,
     gzip: true
   };
@@ -249,8 +273,10 @@ function formatCookie(arr) {
 }
 
 module.exports = {
+  isReadableStream: isReadableStream,
   get: get,
   post: post,
+  postFormData: postFormData,
   generateMessageID: generateMessageID,
   getGUID: getGUID,
   formatMessage: formatMessage,
