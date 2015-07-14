@@ -59,7 +59,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       form['message_batch[0][gif_ids]'] = [];
       form['message_batch[0][file_ids]'] = [];
 
-      if (!utils.getType(msg.attachment) !== 'Array') {
+      if (utils.getType(msg.attachment) !== 'Array') {
         msg.attachment = [msg.attachment]
       }
 
