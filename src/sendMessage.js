@@ -7,13 +7,21 @@ var log = require("npmlog");
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function sendMessage(msg, thread_id, callback) {
     if(!callback) callback = function() {};
-    if(typeof msg !== "string" && !utils.checkType(msg, "Object"))
-      return callback({error: "Message should be of type string or object and not " + utils.getType(msg) + "."});
-    if(typeof thread_id !== "number" && typeof thread_id !== "string")
-      return callback({error: "Thread_id should be of type number or string and not " + typeof thread_id + "."});
 
-    if (typeof msg === "string") {
+    var msgType = utils.getType(msg);
+    var thread_idType = utils.getType(thread_id);
+
+    if(msgType !== "String" && msgType !== "Object")
+      return callback({error: "Message should be of type string or object and not " + thread_idType + "."});
+    if(thread_idType !== "Number" && thread_idType !== "String")
+      return callback({error: "Thread_id should be of type number or string and not " + thread_idType + "."});
+
+    if (msgType === "String") {
       msg = { body: msg }
+    } else if (msg.sticker) {
+      // Sticker can't be combined with body and/or attachment
+      delete msg.body;
+      delete msg.attachment;
     }
 
     var messageAndThreadID = utils.generateMessageID(ctx.clientid);
@@ -51,7 +59,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       form['message_batch[0][gif_ids]'] = [];
       form['message_batch[0][file_ids]'] = [];
 
-      if (!(msg.attachment instanceof Array)) {
+      if (!utils.getType(msg.attachment) !== 'Array') {
         msg.attachment = [msg.attachment]
       }
 
@@ -70,6 +78,11 @@ module.exports = function(mergeWithDefaults, api, ctx) {
 
         send();
       });
+    } else if (msg.sticker) {
+      form['message_batch[0][has_attachment]'] = true;
+      form['message_batch[0][sticker_id]'] = msg.sticker;
+
+      send();
     } else {
       send();
     }
