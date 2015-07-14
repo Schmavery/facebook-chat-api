@@ -277,10 +277,6 @@ function getType(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1);
 }
 
-function checkType(obj, type) {
-  return getType(obj) === type;
-}
-
 module.exports = {
   isReadableStream: isReadableStream,
   get: get,
@@ -300,6 +296,5 @@ module.exports = {
   parseResponse: parseResponse,
   saveCookies: saveCookies,
   formatCookie: formatCookie,
-  getType: getType,
-  checkType: checkType
+  getType: getType
 };

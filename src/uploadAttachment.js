@@ -7,11 +7,13 @@ var bluebird = require("bluebird");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function sendAttachment(attachment, callback) {
+    var attachmentType = utils.getType(attachment);
+
     function typeError() {
-      return callback({error: "Attachment should be of type array of readable stream and not " + typeof attachment + "."});
+      return callback({error: "Attachment should be of type array of readable stream and not " + attachmentType + "."});
     }
 
-    if (!(attachment instanceof Array)) return typeError();
+    if (attachmentType !== "Array") return typeError();
 
     var qs = mergeWithDefaults();
     var uploads = []
