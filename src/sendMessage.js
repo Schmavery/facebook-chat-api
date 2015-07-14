@@ -7,8 +7,8 @@ var log = require("npmlog");
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function sendMessage(msg, thread_id, callback) {
     if(!callback) callback = function() {};
-    if(typeof msg !== "string" && typeof msg !== "object")
-      return callback({error: "Message should be of type string or object and not " + typeof msg + "."});
+    if(typeof msg !== "string" && !utils.checkType(msg, "Object"))
+      return callback({error: "Message should be of type string or object and not " + utils.getType(msg) + "."});
     if(typeof thread_id !== "number" && typeof thread_id !== "string")
       return callback({error: "Thread_id should be of type number or string and not " + typeof thread_id + "."});
 

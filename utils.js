@@ -268,8 +268,17 @@ function formatDate(date) {
     d+' '+ NUM_TO_MONTH[date.getUTCMonth()] +' '+ date.getUTCFullYear() +' '+
     h+':'+m+':'+s+' GMT';
 }
+
 function formatCookie(arr) {
   return arr[0]+"="+arr[1]+"; " + (arr[2] !== 0 ? "expires=" + formatDate(new Date(arr[2])) + "; " : "") + "path=" + arr[3] + ";";
+}
+
+function getType(obj) {
+  return Object.prototype.toString.call(obj).slice(8, -1);
+}
+
+function checkType(obj, type) {
+  return getType(obj) === type;
 }
 
 module.exports = {
@@ -290,5 +299,7 @@ module.exports = {
   formatEvent: formatEvent,
   parseResponse: parseResponse,
   saveCookies: saveCookies,
-  formatCookie: formatCookie
+  formatCookie: formatCookie,
+  getType: getType,
+  checkType: checkType
 };
