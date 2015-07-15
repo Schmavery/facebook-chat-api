@@ -5,7 +5,7 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function getThread(thread_id, start, end, callback) {
+  return function getThreadHistory(thread_id, start, end, callback) {
     if(!callback) callback = function() {};
 
     var data = {

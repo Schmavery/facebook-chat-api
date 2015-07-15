@@ -122,7 +122,7 @@ function _login(email, password, loginOptions, callback) {
         'sendSticker',
         'setTitle',
         'getThreadList',
-        'getThread',
+        'getThreadHistory',
         'markAsRead',
         'sendMessage',
         'getAccessToken',
