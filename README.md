@@ -248,7 +248,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     if(err) return console.error(err);
     
     var yourID = 0000000000000;
-    var msg = {text: "Hey!"};
+    var msg = {body: "Hey!"};
     api.sendMessage(msg, yourID);
 });
 ```
