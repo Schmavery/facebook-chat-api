@@ -14,7 +14,7 @@ function getHeaders(url) {
     'Connection' : 'keep-alive',
   };
 
-  return headers
+  return headers;
 }
 
 function isReadableStream(obj) {
@@ -143,7 +143,7 @@ function formatMessage(m) {
         obj.name = originalMessage.attachments[i].name;
         obj.hires_url = originalMessage.attachments[i].hires_url;
         obj.thumbnail_url = originalMessage.attachments[i].thumbnail_url;
-        obj.preview_url = originalMessage.attachments[i].preview_url
+        obj.preview_url = originalMessage.attachments[i].preview_url;
         break;
       }
       if (originalMessage.attachments[i].attach_type === "animated_image"){
