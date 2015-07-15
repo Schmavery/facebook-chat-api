@@ -5,14 +5,20 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function deleteMessage(message, callback) {
+  return function deleteMessage(messageOrMessages, callback) {
     var message_id = message.message_id || message;
-    
-    var form = mergeWithDefaults({
-      'client' : 'mercury',
-      'message_ids[0]' : message_id
-    });
 
+    var form = mergeWithDefaults();
+    form['client'] = "mercury";
+
+    if(Array.isArray(messageOrMessages)) {
+      for (var i = 0; i < messageOrMessages.length; i++) {
+        form['message_ids['+i+']'] = messageOrMessages[i];
+      }
+    } else {
+      form['message_ids[0]'] = messageOrMessages;
+    }
+    
     utils.post("https://www.facebook.com/ajax/mercury/delete_messages.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {

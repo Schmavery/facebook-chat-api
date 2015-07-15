@@ -5,10 +5,17 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function archiveThread(thread_id, callback) {
+  return function archiveThread(threadOrThreads, callback) {
 
     var form = mergeWithDefaults();
-    form['ids['+thread_id+']'] = true;
+
+    if(Array.isArray(threadOrThreads)) {
+      for (var i = 0; i < threadOrThreads.length; i++) {
+        form['ids['+threadOrThreads[i]+']'] = true;
+      }
+    } else {
+      form['ids['+threadOrThreads+']'] = true;
+    }
 
     utils.post("https://www.facebook.com/ajax/mercury/change_archived_status.php", ctx.jar, form)
       .then(utils.parseResponse)
