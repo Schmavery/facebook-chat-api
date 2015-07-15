@@ -8,14 +8,12 @@ module.exports = function(mergeWithDefaults, api, ctx) {
   return function getThread(thread_id, start, end, callback) {
     if(!callback) callback = function() {};
 
-    if (end <= start) end = start + 20;
-
     var data = {
       'client' : 'mercury'
     };
 
     data['messages[user_ids][' + thread_id + '][offset]'] = start;
-    data['messages[user_ids][' + thread_id + '][limit]'] = end;
+    data['messages[user_ids][' + thread_id + '][limit]'] = end - start + 1;
 
     var form = mergeWithDefaults(data);
 
