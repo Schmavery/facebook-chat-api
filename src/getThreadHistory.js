@@ -28,7 +28,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       } else callback(null, resData.payload.actions);
     })
     .catch(function(err) {
-      log.error("Error in getThread", err);
+      log.error("Error in getThreadHistory", err);
       return callback(err);
     });
   };
