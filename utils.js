@@ -118,7 +118,8 @@ function formatMessage(m) {
     participant_ids: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids : [originalMessage.sender_fbid]),
     body: originalMessage.body,
     thread_id: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
-    location: originalMessage.coordinates ? originalMessage.coordinates : null
+    location: originalMessage.coordinates ? originalMessage.coordinates : null,
+    message_id: originalMessage.mid
   };
 
   if (originalMessage.attachments){
