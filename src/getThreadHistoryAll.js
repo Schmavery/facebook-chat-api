@@ -8,7 +8,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
   return function getThreadHistoryAll(thread_id, callback) {
     if(!callback) callback = function() {};
 
-    var message_counter = 21,
+    var message_counter = 0,
         all_messages = [],
         last_timestamp = 0;
 
