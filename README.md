@@ -236,7 +236,7 @@ __Arguments__
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
 
 *Message Object*: Various types of message can be sent:
-* Regular - Set a field `text` to the desired message.
+* Regular - Set a field `body` to the desired message.
 * Sticker - Set a field `sticker` to the desired sticker ID.
 * File/Image - Set field `attachment` to a readable stream or an array of readable streams.
 
