@@ -131,7 +131,8 @@ function _login(email, password, loginOptions, callback) {
         'removeUserFromGroup',
         'addUserToGroup',
         'sendTypingIndicator',
-        'getCurrentUserId'];
+        'getCurrentUserId',
+        'uploadAttachment'];
 
       var mergeWithDefaults = utils.makeMergeWithDefaults(html, userId);
 
@@ -307,6 +308,7 @@ function login(loginData, options, callback) {
     options = {};
   }
 
+  if (options.logLevel) log.level = options.logLevel;
   return _login(loginData.email, loginData.password, options, callback);
 }
 

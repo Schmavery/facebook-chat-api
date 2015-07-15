@@ -34,7 +34,6 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 * [`api.getCurrentUserId`](#getCurrentUserId)
 * [`api.sendMessage`](#sendMessage)
 * [`api.markAsRead`](#markAsRead)
-* [`api.sendSticker`](#sendSticker)
 * [`api.setTitle`](#setTitle)
 * [`api.getUserInfo`](#getUserInfo)
 * [`api.getFriendsList`](#getFriendsList)
@@ -45,6 +44,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
 
 ## &#9888; Deprecated &#9888;
+* [`api.sendSticker`](#sendSticker)
 * [`api.sendDirectMessage`](#sendDirectMessage)
 * [`api.sendDirectSticker`](#sendDirectSticker)
 
@@ -231,20 +231,40 @@ Sends the given message to the thread_id.
 
 __Arguments__
 
-* `message` - A string being the message to be sent to the given thread_id.
+* `message` - A string (for backward compatibility) or a message object as described below.
 * `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation. 
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
 
+*Message Object*: Various types of message can be sent:
+* Regular - Set a field `body` to the desired message.
+* Sticker - Set a field `sticker` to the desired sticker ID.
+* File/Image - Set field `attachment` to a readable stream or an array of readable streams.
+
 __Tip__: to find your own ID, go to your own profile on Facebook and replace 'www' by 'graph' in the URL.
 
-__Example__
-
+__Example (Basic Message)__
 ```js
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
     
     var yourID = 0000000000000;
-    api.sendMessage("Hey!", yourID);
+    var msg = {body: "Hey!"};
+    api.sendMessage(msg, yourID);
+});
+```
+
+__Example (File upload)__
+```js
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+    
+    // Note this example uploads an image called image.jpg 
+    var yourID = 0000000000000;
+    var msg = {
+      body: "Hey!",
+      attachment: fs.createReadStream(__dirname + '/image.jpg')
+    }
+    api.sendMessage(msg, yourID);
 });
 ```
 
@@ -272,32 +292,6 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
         // Marks message as read immediately after they're sent
         api.markAsRead(message.thread_id);
     });
-});
-```
-
----------------------------------------
-
-<a name="sendSticker" />
-### api.sendSticker(sticker\_id, thread\_id, [callback])
-
-Sends the given sticker_id to the thread_id.
-
-__Arguments__
-
-* `sticker_id` - A string or number representing the sticker to be sent to the given thread_id.
-* `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation. 
-* `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
-
-__Tip__: to find your own ID, go to your own profile on Facebook and replace 'www' by 'graph' in the URL.
-
-__Example__
-
-```js
-login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
-    if(err) return console.error(err);
-    
-    var yourID = 0000000000000;
-    api.sendMessage(767334526626290, yourID);
 });
 ```
 
@@ -415,7 +409,6 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 });
 ```
 
-
 ---------------------------------------
 
 <a name="addUserToGroup" />
@@ -458,10 +451,40 @@ __Arguments__
 
 ---------------------------------------
 
+<a name="sendSticker" />
+### api.sendSticker(sticker\_id, thread\_id, [callback])
+
+__Deprecated__: This should be simply replaced with a call to `sendMessage` with the appropriate message object.
+
+Sends the given sticker_id to the thread_id.
+
+__Arguments__
+
+* `sticker_id` - A string or number representing the sticker to be sent to the given thread_id.
+* `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation. 
+* `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
+
+__Tip__: to find your own ID, go to your own profile on Facebook and replace 'www' by 'graph' in the URL.
+
+__Example__
+
+```js
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+    
+    var yourID = 0000000000000;
+    api.sendMessage(767334526626290, yourID);
+});
+```
+
+---------------------------------------
+
 <a name="sendDirectMessage" />
 ### api.sendDirectMessage(message, nameOrUserId, callback)
 
-__Warning__: This function is ambiguous. It'll send messages to facebook's best match when searching for a person called `nameOrUserId`. If all the returned matches aren't people (pages, events etc...), `sendDirectMessage` will call the callback with an error. For this reason, the callback is required.
+__Deprecated__: This should be simply replaced with a call to `getUserId` followed by `sendMessage`.
+
+__Warning__: This function is ambiguous. It will send messages to Facebook's best match when searching for a person called `nameOrUserId`. If all the returned matches aren't people (pages, events etc...), `sendDirectMessage` will call the callback with an error. For this reason, the callback is required.
 
 Similar to `sendMessage` but if `nameOrUserId` is a string, it will query Facebook's search engine to find the person that matches the closest the given name. 'the closest' means that given what facebook knows about you, it'll give priority to friends and friends of friends etc... If `nameOrUserId` is a number, it'll just call `sendMessage`.
 
@@ -488,6 +511,8 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 
 <a name="sendDirectSticker" />
 ### api.sendDirectSticker(sticker_id, nameOrUserId, callback)
+
+__Deprecated__: This should be simply replaced with a call to `getUserId` followed by `sendMessage`.
 
 __Warning__: This function is also ambiguous (look at [`sendDirectMessage`](#sendDirectMessage)) and therefore a callback is required.
 
