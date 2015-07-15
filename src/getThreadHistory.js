@@ -5,7 +5,7 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function getThreadHistory(thread_id, start, end, callback) {
+  return function getThreadHistory(thread_id, start, end, timestamp, callback) {
     if(!callback) callback = function() {};
 
     var data = {
@@ -13,6 +13,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     };
 
     data['messages[user_ids][' + thread_id + '][offset]'] = start;
+    data['messages[user_ids][' + thread_id + '][timestamp]'] = timestamp;
     data['messages[user_ids][' + thread_id + '][limit]'] = end - start + 1;
 
     var form = mergeWithDefaults(data);

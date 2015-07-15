@@ -123,6 +123,7 @@ function _login(email, password, loginOptions, callback) {
         'setTitle',
         'getThreadList',
         'getThreadHistory',
+        'getThreadHistoryAll',
         'markAsRead',
         'sendMessage',
         'getAccessToken',
