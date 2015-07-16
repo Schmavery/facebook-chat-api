@@ -14,6 +14,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     var getThreadList = function() {
       api.getThreadList(thread_counter, thread_counter + 19, function(err, threads) {
         if (err) return callback(err);
+        if (!threads) return callback(err, all_threads);
 
         all_threads = all_threads.concat(threads);
 
