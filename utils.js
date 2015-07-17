@@ -239,6 +239,10 @@ function makeMergeWithDefaults(html, userId) {
 }
 
 function parseResponse(res) {
+  // functions don't play nicely here, get rid of them
+  delete res.delete;
+  delete res.archiveThread;
+
   return bluebird.try(function() {
     return JSON.parse(makeParsable(res.body));
   });
@@ -278,6 +282,21 @@ function getType(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1);
 }
 
+function attachMessageFunctions(message, api) {
+  // if adding a function here remember to
+  // delete it in parseResponse()
+  message.delete = function(callback) {
+    api.deleteMessage(message.message_id, callback)
+  };
+
+  message.archiveThread = function(callback) {
+    api.archiveThread(message.thread_id, callback)
+  };
+
+  return message;
+
+}
+
 module.exports = {
   isReadableStream: isReadableStream,
   get: get,
@@ -297,5 +316,6 @@ module.exports = {
   parseResponse: parseResponse,
   saveCookies: saveCookies,
   formatCookie: formatCookie,
-  getType: getType
+  getType: getType,
+  attachMessageFunctions: attachMessageFunctions
 };
