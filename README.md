@@ -87,7 +87,9 @@ By default this won't receive events (joining/leaving a chat, title change etc..
 
 __Arguments__
 
-- `callback(error, message, stopListening)` - A callback called every time the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. `message` is an object containing the following fields:
+- `callback(error, message, stopListening)` - A callback called every time the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. 
+
+If `type` is `message`, the object will contain the following fields:
     * `sender_name` - First and last name of the person who just sent the message.
     * `sender_id` - The id of the person who sent the message in the chat with thread_id.
     * `participant_ids` - An array containing the ids of everyone in the thread (sender included).
@@ -105,13 +107,18 @@ If `type` is `photo` there will be `name`,`hires_url`, `thumbnail_url`, and `pre
 
 If `type` is `animated_image` there will be `name`, `url`, and `preview_url`  instead of `body`.
 
-If enabled this will also handle events. In this case, `message` will be either a message (see above) or an event object with the following fields
+If enabled through [setOptions](#setOptions), this will also handle events. In this case, `message` will be either a message (see above) or an event object with the following fields
 - `type` - The string `"event"`
 - `thread_id` - The thread_id representing the thread in which the message was sent.
 - `log_message_type` - String representing the type of event (`"log:thread-name"`, `"log:unsubscribe"`, `"log:subscribe"`, ...)
 - `log_message_data` - Data relevant to the event.
 - `log_message_body` - String printed in the chat.
 - `author` - The person who performed the event.
+
+If enabled through [setOptions](#setOptions), this will also return presence, (`type` will be `"presence"`), which is the online status of the user's friends. The object given to the callback will have the following fields
+- `timestamp` - how old the information is
+- `userId` - the id of the user whose status this packet is describing
+- `statuses` - An object will the following fields: `fbAppStatus`, `messengerStatus`, `otherStatus`, `status` and `webStatus`. All those can contain either of the following values: `"active"`, `"idle"`, `"offline"`.
 
 __Example__
 
@@ -163,8 +170,9 @@ __Arguments__
       to receive messages from its own account.  This is to be used with
       caution, as it can result in loops (a simple echo bot will send messages
       forever).
-    - `listenEvents` - (Default `false`) Will make api.listen also handle events.
-    - `pageId` - (Default empty) Makes listen only receive messages through the page specified by that ID. Also makes sendMessage and sendSticker send from the page.
+    - `listenEvents` - (Default `false`) Will make [api.listen](#listen) also handle events (look at api.listen for more details).
+    - `pageId` - (Default empty) Makes [api.listen](#listen) only receive messages through the page specified by that ID. Also makes sendMessage and sendSticker send from the page.
+    - `updatePresence` - (Default `false`) Will make [api.listen](#listen) also return `presence` (look at api.listen for more details).
 
 __Example__
 

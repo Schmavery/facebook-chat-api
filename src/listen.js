@@ -88,6 +88,16 @@ module.exports = function(mergeWithDefaults, api, ctx) {
           return a.timestamp - b.timestamp;
         }).map(function parsePackets(v) {
           switch (v.type) {
+            case 'buddylist_overlay':
+              // TODO: what happens when you're logged in as a page?
+              if(!ctx.globalOptions.updatePresence) return;
+
+              // There should be only one key inside overlay
+              Object.keys(v.overlay).map(function(userId) {
+                var formattedPresence = utils.formatPresence(v.overlay[userId], userId);
+                if(!shouldStop) callback(null, formattedPresence, stopListening);
+              });
+              break;
             case 'mercury':
               if(ctx.globalOptions.pageId) return;
               if(!ctx.globalOptions.listenEvents) return;
@@ -96,7 +106,6 @@ module.exports = function(mergeWithDefaults, api, ctx) {
                 if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userId.toString()) return;
 
                 if (!shouldStop) callback(null, formattedEvent, stopListening);
-                else return;
               });
               break;
             case 'messaging':
@@ -105,7 +114,6 @@ module.exports = function(mergeWithDefaults, api, ctx) {
               if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userId.toString()) return;
               atLeastOne = true;
               if (!shouldStop) callback(null, utils.formatMessage(v), stopListening);
-              else return;
               break;
             case 'pages_messaging':
               if(!ctx.globalOptions.pageId) return;
@@ -115,7 +123,6 @@ module.exports = function(mergeWithDefaults, api, ctx) {
 
               atLeastOne = true;
               if (!shouldStop) callback(null, utils.formatMessage(v), stopListening);
-              else return;
               break;
           }
         });

@@ -277,6 +277,15 @@ function getType(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1);
 }
 
+function formatPresence(presence, userId) {
+  return {
+    type: "presence",
+    timestamp: presence.la * 1000,
+    userId: userId,
+    statuses: presence.p
+  };
+}
+
 module.exports = {
   isReadableStream: isReadableStream,
   get: get,
@@ -296,5 +305,6 @@ module.exports = {
   parseResponse: parseResponse,
   saveCookies: saveCookies,
   formatCookie: formatCookie,
-  getType: getType
+  getType: getType,
+  formatPresence: formatPresence,
 };

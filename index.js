@@ -2,7 +2,6 @@
 "use strict";
 
 var utils = require("./utils");
-var time = require("./time");
 
 var cheerio = require("cheerio");
 var log = require("npmlog");
@@ -82,23 +81,30 @@ function _login(email, password, loginOptions, callback) {
       };
       var access_token = 'NONE';
 
-      api.setOptions = function setOptions(options){
-        if (options.hasOwnProperty('logLevel')) {
-          log.level = options.logLevel;
-          globalOptions.logLevel = options.logLevel;
-        }
-
-        if (options.hasOwnProperty('selfListen')) {
-          globalOptions.selfListen = options.selfListen;
-        }
-
-        if(options.hasOwnProperty('listenEvents')) {
-          globalOptions.listenEvents = options.listenEvents;
-        }
-
-        if(options.hasOwnProperty('pageId')) {
-          globalOptions.pageId = options.pageId;
-        }
+      api.setOptions = function setOptions(options) {
+        Object.keys(options).map(function(key) {
+          switch (key) {
+            case 'logLevel':
+              log.level = options.logLevel;
+              globalOptions.logLevel = options.logLevel;
+              break;
+            case 'selfListen':
+              globalOptions.selfListen = options.selfListen;
+              break;
+            case 'listenEvents':
+              globalOptions.listenEvents = options.listenEvents;
+              break;
+            case 'pageId':
+              globalOptions.pageId = options.pageId;
+              break;
+            case 'updatePresence':
+              globalOptions.updatePresence = options.updatePresence;
+              break;
+            default:
+              log.warn('Unrecognized option given to setOptions', key);
+              break;
+          }
+        });
       };
 
       api.setOptions(loginOptions);
@@ -140,8 +146,6 @@ function _login(email, password, loginOptions, callback) {
         api[v] = require('./src/' + v)(mergeWithDefaults, api, ctx);
       });
 
-      time.initialize();
-
       var form2 = mergeWithDefaults({
         'grammar_version' : utils.getFrom(html, "grammar_version\":\"", "\"")
       });
@@ -159,7 +163,6 @@ function _login(email, password, loginOptions, callback) {
       return [utils.get("https://www.facebook.com/ajax/presence/reconnect.php", ctx.jar, form3).then(utils.saveCookies(ctx.jar)), ctx, mergeWithDefaults, api];
     },
     function firstPullReq(res, ctx, mergeWithDefaults, api) {
-      time.reportPullSent();
       log.info('Request to pull 1');
       var form = {
         'channel' : 'p_' + ctx.userId,
@@ -176,8 +179,6 @@ function _login(email, password, loginOptions, callback) {
       return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form).then(utils.parseResponse), ctx, mergeWithDefaults, api, form];
     },
     function secondPullReq(resData, ctx, mergeWithDefaults, api, form) {
-      time.reportPullReturned();
-      form.wtc = time.doSerialize();
       if (resData.t !== 'lb') throw new Error("Bad response from pull 1");
 
       form.sticky_token = resData.lb_info.sticky;
@@ -187,8 +188,6 @@ function _login(email, password, loginOptions, callback) {
       return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form), ctx, mergeWithDefaults, api];
     },
     function syncReq(res, ctx, mergeWithDefaults, api) {
-      time.reportPullReturned();
-      // form.wtc = time.doSerialize();
       var form = mergeWithDefaults({
         'lastSync' : ~~(Date.now()/1000 - 60),
       });
