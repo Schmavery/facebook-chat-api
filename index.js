@@ -137,7 +137,11 @@ function _login(email, password, loginOptions, callback) {
         'addUserToGroup',
         'sendTypingIndicator',
         'getCurrentUserId',
-        'uploadAttachment'];
+        'uploadAttachment',
+        'deleteMessage',
+        'deleteThread',
+        'archiveThread',
+        'unarchiveThread'];
 
       var mergeWithDefaults = utils.makeMergeWithDefaults(html, userId);
 
