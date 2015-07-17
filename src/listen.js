@@ -1,7 +1,6 @@
 /*jslint node: true */
 "use strict";
 
-var time = require("../time");
 var utils = require("../utils");
 var log = require("npmlog");
 
@@ -35,11 +34,8 @@ module.exports = function(mergeWithDefaults, api, ctx) {
   return function listen(callback) {
     if(shouldStop) return;
 
-    form.wtc = time.doSerialize();
     form.idle = ~~(Date.now()/1000) - prev;
     prev = ~~(Date.now()/1000);
-
-    time.reportPullSent();
 
     // TODO: get the right URL to query...
     utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
@@ -50,8 +46,6 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       tmpPrev = now;
 
       if(resData && resData.t === "lb") {
-        time.reportPullReturned();
-        form.wtc = time.doSerialize();
         form.sticky_token = resData.lb_info.sticky;
         form.sticky_pool = resData.lb_info.pool;
       }
