@@ -207,71 +207,7 @@ function _login(email, password, loginOptions, callback) {
       log.info("Request to thread_sync");
       return [utils.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form).then(utils.saveCookies(ctx.jar)), ctx, mergeWithDefaults, api];
     },
-    function graphAPIReadReq(res, ctx, mergeWithDefaults, api) {
-      var graphAPIForm = mergeWithDefaults({
-        "app_id":"145634995501895",
-        "redirect_uri":"https://www.facebook.com/connect/login_success.html",
-        "display":"popup",
-        "access_token":"",
-        "sdk":"",
-        "from_post":"1",
-        "public_info_nux":"1",
-        "private":"",
-        "login":"",
-        "read":"user_about_me,user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,user_birthday,user_education_history,user_events,user_friends,user_games_activity,user_groups,user_hometown,user_likes,user_location,user_managed_groups,user_photos,user_posts,user_relationship_details,user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,public_profile,baseline",
-        "write": "",
-        "readwrite":"",
-        "extended": "",
-        "social_confirm":"",
-        "confirm":"",
-        "seen_scopes":"user_about_me,user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,user_birthday,user_education_history,user_events,user_friends,user_games_activity,user_groups,user_hometown,user_likes,user_location,user_managed_groups,user_photos,user_posts,user_relationship_details,user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,public_profile,baseline",
-        "auth_type":"",
-        "auth_token":"",
-        "auth_nonce":"",
-        "default_audience":"",
-        "ref":"Default",
-        "return_format":"access_token",
-        "domain":"",
-        "sso_device":"",
-        "sheet_name":"initial",
-        "__CONFIRM__":"1",
-      });
-      log.info("Getting read access.");
-      return [utils.post("https://www.facebook.com/v2.3/dialog/oauth/read", ctx.jar, graphAPIForm), ctx, mergeWithDefaults, api, graphAPIForm];
-    },
-    function graphAPIWriteReq(res, ctx, mergeWithDefaults, api, graphAPIForm) {
-      graphAPIForm.read = "";
-      graphAPIForm.write = "publish_actions";
-      graphAPIForm.seen_scopes = graphAPIForm.write;
-      graphAPIForm["audience[0][value]"] = 40;
-      log.info("Getting write access.");
-      return [utils.post("https://www.facebook.com/v2.3/dialog/oauth/write", ctx.jar, graphAPIForm), ctx, mergeWithDefaults, api, graphAPIForm];
-    },
-    function graphAPIExtendedReq(res, ctx, mergeWithDefaults, api, graphAPIForm) {
-      graphAPIForm.write = "";
-      graphAPIForm.extended = "ads_management,ads_read,manage_notifications,manage_pages,publish_pages,read_insights,read_page_mailboxes,rsvp_event";
-      graphAPIForm.seen_scopes = graphAPIForm.extended;
-      graphAPIForm["audience[0][value]"] = "";
-      log.info("Getting extended access.");
-      return [utils.post("https://www.facebook.com/v2.3/dialog/oauth/extended", ctx.jar, graphAPIForm).then(utils.parseResponse), ctx, mergeWithDefaults, api];
-    },
     function almostDone(resData, ctx, mergeWithDefaults, api) {
-      ctx.access_token = -1;
-      try {
-        var tokenArray = resData.jsmods.require;
-        for (var i = 0; i < tokenArray.length; i++){
-          if (tokenArray[i][3][0].indexOf("access_token=") != -1){
-            ctx.access_token = tokenArray[i][3][0].split("access_token=")[1].split("&")[0];
-            break;
-          }
-        }
-      } catch (e) {
-        ctx.access_token = -1;
-      }
-      if (ctx.access_token === -1){
-        log.error("Error retrieving access token, continuing...");
-      }
-
       if(!ctx.globalOptions.pageId) return [null, ctx, mergeWithDefaults, api];
 
       // Return a promise maybe?
