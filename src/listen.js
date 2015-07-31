@@ -31,13 +31,14 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     'msgs_recv':msgs_recv
   };
 
-  return function listen(callback) {
+  var globalCallback = null;
+
+  function listen() {
     if(shouldStop) return;
 
     form.idle = ~~(Date.now()/1000) - prev;
     prev = ~~(Date.now()/1000);
 
-    // TODO: get the right URL to query...
     utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
@@ -69,7 +70,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
           utils.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form)
           .then(function(res) {
             log.info("thread sync --->", res.body);
-            currentlyRunning = setTimeout(api.listen, 1000, callback);
+            currentlyRunning = setTimeout(listen, 1000);
           });
         });
         return;
@@ -89,7 +90,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
               // There should be only one key inside overlay
               Object.keys(v.overlay).map(function(userID) {
                 var formattedPresence = utils.formatPresence(v.overlay[userID], userID);
-                if(!shouldStop) callback(null, formattedPresence, stopListening);
+                if(!shouldStop) globalCallback(null, formattedPresence);
               });
               break;
             case 'mercury':
@@ -99,7 +100,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
                 var formattedEvent = utils.formatEvent(v2);
                 if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID.toString()) return;
 
-                if (!shouldStop) callback(null, formattedEvent, stopListening);
+                if (!shouldStop) globalCallback(null, formattedEvent);
               });
               break;
             case 'messaging':
@@ -107,7 +108,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
               if(v.event !== "deliver") return;
               if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID.toString()) return;
               atLeastOne = true;
-              if (!shouldStop) callback(null, utils.formatMessage(v), stopListening);
+              if (!shouldStop) globalCallback(null, utils.formatMessage(v));
               break;
             case 'pages_messaging':
               if(!ctx.globalOptions.pageID) return;
@@ -116,7 +117,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
               if(v.realtime_viewer_fbid !== ctx.globalOptions.pageID) return;
 
               atLeastOne = true;
-              if (!shouldStop) callback(null, utils.formatMessage(v), stopListening);
+              if (!shouldStop) globalCallback(null, utils.formatMessage(v));
               break;
           }
         });
@@ -138,13 +139,21 @@ module.exports = function(mergeWithDefaults, api, ctx) {
 
       if(resData.seq) form.seq = resData.seq;
       if(resData.tr) form.traceid = resData.tr;
-      currentlyRunning = setTimeout(api.listen, Math.random() * 200 + 50, callback);
+      currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
 
     })
     .catch(function(err) {
       log.error("ERROR in listen --> ", err);
-      callback(err, null, stopListening);
-      currentlyRunning = setTimeout(api.listen, Math.random() * 200 + 50, callback);
+      globalCallback(err);
+      currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
     });
+  }
+
+  return function(callback) {
+    globalCallback = callback;
+
+    if (!currentlyRunning) currentlyRunning = setTimeout(listen, Math.random() * 200 + 50, callback);
+
+    return stopListening;
   };
 };
