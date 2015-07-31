@@ -6,6 +6,8 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function setTitle(newTitle, threadFbid, callback) {
+    if(!callback && utils.getType(threadFbid) === 'Function') return callback({error: "please pass a threadFbid as a second argument."});
+
     if(!callback) callback = function() {};
 
     var messageAndOTID = utils.generateOfflineThreadingID();

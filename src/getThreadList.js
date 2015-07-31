@@ -39,6 +39,8 @@ function formatData(data) {
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function getThreadList(start, end, callback) {
+    if(!callback && utils.getType(end) === 'Function') return callback({error: "please pass an number as a second argument."});
+
     if(!callback) return log.error("getThreadList: need callback");
 
     if (end <= start) end = start + 20;

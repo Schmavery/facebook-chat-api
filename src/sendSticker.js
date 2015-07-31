@@ -6,6 +6,8 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function sendSticker(stickerId, threadID, callback) {
+    if(!callback && utils.getType(threadID) === 'Function') return callback({error: "please pass a threadID as a second argument."});
+
     if(!callback) callback = function() {};
 
     if (typeof stickerId !== "number" && typeof stickerId !== "string")

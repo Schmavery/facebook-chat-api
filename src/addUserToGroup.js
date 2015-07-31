@@ -6,6 +6,8 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function addUserToGroup(userID, threadID, callback) {
+    if(!callback && utils.getType(threadID) === 'Function') return callback({error: "please pass a threadID as a second argument."});
+
     if(!callback) callback = function() {};
     if (typeof threadID !== "number" && typeof threadID !== "string")
       return callback({error: "ThreadID should be of type number or string and not " + typeof threadID + "."});

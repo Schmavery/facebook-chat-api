@@ -6,6 +6,7 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function sendMessage(msg, threadID, callback) {
+    if(!callback && utils.getType(threadID) === 'Function') return callback({error: "please pass a threadID as a second argument."});
     if(!callback) callback = function() {};
 
     var msgType = utils.getType(msg);
