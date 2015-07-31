@@ -125,9 +125,7 @@ function _login(email, password, loginOptions, callback) {
 
       var apiFuncNames = [
         'listen',
-        'getUserId',
-        'sendDirectMessage',
-        'sendDirectSticker',
+        'getUserID',
         'sendSticker',
         'setTitle',
         'getThreadList',
