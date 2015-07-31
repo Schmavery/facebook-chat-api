@@ -1,17 +1,16 @@
-var mocha = require('mocha');
 var login = require('../index.js');
 var fs = require('fs');
 var assert = require('assert');
 
 var conf = JSON.parse(fs.readFileSync('tests/test-config.json', 'utf8'));
-var credentials = {email: conf.email1, password: conf.password1};
-var groupChatId = conf.groupChatId;
+var credentials = {email: conf.email, password: conf.password};
+var groupChatID = conf.groupChatId;
 var otherId = conf.otherId;
 
 var options = {logLevel: 'silent', selfListen: 'true', listenEvents: 'true'};
 var pageOptions = {logLevel: 'silent', pageId: credentials.pageId};
 
-var user_id = 0;
+var userID = 0;
 
 function checkError(done){
   return function(err) {
@@ -23,12 +22,13 @@ function checkError(done){
 // Init all tests to null
 // Create a listen that tries to find an appropriate compare obj and set it to true and call `done`.
 // In the `it`, set the compare obj.
-describe('Listen:', function() {
+describe('Login:', function() {
   var api = null;
   var tests = {};
   var dones = {};
-  var submitted = false;
+  var stopListening;
   this.timeout(5000);
+
 
 
   before(function(done) {
@@ -36,54 +36,80 @@ describe('Listen:', function() {
       checkError(done)(err);
       assert(localAPI);
       api = localAPI;
-      user_id = api.getCurrentUserId();
-      api.listen(function (err, msg, stopListening) {
+      userID = api.getCurrentUserId();
+      api.listen(function (err, msg, sl) {
         Object.keys(tests).map(function(key) {
           if (typeof tests[key] === 'function' && tests[key](msg)){
-            tests[key] = true;
+            delete tests[key];
             dones[key]();
+            delete dones[key];
           }
         });
-
-       // if (Object.keys(tests).reduce(function (e, acc) {
-       //  return (tests[e] === true && acc);
-       // }, true)) stopListening();
+        if (!stopListening) stopListening = sl;
       });
       done();
     });
   });
 
-  it('Should login without error', function (done){
+  it('Login without error', function (done){
    if (api) done();
   });
 
   
-  it('Send/rec a text message object', function (done){
+  it('Text message object (user)', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'message' && msg.body === 'test' + time);
     };
-    api.sendMessage({body: 'test'+time}, user_id, checkError(done));  
+    api.sendMessage({body: 'test'+time}, userID, checkError(done));  
   });
 
-  it('Send/rec a sticker message object', function (done){
+  it('Sticker message object (user)', function (done){
     var sticker_id = '767334526626290'; 
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'sticker' && msg.sticker_id == sticker_id);
     };
-    api.sendMessage({sticker: sticker_id}, user_id, checkError(done));  
+    api.sendMessage({sticker: sticker_id}, userID, checkError(done));  
   });
 
-  it('Send/rec a basic string', function (done){
+  it('Basic string (user)', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'message' && msg.body === 'test' + time);
     };
-    api.sendMessage('test'+time, user_id, checkError(done));  
+    api.sendMessage('test'+time, userID, checkError(done));  
+  });
+
+  it('Text message object (group)', function (done){
+    var time = Date.now();
+    dones[time] = done;
+    tests[time] = function (msg) {
+      return (msg.type === 'message' && msg.body === 'test' + time);
+    };
+    api.sendMessage({body: 'test'+time}, groupChatID, checkError(done));  
+  });
+
+  it('Sticker message object (group)', function (done){
+    var sticker_id = '767334526626290'; 
+    var time = Date.now();
+    dones[time] = done;
+    tests[time] = function (msg) {
+      return (msg.type === 'sticker' && msg.sticker_id == sticker_id);
+    };
+    api.sendMessage({sticker: sticker_id}, groupChatID, checkError(done));  
+  });
+
+  it('Basic string (group)', function (done){
+    var time = Date.now();
+    dones[time] = done;
+    tests[time] = function (msg) {
+      return (msg.type === 'message' && msg.body === 'test' + time);
+    };
+    api.sendMessage('test'+time, groupChatID, checkError(done));  
   });
 
   it('Change chat title', function (done){
@@ -94,7 +120,7 @@ describe('Listen:', function() {
         msg.log_message_type === 'log:thread-name' && 
         msg.log_message_data.name === 'test chat ' + time);
     };
-    api.setTitle('test chat '+time, groupChatId, checkError(done));  
+    api.setTitle('test chat '+time, groupChatID, checkError(done));  
   });
 
   it('Kick user', function (done){
@@ -106,7 +132,7 @@ describe('Listen:', function() {
         msg.log_message_data.
           removed_participants.indexOf('fbid:'+otherId) > -1);
     };
-    api.removeUserFromGroup(otherId, groupChatId, checkError(done));  
+    api.removeUserFromGroup(otherId, groupChatID, checkError(done));  
   });
 
   it('Add user', function (done){
@@ -118,6 +144,18 @@ describe('Listen:', function() {
         msg.log_message_data.
           added_participants.indexOf('fbid:'+otherId) > -1);
     };
-    api.addUserToGroup(otherId, groupChatId, checkError(done));  
+    api.addUserToGroup(otherId, groupChatID, checkError(done));  
+  });
+
+  it('Mark as read', function (done){
+    api.markAsRead(groupChatID, done);  
+  });
+
+  it('Send typing indicator', function (done){
+    api.sendTypingIndicator(groupChatID, done);  
+  });
+
+  after(function (){
+    if (stopListening) stopListening(); 
   });
 });
