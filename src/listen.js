@@ -98,7 +98,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               if(!ctx.globalOptions.listenEvents) return;
               v.actions.map(function(v2) {
                 var formattedEvent = utils.formatEvent(v2);
-                if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID.toString()) return;
+                if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID) return;
 
                 if (!shouldStop) globalCallback(null, formattedEvent);
               });
@@ -106,14 +106,14 @@ module.exports = function(defaultFuncs, api, ctx) {
             case 'messaging':
               if(ctx.globalOptions.pageID) return;
               if(v.event !== "deliver") return;
-              if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID.toString()) return;
+              if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID) return;
               atLeastOne = true;
               if (!shouldStop) globalCallback(null, utils.formatMessage(v));
               break;
             case 'pages_messaging':
               if(!ctx.globalOptions.pageID) return;
               if(v.event !== "deliver") return;
-              if(!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID.toString() || v.message.sender_fbid.toString() === ctx.globalOptions.pageID.toString())) return;
+              if(!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID || v.message.sender_fbid.toString() === ctx.globalOptions.pageID)) return;
               if(v.realtime_viewer_fbid !== ctx.globalOptions.pageID) return;
 
               atLeastOne = true;
@@ -126,9 +126,11 @@ module.exports = function(defaultFuncs, api, ctx) {
           // Send deliveryReceipt notification to the server
           var formDeliveryReceipt = {};
 
-          for (var i = 0; i < resData.ms.length; i++) {
-            if(resData.ms[i].message && resData.ms[i].message.mid) formDeliveryReceipt["[" + i + "]"] = resData.ms[i].message.mid;
-          }
+          resData.ms.filter(function(v) {
+            return v.message && v.message.mid && v.message.sender_fbid.toString() !== ctx.userID;
+          }).forEach(function(val, i) {
+            formDeliveryReceipt["[" + i + "]"] = val.message.mid;
+          });
 
           // If there's at least one, we do the post request
           if(formDeliveryReceipt["[0]"]) {
