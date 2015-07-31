@@ -35,7 +35,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'message_batch[0][status]' : '0',
       'message_batch[0][offline_threading_id]' : messageAndOTID,
       'message_batch[0][message_id]' : messageAndOTID,
-      'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientid),
+      'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientID),
       'message_batch[0][manual_retry_cnt]' : '0',
       'message_batch[0][thread_fbid]' : threadID,
       'message_batch[0][sticker_id]' : stickerId,
@@ -47,20 +47,20 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     api.getUserInfo(threadID, function(err, res) {
       // This means that threadID is the id of a user, and the chat
       // is a single person chat
-      if(!(res instanceof Array)) {
+      if(Object.keys(res).length > 0) {
         form['message_batch[0][client_thread_id]'] = "user:"+threadID;
         form['message_batch[0][specific_to_list][0]'] = "fbid:"+threadID;
         form['message_batch[0][specific_to_list][1]'] = "fbid:"+ctx.userID;
       }
 
-      if(ctx.globalOptions.pageId) {
-        form['message_batch[0][author]'] = "fbid:" + ctx.globalOptions.pageId;
-        form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.globalOptions.pageId;
+      if(ctx.globalOptions.pageID) {
+        form['message_batch[0][author]'] = "fbid:" + ctx.globalOptions.pageID;
+        form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.globalOptions.pageID;
         form['message_batch[0][creator_info][creatorID]'] = ctx.userID;
         form['message_batch[0][creator_info][creatorType]'] = "direct_admin";
         form['message_batch[0][creator_info][labelType]'] = "sent_message";
-        form['message_batch[0][creator_info][pageID]'] = ctx.globalOptions.pageId;
-        form['request_user_id'] = ctx.globalOptions.pageId;
+        form['message_batch[0][creator_info][pageID]'] = ctx.globalOptions.pageID;
+        form['request_user_id'] = ctx.globalOptions.pageID;
         form['message_batch[0][creator_info][profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userID;
       }
 

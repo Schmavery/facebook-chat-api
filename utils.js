@@ -141,10 +141,10 @@ function formatMessage(m) {
 
   var obj = {
     type: "message",
-    sender_name: originalMessage.sender_name,
-    sender_id: originalMessage.sender_fbid,
-    participant_names: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
-    participant_ids: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids : [originalMessage.sender_fbid]),
+    senderName: originalMessage.sender_name,
+    senderID: originalMessage.sender_fbid,
+    participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
+    participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids : [originalMessage.sender_fbid]),
     body: originalMessage.body,
     threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
@@ -156,24 +156,24 @@ function formatMessage(m) {
       if (originalMessage.attachments[i].attach_type === "sticker"){
         obj.type = "sticker";
         delete obj.body;
-        obj.sticker_id = originalMessage.attachments[i].metadata.stickerID;
-        obj.sticker_url = originalMessage.attachments[i].url;
+        obj.stickerID = originalMessage.attachments[i].metadata.stickerID;
+        obj.stickerUrl = originalMessage.attachments[i].url;
         break;
       }
       if (originalMessage.attachments[i].attach_type === "file"){
         obj.type = "file";
         delete obj.body;
         obj.name = originalMessage.attachments[i].name;
-        obj.file_url = originalMessage.attachments[i].url;
+        obj.fileUrl = originalMessage.attachments[i].url;
         break;
       }
       if (originalMessage.attachments[i].attach_type === "photo"){
         obj.type = "photo";
         delete obj.body;
         obj.name = originalMessage.attachments[i].name;
-        obj.hires_url = originalMessage.attachments[i].hires_url;
-        obj.thumbnail_url = originalMessage.attachments[i].thumbnail_url;
-        obj.preview_url = originalMessage.attachments[i].preview_url;
+        obj.hiresUrl = originalMessage.attachments[i].hires_url;
+        obj.thumbnailUrl = originalMessage.attachments[i].thumbnail_url;
+        obj.previewUrl = originalMessage.attachments[i].preview_url;
         break;
       }
       if (originalMessage.attachments[i].attach_type === "animated_image"){
@@ -181,13 +181,13 @@ function formatMessage(m) {
         delete obj.body;
         obj.name = originalMessage.attachments[i].name;
         obj.url = originalMessage.attachments[i].url;
-        obj.preview_url = originalMessage.attachments[i].preview_url;
+        obj.previewUrl = originalMessage.attachments[i].preview_url;
         break;
       }
     }
   }
 
-  if(m.type === "pages_messaging") obj.pageId = m.realtime_viewer_fbid;
+  if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid;
 
   return obj;
 }

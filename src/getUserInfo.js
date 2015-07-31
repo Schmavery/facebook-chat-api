@@ -42,7 +42,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     .then(function(resData) {
       if (resData.error) return callback(resData);
 
-      callback(null, formatData(resData.payload.profiles));
+      return callback(null, formatData(resData.payload.profiles));
     })
     .catch(function(err) {
       log.error("Error in getUserInfo", err);

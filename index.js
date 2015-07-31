@@ -60,6 +60,7 @@ function _login(email, password, loginOptions, callback) {
       var headers = res.headers;
 
       if (!headers.location) return callback({error: "Wrong username/password."});
+
       return [utils.get(headers.location, jar), jar];
     },
     function redirect(res, jar) {
@@ -97,8 +98,8 @@ function _login(email, password, loginOptions, callback) {
             case 'listenEvents':
               globalOptions.listenEvents = options.listenEvents;
               break;
-            case 'pageId':
-              globalOptions.pageId = options.pageId;
+            case 'pageID':
+              globalOptions.pageID = options.pageID;
               break;
             case 'updatePresence':
               globalOptions.updatePresence = options.updatePresence;
@@ -114,11 +115,11 @@ function _login(email, password, loginOptions, callback) {
 
       // All data available to api functions
 
-      var clientid = (Math.random()*2147483648|0).toString(16);
+      var clientID = (Math.random()*2147483648|0).toString(16);
       var ctx = {
         userID: userID,
         jar: jar,
-        clientid: clientid,
+        clientID: clientID,
         globalOptions: globalOptions,
         access_token: access_token
       };
@@ -173,7 +174,7 @@ function _login(email, password, loginOptions, callback) {
         'channel' : 'p_' + ctx.userID,
         'seq' : 0,
         'partition' : -2,
-        'clientid' : ctx.clientid,
+        'clientid' : ctx.clientID,
         'viewer_uid' : ctx.userID,
         'uid' : ctx.userID,
         'state' : 'active',
@@ -209,10 +210,10 @@ function _login(email, password, loginOptions, callback) {
       return [utils.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form).then(utils.saveCookies(ctx.jar)), ctx, mergeWithDefaults, api];
     },
     function almostDone(resData, ctx, mergeWithDefaults, api) {
-      if(!ctx.globalOptions.pageId) return [null, ctx, mergeWithDefaults, api];
+      if(!ctx.globalOptions.pageID) return [null, ctx, mergeWithDefaults, api];
 
       // Return a promise maybe?
-      return [utils.get('https://www.facebook.com/'+ctx.globalOptions.pageId+'/messages/?section=messages&subsection=inbox', ctx.jar), ctx, mergeWithDefaults, api];
+      return [utils.get('https://www.facebook.com/'+ctx.globalOptions.pageID+'/messages/?section=messages&subsection=inbox', ctx.jar), ctx, mergeWithDefaults, api];
     },
     function maybePageLogin(resData, ctx, mergeWithDefaults, api) {
       if(!resData) return [null, api];

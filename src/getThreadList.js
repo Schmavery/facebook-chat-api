@@ -49,7 +49,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'inbox[limit]' : end - start,
     });
 
-    if(ctx.globalOptions.pageId) form.request_user_id = ctx.globalOptions.pageId;
+    if(ctx.globalOptions.pageID) form.request_user_id = ctx.globalOptions.pageID;
 
     utils.post("https://www.facebook.com/ajax/mercury/threadlist_info.php", ctx.jar, form)
     .then(utils.parseResponse)

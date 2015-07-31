@@ -22,7 +22,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     'channel' : 'p_' + ctx.userID,
     'seq' : '0',
     'partition' : '-2',
-    'clientid' : ctx.clientid,
+    'clientid' : ctx.clientID,
     'viewer_uid' : ctx.userID,
     'uid' : ctx.userID,
     'state' : 'active',
@@ -93,7 +93,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
               });
               break;
             case 'mercury':
-              if(ctx.globalOptions.pageId) return;
+              if(ctx.globalOptions.pageID) return;
               if(!ctx.globalOptions.listenEvents) return;
               v.actions.map(function(v2) {
                 var formattedEvent = utils.formatEvent(v2);
@@ -103,17 +103,17 @@ module.exports = function(mergeWithDefaults, api, ctx) {
               });
               break;
             case 'messaging':
-              if(ctx.globalOptions.pageId) return;
+              if(ctx.globalOptions.pageID) return;
               if(v.event !== "deliver") return;
               if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID.toString()) return;
               atLeastOne = true;
               if (!shouldStop) callback(null, utils.formatMessage(v), stopListening);
               break;
             case 'pages_messaging':
-              if(!ctx.globalOptions.pageId) return;
+              if(!ctx.globalOptions.pageID) return;
               if(v.event !== "deliver") return;
-              if(!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID.toString() || v.message.sender_fbid.toString() === ctx.globalOptions.pageId.toString())) return;
-              if(v.realtime_viewer_fbid !== ctx.globalOptions.pageId) return;
+              if(!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID.toString() || v.message.sender_fbid.toString() === ctx.globalOptions.pageID.toString())) return;
+              if(v.realtime_viewer_fbid !== ctx.globalOptions.pageID) return;
 
               atLeastOne = true;
               if (!shouldStop) callback(null, utils.formatMessage(v), stopListening);

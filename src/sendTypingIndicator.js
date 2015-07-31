@@ -17,7 +17,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     // More info on this is in api.sendMessage
     api.getUserInfo(threadID, function(err, res) {
       // If id is single person chat
-      if(!(res instanceof Array)) {
+      if(Object.keys(res).length > 0) {
         form.to = threadID
       };
 
@@ -45,8 +45,10 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     });
 
     // TODO: document that we return the stop/cancel functions now
-    return function end() {
-      makeTypingIndicator(threadID, false)
+    return function end(cb) {
+      if(!cb) cb = function() {};
+
+      makeTypingIndicator(threadID, false, cb);
     };
   };
 };
