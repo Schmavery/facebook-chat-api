@@ -8,6 +8,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
   return function setTitle(newTitle, thread_id, callback) {
     if(!callback) callback = function() {};
 
+    var messageAndOTID = utils.generateOfflineThreadingID();
     var form = mergeWithDefaults({
       'client' : 'mercury',
       'message_batch[0][action_type]' : 'ma-type:log-message',
@@ -27,7 +28,9 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'message_batch[0][source]' : 'source:chat:web',
       'message_batch[0][source_tags][0]' : 'source:chat',
       'message_batch[0][status]' : '0',
-      'message_batch[0][message_id]' : utils.generateMessageID(ctx.clientid),
+      'message_batch[0][offline_threading_id]' : messageAndOTID,
+      'message_batch[0][message_id]' : messageAndOTID,
+      'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientid),
       'message_batch[0][manual_retry_cnt]' : '0',
       'message_batch[0][thread_fbid]' : thread_id,
       'message_batch[0][log_message_data][name]' : newTitle,
