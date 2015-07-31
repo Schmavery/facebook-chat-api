@@ -4,7 +4,7 @@
   "description": "Facebook chat API that doesn't rely on XMPP.  Will NOT be deprecated April 30th 2015.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node_modules/.bin/mocha tests/tests.js",
     "start": "node server.js"
   },
   "repository": {
@@ -29,5 +29,8 @@
   },
   "engines": {
     "node": "0.12.x"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5"
   }
 }
