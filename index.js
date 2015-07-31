@@ -75,7 +75,7 @@ function _login(email, password, loginOptions, callback) {
 
       if(maybeCookie.length === 0) return callback(new Error("Error retrieving userID. This can be caused by a lot of things, including getting blocked by Facebook for logging in from an unknown location. Try logging in with a browser to verify."));
 
-      var userID = maybeCookie[0].cookieString().split("=")[1];
+      var userID = maybeCookie[0].cookieString().split("=")[1].toString();
       log.info("Logged in");
 
       var api = {};
@@ -99,7 +99,7 @@ function _login(email, password, loginOptions, callback) {
               globalOptions.listenEvents = options.listenEvents;
               break;
             case 'pageID':
-              globalOptions.pageID = options.pageID;
+              globalOptions.pageID = options.pageID.toString();
               break;
             case 'updatePresence':
               globalOptions.updatePresence = options.updatePresence;
