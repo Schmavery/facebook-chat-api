@@ -152,14 +152,12 @@ describe('Login:', function() {
   });
 
   it('Send typing indicator', function (done) {
-    this.timeout(10000);
-    var time = Date.now();
-    dones[time] = done;
-    tests[time] = function(res) {
+    var stopType = api.sendTypingIndicator(groupChatID, function(err) {
+      if(err) return done(err);
+
       stopType();
-      return true;
-    };
-    var stopType = api.sendTypingIndicator(groupChatID, checkError(done));
+      done();
+    });
   });
 
   after(function (){
