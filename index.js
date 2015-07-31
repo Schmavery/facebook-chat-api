@@ -62,9 +62,12 @@ function _login(email, password, loginOptions, callback) {
       if (!headers.location) return callback({error: "Wrong username/password."});
       return [utils.get(headers.location, jar), jar];
     },
+    function redirect(res, jar) {
+      return [utils.get('https:\/\/www.facebook.com\/home.php', jar).then(utils.saveCookies(jar)), jar];
+    },
     function nullStateReq(res, jar) {
       var html = res.body;
-      // if(err) return callback(err);
+
       var maybeCookie = jar.getCookies("https://www.facebook.com").filter(function(val) {
         return val.cookieString().split("=")[0] === "c_user";
       });
