@@ -5,12 +5,12 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function markAsRead(thread_id, callback) {
+  return function markAsRead(threadID, callback) {
     if(!callback) callback = function() {};
 
     var form = mergeWithDefaults();
 
-    form["ids[" + thread_id + "]"] = true;
+    form["ids[" + threadID + "]"] = true;
 
     utils.post("https://www.facebook.com/ajax/mercury/change_read_status.php", ctx.jar, form)
     .then(utils.saveCookies(ctx.jar))

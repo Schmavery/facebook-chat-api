@@ -19,12 +19,12 @@ module.exports = function(mergeWithDefaults, api, ctx) {
   var lastSync = Date.now();
 
   var form = {
-    'channel' : 'p_' + ctx.userId,
+    'channel' : 'p_' + ctx.userID,
     'seq' : '0',
     'partition' : '-2',
     'clientid' : ctx.clientid,
-    'viewer_uid' : ctx.userId,
-    'uid' : ctx.userId,
+    'viewer_uid' : ctx.userID,
+    'uid' : ctx.userID,
     'state' : 'active',
     'idle' : 0,
     'cap' : '8',
@@ -87,8 +87,8 @@ module.exports = function(mergeWithDefaults, api, ctx) {
               if(!ctx.globalOptions.updatePresence) return;
 
               // There should be only one key inside overlay
-              Object.keys(v.overlay).map(function(userId) {
-                var formattedPresence = utils.formatPresence(v.overlay[userId], userId);
+              Object.keys(v.overlay).map(function(userID) {
+                var formattedPresence = utils.formatPresence(v.overlay[userID], userID);
                 if(!shouldStop) callback(null, formattedPresence, stopListening);
               });
               break;
@@ -97,7 +97,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
               if(!ctx.globalOptions.listenEvents) return;
               v.actions.map(function(v2) {
                 var formattedEvent = utils.formatEvent(v2);
-                if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userId.toString()) return;
+                if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID.toString()) return;
 
                 if (!shouldStop) callback(null, formattedEvent, stopListening);
               });
@@ -105,14 +105,14 @@ module.exports = function(mergeWithDefaults, api, ctx) {
             case 'messaging':
               if(ctx.globalOptions.pageId) return;
               if(v.event !== "deliver") return;
-              if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userId.toString()) return;
+              if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID.toString()) return;
               atLeastOne = true;
               if (!shouldStop) callback(null, utils.formatMessage(v), stopListening);
               break;
             case 'pages_messaging':
               if(!ctx.globalOptions.pageId) return;
               if(v.event !== "deliver") return;
-              if(!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userId.toString() || v.message.sender_fbid.toString() === ctx.globalOptions.pageId.toString())) return;
+              if(!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID.toString() || v.message.sender_fbid.toString() === ctx.globalOptions.pageId.toString())) return;
               if(v.realtime_viewer_fbid !== ctx.globalOptions.pageId) return;
 
               atLeastOne = true;

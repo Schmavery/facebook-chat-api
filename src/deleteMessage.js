@@ -9,20 +9,18 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     if(!callback) callback = function(){};
 
     // this allows also passing a message object
-    var message_id = messageOrMessages.message_id || null;
-    if(message_id != null) {
-      messageOrMessages = message_id;
+    var messageID = messageOrMessages.messageID || null;
+    if(messageID != null) {
+      messageOrMessages = messageID;
     }
 
     var form = mergeWithDefaults();
     form['client'] = "mercury";
 
-    if(Array.isArray(messageOrMessages)) {
-      for (var i = 0; i < messageOrMessages.length; i++) {
-        form['message_ids['+i+']'] = messageOrMessages[i];
-      }
-    } else {
-      form['message_ids[0]'] = messageOrMessages;
+    if(!Array.isArray(messageOrMessages)) messageOrMessages = [messageOrMessages];
+
+    for (var i = 0; i < messageOrMessages.length; i++) {
+      form['message_ids['+i+']'] = messageOrMessages[i];
     }
 
     utils.post("https://www.facebook.com/ajax/mercury/delete_messages.php", ctx.jar, form)

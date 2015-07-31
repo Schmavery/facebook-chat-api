@@ -12,7 +12,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     var form = mergeWithDefaults({
       'client' : 'mercury',
       'message_batch[0][action_type]' : 'ma-type:log-message',
-      'message_batch[0][author]' : 'fbid:' + ctx.userId,
+      'message_batch[0][author]' : 'fbid:' + ctx.userID,
       'message_batch[0][thread_id]' : '',
       'message_batch[0][author_email]' : '',
       'message_batch[0][coordinates]' : '',

@@ -17,7 +17,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     var form = mergeWithDefaults({
       'client' : 'mercury',
       'message_batch[0][action_type]' : 'ma-type:user-generated-message',
-      'message_batch[0][author]' : 'fbid:' + ctx.userId,
+      'message_batch[0][author]' : 'fbid:' + ctx.userID,
       'message_batch[0][timestamp]' : Date.now(),
       'message_batch[0][timestamp_absolute]' : 'Today',
       'message_batch[0][timestamp_relative]' : utils.genTimestampRelative(),
@@ -50,18 +50,18 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       if(!(res instanceof Array)) {
         form['message_batch[0][client_thread_id]'] = "user:"+threadID;
         form['message_batch[0][specific_to_list][0]'] = "fbid:"+threadID;
-        form['message_batch[0][specific_to_list][1]'] = "fbid:"+ctx.userId;
+        form['message_batch[0][specific_to_list][1]'] = "fbid:"+ctx.userID;
       }
 
       if(ctx.globalOptions.pageId) {
         form['message_batch[0][author]'] = "fbid:" + ctx.globalOptions.pageId;
         form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.globalOptions.pageId;
-        form['message_batch[0][creator_info][creatorID]'] = ctx.userId;
+        form['message_batch[0][creator_info][creatorID]'] = ctx.userID;
         form['message_batch[0][creator_info][creatorType]'] = "direct_admin";
         form['message_batch[0][creator_info][labelType]'] = "sent_message";
         form['message_batch[0][creator_info][pageID]'] = ctx.globalOptions.pageId;
         form['request_user_id'] = ctx.globalOptions.pageId;
-        form['message_batch[0][creator_info][profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userId;
+        form['message_batch[0][creator_info][profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userID;
       }
 
       utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)

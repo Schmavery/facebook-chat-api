@@ -72,9 +72,9 @@ function _login(email, password, loginOptions, callback) {
         return val.cookieString().split("=")[0] === "c_user";
       });
 
-      if(maybeCookie.length === 0) return callback(new Error("Error retrieving userId. This can be caused by a lot of things, including getting blocked by Facebook for logging in from an unknown location. Try logging in with a browser to verify."));
+      if(maybeCookie.length === 0) return callback(new Error("Error retrieving userID. This can be caused by a lot of things, including getting blocked by Facebook for logging in from an unknown location. Try logging in with a browser to verify."));
 
-      var userId = maybeCookie[0].cookieString().split("=")[1];
+      var userID = maybeCookie[0].cookieString().split("=")[1];
       log.info("Logged in");
 
       var api = {};
@@ -116,7 +116,7 @@ function _login(email, password, loginOptions, callback) {
 
       var clientid = (Math.random()*2147483648|0).toString(16);
       var ctx = {
-        userId: userId,
+        userID: userID,
         jar: jar,
         clientid: clientid,
         globalOptions: globalOptions,
@@ -137,14 +137,14 @@ function _login(email, password, loginOptions, callback) {
         'removeUserFromGroup',
         'addUserToGroup',
         'sendTypingIndicator',
-        'getCurrentUserId',
+        'getCurrentUserID',
         'uploadAttachment',
         'deleteMessage',
         'deleteThread',
         'archiveThread',
         'unarchiveThread'];
 
-      var mergeWithDefaults = utils.makeMergeWithDefaults(html, userId);
+      var mergeWithDefaults = utils.makeMergeWithDefaults(html, userID);
 
       // Load all api functions in a loop
       apiFuncNames.map(function(v) {
@@ -170,12 +170,12 @@ function _login(email, password, loginOptions, callback) {
     function firstPullReq(res, ctx, mergeWithDefaults, api) {
       log.info('Request to pull 1');
       var form = {
-        'channel' : 'p_' + ctx.userId,
+        'channel' : 'p_' + ctx.userID,
         'seq' : 0,
         'partition' : -2,
         'clientid' : ctx.clientid,
-        'viewer_uid' : ctx.userId,
-        'uid' : ctx.userId,
+        'viewer_uid' : ctx.userID,
+        'uid' : ctx.userID,
         'state' : 'active',
         'idle' : 0,
         'cap' : 8,

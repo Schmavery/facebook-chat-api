@@ -146,9 +146,9 @@ function formatMessage(m) {
     participant_names: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
     participant_ids: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids : [originalMessage.sender_fbid]),
     body: originalMessage.body,
-    thread_id: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
+    threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
-    message_id: originalMessage.mid
+    messageID: originalMessage.mid
   };
 
   if (originalMessage.attachments){
@@ -195,7 +195,7 @@ function formatMessage(m) {
 function formatEvent(m) {
   return {
     type: "event",
-    thread_id: m.thread_fbid,
+    threadID: m.thread_fbid,
     log_message_type: m.log_message_type,
     log_message_data: m.log_message_data,
     log_message_body: m.log_message_body,
@@ -236,7 +236,7 @@ function genTimestampRelative() {
   return d.getHours() + ":" + padZeros(d.getMinutes());
 }
 
-function makeMergeWithDefaults(html, userId) {
+function makeMergeWithDefaults(html, userID) {
   var reqCounter = 1;
   var fb_dtsg = getFrom(html, "name=\"fb_dtsg\" value=\"", "\"");
   var ttstamp = "";
@@ -247,7 +247,7 @@ function makeMergeWithDefaults(html, userId) {
 
   return function (obj) {
     var newObj = {
-      __user: userId,
+      __user: userID,
       __req: (reqCounter++).toString(36),
       __rev: getFrom(html, "revision\":",","),
       __a: 1,
@@ -307,11 +307,11 @@ function getType(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1);
 }
 
-function formatPresence(presence, userId) {
+function formatPresence(presence, userID) {
   return {
     type: "presence",
     timestamp: presence.la * 1000,
-    userId: userId,
+    userID: userID,
     statuses: presence.p
   };
 }

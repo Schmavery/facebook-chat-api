@@ -6,7 +6,7 @@ var log = require("npmlog");
 
 function formatData(data) {
   return {
-    threadId: data.thread_id,
+    threadID: data.thread_id,
     threadFbid: data.thread_fbid,
     participants: data.participants,
     formerParticipants: data.former_participants,
@@ -25,7 +25,7 @@ function formatData(data) {
     isCanonical: data.is_canonical,
     canonicalFbid: data.canonical_fbid,
     isSubscribed: data.is_subscribed,
-    rootMessageThreadingId: data.root_message_threading_id,
+    rootMessageThreadingID: data.root_message_threading_id,
     folder: data.folder,
     isArchived: data.is_archived,
     recipientsLoadable: data.recipients_loadable,
@@ -34,7 +34,7 @@ function formatData(data) {
     canReply: data.can_reply,
     composerEnabled: data.composer_enabled,
     blockedParticipants: data.blocked_participants,
-    lastMessageId: data.last_message_id }
+    lastMessageID: data.last_message_id }
 }
 
 module.exports = function(mergeWithDefaults, api, ctx) {

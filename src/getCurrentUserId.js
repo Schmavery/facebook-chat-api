@@ -3,6 +3,6 @@
 
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function getCurrentUserId(callback) {
-    return ctx.userId;
+    return ctx.userID;
   };
 };
