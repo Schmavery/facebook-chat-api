@@ -4,14 +4,14 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   function makeTypingIndicator(threadID, typ, callback) {
-    var form = mergeWithDefaults({
+    var form = {
       typ: +typ,
       to: '',
       source: 'mercury-chat',
       thread: threadID
-    });
+    };
 
     // Check if thread is single person chat or group chat
     // More info on this is in api.sendMessage
@@ -21,7 +21,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         form.to = threadID
       };
 
-      utils.post("https://www.facebook.com/ajax/messaging/typ.php", ctx.jar, form)
+      defaultFuncs.post("https://www.facebook.com/ajax/messaging/typ.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {
         if(resData.error) return callback(resData);

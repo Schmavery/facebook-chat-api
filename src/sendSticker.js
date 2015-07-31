@@ -4,7 +4,7 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function sendSticker(stickerId, threadID, callback) {
     if(!callback) callback = function() {};
 
@@ -14,7 +14,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       return callback({error: "ThreadID should be of type number or string and not " + typeof threadID + "."});
 
     var messageAndOTID = utils.generateOfflineThreadingID();
-    var form = mergeWithDefaults({
+    var form = {
       'client' : 'mercury',
       'message_batch[0][action_type]' : 'ma-type:user-generated-message',
       'message_batch[0][author]' : 'fbid:' + ctx.userID,
@@ -42,7 +42,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'message_batch[0][has_attachment]' : true,
       'message_batch[0][client_thread_id]' : "user:"+threadID,
       'message_batch[0][signatureID]' : utils.getSignatureID()
-    });
+    };
 
     api.getUserInfo(threadID, function(err, res) {
       // This means that threadID is the id of a user, and the chat
@@ -64,7 +64,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         form['message_batch[0][creator_info][profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userID;
       }
 
-      utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
+      defaultFuncs.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {
         if (!resData) return callback({error: "Send sticker failed."});

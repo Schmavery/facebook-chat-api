@@ -4,7 +4,7 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function removeUserFromGroup(userID, threadID, callback) {
     if(!callback) callback = function() {};
 
@@ -13,12 +13,12 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     if (typeof userID !== "number" && typeof userID !== "string")
       return callback({error: "userID should be of type number or string and not " + typeof userID + "."});
 
-    var form = mergeWithDefaults({
+    var form = {
       'uid' : userID,
       'tid' : threadID,
-    });
+    };
 
-    utils.post("https://www.facebook.com/chat/remove_participants", ctx.jar, form)
+    defaultFuncs.post("https://www.facebook.com/chat/remove_participants", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
       if (!resData) return callback({error: "Remove from group failed."});

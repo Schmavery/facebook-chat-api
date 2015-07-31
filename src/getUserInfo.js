@@ -26,18 +26,18 @@ function formatData(data) {
   return retObj;
 }
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function getUserInfo(id, callback) {
     if(!callback) return log.error("getUserInfo: need callback");
 
-    var form = mergeWithDefaults();
     if(!(id instanceof Array)) id = [id];
 
+    var form = {};
     id.map(function(v, i) {
       form["ids[" + i + "]"] = v;
     });
 
-    utils.get("https://www.facebook.com/chat/user_info/", ctx.jar, form)
+    defaultFuncs.get("https://www.facebook.com/chat/user_info/", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
       if (resData.error) return callback(resData);

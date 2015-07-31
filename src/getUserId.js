@@ -17,20 +17,20 @@ function formatData(data) {
   };
 }
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function getUserID(name, callback) {
     if(!callback) return log.error("getUserID: need callback");
 
-    var form = mergeWithDefaults({
+    var form = {
       'value' : name.toLowerCase(),
       'viewer' : ctx.userID,
       'rsp' : "search",
       'context' : "search",
       'path' : "/home.php",
       'request_id' : utils.getGUID(),
-    });
+    };
 
-    utils.get("https://www.facebook.com/ajax/typeahead/search.php", ctx.jar, form)
+    defaultFuncs.get("https://www.facebook.com/ajax/typeahead/search.php", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
       if (resData.error) return callback(resData);

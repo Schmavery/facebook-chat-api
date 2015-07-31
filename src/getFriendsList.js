@@ -5,7 +5,7 @@ var cheerio = require("cheerio");
 var utils = require("../utils");
 var log = require("npmlog");
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function getFriendsList(id, callback) {
     if(!callback) return log.error("getFriendsList: need callback");
 
@@ -53,7 +53,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         });
 
         var getFriendsFromId = function(lastId, cb) {
-          var formFriendsList = mergeWithDefaults({
+          var formFriendsList = {
             data: {
               collection_token: token,
               cursor: new Buffer("0:not_structured:" + lastId).toString('base64'),
@@ -62,9 +62,9 @@ module.exports = function(mergeWithDefaults, api, ctx) {
               overview:false,
               sk:"friends"
             }
-          });
+          };
 
-          utils.get("https://www.facebook.com/ajax/pagelet/generic.php/AllFriendsAppCollectionPagelet", ctx.jar, formFriendsList)
+          defaultFuncs.get("https://www.facebook.com/ajax/pagelet/generic.php/AllFriendsAppCollectionPagelet", ctx.jar, formFriendsList)
           .then(utils.parseResponse)
           .then(function(resData) {
             var nextBatch = resData.jsmods.require.filter(function(v) {

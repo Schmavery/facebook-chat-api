@@ -4,7 +4,7 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function deleteMessage(messageOrMessages, callback) {
     if(!callback) callback = function(){};
 
@@ -14,8 +14,9 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       messageOrMessages = messageID;
     }
 
-    var form = mergeWithDefaults();
-    form['client'] = "mercury";
+    var form = {
+      client: 'mercury',
+    };
 
     if(!Array.isArray(messageOrMessages)) messageOrMessages = [messageOrMessages];
 
@@ -23,7 +24,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       form['message_ids['+i+']'] = messageOrMessages[i];
     }
 
-    utils.post("https://www.facebook.com/ajax/mercury/delete_messages.php", ctx.jar, form)
+    defaultFuncs.post("https://www.facebook.com/ajax/mercury/delete_messages.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {
         if (resData.error) return callback(resData);

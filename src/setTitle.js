@@ -4,12 +4,12 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function setTitle(newTitle, threadFbid, callback) {
     if(!callback) callback = function() {};
 
     var messageAndOTID = utils.generateOfflineThreadingID();
-    var form = mergeWithDefaults({
+    var form = {
       'client' : 'mercury',
       'message_batch[0][action_type]' : 'ma-type:log-message',
       'message_batch[0][author]' : 'fbid:' + ctx.userID,
@@ -35,9 +35,9 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'message_batch[0][thread_fbid]' : threadFbid,
       'message_batch[0][log_message_data][name]' : newTitle,
       'message_batch[0][log_message_type]' : 'log:thread-name'
-    });
+    };
 
-    utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
+    defaultFuncs.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
       if (resData.error && resData.error === 1545012){

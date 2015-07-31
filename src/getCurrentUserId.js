@@ -1,7 +1,7 @@
 /*jslint node: true */
 "use strict";
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function getCurrentUserId(callback) {
     return ctx.userID;
   };

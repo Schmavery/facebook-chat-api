@@ -6,7 +6,7 @@ var log = require("npmlog");
 
 var msgs_recv = 0;
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   var shouldStop = false;
   var currentlyRunning = null;
   var stopListening = function() {
@@ -55,19 +55,19 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         form.seq = resData.seq;
         delete form.sticky_pool;
         delete form.sticky_token;
-        var form4 = mergeWithDefaults({
+        var form4 = {
           'lastSync' : ~~(lastSync/1000),
-        });
-        utils.get("https://www.facebook.com/notifications/sync/", ctx.jar, form4)
+        };
+        defaultFuncs.get("https://www.facebook.com/notifications/sync/", ctx.jar, form4)
         .then(utils.saveCookies(ctx.jar))
         .then(function(res) {
           lastSync = Date.now();
-          var form6 = mergeWithDefaults({
+          var form6 = {
             'client' : 'mercury',
             'folders[0]': 'inbox',
             'last_action_timestamp' : ~~(Date.now() - 60)
-          });
-          utils.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form)
+          };
+          defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form)
           .then(function(res) {
             log.info("thread sync --->", res.body);
             currentlyRunning = setTimeout(listen, 1000);
@@ -124,7 +124,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
 
         if(atLeastOne) {
           // Send deliveryReceipt notification to the server
-          var formDeliveryReceipt = mergeWithDefaults();
+          var formDeliveryReceipt = {};
 
           for (var i = 0; i < resData.ms.length; i++) {
             if(resData.ms[i].message && resData.ms[i].message.mid) formDeliveryReceipt["[" + i + "]"] = resData.ms[i].message.mid;
@@ -132,7 +132,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
 
           // If there's at least one, we do the post request
           if(formDeliveryReceipt["[0]"]) {
-            utils.post("https://www.facebook.com/ajax/mercury/delivery_receipts.php", ctx.jar, formDeliveryReceipt);
+            defaultFuncs.post("https://www.facebook.com/ajax/mercury/delivery_receipts.php", ctx.jar, formDeliveryReceipt);
           }
         }
       }

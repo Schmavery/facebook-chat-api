@@ -4,7 +4,7 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function addUserToGroup(userID, threadID, callback) {
     if(!callback) callback = function() {};
     if (typeof threadID !== "number" && typeof threadID !== "string")
@@ -13,7 +13,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       userID = [userID];
 
     var messageAndOTID = utils.generateOfflineThreadingID();
-    var form = mergeWithDefaults({
+    var form = {
       'client' : 'mercury',
       'message_batch[0][action_type]' : 'ma-type:log-message',
       'message_batch[0][author]' : 'fbid:' + ctx.userID,
@@ -38,7 +38,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientID),
       'message_batch[0][manual_retry_cnt]' : '0',
       'message_batch[0][thread_fbid]' : threadID,
-    });
+    };
 
     for (var i = 0; i < userID.length; i++){
       if (typeof userID[i] !== "number" && typeof userID[i] !== "string")
@@ -46,7 +46,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       form['message_batch[0][log_message_data][added_participants]['+i+']'] = 'fbid:' + userID[i];
     }
 
-    utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
+    defaultFuncs.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
       if (!resData) return callback({error: "Add to group failed."});

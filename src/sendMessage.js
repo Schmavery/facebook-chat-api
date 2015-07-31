@@ -4,7 +4,7 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function sendMessage(msg, threadID, callback) {
     if(!callback) callback = function() {};
 
@@ -26,7 +26,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
 
     var messageAndOTID = utils.generateOfflineThreadingID();
 
-    var form = mergeWithDefaults({
+    var form = {
       'client' : 'mercury',
       'message_batch[0][action_type]' : 'ma-type:user-generated-message',
       'message_batch[0][author]' : 'fbid:' + ctx.userID,
@@ -52,7 +52,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'message_batch[0][thread_fbid]' : threadID,
       'message_batch[0][has_attachment]' : false,
       'message_batch[0][signatureID]' : utils.getSignatureID(),
-    });
+    };
 
     if (msg.attachment) {
       form['message_batch[0][has_attachment]'] = true;
@@ -113,7 +113,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
           form['message_batch[0][creator_info][profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userID;
         }
 
-        utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
+        defaultFuncs.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
         .then(utils.parseResponse)
         .then(function(resData) {
           if (!resData) return callback({error: "Send message failed."});

@@ -27,10 +27,9 @@ describe('Login:', function() {
   var tests = {};
   var dones = {};
   var stopListening;
-  this.timeout(5000);
+  this.timeout(15000);
 
   before(function(done) {
-    this.timeout(15000);
     login(credentials, options, function (err, localAPI) {
       checkError(done)(err);
       assert(localAPI);

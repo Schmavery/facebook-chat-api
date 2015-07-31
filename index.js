@@ -145,30 +145,30 @@ function _login(email, password, loginOptions, callback) {
         'archiveThread',
         'unarchiveThread'];
 
-      var mergeWithDefaults = utils.makeMergeWithDefaults(html, userID);
+      var defaultFuncs = utils.makeDefaults(html, userID);
 
       // Load all api functions in a loop
       apiFuncNames.map(function(v) {
-        api[v] = require('./src/' + v)(mergeWithDefaults, api, ctx);
+        api[v] = require('./src/' + v)(defaultFuncs, api, ctx);
       });
 
-      var form2 = mergeWithDefaults({
+      var form = {
         'grammar_version' : utils.getFrom(html, "grammar_version\":\"", "\"")
-      });
+      };
 
       log.info("Initial requests...");
       log.info("Request to null_state");
-      return [utils.get("https://www.facebook.com/ajax/browse/null_state.php", jar, form2), ctx, mergeWithDefaults, api];
+      return [defaultFuncs.get("https://www.facebook.com/ajax/browse/null_state.php", jar, form), ctx, defaultFuncs, api];
     },
-    function reconnectReq(res, ctx, mergeWithDefaults, api) {
+    function reconnectReq(res, ctx, defaultFuncs, api) {
       var html = res.body;
       log.info("Request to reconnect");
-      var form3 = mergeWithDefaults({
+      var form = {
         reason: 6,
-      });
-      return [utils.get("https://www.facebook.com/ajax/presence/reconnect.php", ctx.jar, form3).then(utils.saveCookies(ctx.jar)), ctx, mergeWithDefaults, api];
+      };
+      return [defaultFuncs.get("https://www.facebook.com/ajax/presence/reconnect.php", ctx.jar, form).then(utils.saveCookies(ctx.jar)), ctx, defaultFuncs, api];
     },
-    function firstPullReq(res, ctx, mergeWithDefaults, api) {
+    function firstPullReq(res, ctx, defaultFuncs, api) {
       log.info('Request to pull 1');
       var form = {
         'channel' : 'p_' + ctx.userID,
@@ -182,40 +182,40 @@ function _login(email, password, loginOptions, callback) {
         'cap' : 8,
         'msgs_recv':0
       };
-      return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form).then(utils.parseResponse), ctx, mergeWithDefaults, api, form];
+      return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form).then(utils.parseResponse), ctx, defaultFuncs, api, form];
     },
-    function secondPullReq(resData, ctx, mergeWithDefaults, api, form) {
+    function secondPullReq(resData, ctx, defaultFuncs, api, form) {
       if (resData.t !== 'lb') throw new Error("Bad response from pull 1");
 
       form.sticky_token = resData.lb_info.sticky;
       form.sticky_pool = resData.lb_info.pool;
 
       log.info("Request to pull 2");
-      return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form), ctx, mergeWithDefaults, api];
+      return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form), ctx, defaultFuncs, api];
     },
-    function syncReq(res, ctx, mergeWithDefaults, api) {
-      var form = mergeWithDefaults({
+    function syncReq(res, ctx, defaultFuncs, api) {
+      var form = {
         'lastSync' : ~~(Date.now()/1000 - 60),
-      });
+      };
       log.info("Request to sync");
-      return [utils.get("https://www.facebook.com/notifications/sync", ctx.jar, form).then(utils.saveCookies(ctx.jar)), ctx, mergeWithDefaults, api];
+      return [defaultFuncs.get("https://www.facebook.com/notifications/sync", ctx.jar, form).then(utils.saveCookies(ctx.jar)), ctx, defaultFuncs, api];
     },
-    function threadSyncReq(res, ctx, mergeWithDefaults, api) {
-      var form = mergeWithDefaults({
+    function threadSyncReq(res, ctx, defaultFuncs, api) {
+      var form = {
         'client' : 'mercury',
         'folders[0]': 'inbox',
         'last_action_timestamp' : '0'
-      });
+      };
       log.info("Request to thread_sync");
-      return [utils.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form).then(utils.saveCookies(ctx.jar)), ctx, mergeWithDefaults, api];
+      return [defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form).then(utils.saveCookies(ctx.jar)), ctx, defaultFuncs, api];
     },
-    function almostDone(resData, ctx, mergeWithDefaults, api) {
-      if(!ctx.globalOptions.pageID) return [null, ctx, mergeWithDefaults, api];
+    function almostDone(resData, ctx, defaultFuncs, api) {
+      if(!ctx.globalOptions.pageID) return [null, ctx, defaultFuncs, api];
 
       // Return a promise maybe?
-      return [utils.get('https://www.facebook.com/'+ctx.globalOptions.pageID+'/messages/?section=messages&subsection=inbox', ctx.jar), ctx, mergeWithDefaults, api];
+      return [utils.get('https://www.facebook.com/'+ctx.globalOptions.pageID+'/messages/?section=messages&subsection=inbox', ctx.jar), ctx, defaultFuncs, api];
     },
-    function maybePageLogin(resData, ctx, mergeWithDefaults, api) {
+    function maybePageLogin(resData, ctx, defaultFuncs, api) {
       if(!resData) return [null, api];
 
       var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/www.facebook.com\\', '");').split('\\').join('');

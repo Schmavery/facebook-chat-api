@@ -236,7 +236,7 @@ function genTimestampRelative() {
   return d.getHours() + ":" + padZeros(d.getMinutes());
 }
 
-function makeMergeWithDefaults(html, userID) {
+function makeDefaults(html, userID) {
   var reqCounter = 1;
   var fb_dtsg = getFrom(html, "name=\"fb_dtsg\" value=\"", "\"");
   var ttstamp = "";
@@ -245,7 +245,9 @@ function makeMergeWithDefaults(html, userID) {
   }
   ttstamp += '2';
 
-  return function (obj) {
+  function mergeWithDefaults(obj) {
+    if (!obj) return {};
+
     var newObj = {
       __user: userID,
       __req: (reqCounter++).toString(36),
@@ -264,6 +266,24 @@ function makeMergeWithDefaults(html, userID) {
     }
 
     return newObj;
+  };
+
+  function postWithDefaults(url, jar, form) {
+    return post(url, jar, mergeWithDefaults(form));
+  }
+
+  function getWithDefaults(url, jar, qs) {
+    return get(url, jar, mergeWithDefaults(qs));
+  }
+
+  function postFormDataWithDefault(url, jar, form, qs) {
+    return postFormData(url, jar, mergeWithDefaults(form), mergeWithDefaults(qs));
+  }
+
+  return {
+    get: getWithDefaults,
+    post: postWithDefaults,
+    postFormData: postFormDataWithDefault,
   };
 }
 
@@ -331,7 +351,7 @@ module.exports = {
   getSignatureID: getSignatureID,
   getJar: request.jar,
   genTimestampRelative: genTimestampRelative,
-  makeMergeWithDefaults: makeMergeWithDefaults,
+  makeDefaults: makeDefaults,
   formatEvent: formatEvent,
   parseResponse: parseResponse,
   saveCookies: saveCookies,

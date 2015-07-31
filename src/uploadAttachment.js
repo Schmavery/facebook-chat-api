@@ -13,42 +13,36 @@ function formatData(data) {
   }
 }
 
-module.exports = function(mergeWithDefaults, api, ctx) {
-  return function sendAttachment(attachment, callback) {
+module.exports = function(defaultFuncs, api, ctx) {
+  return function sendAttachment(attachments, callback) {
     if(!callback) callback = function() {};
 
-    var attachmentType = utils.getType(attachment);
+    if (!Array.isArray(attachments)) attachments = [attachments];
 
-    function typeError() {
-      return callback({error: "Attachment should be of type array of readable stream and not " + attachmentType + "."});
-    }
-
-    if (attachmentType !== "Array") return typeError();
-
-    var qs = mergeWithDefaults();
+    var qs = {};
     var uploads = []
 
     // create an array of promises
-    for (var i = 0; i < attachment.length; i++) {
-      if (!utils.isReadableStream(attachment[i])) return typeError();
+    for (var i = 0; i < attachments.length; i++) {
+      if (!utils.isReadableStream(attachments[i])) return callback({error: "Attachement should be a readable stream and not " + utils.getType(attachments[i]) + "."});
 
       var form = {
-        upload_1024: attachment[i]
+        upload_1024: attachments[i]
       };
 
-      uploads.push(utils.postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, qs)
+      uploads.push(defaultFuncs.postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, qs)
       .then(utils.parseResponse)
       .then(function (resData) {
         if (resData.error) throw resData;
 
-        return resData.payload.metadata[0];
+        return formatData(resData.payload.metadata[0]);
       }));
     }
 
     // resolve all promises
     bluebird.all(uploads)
     .then(function(resData) {
-      callback(null, resData.map(formatData));
+      callback(null, resData);
     })
     .catch(function(err) {
       log.error("Error in sendAttachment", err);

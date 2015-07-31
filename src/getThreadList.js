@@ -37,21 +37,21 @@ function formatData(data) {
     lastMessageID: data.last_message_id }
 }
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function getThreadList(start, end, callback) {
     if(!callback) return log.error("getThreadList: need callback");
 
     if (end <= start) end = start + 20;
 
-    var form = mergeWithDefaults({
+    var form = {
       'client' : 'mercury',
       'inbox[offset]' : start,
       'inbox[limit]' : end - start,
-    });
+    };
 
     if(ctx.globalOptions.pageID) form.request_user_id = ctx.globalOptions.pageID;
 
-    utils.post("https://www.facebook.com/ajax/mercury/threadlist_info.php", ctx.jar, form)
+    defaultFuncs.post("https://www.facebook.com/ajax/mercury/threadlist_info.php", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
       if (resData.error) return callback(resData);

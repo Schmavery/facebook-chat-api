@@ -4,12 +4,13 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-module.exports = function(mergeWithDefaults, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function deleteThread(threadOrThreads, callback) {
     if(!callback) callback = function(){};
 
-    var form = mergeWithDefaults();
-    form['client'] = 'mercury';
+    var form = {
+      client: 'mercury',
+    };
 
     if(Array.isArray(threadOrThreads)) {
       for (var i = 0; i < threadOrThreads.length; i++) {
@@ -19,7 +20,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       form['ids[0]'] = threadOrThreads;
     }
 
-    utils.post("https://www.facebook.com/ajax/mercury/delete_thread.php", ctx.jar, form)
+    defaultFuncs.post("https://www.facebook.com/ajax/mercury/delete_thread.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {
         if (resData.error) return callback(resData);
