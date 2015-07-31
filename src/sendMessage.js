@@ -5,16 +5,16 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function sendMessage(msg, thread_id, callback) {
+  return function sendMessage(msg, threadID, callback) {
     if(!callback) callback = function() {};
 
     var msgType = utils.getType(msg);
-    var thread_idType = utils.getType(thread_id);
+    var threadIdType = utils.getType(threadID);
 
     if(msgType !== "String" && msgType !== "Object")
-      return callback({error: "Message should be of type string or object and not " + thread_idType + "."});
-    if(thread_idType !== "Number" && thread_idType !== "String")
-      return callback({error: "Thread_id should be of type number or string and not " + thread_idType + "."});
+      return callback({error: "Message should be of type string or object and not " + threadIdType + "."});
+    if(threadIdType !== "Number" && threadIdType !== "String")
+      return callback({error: "ThreadID should be of type number or string and not " + threadIdType + "."});
 
     if (msgType === "String") {
       msg = { body: msg }
@@ -49,7 +49,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'message_batch[0][message_id]' : messageAndOTID,
       'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientid),
       'message_batch[0][manual_retry_cnt]' : '0',
-      'message_batch[0][thread_fbid]' : thread_id,
+      'message_batch[0][thread_fbid]' : threadID,
       'message_batch[0][has_attachment]' : false,
       'message_batch[0][signatureID]' : utils.getSignatureID(),
     });
@@ -92,12 +92,12 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       // We're doing a query to this to check if the given id is the id of
       // a user or of a group chat. The form will be different depending
       // on that.
-      api.getUserInfo(thread_id, function(err, res) {
-        // This means that thread_id is the id of a user, and the chat
+      api.getUserInfo(threadID, function(err, res) {
+        // This means that threadID is the id of a user, and the chat
         // is a single person chat
         if(!(res instanceof Array)) {
-          form['message_batch[0][client_thread_id]'] = "user:"+thread_id;
-          form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
+          form['message_batch[0][client_thread_id]'] = "user:"+threadID;
+          form['message_batch[0][specific_to_list][0]'] = "fbid:"+threadID;
           form['message_batch[0][specific_to_list][1]'] = "fbid:"+ctx.userId;
         }
 
@@ -119,7 +119,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
           if (!resData) return callback({error: "Send message failed."});
           if(resData.error) return callback(resData);
 
-          callback();
+          return callback();
         })
         .catch(function(err) {
           log.error("ERROR in sendMessage --> ", err);

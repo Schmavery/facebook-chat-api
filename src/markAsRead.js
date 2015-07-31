@@ -7,6 +7,7 @@ var log = require("npmlog");
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function markAsRead(thread_id, callback) {
     if(!callback) callback = function() {};
+
     var form = mergeWithDefaults();
 
     form["ids[" + thread_id + "]"] = true;
@@ -15,7 +16,9 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     .then(utils.saveCookies(ctx.jar))
     .then(utils.parseResponse)
     .then(function(resData) {
-      callback();
+      if (resData.error) return callback(resData);
+
+      return callback();
     })
     .catch(function(err) {
       log.error("Error in markAsRead", err);

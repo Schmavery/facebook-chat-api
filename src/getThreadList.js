@@ -39,7 +39,7 @@ function formatData(data) {
 
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function getThreadList(start, end, callback) {
-    if(!callback) callback = function() {};
+    if(!callback) return log.error("getThreadList: need callback");
 
     if (end <= start) end = start + 20;
 
@@ -54,9 +54,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     utils.post("https://www.facebook.com/ajax/mercury/threadlist_info.php", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
-      if (resData.error) {
-        return callback(resData);
-      }
+      if (resData.error) return callback(resData);
 
       return callback(null, resData.payload.threads.map(formatData));
     })

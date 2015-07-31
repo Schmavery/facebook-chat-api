@@ -5,12 +5,12 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function addUserToGroup(user_id, thread_id, callback) {
+  return function addUserToGroup(userID, threadID, callback) {
     if(!callback) callback = function() {};
-    if (typeof thread_id !== "number" && typeof thread_id !== "string")
-      return callback({error: "Thread_id should be of type number or string and not " + typeof thread_id + "."});
-    if (!(user_id instanceof Array))
-      user_id = [user_id];
+    if (typeof threadID !== "number" && typeof threadID !== "string")
+      return callback({error: "ThreadID should be of type number or string and not " + typeof threadID + "."});
+    if (!(userID instanceof Array))
+      userID = [userID];
 
     var messageAndOTID = utils.generateOfflineThreadingID();
     var form = mergeWithDefaults({
@@ -37,13 +37,13 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'message_batch[0][message_id]' : messageAndOTID,
       'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientid),
       'message_batch[0][manual_retry_cnt]' : '0',
-      'message_batch[0][thread_fbid]' : thread_id,
+      'message_batch[0][thread_fbid]' : threadID,
     });
 
-    for (var i = 0; i < user_id.length; i++){
-      if (typeof user_id[i] !== "number" && typeof user_id[i] !== "string")
-        return callback({error: "Elements of user_id should be of type number or string and not " + typeof user_id[i] + "."});
-      form['message_batch[0][log_message_data][added_participants]['+i+']'] = 'fbid:' + user_id[i];
+    for (var i = 0; i < userID.length; i++){
+      if (typeof userID[i] !== "number" && typeof userID[i] !== "string")
+        return callback({error: "Elements of userID should be of type number or string and not " + typeof userID[i] + "."});
+      form['message_batch[0][log_message_data][added_participants]['+i+']'] = 'fbid:' + userID[i];
     }
 
     utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
@@ -52,7 +52,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       if (!resData) return callback({error: "Add to group failed."});
       if(resData.error) return callback(resData);
 
-      callback();
+      return callback();
     })
     .catch(function(err) {
       log.error("ERROR in addUserToGroup --> ", err);

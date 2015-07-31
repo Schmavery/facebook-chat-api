@@ -6,6 +6,8 @@ var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function deleteMessage(messageOrMessages, callback) {
+    if(!callback) callback = function(){};
+
     // this allows also passing a message object
     var message_id = messageOrMessages.message_id || null;
     if(message_id != null) {
@@ -26,14 +28,13 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     utils.post("https://www.facebook.com/ajax/mercury/delete_messages.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {
-        if (resData.error) {
-          callback(resData);
-        } else callback(null);
+        if (resData.error) return callback(resData);
+
+        return callback();
       })
       .catch(function(err) {
         log.error("Error in deleteMessage", err);
         return callback(err);
       });
-    return ctx.access_token;
   };
 };

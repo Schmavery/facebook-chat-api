@@ -6,6 +6,7 @@ var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function archiveThread(threadOrThreads, callback) {
+    if(!callback) callback = function(){};
 
     var form = mergeWithDefaults();
 
@@ -20,14 +21,13 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     utils.post("https://www.facebook.com/ajax/mercury/change_archived_status.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {
-        if (resData.error) {
-          callback(resData);
-        } else callback(null);
+        if (resData.error) return callback(resData);
+
+        return callback();
       })
       .catch(function(err) {
         log.error("Error in archiveThread", err);
         return callback(err);
       });
-    return ctx.access_token;
   };
 };

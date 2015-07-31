@@ -5,27 +5,28 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  function makeTypingIndicator(thread_id, typ, callback) {
-    if(!callback) callback = function() {};
+  function makeTypingIndicator(threadID, typ, callback) {
     var form = mergeWithDefaults({
       typ: +typ,
       to: '',
       source: 'mercury-chat',
-      thread: thread_id
+      thread: threadID
     });
 
     // Check if thread is single person chat or group chat
     // More info on this is in api.sendMessage
-    api.getUserInfo(thread_id, function(err, res) {
+    api.getUserInfo(threadID, function(err, res) {
       // If id is single person chat
       if(!(res instanceof Array)) {
-        form.to = thread_id
+        form.to = threadID
       };
 
       utils.post("https://www.facebook.com/ajax/messaging/typ.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {
-        callback();
+        if(resData.error) return callback(resData);
+
+        return callback();
       })
       .catch(function(err) {
         log.error("Error in sendTypingIndicator", err);
@@ -34,17 +35,18 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     });
   };
 
-  return function sendTypingIndicator(thread_id, callback) {
-    if(!callback) callback = function() {};
+  return function sendTypingIndicator(threadID, callback) {
+    if(!callback) return log.error("sendTypingIndicator: need callback");
 
-    makeTypingIndicator(thread_id, true, function(err) {
+    makeTypingIndicator(threadID, true, function(err) {
       if(err) return callback(err)
 
-      function end() {
-        makeTypingIndicator(thread_id, false)
-      };
-
-      callback(null, end);
+      return callback();
     });
+
+    // TODO: document that we return the stop/cancel functions now
+    return function end() {
+      makeTypingIndicator(threadID, false)
+    };
   };
 };

@@ -28,6 +28,8 @@ function formatData(data) {
 
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function getUserInfo(id, callback) {
+    if(!callback) return log.error("getUserInfo: need callback");
+
     var form = mergeWithDefaults();
     if(!(id instanceof Array)) id = [id];
 
@@ -38,6 +40,8 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     utils.get("https://www.facebook.com/chat/user_info/", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
+      if (resData.error) return callback(resData);
+
       callback(null, formatData(resData.payload.profiles));
     })
     .catch(function(err) {

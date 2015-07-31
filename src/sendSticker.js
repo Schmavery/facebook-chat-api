@@ -5,12 +5,13 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function sendSticker(sticker_id, thread_id, callback) {
+  return function sendSticker(stickerId, threadID, callback) {
     if(!callback) callback = function() {};
-    if (typeof sticker_id !== "number" && typeof sticker_id !== "string")
-      return callback({error: "Sticker_id should be of type number or string and not " + typeof msg + "."});
-    if (typeof thread_id !== "number" && typeof thread_id !== "string")
-      return callback({error: "Thread_id should be of type number or string and not " + typeof thread_id + "."});
+
+    if (typeof stickerId !== "number" && typeof stickerId !== "string")
+      return callback({error: "StickerId should be of type number or string and not " + typeof msg + "."});
+    if (typeof threadID !== "number" && typeof threadID !== "string")
+      return callback({error: "ThreadID should be of type number or string and not " + typeof threadID + "."});
 
     var messageAndOTID = utils.generateOfflineThreadingID();
     var form = mergeWithDefaults({
@@ -36,19 +37,19 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'message_batch[0][message_id]' : messageAndOTID,
       'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientid),
       'message_batch[0][manual_retry_cnt]' : '0',
-      'message_batch[0][thread_fbid]' : thread_id,
-      'message_batch[0][sticker_id]' : sticker_id,
+      'message_batch[0][thread_fbid]' : threadID,
+      'message_batch[0][sticker_id]' : stickerId,
       'message_batch[0][has_attachment]' : true,
-      'message_batch[0][client_thread_id]' : "user:"+thread_id,
+      'message_batch[0][client_thread_id]' : "user:"+threadID,
       'message_batch[0][signatureID]' : utils.getSignatureID()
     });
 
-    api.getUserInfo(thread_id, function(err, res) {
-      // This means that thread_id is the id of a user, and the chat
+    api.getUserInfo(threadID, function(err, res) {
+      // This means that threadID is the id of a user, and the chat
       // is a single person chat
       if(!(res instanceof Array)) {
-        form['message_batch[0][client_thread_id]'] = "user:"+thread_id;
-        form['message_batch[0][specific_to_list][0]'] = "fbid:"+thread_id;
+        form['message_batch[0][client_thread_id]'] = "user:"+threadID;
+        form['message_batch[0][specific_to_list][0]'] = "fbid:"+threadID;
         form['message_batch[0][specific_to_list][1]'] = "fbid:"+ctx.userId;
       }
 
@@ -57,7 +58,6 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.globalOptions.pageId;
         form['message_batch[0][creator_info][creatorID]'] = ctx.userId;
         form['message_batch[0][creator_info][creatorType]'] = "direct_admin";
-        // form['message_batch[0][creator_info][creatorName]'] = Marc Zuckerbot
         form['message_batch[0][creator_info][labelType]'] = "sent_message";
         form['message_batch[0][creator_info][pageID]'] = ctx.globalOptions.pageId;
         form['request_user_id'] = ctx.globalOptions.pageId;
@@ -70,7 +70,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         if (!resData) return callback({error: "Send sticker failed."});
         if(resData.error) return callback(resData);
 
-        callback();
+        return callback();
       })
       .catch(function(err) {
         log.error("ERROR in sendSticker --> ", err);

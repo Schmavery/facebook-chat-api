@@ -5,8 +5,18 @@ var utils = require("../utils");
 var log = require("npmlog");
 var bluebird = require("bluebird");
 
+function formatData(data) {
+  return {
+    imageID: data.image_id,
+    filename: data.filename,
+    filetype: data.filetype
+  }
+}
+
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function sendAttachment(attachment, callback) {
+    if(!callback) callback = function() {};
+
     var attachmentType = utils.getType(attachment);
 
     function typeError() {
@@ -29,9 +39,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       uploads.push(utils.postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, qs)
       .then(utils.parseResponse)
       .then(function (resData) {
-        if (resData.error) {
-          throw resData
-        };
+        if (resData.error) throw resData;
 
         return resData.payload.metadata[0];
       }));
@@ -40,7 +48,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     // resolve all promises
     bluebird.all(uploads)
     .then(function(resData) {
-      callback(null, resData);
+      callback(null, resData.map(formatData));
     })
     .catch(function(err) {
       log.error("Error in sendAttachment", err);

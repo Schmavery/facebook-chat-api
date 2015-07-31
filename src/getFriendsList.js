@@ -7,7 +7,6 @@ var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function getFriendsList(id, callback) {
-    if(!id) return log.error("getFriendsList: need id");
     if(!callback) return log.error("getFriendsList: need callback");
 
     id = parseInt(id);

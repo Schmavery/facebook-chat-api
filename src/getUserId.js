@@ -6,7 +6,7 @@ var log = require("npmlog");
 
 function formatData(data) {
   return {
-    userId: data.uid,
+    userID: data.uid,
     photoUrl: data.photo,
     indexRank: data.index_rank,
     name: data.text,
@@ -18,10 +18,12 @@ function formatData(data) {
 }
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function getUserId(name, callback) {
+  return function getUserID(name, callback) {
+    if(!callback) return log.error("getUserID: need callback");
+
     var form = mergeWithDefaults({
       'value' : name.toLowerCase(),
-      'viewer' : ctx.userId,
+      'viewer' : ctx.userID,
       'rsp' : "search",
       'context' : "search",
       'path' : "/home.php",
@@ -31,6 +33,8 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     utils.get("https://www.facebook.com/ajax/typeahead/search.php", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
+      if (resData.error) return callback(resData);
+
       var data = resData.payload.entries;
 
       if(data[0].type !== "user") {
@@ -40,7 +44,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       callback(null, data.map(formatData));
     })
     .catch(function(err) {
-      log.error("Error in getUserId", err);
+      log.error("Error in getUserID", err);
       return callback(err);
     });
   };
