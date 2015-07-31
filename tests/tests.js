@@ -9,6 +9,7 @@ var otherID = conf.otherID;
 
 var options = {logLevel: 'silent', selfListen: true, listenEvents: true};
 var pageOptions = {logLevel: 'silent', pageID: conf.pageID};
+var getType = require('../utils').getType;
 
 var userID = 0;
 
@@ -37,7 +38,7 @@ describe('Login:', function() {
       userID = api.getCurrentUserID();
       api.listen(function (err, msg, sl) {
         Object.keys(tests).map(function(key) {
-          if (typeof tests[key] === 'function' && tests[key](msg)){
+          if (getType(tests[key]) === 'Function' && tests[key](msg)){
             delete tests[key];
             dones[key]();
             delete dones[key];

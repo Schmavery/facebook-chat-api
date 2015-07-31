@@ -9,12 +9,10 @@ module.exports = function(defaultFuncs, api, ctx) {
     if(!callback) callback = function() {};
     var form = {};
 
-    if(Array.isArray(threadOrThreads)) {
-      for (var i = 0; i < threadOrThreads.length; i++) {
-        form['ids['+threadOrThreads[i]+']'] = false;
-      }
-    } else {
-      form['ids['+threadOrThreads+']'] = false;
+    if(utils.getType(threadOrThreads) !== "Array") threadOrThreads = [threadOrThreads];
+
+    for (var i = 0; i < threadOrThreads.length; i++) {
+      form['ids['+threadOrThreads[i]+']'] = false;
     }
 
     defaultFuncs.post("https://www.facebook.com/ajax/mercury/change_archived_status.php", ctx.jar, form)

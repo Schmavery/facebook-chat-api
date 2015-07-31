@@ -9,10 +9,9 @@ module.exports = function(defaultFuncs, api, ctx) {
     if(!callback && utils.getType(threadID) === 'Function') return callback({error: "please pass a threadID as a second argument."});
 
     if(!callback) callback = function() {};
-    if (typeof threadID !== "number" && typeof threadID !== "string")
-      return callback({error: "ThreadID should be of type number or string and not " + typeof threadID + "."});
-    if (!(userID instanceof Array))
-      userID = [userID];
+    if (utils.getType(threadID) !== "Number" && utils.getType(threadID) !== "String")
+      return callback({error: "ThreadID should be of type Number or String and not " + utils.getType(threadID) + "."});
+    if (utils.getType(userID) !== "Array") userID = [userID];
 
     var messageAndOTID = utils.generateOfflineThreadingID();
     var form = {
@@ -43,8 +42,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     };
 
     for (var i = 0; i < userID.length; i++){
-      if (typeof userID[i] !== "number" && typeof userID[i] !== "string")
-        return callback({error: "Elements of userID should be of type number or string and not " + typeof userID[i] + "."});
+      if (utils.getType(userID[i]) !== "Number" && utils.getType(userID[i]) !== "String")
+        return callback({error: "Elements of userID should be of type Number or String and not " + utils.getType(userID[i]) + "."});
       form['message_batch[0][log_message_data][added_participants]['+i+']'] = 'fbid:' + userID[i];
     }
 

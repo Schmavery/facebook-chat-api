@@ -17,7 +17,7 @@ module.exports = function(defaultFuncs, api, ctx) {
   return function sendAttachment(attachments, callback) {
     if(!callback) callback = function() {};
 
-    if (!Array.isArray(attachments)) attachments = [attachments];
+    if (utils.getType(attachments) !== "Array") attachments = [attachments];
 
     var qs = {};
     var uploads = []

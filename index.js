@@ -243,7 +243,7 @@ function _login(email, password, loginOptions, callback) {
 }
 
 function login(loginData, options, callback) {
-  if(typeof options === 'function') {
+  if(utils.getType(options) === 'Function') {
     callback = options;
     options = {};
   }

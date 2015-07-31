@@ -19,15 +19,15 @@ function getHeaders(url) {
 
 function isReadableStream(obj) {
   return obj instanceof stream.Stream &&
-    typeof (obj._read === 'function') &&
-    typeof (obj._readableState === 'object');
+    getType(obj._read) === 'Function' &&
+    getType(obj._readableState) === 'Object';
 }
 
 function get(url, jar, qs) {
   // I'm still confused about this
-  if(typeof qs === "object") {
+  if(getType(qs) === "Object") {
     for(var prop in qs) {
-      if(qs.hasOwnProperty(prop) && typeof qs[prop] === "object") {
+      if(qs.hasOwnProperty(prop) && getType(qs[prop]) === "Object") {
         qs[prop] = JSON.stringify(qs[prop]);
       }
     }

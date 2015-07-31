@@ -5,7 +5,7 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  function makeTypingIndicator(threadID, typ, callback) {
+  function makeTypingIndicator(typ, threadID, callback) {
     var form = {
       typ: +typ,
       to: '',
@@ -38,7 +38,7 @@ module.exports = function(defaultFuncs, api, ctx) {
   return function sendTypingIndicator(threadID, callback) {
     if(!callback) return log.error("sendTypingIndicator: need callback");
 
-    makeTypingIndicator(threadID, true, function(err) {
+    makeTypingIndicator(true, threadID, function(err) {
       if(err) return callback(err)
 
       return callback();
@@ -48,7 +48,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     return function end(cb) {
       if(!cb) cb = function() {};
 
-      makeTypingIndicator(threadID, false, cb);
+      makeTypingIndicator(false, threadID, cb);
     };
   };
 };

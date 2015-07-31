@@ -10,7 +10,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     var form = {};
 
-    if(Array.isArray(threadOrThreads)) {
+    if(utils.getType(threadOrThreads) === "Array") {
       for (var i = 0; i < threadOrThreads.length; i++) {
         form['ids['+threadOrThreads[i]+']'] = true;
       }

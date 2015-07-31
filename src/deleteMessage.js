@@ -18,7 +18,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       client: 'mercury',
     };
 
-    if(!Array.isArray(messageOrMessages)) messageOrMessages = [messageOrMessages];
+    if(utils.getType(messageOrMessages) !== "Array") messageOrMessages = [messageOrMessages];
 
     for (var i = 0; i < messageOrMessages.length; i++) {
       form['message_ids['+i+']'] = messageOrMessages[i];
