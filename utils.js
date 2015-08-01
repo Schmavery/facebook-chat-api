@@ -142,9 +142,9 @@ function formatMessage(m) {
   var obj = {
     type: "message",
     senderName: originalMessage.sender_name,
-    senderID: originalMessage.sender_fbid,
+    senderID: originalMessage.sender_fbid.toString(),
     participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
-    participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids : [originalMessage.sender_fbid]),
+    participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return v.toString();}) : [originalMessage.sender_fbid]),
     body: originalMessage.body,
     threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
@@ -196,7 +196,7 @@ function formatMessage(m) {
 function formatEvent(m) {
   return {
     type: "event",
-    threadID: m.thread_fbid,
+    threadID: m.thread_fbid.toString(),
     logMessageType: m.log_message_type,
     logMessageData: m.log_message_data,
     logMessageBody: m.log_message_body,
