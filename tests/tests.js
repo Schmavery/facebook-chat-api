@@ -3,15 +3,15 @@ var fs = require('fs');
 var assert = require('assert');
 
 var conf = JSON.parse(fs.readFileSync('tests/test-config.json', 'utf8'));
-var credentials = {email: conf.email, password: conf.password};
+var credentials = {email: conf.markEmail, password: conf.markPassword};
 var groupChatID = conf.groupChatID;
-var otherID = conf.otherID;
+var roseID = conf.roseID;
 
 var options = {logLevel: 'silent', selfListen: true, listenEvents: true};
 var pageOptions = {logLevel: 'silent', pageID: conf.pageID};
 var getType = require('../utils').getType;
 
-var userID = 0;
+var markID = conf.markID;
 
 function checkError(done){
   return function(err) {
@@ -32,10 +32,11 @@ describe('Login:', function() {
 
   before(function(done) {
     login(credentials, options, function (err, localAPI) {
-      checkError(done)(err);
+      if(err) return done(err);
+
       assert(localAPI);
       api = localAPI;
-      userID = api.getCurrentUserID();
+      markID = api.getCurrentUserID();
       stopListening = api.listen(function (err, msg) {
         Object.keys(tests).map(function(key) {
           if (getType(tests[key]) === 'Function' && tests[key](msg)){
@@ -50,40 +51,43 @@ describe('Login:', function() {
     });
   });
 
-  it('Login without error', function (done){
+  it('should login without error', function (done){
    if (api) done();
   });
 
+  it('should get the right user ID', function (){
+   assertEqual(markID, api.getCurrentUserID());
+  });
 
-  it('Text message object (user)', function (done){
+  it('should send text message object (user)', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'message' && msg.body === 'test' + time);
     };
-    api.sendMessage({body: 'test'+time}, userID, checkError(done));
+    api.sendMessage({body: 'test'+time}, markID, checkError(done));
   });
 
-  it('Sticker message object (user)', function (done){
+  it('should send sticker message object (user)', function (done){
     var stickerID = '767334526626290';
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'sticker' && msg.stickerID == stickerID);
     };
-    api.sendMessage({sticker: stickerID}, userID, checkError(done));
+    api.sendMessage({sticker: stickerID}, markID, checkError(done));
   });
 
-  it('Basic string (user)', function (done){
+  it('should send basic string (user)', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'message' && msg.body === 'test' + time);
     };
-    api.sendMessage('test'+time, userID, checkError(done));
+    api.sendMessage('test'+time, markID, checkError(done));
   });
 
-  it('Text message object (group)', function (done){
+  it('should send text message object (group)', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
@@ -92,7 +96,7 @@ describe('Login:', function() {
     api.sendMessage({body: 'test'+time}, groupChatID, checkError(done));
   });
 
-  it('Sticker message object (group)', function (done){
+  it('should send sticker message object (group)', function (done){
     var stickerID = '767334526626290';
     var time = Date.now();
     dones[time] = done;
@@ -102,7 +106,7 @@ describe('Login:', function() {
     api.sendMessage({sticker: stickerID}, groupChatID, checkError(done));
   });
 
-  it('Basic string (group)', function (done){
+  it('should send basic string (group)', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
@@ -111,7 +115,7 @@ describe('Login:', function() {
     api.sendMessage('test'+time, groupChatID, checkError(done));
   });
 
-  it('Change chat title', function (done){
+  it('should change chat title', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
@@ -122,39 +126,58 @@ describe('Login:', function() {
     api.setTitle('test chat '+time, groupChatID, checkError(done));
   });
 
-  it('Kick user', function (done){
+  it('should kick user', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'event' &&
         msg.logMessageType === 'log:unsubscribe' &&
         msg.logMessageData.
-          removed_participants.indexOf('fbid:'+otherID) > -1);
+          removed_participants.indexOf('fbid:'+roseID) > -1);
     };
-    api.removeUserFromGroup(otherID, groupChatID, checkError(done));
+    api.removeUserFromGroup(roseID, groupChatID, checkError(done));
   });
 
-  it('Add user', function (done){
+  it('should add user', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
+      console.log(msg);
       return (msg.type === 'event' &&
         msg.logMessageType === 'log:subscribe' &&
         msg.logMessageData.
-          added_participants.indexOf('fbid:'+otherID) > -1);
+          added_participants.indexOf('fbid:'+roseID) > -1);
     };
-    api.addUserToGroup(otherID, groupChatID, checkError(done));
+    api.addUserToGroup(roseID, groupChatID, checkError(done));
   });
 
-  it('Mark as read', function (done){
+  it('should mark as read', function (done){
     api.markAsRead(groupChatID, done);
   });
 
-  it('Send typing indicator', function (done) {
+  it('should send typing indicator', function (done) {
     var stopType = api.sendTypingIndicator(groupChatID, function(err) {
       if(err) return done(err);
 
       stopType();
+      done();
+    });
+  });
+
+  it('should get the right user info', function (done) {
+    api.getUserInfo(markID, function(err, data) {
+      if(err) return done(err);
+
+      var mark = data[markID];
+
+      assert(mark.name === "Marc Zuckerbot");
+      assert(mark.firstName === "Marc");
+      assert(mark.vanity === '');
+      assert(mark.profileUrl === 'https://www.facebook.com/profile.php?id=100009069356507');
+      assert(mark.gender === 2);
+      assert(mark.type === 'friend');
+      assert(!mark.isFriend);
+
       done();
     });
   });
