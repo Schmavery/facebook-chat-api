@@ -69,7 +69,6 @@ module.exports = function(defaultFuncs, api, ctx) {
           };
           defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form)
           .then(function(res) {
-            log.info("thread sync --->", res.body);
             currentlyRunning = setTimeout(listen, 1000);
           });
         });

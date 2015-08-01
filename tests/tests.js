@@ -3,11 +3,15 @@ var fs = require('fs');
 var assert = require('assert');
 
 var conf = JSON.parse(fs.readFileSync('tests/test-config.json', 'utf8'));
-var credentials = {email: conf.markEmail, password: conf.markPassword};
+var credentials = {
+  email: conf.markEmail,
+  password: conf.markPassword,
+  // appState: JSON.parse(fs.readFileSync('tests.json', 'utf8')),
+};
 var groupChatID = conf.groupChatID;
 var roseID = conf.roseID;
 
-var options = {logLevel: 'silent', selfListen: true, listenEvents: true};
+var options = { selfListen: true, listenEvents: true};
 var pageOptions = {logLevel: 'silent', pageID: conf.pageID};
 var getType = require('../utils').getType;
 
@@ -38,6 +42,8 @@ describe('Login:', function() {
       api = localAPI;
       markID = api.getCurrentUserID();
       stopListening = api.listen(function (err, msg) {
+        if (err) throw err;
+
         Object.keys(tests).map(function(key) {
           if (getType(tests[key]) === 'Function' && tests[key](msg)){
             delete tests[key];
@@ -46,6 +52,8 @@ describe('Login:', function() {
           }
         });
       });
+
+      fs.writeFileSync('tests.json', JSON.stringify(api.getAppState()));
 
       done();
     });
@@ -56,7 +64,7 @@ describe('Login:', function() {
   });
 
   it('should get the right user ID', function (){
-   assertEqual(markID, api.getCurrentUserID());
+   assert(markID === api.getCurrentUserID());
   });
 
   it('should send text message object (user)', function (done){
@@ -142,7 +150,6 @@ describe('Login:', function() {
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
-      console.log(msg);
       return (msg.type === 'event' &&
         msg.logMessageType === 'log:subscribe' &&
         msg.logMessageData.

@@ -48,7 +48,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       'message_batch[0][status]' : '0',
       'message_batch[0][offline_threading_id]' : messageAndOTID,
       'message_batch[0][message_id]' : messageAndOTID,
-      'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientid),
+      'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientID),
       'message_batch[0][manual_retry_cnt]' : '0',
       'message_batch[0][thread_fbid]' : threadID,
       'message_batch[0][has_attachment]' : false,
