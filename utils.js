@@ -136,9 +136,88 @@ function getGUID() {
   return id;
 }
 
+function _formatAttachement(attachment1, attachment2) {
+  if (attachment1.attach_type === "sticker") {
+    return {
+      type: "sticker",
+      url: attachment1.url,
+      stickerID: attachment1.metadata.stickerID,
+      packID: attachment1.metadata.packID,
+      frameCount: attachment1.metadata.frameCount,
+      frameRate: attachment1.metadata.frameRate,
+      framesPerRow: attachment1.metadata.framesPerRow,
+      framesPerCol: attachment1.metadata.framesPerCol,
+      spriteURI: attachment1.metadata.spriteURI,
+      spriteURI2x: attachment1.metadata.spriteURI2x,
+      height: attachment1.metadata.height,
+      width: attachment1.metadata.width,
+      caption: attachment2.caption,
+      description: attachment2.description,
+    };
+  }
+  if (attachment1.attach_type === "file"){
+    return {
+      type: "file",
+      name: attachment1.name,
+      url: attachment1.url,
+      ID: attachment2.id,
+      fileSize: attachment2.file_size,
+      isMalicious: attachment2.is_malicious,
+      mimeType: attachment2.mime_type,
+    };
+  }
+  if (attachment1.attach_type === "photo"){
+    return {
+      type: "photo",
+      name: attachment1.name, // Do we need this?
+      hiresUrl: attachment1.hires_url,
+      thumbnailUrl: attachment1.thumbnail_url,
+      previewUrl: attachment1.preview_url,
+      previewWidth: attachment1.preview_width,
+      previewHeight: attachment1.preview_height,
+      facebookUrl: attachment1.url, // wtf is this?
+      ID: attachment2.id,
+      filename: attachment2.filename,
+      mimeType: attachment2.mime_type,
+      url: attachment2.image_data.url,
+      width:attachment2.image_data.width,
+      height:attachment2.image_data.height,
+    };
+  }
+  if (attachment1.attach_type === "animated_image"){
+    return {
+      type: "animated_image",
+      name: attachment1.name,
+      facebookUrl: attachment1.url,
+      previewUrl: attachment1.preview_url,
+      previewWidth: attachment1.preview_width,
+      previewHeight: attachment1.preview_height,
+      thumbnailUrl: attachment1.thumbnail_url,
+      ID: attachment2.id,
+      filename: attachment2.filename,
+      mimeType: attachment2.mime_type,
+      width: attachment2.image_data.width,
+      height: attachment2.image_data.height,
+      url: attachment2.image_data.url,
+      rawGifImage: attachment2.image_data.raw_gif_image,
+      rawWebpImage: attachment2.image_data.raw_webp_image,
+      animatedGifUrl: attachment2.image_data.animated_gif_url,
+      animatedGifPreviewUrl: attachment2.image_data.animated_gif_preview_url,
+      animatedWebpUrl: attachment2.image_data.animated_webp_url,
+      animatedWebpPreviewUrl: attachment2.image_data.animated_webp_preview_url,
+    };
+  }
+}
+
+function formatAttachement(attachments, attachmentIds, attachmentMap, shareMap) {
+  attachmentMap = shareMap || attachmentMap;
+  return attachments.map(function(val, i) {
+    return _formatAttachement(val, attachmentMap[attachmentIds[i]]);
+  });
+}
+
 function formatMessage(m) {
   var originalMessage = m.message ? m.message : m;
-
   var obj = {
     type: "message",
     senderName: originalMessage.sender_name,
@@ -149,44 +228,9 @@ function formatMessage(m) {
     threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
-    messageID: originalMessage.mid
+    messageID: originalMessage.mid,
+    attachments: formatAttachement(originalMessage.attachments, originalMessage.attachmentIds, originalMessage.attachment_map, originalMessage.share_map),
   };
-
-  if (originalMessage.attachments){
-    for (var i = 0; i < originalMessage.attachments.length; i++){
-      if (originalMessage.attachments[i].attach_type === "sticker"){
-        obj.type = "sticker";
-        delete obj.body;
-        obj.stickerID = originalMessage.attachments[i].metadata.stickerID;
-        obj.stickerUrl = originalMessage.attachments[i].url;
-        break;
-      }
-      if (originalMessage.attachments[i].attach_type === "file"){
-        obj.type = "file";
-        delete obj.body;
-        obj.name = originalMessage.attachments[i].name;
-        obj.fileUrl = originalMessage.attachments[i].url;
-        break;
-      }
-      if (originalMessage.attachments[i].attach_type === "photo"){
-        obj.type = "photo";
-        delete obj.body;
-        obj.name = originalMessage.attachments[i].name;
-        obj.hiresUrl = originalMessage.attachments[i].hires_url;
-        obj.thumbnailUrl = originalMessage.attachments[i].thumbnail_url;
-        obj.previewUrl = originalMessage.attachments[i].preview_url;
-        break;
-      }
-      if (originalMessage.attachments[i].attach_type === "animated_image"){
-        obj.type = "animated_image";
-        delete obj.body;
-        obj.name = originalMessage.attachments[i].name;
-        obj.url = originalMessage.attachments[i].url;
-        obj.previewUrl = originalMessage.attachments[i].preview_url;
-        break;
-      }
-    }
-  }
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid;
 
