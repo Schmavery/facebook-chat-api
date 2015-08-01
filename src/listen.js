@@ -81,7 +81,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         var atLeastOne = false;
         resData.ms.sort(function(a, b) {
           return a.timestamp - b.timestamp;
-        }).map(function parsePackets(v) {
+        }).forEach(function parsePackets(v) {
           switch (v.type) {
             case 'buddylist_overlay':
               // TODO: what happens when you're logged in as a page?
@@ -108,7 +108,31 @@ module.exports = function(defaultFuncs, api, ctx) {
               if(v.event !== "deliver") return;
               if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID) return;
               atLeastOne = true;
-              if (!shouldStop) globalCallback(null, utils.formatMessage(v));
+              var message = utils.formatMessage(v);
+
+              // The participants array is caped at 5, we need to query more to
+              // get them.
+              if(message.participantIDs.length >= 3) {
+                api.searchForThread(message.threadName, function(err, res) {
+                  if (err) return globalCallback(err);
+
+                  message.participantIDs = res.participants;
+                  api.getUserInfo(res.participants, function(err, res) {
+                    if (err) return globalCallback(err);
+
+                    message.participantsInfo = Object.keys(res).map(function(key) {
+                      return res[key];
+                    });
+                    // Rename this?
+                    message.participantNames = message.participantsInfo.map(function(v) {
+                      return v.name;
+                    })
+                    globalCallback(null, message);
+                  });
+                });
+                return;
+              }
+              if (!shouldStop) globalCallback(null, message);
               break;
             case 'pages_messaging':
               if(!ctx.globalOptions.pageID) return;

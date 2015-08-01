@@ -147,6 +147,7 @@ function formatMessage(m) {
     participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids : [originalMessage.sender_fbid]),
     body: originalMessage.body,
     threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
+    threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
     messageID: originalMessage.mid
   };

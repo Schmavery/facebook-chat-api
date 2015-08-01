@@ -143,7 +143,9 @@ function _login(email, password, loginOptions, callback) {
         'deleteMessage',
         'deleteThread',
         'archiveThread',
-        'unarchiveThread'];
+        'unarchiveThread',
+        'searchForThread',
+      ];
 
       var defaultFuncs = utils.makeDefaults(html, userID);
 

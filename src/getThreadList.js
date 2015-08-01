@@ -8,19 +8,19 @@ function formatData(data) {
   return {
     threadID: data.thread_id,
     threadFbid: data.thread_fbid,
-    participants: data.participants,
+    participants: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
     formerParticipants: data.former_participants,
     name: data.name,
     snippet: data.snippet,
     snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,
-    snippetSender: data.snippet_sender,
+    snippetSender: data.snippet_sender.replace('fbid:', ''),
     unreadCount: data.unread_count,
     messageCount: data.message_count,
     imageSrc: data.image_src,
     timestamp: data.timestamp,
     serverTimestamp: data.server_timestamp, // what is this?
-    muteSettings: [],
+    muteSettings: data.muteSettings,
     isCanonicalUser: data.is_canonical_user,
     isCanonical: data.is_canonical,
     canonicalFbid: data.canonical_fbid,
@@ -34,7 +34,8 @@ function formatData(data) {
     canReply: data.can_reply,
     composerEnabled: data.composer_enabled,
     blockedParticipants: data.blocked_participants,
-    lastMessageID: data.last_message_id }
+    lastMessageID: data.last_message_id
+  };
 }
 
 module.exports = function(defaultFuncs, api, ctx) {
