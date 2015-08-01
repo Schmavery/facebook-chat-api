@@ -30,7 +30,7 @@ module.exports = function(defaultFuncs, api, ctx) {
   return function getUserInfo(id, callback) {
     if(!callback) return log.error("getUserInfo: need callback");
 
-    if(!(id instanceof Array)) id = [id];
+    if(utils.getType(id) !== 'Array') id = [id];
 
     var form = {};
     id.map(function(v, i) {
