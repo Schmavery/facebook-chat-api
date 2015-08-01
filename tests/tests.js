@@ -36,7 +36,7 @@ describe('Login:', function() {
       assert(localAPI);
       api = localAPI;
       userID = api.getCurrentUserID();
-      api.listen(function (err, msg, sl) {
+      stopListening = api.listen(function (err, msg) {
         Object.keys(tests).map(function(key) {
           if (getType(tests[key]) === 'Function' && tests[key](msg)){
             delete tests[key];
@@ -44,7 +44,6 @@ describe('Login:', function() {
             delete dones[key];
           }
         });
-        if (!stopListening) stopListening = sl;
       });
 
       done();
