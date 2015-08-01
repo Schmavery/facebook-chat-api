@@ -83,6 +83,12 @@ module.exports = function(defaultFuncs, api, ctx) {
           return a.timestamp - b.timestamp;
         }).forEach(function parsePackets(v) {
           switch (v.type) {
+            case 'ttyp':
+              if(!ctx.globalOptions.listenEvents) return;
+              if(!ctx.globalOptions.selfListen && v.from.toString() === ctx.userID) return;
+
+              globalCallback(null, utils.formatTyp(v));
+              break;
             case 'buddylist_overlay':
               // TODO: what happens when you're logged in as a page?
               if(!ctx.globalOptions.updatePresence) return;

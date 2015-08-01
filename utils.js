@@ -204,6 +204,17 @@ function formatEvent(m) {
   };
 }
 
+function formatTyp(event) {
+  return {
+    isTyping: !!event.st,
+    from: event.from.toString(),
+    threadID: event.thread_fbid.toString(),
+    from_mobile: event.from_mobile,
+    userID: event.realtime_viewer_fbid.toString(),
+    type: 'typ',
+  }
+}
+
 function getFrom(str, startToken, endToken) {
   var start = str.indexOf(startToken) + startToken.length;
   if(start < startToken.length) return "";
@@ -345,7 +356,6 @@ module.exports = {
   generateThreadingID: generateThreadingID,
   generateOfflineThreadingID: generateOfflineThreadingID,
   getGUID: getGUID,
-  formatMessage: formatMessage,
   getFrom: getFrom,
   makeParsable: makeParsable,
   arrToForm: arrToForm,
@@ -353,10 +363,12 @@ module.exports = {
   getJar: request.jar,
   genTimestampRelative: genTimestampRelative,
   makeDefaults: makeDefaults,
-  formatEvent: formatEvent,
   parseResponse: parseResponse,
   saveCookies: saveCookies,
-  formatCookie: formatCookie,
   getType: getType,
+  formatMessage: formatMessage,
+  formatEvent: formatEvent,
   formatPresence: formatPresence,
+  formatTyp: formatTyp,
+  formatCookie: formatCookie,
 };
