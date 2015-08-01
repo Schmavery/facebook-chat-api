@@ -117,8 +117,8 @@ describe('Login:', function() {
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'event' &&
-        msg.log_message_type === 'log:thread-name' &&
-        msg.log_message_data.name === 'test chat ' + time);
+        msg.logMessageType === 'log:thread-name' &&
+        msg.logMessageData.name === 'test chat ' + time);
     };
     api.setTitle('test chat '+time, groupChatID, checkError(done));
   });
@@ -128,8 +128,8 @@ describe('Login:', function() {
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'event' &&
-        msg.log_message_type === 'log:unsubscribe' &&
-        msg.log_message_data.
+        msg.logMessageType === 'log:unsubscribe' &&
+        msg.logMessageData.
           removed_participants.indexOf('fbid:'+otherID) > -1);
     };
     api.removeUserFromGroup(otherID, groupChatID, checkError(done));
@@ -140,8 +140,8 @@ describe('Login:', function() {
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'event' &&
-        msg.log_message_type === 'log:subscribe' &&
-        msg.log_message_data.
+        msg.logMessageType === 'log:subscribe' &&
+        msg.logMessageData.
           added_participants.indexOf('fbid:'+otherID) > -1);
     };
     api.addUserToGroup(otherID, groupChatID, checkError(done));

@@ -196,9 +196,9 @@ function formatEvent(m) {
   return {
     type: "event",
     threadID: m.thread_fbid,
-    log_message_type: m.log_message_type,
-    log_message_data: m.log_message_data,
-    log_message_body: m.log_message_body,
+    logMessageType: m.log_message_type,
+    logMessageData: m.log_message_data,
+    logMessageBody: m.log_message_body,
     author: m.author.split(":")[1]
   };
 }
