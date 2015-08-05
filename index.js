@@ -4,7 +4,6 @@
 var utils = require("./utils");
 var cheerio = require("cheerio");
 var log = require("npmlog");
-var bluebird = require("bluebird");
 
 function buildAPI(loginOptions, html, jar) {
   var maybeCookie = jar.getCookies("https://www.facebook.com").filter(function(val) {
@@ -21,8 +20,9 @@ function buildAPI(loginOptions, html, jar) {
     listenEvents: false
   };
 
+  var clientID = (Math.random() * 2147483648 | 0).toString(16);
+
   // All data available to api functions
-  var clientID = (Math.random()*2147483648|0).toString(16);
   var ctx = {
     userID: userID,
     jar: jar,
@@ -58,10 +58,9 @@ function buildAPI(loginOptions, html, jar) {
       });
     },
     getAppState: function getAppState() {
-      return {
-        cookies: jar.getCookies("https://www.facebook.com").concat(jar.getCookies("https://facebook.com")),
-        clientID: clientID,
-      }
+      return jar
+        .getCookies("https://www.facebook.com")
+        .concat(jar.getCookies("https://facebook.com"));
     },
   };
 
@@ -100,13 +99,8 @@ function buildAPI(loginOptions, html, jar) {
   return [ctx, defaultFuncs, api];
 }
 
-
-var initialLogin = [
-  function getLoginForm(email, password, jar, loginOptions) {
-    var jar = utils.getJar();
-    return [utils.get("https://www.facebook.com/", null).then(utils.saveCookies(jar)), email, password, jar, loginOptions];
-  },
-  function loginReq(res, email, password, jar, loginOptions) {
+function makeLogin(jar, email, password) {
+  return function(res) {
     var html = res.body;
     var $ = cheerio.load(html);
     var arr = [];
@@ -142,123 +136,138 @@ var initialLogin = [
     // ---------- Very Hacky Part Ends -----------------
 
     log.info("Logging in...");
-    return [utils.post("https://www.facebook.com/login.php?login_attempt=1", jar, form).then(utils.saveCookies(jar)), jar, loginOptions];
-  },
-  function loadMainPage(res, jar, loginOptions) {
-    var html = res.body;
-    var headers = res.headers;
 
-    if (!headers.location) return callback({error: "Wrong username/password."});
+    return utils
+      .post("https://www.facebook.com/login.php?login_attempt=1", jar, form)
+      .then(utils.saveCookies(jar))
+      .then(function(res) {
+        var headers = res.headers;
 
-    return [utils.get('https:\/\/www.facebook.com\/home.php', jar).then(utils.saveCookies(jar)), jar, loginOptions];
-  }
-];
+        if (!headers.location) throw new Error("Wrong username/password.");
 
-var middle = [
-  function firstPullReq(res, jar, loginOptions) {
-    var html = res.body;
-
-    var stuff = buildAPI(loginOptions, html, jar);
-    var ctx = stuff[0];
-    var defaultFuncs = stuff[1];
-    var api = stuff[2];
-
-    log.info('Request to pull 1');
-    var form = {
-      'channel' : 'p_' + ctx.userID,
-      'seq' : 0,
-      'partition' : -2,
-      'clientid' : ctx.clientID,
-      'viewer_uid' : ctx.userID,
-      'uid' : ctx.userID,
-      'state' : 'active',
-      'idle' : 0,
-      'cap' : 8,
-      'msgs_recv':0
-    };
-    return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form).then(utils.parseResponse), ctx, defaultFuncs, api, form];
-  },
-  function secondPullReq(resData, ctx, defaultFuncs, api, form) {
-    if (resData.t !== 'lb') throw new Error("Bad response from pull 1");
-
-    form.sticky_token = resData.lb_info.sticky;
-    form.sticky_pool = resData.lb_info.pool;
-
-    log.info("Request to pull 2");
-    return [utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form), ctx, defaultFuncs, api];
-  },
-  function threadSyncReq(res, ctx, defaultFuncs, api) {
-    var form = {
-      'client' : 'mercury',
-      'folders[0]': 'inbox',
-      'last_action_timestamp' : '0'
-    };
-    log.info("Request to thread_sync");
-    return [defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form).then(utils.saveCookies(ctx.jar)), ctx, defaultFuncs, api];
-  }
-];
-
-var pageLogin = [
-  function almostDone(resData, ctx, defaultFuncs, api) {
-    if(!ctx.globalOptions.pageID) return [null, ctx, defaultFuncs, api];
-
-    // Return a promise maybe?
-    return [utils.get('https://www.facebook.com/'+ctx.globalOptions.pageID+'/messages/?section=messages&subsection=inbox', ctx.jar), ctx, defaultFuncs, api];
-  },
-  function maybePageLogin(resData, ctx, defaultFuncs, api) {
-    if(!resData) return [null, api];
-
-    var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/www.facebook.com\\', '");').split('\\').join('');
-    url = url.substring(0, url.length - 1);
-    return [utils.get('https://www.facebook.com' + url, ctx.jar), ctx, defaultFuncs, api];
-  }
-];
+        return utils.get('https:\/\/www.facebook.com\/home.php', jar).then(utils.saveCookies(jar));
+      });
+  };
+}
 
 function _login(appState, email, password, loginOptions, callback) {
-  var loginProcess = [];
+  var mainPromise = null;
+  var jar = utils.getJar();
 
+  // If we're given an appState we loop through it and save each cookie
+  // back into the jar.
   if(appState != null) {
-    var jar = utils.getJar();
-    appState.cookies.map(function(c) {
+    appState.map(function(c) {
       var str = c.key + "=" + c.value + "; expires=" + c.expires + "; domain=" + c.domain + "; path=" + c.path + ";";
       jar.setCookie(str, "http://" + c.domain);
     });
 
-    // Send default base function
-    loginProcess.push(function() {
-      return [utils.get('https:\/\/www.facebook.com\/home.php', jar).then(utils.saveCookies(jar)), jar, loginOptions];
-    });
+    // Load the main page.
+    mainPromise = utils
+      .get('https:\/\/www.facebook.com\/home.php', jar)
+      .then(utils.saveCookies(jar));
   } else {
-    // Send default base function
-    loginProcess.push(function() {
-      return [email, password, jar, loginOptions];
-    });
-    loginProcess = loginProcess.concat(initialLogin);
+    // Open the main page, then we login with the given credentials and finally
+    // load the main page again (it'll give us some IDs that we need)
+    mainPromise = utils
+      .get("https://www.facebook.com/", null)
+      .then(utils.saveCookies(jar))
+      .then(makeLogin(jar, email, password))
+      .then(function() {
+        return utils
+          .get('https:\/\/www.facebook.com\/home.php', jar)
+          .then(utils.saveCookies(jar));
+      });
   }
 
-  loginProcess = loginProcess.concat(middle);
+  var ctx = null;
+  var defaultFuncs = null;
+  var api = null;
 
-  if (loginOptions.pageId) {
-    loginProcess = loginProcess.concat(pageLogin);
+  mainPromise = mainPromise
+    .then(function(res) {
+      var html = res.body;
+
+      var stuff = buildAPI(loginOptions, html, jar);
+      ctx = stuff[0];
+      defaultFuncs = stuff[1];
+      api = stuff[2];
+
+      log.info('Request to pull 1');
+      var form = {
+        channel : 'p_' + ctx.userID,
+        seq : 0,
+        partition : -2,
+        clientid : ctx.clientID,
+        viewer_uid : ctx.userID,
+        uid : ctx.userID,
+        state : 'active',
+        idle : 0,
+        cap : 8,
+        msgs_recv:0
+      };
+
+      return utils
+        .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
+        .then(utils.parseResponse);
+    })
+    .then(function(resData) {
+      if (resData.t !== 'lb') throw new Error("Bad response from pull 1");
+
+      var form = {
+        channel : 'p_' + ctx.userID,
+        seq : 0,
+        partition : -2,
+        clientid : ctx.clientID,
+        viewer_uid : ctx.userID,
+        uid : ctx.userID,
+        state : 'active',
+        idle : 0,
+        cap : 8,
+        msgs_recv:0,
+        sticky_token: resData.lb_info.sticky,
+        sticky_pool: resData.lb_info.pool,
+      };
+
+      log.info("Request to pull 2");
+      return utils
+        .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form);
+    })
+    .then(function() {
+      var form = {
+        'client' : 'mercury',
+        'folders[0]': 'inbox',
+        'last_action_timestamp' : '0'
+      };
+      log.info("Request to thread_sync");
+
+      return defaultFuncs
+        .post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form)
+        .then(utils.saveCookies(ctx.jar));
+    });
+
+  // given a pageID we log in as a page
+  if (loginOptions.pageID) {
+    mainPromise = mainPromise
+      .then(function() {
+        return utils
+            .get('https://www.facebook.com/' + ctx.globalOptions.pageID + '/messages/?section=messages&subsection=inbox', ctx.jar);
+      })
+      .then(function(resData) {
+        var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/www.facebook.com\\', '");').split('\\').join('');
+        url = url.substring(0, url.length - 1);
+        return utils.get('https://www.facebook.com' + url, ctx.jar);
+      });
   }
 
-  loginProcess.push(function done(resData, ctx, defaultFuncs, api) {
-    log.info("Done loading.");
-    return [api];
-  });
-
-  bluebird.reduce(loginProcess, function(prev, cur) {
-    return bluebird.all(prev).then(function(prevResolved) {
-      return cur.apply(null, prevResolved);
+  // At the end we call the callback or catch an exception
+  mainPromise
+    .then(function() {
+      return callback(null, api);
+    })
+    .catch(function(e) {
+      callback(e);
     });
-  }, [])
-  .then(function(api) {
-    callback(null, api[0]);
-  })
-  .catch(function(err) {
-    log.error(err);
-    return callback(err);
-  });
 }
 
 function login(loginData, options, callback) {
@@ -268,7 +277,8 @@ function login(loginData, options, callback) {
   }
 
   if (options.logLevel != null) log.level = options.logLevel;
-  return _login(loginData.appState, loginData.email, loginData.password, options, callback);
+
+  _login(loginData.appState, loginData.email, loginData.password, options, callback);
 }
 
 module.exports = login;

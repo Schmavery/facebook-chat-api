@@ -6,7 +6,7 @@ var conf = JSON.parse(fs.readFileSync('tests/test-config.json', 'utf8'));
 var credentials = {
   email: conf.markEmail,
   password: conf.markPassword,
-  // appState: JSON.parse(fs.readFileSync('tests.json', 'utf8')),
+  appState: JSON.parse(fs.readFileSync('tests/tests-appState.json', 'utf8')),
 };
 var groupChatID = conf.groupChatID;
 var roseID = conf.roseID;
@@ -53,7 +53,7 @@ describe('Login:', function() {
         });
       });
 
-      fs.writeFileSync('tests.json', JSON.stringify(api.getAppState()));
+      // fs.writeFileSync('tests/tests-appState.json', JSON.stringify(api.getAppState()));
 
       done();
     });
@@ -71,9 +71,9 @@ describe('Login:', function() {
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
-      return (msg.type === 'message' && msg.body === 'test' + time);
+      return msg.type === 'message' && msg.body === 'test' + time;
     };
-    api.sendMessage({body: 'test'+time}, markID, checkError(done));
+    api.sendMessage({body: 'test' + time}, markID, checkError(done));
   });
 
   it('should send sticker message object (user)', function (done){
@@ -81,7 +81,10 @@ describe('Login:', function() {
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
-      return (msg.type === 'sticker' && msg.stickerID == stickerID);
+      return msg.type === 'message' &&
+             msg.attachments.length > 0 &&
+             msg.attachments[0].type === 'sticker' &&
+             msg.attachments[0].stickerID === stickerID;
     };
     api.sendMessage({sticker: stickerID}, markID, checkError(done));
   });
@@ -92,16 +95,16 @@ describe('Login:', function() {
     tests[time] = function (msg) {
       return (msg.type === 'message' && msg.body === 'test' + time);
     };
-    api.sendMessage('test'+time, markID, checkError(done));
+    api.sendMessage('test' + time, markID, checkError(done));
   });
 
   it('should send text message object (group)', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
-      return (msg.type === 'message' && msg.body === 'test' + time);
+      return msg.type === 'message' && msg.body === 'test' + time;
     };
-    api.sendMessage({body: 'test'+time}, groupChatID, checkError(done));
+    api.sendMessage({body: 'test' + time}, groupChatID, checkError(done));
   });
 
   it('should send sticker message object (group)', function (done){
@@ -109,7 +112,10 @@ describe('Login:', function() {
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
-      return (msg.type === 'sticker' && msg.stickerID == stickerID);
+      return msg.type === 'message' &&
+             msg.attachments.length > 0 &&
+             msg.attachments[0].type === 'sticker' &&
+             msg.attachments[0].stickerID === stickerID;
     };
     api.sendMessage({sticker: stickerID}, groupChatID, checkError(done));
   });
@@ -118,30 +124,29 @@ describe('Login:', function() {
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
-      return (msg.type === 'message' && msg.body === 'test' + time);
+      return msg.type === 'message' && msg.body === 'test' + time;
     };
-    api.sendMessage('test'+time, groupChatID, checkError(done));
+    api.sendMessage('test' + time, groupChatID, checkError(done));
   });
 
   it('should change chat title', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
-      return (msg.type === 'event' &&
-        msg.logMessageType === 'log:thread-name' &&
-        msg.logMessageData.name === 'test chat ' + time);
+      return msg.type === 'event' &&
+             msg.logMessageType === 'log:thread-name' &&
+             msg.logMessageData.name === 'test chat ' + time;
     };
-    api.setTitle('test chat '+time, groupChatID, checkError(done));
+    api.setTitle('test chat ' + time, groupChatID, checkError(done));
   });
 
   it('should kick user', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
-      return (msg.type === 'event' &&
-        msg.logMessageType === 'log:unsubscribe' &&
-        msg.logMessageData.
-          removed_participants.indexOf('fbid:'+roseID) > -1);
+      return msg.type === 'event' &&
+             msg.logMessageType === 'log:unsubscribe' &&
+             msg.logMessageData.removed_participants.indexOf('fbid:' + roseID) > -1;
     };
     api.removeUserFromGroup(roseID, groupChatID, checkError(done));
   });
