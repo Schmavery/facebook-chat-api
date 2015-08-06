@@ -4,6 +4,7 @@
 var utils = require("./utils");
 var cheerio = require("cheerio");
 var log = require("npmlog");
+var fs = require("fs");
 
 function buildAPI(loginOptions, html, jar) {
   var maybeCookie = jar.getCookies("https://www.facebook.com").filter(function(val) {
@@ -99,7 +100,7 @@ function buildAPI(loginOptions, html, jar) {
   return [ctx, defaultFuncs, api];
 }
 
-function makeLogin(jar, email, password) {
+function makeLogin(jar, email, password, loginOptions, callback) {
   return function(res) {
     var html = res.body;
     var $ = cheerio.load(html);
@@ -152,7 +153,68 @@ function makeLogin(jar, email, password) {
 
         if (!headers.location) throw {error: "Wrong username/password."};
 
-        return utils.get('https:\/\/www.facebook.com\/home.php', jar).then(utils.saveCookies(jar));
+        // This means the account has login approvals turned on.
+        if (headers.location.indexOf('https://www.facebook.com/checkpoint/') !== -1) {
+          var nextURL = 'https://www.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php';
+
+          return utils
+            .get(headers.location, jar)
+            .then(utils.saveCookies(jar))
+            .then(function(res) {
+              var html = res.body;
+              // Make the form in advance which will contain the fb_dtsg and nh
+              var $ = cheerio.load(html);
+              var arr = [];
+              $("form input").map(function(i, v){
+                arr.push({val: $(v).val(), name: $(v).attr("name")});
+              });
+
+              arr = arr.filter(function(v) {
+                return v.val && v.val.length;
+              });
+
+              var form = utils.arrToForm(arr);
+
+              throw {
+                error: 'login-approval',
+                callback: function(code) {
+                  form.approvals_code = code;
+                  form['submit[Continue]'] = 'Continue';
+                  console.log(form);
+                  return utils
+                    .post(nextURL, jar, form)
+                    .then(utils.saveCookies(jar))
+                    .then(function() {
+                      // Use the same form (safe I hope)
+                      form.name_action_selected = 'save_device';
+
+                      return utils
+                        .post(nextURL, jar, form)
+                        .then(utils.saveCookies(jar));
+                    })
+                    .then(function(res) {
+                      var headers = res.headers;
+
+                      if (!headers.location && res.body.indexOf('Review Recent Login') === -1) {
+                        throw {error: "Something went wrong with login approvals."};
+                      }
+
+                      var appState = jar
+                        .getCookies("https://www.facebook.com")
+                        .concat(jar.getCookies("https://facebook.com"));
+
+                      // Simply call loginHelper because all it needs is the jar
+                      // and will then complete the login process
+                      return loginHelper(appState, email, password, loginOptions, callback);
+                    });
+                }
+              }
+            });
+        }
+
+        return utils
+          .get('https:\/\/www.facebook.com\/home.php', jar)
+          .then(utils.saveCookies(jar));
       });
   };
 }
@@ -179,7 +241,7 @@ function loginHelper(appState, email, password, loginOptions, callback) {
     mainPromise = utils
       .get("https://www.facebook.com/", null)
       .then(utils.saveCookies(jar))
-      .then(makeLogin(jar, email, password))
+      .then(makeLogin(jar, email, password, loginOptions, callback))
       .then(function() {
         return utils
           .get('https:\/\/www.facebook.com\/home.php', jar)
@@ -194,6 +256,67 @@ function loginHelper(appState, email, password, loginOptions, callback) {
   mainPromise = mainPromise
     .then(function(res) {
       var html = res.body;
+      // Make the form in advance which will contain the fb_dtsg and nh
+      var $ = cheerio.load(html);
+      var arr = [];
+      $("form input").map(function(i, v){
+        arr.push({val: $(v).val(), name: $(v).attr("name")});
+      });
+
+      arr = arr.filter(function(v) {
+        return v.val && v.val.length;
+      });
+
+      var form = utils.arrToForm(arr);
+
+      // Login review
+      if (html.indexOf('Review Recent Login') === -1) {
+        var nextURL = 'https://www.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php';
+        return utils
+          .post(nextURL, jar, form)
+          .then(utils.saveCookies(jar))
+          .then(function(res) {
+            function cb(yesOrNo) {
+              form['submit[' + yesOrNo + ']'] = yesOrNo;
+
+              return utils
+                .post(nextURL, jar, form)
+                .then(utils.saveCookies(jar))
+                .then(function() {
+                  // Use the same form (safe I hope)
+                  form.name_action_selected = 'save_device';
+
+                  return utils
+                    .post(nextURL, jar, form)
+                    .then(utils.saveCookies(jar));
+                })
+                .then(function(res) {
+                  var headers = res.headers;
+
+                  if (!headers.location && res.body.indexOf('Review Recent Login') === -1) {
+                    throw {error: "Something went wrong with login approvals."};
+                  }
+
+                  var appState = jar
+                    .getCookies("https://www.facebook.com")
+                    .concat(jar.getCookies("https://facebook.com"));
+
+                  // Simply call loginHelper because all it needs is the jar
+                  // and will then complete the login process
+                  return loginHelper(appState, email, password, loginOptions, callback);
+                });
+            }
+
+            throw {
+              error: 'login-checks',
+              yes: cb.bind(null, 'This Is Okay'),
+              // no: cb.bind(null, 'This Is Not Okay'),
+              no: function() {
+                log.error('not implemented yet');
+              },
+            };
+          });
+      }
 
       var stuff = buildAPI(loginOptions, html, jar);
       ctx = stuff[0];
@@ -273,6 +396,7 @@ function loginHelper(appState, email, password, loginOptions, callback) {
       return callback(null, api);
     })
     .catch(function(e) {
+      console.log(e);
       callback(e);
     });
 }
