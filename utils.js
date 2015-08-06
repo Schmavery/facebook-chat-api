@@ -136,7 +136,7 @@ function getGUID() {
   return id;
 }
 
-function _formatAttachement(attachment1, attachment2) {
+function _formatAttachment(attachment1, attachment2) {
   switch (attachment1.attach_type) {
     case "sticker":
       return {
@@ -226,10 +226,10 @@ function _formatAttachement(attachment1, attachment2) {
   }
 }
 
-function formatAttachement(attachments, attachmentIds, attachmentMap, shareMap) {
+function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
   attachmentMap = shareMap || attachmentMap;
   return attachments.map(function(val, i) {
-    return _formatAttachement(val, attachmentMap[attachmentIds[i]]);
+    return _formatAttachment(val, attachmentMap[attachmentIds[i]]);
   });
 }
 
@@ -246,7 +246,7 @@ function formatMessage(m) {
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
     messageID: originalMessage.mid,
-    attachments: formatAttachement(originalMessage.attachments, originalMessage.attachmentIds, originalMessage.attachment_map, originalMessage.share_map),
+    attachments: formatAttachment(originalMessage.attachments, originalMessage.attachmentIds, originalMessage.attachment_map, originalMessage.share_map),
   };
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid;

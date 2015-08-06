@@ -117,7 +117,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               // The participants array is caped at 5, we need to query more to
               // get them.
-              if(message.participantIDs.length >= 3) {
+              if(message.participantIDs.length === 5) {
                 api.searchForThread(message.threadName, function(err, res) {
                   if (err) return globalCallback(err);
 
@@ -131,7 +131,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                     // Rename this?
                     message.participantNames = message.participantsInfo.map(function(v) {
                       return v.name;
-                    })
+                    });
                     globalCallback(null, message);
                   });
                 });
