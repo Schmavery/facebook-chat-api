@@ -258,6 +258,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
   };
 }
 
+// Helps the login
 function loginHelper(appState, email, password, globalOptions, callback) {
   var mainPromise = null;
   var jar = utils.getJar();
