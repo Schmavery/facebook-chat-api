@@ -3,7 +3,6 @@
 
 var utils = require("../utils");
 var log = require("npmlog");
-var fs = require("fs");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
   return function logout(threadOrThreads, callback) {
