@@ -88,6 +88,7 @@ function buildAPI(loginOptions, html, jar) {
     'archiveThread',
     'unarchiveThread',
     'searchForThread',
+    'logout',
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID);
@@ -233,7 +234,7 @@ function loginHelper(appState, email, password, loginOptions, callback) {
 
     // Load the main page.
     mainPromise = utils
-      .get('https:\/\/www.facebook.com\/home.php', jar)
+      .get('https://www.facebook.com/home.php', jar)
       .then(utils.saveCookies(jar));
   } else {
     // Open the main page, then we login with the given credentials and finally
@@ -256,21 +257,23 @@ function loginHelper(appState, email, password, loginOptions, callback) {
   mainPromise = mainPromise
     .then(function(res) {
       var html = res.body;
-      // Make the form in advance which will contain the fb_dtsg and nh
-      var $ = cheerio.load(html);
-      var arr = [];
-      $("form input").map(function(i, v){
-        arr.push({val: $(v).val(), name: $(v).attr("name")});
-      });
 
-      arr = arr.filter(function(v) {
-        return v.val && v.val.length;
-      });
-
-      var form = utils.arrToForm(arr);
+      fs.writeFileSync('test.html', html);
 
       // Login review
-      if (html.indexOf('Review Recent Login') === -1) {
+      if (html.indexOf('Review Recent Login') !== -1) {
+        // Make the form in advance which will contain the fb_dtsg and nh
+        var $ = cheerio.load(html);
+        var arr = [];
+        $("form input").map(function(i, v){
+          arr.push({val: $(v).val(), name: $(v).attr("name")});
+        });
+
+        arr = arr.filter(function(v) {
+          return v.val && v.val.length;
+        });
+
+        var form = utils.arrToForm(arr);
         var nextURL = 'https://www.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php';
         return utils
           .post(nextURL, jar, form)
@@ -278,7 +281,7 @@ function loginHelper(appState, email, password, loginOptions, callback) {
           .then(function(res) {
             function cb(yesOrNo) {
               form['submit[' + yesOrNo + ']'] = yesOrNo;
-
+              // console.log(form);
               return utils
                 .post(nextURL, jar, form)
                 .then(utils.saveCookies(jar))
@@ -393,10 +396,11 @@ function loginHelper(appState, email, password, loginOptions, callback) {
   // At the end we call the callback or catch an exception
   mainPromise
     .then(function() {
+      log.info('Done logging in.');
       return callback(null, api);
     })
     .catch(function(e) {
-      console.log(e);
+      log.error(e);
       callback(e);
     });
 }
