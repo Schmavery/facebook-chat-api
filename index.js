@@ -112,9 +112,9 @@ function _login(email, password, loginOptions, callback) {
 
       api.setOptions(loginOptions);
 
-      // All data available to api functions
-
       var clientid = (Math.random()*2147483648|0).toString(16);
+
+      // All data available to api functions
       var ctx = {
         userId: userId,
         jar: jar,
@@ -144,7 +144,9 @@ function _login(email, password, loginOptions, callback) {
         'deleteMessage',
         'deleteThread',
         'archiveThread',
-        'unarchiveThread'];
+        'unarchiveThread',
+        'logout',
+        ];
 
       var mergeWithDefaults = utils.makeMergeWithDefaults(html, userId);
 
