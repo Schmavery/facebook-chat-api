@@ -68,7 +68,7 @@ function buildAPI(loginOptions, html, jar) {
 
   var apiFuncNames = [
     'listen',
-    'getUserID',
+    'getUserId',
     'sendSticker',
     'setTitle',
     'getThreadList',
@@ -80,13 +80,14 @@ function buildAPI(loginOptions, html, jar) {
     'removeUserFromGroup',
     'addUserToGroup',
     'sendTypingIndicator',
-    'getCurrentUserID',
+    'getCurrentUserId',
     'uploadAttachment',
     'deleteMessage',
     'deleteThread',
     'archiveThread',
     'unarchiveThread',
     'searchForThread',
+    'getUri'
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID);
