@@ -6,7 +6,7 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function getUri(uri, callback) {
-    if(!callback) callback = function() {};
+    if(!callback) return log.error("getUri: need callback");
     var form = {
       image_height: 960,
       image_width: 960,
