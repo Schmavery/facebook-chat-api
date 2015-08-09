@@ -87,7 +87,7 @@ function buildAPI(loginOptions, html, jar) {
     'archiveThread',
     'unarchiveThread',
     'searchForThread',
-    'getUri'
+    'getUrl'
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID);

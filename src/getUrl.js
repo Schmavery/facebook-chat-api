@@ -5,12 +5,12 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function getUri(uri, callback) {
-    if(!callback) return log.error("getUri: need callback");
+  return function getUrl(url, callback) {
+    if(!callback) return log.error("getUrl: need callback");
     var form = {
       image_height: 960,
       image_width: 960,
-      uri: uri
+      uri: url
     };
 
     defaultFuncs.post("https://www.facebook.com/message_share_attachment/fromURI/", ctx.jar, form)
@@ -27,7 +27,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       callback(null, resData.payload.share_data.share_params);
     })
     .catch(function(err) {
-      log.error("Error in getUri", err);
+      log.error("Error in getUrl", err);
       return callback(err);
     });
   };

@@ -76,10 +76,10 @@ module.exports = function(defaultFuncs, api, ctx) {
 
         send();
       });
-    } else if (msg.url || msg.uri) {
+    } else if (msg.url) {
       form['message_batch[0][has_attachment]'] = true;
       form['message_batch[0][shareable_attachment][share_type]'] = 100;
-      api.getUri(msg.url || msg.uri, function (err, params) {
+      api.getUrl(msg.url, function (err, params) {
         if (err) {
           log.error("ERROR in sendMessage --> ", err);
           return callback(err)
