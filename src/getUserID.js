@@ -1,4 +1,3 @@
-/*jslint node: true */
 "use strict";
 
 var utils = require("../utils");
@@ -19,7 +18,9 @@ function formatData(data) {
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function getUserID(name, callback) {
-    if(!callback) return log.error("getUserID: need callback");
+    if(!callback) {
+      throw {error: "getUserID: need callback"};
+    }
 
     var form = {
       'value' : name.toLowerCase(),
@@ -33,12 +34,14 @@ module.exports = function(defaultFuncs, api, ctx) {
     defaultFuncs.get("https://www.facebook.com/ajax/typeahead/search.php", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
-      if (resData.error) return callback(resData);
+      if (resData.error) {
+        throw resData;
+      }
 
       var data = resData.payload.entries;
 
       if(data[0].type !== "user") {
-        return callback({error: "Couldn't find a user with name " + name + ". Best match: " + data[0].path});
+        throw {error: "Couldn't find a user with name " + name + ". Bes match: " + data[0].path};
       }
 
       callback(null, data.map(formatData));

@@ -1,4 +1,3 @@
-/*jslint node: true */
 "use strict";
 
 var utils = require("../utils");
@@ -6,9 +5,13 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function setTitle(newTitle, threadFbid, callback) {
-    if(!callback && utils.getType(threadFbid) === 'Function') return callback({error: "please pass a threadFbid as a second argument."});
+    if(!callback && utils.getType(threadFbid) === 'Function') {
+      throw {error: "please pass a threadFbid as a second argument."};
+    }
 
-    if(!callback) callback = function() {};
+    if(!callback) {
+      callback = function() {};
+    }
 
     var messageAndOTID = utils.generateOfflineThreadingID();
     var form = {
@@ -43,14 +46,16 @@ module.exports = function(defaultFuncs, api, ctx) {
     .then(utils.parseResponse)
     .then(function(resData) {
       if (resData.error && resData.error === 1545012){
-        return callback({error: "Cannot change chat title: Not member of chat."});
+        throw {error: "Cannot change chat title: Not member of chat."};
       }
 
       if (resData.error && resData.error === 1545003){
-        return callback({error: "Cannot set title of single-user chat."});
+        throw {error: "Cannot set title of single-user chat."};
       }
 
-      if (resData.error) return callback(resData);
+      if (resData.error) {
+        throw resData;
+      }
 
       return callback();
     })

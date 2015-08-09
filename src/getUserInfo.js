@@ -1,4 +1,3 @@
-/*jslint node: true */
 "use strict";
 
 var utils = require("../utils");
@@ -28,9 +27,13 @@ function formatData(data) {
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function getUserInfo(id, callback) {
-    if(!callback) return log.error("getUserInfo: need callback");
+    if(!callback) {
+      throw {error: "getUserInfo: need callback"};
+    }
 
-    if(utils.getType(id) !== 'Array') id = [id];
+    if(utils.getType(id) !== 'Array') {
+      id = [id];
+    }
 
     var form = {};
     id.map(function(v, i) {
@@ -40,7 +43,9 @@ module.exports = function(defaultFuncs, api, ctx) {
     defaultFuncs.get("https://www.facebook.com/chat/user_info/", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
-      if (resData.error) return callback(resData);
+      if (resData.error) {
+        throw resData;
+      }
 
       return callback(null, formatData(resData.payload.profiles));
     })

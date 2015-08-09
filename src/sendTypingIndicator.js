@@ -1,4 +1,3 @@
-/*jslint node: true */
 "use strict";
 
 var utils = require("../utils");
@@ -16,15 +15,21 @@ module.exports = function(defaultFuncs, api, ctx) {
     // Check if thread is single person chat or group chat
     // More info on this is in api.sendMessage
     api.getUserInfo(threadID, function(err, res) {
+      if (err) {
+        throw err;
+      }
+
       // If id is single person chat
       if(Object.keys(res).length > 0) {
-        form.to = threadID
-      };
+        form.to = threadID;
+      }
 
       defaultFuncs.post("https://www.facebook.com/ajax/messaging/typ.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {
-        if(resData.error) return callback(resData);
+        if(resData.error) {
+          throw resData;
+        }
 
         return callback();
       })
@@ -33,22 +38,24 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback(err);
       });
     });
-  };
+  }
 
   return function sendTypingIndicator(threadID, callback) {
-    if(!callback) return log.error("sendTypingIndicator: need callback");
+    if(!callback) {
+      throw {error: "sendTypingIndicator: need callback"};
+    }
 
     makeTypingIndicator(true, threadID, function(err) {
-      if(err) return callback(err)
+      if(err) {
+        throw err;
+      }
 
       return callback();
     });
 
     // TODO: document that we return the stop/cancel functions now
     return function end(cb) {
-      if(!cb) cb = function() {};
-
-      makeTypingIndicator(false, threadID, cb);
+      makeTypingIndicator(false, threadID, cb || function() {});
     };
   };
 };

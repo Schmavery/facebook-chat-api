@@ -1,4 +1,3 @@
-/*jslint node: true */
 "use strict";
 
 var utils = require("../utils");
@@ -40,9 +39,13 @@ function formatData(data) {
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function getThreadList(start, end, callback) {
-    if(!callback && utils.getType(end) === 'Function') return callback({error: "please pass an number as a second argument."});
+    if(!callback && utils.getType(end) === 'Function') {
+      throw {error: "please pass an number as a second argument."};
+    }
 
-    if(!callback) return log.error("getThreadList: need callback");
+    if(!callback) {
+      throw {error: "getThreadList: need callback"};
+    }
 
     if (end <= start) end = start + 20;
 
@@ -57,7 +60,9 @@ module.exports = function(defaultFuncs, api, ctx) {
     defaultFuncs.post("https://www.facebook.com/ajax/mercury/threadlist_info.php", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
-      if (resData.error) return callback(resData);
+      if (resData.error) {
+        throw resData;
+      }
 
       return callback(null, resData.payload.threads.map(formatData));
     })

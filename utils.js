@@ -1,5 +1,5 @@
-/*jslint node: true */
 "use strict";
+
 var bluebird = require("bluebird");
 var request = bluebird.promisify(require("request").defaults({jar: true}));
 var stream = require('stream');

@@ -1,4 +1,3 @@
-/*jslint node: true */
 "use strict";
 
 var utils = require("../utils");
@@ -6,12 +5,21 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function addUserToGroup(userID, threadID, callback) {
-    if(!callback && utils.getType(threadID) === 'Function') return callback({error: "please pass a threadID as a second argument."});
+    if(!callback && utils.getType(threadID) === 'Function') {
+      throw {error: "please pass a threadID as a second argument."};
+    }
 
-    if(!callback) callback = function() {};
-    if (utils.getType(threadID) !== "Number" && utils.getType(threadID) !== "String")
-      return callback({error: "ThreadID should be of type Number or String and not " + utils.getType(threadID) + "."});
-    if (utils.getType(userID) !== "Array") userID = [userID];
+    if(!callback) {
+      callback = function() {};
+    }
+
+    if (utils.getType(threadID) !== "Number" && utils.getType(threadID) !== "String") {
+      throw {error: "ThreadID should be of type Number or String and not " + utils.getType(threadID) + "."};
+    }
+
+    if (utils.getType(userID) !== "Array") {
+      userID = [userID];
+    }
 
     var messageAndOTID = utils.generateOfflineThreadingID();
     var form = {
@@ -42,16 +50,22 @@ module.exports = function(defaultFuncs, api, ctx) {
     };
 
     for (var i = 0; i < userID.length; i++){
-      if (utils.getType(userID[i]) !== "Number" && utils.getType(userID[i]) !== "String")
-        return callback({error: "Elements of userID should be of type Number or String and not " + utils.getType(userID[i]) + "."});
+      if (utils.getType(userID[i]) !== "Number" && utils.getType(userID[i]) !== "String") {
+        throw {error: "Elements of userID should be of type Number or String and not " + utils.getType(userID[i]) + "."};
+      }
+
       form['message_batch[0][log_message_data][added_participants]['+i+']'] = 'fbid:' + userID[i];
     }
 
     defaultFuncs.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
     .then(utils.parseResponse)
     .then(function(resData) {
-      if (!resData) return callback({error: "Add to group failed."});
-      if(resData.error) return callback(resData);
+      if (!resData) {
+        throw {error: "Add to group failed."};
+      }
+      if(resData.error) {
+        throw resData;
+      }
 
       return callback();
     })

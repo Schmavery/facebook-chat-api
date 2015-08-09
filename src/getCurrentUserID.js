@@ -1,8 +1,7 @@
-/*jslint node: true */
 "use strict";
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function getCurrentUserId(callback) {
+  return function getCurrentUserId() {
     return ctx.userID;
   };
 };

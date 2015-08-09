@@ -32,7 +32,7 @@ describe('Login:', function() {
   var tests = {};
   var dones = {};
   var stopListening;
-  this.timeout(15000);
+  this.timeout(20000);
 
   before(function(done) {
     login(credentials, options, function (err, localAPI) {
@@ -53,7 +53,7 @@ describe('Login:', function() {
         });
       });
 
-      // fs.writeFileSync('tests/tests-appState.json', JSON.stringify(api.getAppState()));
+      fs.writeFileSync('tests/tests-appState.json', JSON.stringify(api.getAppState()));
 
       done();
     });

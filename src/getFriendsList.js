@@ -1,4 +1,3 @@
-/*jslint node: true */
 "use strict";
 
 var cheerio = require("cheerio");
@@ -7,7 +6,9 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function getFriendsList(id, callback) {
-    if(!callback) return log.error("getFriendsList: need callback");
+    if(!callback) {
+      throw {error: "getFriendsList: need callback"};
+    }
 
     id = parseInt(id);
 
@@ -17,12 +18,17 @@ module.exports = function(defaultFuncs, api, ctx) {
 
       var maybeUrl = utils.getFrom(html, "window.location.replace(\"", "\");").split("\\/").join("/");
 
-      if(maybeUrl.length === 0) return callback({error: "Problem retrieving friends list. Couldn't find redirect url."});
+      if(maybeUrl.length === 0) {
+        throw {error: "Problem retrieving friends list. Couldn't find redirec url."};
+      }
 
       // Old profiles use profile.php?something=username and not
       // /username
-      if(maybeUrl.indexOf("profile.php") !== -1) maybeUrl += "&sk=friends";
-      else maybeUrl += "/friends";
+      if(maybeUrl.indexOf("profile.php") !== -1) {
+        maybeUrl += "&sk=friends";
+      } else {
+        maybeUrl += "/friends";
+      }
 
       utils.get(maybeUrl, ctx.jar)
       .then(function(res) {
@@ -30,15 +36,22 @@ module.exports = function(defaultFuncs, api, ctx) {
         html = res.body.split("<!--").join("").split("-->").join("");
 
         var maybeAllFriends = html.split("AllFriendsAppCollectionPagelet");
-        if(maybeAllFriends.length === 1) maybeAllFriends = html.split("FriendsAppCollectionPagelet");
-        if(maybeAllFriends.length === 1) return log.error("Couldn't find token on page. Assuming you can't access this person's friends: " + id);
+        if(maybeAllFriends.length === 1) {
+          maybeAllFriends = html.split("FriendsAppCollectionPagelet");
+        }
+
+        if(maybeAllFriends.length === 1) {
+          throw {error: "Couldn't find token on page. Assuming you can't acces this person's friends: " + id};
+        }
 
         var token = utils.getFrom(maybeAllFriends[1], "\"token\":\"", "\"");
 
         var $ = cheerio.load(html);
 
         var friendsList = $(".uiProfileBlockContent div div div a");
-        if(!friendsList) return callback({error: "Couldn't retrieve friends list from " + id + "."});
+        if(!friendsList) {
+          throw {error: "Couldn't retrieve friends list from " + id + "."};
+        }
 
         var friendsData = [];
 

@@ -1,4 +1,3 @@
-/*jslint node: true */
 "use strict";
 
 var utils = require("../utils");
@@ -6,19 +5,25 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function sendMessage(msg, threadID, callback) {
-    if(!callback && utils.getType(threadID) === 'Function') return callback({error: "please pass a threadID as a second argument."});
-    if(!callback) callback = function() {};
+    if(!callback && utils.getType(threadID) === 'Function') {
+      throw {error: "please pass a threadID as a second argument."};
+    }
+    if(!callback) {
+      callback = function() {};
+    }
 
     var msgType = utils.getType(msg);
     var threadIDType = utils.getType(threadID);
 
-    if(msgType !== "String" && msgType !== "Object")
-      return callback({error: "Message should be of type string or object and not " + threadIDType + "."});
-    if(threadIDType !== "Number" && threadIDType !== "String")
-      return callback({error: "ThreadID should be of type number or string and not " + threadIDType + "."});
+    if(msgType !== "String" && msgType !== "Object"){
+      throw {error: "Message should be of type string or object and not " + threadIDType + "."};
+    }
+    if(threadIDType !== "Number" && threadIDType !== "String"){
+      throw {error: "ThreadID should be of type number or string and not " + threadIDType + "."};
+    }
 
     if (msgType === "String") {
-      msg = { body: msg }
+      msg = { body: msg };
     }
 
     var messageAndOTID = utils.generateOfflineThreadingID();
@@ -58,13 +63,12 @@ module.exports = function(defaultFuncs, api, ctx) {
       form['message_batch[0][file_ids]'] = [];
 
       if (utils.getType(msg.attachment) !== 'Array') {
-        msg.attachment = [msg.attachment]
+        msg.attachment = [msg.attachment];
       }
 
       api.uploadAttachment(msg.attachment, function (err, files) {
         if (err) {
-          log.error("ERROR in sendMessage --> ", err);
-          return callback(err)
+          throw err;
         }
 
         files.forEach(function (file) {
@@ -81,19 +85,18 @@ module.exports = function(defaultFuncs, api, ctx) {
       form['message_batch[0][shareable_attachment][share_type]'] = 100;
       api.getUrl(msg.url, function (err, params) {
         if (err) {
-          log.error("ERROR in sendMessage --> ", err);
-          return callback(err)
+          throw err;
         }
 
         form['message_batch[0][shareable_attachment][share_params]'] = params;
         send();
-      })
+      });
     } else if (msg.sticker) {
       form['message_batch[0][has_attachment]'] = true;
       form['message_batch[0][sticker_id]'] = msg.sticker;
 
       // Sticker can't be combined with body
-      delete msg.body
+      delete msg.body;
 
       send();
     } else {
@@ -105,12 +108,15 @@ module.exports = function(defaultFuncs, api, ctx) {
       // a user or of a group chat. The form will be different depending
       // on that.
       api.getUserInfo(threadID, function(err, res) {
+        if (err) {
+          throw err;
+        }
         // This means that threadID is the id of a user, and the chat
         // is a single person chat
         if(Object.keys(res).length > 0) {
-          form['message_batch[0][client_thread_id]'] = "user:"+threadID;
-          form['message_batch[0][specific_to_list][0]'] = "fbid:"+threadID;
-          form['message_batch[0][specific_to_list][1]'] = "fbid:"+ctx.userID;
+          form['message_batch[0][client_thread_id]'] = "user:" + threadID;
+          form['message_batch[0][specific_to_list][0]'] = "fbid:" + threadID;
+          form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.userID;
         }
 
         if(ctx.globalOptions.pageID) {
@@ -128,8 +134,12 @@ module.exports = function(defaultFuncs, api, ctx) {
         defaultFuncs.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
         .then(utils.parseResponse)
         .then(function(resData) {
-          if (!resData) return callback({error: "Send message failed."});
-          if(resData.error) return callback(resData);
+          if (!resData) {
+            throw {error: "Send message failed."};
+          }
+          if(resData.error) {
+            throw resData;
+          }
 
           return callback();
         })
@@ -138,6 +148,6 @@ module.exports = function(defaultFuncs, api, ctx) {
           return callback(err);
         });
       });
-    };
+    }
   };
 };

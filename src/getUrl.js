@@ -1,4 +1,3 @@
-/*jslint node: true */
 "use strict";
 
 var utils = require("../utils");
@@ -6,7 +5,10 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function getUrl(url, callback) {
-    if(!callback) return log.error("getUrl: need callback");
+    if(!callback) {
+      throw {error: "getUrl: need callback"};
+    }
+
     var form = {
       image_height: 960,
       image_width: 960,
@@ -17,12 +19,12 @@ module.exports = function(defaultFuncs, api, ctx) {
     .then(utils.parseResponse)
     .then(function(resData) {
       if (resData.error) {
-        throw resData
-      };
+        throw resData;
+      }
 
       if (!resData.payload) {
-        throw 'Invalid uri'
-      };
+        throw {error: 'Invalid url'};
+      }
 
       callback(null, resData.payload.share_data.share_params);
     })

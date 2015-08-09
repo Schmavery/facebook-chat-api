@@ -1,19 +1,24 @@
-/*jslint node: true */
 "use strict";
 
 var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function sendSticker(stickerId, threadID, callback) {
-    if(!callback && utils.getType(threadID) === 'Function') return callback({error: "please pass a threadID as a second argument."});
+  return function sendSticker(stickerID, threadID, callback) {
+    if(!callback && utils.getType(threadID) === 'Function') {
+      throw {error: "please pass a threadID as a second argument."};
+    }
 
-    if(!callback) callback = function() {};
+    if(!callback) {
+     callback = function() {};
+    }
 
-    if (utils.getType(stickerId) !== "Number" && utils.getType(stickerId) !== "String")
-      return callback({error: "StickerId should be of type Number or String and not " + utils.getType(msg) + "."});
-    if (utils.getType(threadID) !== "Number" && utils.getType(threadID) !== "String")
-      return callback({error: "ThreadID should be of type Number or String and not " + utils.getType(threadID) + "."});
+    if (utils.getType(stickerID) !== "Number" && utils.getType(stickerID) !== "String") {
+      throw {error: "StickerID should be of type Number or String and not " + utils.getType(stickerID) + "."};
+    }
+    if (utils.getType(threadID) !== "Number" && utils.getType(threadID) !== "String"){
+      throw {error: "ThreadID should be of type Number or String and not " + utils.getType(threadID) + "."};
+    }
 
     var messageAndOTID = utils.generateOfflineThreadingID();
     var form = {
@@ -40,19 +45,22 @@ module.exports = function(defaultFuncs, api, ctx) {
       'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientID),
       'message_batch[0][manual_retry_cnt]' : '0',
       'message_batch[0][thread_fbid]' : threadID,
-      'message_batch[0][sticker_id]' : stickerId,
+      'message_batch[0][sticker_id]' : stickerID,
       'message_batch[0][has_attachment]' : true,
-      'message_batch[0][client_thread_id]' : "user:"+threadID,
+      'message_batch[0][client_thread_id]' : "user:" + threadID,
       'message_batch[0][signatureID]' : utils.getSignatureID()
     };
 
     api.getUserInfo(threadID, function(err, res) {
+      if(err) {
+        throw err;
+      }
       // This means that threadID is the id of a user, and the chat
       // is a single person chat
       if(Object.keys(res).length > 0) {
-        form['message_batch[0][client_thread_id]'] = "user:"+threadID;
-        form['message_batch[0][specific_to_list][0]'] = "fbid:"+threadID;
-        form['message_batch[0][specific_to_list][1]'] = "fbid:"+ctx.userID;
+        form['message_batch[0][client_thread_id]'] = "user:" + threadID;
+        form['message_batch[0][specific_to_list][0]'] = "fbid:" + threadID;
+        form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.userID;
       }
 
       if(ctx.globalOptions.pageID) {
@@ -69,8 +77,12 @@ module.exports = function(defaultFuncs, api, ctx) {
       defaultFuncs.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
       .then(utils.parseResponse)
       .then(function(resData) {
-        if (!resData) return callback({error: "Send sticker failed."});
-        if(resData.error) return callback(resData);
+        if (!resData) {
+          throw {error: "Send sticker failed."};
+        }
+        if(resData.error) {
+          throw resData;
+        }
 
         return callback();
       })

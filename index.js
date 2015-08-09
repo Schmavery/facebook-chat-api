@@ -1,4 +1,3 @@
-/*jslint node: true */
 "use strict";
 
 var utils = require("./utils");
@@ -11,7 +10,9 @@ function buildAPI(loginOptions, html, jar) {
     return val.cookieString().split("=")[0] === "c_user";
   });
 
-  if(maybeCookie.length === 0) throw {error: "Error retrieving userID. This can be caused by a lot of things, including getting blocked by Facebook for logging in from an unknown location. Try logging in with a browser to verify."};
+  if(maybeCookie.length === 0) {
+    throw {error: "Error retrieving userID. This can be caused by a lot of things, including getting blocked by Facebook for logging in from an unknown location. Try logging in with a browser to verify."};
+  }
 
   var userID = maybeCookie[0].cookieString().split("=")[1].toString();
   log.info("Logged in");
@@ -152,8 +153,9 @@ function makeLogin(jar, email, password, loginOptions, callback) {
       .then(utils.saveCookies(jar))
       .then(function(res) {
         var headers = res.headers;
-
-        if (!headers.location) throw {error: "Wrong username/password."};
+        if (!headers.location) {
+          throw {error: "Wrong username/password."};
+        }
 
         // This means the account has login approvals turned on.
         if (headers.location.indexOf('https://www.facebook.com/checkpoint/') !== -1) {
@@ -401,7 +403,7 @@ function loginHelper(appState, email, password, loginOptions, callback) {
       return callback(null, api);
     })
     .catch(function(e) {
-      log.error(e);
+      log.error("Error in login:", e.error || e);
       callback(e);
     });
 }
@@ -412,7 +414,9 @@ function login(loginData, options, callback) {
     options = {};
   }
 
-  if (options.logLevel != null) log.level = options.logLevel;
+  if (options.logLevel != null) {
+    log.level = options.logLevel;
+  }
 
   loginHelper(loginData.appState, loginData.email, loginData.password, options, callback);
 }

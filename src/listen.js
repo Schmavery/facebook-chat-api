@@ -1,17 +1,18 @@
-/*jslint node: true */
 "use strict";
 
 var utils = require("../utils");
 var log = require("npmlog");
 
-var msgs_recv = 0;
+var msgsRecv = 0;
 
 module.exports = function(defaultFuncs, api, ctx) {
   var shouldStop = false;
   var currentlyRunning = null;
   var stopListening = function() {
     shouldStop = true;
-    if(currentlyRunning) clearTimeout(currentlyRunning);
+    if(currentlyRunning) {
+      clearTimeout(currentlyRunning);
+    }
   };
 
   var prev = Date.now();
@@ -28,16 +29,18 @@ module.exports = function(defaultFuncs, api, ctx) {
     'state' : 'active',
     'idle' : 0,
     'cap' : '8',
-    'msgs_recv':msgs_recv
+    'msgs_recv':msgsRecv
   };
 
   var globalCallback = null;
 
   function listen() {
-    if(shouldStop) return;
+    if(shouldStop) {
+      return;
+    }
 
-    form.idle = ~~(Date.now()/1000) - prev;
-    prev = ~~(Date.now()/1000);
+    form.idle = ~~(Date.now() / 1000) - prev;
+    prev = ~~(Date.now() / 1000);
 
     utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
     .then(utils.parseResponse)
@@ -60,15 +63,15 @@ module.exports = function(defaultFuncs, api, ctx) {
         };
         defaultFuncs.get("https://www.facebook.com/notifications/sync/", ctx.jar, form4)
         .then(utils.saveCookies(ctx.jar))
-        .then(function(res) {
+        .then(function() {
           lastSync = Date.now();
-          var form6 = {
+          var form = {
             'client' : 'mercury',
             'folders[0]': 'inbox',
             'last_action_timestamp' : ~~(Date.now() - 60)
           };
           defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form)
-          .then(function(res) {
+          .then(function() {
             currentlyRunning = setTimeout(listen, 1000);
           });
         });
@@ -76,42 +79,57 @@ module.exports = function(defaultFuncs, api, ctx) {
       }
 
       if(resData.ms) {
-        msgs_recv += resData.ms.length;
+        msgsRecv += resData.ms.length;
         var atLeastOne = false;
         resData.ms.sort(function(a, b) {
           return a.timestamp - b.timestamp;
         }).forEach(function parsePackets(v) {
           switch (v.type) {
             case 'ttyp':
-              if(!ctx.globalOptions.listenEvents) return;
-              if(!ctx.globalOptions.selfListen && v.from.toString() === ctx.userID) return;
+              if(!ctx.globalOptions.listenEvents ||
+                (!ctx.globalOptions.selfListen && v.from.toString() === ctx.userID)) {
+                return;
+              }
 
               globalCallback(null, utils.formatTyp(v));
               break;
             case 'buddylist_overlay':
               // TODO: what happens when you're logged in as a page?
-              if(!ctx.globalOptions.updatePresence) return;
+              if(!ctx.globalOptions.updatePresence) {
+                return;
+              }
 
               // There should be only one key inside overlay
               Object.keys(v.overlay).map(function(userID) {
                 var formattedPresence = utils.formatPresence(v.overlay[userID], userID);
-                if(!shouldStop) globalCallback(null, formattedPresence);
+                if(!shouldStop) {
+                  globalCallback(null, formattedPresence);
+                }
               });
               break;
             case 'mercury':
-              if(ctx.globalOptions.pageID) return;
-              if(!ctx.globalOptions.listenEvents) return;
+              if(ctx.globalOptions.pageID || !ctx.globalOptions.listenEvents){
+               return;
+              }
+
               v.actions.map(function(v2) {
                 var formattedEvent = utils.formatEvent(v2);
-                if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID) return;
+                if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID) {
+                  return;
+                }
 
-                if (!shouldStop) globalCallback(null, formattedEvent);
+                if (!shouldStop) {
+                  globalCallback(null, formattedEvent);
+                }
               });
               break;
             case 'messaging':
-              if(ctx.globalOptions.pageID) return;
-              if(v.event !== "deliver") return;
-              if(!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID) return;
+              if(ctx.globalOptions.pageID ||
+                v.event !== "deliver" ||
+                (!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID)) {
+                return;
+              }
+
               atLeastOne = true;
               var message = utils.formatMessage(v);
 
@@ -119,11 +137,15 @@ module.exports = function(defaultFuncs, api, ctx) {
               // get them.
               if(message.participantIDs.length === 5) {
                 api.searchForThread(message.threadName, function(err, res) {
-                  if (err) return globalCallback(err);
+                  if (err) {
+                    throw err;
+                  }
 
                   message.participantIDs = res.participants;
                   api.getUserInfo(res.participants, function(err, res) {
-                    if (err) return globalCallback(err);
+                    if (err) {
+                      throw err;
+                    }
 
                     message.participantsInfo = Object.keys(res).map(function(key) {
                       return res[key];
@@ -137,16 +159,23 @@ module.exports = function(defaultFuncs, api, ctx) {
                 });
                 return;
               }
-              if (!shouldStop) globalCallback(null, message);
+
+              if (!shouldStop) {
+                globalCallback(null, message);
+              }
               break;
             case 'pages_messaging':
-              if(!ctx.globalOptions.pageID) return;
-              if(v.event !== "deliver") return;
-              if(!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID || v.message.sender_fbid.toString() === ctx.globalOptions.pageID)) return;
-              if(v.realtime_viewer_fbid !== ctx.globalOptions.pageID) return;
+              if(!ctx.globalOptions.pageID ||
+                v.event !== "deliver" ||
+                (!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID || v.message.sender_fbid.toString() === ctx.globalOptions.pageID)) ||
+                v.realtime_viewer_fbid !== ctx.globalOptions.pageID) {
+                return;
+              }
 
               atLeastOne = true;
-              if (!shouldStop) globalCallback(null, utils.formatMessage(v));
+              if (!shouldStop) {
+                globalCallback(null, utils.formatMessage(v));
+              }
               break;
           }
         });
@@ -168,8 +197,12 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
       }
 
-      if(resData.seq) form.seq = resData.seq;
-      if(resData.tr) form.traceid = resData.tr;
+      if(resData.seq) {
+        form.seq = resData.seq;
+      }
+      if(resData.tr) {
+        form.traceid = resData.tr;
+      }
       currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
 
     })
@@ -183,7 +216,9 @@ module.exports = function(defaultFuncs, api, ctx) {
   return function(callback) {
     globalCallback = callback;
 
-    if (!currentlyRunning) currentlyRunning = setTimeout(listen, Math.random() * 200 + 50, callback);
+    if (!currentlyRunning) {
+      currentlyRunning = setTimeout(listen, Math.random() * 200 + 50, callback);
+    }
 
     return stopListening;
   };
