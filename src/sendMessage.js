@@ -19,10 +19,6 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     if (msgType === "String") {
       msg = { body: msg }
-    } else if (msg.sticker) {
-      // Sticker can't be combined with body and/or attachment
-      delete msg.body;
-      delete msg.attachment;
     }
 
     var messageAndOTID = utils.generateOfflineThreadingID();
@@ -80,9 +76,24 @@ module.exports = function(defaultFuncs, api, ctx) {
 
         send();
       });
+    } else if (msg.url) {
+      form['message_batch[0][has_attachment]'] = true;
+      form['message_batch[0][shareable_attachment][share_type]'] = 100;
+      api.getUrl(msg.url, function (err, params) {
+        if (err) {
+          log.error("ERROR in sendMessage --> ", err);
+          return callback(err)
+        }
+
+        form['message_batch[0][shareable_attachment][share_params]'] = params;
+        send();
+      })
     } else if (msg.sticker) {
       form['message_batch[0][has_attachment]'] = true;
       form['message_batch[0][sticker_id]'] = msg.sticker;
+
+      // Sticker can't be combined with body
+      delete msg.body
 
       send();
     } else {

@@ -88,6 +88,7 @@ function buildAPI(loginOptions, html, jar) {
     'archiveThread',
     'unarchiveThread',
     'searchForThread',
+    'getUrl',
     'logout',
   ];
 
