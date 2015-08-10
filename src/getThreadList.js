@@ -39,7 +39,7 @@ function formatData(data) {
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function getThreadList(start, end, callback) {
-    if(!callback && utils.getType(end) === 'Function') {
+    if(!callback && utils.getType(end) !== 'Number') {
       throw {error: "please pass an number as a second argument."};
     }
 
@@ -55,20 +55,23 @@ module.exports = function(defaultFuncs, api, ctx) {
       'inbox[limit]' : end - start,
     };
 
-    if(ctx.globalOptions.pageID) form.request_user_id = ctx.globalOptions.pageID;
+    if(ctx.globalOptions.pageID) {
+      form.request_user_id = ctx.globalOptions.pageID;
+    }
 
-    defaultFuncs.post("https://www.facebook.com/ajax/mercury/threadlist_info.php", ctx.jar, form)
-    .then(utils.parseResponse)
-    .then(function(resData) {
-      if (resData.error) {
-        throw resData;
-      }
+    defaultFuncs
+      .post("https://www.facebook.com/ajax/mercury/threadlist_info.php", ctx.jar, form)
+      .then(utils.parseAndCheckLogin)
+      .then(function(resData) {
+        if (resData.error) {
+          throw resData;
+        }
 
-      return callback(null, resData.payload.threads.map(formatData));
-    })
-    .catch(function(err) {
-      log.error("Error in getThreadList", err);
-      return callback(err);
-    });
+        return callback(null, resData.payload.threads.map(formatData));
+      })
+      .catch(function(err) {
+        log.error("Error in getThreadList", err);
+        return callback(err);
+      });
   };
 };

@@ -13,9 +13,8 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post('https://www.facebook.com/bluebar/modern_settings_menu/?help_type=364455653583099&show_contextual_help=1', ctx.jar, form)
-      .then(utils.parseResponse)
+      .then(utils.parseAndCheckLogin)
       .then(function(resData) {
-
         var elem = resData.jsmods.instances[0][2][0].filter(function(v) {
           return v.label === "Log Out";
         })[0];
@@ -35,7 +34,9 @@ module.exports = function(defaultFuncs, api, ctx) {
           .then(utils.saveCookies(ctx.jar));
       })
       .then(function(res) {
-        if(!res.headers) throw {error: "An error occured when logging out."};
+        if(!res.headers) {
+          throw {error: "An error occurred when logging out."};
+        }
 
         return utils
           .get(res.headers.location, ctx.jar)
@@ -48,6 +49,5 @@ module.exports = function(defaultFuncs, api, ctx) {
         log.error("Error in logout", err);
         return callback(err);
       });
-    return ctx.access_token;
   };
 };

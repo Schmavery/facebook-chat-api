@@ -15,10 +15,10 @@ module.exports = function(defaultFuncs, api, ctx) {
     var msgType = utils.getType(msg);
     var threadIDType = utils.getType(threadID);
 
-    if(msgType !== "String" && msgType !== "Object"){
+    if(msgType !== "String" && msgType !== "Object") {
       throw {error: "Message should be of type string or object and not " + threadIDType + "."};
     }
-    if(threadIDType !== "Number" && threadIDType !== "String"){
+    if(threadIDType !== "Number" && threadIDType !== "String") {
       throw {error: "ThreadID should be of type number or string and not " + threadIDType + "."};
     }
 
@@ -68,7 +68,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
       api.uploadAttachment(msg.attachment, function (err, files) {
         if (err) {
-          throw err;
+          return callback(err);
         }
 
         files.forEach(function (file) {
@@ -85,7 +85,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       form['message_batch[0][shareable_attachment][share_type]'] = 100;
       api.getUrl(msg.url, function (err, params) {
         if (err) {
-          throw err;
+          return callback(err);
         }
 
         form['message_batch[0][shareable_attachment][share_params]'] = params;
@@ -109,7 +109,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       // on that.
       api.getUserInfo(threadID, function(err, res) {
         if (err) {
-          throw err;
+          return callback(err);
         }
         // This means that threadID is the id of a user, and the chat
         // is a single person chat
@@ -131,23 +131,24 @@ module.exports = function(defaultFuncs, api, ctx) {
           form['message_batch[0][creator_info][profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userID;
         }
 
-        defaultFuncs.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
-        .then(utils.parseResponse)
-        .then(function(resData) {
-          if (!resData) {
-            throw {error: "Send message failed."};
-          }
-          if(resData.error) {
-            throw resData;
-          }
+        defaultFuncs
+          .post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
+          .then(utils.parseAndCheckLogin)
+          .then(function(resData) {
+            if (!resData) {
+              throw {error: "Send message failed."};
+            }
+            if(resData.error) {
+              throw resData;
+            }
 
-          return callback();
-        })
-        .catch(function(err) {
-          log.error("ERROR in sendMessage --> ", err);
-          return callback(err);
+            return callback();
+          })
+          .catch(function(err) {
+            log.error("ERROR in sendMessage --> ", err);
+            return callback(err);
+          });
         });
-      });
     }
   };
 };

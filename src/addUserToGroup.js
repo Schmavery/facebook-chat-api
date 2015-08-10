@@ -58,7 +58,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     defaultFuncs.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
-    .then(utils.parseResponse)
+    .then(utils.parseAndCheckLogin)
     .then(function(resData) {
       if (!resData) {
         throw {error: "Add to group failed."};

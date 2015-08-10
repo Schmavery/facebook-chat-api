@@ -15,22 +15,23 @@ module.exports = function(defaultFuncs, api, ctx) {
       uri: url
     };
 
-    defaultFuncs.post("https://www.facebook.com/message_share_attachment/fromURI/", ctx.jar, form)
-    .then(utils.parseResponse)
-    .then(function(resData) {
-      if (resData.error) {
-        throw resData;
-      }
+    defaultFuncs
+      .post("https://www.facebook.com/message_share_attachment/fromURI/", ctx.jar, form)
+      .then(utils.parseAndCheckLogin)
+      .then(function(resData) {
+        if (resData.error) {
+          throw resData;
+        }
 
-      if (!resData.payload) {
-        throw {error: 'Invalid url'};
-      }
+        if (!resData.payload) {
+          throw {error: 'Invalid url'};
+        }
 
-      callback(null, resData.payload.share_data.share_params);
-    })
-    .catch(function(err) {
-      log.error("Error in getUrl", err);
-      return callback(err);
-    });
+        callback(null, resData.payload.share_data.share_params);
+      })
+      .catch(function(err) {
+        log.error("Error in getUrl", err);
+        return callback(err);
+      });
   };
 };

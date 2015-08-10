@@ -360,9 +360,19 @@ function makeDefaults(html, userID) {
   };
 }
 
-function parseResponse(res) {
+function parseAndCheckLogin(res) {
   return bluebird.try(function() {
     return JSON.parse(makeParsable(res.body));
+  })
+  .then(function(res) {
+    if (res.error && res.error === 1357001) {
+      throw {}; // Doesn't matter, it's the same message as bellow
+    }
+
+    return res;
+  })
+  .catch(function() {
+    throw {error: "Not logged in."};
   });
 }
 
@@ -424,7 +434,7 @@ module.exports = {
   getJar: request.jar,
   genTimestampRelative: genTimestampRelative,
   makeDefaults: makeDefaults,
-  parseResponse: parseResponse,
+  parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,
   getType: getType,
   formatMessage: formatMessage,

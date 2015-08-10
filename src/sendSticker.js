@@ -53,7 +53,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     api.getUserInfo(threadID, function(err, res) {
       if(err) {
-        throw err;
+        return callback(err);
       }
       // This means that threadID is the id of a user, and the chat
       // is a single person chat
@@ -74,22 +74,23 @@ module.exports = function(defaultFuncs, api, ctx) {
         form['message_batch[0][creator_info][profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userID;
       }
 
-      defaultFuncs.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
-      .then(utils.parseResponse)
-      .then(function(resData) {
-        if (!resData) {
-          throw {error: "Send sticker failed."};
-        }
-        if(resData.error) {
-          throw resData;
-        }
+      defaultFuncs
+        .post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
+        .then(utils.parseAndCheckLogin)
+        .then(function(resData) {
+          if (!resData) {
+            throw {error: "Send sticker failed."};
+          }
+          if(resData.error) {
+            throw resData;
+          }
 
-        return callback();
-      })
-      .catch(function(err) {
-        log.error("ERROR in sendSticker --> ", err);
-        return callback(err);
-      });
+          return callback();
+        })
+        .catch(function(err) {
+          log.error("ERROR in sendSticker --> ", err);
+          return callback(err);
+        });
     });
   };
 };

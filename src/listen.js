@@ -43,7 +43,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     prev = ~~(Date.now() / 1000);
 
     utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
-    .then(utils.parseResponse)
+    .then(utils.parseAndCheckLogin)
     .then(function(resData) {
       var now = Date.now();
       log.info("Got answer in ", now - tmpPrev);

@@ -41,7 +41,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     });
 
     defaultFuncs.get("https://www.facebook.com/chat/user_info/", ctx.jar, form)
-    .then(utils.parseResponse)
+    .then(utils.parseAndCheckLogin)
     .then(function(resData) {
       if (resData.error) {
         throw resData;

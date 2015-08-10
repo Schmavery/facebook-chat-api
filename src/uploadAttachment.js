@@ -15,14 +15,13 @@ function formatData(data) {
 module.exports = function(defaultFuncs, api, ctx) {
   return function sendAttachment(attachments, callback) {
     if(!callback) {
-      callback = function() {};
+      throw {error: "sendAttachment: need callback"};
     }
 
     if (utils.getType(attachments) !== "Array") {
       attachments = [attachments];
     }
 
-    var qs = {};
     var uploads = [];
 
     // create an array of promises
@@ -36,8 +35,8 @@ module.exports = function(defaultFuncs, api, ctx) {
       };
 
       uploads.push(defaultFuncs
-        .postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, qs)
-        .then(utils.parseResponse)
+        .postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, {})
+        .then(utils.parseAndCheckLogin)
         .then(function (resData) {
           if (resData.error) {
             throw resData;

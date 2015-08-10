@@ -212,7 +212,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
                       return loginHelper(appState, email, password, loginOptions, callback);
                     });
                 }
-              }
+              };
             });
         }
 
@@ -261,7 +261,7 @@ function loginHelper(appState, email, password, loginOptions, callback) {
     .then(function(res) {
       var html = res.body;
 
-      fs.writeFileSync('test.html', html);
+      // fs.writeFileSync('test.html', html);
 
       // Login review
       if (html.indexOf('Review Recent Login') !== -1) {
@@ -345,7 +345,16 @@ function loginHelper(appState, email, password, loginOptions, callback) {
 
       return utils
         .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
-        .then(utils.parseResponse);
+        .then(function(res) {
+          var ret = null;
+          try {
+            ret = JSON.parse(utils.makeParsable(res.body));
+          } catch(e) {
+            throw {error: "Error inside first pull request. Received HTML instead of JSON. Logging in inside a browser might help fix this."};
+          }
+
+          return ret;
+        });
     })
     .then(function(resData) {
       if (resData.t !== 'lb') throw {error: "Bad response from pull 1"};
@@ -387,12 +396,14 @@ function loginHelper(appState, email, password, loginOptions, callback) {
     mainPromise = mainPromise
       .then(function() {
         return utils
-            .get('https://www.facebook.com/' + ctx.globalOptions.pageID + '/messages/?section=messages&subsection=inbox', ctx.jar);
+          .get('https://www.facebook.com/' + ctx.globalOptions.pageID + '/messages/?section=messages&subsection=inbox', ctx.jar);
       })
       .then(function(resData) {
         var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/www.facebook.com\\', '");').split('\\').join('');
         url = url.substring(0, url.length - 1);
-        return utils.get('https://www.facebook.com' + url, ctx.jar);
+
+        return utils
+          .get('https://www.facebook.com' + url, ctx.jar);
       });
   }
 

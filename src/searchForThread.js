@@ -1,7 +1,6 @@
 "use strict";
 
 var utils = require("../utils");
-var log = require("npmlog");
 
 function formatData(data) {
   return {
@@ -39,6 +38,10 @@ function formatData(data) {
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function searchForThread(name, callback) {
+    if (!callback) {
+      throw {error: "searchForThread: need callback"};
+    }
+
     var tmpForm = {
       client: 'web_messenger',
       query: name,
@@ -47,12 +50,15 @@ module.exports = function(defaultFuncs, api, ctx) {
       index: 'fbid',
     };
 
-    defaultFuncs.post('https://www.facebook.com/ajax/mercury/search_threads.php', ctx.jar, tmpForm)
-    .then(utils.parseResponse)
-    .then(function(resData) {
-      if (resData.error) return globalCallback(resData);
+    defaultFuncs
+      .post('https://www.facebook.com/ajax/mercury/search_threads.php', ctx.jar, tmpForm)
+      .then(utils.parseAndCheckLogin)
+      .then(function(resData) {
+        if (resData.error) {
+          throw resData;
+        }
 
-      return callback(null, formatData(resData.payload.mercury_payload.threads[0]));
-    });
+        return callback(null, formatData(resData.payload.mercury_payload.threads[0]));
+      });
   }
 }

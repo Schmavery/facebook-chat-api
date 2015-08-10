@@ -27,8 +27,9 @@ module.exports = function(defaultFuncs, api, ctx) {
       form['message_ids[' + i + ']'] = messageOrMessages[i];
     }
 
-    defaultFuncs.post("https://www.facebook.com/ajax/mercury/delete_messages.php", ctx.jar, form)
-      .then(utils.parseResponse)
+    defaultFuncs
+      .post("https://www.facebook.com/ajax/mercury/delete_messages.php", ctx.jar, form)
+      .then(utils.parseAndCheckLogin)
       .then(function(resData) {
         if (resData.error) {
           throw resData;

@@ -42,26 +42,27 @@ module.exports = function(defaultFuncs, api, ctx) {
       'message_batch[0][log_message_type]' : 'log:thread-name'
     };
 
-    defaultFuncs.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
-    .then(utils.parseResponse)
-    .then(function(resData) {
-      if (resData.error && resData.error === 1545012){
-        throw {error: "Cannot change chat title: Not member of chat."};
-      }
+    defaultFuncs
+      .post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
+      .then(utils.parseAndCheckLogin)
+      .then(function(resData) {
+        if (resData.error && resData.error === 1545012){
+          throw {error: "Cannot change chat title: Not member of chat."};
+        }
 
-      if (resData.error && resData.error === 1545003){
-        throw {error: "Cannot set title of single-user chat."};
-      }
+        if (resData.error && resData.error === 1545003){
+          throw {error: "Cannot set title of single-user chat."};
+        }
 
-      if (resData.error) {
-        throw resData;
-      }
+        if (resData.error) {
+          throw resData;
+        }
 
-      return callback();
-    })
-    .catch(function(err) {
-      log.error("Error in setTitle", err);
-      return callback(err);
-    });
+        return callback();
+      })
+      .catch(function(err) {
+        log.error("Error in setTitle", err);
+        return callback(err);
+      });
   };
 };

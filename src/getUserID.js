@@ -31,24 +31,25 @@ module.exports = function(defaultFuncs, api, ctx) {
       'request_id' : utils.getGUID(),
     };
 
-    defaultFuncs.get("https://www.facebook.com/ajax/typeahead/search.php", ctx.jar, form)
-    .then(utils.parseResponse)
-    .then(function(resData) {
-      if (resData.error) {
-        throw resData;
-      }
+    defaultFuncs
+      .get("https://www.facebook.com/ajax/typeahead/search.php", ctx.jar, form)
+      .then(utils.parseAndCheckLogin)
+      .then(function(resData) {
+        if (resData.error) {
+          throw resData;
+        }
 
-      var data = resData.payload.entries;
+        var data = resData.payload.entries;
 
-      if(data[0].type !== "user") {
-        throw {error: "Couldn't find a user with name " + name + ". Bes match: " + data[0].path};
-      }
+        if(data[0].type !== "user") {
+          throw {error: "Couldn't find a user with name " + name + ". Bes match: " + data[0].path};
+        }
 
-      callback(null, data.map(formatData));
-    })
-    .catch(function(err) {
-      log.error("Error in getUserID", err);
-      return callback(err);
-    });
+        callback(null, data.map(formatData));
+      })
+      .catch(function(err) {
+        log.error("Error in getUserID", err);
+        return callback(err);
+      });
   };
 };
