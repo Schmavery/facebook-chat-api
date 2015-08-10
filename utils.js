@@ -360,19 +360,23 @@ function makeDefaults(html, userID) {
   };
 }
 
-function parseAndCheckLogin(res) {
+function parseAndCheckLogin(data) {
   return bluebird.try(function() {
-    return JSON.parse(makeParsable(res.body));
-  })
-  .then(function(res) {
+    var res = null;
+    try {
+      res = JSON.parse(makeParsable(data.body));
+    } catch(e) {
+      throw {
+        error: "JSON.parse error. Probably due to not being logged in. Check the `detail` property on this error.",
+        detail: e
+      };
+    }
+
     if (res.error && res.error === 1357001) {
-      throw {}; // Doesn't matter, it's the same message as bellow
+      throw {error: "Not logged in."};
     }
 
     return res;
-  })
-  .catch(function() {
-    throw {error: "Not logged in."};
   });
 }
 
