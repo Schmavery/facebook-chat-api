@@ -32,7 +32,7 @@ function _login(email, password, loginOptions, callback) {
       });
 
       var form = utils.arrToForm(arr);
-      form.lsd = utils.getFrom(html, "[\"LSD\",[],{\"token\":\"", "\"}")
+      form.lsd = utils.getFrom(html, "[\"LSD\",[],{\"token\":\"", "\"}");
       form.lgndim = new Buffer("{\"w\":1440,\"h\":900,\"aw\":1440,\"ah\":834,\"c\":24}").toString('base64');
       form.email = email;
       form.pass = password;
@@ -86,21 +86,21 @@ function _login(email, password, loginOptions, callback) {
 
       api.setOptions = function setOptions(options) {
         Object.keys(options).map(function(key) {
-          switch (key) {
-            case 'logLevel':
+          switch (key.toLowerCase()) {
+            case 'loglevel':
               log.level = options.logLevel;
               globalOptions.logLevel = options.logLevel;
               break;
-            case 'selfListen':
+            case 'selflisten':
               globalOptions.selfListen = options.selfListen;
               break;
-            case 'listenEvents':
+            case 'listenevents':
               globalOptions.listenEvents = options.listenEvents;
               break;
-            case 'pageId':
-              globalOptions.pageId = options.pageId;
+            case 'pageid':
+              globalOptions.pageId = options.pageId.toString();
               break;
-            case 'updatePresence':
+            case 'updatepresence':
               globalOptions.updatePresence = options.updatePresence;
               break;
             default:
@@ -238,7 +238,7 @@ function _login(email, password, loginOptions, callback) {
   }, [])
   .then(function(api) {
     callback(null, api[0]);
-  })
+  });
   // .catch(function(err) {
   //   log.error(err);
   //   return callback(err);

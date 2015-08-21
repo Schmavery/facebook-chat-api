@@ -112,8 +112,8 @@ module.exports = function(mergeWithDefaults, api, ctx) {
             case 'pages_messaging':
               if(!ctx.globalOptions.pageId) return;
               if(v.event !== "deliver") return;
-              if(!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userId.toString() || v.message.sender_fbid.toString() === ctx.globalOptions.pageId.toString())) return;
-              if(v.realtime_viewer_fbid !== ctx.globalOptions.pageId) return;
+              if(v.realtime_viewer_fbid.toString() !== ctx.globalOptions.pageId) return;
+              if(!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userId || v.message.sender_fbid.toString() === ctx.globalOptions.pageId)) return;
 
               atLeastOne = true;
               if (!shouldStop) callback(null, utils.formatMessage(v), stopListening);
