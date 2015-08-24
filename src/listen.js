@@ -168,7 +168,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               if(!ctx.globalOptions.pageID ||
                 v.event !== "deliver" ||
                 (!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID || v.message.sender_fbid.toString() === ctx.globalOptions.pageID)) ||
-                v.realtime_viewer_fbid !== ctx.globalOptions.pageID) {
+                v.realtime_viewer_fbid.toString() !== ctx.globalOptions.pageID) {
                 return;
               }
 
