@@ -155,6 +155,13 @@ function _login(email, password, loginOptions, callback) {
         api[v] = require('./src/' + v)(mergeWithDefaults, api, ctx);
       });
 
+      // Load all custom api functions in a loop
+      if (loginOptions.customFunctions) {
+        customFunctions.map(function(v) {
+          api[v.split("/").pop()] = require(v)(mergeWithDefaults, api, ctx);
+        });
+      }
+
       var form2 = mergeWithDefaults({
         'grammar_version' : utils.getFrom(html, "grammar_version\":\"", "\"")
       });
