@@ -38,7 +38,6 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 * [`api.getUserInfo`](#getUserInfo)
 * [`api.getFriendsList`](#getFriendsList)
 * [`api.getThreadList`](#getThreadList)
-* [`api.getAccessToken`](#getAccessToken)
 * [`api.addUserToGroup`](#addUserToGroup)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
@@ -47,6 +46,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 * [`api.sendSticker`](#sendSticker)
 * [`api.sendDirectMessage`](#sendDirectMessage)
 * [`api.sendDirectSticker`](#sendDirectSticker)
+* [`api.getAccessToken`](#getAccessToken)
 
 ---------------------------------------
 
@@ -394,31 +394,6 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="getAccessToken" />
-### api.getAccessToken()
-
-Synchronously returns an access token to the Facebook Graph API.
-
-This is a bit of a hack because it's using the Graph API Explorer's app ID. It has all permissions so drive safely.
-
-__Example__
-
-```js
-var fb = require('fb');
-
-login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
-    if(err) return console.error(err);
-    
-    fb.setAccessToken(api.getAccessToken());
-    fb.api('/me', 'get', function (res) {
-        if(!res || res.error) return console.error(res ? res.error : "error");
-        console.log('me: ', res);
-    });
-});
-```
-
----------------------------------------
-
 <a name="addUserToGroup" />
 ### api.addUserToGroup(user\_id, thread\_id, [callback])
 
@@ -525,3 +500,28 @@ __Deprecated__: This should be simply replaced with a call to `getUserId` follow
 __Warning__: This function is also ambiguous (look at [`sendDirectMessage`](#sendDirectMessage)) and therefore a callback is required.
 
 Same as sendDirectMessage but for stickers.
+
+---------------------------------------
+
+<a name="getAccessToken" />
+### api.getAccessToken()
+
+__Deprecated__: This call no longer works and will be removed in v1.0.  Please retreive an access token in the usual way.
+
+Synchronously returns an access token to the Facebook Graph API.
+
+__Example__
+
+```js
+var fb = require('fb');
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+    
+    fb.setAccessToken(api.getAccessToken());
+    fb.api('/me', 'get', function (res) {
+        if(!res || res.error) return console.error(res ? res.error : "error");
+        console.log('me: ', res);
+    });
+});
+```
