@@ -16,7 +16,7 @@ var login = require("facebook-chat-api");
 // Create simple echo bot
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
-    
+
     api.listen(function callback(err, message) {
         api.sendMessage(message.body, message.thread_id);
     });
@@ -53,7 +53,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 <a name="login" />
 ### login(emailAndPassword, [options], callback)
 
-This function is returned by require(...) and is the main entry point to the API. 
+This function is returned by require(...) and is the main entry point to the API.
 
 Logs into facebook given the right credentials.
 
@@ -82,12 +82,12 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 <a name="listen" />
 ### api.listen(callback)
 
-Will call callback when a new message it received on this account. 
+Will call callback when a new message it received on this account.
 By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true})`.
 
 __Arguments__
 
-- `callback(error, message, stopListening)` - A callback called every time the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. 
+- `callback(error, message, stopListening)` - A callback called every time the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue.
 
 If `type` is `message`, the object will contain the following fields:
     * `sender_name` - First and last name of the person who just sent the message.
@@ -173,6 +173,7 @@ __Arguments__
     - `listenEvents` - (Default `false`) Will make [api.listen](#listen) also handle events (look at api.listen for more details).
     - `pageId` - (Default empty) Makes [api.listen](#listen) only receive messages through the page specified by that ID. Also makes sendMessage and sendSticker send from the page.
     - `updatePresence` - (Default `false`) Will make [api.listen](#listen) also return `presence` (look at api.listen for more details).
+    - `customFunctions` - List of custom api functions ( ["/path/to/your_custom_api_module"] )
 
 __Example__
 
@@ -181,7 +182,7 @@ __Example__
 
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
-    
+
     api.setOptions({
       selfListen: true,
       logLevel: "silent"
@@ -212,10 +213,10 @@ __Example__
 ```js
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
-    
+
     api.getUserId("Marc Zuckerbot", function(err, data) {
         if(err) return callback(err);
-        
+
         // Send the message to the best match (best by Facebook's criteria)
         var thread_id = data[0].uid;
         api.sendMessage(msg, thread_id);
@@ -240,7 +241,7 @@ Sends the given message to the thread_id.
 __Arguments__
 
 * `message` - A string (for backward compatibility) or a message object as described below.
-* `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation. 
+* `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation.
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
 
 *Message Object*: Various types of message can be sent:
@@ -254,7 +255,7 @@ __Example (Basic Message)__
 ```js
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
-    
+
     var yourID = 0000000000000;
     var msg = {body: "Hey!"};
     api.sendMessage(msg, yourID);
@@ -265,8 +266,8 @@ __Example (File upload)__
 ```js
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
-    
-    // Note this example uploads an image called image.jpg 
+
+    // Note this example uploads an image called image.jpg
     var yourID = 0000000000000;
     var msg = {
       body: "Hey!",
@@ -295,7 +296,7 @@ var login = require("facebook-chat-api");
 
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
-  
+
     api.listen(function callback(err, message) {
         // Marks message as read immediately after they're sent
         api.markAsRead(message.thread_id);
@@ -316,7 +317,7 @@ if the bot is not in the group chat.
 __Arguments__
 
 * `newTitle` - A string representing the new title.
-* `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation. 
+* `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation.
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
 
 ---------------------------------------
@@ -336,7 +337,7 @@ __Example__
 ```js
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
-    
+
     api.getUserInfo([1, 2, 3, 4], function(err, ret) {
       if(err) return console.error(err);
 
@@ -370,7 +371,7 @@ __Example__
 ```js
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
   if(err) return console.error(err);
-  
+
   api.getFriendsList(1216678154, function(err, data) {
     if(err) return console.error(err);
 
@@ -444,7 +445,7 @@ Sends the given sticker_id to the thread_id.
 __Arguments__
 
 * `sticker_id` - A string or number representing the sticker to be sent to the given thread_id.
-* `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation. 
+* `thread_id` - A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation.
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
 
 __Tip__: to find your own ID, go to your own profile on Facebook and replace 'www' by 'graph' in the URL.
@@ -454,7 +455,7 @@ __Example__
 ```js
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
-    
+
     var yourID = 0000000000000;
     api.sendMessage(767334526626290, yourID);
 });
@@ -482,7 +483,7 @@ __Example__
 ```js
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
-    
+
     var yourName = "Marc Zuckerbot";
     api.sendDirectMessage("Hey John!", yourName, function(err, data){
         if(err) console.error(err);
@@ -517,7 +518,7 @@ var fb = require('fb');
 
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
-    
+
     fb.setAccessToken(api.getAccessToken());
     fb.api('/me', 'get', function (res) {
         if(!res || res.error) return console.error(res ? res.error : "error");
