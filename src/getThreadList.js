@@ -8,12 +8,10 @@ module.exports = function(mergeWithDefaults, api, ctx) {
   return function getThreadList(start, end, callback) {
     if(!callback) callback = function() {};
 
-    if (end <= start) end = start + 20;
-
     var form = mergeWithDefaults({
       'client' : 'mercury',
       'inbox[offset]' : start,
-      'inbox[limit]' : end
+      'inbox[limit]' : end - start + 1
     });
 
     if(ctx.globalOptions.pageId) form.request_user_id = ctx.globalOptions.pageId;
