@@ -316,6 +316,12 @@ function formatPresence(presence, userId) {
   };
 }
 
+function getDefaultRequestOptions() {
+  return {
+    payload: true
+  };
+}
+
 module.exports = {
   isReadableStream: isReadableStream,
   get: get,
@@ -338,4 +344,5 @@ module.exports = {
   formatCookie: formatCookie,
   getType: getType,
   formatPresence: formatPresence,
+  getDefaultRequestOptions: getDefaultRequestOptions
 };

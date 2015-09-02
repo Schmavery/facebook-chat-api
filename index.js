@@ -124,6 +124,7 @@ function _login(email, password, loginOptions, callback) {
       };
 
       var apiFuncNames = [
+        'get',
         'listen',
         'getUserId',
         'sendDirectMessage',
