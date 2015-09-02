@@ -25,7 +25,6 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 
 ```
 
-
 ## Documentation
 * [`login`](#login)
 * [`api.listen`](#listen)
@@ -41,6 +40,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 * [`api.addUserToGroup`](#addUserToGroup)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
+* [`api.getOnlineUsers`](#getOnlineUsers)
 
 ---------------------------------------
 
@@ -459,3 +459,26 @@ __Arguments__
 
 * `thread_id` - Group chat ID.
 * `callback(err, end)` - A callback called when the query is done (either with an error or with null followed by a function `end` described above).
+
+---------------------------------------
+
+<a name="getOnlineUsers" />
+### api.getOnlineUsers([callback])
+
+Will call the callback with a list of the online users.
+
+__Arguments__
+
+* `callback(err, arr)` - A callback called when the query is done (either with an error or with null followed by an array `arr`). `arr`
+is an array of objects with the following keys: `timestamp`, `userID` and `statuses`. `statuses` looks like:
+```js
+{
+  status: 'idle',
+  webStatus: 'idle',
+  fbAppStatus: 'offline',
+  messengerStatus: 'offline',
+  otherStatus: 'offline'
+}
+```
+
+Look at [listen](#listen) for details on how to get updated presence.

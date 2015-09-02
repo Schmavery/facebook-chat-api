@@ -69,12 +69,10 @@ function buildAPI(globalOptions, html, jar) {
   var apiFuncNames = [
     'listen',
     'getUserID',
-    'sendSticker',
     'setTitle',
     'getThreadList',
     'markAsRead',
     'sendMessage',
-    'getAccessToken',
     'getFriendsList',
     'getUserInfo',
     'removeUserFromGroup',
@@ -89,6 +87,7 @@ function buildAPI(globalOptions, html, jar) {
     'searchForThread',
     'getUrl',
     'logout',
+    'getOnlineUsers',
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID);
@@ -176,42 +175,79 @@ function makeLogin(jar, email, password, loginOptions, callback) {
               });
 
               var form = utils.arrToForm(arr);
+              if (html.indexOf("Enter Security Code to Continue") > -1) {
+                throw {
+                  error: 'login-approval',
+                  continue: function(code) {
+                    form.approvals_code = code;
+                    form['submit[Continue]'] = 'Continue';
+                    return utils
+                      .post(nextURL, jar, form)
+                      .then(utils.saveCookies(jar))
+                      .then(function() {
+                        // Use the same form (safe I hope)
+                        form.name_action_selected = 'save_device';
 
-              throw {
-                error: 'login-approval',
-                continue: function(code) {
-                  form.approvals_code = code;
-                  form['submit[Continue]'] = 'Continue';
-                  return utils
-                    .post(nextURL, jar, form)
-                    .then(utils.saveCookies(jar))
-                    .then(function() {
-                      // Use the same form (safe I hope)
-                      form.name_action_selected = 'save_device';
+                        return utils
+                          .post(nextURL, jar, form)
+                          .then(utils.saveCookies(jar));
+                      })
+                      .then(function(res) {
+                        var headers = res.headers;
+                        if (!headers.location && res.body.indexOf('Review Recent Login') > -1) {
+                          throw {error: "Something went wrong with login approvals."};
+                        }
 
-                      return utils
-                        .post(nextURL, jar, form)
-                        .then(utils.saveCookies(jar));
-                    })
-                    .then(function(res) {
-                      var headers = res.headers;
-                      if (!headers.location && res.body.indexOf('Review Recent Login') > -1) {
-                        throw {error: "Something went wrong with login approvals."};
-                      }
+                        var appState = jar
+                          .getCookies("https://www.facebook.com")
+                          .concat(jar.getCookies("https://facebook.com"));
 
-                      var appState = jar
-                        .getCookies("https://www.facebook.com")
-                        .concat(jar.getCookies("https://facebook.com"));
-
-                      // Simply call loginHelper because all it needs is the jar
-                      // and will then complete the login process
-                      return loginHelper(appState, email, password, loginOptions, callback);
-                    })
-                    .catch(function(err) {
-                      callback(err);
-                    });
+                        // Simply call loginHelper because all it needs is the jar
+                        // and will then complete the login process
+                        return loginHelper(appState, email, password, loginOptions, callback);
+                      })
+                      .catch(function(err) {
+                        callback(err);
+                      });
+                  }
+                };
+              } else {
+                if (html.indexOf("Suspicious Login Attempt") > -1) {
+                  form['submit[This was me]'] = "This was me";
+                } else {
+                  form['submit[This Is Okay]'] = "This Is Okay";
                 }
-              };
+
+                return utils
+                  .post(nextURL, jar, form)
+                  .then(utils.saveCookies(jar))
+                  .then(function() {
+                    // Use the same form (safe I hope)
+                    form.name_action_selected = 'save_device';
+
+                    return utils
+                      .post(nextURL, jar, form)
+                      .then(utils.saveCookies(jar));
+                  })
+                  .then(function(res) {
+                    var headers = res.headers;
+
+                    if (!headers.location && res.body.indexOf('Review Recent Login') > -1) {
+                      throw {error: "Something went wrong with review recent login."};
+                    }
+
+                    var appState = jar
+                      .getCookies("https://www.facebook.com")
+                      .concat(jar.getCookies("https://facebook.com"));
+
+                    // Simply call loginHelper because all it needs is the jar
+                    // and will then complete the login process
+                    return loginHelper(appState, email, password, globalOptions, callback);
+                  })
+                  .catch(function(e) {
+                    callback(e);
+                  });
+              }
             });
         }
 
@@ -261,60 +297,65 @@ function loginHelper(appState, email, password, globalOptions, callback) {
       var html = res.body;
 
       // Login review
-      if (html.indexOf('Review Recent Login') > -1) {
-        if (!globalOptions.forceLogin) {
-          throw {error: "review-recent-login"};
-        }
+      // if (html.indexOf('Review Recent Login') > -1) {
+      //   if (!globalOptions.forceLogin) {
+      //     throw {error: "review-recent-login"};
+      //   }
 
-        // Make the form in advance which will contain the fb_dtsg and nh
-        var $ = cheerio.load(html);
-        var arr = [];
-        $("form input").map(function(i, v){
-          arr.push({val: $(v).val(), name: $(v).attr("name")});
-        });
+      //   // Make the form in advance which will contain the fb_dtsg and nh
+      //   var $ = cheerio.load(html);
+      //   var arr = [];
+      //   $("form input").map(function(i, v){
+      //     arr.push({val: $(v).val(), name: $(v).attr("name")});
+      //   });
 
-        arr = arr.filter(function(v) {
-          return v.val && v.val.length;
-        });
+      //   arr = arr.filter(function(v) {
+      //     return v.val && v.val.length;
+      //   });
 
-        var form = utils.arrToForm(arr);
-        var nextURL = 'https://www.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php';
-        return utils
-          .post(nextURL, jar, form)
-          .then(utils.saveCookies(jar))
-          .then(function(res) {
-            form['submit[This Is Okay]'] = "This Is Okay";
-            return utils
-              .post(nextURL, jar, form)
-              .then(utils.saveCookies(jar))
-              .then(function() {
-                // Use the same form (safe I hope)
-                form.name_action_selected = 'save_device';
+      //   var form = utils.arrToForm(arr);
+      //   var nextURL = 'https://www.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php';
+      //   return utils
+      //     .post(nextURL, jar, form)
+      //     .then(utils.saveCookies(jar))
+      //     .then(function(res) {
+      //       if (html.indexOf("Suspicious Login Attempt") > -1) {
+      //         form['submit[This was me]'] = "This was me";
+      //       } else {
+      //         form['submit[This Is Okay]'] = "This Is Okay";
+      //       }
 
-                return utils
-                  .post(nextURL, jar, form)
-                  .then(utils.saveCookies(jar));
-              })
-              .then(function(res) {
-                var headers = res.headers;
+      //       return utils
+      //         .post(nextURL, jar, form)
+      //         .then(utils.saveCookies(jar))
+      //         .then(function() {
+      //           // Use the same form (safe I hope)
+      //           form.name_action_selected = 'save_device';
 
-                if (!headers.location && res.body.indexOf('Review Recent Login') > -1) {
-                  throw {error: "Something went wrong with review recent login."};
-                }
+      //           return utils
+      //             .post(nextURL, jar, form)
+      //             .then(utils.saveCookies(jar));
+      //         })
+      //         .then(function(res) {
+      //           var headers = res.headers;
 
-                var appState = jar
-                  .getCookies("https://www.facebook.com")
-                  .concat(jar.getCookies("https://facebook.com"));
+      //           if (!headers.location && res.body.indexOf('Review Recent Login') > -1) {
+      //             throw {error: "Something went wrong with review recent login."};
+      //           }
 
-                // Simply call loginHelper because all it needs is the jar
-                // and will then complete the login process
-                return loginHelper(appState, email, password, globalOptions, callback);
-              })
-              .catch(function(e) {
-                callback(e);
-              });
-          });
-      }
+      //           var appState = jar
+      //             .getCookies("https://www.facebook.com")
+      //             .concat(jar.getCookies("https://facebook.com"));
+
+      //           // Simply call loginHelper because all it needs is the jar
+      //           // and will then complete the login process
+      //           return loginHelper(appState, email, password, globalOptions, callback);
+      //         })
+      //         .catch(function(e) {
+      //           callback(e);
+      //         });
+      //     });
+      // }
 
       var stuff = buildAPI(globalOptions, html, jar);
       ctx = stuff[0];
