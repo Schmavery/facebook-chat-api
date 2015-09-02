@@ -7,8 +7,8 @@ var credentials = {email: conf.email, password: conf.password};
 var groupChatID = conf.groupChatId;
 var otherId = conf.otherId;
 
-var options = {logLevel: 'silent', selfListen: 'true', listenEvents: 'true'};
-var pageOptions = {logLevel: 'silent', pageId: credentials.pageId};
+var options = {logLevel: 'silly', selfListen: 'true', listenEvents: 'true'};
+var pageOptions = {logLevel: 'silly', pageId: credentials.pageId};
 
 var userID = 0;
 
@@ -27,7 +27,7 @@ describe('Login:', function() {
   var tests = {};
   var dones = {};
   var stopListening;
-  this.timeout(5000);
+  this.timeout(25000);
 
 
 
@@ -55,24 +55,40 @@ describe('Login:', function() {
    if (api) done();
   });
 
-  
+  it('Custom get request', function(done){
+    var requestOptions = {
+      options: {
+        payload: true
+      },
+      data: {
+        "__a": 1,
+        'viewer': userID
+      }
+    };
+    api.get('https://www.facebook.com/ajax/typeahead/search/facebar/bootstrap/', requestOptions, function(err, data){
+      if (!err && data.entries)
+        done();
+      done(err);
+    });
+  });
+
   it('Text message object (user)', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'message' && msg.body === 'test' + time);
     };
-    api.sendMessage({body: 'test'+time}, userID, checkError(done));  
+    api.sendMessage({body: 'test'+time}, userID, checkError(done));
   });
 
   it('Sticker message object (user)', function (done){
-    var sticker_id = '767334526626290'; 
+    var sticker_id = '767334526626290';
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'sticker' && msg.sticker_id == sticker_id);
     };
-    api.sendMessage({sticker: sticker_id}, userID, checkError(done));  
+    api.sendMessage({sticker: sticker_id}, userID, checkError(done));
   });
 
   it('Basic string (user)', function (done){
@@ -81,7 +97,7 @@ describe('Login:', function() {
     tests[time] = function (msg) {
       return (msg.type === 'message' && msg.body === 'test' + time);
     };
-    api.sendMessage('test'+time, userID, checkError(done));  
+    api.sendMessage('test'+time, userID, checkError(done));
   });
 
   it('Text message object (group)', function (done){
@@ -90,17 +106,17 @@ describe('Login:', function() {
     tests[time] = function (msg) {
       return (msg.type === 'message' && msg.body === 'test' + time);
     };
-    api.sendMessage({body: 'test'+time}, groupChatID, checkError(done));  
+    api.sendMessage({body: 'test'+time}, groupChatID, checkError(done));
   });
 
   it('Sticker message object (group)', function (done){
-    var sticker_id = '767334526626290'; 
+    var sticker_id = '767334526626290';
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
       return (msg.type === 'sticker' && msg.sticker_id == sticker_id);
     };
-    api.sendMessage({sticker: sticker_id}, groupChatID, checkError(done));  
+    api.sendMessage({sticker: sticker_id}, groupChatID, checkError(done));
   });
 
   it('Basic string (group)', function (done){
@@ -109,53 +125,53 @@ describe('Login:', function() {
     tests[time] = function (msg) {
       return (msg.type === 'message' && msg.body === 'test' + time);
     };
-    api.sendMessage('test'+time, groupChatID, checkError(done));  
+    api.sendMessage('test'+time, groupChatID, checkError(done));
   });
 
   it('Change chat title', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
-      return (msg.type === 'event' && 
-        msg.log_message_type === 'log:thread-name' && 
+      return (msg.type === 'event' &&
+        msg.log_message_type === 'log:thread-name' &&
         msg.log_message_data.name === 'test chat ' + time);
     };
-    api.setTitle('test chat '+time, groupChatID, checkError(done));  
+    api.setTitle('test chat '+time, groupChatID, checkError(done));
   });
 
   it('Kick user', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
-      return (msg.type === 'event' && 
+      return (msg.type === 'event' &&
         msg.log_message_type === 'log:unsubscribe' &&
         msg.log_message_data.
           removed_participants.indexOf('fbid:'+otherId) > -1);
     };
-    api.removeUserFromGroup(otherId, groupChatID, checkError(done));  
+    api.removeUserFromGroup(otherId, groupChatID, checkError(done));
   });
 
   it('Add user', function (done){
     var time = Date.now();
     dones[time] = done;
     tests[time] = function (msg) {
-      return (msg.type === 'event' && 
+      return (msg.type === 'event' &&
         msg.log_message_type === 'log:subscribe' &&
         msg.log_message_data.
           added_participants.indexOf('fbid:'+otherId) > -1);
     };
-    api.addUserToGroup(otherId, groupChatID, checkError(done));  
+    api.addUserToGroup(otherId, groupChatID, checkError(done));
   });
 
   it('Mark as read', function (done){
-    api.markAsRead(groupChatID, done);  
+    api.markAsRead(groupChatID, done);
   });
 
   it('Send typing indicator', function (done){
-    api.sendTypingIndicator(groupChatID, done);  
+    api.sendTypingIndicator(groupChatID, done);
   });
 
   after(function (){
-    if (stopListening) stopListening(); 
+    if (stopListening) stopListening();
   });
 });
