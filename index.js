@@ -5,7 +5,36 @@ var cheerio = require("cheerio");
 var log = require("npmlog");
 var fs = require("fs");
 
-function buildAPI(loginOptions, html, jar) {
+function setOptions(globalOptions, options) {
+  Object.keys(options).map(function(key) {
+    switch (key) {
+      case 'logLevel':
+        log.level = options.logLevel;
+        globalOptions.logLevel = options.logLevel;
+        break;
+      case 'selfListen':
+        globalOptions.selfListen = options.selfListen;
+        break;
+      case 'listenEvents':
+        globalOptions.listenEvents = options.listenEvents;
+        break;
+      case 'pageID':
+        globalOptions.pageID = options.pageID.toString();
+        break;
+      case 'updatePresence':
+        globalOptions.updatePresence = options.updatePresence;
+        break;
+      case 'forceLogin':
+        globalOptions.forceLogin = options.forceLogin;
+        break;
+      default:
+        log.warn('Unrecognized option given to setOptions', key);
+        break;
+    }
+  });
+}
+
+function buildAPI(globalOptions, html, jar) {
   var maybeCookie = jar.getCookies("https://www.facebook.com").filter(function(val) {
     return val.cookieString().split("=")[0] === "c_user";
   });
@@ -16,11 +45,6 @@ function buildAPI(loginOptions, html, jar) {
 
   var userID = maybeCookie[0].cookieString().split("=")[1].toString();
   log.info("Logged in");
-
-  var globalOptions = {
-    selfListen: false,
-    listenEvents: false
-  };
 
   var clientID = (Math.random() * 2147483648 | 0).toString(16);
 
@@ -34,39 +58,13 @@ function buildAPI(loginOptions, html, jar) {
   };
 
   var api = {
-    setOptions: function setOptions(options) {
-      Object.keys(options).map(function(key) {
-        switch (key) {
-          case 'logLevel':
-            log.level = options.logLevel;
-            globalOptions.logLevel = options.logLevel;
-            break;
-          case 'selfListen':
-            globalOptions.selfListen = options.selfListen;
-            break;
-          case 'listenEvents':
-            globalOptions.listenEvents = options.listenEvents;
-            break;
-          case 'pageID':
-            globalOptions.pageID = options.pageID.toString();
-            break;
-          case 'updatePresence':
-            globalOptions.updatePresence = options.updatePresence;
-            break;
-          default:
-            log.warn('Unrecognized option given to setOptions', key);
-            break;
-        }
-      });
-    },
+    setOptions: setOptions.bind(null, globalOptions),
     getAppState: function getAppState() {
       return jar
         .getCookies("https://www.facebook.com")
         .concat(jar.getCookies("https://facebook.com"));
     },
   };
-
-  api.setOptions(loginOptions);
 
   var apiFuncNames = [
     'listen',
@@ -158,7 +156,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
         }
 
         // This means the account has login approvals turned on.
-        if (headers.location.indexOf('https://www.facebook.com/checkpoint/') !== -1) {
+        if (headers.location.indexOf('https://www.facebook.com/checkpoint/') > -1) {
           var nextURL = 'https://www.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php';
 
           return utils
@@ -181,10 +179,9 @@ function makeLogin(jar, email, password, loginOptions, callback) {
 
               throw {
                 error: 'login-approval',
-                callback: function(code) {
+                continue: function(code) {
                   form.approvals_code = code;
                   form['submit[Continue]'] = 'Continue';
-                  console.log(form);
                   return utils
                     .post(nextURL, jar, form)
                     .then(utils.saveCookies(jar))
@@ -198,8 +195,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
                     })
                     .then(function(res) {
                       var headers = res.headers;
-
-                      if (!headers.location && res.body.indexOf('Review Recent Login') === -1) {
+                      if (!headers.location && res.body.indexOf('Review Recent Login') > -1) {
                         throw {error: "Something went wrong with login approvals."};
                       }
 
@@ -210,6 +206,9 @@ function makeLogin(jar, email, password, loginOptions, callback) {
                       // Simply call loginHelper because all it needs is the jar
                       // and will then complete the login process
                       return loginHelper(appState, email, password, loginOptions, callback);
+                    })
+                    .catch(function(err) {
+                      callback(err);
                     });
                 }
               };
@@ -223,7 +222,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
   };
 }
 
-function loginHelper(appState, email, password, loginOptions, callback) {
+function loginHelper(appState, email, password, globalOptions, callback) {
   var mainPromise = null;
   var jar = utils.getJar();
 
@@ -245,7 +244,7 @@ function loginHelper(appState, email, password, loginOptions, callback) {
     mainPromise = utils
       .get("https://www.facebook.com/", null)
       .then(utils.saveCookies(jar))
-      .then(makeLogin(jar, email, password, loginOptions, callback))
+      .then(makeLogin(jar, email, password, globalOptions, callback))
       .then(function() {
         return utils
           .get('https:\/\/www.facebook.com\/home.php', jar)
@@ -261,10 +260,12 @@ function loginHelper(appState, email, password, loginOptions, callback) {
     .then(function(res) {
       var html = res.body;
 
-      // fs.writeFileSync('test.html', html);
-
       // Login review
-      if (html.indexOf('Review Recent Login') !== -1) {
+      if (html.indexOf('Review Recent Login') > -1) {
+        if (!globalOptions.forceLogin) {
+          throw {error: "review-recent-login"};
+        }
+
         // Make the form in advance which will contain the fb_dtsg and nh
         var $ = cheerio.load(html);
         var arr = [];
@@ -282,49 +283,40 @@ function loginHelper(appState, email, password, loginOptions, callback) {
           .post(nextURL, jar, form)
           .then(utils.saveCookies(jar))
           .then(function(res) {
-            function cb(yesOrNo) {
-              form['submit[' + yesOrNo + ']'] = yesOrNo;
-              // console.log(form);
-              return utils
-                .post(nextURL, jar, form)
-                .then(utils.saveCookies(jar))
-                .then(function() {
-                  // Use the same form (safe I hope)
-                  form.name_action_selected = 'save_device';
+            form['submit[This Is Okay]'] = "This Is Okay";
+            return utils
+              .post(nextURL, jar, form)
+              .then(utils.saveCookies(jar))
+              .then(function() {
+                // Use the same form (safe I hope)
+                form.name_action_selected = 'save_device';
 
-                  return utils
-                    .post(nextURL, jar, form)
-                    .then(utils.saveCookies(jar));
-                })
-                .then(function(res) {
-                  var headers = res.headers;
+                return utils
+                  .post(nextURL, jar, form)
+                  .then(utils.saveCookies(jar));
+              })
+              .then(function(res) {
+                var headers = res.headers;
 
-                  if (!headers.location && res.body.indexOf('Review Recent Login') === -1) {
-                    throw {error: "Something went wrong with login approvals."};
-                  }
+                if (!headers.location && res.body.indexOf('Review Recent Login') > -1) {
+                  throw {error: "Something went wrong with review recent login."};
+                }
 
-                  var appState = jar
-                    .getCookies("https://www.facebook.com")
-                    .concat(jar.getCookies("https://facebook.com"));
+                var appState = jar
+                  .getCookies("https://www.facebook.com")
+                  .concat(jar.getCookies("https://facebook.com"));
 
-                  // Simply call loginHelper because all it needs is the jar
-                  // and will then complete the login process
-                  return loginHelper(appState, email, password, loginOptions, callback);
-                });
-            }
-
-            throw {
-              error: 'login-checks',
-              yes: cb.bind(null, 'This Is Okay'),
-              // no: cb.bind(null, 'This Is Not Okay'),
-              no: function() {
-                log.error('not implemented yet');
-              },
-            };
+                // Simply call loginHelper because all it needs is the jar
+                // and will then complete the login process
+                return loginHelper(appState, email, password, globalOptions, callback);
+              })
+              .catch(function(e) {
+                callback(e);
+              });
           });
       }
 
-      var stuff = buildAPI(loginOptions, html, jar);
+      var stuff = buildAPI(globalOptions, html, jar);
       ctx = stuff[0];
       defaultFuncs = stuff[1];
       api = stuff[2];
@@ -392,7 +384,7 @@ function loginHelper(appState, email, password, loginOptions, callback) {
     });
 
   // given a pageID we log in as a page
-  if (loginOptions.pageID) {
+  if (globalOptions.pageID) {
     mainPromise = mainPromise
       .then(function() {
         return utils
@@ -425,11 +417,16 @@ function login(loginData, options, callback) {
     options = {};
   }
 
-  if (options.logLevel != null) {
-    log.level = options.logLevel;
-  }
+  var globalOptions = {
+    selfListen: false,
+    listenEvents: false,
+    updatePresence: false,
+    forceLogin: false,
+  };
 
-  loginHelper(loginData.appState, loginData.email, loginData.password, options, callback);
+  setOptions(globalOptions, options);
+
+  loginHelper(loginData.appState, loginData.email, loginData.password, globalOptions, callback);
 }
 
 module.exports = login;

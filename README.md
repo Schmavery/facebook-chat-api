@@ -38,15 +38,9 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 * [`api.getUserInfo`](#getUserInfo)
 * [`api.getFriendsList`](#getFriendsList)
 * [`api.getThreadList`](#getThreadList)
-* [`api.getAccessToken`](#getAccessToken)
 * [`api.addUserToGroup`](#addUserToGroup)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
-
-## &#9888; Deprecated &#9888;
-* [`api.sendSticker`](#sendSticker)
-* [`api.sendDirectMessage`](#sendDirectMessage)
-* [`api.sendDirectSticker`](#sendDirectSticker)
 
 ---------------------------------------
 
@@ -77,6 +71,38 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 ```
 
 
+__Login Approvals (2-Factor Auth)__: When you try to login with Login Approvals enabled, your callback will be called with an error `'login-approval'` that has a `continue` function that accepts the approval code as a `string` or a `number`.
+
+__Example__:
+
+```js
+var readline = require("readline");
+var rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+login(obj, function(err, api) {
+  if(err) {
+    switch (err.error) {
+      case 'login-approval':
+        console.log('Enter code > ');
+        rl.on('line', function(line){
+          err.continue(line);
+          rl.close();
+        });
+        break;
+    }
+    return;
+  }
+  
+  // Logged in!
+}
+```
+
+__Review Recent Login__: Sometimes Facebook will ask you to review your recent logins. This means you've recently logged in from a unrecognized location. This will will result in the callback being called with an error `'review-recent-login'` by default. If you wish to automatically approve all recent logins, you can set the option `forceLogin` to `true` in the `loginOptions`.
+
+
 ---------------------------------------
 
 <a name="listen" />
@@ -89,15 +115,18 @@ __Arguments__
 
 - `callback(error, message, stopListening)` - A callback called every time the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue. 
 
+__Message__
+
 If `type` is `message`, the object will contain the following fields:
-    * `sender_name` - First and last name of the person who just sent the message.
-    * `sender_id` - The id of the person who sent the message in the chat with thread_id.
-    * `participant_ids` - An array containing the ids of everyone in the thread (sender included).
-    * `participant_names` - An array containing only the first names of the other participants in the thread (sender included).
-    * `body` - The string corresponding to the message that was just received.
-    * `thread_id` - The thread_id representing the thread in which the message was sent.
-    * `coordinates` - An object containing `latitude`, `longitude`, and `accuracy`.
-    * `type` - The string `"message"`, `"sticker"`, `"file"`, `"photo"`, `"animated_image"`, or `"event"` (if applicable, see below).
+
+  + `sender_name` - First and last name of the person who just sent the message.
+  + `sender_id` - The id of the person who sent the message in the chat with thread_id.
+  + `participant_ids` - An array containing the ids of everyone in the thread (sender included).
+  + `participant_names` - An array containing only the first names of the other participants in the thread (sender included).
+  + `body` - The string corresponding to the message that was just received.
+  + `thread_id` - The thread_id representing the thread in which the message was sent.
+  + `coordinates` - An object containing `latitude`, `longitude`, and `accuracy`.
+  + `type` - The string `"message"`, `"sticker"`, `"file"`, `"photo"`, `"animated_image"`, or `"event"` (if applicable, see below).
 
 If `type` is `"sticker"` there will be a `sticker_id` and `sticker_url` field instead of `body`.
 
@@ -173,6 +202,7 @@ __Arguments__
     - `listenEvents` - (Default `false`) Will make [api.listen](#listen) also handle events (look at api.listen for more details).
     - `pageId` - (Default empty) Makes [api.listen](#listen) only receive messages through the page specified by that ID. Also makes sendMessage and sendSticker send from the page.
     - `updatePresence` - (Default `false`) Will make [api.listen](#listen) also return `presence` (look at api.listen for more details).
+    - `forceLogin` - (Default `false`) Will automatically approve of any recent logins and continue with the login process.
 
 __Example__
 
@@ -391,31 +421,6 @@ __Arguments__
 * `start` - Start index in the list of recently used threads.
 * `end` - End index.
 * `callback(err, arr)` - A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: thread_id, thread_fbid, other_user_fbid, last_action_id, participants, former_participants, name, snippet, snippet_has_attachment, is_forwarded_snippet, snippet_attachments, snippet_sender, unread_count, message_count, image_src, timestamp_absolute, timestamp_datetime, timestamp_relative, timestamp_time_passed, timestamp, server_timestamp, mute_settings, is_canonical_user, is_canonical, canonical_fbid, is_subscribed, root_message_threading_id, folder, is_archived, mode, recipients_loadable, name_conversation_sheet_dismissed, has_email_participant, read_only.
-
----------------------------------------
-
-<a name="getAccessToken" />
-### api.getAccessToken()
-
-Synchronously returns an access token to the Facebook Graph API.
-
-This is a bit of a hack because it's using the Graph API Explorer's app ID. It has all permissions so drive safely.
-
-__Example__
-
-```js
-var fb = require('fb');
-
-login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
-    if(err) return console.error(err);
-    
-    fb.setAccessToken(api.getAccessToken());
-    fb.api('/me', 'get', function (res) {
-        if(!res || res.error) return console.error(res ? res.error : "error");
-        console.log('me: ', res);
-    });
-});
-```
 
 ---------------------------------------
 
