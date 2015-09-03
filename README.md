@@ -430,6 +430,18 @@ __Arguments__
 * `thread_id` - Group chat ID.
 * `callback(err, end)` - A callback called when the query is done (either with an error or with null followed by a function `end` described above).
 
+---------------------------------------
+
+<a name="getAccessToken" />
+### api.getAccessToken(app_id, [callback])
+
+Get access token by givin an app id from Graph API Explorer API.
+
+__Arguments__
+
+* `app_id` - App id.
+* `callback(err, token)` - A callback called when the query is done (either with an error or with null followed by a token).
+
 ## Deprecated
 
 ---------------------------------------
@@ -501,27 +513,4 @@ __Warning__: This function is also ambiguous (look at [`sendDirectMessage`](#sen
 
 Same as sendDirectMessage but for stickers.
 
----------------------------------------
 
-<a name="getAccessToken" />
-### api.getAccessToken()
-
-__Deprecated__: This call no longer works and will be removed in v1.0.  Please retreive an access token in the usual way.
-
-Synchronously returns an access token to the Facebook Graph API.
-
-__Example__
-
-```js
-var fb = require('fb');
-
-login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
-    if(err) return console.error(err);
-    
-    fb.setAccessToken(api.getAccessToken());
-    fb.api('/me', 'get', function (res) {
-        if(!res || res.error) return console.error(res ? res.error : "error");
-        console.log('me: ', res);
-    });
-});
-```
