@@ -18,7 +18,9 @@ module.exports = function(defaultFuncs, api, ctx) {
     if(msgType !== "String" && msgType !== "Object") {
       throw {error: "Message should be of type string or object and not " + threadIDType + "."};
     }
-    if(threadIDType !== "Number" && threadIDType !== "String") {
+
+    // Changing this to accomodate an array of users
+    if(threadIDType !== "Array" && threadIDType !== "Number" && threadIDType !== "String") {
       throw {error: "ThreadID should be of type number or string and not " + threadIDType + "."};
     }
 
@@ -51,7 +53,6 @@ module.exports = function(defaultFuncs, api, ctx) {
       'message_batch[0][message_id]' : messageAndOTID,
       'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientID),
       'message_batch[0][manual_retry_cnt]' : '0',
-      'message_batch[0][thread_fbid]' : threadID,
       'message_batch[0][has_attachment]' : false,
       'message_batch[0][signatureID]' : utils.getSignatureID(),
     };
@@ -103,52 +104,75 @@ module.exports = function(defaultFuncs, api, ctx) {
       send();
     }
 
-    function send() {
-      // We're doing a query to this to check if the given id is the id of
-      // a user or of a group chat. The form will be different depending
-      // on that.
-      api.getUserInfo(threadID, function(err, res) {
-        if (err) {
-          return callback(err);
+    function sendContent(isSingleUser) {
+      // There are three cases here:
+      // 1. threadID is of type array, where we're starting a new group chat with users
+      //    specified in the array.
+      // 2. User is sending a message to a specific user.
+      // 3. No additional form params and the message goes to an existing group chat.
+      if(threadIDType === "Array") {
+        for (var i  = 0; i < threadID.length; i++) {
+          form['message_batch[0][specific_to_list][' + i + ']'] = "fbid:" + threadID[i];
         }
+        form['message_batch[0][specific_to_list][' + (threadID.length + 1) + ']'] = "fbid:" + ctx.userID;
+        log.info("Sending message to multiple users: " + threadID);
+      } else {
+        form['message_batch[0][thread_fbid]'] = threadID;
         // This means that threadID is the id of a user, and the chat
         // is a single person chat
-        if(Object.keys(res).length > 0) {
+        if(isSingleUser) {
           form['message_batch[0][client_thread_id]'] = "user:" + threadID;
           form['message_batch[0][specific_to_list][0]'] = "fbid:" + threadID;
           form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.userID;
         }
+      }
 
-        if(ctx.globalOptions.pageID) {
-          form['message_batch[0][author]'] = "fbid:" + ctx.globalOptions.pageID;
-          form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.globalOptions.pageID;
-          form['message_batch[0][creator_info][creatorID]'] = ctx.userID;
-          form['message_batch[0][creator_info][creatorType]'] = "direct_admin";
-          // form['message_batch[0][creator_info][creatorName]'] = Marc Zuckerbot
-          form['message_batch[0][creator_info][labelType]'] = "sent_message";
-          form['message_batch[0][creator_info][pageID]'] = ctx.globalOptions.pageID;
-          form['request_user_id'] = ctx.globalOptions.pageID;
-          form['message_batch[0][creator_info][profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userID;
-        }
+      if(ctx.globalOptions.pageID) {
+        form['message_batch[0][author]'] = "fbid:" + ctx.globalOptions.pageID;
+        form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.globalOptions.pageID;
+        form['message_batch[0][creator_info][creatorID]'] = ctx.userID;
+        form['message_batch[0][creator_info][creatorType]'] = "direct_admin";
+        form['message_batch[0][creator_info][labelType]'] = "sent_message";
+        form['message_batch[0][creator_info][pageID]'] = ctx.globalOptions.pageID;
+        form['request_user_id'] = ctx.globalOptions.pageID;
+        form['message_batch[0][creator_info][profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userID;
+      }
 
-        defaultFuncs
-          .post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
-          .then(utils.parseAndCheckLogin)
-          .then(function(resData) {
-            if (!resData) {
-              throw {error: "Send message failed."};
-            }
-            if(resData.error) {
-              throw resData;
-            }
+      defaultFuncs
+        .post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
+        .then(utils.parseAndCheckLogin)
+        .then(function(resData) {
+          if (!resData) {
+            throw {error: "Send message failed."};
+          }
+          if(resData.error) {
+            throw resData;
+          }
 
-            return callback();
-          })
-          .catch(function(err) {
-            log.error("ERROR in sendMessage --> ", err);
-            return callback(err);
-          });
+          return callback(null, resData.payload.actions.reduce(function(p, v) {
+            return v.thread_fbid || p;
+          }, null));
+        })
+        .catch(function(err) {
+          log.error("ERROR in sendMessage --> ", err);
+          return callback(err);
         });
+    }
+
+    function send() {
+      // We're doing a query to this to check if the given id is the id of
+      // a user or of a group chat. The form will be different depending
+      // on that.
+      if(threadIDType === "Array") {
+        sendContent(false);
+      } else {
+        api.getUserInfo(threadID, function(err, res) {
+          if(err) {
+            return callback(err);
+          }
+          sendContent(Object.keys(res).length > 0);
+        });
+      }
     }
   };
 };
