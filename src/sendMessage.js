@@ -114,7 +114,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         for (var i  = 0; i < threadID.length; i++) {
           form['message_batch[0][specific_to_list][' + i + ']'] = "fbid:" + threadID[i];
         }
-        form['message_batch[0][specific_to_list][' + (threadID.length + 1) + ']'] = "fbid:" + ctx.userID;
+        form['message_batch[0][specific_to_list][' + (threadID.length) + ']'] = "fbid:" + ctx.userID;
         log.info("Sending message to multiple users: " + threadID);
       } else {
         form['message_batch[0][thread_fbid]'] = threadID;
