@@ -54,6 +54,7 @@ function buildAPI(globalOptions, html, jar) {
     jar: jar,
     clientID: clientID,
     globalOptions: globalOptions,
+    loggedIn: true,
     access_token: 'NONE'
   };
 
