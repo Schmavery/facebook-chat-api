@@ -35,7 +35,7 @@ module.exports = function(defaultFuncs, api, ctx) {
   var globalCallback = null;
 
   function listen() {
-    if(shouldStop) {
+    if(shouldStop || !ctx.loggedIn) {
       return;
     }
 
@@ -102,7 +102,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               // There should be only one key inside overlay
               Object.keys(v.overlay).map(function(userID) {
                 var formattedPresence = utils.formatPresence(v.overlay[userID], userID);
-                if(!shouldStop) {
+                if(!shouldStop && ctx.loggedIn) {
                   globalCallback(null, formattedPresence);
                 }
               });
@@ -118,7 +118,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                   return;
                 }
 
-                if (!shouldStop) {
+                if (!shouldStop && ctx.loggedIn) {
                   globalCallback(null, formattedEvent);
                 }
               });
@@ -160,7 +160,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 return;
               }
 
-              if (!shouldStop) {
+              if (!shouldStop && ctx.loggedIn) {
                 globalCallback(null, message);
               }
               break;
@@ -173,7 +173,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               }
 
               atLeastOne = true;
-              if (!shouldStop) {
+              if (!shouldStop && ctx.loggedIn) {
                 globalCallback(null, utils.formatMessage(v));
               }
               break;
