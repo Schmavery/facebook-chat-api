@@ -1,5 +1,6 @@
 // Instructions: Copy this file to test-config.json, fill in your test data 
 // and remove all comments (JSON doesn't support comments).
+// Run the test with `npm test` after installing the devDependencies (mocha).
 {
   // Test user login information
   "user" : {
