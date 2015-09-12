@@ -29,8 +29,8 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 * [`login`](#login)
 * [`api.listen`](#listen)
 * [`api.setOptions`](#setOptions)
-* [`api.getUserId`](#getUserId)
-* [`api.getCurrentUserId`](#getCurrentUserId)
+* [`api.getUserID`](#getUserID)
+* [`api.getCurrentUserID`](#getCurrentUserID)
 * [`api.sendMessage`](#sendMessage)
 * [`api.markAsRead`](#markAsRead)
 * [`api.setTitle`](#setTitle)
@@ -227,8 +227,8 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 
 ---------------------------------------
 
-<a name="getUserId" />
-### api.getUserId(name, callback)
+<a name="getUserID" />
+### api.getUserID(name, callback)
 
 Given a person's full name will do a Facebook Graph search and return all the ids ordered by however Facebook wants to order them.
 
@@ -243,7 +243,7 @@ __Example__
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
 
-    api.getUserId("Marc Zuckerbot", function(err, data) {
+    api.getUserID("Marc Zuckerbot", function(err, data) {
         if(err) return callback(err);
 
         // Send the message to the best match (best by Facebook's criteria)
@@ -255,8 +255,8 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 
 ---------------------------------------
 
-<a name="getCurrentUserId" />
-### api.getCurrentUserId()
+<a name="getCurrentUserID" />
+### api.getCurrentUserID()
 
 Returns the currently logged-in user's Facebook user ID.
 

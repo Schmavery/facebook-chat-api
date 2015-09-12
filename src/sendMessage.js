@@ -21,7 +21,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     // Changing this to accomodate an array of users
     if(threadIDType !== "Array" && threadIDType !== "Number" && threadIDType !== "String") {
-      throw {error: "ThreadID should be of type number or string and not " + threadIDType + "."};
+      throw {error: "ThreadID should be of type number, string, or array and not " + threadIDType + "."};
     }
 
     if (msgType === "String") {
@@ -149,9 +149,10 @@ module.exports = function(defaultFuncs, api, ctx) {
             throw resData;
           }
 
-          return callback(null, resData.payload.actions.reduce(function(p, v) {
+          var returnID = (threadIDType === "Array") ? resData.payload.actions.reduce(function(p, v) {
             return v.thread_fbid || p;
-          }, null));
+          }, null) : threadID.toString();
+          return callback(null, returnID);
         })
         .catch(function(err) {
           log.error("ERROR in sendMessage --> ", err);

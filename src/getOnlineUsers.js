@@ -32,7 +32,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (resData.error) {
           throw resData;
         }
-        return callback(formatData(resData.payload.buddy_list.nowAvailableList, resData.payload.time));
+        return callback(null, formatData(resData.payload.buddy_list.nowAvailableList, resData.payload.time));
       })
       .catch(function(err) {
         log.error("Error in getOnlineUsers", err);
