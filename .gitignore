@@ -2,4 +2,6 @@ node_modules
 facebook
 test-bot.js
 test-bot-config.json
-tests/test-config.json
+
+test/test-config.json
+test/test-appstate.json
