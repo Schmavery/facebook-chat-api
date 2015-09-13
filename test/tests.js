@@ -59,11 +59,11 @@ describe('Login:', function() {
   });
 
   it('should login without error', function (){
-   assert(api);
+    assert(api);
   });
 
-  it('should get the right user ID', function (){
-   assert(userID == api.getCurrentUserID());
+  it('should get the current user ID', function (){
+    assert(userID === api.getCurrentUserID());
   });
 
   it('should send text message object (user)', function (done){
@@ -150,7 +150,7 @@ describe('Login:', function() {
     });
     api.sendMessage({attachment: attach, body: body}, groupChatID, function(err, id){
       checkErr(done)(err);
-      assert(groupChatID == id);
+      assert(groupChatID === id);
     });
   });
 
@@ -189,15 +189,17 @@ describe('Login:', function() {
   it('should retrieve a list of threads', function (done) {
     api.getThreadList(0, 20, function(err, res) {
       checkErr(done)(err);
-      assert(res.reduce(function (p, v) {
-          return p || 
-          // This checks to see if the group chat we just made 
-          // is in the list... it should be.
-            (v.threadFbid == groupChatID &&
-              userIDs.reduce(function (pr, val)
-              {return pr && v.participants.indexOf(val) > -1;}, true) &&
-              v.name == groupChatName);
-        }, false));
+      // This checks to see if the group chat we just made
+      // is in the list... it should be.
+      assert(res.some(function (v) {
+        return (
+          v.threadFbid === groupChatID &&
+          userIDs.every(function (val) {
+            return v.participants.indexOf(val) > -1;
+          }) &&
+          v.name === groupChatName
+        );
+      }));
       done();
     });
   });
@@ -232,18 +234,34 @@ describe('Login:', function() {
     });
   });
 
+
   it('should get the right user info', function (done) {
     api.getUserInfo(userID, function(err, data) {
       checkErr(done)(err);
-      var mark = data[userID];
-      assert(mark.name);
-      assert(mark.firstName);
-      assert(mark.vanity !== null);
-      assert(mark.profileUrl);
-      assert(mark.gender);
-      assert(mark.type);
-      assert(!mark.isFriend);
+      var user = data[userID];
+      assert(user.name);
+      assert(user.firstName);
+      assert(user.vanity !== null);
+      assert(user.profileUrl);
+      assert(user.gender);
+      assert(user.type);
+      assert(!user.isFriend);
       done();
+    });
+  });
+
+  it('should get the user ID', function(done) {
+    api.getUserInfo(userID, function(err, data) {
+      checkErr(done)(err);
+      var user = data[userID];
+      api.getUserID(user.name, function(err, data) {
+        checkErr(done)(err);
+        assert(getType(data) === "Array");
+        assert(data.some(function(val) {
+          return val.userID === userID;
+        }));
+        done();
+      });
     });
   });
 
@@ -251,7 +269,7 @@ describe('Login:', function() {
     api.getFriendsList(userID, function(err, data) {
       checkErr(done)(err);
       assert(getType(data) === "Array");
-      data.map(function(v) {parseInt(v);});
+      assert(data.every(function(v) {return !isNaN(v);}));
       done();
     });
   });
