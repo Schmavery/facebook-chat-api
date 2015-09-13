@@ -2,8 +2,47 @@
 
 var utils = require("../utils");
 var log = require("npmlog");
+var bluebird = require("bluebird");
 
 module.exports = function(defaultFuncs, api, ctx) {
+  function uploadAttachment(attachments, callback) {
+    var uploads = [];
+
+    // create an array of promises
+    for (var i = 0; i < attachments.length; i++) {
+      if (!utils.isReadableStream(attachments[i])) {
+        throw {error: "Attachment should be a readable stream and not " + utils.getType(attachments[i]) + "."};
+      }
+
+      var form = {
+        upload_1024: attachments[i],
+      };
+      uploads.push(defaultFuncs
+        .postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, {})
+        .then(utils.parseAndCheckLogin)
+        .then(function (resData) {
+          if (resData.error) {
+            throw resData;
+          }
+
+          // We have to return the data unformatted unless we want to change it
+          // back in sendMessage.
+          return resData.payload.metadata[0];
+        }));
+    }
+
+    // resolve all promises
+    bluebird
+      .all(uploads)
+      .then(function(resData) {
+        callback(null, resData);
+      })
+      .catch(function(err) {
+        log.error("Error in uploadAttachment", err);
+        return callback(err);
+      });
+  }
+
   return function sendMessage(msg, threadID, callback) {
     if(!callback && utils.getType(threadID) === 'Function') {
       throw {error: "please pass a threadID as a second argument."};
@@ -67,7 +106,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         msg.attachment = [msg.attachment];
       }
 
-      api.uploadAttachment(msg.attachment, function (err, files) {
+      uploadAttachment(msg.attachment, function (err, files) {
         if (err) {
           return callback(err);
         }

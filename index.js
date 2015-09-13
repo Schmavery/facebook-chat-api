@@ -80,7 +80,6 @@ function buildAPI(globalOptions, html, jar) {
     'addUserToGroup',
     'sendTypingIndicator',
     'getCurrentUserID',
-    'uploadAttachment',
     'deleteMessage',
     'deleteThread',
     'archiveThread',
