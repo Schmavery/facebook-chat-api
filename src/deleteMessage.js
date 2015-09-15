@@ -9,12 +9,6 @@ module.exports = function(defaultFuncs, api, ctx) {
       callback = function(){};
     }
 
-    // this allows also passing a message object
-    var messageID = messageOrMessages.messageID || null;
-    if(messageID != null) {
-      messageOrMessages = messageID;
-    }
-
     var form = {
       client: 'mercury',
     };

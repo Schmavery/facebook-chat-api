@@ -188,10 +188,13 @@ module.exports = function(defaultFuncs, api, ctx) {
             throw resData;
           }
 
-          var returnID = (threadIDType === "Array") ? resData.payload.actions.reduce(function(p, v) {
-            return v.thread_fbid || p;
-          }, null) : threadID.toString();
-          return callback(null, returnID);
+          var messageInfo = resData.payload.actions.reduce(function(p, v) {
+            return {
+              threadID: v.thread_fbid,
+              messageID: v.message_id
+            } || p; }, null);
+
+          return callback(null, messageInfo);
         })
         .catch(function(err) {
           log.error("ERROR in sendMessage --> ", err);
