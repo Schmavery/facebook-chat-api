@@ -4,7 +4,7 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function archiveThread(threadOrThreads, callback) {
+  return function changeArchivedStatus(threadOrThreads, archive, callback) {
     if(!callback) {
       callback = function(){};
     }
@@ -13,10 +13,10 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     if(utils.getType(threadOrThreads) === "Array") {
       for (var i = 0; i < threadOrThreads.length; i++) {
-        form['ids[' + threadOrThreads[i] + ']'] = true;
+        form['ids[' + threadOrThreads[i] + ']'] = archive;
       }
     } else {
-      form['ids[' + threadOrThreads + ']'] = true;
+      form['ids[' + threadOrThreads + ']'] = archive;
     }
 
     defaultFuncs

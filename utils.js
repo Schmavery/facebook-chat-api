@@ -273,7 +273,7 @@ function formatTyp(event) {
     from_mobile: event.from_mobile,
     userID: event.realtime_viewer_fbid.toString(),
     type: 'typ',
-  }
+  };
 }
 
 function getFrom(str, startToken, endToken) {
@@ -339,7 +339,7 @@ function makeDefaults(html, userID) {
     }
 
     return newObj;
-  };
+  }
 
   function postWithDefaults(url, jar, form) {
     return post(url, jar, mergeWithDefaults(form));
@@ -367,8 +367,9 @@ function parseAndCheckLogin(data) {
       res = JSON.parse(makeParsable(data.body));
     } catch(e) {
       throw {
-        error: "JSON.parse error. Probably due to not being logged in. Check the `detail` property on this error.",
-        detail: e
+        error: "JSON.parse error. Check the `detail` property on this error.",
+        detail: e,
+        res: data.body
       };
     }
 
@@ -410,6 +411,41 @@ function formatCookie(arr) {
   return arr[0]+"="+arr[1]+"; " + (arr[2] !== 0 ? "expires=" + formatDate(new Date(arr[2])) + "; " : "") + "path=" + arr[3] + ";";
 }
 
+function formatThread(data) {
+  return {
+    threadID: data.thread_id,
+    threadFbid: data.thread_fbid,
+    participants: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
+    formerParticipants: data.former_participants,
+    name: data.name,
+    snippet: data.snippet,
+    snippetHasAttachment: data.snippet_has_attachment,
+    snippetAttachments: data.snippet_attachments,
+    snippetSender: data.snippet_sender.replace('fbid:', ''),
+    unreadCount: data.unread_count,
+    messageCount: data.message_count,
+    imageSrc: data.image_src,
+    timestamp: data.timestamp,
+    serverTimestamp: data.server_timestamp, // what is this?
+    muteSettings: data.muteSettings,
+    isCanonicalUser: data.is_canonical_user,
+    isCanonical: data.is_canonical,
+    canonicalFbid: data.canonical_fbid,
+    isSubscribed: data.is_subscribed,
+    rootMessageThreadingID: data.root_message_threading_id,
+    folder: data.folder,
+    isArchived: data.is_archived,
+    recipientsLoadable: data.recipients_loadable,
+    hasEmailParticipant: data.has_email_participant,
+    readOnly: data.read_only,
+    canReply: data.can_reply,
+    composerEnabled: data.composer_enabled,
+    blockedParticipants: data.blocked_participants,
+    lastMessageID: data.last_message_id
+  };
+}
+
+
 function getType(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1);
 }
@@ -446,4 +482,5 @@ module.exports = {
   formatPresence: formatPresence,
   formatTyp: formatTyp,
   formatCookie: formatCookie,
+  formatThread: formatThread
 };

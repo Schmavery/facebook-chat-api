@@ -98,9 +98,9 @@ describe('Login:', function() {
     listen(done, function (msg) {
       return msg.type === 'message' && msg.body === body;
     });
-    api.sendMessage(body, userIDs, function(err, id){
+    api.sendMessage(body, userIDs, function(err, info){
       checkErr(done)(err);
-      groupChatID = id;
+      groupChatID = info.threadID;
     });
   });
 
@@ -109,9 +109,9 @@ describe('Login:', function() {
     listen(done, function (msg) {
       return msg.type === 'message' && msg.body === body;
     });
-    api.sendMessage({body: body}, groupChatID, function(err, id){
+    api.sendMessage({body: body}, groupChatID, function(err, info){
       checkErr(done)(err);
-      assert(groupChatID === id);
+      assert(groupChatID === info.threadID);
     });
   });
 
@@ -120,9 +120,9 @@ describe('Login:', function() {
     listen(done, function (msg) {
       return msg.type === 'message' && msg.body === body;
     });
-    api.sendMessage(body, groupChatID, function(err, id) {
+    api.sendMessage(body, groupChatID, function(err, info) {
       checkErr(done)(err);
-      assert(groupChatID === id);
+      assert(groupChatID === info.threadID);
     });
   });
 
@@ -134,8 +134,8 @@ describe('Login:', function() {
         msg.attachments[0].type === 'sticker' &&
         msg.attachments[0].stickerID === stickerID;
     });
-    api.sendMessage({sticker: stickerID}, groupChatID, function (err, id) {
-      assert(groupChatID === id);
+    api.sendMessage({sticker: stickerID}, groupChatID, function (err, info) {
+      assert(groupChatID === info.threadID);
       checkErr(done)(err);
     });
   });
@@ -148,9 +148,9 @@ describe('Login:', function() {
     listen(done, function (msg) {
       return msg.type === 'message' && msg.body === body;
     });
-    api.sendMessage({attachment: attach, body: body}, groupChatID, function(err, id){
+    api.sendMessage({attachment: attach, body: body}, groupChatID, function(err, info){
       checkErr(done)(err);
-      assert(groupChatID === id);
+      assert(groupChatID === info.threadID);
     });
   });
 

@@ -33,7 +33,7 @@ function checkErr(done){
   };
 }
 
-describe('Login:', function() {
+describe('Login As Page:', function() {
   var api = null;
   var tests = [];
   var stopListening;
