@@ -263,7 +263,7 @@ function loginHelper(appState, email, password, globalOptions, callback) {
 
   // If we're given an appState we loop through it and save each cookie
   // back into the jar.
-  if(appState !== null) {
+  if(appState) {
     appState.map(function(c) {
       var str = c.key + "=" + c.value + "; expires=" + c.expires + "; domain=" + c.domain + "; path=" + c.path + ";";
       jar.setCookie(str, "http://" + c.domain);
