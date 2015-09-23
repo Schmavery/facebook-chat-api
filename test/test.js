@@ -88,6 +88,15 @@ describe('Login:', function() {
     api.sendMessage(body, userID, checkErr(done));
   });
 
+  it('should get the history of the chat (user)', function (done) {
+    api.getThreadHistory(userID, 0, 5, Date.now(), function(err, data) {
+      checkErr(done)(err);
+      assert(getType(data) === "Array");
+      assert(data.every(function(v) {return getType(v) == "Object";}));
+      done();
+    });
+  });
+
   it('should create a chat', function (done){
     var body = "new-chat-" + Date.now();
     listen(done, function (msg) {
@@ -146,6 +155,15 @@ describe('Login:', function() {
     api.sendMessage({attachment: attach, body: body}, groupChatID, function(err, info){
       checkErr(done)(err);
       assert(groupChatID === info.threadID);
+    });
+  });
+
+  it('should get the history of the chat (group)', function (done) {
+    api.getThreadHistory(groupChatID, 0, 5, Date.now(), function(err, data) {
+      checkErr(done)(err);
+      assert(getType(data) === "Array");
+      assert(data.every(function(v) {return getType(v) == "Object";}));
+      done();
     });
   });
 
