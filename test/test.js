@@ -8,10 +8,6 @@ var credentials = {
   password: conf.user.password,
 };
 
-try {
-  credentials.appState = JSON.parse(fs.readFileSync('test/test-appstate.json', 'utf8'));
-} catch (e) {}
-
 var userIDs = conf.userIDs;
 
 var options = { selfListen: true, listenEvents: true, logLevel: "silent"};
@@ -53,7 +49,6 @@ describe('Login:', function() {
         });
       });
 
-      fs.writeFileSync('test/test-appstate.json', JSON.stringify(api.getAppState()));
       done();
     });
   });
@@ -272,6 +267,10 @@ describe('Login:', function() {
       assert(data.every(function(v) {return !isNaN(v);}));
       done();
     });
+  });
+
+  it('should log out', function (done) {
+    api.logout(done);
   });
 
   after(function (){
