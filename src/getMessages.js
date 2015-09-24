@@ -5,19 +5,21 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function getMessages(thread_id, start, end, callback) {
+  return function getMessages(threadId, isGroup, start, end, callback) {
     if(!callback) callback = function() {};
 
     if (end <= start) end = start + 20;
 
-    var startKey = 'messages[user_ids][' + thread_id + '][offset]';
-    var endKey = 'messages[user_ids][' + thread_id + '][limit]';
+    var ids = isGroup ? 'thread_fbids' : 'user_ids';
 
-    var form = mergeWithDefaults({
-      'client' : 'mercury',
-      startKey : start,
-      endKey : end
-    });
+    var startKey = 'messages[' + ids + '][' + threadId + '][offset]';
+    var endKey = 'messages[' + ids + '][' + threadId + '][limit]';
+
+    var toMerge = {};
+    toMerge[startKey] = start;
+    toMerge[endKey] = end;
+
+    var form = mergeWithDefaults(toMerge);
 
     if(ctx.globalOptions.pageId) form.request_user_id = ctx.globalOptions.pageId;
 
@@ -30,7 +32,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
         callback({error: "Cannot set title of single-user chat."});
       } else if (resData.error) {
         callback(resData);
-      } else callback(null, resData.payload.threads);
+      } else callback(null, resData.payload.actions);
     })
     .catch(function(err) {
       log.error("Error in getMessages", err);
