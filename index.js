@@ -130,6 +130,7 @@ function _login(email, password, loginOptions, callback) {
         'sendDirectSticker',
         'sendSticker',
         'setTitle',
+        'getMessages',
         'getThreadList',
         'markAsRead',
         'sendMessage',
