@@ -251,6 +251,10 @@ function formatMessage(m) {
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
     messageID: originalMessage.mid,
     attachments: formatAttachment(originalMessage.attachments, originalMessage.attachmentIds, originalMessage.attachment_map, originalMessage.share_map),
+    timestamp: originalMessage.timestamp,
+    timestampAbsolute: originalMessage.timestamp_absolute,
+    timestampRelative: originalMessage.timestamp_relative,
+    timestampDatetime: originalMessage.timestamp_datetime,
   };
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid;
