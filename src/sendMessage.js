@@ -101,6 +101,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       form['message_batch[0][image_ids]'] = [];
       form['message_batch[0][gif_ids]'] = [];
       form['message_batch[0][file_ids]'] = [];
+      form['message_batch[0][video_ids]'] = [];
 
       if (utils.getType(msg.attachment) !== 'Array') {
         msg.attachment = [msg.attachment];
@@ -114,7 +115,6 @@ module.exports = function(defaultFuncs, api, ctx) {
         files.forEach(function (file) {
           var key = Object.keys(file);
           var type = key[0]; // image_id, file_id, etc
-
           form['message_batch[0][' + type + 's]'].push(file[type]); // push the id
         });
 
