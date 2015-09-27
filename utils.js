@@ -221,6 +221,20 @@ function _formatAttachment(attachment1, attachment2) {
         facebookUrl: attachment1.share.uri,
         url: attachment2.href,
       };
+    case "video":
+      return {
+        type: "video",
+        filename: attachment1.name,
+        thumbnailUrl: attachment1.thumbnail_url,
+        previewUrl: attachment1.preview_url,
+        previewWidth: attachment1.preview_width,
+        previewHeight: attachment1.preview_height,
+        ID: attachment1.metadata.fbid,
+        url: attachment1.url,
+        width: attachment1.metadata.dimensions.width,
+        height: attachment1.metadata.dimensions.height,
+        duration: attachment1.metadata.duration,
+      };
     default:
       throw new Error("unrecognized attach_file " + attachment1.attach_type);
   }
