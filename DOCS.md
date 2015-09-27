@@ -1,5 +1,6 @@
 # Documentation
 
+* [`login`](#login)
 * [`api.addUserToGroup`](#addUserToGroup)
 * [`api.changeArchivedStatus`](#changeArchivedStatus)
 * [`api.deleteMessage`](#deleteMessage)
@@ -11,7 +12,6 @@
 * [`api.getUserID`](#getUserID)
 * [`api.getUserInfo`](#getUserInfo)
 * [`api.listen`](#listen)
-* [`login`](#login)
 * [`api.logout`](#logout)
 * [`api.markAsRead`](#markAsRead)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
@@ -20,6 +20,66 @@
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
 * [`api.setOptions`](#setOptions)
 * [`api.setTitle`](#setTitle)
+
+---------------------------------------
+
+<a name="login"/>
+### login(emailAndPassword, [options], callback)
+
+This function is returned by `require(...)` and is the main entry point to the API.
+
+It allows the user to log into facebook given the right credentials.
+
+If it succeeds, `callback` will be called with a `null` object (for potential errors) and with an object containing all the available functions.
+
+If it fails, `callback` will be called with an error object.
+
+__Arguments__
+
+* `emailAndPassword`: An object containing the fields `email` and `password` used to login.
+* `options`: An object representing options to use when logging in (as described in [api.setOptions](#setOptions)).
+* `callback(err, api)`: A callback called when login is done (successful or not). `err` is an object containing a field `error`.
+
+__Example__
+
+```js
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+    // Here you can use the api
+});
+```
+
+__Login Approvals (2-Factor Auth)__: When you try to login with Login Approvals enabled, your callback will be called with an error `'login-approval'` that has a `continue` function that accepts the approval code as a `string` or a `number`.
+
+__Example__:
+
+```js
+var readline = require("readline");
+var rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+login(obj, function(err, api) {
+  if(err) {
+    switch (err.error) {
+      case 'login-approval':
+        console.log('Enter code > ');
+        rl.on('line', function(line){
+          err.continue(line);
+          rl.close();
+        });
+        break;
+    }
+    return;
+  }
+
+  // Logged in!
+}
+```
+
+__Review Recent Login__: Sometimes Facebook will ask you to review your recent logins. This means you've recently logged in from a unrecognized location. This will will result in the callback being called with an error `'review-recent-login'` by default. If you wish to automatically approve all recent logins, you can set the option `forceLogin` to `true` in the `loginOptions`.
+
 
 ---------------------------------------
 
@@ -297,66 +357,6 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     });
 });
 ```
-
----------------------------------------
-
-<a name="login"/>
-### login(emailAndPassword, [options], callback)
-
-This function is returned by `require(...)` and is the main entry point to the API.
-
-It allows the user to log into facebook given the right credentials.
-
-If it succeeds, `callback` will be called with a `null` object (for potential errors) and with an object containing all the available functions.
-
-If it fails, `callback` will be called with an error object.
-
-__Arguments__
-
-* `emailAndPassword`: An object containing the fields `email` and `password` used to login.
-* `options`: An object representing options to use when logging in (as described in [api.setOptions](#setOptions)).
-* `callback(err, api)`: A callback called when login is done (successful or not). `err` is an object containing a field `error`.
-
-__Example__
-
-```js
-login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
-    if(err) return console.error(err);
-    // Here you can use the api
-});
-```
-
-__Login Approvals (2-Factor Auth)__: When you try to login with Login Approvals enabled, your callback will be called with an error `'login-approval'` that has a `continue` function that accepts the approval code as a `string` or a `number`.
-
-__Example__:
-
-```js
-var readline = require("readline");
-var rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-login(obj, function(err, api) {
-  if(err) {
-    switch (err.error) {
-      case 'login-approval':
-        console.log('Enter code > ');
-        rl.on('line', function(line){
-          err.continue(line);
-          rl.close();
-        });
-        break;
-    }
-    return;
-  }
-
-  // Logged in!
-}
-```
-
-__Review Recent Login__: Sometimes Facebook will ask you to review your recent logins. This means you've recently logged in from a unrecognized location. This will will result in the callback being called with an error `'review-recent-login'` by default. If you wish to automatically approve all recent logins, you can set the option `forceLogin` to `true` in the `loginOptions`.
-
 
 ---------------------------------------
 
