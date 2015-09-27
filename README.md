@@ -114,7 +114,7 @@ For tests, create a `test-config.json` file that resembles `example-config.json`
 Pages can't start conversations with users directly; this is to prevent pages from spamming users.
 
 3. What do I do when `login` doesn't work?
-First check that you can login to Facebook using the website or app. If login approvals are enabled, you might be logging in incorrectly. For how to handle 2-factor auth, read our docs on [`login`](DOCS.md#login).
+First check that you can login to Facebook using the website or app. If login approvals are enabled, you might be logging in incorrectly. For how to handle login approvals, read our docs on [`login`](DOCS.md#login).
 
 
 You can find all of our documentation [here](DOCS.md).
