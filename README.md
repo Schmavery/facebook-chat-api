@@ -23,7 +23,30 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 });
 ```
 
-## Main functionality
+## Documentation
+
+* [`login`](DOCS.md#login)
+* [`api.addUserToGroup`](DOCS.md#addUserToGroup)
+* [`api.changeArchivedStatus`](DOCS.md#changeArchivedStatus)
+* [`api.deleteMessage`](DOCS.md#deleteMessage)
+* [`api.getCurrentUserID`](DOCS.md#getCurrentUserID)
+* [`api.getFriendsList`](DOCS.md#getFriendsList)
+* [`api.getOnlineUsers`](DOCS.md#getOnlineUsers)
+* [`api.getThreadHistory`](DOCS.md#searchForThread)
+* [`api.getThreadList`](DOCS.md#getThreadList)
+* [`api.getUserID`](DOCS.md#getUserID)
+* [`api.getUserInfo`](DOCS.md#getUserInfo)
+* [`api.listen`](DOCS.md#listen)
+* [`api.logout`](DOCS.md#logout)
+* [`api.markAsRead`](DOCS.md#markAsRead)
+* [`api.removeUserFromGroup`](DOCS.md#removeUserFromGroup)
+* [`api.searchForThread`](DOCS.md#searchForThread)
+* [`api.sendMessage`](DOCS.md#sendMessage)
+* [`api.sendTypingIndicator`](DOCS.md#sendTypingIndicator)
+* [`api.setOptions`](DOCS.md#setOptions)
+* [`api.setTitle`](DOCS.md#setTitle)
+
+## Main Functionality
 
 ### Sending a message
 #### api.sendMessage(message, threadID, [callback])
@@ -82,7 +105,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 
     api.setOptions({listenEvents: true});
 
-    api.listen(function(err, event, stopListening) {
+    var stopListening = api.listen(function(err, event) {
         if(err) return console.error(err);
 
         switch(event.type) {
@@ -115,6 +138,3 @@ Pages can't start conversations with users directly; this is to prevent pages fr
 
 3. What do I do when `login` doesn't work?
 First check that you can login to Facebook using the website or app. If login approvals are enabled, you might be logging in incorrectly. For how to handle login approvals, read our docs on [`login`](DOCS.md#login).
-
-
-You can find all of our documentation [here](DOCS.md).

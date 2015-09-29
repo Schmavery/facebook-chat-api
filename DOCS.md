@@ -237,8 +237,8 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
         if(err) return callback(err);
 
         // Send the message to the best match (best by Facebook's criteria)
-        var thread_id = data[0].uid;
-        api.sendMessage(msg, thread_id);
+        var threadID = data[0].uid;
+        api.sendMessage(msg, threadID);
     });
 });
 ```
@@ -279,22 +279,22 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 ### api.listen(callback)
 
 Will call `callback` when a new message is received on this account.
-By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true})`.
+By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true})`. This returns `stopListening` that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue.
 
 __Arguments__
 
-- `callback(error, message, stopListening)`: A callback called every time the logged-in account receives a new message. `stopListening` is a function that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue.
+- `callback(error, message)`: A callback called every time the logged-in account receives a new message.
 
 __Message__
 
 If `type` is `message`, the object will contain the following fields:
 
   + `senderName`: First and last name of the person who just sent the message.
-  + `senderID`: The id of the person who sent the message in the chat with thread_id.
+  + `senderID`: The id of the person who sent the message in the chat with threadID.
   + `participantNames`: An array containing only the first names of the other participants in the thread (sender included).
   + `participantIDs`: An array containing the ids of everyone in the thread (sender included).
   + `body`: The string corresponding to the message that was just received.
-  + `threadID`: The thread_id representing the thread in which the message was sent.
+  + `threadID`: The threadID representing the thread in which the message was sent.
   + `threadName`: The name of the receiver in a single person chat or the name of the group chat.
   + `location`
   + `messageID`: A string representing the message ID.
@@ -319,6 +319,7 @@ If enabled through [setOptions](#setOptions), this will also handle events. In t
 - `logMessageBody`: String printed in the chat.
 - `author`: The person who performed the event.
 
+<a name="presence" />
 If enabled through [setOptions](#setOptions), this will also return presence, (`type` will be `"presence"`), which is the online status of the user's friends. The object given to the callback will have the following fields:
 - `type`: The string "presence".
 - `timestamp`: How old the information is.
@@ -336,19 +337,19 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 
     api.setOptions({listenEvents: true});
 
-    api.listen(function(err, event, stopListening) {
+    var stopListening = api.listen(function(err, event) {
         if(err) return console.error(err);
 
         switch(event.type) {
           case "message":
             if(event.body === '/stop') {
-              api.sendMessage("Goodbye...", event.thread_id);
+              api.sendMessage("Goodbye...", event.threadID);
               return stopListening();
             }
-            api.markAsRead(event.thread_id, function(err) {
+            api.markAsRead(event.threadID, function(err) {
               if(err) console.log(err);
             });
-            api.sendMessage("TEST BOT: " + event.body, event.thread_id);
+            api.sendMessage("TEST BOT: " + event.body, event.threadID);
             break;
           case "event":
             console.log(event);
@@ -374,7 +375,7 @@ __Arguments__
 <a name="markAsRead" />
 ### api.markAsRead(threadID, [callback])
 
-Given a thread_id will mark all the unread messages as read. Facebook will take a couple of seconds to show that you've read the messages.
+Given a threadID will mark all the unread messages as read. Facebook will take a couple of seconds to show that you've read the messages.
 
 __Arguments__
 
@@ -391,7 +392,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 
     api.listen(function callback(err, message) {
         // Marks message as read immediately after they're sent
-        api.markAsRead(message.thread_id);
+        api.markAsRead(message.threadID);
     });
 });
 ```
@@ -425,7 +426,7 @@ __Arguments__
 <a name="sendMessage" />
 ### api.sendMessage(message, threadID, [callback])
 
-Sends the given message to the thread_id.
+Sends the given message to the threadID.
 
 __Arguments__
 
@@ -474,13 +475,13 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 ---------------------------------------
 
 <a name="sendTypingIndicator" />
-### api.sendTypingIndicator(thread\_id, [callback])
+### api.sendTypingIndicator(threadID, [callback])
 
-Sends a "USERNAME is typing" indicator to other members of the thread indicated by thread\_id.  This indication will disappear after 30 second or when the `end` function is called.
+Sends a "USERNAME is typing" indicator to other members of the thread indicated by threadID.  This indication will disappear after 30 second or when the `end` function is called.
 
 __Arguments__
 
-* `thread_id`: Group chat ID.
+* `threadID`: Group chat ID.
 * `callback(err, end)`: A callback called when the query is done (either with an error or with null followed by a function `end` described above).
 
 ---------------------------------------
@@ -502,7 +503,7 @@ __Arguments__
       forever).
     - `listenEvents`: (Default `false`) Will make [api.listen](#listen) also handle events (look at api.listen for more details).
     - `pageId`: (Default empty) Makes [api.listen](#listen) only receive messages through the page specified by that ID. Also makes `sendMessage` and `sendSticker` send from the page.
-    - `updatePresence`: (Default `false`) Will make [api.listen](#listen) also return `presence` ([api.listen](#listen) for more details).
+    - `updatePresence`: (Default `false`) Will make [api.listen](#listen) also return `presence` ([api.listen](#presence) for more details).
     - `forceLogin`: (Default `false`) Will automatically approve of any recent logins and continue with the login process.
 
 __Example__
@@ -521,7 +522,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     api.listen(function(err, message, stopListening){
         if(err) return console.error(err);
 
-        api.sendMessage(message.body, message.thread_id);
+        api.sendMessage(message.body, message.threadID);
     });
 });
 ```
@@ -539,6 +540,6 @@ __Arguments__
 
 * `newTitle`: A string representing the new title.
 * `threadID`: A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation.
-* `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the thread_id where the message was sent.
+* `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the threadID where the message was sent.
 
 ---------------------------------------
