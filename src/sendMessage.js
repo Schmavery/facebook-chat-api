@@ -191,7 +191,8 @@ module.exports = function(defaultFuncs, api, ctx) {
           var messageInfo = resData.payload.actions.reduce(function(p, v) {
             return {
               threadID: v.thread_fbid,
-              messageID: v.message_id
+              messageID: v.message_id,
+              timestamp: v.timestamp
             } || p; }, null);
 
           return callback(null, messageInfo);
