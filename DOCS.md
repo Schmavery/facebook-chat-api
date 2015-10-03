@@ -9,6 +9,7 @@
 * [`api.getOnlineUsers`](#getOnlineUsers)
 * [`api.getThreadHistory`](#searchForThread)
 * [`api.getThreadList`](#getThreadList)
+* [`api.deleteThread`](#deleteThread)
 * [`api.getUserID`](#getUserID)
 * [`api.getUserInfo`](#getUserInfo)
 * [`api.listen`](#listen)
@@ -214,6 +215,32 @@ __Arguments__
 * `start`: Start index in the list of recently used threads.
 * `end`: End index.
 * `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: `threadID, participants, formerParticipants, name, snippet, snippetHasAttachment, snippetAttachments, snippetSender, unreadCount, messageCount, imageSrc, timestamp, serverTimestamp, muteSettings, isCanonicalUser, isCanonical, canonicalFbid, isSubscribed, rootMessageThreadingID, folder, isArchived, recipientsLoadable, hasEmailParticipant, readOnly, canReply, composerEnabled, blockedParticipants, lastMessageID`.
+
+---------------------------------------
+
+<a name="deleteThread" />
+### api.deleteThread(threadOrThreads, [callback])
+
+Given a threadID, or an array of threadIDs, will delete the threads from your account. Note that this does *not* remove the messages from Facebook's servers - anyone who hasn't deleted the thread can still view all of the messages.
+
+__Arguments__
+
+* `threadOrThreads` - The id(s) of the threads you wish to remove from your account.
+* `callback(err)` - A callback called when the operation is done, maybe with an object representing an error.
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+
+    api.deleteThread(123456789, function callback(err) {
+        if(err) return console.error(err);
+    });
+});
+```
 
 ---------------------------------------
 
