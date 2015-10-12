@@ -59,7 +59,7 @@ Various types of message can be sent:
 
 Note that a message can only be a regular message (which can be empty) and optionally one of the following: a sticker, an attachment or a url.
 
-__Tip__: to find your own ID, go to your own profile on Facebook and replace 'www' by 'graph' in the URL.
+__Tip__: to find your own ID, you can look inside the cookies. The `userID` is under the name `c_user`.
 
 __Example (Basic Message)__
 ```js
