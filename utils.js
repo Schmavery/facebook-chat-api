@@ -229,7 +229,7 @@ function _formatAttachment(attachment1, attachment2) {
         previewUrl: attachment1.preview_url,
         previewWidth: attachment1.preview_width,
         previewHeight: attachment1.preview_height,
-        ID: attachment1.metadata.fbid,
+        ID: attachment1.metadata.fbid.toString(),
         url: attachment1.url,
         width: attachment1.metadata.dimensions.width,
         height: attachment1.metadata.dimensions.height,
@@ -260,10 +260,10 @@ function formatMessage(m) {
     participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
     participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return v.toString();}) : [originalMessage.sender_fbid]),
     body: originalMessage.body,
-    threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
+    threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid.toString(),
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
-    messageID: originalMessage.mid,
+    messageID: originalMessage.mid.toString(),
     attachments: formatAttachment(originalMessage.attachments, originalMessage.attachmentIds, originalMessage.attachment_map, originalMessage.share_map),
     timestamp: originalMessage.timestamp,
     timestampAbsolute: originalMessage.timestamp_absolute,
@@ -271,7 +271,7 @@ function formatMessage(m) {
     timestampDatetime: originalMessage.timestamp_datetime,
   };
 
-  if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid;
+  if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();
 
   return obj;
 }
@@ -435,8 +435,7 @@ function formatCookie(arr) {
 
 function formatThread(data) {
   return {
-    threadID: data.thread_id,
-    threadFbid: data.thread_fbid,
+    threadID: data.thread_fbid.toString(),
     participants: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
     formerParticipants: data.former_participants,
     name: data.name,
@@ -452,9 +451,9 @@ function formatThread(data) {
     muteSettings: data.muteSettings,
     isCanonicalUser: data.is_canonical_user,
     isCanonical: data.is_canonical,
-    canonicalFbid: data.canonical_fbid,
+    canonicalFbid: data.canonical_fbid.toString(),
     isSubscribed: data.is_subscribed,
-    rootMessageThreadingID: data.root_message_threading_id,
+    rootMessageThreadingID: data.root_message_threading_id.toString(),
     folder: data.folder,
     isArchived: data.is_archived,
     recipientsLoadable: data.recipients_loadable,
@@ -463,7 +462,7 @@ function formatThread(data) {
     canReply: data.can_reply,
     composerEnabled: data.composer_enabled,
     blockedParticipants: data.blocked_participants,
-    lastMessageID: data.last_message_id
+    lastMessageID: data.last_message_id.toString()
   };
 }
 
