@@ -202,11 +202,12 @@ describe('Login:', function() {
   it('should retrieve a list of threads', function (done) {
     api.getThreadList(0, 20, function(err, res) {
       checkErr(done)(err);
+
       // This checks to see if the group chat we just made
       // is in the list... it should be.
       assert(res.some(function (v) {
         return (
-          v.threadFbid === groupChatID &&
+          v.threadID === groupChatID &&
           userIDs.every(function (val) {
             return v.participants.indexOf(val) > -1;
           }) &&
@@ -264,14 +265,14 @@ describe('Login:', function() {
   });
 
   it('should get the user ID', function(done) {
-    api.getUserInfo(userID, function(err, data) {
+    api.getUserInfo(userIDs[0], function(err, data) {
       checkErr(done)(err);
-      var user = data[userID];
+      var user = data[userIDs[0]];
       api.getUserID(user.name, function(err, data) {
         checkErr(done)(err);
         assert(getType(data) === "Array");
         assert(data.some(function(val) {
-          return val.userID === userID;
+          return val.userID === userIDs[0];
         }));
         done();
       });

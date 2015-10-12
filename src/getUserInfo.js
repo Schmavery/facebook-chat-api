@@ -39,14 +39,12 @@ module.exports = function(defaultFuncs, api, ctx) {
     id.map(function(v, i) {
       form["ids[" + i + "]"] = v;
     });
-
     defaultFuncs.get("https://www.facebook.com/chat/user_info/", ctx.jar, form)
     .then(utils.parseAndCheckLogin)
     .then(function(resData) {
       if (resData.error) {
         throw resData;
       }
-
       return callback(null, formatData(resData.payload.profiles));
     })
     .catch(function(err) {

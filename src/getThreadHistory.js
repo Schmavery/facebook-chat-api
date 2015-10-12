@@ -30,23 +30,23 @@ module.exports = function(defaultFuncs, api, ctx) {
           } else if (!resData.payload){
             throw {error: "Could not retrieve thread history."};
           }
-          
+
           var userIDs = {};
           resData.payload.actions.forEach(function(v) {
-             userIDs[v.author.split(":").pop()] = "";
+            userIDs[v.author.split(":").pop()] = "";
           });
+
           api.getUserInfo(Object.keys(userIDs), function(err, data){
-            if (err) return callback(err);//callback({error: "Could not retrieve user information in getThreadHistory."});
-            var formattedMessages = resData.payload.actions.map(function (v) {
+            if (err) return callback(err); //callback({error: "Could not retrieve user information in getThreadHistory."});
+
+            resData.payload.actions.forEach(function (v) {
               v.sender_name = data[v.author.split(":").pop()].name;
               v.sender_fbid = v.author;
               delete v.author;
-              return v;
-            }).map(utils.formatMessage);
+            });
 
-            callback(null, formattedMessages);
+            callback(null, resData.payload.actions.map(utils.formatMessage));
           });
-
         })
         .catch(function(err) {
           log.error("Error in getThreadHistory", err);
