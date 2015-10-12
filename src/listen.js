@@ -135,20 +135,28 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               // The participants array is caped at 5, we need to query more to
               // get them.
-              if(message.participantIDs.length === 5) {
+              if(message.participantIDs.length >= 5) {
                 api.searchForThread(message.threadName, function(err, res) {
                   if (err) {
-                    throw err;
+                    globalCallback(err);
                   }
 
-                  message.participantIDs = res.participants;
-                  api.getUserInfo(res.participants, function(err, res) {
+                  // we take the first thread among all the returned threads
+                  var firstThread = res.filter(function(v) {
+                    return v.threadID === message.threadID;
+                  })[0];
+                  if (!firstThread) {
+                    return globalCallback({error: "Couldn't retrieve thread participants for thread with name " + message.threadName + " and ID " + message.threadID});
+                  }
+
+                  message.participantIDs = firstThread.participants;
+                  api.getUserInfo(firstThread.participants, function(err, firstThread) {
                     if (err) {
                       throw err;
                     }
 
-                    message.participantsInfo = Object.keys(res).map(function(key) {
-                      return res[key];
+                    message.participantsInfo = Object.keys(firstThread).map(function(key) {
+                      return firstThread[key];
                     });
                     // Rename this?
                     message.participantNames = message.participantsInfo.map(function(v) {
@@ -167,7 +175,7 @@ module.exports = function(defaultFuncs, api, ctx) {
             case 'pages_messaging':
               if(!ctx.globalOptions.pageID ||
                 v.event !== "deliver" ||
-                (!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID || 
+                (!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID ||
                                                    v.message.sender_fbid.toString() === ctx.globalOptions.pageID)) ||
                 v.realtime_viewer_fbid.toString() !== ctx.globalOptions.pageID) {
                 return;

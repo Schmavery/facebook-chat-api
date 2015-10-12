@@ -27,7 +27,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           return callback({error: "Could not find thread `"+name+"`."});
         }
         return callback(null, resData.payload.mercury_payload
-          .threads.map( utils.formatThread));
+          .threads.map(utils.formatThread));
       });
   };
 };
