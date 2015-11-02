@@ -2,9 +2,10 @@
 The Official Facebook Chat API uses XMPP and is deprecated as of April 30th 2015. This is a non-official API that doesn't use XMPP.
 As of right now, the only way to automate the chat functionalities is to emulate the browser. This means doing the exact same GET/POST requests and tricking Facebook into thinking we're accessing the website normally. Because we're doing it this way, this API won't work with an auth token but requires the credentials of a Facebook account.
 
-_Side note_: 
-- if you want a larger example you should head over to [Marc Zuckerbot](https://github.com/bsansouci/marc-zuckerbot)
-- if you want a _cooler_ example, you should head over to [Marc Thuckerbot](https://github.com/bsansouci/lisp-bot)
+Cool projects using facebook-chat-api: 
+- [Kassy](https://github.com/mrkno/Kassy) - Kassy is a modular, easily extensible general purpose chat bot
+- [Marc Zuckerbot](https://github.com/bsansouci/marc-zuckerbot) - Facebook chat bot
+- [Marc Thuckerbot](https://github.com/bsansouci/lisp-bot) - Programmable lisp bot
 
 ## Install
 ```bash
