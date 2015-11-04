@@ -85,7 +85,10 @@ module.exports = function(defaultFuncs, api, ctx) {
           return a.timestamp - b.timestamp;
         }).forEach(function parsePackets(v) {
           switch (v.type) {
+            // TODO: 'ttyp' was used before. It changed to 'typ'. We're keeping
+            // both for now but we should remove 'ttyp' at some point.
             case 'ttyp':
+            case 'typ':
               if(!ctx.globalOptions.listenEvents ||
                 (!ctx.globalOptions.selfListen && v.from.toString() === ctx.userID)) {
                 return;
