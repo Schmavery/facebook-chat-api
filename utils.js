@@ -244,7 +244,7 @@ function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
   attachmentMap = shareMap || attachmentMap;
   return attachments ? attachments.map(function(val, i) {
     // TODO: THIS IS REALLY BAD
-    if (!attachmentMap || !attachmentIds){
+    if (!attachmentMap || !attachmentIds || !attachmentMap[attachmentIds[i]]){
       return _formatAttachment(val, {id:"", image_data: {}});
     }
     return _formatAttachment(val, attachmentMap[attachmentIds[i]]);
