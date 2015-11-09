@@ -3,12 +3,12 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-function formatData(data, time) {
+function formatData(data, lastActiveTimes, time) {
   return Object.keys(data).map(function(key) {
     return {
-      timestamp: time,
+      lastActive: (lastActiveTimes[key] * 1000) || time,
       userID: key,
-      statuses: data[key].p,
+      statuses: data[key],
     };
   });
 }
@@ -32,7 +32,8 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (resData.error) {
           throw resData;
         }
-        return callback(null, formatData(resData.payload.buddy_list.nowAvailableList, resData.payload.time));
+
+        return callback(null, formatData(resData.payload.buddy_list.nowAvailableList, resData.payload.buddy_list.last_active_times, resData.payload.time));
       })
       .catch(function(err) {
         log.error("Error in getOnlineUsers", err);
