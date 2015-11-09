@@ -176,16 +176,7 @@ Obtains users currently online and calls the callback with a list of the online 
 __Arguments__
 
 * `callback(err, arr)`: A callback called when the query is done (either with an error or with null followed by an array `arr`). `arr`
-is an array of objects with the following keys: `timestamp`, `userID` and `statuses`. `statuses` looks like:
-```js
-{
-  status: 'idle',
-  webStatus: 'idle',
-  fbAppStatus: 'offline',
-  messengerStatus: 'offline',
-  otherStatus: 'offline'
-}
-```
+is an array of objects with the following keys: `lastActive`, `userID` and `status`. `status` is one of `['offline', 'idle', 'active', 'mobile']`.
 
 Look at [listen](#listen) for details on how to get updated presence.
 

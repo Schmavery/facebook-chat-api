@@ -3,12 +3,19 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
+var STATUS = {
+  0: 'offline',
+  1: 'idle',
+  2: 'active',
+  3: 'mobile',
+};
+
 function formatData(data, lastActiveTimes, time) {
   return Object.keys(data).map(function(key) {
     return {
       lastActive: (lastActiveTimes[key] * 1000) || time,
       userID: key,
-      statuses: data[key],
+      status: STATUS[data[key].a],
     };
   });
 }
