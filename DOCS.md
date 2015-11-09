@@ -138,19 +138,13 @@ Returns the currently logged-in user's Facebook user ID.
 ---------------------------------------
 
 <a name="getFriendsList" />
-### api.getFriendsList(id, callback)
+### api.getFriendsList(callback)
 
-Given the someone's user id, the function will return an array of ids of the user's friends.
-
-__Warnings__: 
-
-1. This function takes a longer time than others to answer because it pulls friends in batches of 20 (blindly following how the UI pulls the friends list). It might take a couple of seconds if you have over 1000 friends.
-2. This will only work if you're friends with the person or if the person didn't set their friend list as being private information.
+Returns an array of objects with some information about your friends.
 
 __Arguments__
 
-* `id` - The id of a person.
-* `callback(err, arr)` - A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array containing all the ids of the person's friends. You can get more information about those people by then calling getUserInfo with the array (this will return faster because it'll be done in one request).
+* `callback(err, arr)` - A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of objects with the following fields: `alternateName`, `firstName`, `gender`, `userID`, `isFriend`, `fullName`, `profilePicture`, `type`, `profileUrl`, `vanity`.
 
 __Example__
 
@@ -158,7 +152,7 @@ __Example__
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
   if(err) return console.error(err);
 
-  api.getFriendsList(1216678154, function(err, data) {
+  api.getFriendsList(function(err, data) {
     if(err) return console.error(err);
 
     console.log(data.length);
