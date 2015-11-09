@@ -324,12 +324,22 @@ If `attachments` contains an object with type is `"animated_image"`, the same ob
 If `attachments` contains an object with type is `"share"`, the same object will contain the following fields: `description`, `ID`, `subattachments`, `animatedImageSize`, `width`, `height`, `image`, `playable`, `duration`, `source`, `title`, `facebookUrl`, `url`.
 
 If enabled through [setOptions](#setOptions), this will also handle events. In this case, `message` will be either a message (see above) or an event object with the following fields:
-- `type`: The string `"event"`
+- `type`: The string `"event"` or `"typ"`
 - `threadID`: The threadID representing the thread in which the message was sent.
+
+If `type` is `"event"` then the object will also have those fields:
 - `logMessageType`: String representing the type of event (`"log:thread-name"`, `"log:unsubscribe"`, `"log:subscribe"`, ...)
 - `logMessageData`: Data relevant to the event.
 - `logMessageBody`: String printed in the chat.
 - `author`: The person who performed the event.
+
+If `type` is `"typ"` then the object will have the following fields:
+- `isTyping`: Boolean representing whether or not a person started typing
+- `from`: ID of the user who started/stopped typing
+- `threadID`: Current threadID
+- `from_mobile`: Boolean representing whether or not the person's using a mobile device to type
+- 
+
 
 <a name="presence" />
 If enabled through [setOptions](#setOptions), this will also return presence, (`type` will be `"presence"`), which is the online status of the user's friends. The object given to the callback will have the following fields:
