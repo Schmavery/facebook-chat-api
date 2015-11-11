@@ -29,7 +29,7 @@ function formatData(obj) {
       firstName: user.firstName,
       gender: GENDERS[user.gender],
       userID: user.id.toString(),
-      isFriend: user.is_friend,
+      isFriend: (user.is_friend != null && user.is_friend) ? true : false,
       fullName: user.name,
       profilePicture: user.thumbSrc,
       type: user.type,

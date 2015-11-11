@@ -189,14 +189,17 @@ describe('Login:', function() {
     api.removeUserFromGroup(id, groupChatID, checkErr(done));
   });
 
-  it('should add user', function (done){
+  it('should add user', function (done) {
     var id = userIDs[0];
     listen(done, function (msg) {
       return (msg.type === 'event' &&
         msg.logMessageType === 'log:subscribe' &&
         msg.logMessageData.added_participants.indexOf('fbid:'+id) > -1);
     });
-    api.addUserToGroup(id, groupChatID, checkErr(done));
+    // TODO: we don't check for errors inside this because FB changed and
+    // returns an error, even though we receive the event that the user was
+    // added
+    api.addUserToGroup(id, groupChatID, function() {});
   });
 
   it('should retrieve a list of threads', function (done) {
@@ -235,14 +238,9 @@ describe('Login:', function() {
       checkErr(done)(err);
       assert(getType(res) === "Array");
       res.map(function(v) {
-        assert(v.timestamp);
+        assert(v.lastActive);
         assert(v.userID);
-        assert(v.statuses);
-        assert(v.statuses.status);
-        assert(v.statuses.webStatus);
-        assert(v.statuses.fbAppStatus);
-        assert(v.statuses.messengerStatus);
-        assert(v.statuses.otherStatus);
+        assert(v.status);
       });
       done();
     });
@@ -280,10 +278,22 @@ describe('Login:', function() {
   });
 
   it('should get the list of friends', function (done) {
-    api.getFriendsList(userID, function(err, data) {
+    api.getFriendsList(function(err, data) {
       checkErr(done)(err);
       assert(getType(data) === "Array");
-      assert(data.every(function(v) {return !isNaN(v);}));
+      data.map(function(v) {
+        assert(getType(v.alternateName) === "String");
+        assert(getType(v.firstName) === "String");
+        assert(getType(v.gender) === "String");
+        assert(getType(v.userID) === "String");
+        assert(getType(v.isFriend) === "Boolean");
+        assert(getType(v.fullName) === "String");
+        assert(getType(v.profilePicture) === "String");
+        assert(getType(v.type) === "String");
+        assert(getType(v.profileUrl) === "String");
+        assert(getType(v.vanity) === "String");
+        assert(getType(v.isBirthday) === "Boolean");
+      })
       done();
     });
   });

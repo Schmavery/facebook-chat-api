@@ -105,14 +105,9 @@ describe('Login As Page:', function() {
       checkErr(done)(err);
       assert(getType(res) === "Array");
       res.map(function(v) {
-        assert(v.timestamp);
+        assert(v.lastActive);
         assert(v.userID);
-        assert(v.statuses);
-        assert(v.statuses.status);
-        assert(v.statuses.webStatus);
-        assert(v.statuses.fbAppStatus);
-        assert(v.statuses.messengerStatus);
-        assert(v.statuses.otherStatus);
+        assert(v.status);
       });
       done();
     });
@@ -134,7 +129,7 @@ describe('Login As Page:', function() {
   });
 
   it('should get the list of friends', function (done) {
-    api.getFriendsList(userID, function(err, data) {
+    api.getFriendsList(function(err, data) {
       checkErr(done)(err);
       assert(getType(data) === "Array");
       data.map(function(v) {parseInt(v);});
