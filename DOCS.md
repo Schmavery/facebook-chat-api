@@ -4,6 +4,7 @@
 * [`api.addUserToGroup`](#addUserToGroup)
 * [`api.changeArchivedStatus`](#changeArchivedStatus)
 * [`api.deleteMessage`](#deleteMessage)
+* [`api.getAppState`](#getAppState)
 * [`api.getCurrentUserID`](#getCurrentUserID)
 * [`api.getFriendsList`](#getFriendsList)
 * [`api.getOnlineUsers`](#getOnlineUsers)
@@ -25,7 +26,7 @@
 ---------------------------------------
 
 <a name="login"/>
-### login(emailAndPassword, [options], callback)
+### login(credentials, [options], callback)
 
 This function is returned by `require(...)` and is the main entry point to the API.
 
@@ -37,14 +38,33 @@ If it fails, `callback` will be called with an error object.
 
 __Arguments__
 
-* `emailAndPassword`: An object containing the fields `email` and `password` used to login.
+* `credentials`: An object containing the fields `email` and `password` used to login, __*or*__ an object containing the field `appState`.
 * `options`: An object representing options to use when logging in (as described in [api.setOptions](#setOptions)).
 * `callback(err, api)`: A callback called when login is done (successful or not). `err` is an object containing a field `error`.
 
-__Example__
+__Example (Email & Password)__
 
 ```js
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+    // Here you can use the api
+});
+```
+
+__Example (Email & Password then save appState to file)__
+
+```js
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+    
+    fs.writeFileSync('appstate.json', JSON.stringify(api.getAppState()));
+});
+```
+
+__Example (AppState loaded from file)__
+
+```js
+login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, function callback (err, api) {
     if(err) return console.error(err);
     // Here you can use the api
 });
@@ -127,6 +147,13 @@ api.listen(function callback(err, message) {
   }
 });
 ```
+
+---------------------------------------
+
+<a name="getAppState" />
+### api.getAppState()
+
+Returns current appState which can be saved to a file or stored in a variable.
 
 ---------------------------------------
 
