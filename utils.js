@@ -291,7 +291,7 @@ function formatTyp(event) {
   return {
     isTyping: !!event.st,
     from: event.from.toString(),
-    threadID: event.to.toString(),
+    threadID: (event.to || event.thread_fbid).toString(),
     from_mobile: event.from_mobile,
     userID: event.realtime_viewer_fbid.toString(),
     type: 'typ',
