@@ -114,13 +114,13 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
         switch(event.type) {
           case "message":
             if(event.body === '/stop') {
-              api.sendMessage("Goodbye...", event.thread_id);
+              api.sendMessage("Goodbye...", event.threadID);
               return stopListening();
             }
-            api.markAsRead(event.thread_id, function(err) {
+            api.markAsRead(event.threadID, function(err) {
               if(err) console.log(err);
             });
-            api.sendMessage("TEST BOT: " + event.body, event.thread_id);
+            api.sendMessage("TEST BOT: " + event.body, event.threadID);
             break;
           case "event":
             console.log(event);
