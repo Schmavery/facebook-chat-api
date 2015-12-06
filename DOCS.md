@@ -8,7 +8,7 @@
 * [`api.getCurrentUserID`](#getCurrentUserID)
 * [`api.getFriendsList`](#getFriendsList)
 * [`api.getOnlineUsers`](#getOnlineUsers)
-* [`api.getThreadHistory`](#searchForThread)
+* [`api.getThreadHistory`](#getThreadHistory)
 * [`api.getThreadList`](#getThreadList)
 * [`api.deleteThread`](#deleteThread)
 * [`api.getUserID`](#getUserID)
