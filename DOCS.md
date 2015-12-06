@@ -365,7 +365,6 @@ If `type` is `"typ"` then the object will have the following fields:
 - `from`: ID of the user who started/stopped typing
 - `threadID`: Current threadID
 - `from_mobile`: Boolean representing whether or not the person's using a mobile device to type
-- 
 
 
 <a name="presence" />
