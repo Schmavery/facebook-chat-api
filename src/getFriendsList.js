@@ -35,7 +35,7 @@ function formatData(obj) {
       type: user.type,
       profileUrl: user.uri,
       vanity: user.vanity,
-      isBirthday: (user.is_birthday) ? true : false,
+      isBirthday: !!user.is_birthday,
     }
   });
 }
