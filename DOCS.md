@@ -171,7 +171,7 @@ Returns an array of objects with some information about your friends.
 
 __Arguments__
 
-* `callback(err, arr)` - A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of objects with the following fields: `alternateName`, `firstName`, `gender`, `userID`, `isFriend`, `fullName`, `profilePicture`, `type`, `profileUrl`, `vanity`.
+* `callback(err, arr)` - A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of objects with the following fields: `alternateName`, `firstName`, `gender`, `userID`, `isFriend`, `fullName`, `profilePicture`, `type`, `profileUrl`, `vanity`, `isBirthday`.
 
 __Example__
 
@@ -292,7 +292,7 @@ Will get some information about the given users.
 __Arguments__
 
 * `ids` - Either a string/number for one ID or an array of strings/numbers for a batched query.
-* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from userId to another object containing the following properties: id, name, firstName, vanity, thumbSrc, uri, gender, type, is_friend, is_birthday, searchTokens, alternateName.
+* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from userId to another object containing the following properties: id, name, firstName, vanity, thumbSrc, uri, gender, type, isFriend, isBirthday, searchTokens, alternateName.
 
 __Example__
 
@@ -304,7 +304,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
       if(err) return console.error(err);
 
       for(var prop in ret) {
-        if(ret.hasOwnProperty(prop) && ret[prop].is_birthday) {
+        if(ret.hasOwnProperty(prop) && ret[prop].isBirthday) {
           api.sendMessage("Happy birthday :)", prop);
         }
       }
