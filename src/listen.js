@@ -34,6 +34,21 @@ module.exports = function(defaultFuncs, api, ctx) {
 
   var globalCallback = null;
 
+  /**
+   * Get an object maybe representing an event. Handles events it wants to handle
+   * and returns true if it did handle an event (and called the globalCallback).
+   * Returns false otherwise.
+   */
+  function handleMessagingEvents(event) {
+    switch (event.event) {
+      case 'read_receipt':
+        globalCallback(null, utils.formatReadReceipt(event));
+        return true;
+      default:
+        return false;
+    }
+  }
+
   function listen() {
     if(shouldStop || !ctx.loggedIn) {
       return;
@@ -127,11 +142,17 @@ module.exports = function(defaultFuncs, api, ctx) {
               });
               break;
             case 'messaging':
+              if (ctx.globalOptions.listenEvents && handleMessagingEvents(v)) {
+                // globalCallback got called if handleMessagingEvents returned true
+                return;
+              }
+
               if(ctx.globalOptions.pageID ||
                 v.event !== "deliver" ||
                 (!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID)) {
                 return;
               }
+
 
               atLeastOne = true;
               var message = utils.formatMessage(v);
