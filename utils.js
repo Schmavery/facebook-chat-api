@@ -303,6 +303,7 @@ function formatReadReceipt(event) {
     reader: event.reader,
     time: event.time,
     threadID: event.realtime_viewer_fbid,
+    type: 'read_receipt',
   };
 }
 
