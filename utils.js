@@ -300,9 +300,9 @@ function formatTyp(event) {
 
 function formatReadReceipt(event) {
   return {
-    reader: event.reader,
+    reader: event.reader.toString(),
     time: event.time,
-    threadID: event.realtime_viewer_fbid,
+    threadID: event.realtime_viewer_fbid.toString(),
     type: 'read_receipt',
   };
 }
