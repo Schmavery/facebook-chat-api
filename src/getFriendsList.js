@@ -12,13 +12,13 @@ var GENDERS = {
   3: 'female_singular_guess',
   4: 'male_singular_guess',
   5: 'mixed_singular',
-  5: 'mixed_plural',
-  6: 'neuter_singular',
-  7: 'unknown_singular',
-  8: 'female_plural',
-  9: 'male_plural',
-  10: 'neuter_plural',
-  11: 'unknown_plural',
+  6: 'mixed_plural',
+  7: 'neuter_singular',
+  8: 'unknown_singular',
+  9: 'female_plural',
+  10: 'male_plural',
+  11: 'neuter_plural',
+  12: 'unknown_plural',
 };
 
 function formatData(obj) {
