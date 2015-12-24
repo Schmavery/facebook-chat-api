@@ -118,12 +118,13 @@ __Arguments__
 ---------------------------------------
 
 <a name="changeArchivedStatus" />
-### api.changeArchivedStatus(threadOrThreads, [callback])
+### api.changeArchivedStatus(threadOrThreads, archive, [callback])
 
-Takes a chat title (thread name) and returns matching results as a formatted threads array (ordered according to Facebook).
+Given a threadID, or an array of threadIDs, will set the archive state of the threads to `archive`.
 
 __Arguments__
-* `name`: A messageID string or messageID string array
+* `threadOrThreads`: The id(s) of the threads you wish to change the archive state of.
+* `archive`: The new archive state to assign to the thread(s).
 * `callback(err)`: A callback called when the query is done (either with an error or null).
 
 ---------------------------------------
@@ -276,7 +277,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
         if(err) return callback(err);
 
         // Send the message to the best match (best by Facebook's criteria)
-        var threadID = data[0].uid;
+        var threadID = data[0].userID;
         api.sendMessage(msg, threadID);
     });
 });
@@ -292,7 +293,7 @@ Will get some information about the given users.
 __Arguments__
 
 * `ids` - Either a string/number for one ID or an array of strings/numbers for a batched query.
-* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from userId to another object containing the following properties: id, name, firstName, vanity, thumbSrc, uri, gender, type, isFriend, isBirthday, searchTokens, alternateName.
+* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from userId to another object containing the following properties: name, firstName, vanity, thumbSrc, profileUrl, gender, type, isFriend, isBirthday, searchTokens, alternateName.
 
 __Example__
 
