@@ -120,12 +120,26 @@ __Arguments__
 <a name="changeArchivedStatus" />
 ### api.changeArchivedStatus(threadOrThreads, archive, [callback])
 
-Given a threadID, or an array of threadIDs, will set the archive state of the threads to `archive`.
+Given a threadID, or an array of threadIDs, will set the archive status of the threads to `archive`. Archiving a thread will hide it from the logged-in user's inbox until the next time a message is sent or received.
 
 __Arguments__
-* `threadOrThreads`: The id(s) of the threads you wish to change the archive state of.
-* `archive`: The new archive state to assign to the thread(s).
+* `threadOrThreads`: The id(s) of the threads you wish to archive/unarchive.
+* `archive`: Boolean indicating the new archive status to assign to the thread(s).
 * `callback(err)`: A callback called when the query is done (either with an error or null).
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+
+    api.changeArchivedStatus(123456789, true, function callback(err) {
+        if(err) return console.error(err);
+    });
+});
+```
 
 ---------------------------------------
 
