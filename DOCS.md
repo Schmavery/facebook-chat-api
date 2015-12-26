@@ -135,7 +135,7 @@ var login = require("facebook-chat-api");
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
 
-    api.changeArchivedStatus(123456789, true, function callback(err) {
+    api.changeArchivedStatus(0000000000000, true, function callback(err) {
         if(err) return console.error(err);
     });
 });
@@ -263,7 +263,7 @@ var login = require("facebook-chat-api");
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
 
-    api.deleteThread(123456789, function callback(err) {
+    api.deleteThread(0000000000000, function callback(err) {
         if(err) return console.error(err);
     });
 });
