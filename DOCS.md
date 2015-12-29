@@ -118,13 +118,28 @@ __Arguments__
 ---------------------------------------
 
 <a name="changeArchivedStatus" />
-### api.changeArchivedStatus(threadOrThreads, [callback])
+### api.changeArchivedStatus(threadOrThreads, archive, [callback])
 
-Takes a chat title (thread name) and returns matching results as a formatted threads array (ordered according to Facebook).
+Given a threadID, or an array of threadIDs, will set the archive status of the threads to `archive`. Archiving a thread will hide it from the logged-in user's inbox until the next time a message is sent or received.
 
 __Arguments__
-* `name`: A messageID string or messageID string array
+* `threadOrThreads`: The id(s) of the threads you wish to archive/unarchive.
+* `archive`: Boolean indicating the new archive status to assign to the thread(s).
 * `callback(err)`: A callback called when the query is done (either with an error or null).
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+
+    api.changeArchivedStatus(0000000000000, true, function callback(err) {
+        if(err) return console.error(err);
+    });
+});
+```
 
 ---------------------------------------
 
@@ -248,7 +263,7 @@ var login = require("facebook-chat-api");
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
 
-    api.deleteThread(123456789, function callback(err) {
+    api.deleteThread(0000000000000, function callback(err) {
         if(err) return console.error(err);
     });
 });
@@ -276,7 +291,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
         if(err) return callback(err);
 
         // Send the message to the best match (best by Facebook's criteria)
-        var threadID = data[0].uid;
+        var threadID = data[0].userID;
         api.sendMessage(msg, threadID);
     });
 });
@@ -292,7 +307,7 @@ Will get some information about the given users.
 __Arguments__
 
 * `ids` - Either a string/number for one ID or an array of strings/numbers for a batched query.
-* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from userId to another object containing the following properties: id, name, firstName, vanity, thumbSrc, uri, gender, type, isFriend, isBirthday, searchTokens, alternateName.
+* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from userId to another object containing the following properties: name, firstName, vanity, thumbSrc, profileUrl, gender, type, isFriend, isBirthday, searchTokens, alternateName.
 
 __Example__
 
