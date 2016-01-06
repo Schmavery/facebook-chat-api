@@ -212,6 +212,9 @@ function makeLogin(jar, email, password, loginOptions, callback) {
                   }
                 };
               } else {
+                if (!loginOptions.forceLogin) {
+                  throw {error: "Couldn't login. Facebook might have blocked this account. Please login with a browser or enable the option 'forceLogin' and try again."};
+                }
                 if (html.indexOf("Suspicious Login Attempt") > -1) {
                   form['submit[This was me]'] = "This was me";
                 } else {

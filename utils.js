@@ -393,6 +393,8 @@ function makeDefaults(html, userID) {
 
 function parseAndCheckLogin(data) {
   return bluebird.try(function() {
+    if (data.statusCode !== 200) throw new Error("parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.");
+    
     var res = null;
     try {
       res = JSON.parse(makeParsable(data.body));
