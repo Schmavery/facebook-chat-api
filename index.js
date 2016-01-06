@@ -175,7 +175,8 @@ function makeLogin(jar, email, password, loginOptions, callback) {
               });
 
               var form = utils.arrToForm(arr);
-              if (html.indexOf("Enter Security Code to Continue") > -1) {
+              if (html.indexOf("Enter Security Code to Continue") > -1 ||
+                  html.indexOf("Enter Your Login Code") > -1) {
                 throw {
                   error: 'login-approval',
                   continue: function(code) {
