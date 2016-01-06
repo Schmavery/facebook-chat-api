@@ -16,7 +16,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       .then(utils.parseAndCheckLogin)
       .then(function(resData) {
         var elem = resData.jsmods.instances[0][2][0].filter(function(v) {
-          return v.label === "Log Out";
+          return v.value === "logout";
         })[0];
 
         var html = resData.jsmods.markup.filter(function(v) {
