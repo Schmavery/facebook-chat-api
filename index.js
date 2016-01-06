@@ -242,7 +242,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
 
                     // Simply call loginHelper because all it needs is the jar
                     // and will then complete the login process
-                    return loginHelper(appState, email, password, globalOptions, callback);
+                    return loginHelper(appState, email, password, loginOptions, callback);
                   })
                   .catch(function(e) {
                     callback(e);
