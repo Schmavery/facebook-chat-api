@@ -30,6 +30,12 @@ module.exports = function(defaultFuncs, api, ctx) {
           } else if (!resData.payload){
             throw {error: "Could not retrieve thread history."};
           }
+          
+          // Asking for message history from a thread with no message history
+          // will return undefined for actions here
+          if (!resData.payload.actions) {
+            resData.payload.actions = []
+          }
 
           var userIDs = {};
           resData.payload.actions.forEach(function(v) {
