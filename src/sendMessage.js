@@ -165,7 +165,6 @@ module.exports = function(defaultFuncs, api, ctx) {
         // This means that threadID is the id of a user, and the chat
         // is a single person chat
         if(isSingleUser) {
-          form['message_batch[0][client_thread_id]'] = "user:" + threadID;
           form['message_batch[0][specific_to_list][0]'] = "fbid:" + threadID;
           form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.userID;
           form['message_batch[0][other_user_fbid]'] = threadID;
@@ -192,7 +191,8 @@ module.exports = function(defaultFuncs, api, ctx) {
           if (!resData) {
             throw {error: "Send message failed."};
           }
-          if(resData.error) {
+
+          if (resData.error) {
             throw resData;
           }
 

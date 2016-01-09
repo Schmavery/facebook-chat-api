@@ -144,9 +144,8 @@ function makeLogin(jar, email, password, loginOptions, callback) {
     // ---------- Very Hacky Part Ends -----------------
 
     log.info("Logging in...");
-
     return utils
-      .post("https://www.facebook.com/login.php?login_attempt=1", jar, form)
+      .post("https://www.facebook.com/login.php?login_attempt=1&lwv=110", jar, form)
       .then(utils.saveCookies(jar))
       .then(function(res) {
         var headers = res.headers;
@@ -255,7 +254,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
         }
 
         return utils
-          .get('https:\/\/www.facebook.com\/home.php', jar)
+          .get('https://www.facebook.com/', jar)
           .then(utils.saveCookies(jar));
       });
   };
@@ -276,7 +275,7 @@ function loginHelper(appState, email, password, globalOptions, callback) {
 
     // Load the main page.
     mainPromise = utils
-      .get('https://www.facebook.com/home.php', jar)
+      .get('https://www.facebook.com/', jar)
       .then(utils.saveCookies(jar));
   } else {
     // Open the main page, then we login with the given credentials and finally
@@ -287,7 +286,7 @@ function loginHelper(appState, email, password, globalOptions, callback) {
       .then(makeLogin(jar, email, password, globalOptions, callback))
       .then(function() {
         return utils
-          .get('https:\/\/www.facebook.com\/home.php', jar)
+          .get('https://www.facebook.com/', jar)
           .then(utils.saveCookies(jar));
       });
   }
@@ -303,7 +302,15 @@ function loginHelper(appState, email, password, globalOptions, callback) {
       ctx = stuff[0];
       defaultFuncs = stuff[1];
       api = stuff[2];
-
+      var form = {
+        reason: 6
+      };
+      log.info('Request to reconnect');
+      return defaultFuncs
+        .get("https://www.facebook.com/ajax/presence/reconnect.php", ctx.jar, form)
+        .then(utils.saveCookies(ctx.jar));
+    })
+    .then(function(res) {
       log.info('Request to pull 1');
       var form = {
         channel : 'p_' + ctx.userID,
@@ -315,11 +322,15 @@ function loginHelper(appState, email, password, globalOptions, callback) {
         state : 'active',
         idle : 0,
         cap : 8,
-        msgs_recv:0
+        msgs_recv: 0
       };
+      var presence = utils.generatePresence(ctx.userID);
+      ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
+      ctx.jar.setCookie("a11y=" + utils.generateAccessiblityCookie() + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
 
       return utils
         .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
+        .then(utils.saveCookies(ctx.jar))
         .then(function(res) {
           var ret = null;
           try {
@@ -351,7 +362,8 @@ function loginHelper(appState, email, password, globalOptions, callback) {
 
       log.info("Request to pull 2");
       return utils
-        .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form);
+        .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
+        .then(utils.saveCookies(ctx.jar));
     })
     .then(function() {
       var form = {

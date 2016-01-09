@@ -56,7 +56,8 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     form.idle = ~~(Date.now() / 1000) - prev;
     prev = ~~(Date.now() / 1000);
-
+    var presence = utils.generatePresence(ctx.userID);
+    ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
     utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
     .then(utils.parseAndCheckLogin)
     .then(function(resData) {
@@ -109,7 +110,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 return;
               }
 
-              globalCallback(null, utils.formatTyp(v));
+              return globalCallback(null, utils.formatTyp(v));
               break;
             case 'buddylist_overlay':
               // TODO: what happens when you're logged in as a page?
@@ -121,7 +122,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               Object.keys(v.overlay).map(function(userID) {
                 var formattedPresence = utils.formatPresence(v.overlay[userID], userID);
                 if(!shouldStop && ctx.loggedIn) {
-                  globalCallback(null, formattedPresence);
+                  return globalCallback(null, formattedPresence);
                 }
               });
               break;
@@ -137,7 +138,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 }
 
                 if (!shouldStop && ctx.loggedIn) {
-                  globalCallback(null, formattedEvent);
+                  return globalCallback(null, formattedEvent);
                 }
               });
               break;
@@ -186,14 +187,14 @@ module.exports = function(defaultFuncs, api, ctx) {
                     message.participantNames = message.participantsInfo.map(function(v) {
                       return v.name;
                     });
-                    globalCallback(null, message);
+                    return globalCallback(null, message);
                   });
                 });
                 return;
               }
 
               if (!shouldStop && ctx.loggedIn) {
-                globalCallback(null, message);
+                return globalCallback(null, message);
               }
               break;
             case 'pages_messaging':
@@ -207,7 +208,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               atLeastOne = true;
               if (!shouldStop && ctx.loggedIn) {
-                globalCallback(null, utils.formatMessage(v));
+                return globalCallback(null, utils.formatMessage(v));
               }
               break;
           }
