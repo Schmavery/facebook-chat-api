@@ -162,7 +162,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               if(message.participantIDs.length >= 5) {
                 api.searchForThread(message.threadName, function(err, res) {
                   if (err) {
-                    globalCallback(err);
+                    return globalCallback(err);
                   }
 
                   // we take the first thread among all the returned threads
