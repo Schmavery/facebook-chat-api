@@ -228,7 +228,7 @@ __Arguments__
 * `start`: The ith message in the chat from which to start retrieving history.
 * `end`: The jth message in the chat to which retrieving history.
 * `timestamp`: A timestamp.
-* `callback(error)`: Optional.
+* `callback(error, history)`: Optional.
 
 ---------------------------------------
 
