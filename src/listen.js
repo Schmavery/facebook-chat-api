@@ -161,35 +161,74 @@ module.exports = function(defaultFuncs, api, ctx) {
               // The participants array is caped at 5, we need to query more to
               // get them.
               if(message.participantIDs.length >= 5) {
-                api.searchForThread(message.threadName, function(err, res) {
-                  if (err) {
-                    return globalCallback(err);
-                  }
-
-                  // we take the first thread among all the returned threads
-                  var firstThread = res.filter(function(v) {
-                    return v.threadID === message.threadID;
-                  })[0];
-                  if (!firstThread) {
-                    return globalCallback({error: "Couldn't retrieve thread participants for thread with name " + message.threadName + " and ID " + message.threadID});
-                  }
-
-                  message.participantIDs = firstThread.participants;
-                  api.getUserInfo(firstThread.participants, function(err, firstThread) {
+                // Either the thread has a name, and we can "search" for it
+                // or it doesn't, then we can simply use getThreadList to
+                // retrieve the participants array.
+                if (message.threadName.length > 0) {
+                  api.searchForThread(message.threadName, function(err, res) {
                     if (err) {
-                      throw err;
+                      return globalCallback(err);
                     }
 
-                    message.participantsInfo = Object.keys(firstThread).map(function(key) {
-                      return firstThread[key];
+                    var firstThread = res.filter(function(v) {
+                      return v.threadID === message.threadID;
+                    })[0];
+                    if (!firstThread) {
+                      return globalCallback({error: "Couldn't retrieve thread participants for thread with name " + message.threadName + " and ID " + message.threadID});
+                    }
+
+                    message.participantIDs = firstThread.participants;
+                    api.getUserInfo(firstThread.participants, function(err, firstThread) {
+                      if (err) {
+                        throw err;
+                      }
+
+                      message.participantsInfo = Object.keys(firstThread).map(function(key) {
+                        return firstThread[key];
+                      });
+                      // Rename this?
+                      message.participantNames = message.participantsInfo.map(function(v) {
+                        return v.name;
+                      });
+                      return globalCallback(null, message);
                     });
-                    // Rename this?
-                    message.participantNames = message.participantsInfo.map(function(v) {
-                      return v.name;
-                    });
-                    return globalCallback(null, message);
                   });
-                });
+                } else {
+                  // This assumes that you didn't receive > 20 messages at the
+                  // same time, on different chats. Otherwise the thread won't
+                  // be part of the first 20 and this first search will fail.
+                  // TODO: Make more getThreadList until you've searched through
+                  // all threads.
+                  api.getThreadList(0, 20, function(err, res) {
+                    if (err) {
+                      return globalCallback(err);
+                    }
+                    var firstThread = res.filter(function(v) {
+                      return v.threadID === message.threadID;
+                    })[0];
+
+                    if (!firstThread) {
+                      return globalCallback({error: "Couldn't retrieve thread participants for thread with name " + message.threadName + " and ID " + message.threadID + "."});
+                    }
+
+                    message.participantIDs = firstThread.participants;
+
+                    api.getUserInfo(firstThread.participants, function(err, firstThread) {
+                      if (err) {
+                        throw err;
+                      }
+
+                      message.participantsInfo = Object.keys(firstThread).map(function(key) {
+                        return firstThread[key];
+                      });
+                      // Rename this?
+                      message.participantNames = message.participantsInfo.map(function(v) {
+                        return v.name;
+                      });
+                      return globalCallback(null, message);
+                    });
+                  });
+                }
                 return;
               }
 
