@@ -161,25 +161,27 @@ module.exports = function(defaultFuncs, api, ctx) {
               // The participants array is caped at 5, we need to query more to
               // get them.
               if(message.participantIDs.length >= 5) {
-                // Either the thread has a name, and we can "search" for it
-                // or it doesn't, then we can simply make a get request to get
-                // the message page focused on a specific thread and parse the
-                // html returned
-                if (message.threadName.length > 0) {
-                  api.searchForThread(message.threadName, function(err, res) {
-                    if (err) {
-                      return globalCallback(err);
+                // We simply make a get request to get the message page focused
+                // on a specific thread and parse the html returned
+                defaultFuncs.get("https://www.facebook.com/messages/search/conversation-" + message.threadID, ctx.jar)
+                  .then(function(res) {
+                    if (res.statusCode !== 200) {
+                      throw {error: "listen: couldn't get participantNames."};
                     }
-
-                    var firstThread = res.filter(function(v) {
-                      return v.threadID === message.threadID;
-                    })[0];
-                    if (!firstThread) {
-                      return globalCallback({error: "Couldn't retrieve thread participants for thread with name " + message.threadName + " and ID " + message.threadID});
-                    }
-
-                    message.participantIDs = firstThread.participants;
-                    api.getUserInfo(firstThread.participants, function(err, firstThread) {
+                    // FB will send the first 20 thread information directly
+                    // merged inside the html. This is an attempt at retrieving
+                    // that information in only 2 (guaranteed) queries.
+                    // ---------- Very Hacky Part Starts -----------------
+                    // Add "]" at the end for the 2nd utils.getFrom
+                    // because this utils.getFrom will slurp the end token
+                    var almostParticipants = utils.getFrom(res.body, "\"thread_fbid\":\"" + message.threadID + "\",\"other_user_fbid\"", "]") + "]";
+                    var stringParticipants = utils.getFrom(almostParticipants, "[", "]");
+                    var participantIDs = stringParticipants.split(",").map(function(v) {
+                      return v.replace("fbid:", "").replace(/\"/g, "");
+                    });
+                    // ---------- Very Hacky Part Ends -----------------
+                    message.participantIDs = participantIDs;
+                    api.getUserInfo(participantIDs, function(err, firstThread) {
                       if (err) {
                         throw err;
                       }
@@ -194,41 +196,6 @@ module.exports = function(defaultFuncs, api, ctx) {
                       return globalCallback(null, message);
                     });
                   });
-                } else {
-                  defaultFuncs.get("https://www.facebook.com/messages/search/conversation-" + message.threadID, ctx.jar)
-                    .then(function(res) {
-                      if (res.statusCode !== 200) {
-                        throw {error: "listen: couldn't get participantNames."};
-                      }
-                      // FB will send the first 20 thread information directly
-                      // merged inside the html. This is an attempt at retrieving
-                      // that information in only 2 (guaranteed) queries.
-                      // ---------- Very Hacky Part Starts -----------------
-                      // Add "]" at the end for the 2nd utils.getFrom
-                      // because this utils.getFrom will slurp the end token
-                      var almostParticipants = utils.getFrom(res.body, "\"thread_fbid\":\"" + message.threadID + "\",\"other_user_fbid\"", "]") + "]";
-                      var stringParticipants = utils.getFrom(almostParticipants, "[", "]");
-                      var participantIDs = stringParticipants.split(",").map(function(v) {
-                        return v.replace("fbid:", "").replace(/\"/g, "");
-                      });
-                      // ---------- Very Hacky Part Ends -----------------
-                      message.participantIDs = participantIDs;
-                      api.getUserInfo(participantIDs, function(err, firstThread) {
-                        if (err) {
-                          throw err;
-                        }
-
-                        message.participantsInfo = Object.keys(firstThread).map(function(key) {
-                          return firstThread[key];
-                        });
-                        // Rename this?
-                        message.participantNames = message.participantsInfo.map(function(v) {
-                          return v.name;
-                        });
-                        return globalCallback(null, message);
-                      });
-                    });
-                }
                 return;
               }
 
