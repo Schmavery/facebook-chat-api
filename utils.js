@@ -63,7 +63,6 @@ function post(url, jar, form) {
 function postFormData(url, jar, form, qs) {
   var headers = getHeaders(url);
   headers['Content-Type'] = 'multipart/form-data';
-
   var op = {
     headers: headers,
     timeout: 60000,
@@ -458,7 +457,9 @@ function makeDefaults(html, userID) {
 
     for(var prop in obj) {
       if(obj.hasOwnProperty(prop)) {
-        newObj[prop] = obj[prop];
+        if (!newObj[prop]) {
+          newObj[prop] = obj[prop];
+        }
       }
     }
 
@@ -484,28 +485,52 @@ function makeDefaults(html, userID) {
   };
 }
 
-function parseAndCheckLogin(data) {
-  return bluebird.try(function() {
-    log.verbose("parseAndCheckLogin: " + data.body);
-    if (data.statusCode !== 200) throw new Error("parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.");
+function parseAndCheckLogin(jar, defaultFuncs) {
+  return function(data) {
+    return bluebird.try(function() {
+      log.verbose("parseAndCheckLogin: " + data.body);
+      if (data.statusCode >= 500 && data.statusCode < 600) {
+        log.warn("parseAndCheckLogin: Got status code " + data.statusCode + " retrying...");
+        var url = data.request.uri.protocol + "//" + data.request.uri.hostname + data.request.uri.pathname;
+        if (data.request.headers['Content-Type'].split(";")[0] === "multipart/form-data") {
+          return defaultFuncs
+            .postFormData(url, jar, data.request.formData, {})
+            .then(parseAndCheckLogin(jar));
+        } else {
+          return defaultFuncs
+            .post(url, jar, data.request.formData)
+            .then(parseAndCheckLogin(jar));
+        }
+      }
+      if (data.statusCode !== 200) throw new Error("parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.");
 
-    var res = null;
-    try {
-      res = JSON.parse(makeParsable(data.body));
-    } catch(e) {
-      throw {
-        error: "JSON.parse error. Check the `detail` property on this error.",
-        detail: e,
-        res: data.body
-      };
-    }
+      var res = null;
+      try {
+        res = JSON.parse(makeParsable(data.body));
+      } catch(e) {
+        throw {
+          error: "JSON.parse error. Check the `detail` property on this error.",
+          detail: e,
+          res: data.body
+        };
+      }
 
-    if (res.error && res.error === 1357001) {
-      throw {error: "Not logged in."};
-    }
+      // TODO: handle multiple cookies?
+      if (res.jsmods
+          && res.jsmods.require
+          && Array.isArray(res.jsmods.require[0])
+          && res.jsmods.require[0][0] === "Cookie") {
+        res.jsmods.require[0][3][0] = res.jsmods.require[0][3][0].replace("_js_", "");
+        var cookie = formatCookie(res.jsmods.require[0][3]);
+        jar.setCookie(cookie, "https://www.facebook.com");
+      }
 
-    return res;
-  });
+      if (res.error === 1357001) {
+        throw {error: "Not logged in."};
+      }
+      return res;
+    });
+  };
 }
 
 function saveCookies(jar) {
@@ -535,7 +560,7 @@ function formatDate(date) {
 }
 
 function formatCookie(arr) {
-  return arr[0]+"="+arr[1]+"; Path=" + arr[3] + ";";
+  return arr[0]+"="+arr[1]+"; Path=" + arr[3] + "; Domain=facebook.com";
 }
 
 function formatThread(data) {

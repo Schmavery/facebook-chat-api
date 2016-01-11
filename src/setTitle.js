@@ -44,7 +44,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
-      .then(utils.parseAndCheckLogin)
+      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
       .then(function(resData) {
         if (resData.error && resData.error === 1545012){
           throw {error: "Cannot change chat title: Not member of chat."};

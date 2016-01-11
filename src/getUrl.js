@@ -17,7 +17,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post("https://www.facebook.com/message_share_attachment/fromURI/", ctx.jar, form)
-      .then(utils.parseAndCheckLogin)
+      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {
           throw resData;

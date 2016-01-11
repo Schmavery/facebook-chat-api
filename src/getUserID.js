@@ -33,7 +33,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .get("https://www.facebook.com/ajax/typeahead/search.php", ctx.jar, form)
-      .then(utils.parseAndCheckLogin)
+      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {
           throw resData;

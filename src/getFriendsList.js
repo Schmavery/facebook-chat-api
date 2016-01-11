@@ -47,7 +47,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .postFormData("https://www.facebook.com/chat/user_info_all", ctx.jar, {}, {viewer: ctx.userID})
-      .then(utils.parseAndCheckLogin)
+      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
       .then(function(resData) {
         if (!resData) {
           throw {error: "getFriendsList returned empty object."};

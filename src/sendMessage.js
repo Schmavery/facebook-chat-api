@@ -17,9 +17,10 @@ module.exports = function(defaultFuncs, api, ctx) {
       var form = {
         upload_1024: attachments[i],
       };
+
       uploads.push(defaultFuncs
         .postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, {})
-        .then(utils.parseAndCheckLogin)
+        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
         .then(function (resData) {
           if (resData.error) {
             throw resData;
@@ -186,7 +187,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
       defaultFuncs
         .post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
-        .then(utils.parseAndCheckLogin)
+        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
         .then(function(resData) {
           if (!resData) {
             throw {error: "Send message failed."};

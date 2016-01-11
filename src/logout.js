@@ -13,7 +13,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post('https://www.facebook.com/bluebar/modern_settings_menu/?help_type=364455653583099&show_contextual_help=1', ctx.jar, form)
-      .then(utils.parseAndCheckLogin)
+      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
       .then(function(resData) {
         var elem = resData.jsmods.instances[0][2][0].filter(function(v) {
           return v.value === "logout";
