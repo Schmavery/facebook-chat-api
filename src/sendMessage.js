@@ -194,6 +194,9 @@ module.exports = function(defaultFuncs, api, ctx) {
           }
 
           if (resData.error) {
+            if (resData.error === 1545012) {
+              log.warn("Got error 1545012. This might mean that you're not part of the conversation " + threadID);
+            }
             throw resData;
           }
 
