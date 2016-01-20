@@ -56,7 +56,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     var threadIDType = utils.getType(threadID);
 
     if(msgType !== "String" && msgType !== "Object") {
-      throw {error: "Message should be of type string or object and not " + threadIDType + "."};
+      throw {error: "Message should be of type string or object and not " + msgType + "."};
     }
 
     // Changing this to accomodate an array of users
