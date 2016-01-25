@@ -40,7 +40,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     id.map(function(v, i) {
       form["ids[" + i + "]"] = v;
     });
-    defaultFuncs.get("https://www.facebook.com/chat/user_info/", ctx.jar, form)
+    defaultFuncs.post("https://www.facebook.com/chat/user_info/", ctx.jar, form)
     .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
     .then(function(resData) {
       if (resData.error) {
