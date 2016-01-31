@@ -4,14 +4,17 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 var msgsRecv = 0;
+var identity = function() {};
 
 module.exports = function(defaultFuncs, api, ctx) {
-  var shouldStop = false;
   var currentlyRunning = null;
+  var globalCallback = identity;
+
   var stopListening = function() {
-    shouldStop = true;
+    globalCallback = identity;
     if(currentlyRunning) {
       clearTimeout(currentlyRunning);
+      currentlyRunning = null;
     }
   };
 
@@ -32,8 +35,6 @@ module.exports = function(defaultFuncs, api, ctx) {
     'msgs_recv':msgsRecv
   };
 
-  var globalCallback = null;
-
   /**
    * Get an object maybe representing an event. Handles events it wants to handle
    * and returns true if it did handle an event (and called the globalCallback).
@@ -50,7 +51,7 @@ module.exports = function(defaultFuncs, api, ctx) {
   }
 
   function listen() {
-    if(shouldStop || !ctx.loggedIn) {
+    if(currentlyRunning == null || !ctx.loggedIn) {
       return;
     }
 
@@ -121,7 +122,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               // There should be only one key inside overlay
               Object.keys(v.overlay).map(function(userID) {
                 var formattedPresence = utils.formatPresence(v.overlay[userID], userID);
-                if(!shouldStop && ctx.loggedIn) {
+                if(ctx.loggedIn) {
                   return globalCallback(null, formattedPresence);
                 }
               });
@@ -137,7 +138,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                   return;
                 }
 
-                if (!shouldStop && ctx.loggedIn) {
+                if (ctx.loggedIn) {
                   return globalCallback(null, formattedEvent);
                 }
               });
@@ -199,7 +200,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 return;
               }
 
-              if (!shouldStop && ctx.loggedIn) {
+              if (ctx.loggedIn) {
                 return globalCallback(null, message);
               }
               break;
@@ -213,7 +214,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               }
 
               atLeastOne = true;
-              if (!shouldStop && ctx.loggedIn) {
+              if (ctx.loggedIn) {
                 return globalCallback(null, utils.formatMessage(v));
               }
               break;
@@ -243,8 +244,9 @@ module.exports = function(defaultFuncs, api, ctx) {
       if(resData.tr) {
         form.traceid = resData.tr;
       }
-      currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
-
+      if (currentlyRunning) {
+        currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
+      }
     })
     .catch(function(err) {
       if (err.code === 'ETIMEDOUT') {
@@ -253,7 +255,9 @@ module.exports = function(defaultFuncs, api, ctx) {
         log.error("ERROR in listen --> ", err);
         globalCallback(err);
       }
-      currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
+      if (currentlyRunning) {
+        currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
+      }
     });
   }
 
