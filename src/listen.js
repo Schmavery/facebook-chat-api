@@ -247,8 +247,12 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     })
     .catch(function(err) {
-      log.error("ERROR in listen --> ", err);
-      globalCallback(err);
+      if (err.code === 'ETIMEDOUT') {
+        log.info("Suppressed timeout error.");
+      } else {
+        log.error("ERROR in listen --> ", err);
+        globalCallback(err);
+      }
       currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
     });
   }
