@@ -572,7 +572,7 @@ function formatThread(data) {
     snippet: data.snippet,
     snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,
-    snippetSender: data.snippet_sender.replace('fbid:', ''),
+    snippetSender: (data.snippet_sender || '').replace('fbid:', ''),
     unreadCount: data.unread_count,
     messageCount: data.message_count,
     imageSrc: data.image_src,
