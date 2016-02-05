@@ -33,7 +33,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           throw resData;
         }
         log.verbose("Response in getThreadList: " + JSON.stringify(resData.payload.threads));
-        return callback(null, resData.payload.threads.map(utils.formatThread));
+        return callback(null, (resData.payload.threads || []).map(utils.formatThread));
       })
       .catch(function(err) {
         log.error("Error in getThreadList", err);
