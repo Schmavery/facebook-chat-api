@@ -152,3 +152,6 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 > ```js
 login(credentials, {pageID: xxxxx}, function(api) { ... }
 ```
+
+6. I'm getting some crazy weird syntax error like `SyntaxError: Unexpected token [`!!!
+> Please try to update your version of node.js before submitting an issue of this nature.  We like to use new language features.
