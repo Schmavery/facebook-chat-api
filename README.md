@@ -150,8 +150,8 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 5. Do you support sending messages as a page?
 > Yes, set the pageID option on login (this doesn't work if you set it using api.setOptions, it affects the login process). 
 > ```js
-login(credentials, {pageID: xxxxx}, function(api) { ... }
-```
+> login(credentials, {pageID: xxxxx}, function(api) { ... }
+> ```
 
 6. I'm getting some crazy weird syntax error like `SyntaxError: Unexpected token [`!!!
 > Please try to update your version of node.js before submitting an issue of this nature.  We like to use new language features.
