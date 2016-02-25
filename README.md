@@ -141,7 +141,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 >Pages can't start conversations with users directly; this is to prevent pages from spamming users.
 
 3. What do I do when `login` doesn't work?
->First check that you can login to Facebook using the website. If login approvals are enabled, you might be logging in >incorrectly. For how to handle login approvals, read our docs on [`login`](DOCS.md#login).
+>First check that you can login to Facebook using the website. If login approvals are enabled, you might be logging in incorrectly. For how to handle login approvals, read our docs on [`login`](DOCS.md#login).
 
 4. How can I avoid logging in every time?  Can I log into a previous session?
 >We support caching everything relevant for you to bypass login. `api.getAppState()` returns an object that you can save and 
