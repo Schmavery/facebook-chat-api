@@ -161,48 +161,35 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               // The participants array is caped at 5, we need to query more to
               // get them.
-              if(message.participantIDs.length >= 5) {
-                // We simply make a get request to get the message page focused
-                // on a specific thread and parse the html returned
-                defaultFuncs.get("https://www.facebook.com/messages/search/conversation-" + message.threadID, ctx.jar)
-                  .then(function(res) {
-                    if (res.statusCode !== 200) {
-                      throw {error: "listen: couldn't get participantNames."};
-                    }
-                    // FB will send the first 20 thread information directly
-                    // merged inside the html. This is an attempt at retrieving
-                    // that information in only 2 (guaranteed) queries.
-                    // ---------- Very Hacky Part Starts -----------------
-                    // Add "]" at the end for the 2nd utils.getFrom
-                    // because this utils.getFrom will slurp the end token
-                    var almostParticipants = utils.getFrom(res.body, "\"thread_fbid\":\"" + message.threadID + "\",\"other_user_fbid\"", "]") + "]";
-                    var stringParticipants = utils.getFrom(almostParticipants, "[", "]");
-                    var participantIDs = stringParticipants.split(",").map(function(v) {
-                      return v.replace("fbid:", "").replace(/\"/g, "");
-                    });
-                    // ---------- Very Hacky Part Ends -----------------
-                    message.participantIDs = participantIDs;
-                    api.getUserInfo(participantIDs, function(err, firstThread) {
-                      if (err) {
-                        throw err;
-                      }
-
-                      message.participantsInfo = Object.keys(firstThread).map(function(key) {
-                        return firstThread[key];
-                      });
-                      // Rename this?
-                      message.participantNames = message.participantsInfo.map(function(v) {
-                        return v.name;
-                      });
-                      return globalCallback(null, message);
-                    });
-                  });
-                return;
+              if(message.participantIDs.length < 5) {
+                if (ctx.loggedIn) return globalCallback(null, message);
+                else return;
               }
 
-              if (ctx.loggedIn) {
-                return globalCallback(null, message);
-              }
+              var participantsForm = {};
+              var threadID = message.threadID;
+              participantsForm['threads[thread_fbids][0]'] = threadID;
+              //participantsForm['messages[thread_fbids][' + threadID + '][offset]'] = 0;
+              //participantsForm['messages[thread_fbids][' + threadID + '][timestamp]'] = '';
+              //participantsForm['messages[thread_fbids][' + threadID + '][limit]'] = 10;
+              if(ctx.globalOptions.pageId) participantsForm.request_user_id = ctx.globalOptions.pageId;
+
+              defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_info.php", ctx.jar, participantsForm)
+              .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+              .then(function(resData) {
+                message.participantIDs = resData.payload.threads[0].participants.map(id=>id.split(':').pop());
+                message.participants = message.participantIDs;
+                api.getUserInfo(message.participantIDs, function(err, firstThread) {
+                  if (err) {
+                    throw err;
+                  }
+
+                  message.participantsInfo = Object.keys(firstThread).map(key => firstThread[key]);
+                  // Rename this?
+                  message.participantNames = message.participantsInfo.map(v => v.name);
+                  return globalCallback(null, message);
+                });
+              });
               break;
             case 'pages_messaging':
               if(!ctx.globalOptions.pageID ||
@@ -247,6 +234,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       if (currentlyRunning) {
         currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
       }
+      return;
     })
     .catch(function(err) {
       if (err.code === 'ETIMEDOUT') {
