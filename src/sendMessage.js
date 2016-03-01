@@ -142,8 +142,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       form['message_batch[0][sticker_id]'] = msg.sticker;
 
       // Sticker can't be combined with body
-      delete msg.body;
-
+      delete form['message_batch[0][body]']
       send();
     } else {
       send();
