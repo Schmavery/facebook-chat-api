@@ -77,7 +77,6 @@ function buildAPI(globalOptions, html, jar) {
     'getOnlineUsers',
     'getThreadHistory',
     'getThreadList',
-    'getUrl',
     'getUserID',
     'getUserInfo',
     'listen',
