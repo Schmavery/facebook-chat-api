@@ -399,6 +399,20 @@ function formatReadReceipt(event) {
   };
 }
 
+function formatRead(event) {
+  return {
+    tids: event.tids,
+    thread_fbids: event.thread_fbids,
+    other_user_fbids: event.other_user_fbids,
+    chat_ids: event.chat_ids,
+    mark_as_read: event.mark_as_read,
+    folder_info: event.folder_info,
+    timestamp: event.timestamp,
+    realtime_viewer_fbid: event.realtime_viewer_fbid,
+    type: 'read'
+  };
+}
+
 function getFrom(str, startToken, endToken) {
   var start = str.indexOf(startToken) + startToken.length;
   if(start < startToken.length) return "";
@@ -636,6 +650,7 @@ module.exports = {
   formatCookie: formatCookie,
   formatThread: formatThread,
   formatReadReceipt: formatReadReceipt,
+  formatRead: formatRead,
   generatePresence: generatePresence,
   generateAccessiblityCookie: generateAccessiblityCookie,
   formatDate: formatDate,

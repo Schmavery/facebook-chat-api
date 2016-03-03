@@ -45,6 +45,9 @@ module.exports = function(defaultFuncs, api, ctx) {
       case 'read_receipt':
         globalCallback(null, utils.formatReadReceipt(event));
         return true;
+      case 'read':
+        globalCallback(null, utils.formatRead(event));
+        return true;
       default:
         return false;
     }
