@@ -403,7 +403,7 @@ function formatRead(event) {
   return {
     threadID: event.tids[0],
     userID: event.realtime_viewer_fbid.toString(),
-    senderID: other_user_fbids[0] || thread_fbids[0] || [], // senderID will be empty if the user is chatting in a group.
+    senderID: other_user_fbids[0].toString(), || thread_fbids[0].toString(), || '', // senderID will be an empty string if the user is chatting in a group.
     time: event.timestamp,
     type: 'read'
   };
