@@ -394,7 +394,7 @@ function formatReadReceipt(event) {
   return {
     reader: event.reader.toString(),
     time: event.time,
-    threadID: (event.thread_fbid) ? event.thread_fbid.toString() : event.realtime_viewer_fbid.toString(),
+    threadID: (event.thread_fbid || event.reader).toString(),
     type: 'read_receipt',
   };
 }
