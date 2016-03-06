@@ -4,9 +4,9 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function setTitle(newTitle, threadFbid, callback) {
-    if(!callback && utils.getType(threadFbid) === 'Function') {
-      throw {error: "please pass a threadFbid as a second argument."};
+  return function setTitle(newTitle, threadID, callback) {
+    if(!callback && utils.getType(threadID) === 'Function') {
+      throw {error: "please pass a threadID as a second argument."};
     }
 
     if(!callback) {
@@ -37,7 +37,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       'message_batch[0][message_id]' : messageAndOTID,
       'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientID),
       'message_batch[0][manual_retry_cnt]' : '0',
-      'message_batch[0][thread_fbid]' : threadFbid,
+      'message_batch[0][thread_fbid]' : threadID,
       'message_batch[0][log_message_data][name]' : newTitle,
       'message_batch[0][log_message_type]' : 'log:thread-name'
     };
