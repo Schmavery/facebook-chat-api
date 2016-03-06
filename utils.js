@@ -401,14 +401,10 @@ function formatReadReceipt(event) {
 
 function formatRead(event) {
   return {
-    tids: event.tids,
-    thread_fbids: event.thread_fbids,
-    other_user_fbids: event.other_user_fbids,
-    chat_ids: event.chat_ids,
-    mark_as_read: event.mark_as_read,
-    folder_info: event.folder_info,
-    timestamp: event.timestamp,
-    realtime_viewer_fbid: event.realtime_viewer_fbid,
+    threadID: event.tids[0],
+    userID: event.realtime_viewer_fbid.toString(),
+    senderID: other_user_fbids[0] || thread_fbids[0] || [], // senderID will be empty if the user is chatting in a group.
+    time: event.timestamp,
     type: 'read'
   };
 }
