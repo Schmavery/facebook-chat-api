@@ -376,15 +376,23 @@ If `type` is `"event"` then the object will also have those fields:
 - `author`: The person who performed the event.
 
 If `type` is `"typ"` then the object will have the following fields:
-- `isTyping`: Boolean representing whether or not a person started typing
-- `from`: ID of the user who started/stopped typing
-- `threadID`: Current threadID
-- `from_mobile`: Boolean representing whether or not the person's using a mobile device to type
+- `isTyping`: Boolean representing whether or not a person started typing.
+- `from`: ID of the user who started/stopped typing.
+- `threadID`: Current threadID.
+- `fromMobile`: Boolean representing whether or not the person's using a mobile device to type.
 
-If `type` is `"read_receipt"` then the object will have the following fileds:
-- `reader`: ID of the user who just read the message
-- `time`: the time at which the reader read the message
-- `threadID`: the thread in which the message was read
+If `type` is `"read_receipt"` then the object will have the following fields:
+- `reader`: ID of the user who just read the message.
+- `time`: The time at which the reader read the message.
+- `threadID`: The thread in which the message was read.
+
+If `type` is `"read"` then the object will have the following fields:
+- `threadID`: The threadID representing the thread in which the message was sent.
+- `time`: The time at which the user read the message.
+
+Difference between `"read_receipt"` and `"read"`:
+- `"read_receipt"` event triggers when other people read the user's messages.
+- `"read"` event triggers when the user read other people's messages.
 
 <a name="presence" />
 If enabled through [setOptions](#setOptions), this will also return presence, (`type` will be `"presence"`), which is the online status of the user's friends. The object given to the callback will have the following fields:

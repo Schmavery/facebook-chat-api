@@ -399,6 +399,14 @@ function formatReadReceipt(event) {
   };
 }
 
+function formatRead(event) {  
+  return {
+    threadID: ((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString(),
+    time: event.timestamp,
+    type: 'read'
+  };
+}
+
 function getFrom(str, startToken, endToken) {
   var start = str.indexOf(startToken) + startToken.length;
   if(start < startToken.length) return "";
@@ -636,6 +644,7 @@ module.exports = {
   formatCookie: formatCookie,
   formatThread: formatThread,
   formatReadReceipt: formatReadReceipt,
+  formatRead: formatRead,
   generatePresence: generatePresence,
   generateAccessiblityCookie: generateAccessiblityCookie,
   formatDate: formatDate,

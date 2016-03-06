@@ -42,8 +42,13 @@ module.exports = function(defaultFuncs, api, ctx) {
    */
   function handleMessagingEvents(event) {
     switch (event.event) {
+      // "read_receipt" event triggers when other people read the user's messages.
       case 'read_receipt':
         globalCallback(null, utils.formatReadReceipt(event));
+        return true;
+      // "read event" triggers when the user read other people's messages.
+      case 'read':
+        globalCallback(null, utils.formatRead(event));
         return true;
       default:
         return false;
