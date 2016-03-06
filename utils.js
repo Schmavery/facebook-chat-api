@@ -352,7 +352,7 @@ function formatMessage(m) {
     participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
     participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return v.toString();}) : [originalMessage.sender_fbid]),
     body: originalMessage.body,
-    threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.other_user_fbid,
+    threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.thread_fbid || originalMessage.other_user_fbid,
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
     messageID: originalMessage.mid ? originalMessage.mid.toString() : originalMessage.message_id,
