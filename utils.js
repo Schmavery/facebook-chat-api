@@ -401,9 +401,8 @@ function formatReadReceipt(event) {
 
 function formatRead(event) {  
   return {
-    threadID: (event.chat_ids.length) ? event.chat_ids[0].toString() : event.thread_fbids[0].toString(),
+    threadID: ((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString(),
     userID: event.realtime_viewer_fbid.toString(),
-    senderID: (event.other_user_fbids.length) ? event.other_user_fbids[0].toString() : '', // senderID will be an empty string if the user is chatting in a group.
     time: event.timestamp,
     type: 'read'
   };

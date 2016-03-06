@@ -389,7 +389,6 @@ If `type` is `"read_receipt"` then the object will have the following feilds:
 If `type` is `"read"` then the object will have the following feilds:
 - `threadID`: The threadID representing the thread in which the message was sent.
 - `userID`: The user ID.
-- `senderID`: The ID of the person who sent the message in the chat with threadID. It will be an empty string if the user is chatting in a group.
 - `time`: The time at which the user read the message.
 
 Difference between `"read_receipt"` and `"read"`:
