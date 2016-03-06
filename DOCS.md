@@ -388,7 +388,6 @@ If `type` is `"read_receipt"` then the object will have the following feilds:
 
 If `type` is `"read"` then the object will have the following feilds:
 - `threadID`: The threadID representing the thread in which the message was sent.
-- `userID`: The user ID.
 - `time`: The time at which the user read the message.
 
 Difference between `"read_receipt"` and `"read"`:

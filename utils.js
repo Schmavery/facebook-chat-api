@@ -402,7 +402,6 @@ function formatReadReceipt(event) {
 function formatRead(event) {  
   return {
     threadID: ((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString(),
-    userID: event.realtime_viewer_fbid.toString(),
     time: event.timestamp,
     type: 'read'
   };
