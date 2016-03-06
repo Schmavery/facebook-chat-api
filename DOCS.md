@@ -379,7 +379,7 @@ If `type` is `"typ"` then the object will have the following fields:
 - `isTyping`: Boolean representing whether or not a person started typing
 - `from`: ID of the user who started/stopped typing
 - `threadID`: Current threadID
-- `from_mobile`: Boolean representing whether or not the person's using a mobile device to type
+- `fromMobile`: Boolean representing whether or not the person's using a mobile device to type
 
 If `type` is `"read_receipt"` then the object will have the following fileds:
 - `reader`: ID of the user who just read the message
