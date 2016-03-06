@@ -399,11 +399,11 @@ function formatReadReceipt(event) {
   };
 }
 
-function formatRead(event) {
+function formatRead(event) {  
   return {
-    threadID: event.tids[0],
+    threadID: (event.chat_ids.length) ? event.chat_ids[0].toString() : event.thread_fbids[0].toString(),
     userID: event.realtime_viewer_fbid.toString(),
-    senderID: other_user_fbids[0].toString(), || thread_fbids[0].toString(), || '', // senderID will be an empty string if the user is chatting in a group.
+    senderID: (event.other_user_fbids.length) ? event.other_user_fbids[0].toString() : '', // senderID will be an empty string if the user is chatting in a group.
     time: event.timestamp,
     type: 'read'
   };
