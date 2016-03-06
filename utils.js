@@ -384,6 +384,8 @@ function formatTyp(event) {
     isTyping: !!event.st,
     from: event.from.toString(),
     threadID: (event.to || event.thread_fbid || event.from).toString(),
+    fromMobile: !!event.from_mobile,
+    // TODO: remove this in the next release
     from_mobile: !!event.from_mobile,
     userID: (event.realtime_viewer_fbid || event.from).toString(),
     type: 'typ',
