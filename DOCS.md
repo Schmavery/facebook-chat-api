@@ -381,12 +381,12 @@ If `type` is `"typ"` then the object will have the following fields:
 - `threadID`: Current threadID.
 - `from_mobile`: Boolean representing whether or not the person's using a mobile device to type.
 
-If `type` is `"read_receipt"` then the object will have the following feilds:
+If `type` is `"read_receipt"` then the object will have the following fields:
 - `reader`: ID of the user who just read the message.
 - `time`: The time at which the reader read the message.
 - `threadID`: The thread in which the message was read.
 
-If `type` is `"read"` then the object will have the following feilds:
+If `type` is `"read"` then the object will have the following fields:
 - `threadID`: The threadID representing the thread in which the message was sent.
 - `time`: The time at which the user read the message.
 
