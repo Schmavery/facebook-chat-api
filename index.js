@@ -87,6 +87,7 @@ function buildAPI(globalOptions, html, jar) {
     'sendMessage',
     'sendTypingIndicator',
     'setTitle',
+    'changeChatColor'
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID);
@@ -138,7 +139,10 @@ function makeLogin(jar, email, password, loginOptions, callback) {
     var willBeCookies = html.split("\"_js_");
     willBeCookies.slice(1).map(function(val) {
       var cookieData = JSON.parse("[\"" + utils.getFrom(val, "", "]") + "]");
-      jar.setCookie(utils.formatCookie(cookieData), "https://www.facebook.com");
+      jar.setCookie(utils.formatCookie(cookieData, "facebook"), "https://www.facebook.com");
+      if (!val[0] === "reg_fb_ref" && !val[0] === "reg_fb_gate") {
+        jar.setCookie(utils.formatCookie(cookieData, "messenger"), "https://www.messenger.com");
+      }
     });
     // ---------- Very Hacky Part Ends -----------------
 
@@ -302,6 +306,9 @@ function loginHelper(appState, email, password, globalOptions, callback) {
       ctx = stuff[0];
       defaultFuncs = stuff[1];
       api = stuff[2];
+      return res;
+    })
+    .then(function() {
       var form = {
         reason: 6
       };
@@ -309,6 +316,23 @@ function loginHelper(appState, email, password, globalOptions, callback) {
       return defaultFuncs
         .get("https://www.facebook.com/ajax/presence/reconnect.php", ctx.jar, form)
         .then(utils.saveCookies(ctx.jar));
+    })
+    .then(function() {
+      return utils
+        .get('https://www.messenger.com/', jar)
+        .then(utils.saveCookies(jar))
+        .then(function(res) {
+          var body = res.body;
+          var form = {
+            userid: ctx.userID,
+            nonce: "9A6zlEGg",
+            persistent: "false",
+            initial_request_id: utils.getFrom(body, "initialRequestID:\"", "\""),
+            lsd: utils.getFrom(body, "[\"LSD\",[],{\"token\":\"", "\"}")
+          };
+          fs.writeFileSync('test.html', body);
+          return utils.post('https://www.messenger.com/login/nonce')
+        });
     })
     .then(function(res) {
       log.info('Request to pull 1');
@@ -326,6 +350,9 @@ function loginHelper(appState, email, password, globalOptions, callback) {
       };
       var presence = utils.generatePresence(ctx.userID);
       ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
+      ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.messenger.com; secure", "https://www.messenger.com");
+      ctx.jar.setCookie("locale=en_US; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
+      ctx.jar.setCookie("locale=en_US; path=/; domain=.messenger.com; secure", "https://www.messenger.com");
       ctx.jar.setCookie("a11y=" + utils.generateAccessiblityCookie() + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
 
       return utils

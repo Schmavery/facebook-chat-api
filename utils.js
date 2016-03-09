@@ -401,7 +401,7 @@ function formatReadReceipt(event) {
   };
 }
 
-function formatRead(event) {  
+function formatRead(event) {
   return {
     threadID: ((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString(),
     time: event.timestamp,
@@ -531,8 +531,10 @@ function parseAndCheckLogin(jar, defaultFuncs) {
           && Array.isArray(res.jsmods.require[0])
           && res.jsmods.require[0][0] === "Cookie") {
         res.jsmods.require[0][3][0] = res.jsmods.require[0][3][0].replace("_js_", "");
-        var cookie = formatCookie(res.jsmods.require[0][3]);
+        var cookie = formatCookie(res.jsmods.require[0][3], "facebook");
+        var cookie2 = formatCookie(res.jsmods.require[0][3], "messenger");
         jar.setCookie(cookie, "https://www.facebook.com");
+        jar.setCookie(cookie2, "https://www.messenger.com");
       }
 
       if (res.error === 1357001) {
@@ -547,7 +549,13 @@ function saveCookies(jar) {
   return function(res) {
     var cookies = res.headers['set-cookie'] || [];
     cookies.map(function (c) {
-      jar.setCookie(c, "https://www.facebook.com");
+      if (c.indexOf(".facebook.com") > -1) {
+        jar.setCookie(c, "https://www.facebook.com");
+      }
+      if (c.indexOf("fr") !== 0) {
+        var c2 = c.replace(/domain=\.facebook\.com/, "domain=.messenger.com");
+        jar.setCookie(c2, "https://www.messenger.com");
+      }
     });
     return res;
   };
@@ -569,8 +577,8 @@ function formatDate(date) {
     h+':'+m+':'+s+' GMT';
 }
 
-function formatCookie(arr) {
-  return arr[0]+"="+arr[1]+"; Path=" + arr[3] + "; Domain=facebook.com";
+function formatCookie(arr, url) {
+  return arr[0]+"="+arr[1]+"; Path=" + arr[3] + "; Domain="+url+".com";
 }
 
 function formatThread(data) {
