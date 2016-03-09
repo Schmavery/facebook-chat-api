@@ -4,6 +4,7 @@
 * [`api.addUserToGroup`](#addUserToGroup)
 * [`api.changeArchivedStatus`](#changeArchivedStatus)
 * [`api.changeThreadColor`](#changeThreadColor)
+* [`api.changeThreadEmoji`](#changeThreadEmoji)
 * [`api.deleteMessage`](#deleteMessage)
 * [`api.getAppState`](#getAppState)
 * [`api.getCurrentUserID`](#getCurrentUserID)
@@ -165,6 +166,34 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     if(err) return console.error(err);
 
     api.changeThreadColor("#0000ff", "0000000000000", function callback(err) {
+        if(err) return console.error(err);
+    });
+});
+```
+
+---------------------------------------
+
+<a name="changeThreadEmoji" />
+### api.changeThreadEmoji(emoji, threadID, [callback])
+
+Will change the thread emoji to the one provided.
+
+Note: The UI doesn't play nice with all emoji.
+
+__Arguments__
+* `emoji`: String containing a single emoji character.
+* `threadID`: String representing the ID of the thread.
+* `callback(err)`: A callback called when the change is done (either with an error or null).
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+
+    api.changeThreadEmoji("💯", "0000000000000", function callback(err) {
         if(err) return console.error(err);
     });
 });

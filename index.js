@@ -71,6 +71,7 @@ function buildAPI(globalOptions, html, jar) {
     'addUserToGroup',
     'changeArchivedStatus',
     'changeThreadColor',
+    'changeThreadEmoji',
     'deleteMessage',
     'deleteThread',
     'getCurrentUserID',
