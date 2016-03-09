@@ -148,7 +148,8 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 <a name="changeThreadColor" />
 ### api.changeThreadColor(color, threadID, [callback])
 
-Will change the thread color to the given hex string color ("#0000ff").
+Will change the thread color to the given hex string color ("#0000ff"). Set it
+to empty string if you want the default.
 
 Note: the color needs to start with a "#".
 
