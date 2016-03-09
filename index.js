@@ -70,6 +70,7 @@ function buildAPI(globalOptions, html, jar) {
   var apiFuncNames = [
     'addUserToGroup',
     'changeArchivedStatus',
+    'changeThreadColor',
     'deleteMessage',
     'deleteThread',
     'getCurrentUserID',
@@ -138,7 +139,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
     var willBeCookies = html.split("\"_js_");
     willBeCookies.slice(1).map(function(val) {
       var cookieData = JSON.parse("[\"" + utils.getFrom(val, "", "]") + "]");
-      jar.setCookie(utils.formatCookie(cookieData), "https://www.facebook.com");
+      jar.setCookie(utils.formatCookie(cookieData, "facebook"), "https://www.facebook.com");
     });
     // ---------- Very Hacky Part Ends -----------------
 
@@ -302,6 +303,9 @@ function loginHelper(appState, email, password, globalOptions, callback) {
       ctx = stuff[0];
       defaultFuncs = stuff[1];
       api = stuff[2];
+      return res;
+    })
+    .then(function() {
       var form = {
         reason: 6
       };
@@ -326,6 +330,9 @@ function loginHelper(appState, email, password, globalOptions, callback) {
       };
       var presence = utils.generatePresence(ctx.userID);
       ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
+      ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.messenger.com; secure", "https://www.messenger.com");
+      ctx.jar.setCookie("locale=en_US; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
+      ctx.jar.setCookie("locale=en_US; path=/; domain=.messenger.com; secure", "https://www.messenger.com");
       ctx.jar.setCookie("a11y=" + utils.generateAccessiblityCookie() + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
 
       return utils

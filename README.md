@@ -2,7 +2,7 @@
 The Official Facebook Chat API uses XMPP and is deprecated as of April 30th 2015. This is a non-official API that doesn't use XMPP.
 As of right now, the only way to automate the chat functionalities is to emulate the browser. This means doing the exact same GET/POST requests and tricking Facebook into thinking we're accessing the website normally. Because we're doing it this way, this API won't work with an auth token but requires the credentials of a Facebook account.
 
-Cool projects using facebook-chat-api: 
+Cool projects using facebook-chat-api:
 - [Kassy](https://github.com/mrkno/Kassy) - Kassy is a modular, easily extensible general purpose chat bot
 - [Marc Zuckerbot](https://github.com/bsansouci/marc-zuckerbot) - Facebook chat bot
 - [Marc Thuckerbot](https://github.com/bsansouci/lisp-bot) - Programmable lisp bot
@@ -31,6 +31,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 * [`login`](DOCS.md#login)
 * [`api.addUserToGroup`](DOCS.md#addUserToGroup)
 * [`api.changeArchivedStatus`](DOCS.md#changeArchivedStatus)
+* [`api.changeThreadColor`](DOCS.md#changeThreadColor)
 * [`api.deleteMessage`](DOCS.md#deleteMessage)
 * [`api.deleteThread`](DOCS.md#deleteThread)
 * [`api.getAppState`](DOCS.md#getAppState)
@@ -144,11 +145,11 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 >First check that you can login to Facebook using the website. If login approvals are enabled, you might be logging in incorrectly. For how to handle login approvals, read our docs on [`login`](DOCS.md#login).
 
 4. How can I avoid logging in every time?  Can I log into a previous session?
->We support caching everything relevant for you to bypass login. `api.getAppState()` returns an object that you can save and 
+>We support caching everything relevant for you to bypass login. `api.getAppState()` returns an object that you can save and
 >pass into login as `{appState: mySavedAppState}` instead of the credentials object.  If this fails, your session has expired.
 
 5. Do you support sending messages as a page?
-> Yes, set the pageID option on login (this doesn't work if you set it using api.setOptions, it affects the login process). 
+> Yes, set the pageID option on login (this doesn't work if you set it using api.setOptions, it affects the login process).
 > ```js
 > login(credentials, {pageID: xxxxx}, function(api) { ... }
 > ```

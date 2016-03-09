@@ -3,6 +3,7 @@
 * [`login`](#login)
 * [`api.addUserToGroup`](#addUserToGroup)
 * [`api.changeArchivedStatus`](#changeArchivedStatus)
+* [`api.changeThreadColor`](#changeThreadColor)
 * [`api.deleteMessage`](#deleteMessage)
 * [`api.getAppState`](#getAppState)
 * [`api.getCurrentUserID`](#getCurrentUserID)
@@ -135,7 +136,35 @@ var login = require("facebook-chat-api");
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
 
-    api.changeArchivedStatus(0000000000000, true, function callback(err) {
+    api.changeArchivedStatus("0000000000000", true, function callback(err) {
+        if(err) return console.error(err);
+    });
+});
+```
+
+---------------------------------------
+
+<a name="changeThreadColor" />
+### api.changeThreadColor(color, threadID, [callback])
+
+Will change the thread color to the given hex string color ("#0000ff").
+
+Note: the color needs to start with a "#".
+
+__Arguments__
+* `color`: String representing a hex color code (eg: "#0000ff") preceded by "#".
+* `threadID`: String representing the ID of the thread.
+* `callback(err)`: A callback called when the change is done (either with an error or null).
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+
+    api.changeThreadColor("#0000ff", "0000000000000", function callback(err) {
         if(err) return console.error(err);
     });
 });
@@ -263,7 +292,7 @@ var login = require("facebook-chat-api");
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
 
-    api.deleteThread(0000000000000, function callback(err) {
+    api.deleteThread("0000000000000", function callback(err) {
         if(err) return console.error(err);
     });
 });
@@ -526,7 +555,7 @@ __Example (Basic Message)__
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
 
-    var yourID = 0000000000000;
+    var yourID = "0000000000000";
     var msg = {body: "Hey!"};
     api.sendMessage(msg, yourID);
 });
@@ -538,7 +567,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     if(err) return console.error(err);
 
     // Note this example uploads an image called image.jpg
-    var yourID = 0000000000000;
+    var yourID = "0000000000000";
     var msg = {
       body: "Hey!",
       attachment: fs.createReadStream(__dirname + '/image.jpg')
