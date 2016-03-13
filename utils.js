@@ -450,6 +450,7 @@ function makeDefaults(html, userID) {
     ttstamp += fb_dtsg.charCodeAt(i);
   }
   ttstamp += '2';
+  var revision = getFrom(html, "revision\":",",");
 
   function mergeWithDefaults(obj) {
     if (!obj) return {};
@@ -457,7 +458,7 @@ function makeDefaults(html, userID) {
     var newObj = {
       __user: userID,
       __req: (reqCounter++).toString(36),
-      __rev: getFrom(html, "revision\":",","),
+      __rev: revision,
       __a: 1,
       fb_dtsg: fb_dtsg,
       ttstamp: ttstamp,
