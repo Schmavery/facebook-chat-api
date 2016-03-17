@@ -61,9 +61,7 @@ function buildAPI(globalOptions, html, jar) {
   var api = {
     setOptions: setOptions.bind(null, globalOptions),
     getAppState: function getAppState() {
-      return jar
-        .getCookies("https://www.facebook.com")
-        .concat(jar.getCookies("https://facebook.com"));
+      return utils.getAppState(jar);
     },
   };
 
@@ -199,9 +197,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
                           throw {error: "Something went wrong with login approvals."};
                         }
 
-                        var appState = jar
-                          .getCookies("https://www.facebook.com")
-                          .concat(jar.getCookies("https://facebook.com"));
+                        var appState = utils.getAppState(jar);
 
                         // Simply call loginHelper because all it needs is the jar
                         // and will then complete the login process
@@ -240,9 +236,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
                       throw {error: "Something went wrong with review recent login."};
                     }
 
-                    var appState = jar
-                      .getCookies("https://www.facebook.com")
-                      .concat(jar.getCookies("https://facebook.com"));
+                    var appState = utils.getAppState(jar);
 
                     // Simply call loginHelper because all it needs is the jar
                     // and will then complete the login process

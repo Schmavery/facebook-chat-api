@@ -628,6 +628,13 @@ function formatPresence(presence, userID) {
   };
 }
 
+function getAppState(jar){
+  return jar
+    .getCookies("https://www.facebook.com")
+    .concat(jar.getCookies("https://facebook.com"))
+    .concat(jar.getCookies("https://www.messenger.com"));
+}
+
 module.exports = {
   isReadableStream: isReadableStream,
   get: get,
@@ -657,4 +664,5 @@ module.exports = {
   generatePresence: generatePresence,
   generateAccessiblityCookie: generateAccessiblityCookie,
   formatDate: formatDate,
+  getAppState: getAppState,
 };
