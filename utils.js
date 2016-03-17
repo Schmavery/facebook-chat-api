@@ -635,6 +635,15 @@ function getAppState(jar){
     .concat(jar.getCookies("https://www.messenger.com"));
 }
 
+function generateSubdomain()
+{
+	var max_conn = 6; //alias r
+	var l = 7;
+	var u = (max_conn - 1) * l;
+	var s = Math.floor(Math.random() * u);
+	return s % l;
+}
+
 module.exports = {
   isReadableStream: isReadableStream,
   get: get,
@@ -665,4 +674,5 @@ module.exports = {
   generateAccessiblityCookie: generateAccessiblityCookie,
   formatDate: formatDate,
   getAppState: getAppState,
+	generateSubdomain: generateSubdomain
 };
