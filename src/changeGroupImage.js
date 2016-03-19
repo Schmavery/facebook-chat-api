@@ -3,13 +3,10 @@
 var utils = require("../utils");
 var log = require("npmlog");
 var bluebird = require("bluebird");
-var fs = require("fs");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  function handleUpload(imageLocation, callback) {
+  function handleUpload(image, callback) {
     var uploads = [];
-
-    var image = fs.createReadStream(imageLocation)
 
     var form = {
       'images_only': 'true',
@@ -39,7 +36,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       });
   }
 
-  return function changeGroupImage(imageLocation, threadID, callback) {
+  return function changeGroupImage(image, threadID, callback) {
     if(!callback && utils.getType(threadID) === 'Function') {
       throw {error: "please pass a threadID as a second argument."};
     }
@@ -78,7 +75,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       'message_batch[0][timestamp_time_passed]' : '0',
     };
 
-    handleUpload(imageLocation, function (err, payload) {
+    handleUpload(image, function (err, payload) {
       if (err) {
         return callback(err);
       }
@@ -102,7 +99,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           return callback();
         })
         .catch(function(err) {
-          log.error("Error in main part of send upload", err);
+          log.error("Error in uploading group image", err);
           return callback(err);
         });
 
