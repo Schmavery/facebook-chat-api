@@ -31,6 +31,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 * [`login`](DOCS.md#login)
 * [`api.addUserToGroup`](DOCS.md#addUserToGroup)
 * [`api.changeArchivedStatus`](DOCS.md#changeArchivedStatus)
+* [`api.changeGroupImage`](DOCS.md#changeGroupImage)
 * [`api.changeThreadColor`](DOCS.md#changeThreadColor)
 * [`api.changeThreadEmoji`](DOCS.md#changeThreadEmoji)
 * [`api.deleteMessage`](DOCS.md#deleteMessage)
@@ -99,7 +100,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 ### Listening to a chat
 #### api.listen(callback)
 
-Listen watches for messages sent in a chat. By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true})`. This will by default ignore messages sent by the current account, you can enable listening to your own messages with `api.setOptions({listenEvents: true})`.
+Listen watches for messages sent in a chat. By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true})`. This will by default ignore messages sent by the current account, you can enable listening to your own messages with `api.setOptions({selfListen: true})`.
 
 __Example__
 

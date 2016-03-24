@@ -3,6 +3,7 @@
 * [`login`](#login)
 * [`api.addUserToGroup`](#addUserToGroup)
 * [`api.changeArchivedStatus`](#changeArchivedStatus)
+* [`api.changeGroupImage`](#changeGroupImage)
 * [`api.changeThreadColor`](#changeThreadColor)
 * [`api.changeThreadEmoji`](#changeThreadEmoji)
 * [`api.deleteMessage`](#deleteMessage)
@@ -138,6 +139,32 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     if(err) return console.error(err);
 
     api.changeArchivedStatus("0000000000000", true, function callback(err) {
+        if(err) return console.error(err);
+    });
+});
+```
+
+---------------------------------------
+
+<a name="changeGroupImage" />
+### api.changeGroupImage(image, threadID, [callback])
+
+Will change the group chat's image to the given image.
+
+__Arguments__
+* `image`: File stream of image.
+* `threadID`: String representing the ID of the thread.
+* `callback(err)`: A callback called when the change is done (either with an error or null).
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+
+    api.changeGroupImage(fs.createReadStream("./avatar.png"), "0000000000000", function callback(err) {
         if(err) return console.error(err);
     });
 });
@@ -392,7 +419,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 ### api.listen(callback)
 
 Will call `callback` when a new message is received on this account.
-By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true})`.  This will by default ignore messages sent by the current account, you can enable listening to your own messages with `api.setOptions({listenEvents: true})`. This returns `stopListening` that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue.  
+By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true})`.  This will by default ignore messages sent by the current account, you can enable listening to your own messages with `api.setOptions({selfListen: true})`. This returns `stopListening` that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue.  
 
 __Arguments__
 
