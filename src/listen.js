@@ -148,6 +148,18 @@ module.exports = function(defaultFuncs, api, ctx) {
                 }
               });
               break;
+            case 'delta':
+              if (v.delta.class !== "NewMessage" || ctx.globalOptions.pageID){
+                return;
+              }
+              var fmtMsg = utils.formatDeltaMessage(v);
+
+              if (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID){
+                return;
+              }
+
+              return globalCallback(null, fmtMsg);
+              break;
             case 'messaging':
               if (ctx.globalOptions.listenEvents && handleMessagingEvents(v)) {
                 // globalCallback got called if handleMessagingEvents returned true

@@ -99,12 +99,20 @@ describe('Login:', function() {
 
   it('should create a chat', function (done){
     var body = "new-chat-" + Date.now();
-    listen(done, function (msg) {
+    var inc = 0;
+
+    function doneHack(){
+      if (inc === 1) return done();
+      inc++;
+    }
+
+    listen(doneHack, function (msg) {
       return msg.type === 'message' && msg.body === body;
     });
     api.sendMessage(body, userIDs, function(err, info){
       checkErr(done)(err);
       groupChatID = info.threadID;
+      doneHack();
     });
   });
 

@@ -229,6 +229,9 @@ function getGUID() {
 }
 
 function _formatAttachment(attachment1, attachment2) {
+  // TODO: THIS IS REALLY BAD
+  attachment2 = attachment2 || {id:"", image_data: {}};
+
   switch (attachment1.attach_type) {
     case "sticker":
       return {
@@ -328,19 +331,32 @@ function _formatAttachment(attachment1, attachment2) {
         duration: attachment1.metadata.duration,
       };
     default:
-      throw new Error("unrecognized attach_file " + attachment1.attach_type);
+      throw new Error("unrecognized attach_file `" + JSON.stringify(attachment1) + "`");
   }
 }
 
 function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
   attachmentMap = shareMap || attachmentMap;
   return attachments ? attachments.map(function(val, i) {
-    // TODO: THIS IS REALLY BAD
     if (!attachmentMap || !attachmentIds || !attachmentMap[attachmentIds[i]]){
-      return _formatAttachment(val, {id:"", image_data: {}});
+      return _formatAttachment(val);
     }
     return _formatAttachment(val, attachmentMap[attachmentIds[i]]);
   }) : [];
+}
+
+function formatDeltaMessage(m){
+  //console.log(m);
+  var delta = m.delta;
+  return {
+    type: "message",
+    senderID: delta.messageMetadata.actorFbId,
+    body: delta.body,
+    threadID: (delta.messageMetadata.threadKey.threadFbId || delta.messageMetadata.threadKey.otherUserFbId).toString(),
+    messageID: delta.messageMetadata.messageId,
+    attachments: delta.attachments.map(v => _formatAttachment(v.mercury)),
+    timestamp: delta.messageMetadata.timestamp,
+  }
 }
 
 function formatMessage(m) {
@@ -654,6 +670,7 @@ module.exports = {
   saveCookies: saveCookies,
   getType: getType,
   formatMessage: formatMessage,
+  formatDeltaMessage: formatDeltaMessage,
   formatEvent: formatEvent,
   formatPresence: formatPresence,
   formatTyp: formatTyp,
