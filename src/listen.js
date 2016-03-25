@@ -149,7 +149,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               });
               break;
             case 'delta':
-              if (v.delta.class !== "NewMessage" || ctx.globalOptions.pageID){
+              if (v.delta.class !== "NewMessage" || ctx.globalOptions.pageID || ctx.globalOptions.disableDelta){
                 return;
               }
               var fmtMsg = utils.formatDeltaMessage(v);
@@ -161,6 +161,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               return globalCallback(null, fmtMsg);
               break;
             case 'messaging':
+              ctx.disableDelta = true;
               if (ctx.globalOptions.listenEvents && handleMessagingEvents(v)) {
                 // globalCallback got called if handleMessagingEvents returned true
                 return;
