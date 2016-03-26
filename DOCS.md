@@ -638,12 +638,12 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 <a name="sendTypingIndicator" />
 ### api.sendTypingIndicator(threadID, [callback])
 
-Sends a "USERNAME is typing" indicator to other members of the thread indicated by threadID.  This indication will disappear after 30 second or when the `end` function is called.
+Sends a "USERNAME is typing" indicator to other members of the thread indicated by threadID.  This indication will disappear after 30 second or when the `end` function is called. The `end` function is returned by `api.sendTypingIndicator`.
 
 __Arguments__
 
 * `threadID`: Group chat ID.
-* `callback(err, end)`: A callback called when the query is done (either with an error or with null followed by a function `end` described above).
+* `callback(err)`: A callback called when the query is done (with an error or with null).
 
 ---------------------------------------
 
