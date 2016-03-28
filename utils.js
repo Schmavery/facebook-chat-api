@@ -354,7 +354,7 @@ function formatDeltaMessage(m){
     body: delta.body,
     threadID: (delta.messageMetadata.threadKey.threadFbId || delta.messageMetadata.threadKey.otherUserFbId).toString(),
     messageID: delta.messageMetadata.messageId,
-    attachments: delta.attachments.map(v => _formatAttachment(v.mercury)),
+    attachments: (delta.attachments || []).map(v => _formatAttachment(v.mercury)),
     timestamp: delta.messageMetadata.timestamp,
   }
 }
