@@ -64,7 +64,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     prev = ~~(Date.now() / 1000);
     var presence = utils.generatePresence(ctx.userID);
     ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
-    utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
+    utils.get("https://" + utils.generateSubdomain() + "-edge-chat.facebook.com/pull", ctx.jar, form)
     .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
     .then(function(resData) {
       var now = Date.now();
