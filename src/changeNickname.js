@@ -17,7 +17,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
       .then(function(resData) {
         if (resData.error === 1545014) {
-          throw {error: "Trying to change user nickname wasnt in thread"};
+          throw {error: "Trying to change nickname of user isn't in thread"};
         }
         if (resData.error === 1357031) {
           throw {error: "Trying to change user nickname of a chat that doesn't exist. Have at least one message in the thread before trying to change the user nickname."};
