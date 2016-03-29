@@ -4,7 +4,7 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function changeThreadUserNickname(nickname, threadID, participantID, callback) {
+  return function changeNickname(nickname, threadID, participantID, callback) {
 
     var form = {
       'nickname': nickname,
@@ -29,7 +29,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in changeThreadUserNickname", err);
+        log.error("Error in changeNickname", err);
         return callback(err);
       });
   };

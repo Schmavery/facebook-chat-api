@@ -74,7 +74,7 @@ function buildAPI(globalOptions, html, jar) {
     'changeGroupImage',
     'changeThreadColor',
     'changeThreadEmoji',
-    'changeThreadUserNickname',
+    'changeNickname',
     'deleteMessage',
     'deleteThread',
     'getCurrentUserID',
