@@ -20,7 +20,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           throw {error: "Trying to change nickname of user isn't in thread"};
         }
         if (resData.error === 1357031) {
-          throw {error: "Trying to change user nickname of a chat that doesn't exist. Have at least one message in the thread before trying to change the user nickname."};
+          throw {error: "Trying to change user nickname of a thread that doesn't exist. Have at least one message in the thread before trying to change the user nickname."};
         }
         if (resData.error) {
           throw resData;
