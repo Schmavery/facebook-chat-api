@@ -6,6 +6,7 @@
 * [`api.changeGroupImage`](#changeGroupImage)
 * [`api.changeThreadColor`](#changeThreadColor)
 * [`api.changeThreadEmoji`](#changeThreadEmoji)
+* [`api.changeNickname`](#changeNickname)
 * [`api.deleteMessage`](#deleteMessage)
 * [`api.getAppState`](#getAppState)
 * [`api.getCurrentUserID`](#getCurrentUserID)
@@ -222,6 +223,33 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     if(err) return console.error(err);
 
     api.changeThreadEmoji("💯", "0000000000000", function callback(err) {
+        if(err) return console.error(err);
+    });
+});
+```
+
+---------------------------------------
+
+<a name="changeNickname" />
+### api.changeNickname(nickname, threadID, participantID, [callback])
+
+Will change the thread user nickname to the one provided.
+
+__Arguments__
+* `nickname`: String containing a nickname. For reset of nickname left it empty
+* `threadID`: String representing the ID of the thread.
+* `participantID`: String representing the ID of the user.
+* `callback(err)`: A callback called when the change is done (either with an error or null).
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+
+    api.changeNickname("Example", "0000000000000", "0000000000000", function callback(err) {
         if(err) return console.error(err);
     });
 });
