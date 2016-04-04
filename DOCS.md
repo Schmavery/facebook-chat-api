@@ -13,6 +13,7 @@
 * [`api.getFriendsList`](#getFriendsList)
 * [`api.getOnlineUsers`](#getOnlineUsers)
 * [`api.getThreadHistory`](#getThreadHistory)
+* [`api.getThreadInfo`](#getThreadInfo)
 * [`api.getThreadList`](#getThreadList)
 * [`api.deleteThread`](#deleteThread)
 * [`api.getUserID`](#getUserID)
@@ -342,7 +343,18 @@ __Arguments__
 * `start`: The ith message in the chat from which to start retrieving history.
 * `end`: The jth message in the chat to which retrieving history.
 * `timestamp`: Used to described the start time. If set, will query messages from `timestamp` to `Date.now()`.
-* `callback(error, history)`: Optional.
+* `callback(error, history)`: If error is null, history will contain an array of message objects.
+
+---------------------------------------
+
+<a name="getThreadInfo" />
+### api.getThreadInfo(threadID, [callback])
+
+Takes a threadID and a callback.  Works for both single-user and group threads.
+
+__Arguments__
+* `threadID`: A threadID corresponding to the target thread.
+* `callback(error, info)`: If error is null, info will contain participantIDs, name, snippet, messageCount, emoji, nicknames, and color.  The last three will be null if custom values are not set for the thread.
 
 ---------------------------------------
 
@@ -457,14 +469,10 @@ __Message__
 
 If `type` is `message`, the object will contain the following fields:
 
-  + `senderName`: First and last name of the person who just sent the message.
   + `senderID`: The id of the person who sent the message in the chat with threadID.
-  + `participantNames`: An array containing only the first names of the other participants in the thread (sender included).
   + `participantIDs`: An array containing the ids of everyone in the thread (sender included).
   + `body`: The string corresponding to the message that was just received.
   + `threadID`: The threadID representing the thread in which the message was sent.
-  + `threadName`: The name of the receiver in a single person chat or the name of the group chat.
-  + `location`
   + `messageID`: A string representing the message ID.
   + `attachments`: An array of attachments to the message.
 
