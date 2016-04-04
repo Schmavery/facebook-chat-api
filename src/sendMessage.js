@@ -23,6 +23,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
       var form = {
         upload_1024: attachments[i],
+        'voice_clip': 'true',
       };
 
       uploads.push(defaultFuncs
@@ -189,6 +190,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       form['message_batch[0][gif_ids]'] = [];
       form['message_batch[0][file_ids]'] = [];
       form['message_batch[0][video_ids]'] = [];
+      form['message_batch[0][audio_ids]'] = [];
 
       if (utils.getType(msg.attachment) !== 'Array') {
         msg.attachment = [msg.attachment];
