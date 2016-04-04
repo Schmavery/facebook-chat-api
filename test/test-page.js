@@ -31,6 +31,7 @@ function checkErr(done){
 
 describe('Login As Page:', function() {
   var api = null;
+  process.on('SIGINT', () => api && !api.logout() && console.log("Logged out :)"));
   var tests = [];
   var stopListening;
   this.timeout(20000);

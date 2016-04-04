@@ -27,6 +27,7 @@ function checkErr(done){
 
 describe('Login:', function() {
   var api = null;
+  process.on('SIGINT', () => api && !api.logout() && console.log("Logged out :)"));
   var tests = [];
   var stopListening;
   this.timeout(20000);
@@ -87,6 +88,23 @@ describe('Login:', function() {
     });
     api.sendMessage(body, userID, checkErr(done));
   });
+
+  it('should get thread info (user)', function (done){
+      api.getThreadInfo(userID, (err, info) => {
+        if (err) done(err);
+
+        assert(info.participantIDs != null && info.participantIDs.length > 0);
+        assert(!info.participantIDs.some(isNaN));
+        assert(!info.participantIDs.some(v => v.length == 0));
+        assert(info.name != null && info.name.length > 0);
+        assert(info.messageCount != null && !isNaN(info.messageCount));
+        assert(info.hasOwnProperty('emoji'));
+        assert(info.hasOwnProperty('nicknames'));
+        assert(info.hasOwnProperty('color'));
+        done();
+      });
+  });
+
 
   it('should get the history of the chat (user)', function (done) {
     api.getThreadHistory(userID, 0, 5, Date.now(), function(err, data) {
@@ -210,6 +228,24 @@ describe('Login:', function() {
     api.addUserToGroup(id, groupChatID, function() {});
   });
 
+  it('should get thread info (group)', function (done){
+      api.getThreadInfo(groupChatID, (err, info) => {
+        if (err) done(err);
+
+        assert(info.participantIDs != null && info.participantIDs.length > 0);
+        assert(!info.participantIDs.some(isNaN));
+        assert(!info.participantIDs.some(v => v.length == 0));
+        assert(info.name != null && info.name.length > 0);
+        assert(info.messageCount != null && !isNaN(info.messageCount));
+        assert(info.hasOwnProperty('emoji'));
+        assert(info.hasOwnProperty('nicknames'));
+        assert(info.hasOwnProperty('color'));
+        done();
+      });
+  });
+
+
+
   it('should retrieve a list of threads', function (done) {
     api.getThreadList(0, 20, function(err, res) {
       checkErr(done)(err);
@@ -287,9 +323,10 @@ describe('Login:', function() {
 
   it('should get the list of friends', function (done) {
     api.getFriendsList(function(err, data) {
+      try{
       checkErr(done)(err);
       assert(getType(data) === "Array");
-      data.map(function(v) {
+      data.map(v => {
         assert(getType(v.alternateName) === "String");
         assert(getType(v.firstName) === "String");
         assert(getType(v.gender) === "String");
@@ -298,11 +335,14 @@ describe('Login:', function() {
         assert(getType(v.fullName) === "String");
         assert(getType(v.profilePicture) === "String");
         assert(getType(v.type) === "String");
-        assert(getType(v.profileUrl) === "String");
+        assert(v.hasOwnProperty("profileUrl"));  // This can be null if the account is disabled
         assert(getType(v.vanity) === "String");
         assert(getType(v.isBirthday) === "Boolean");
       })
       done();
+    } catch(e){
+      done(e);
+    }
     });
   });
 
