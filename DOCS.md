@@ -470,11 +470,11 @@ __Message__
 If `type` is `message`, the object will contain the following fields:
 
   + `senderID`: The id of the person who sent the message in the chat with threadID.
-  + `participantIDs`: An array containing the ids of everyone in the thread (sender included).
   + `body`: The string corresponding to the message that was just received.
   + `threadID`: The threadID representing the thread in which the message was sent.
   + `messageID`: A string representing the message ID.
   + `attachments`: An array of attachments to the message.
+  + `isGroup`: boolean, true if this thread is a group thread (more than 2 participants). 
 
 If `attachments` contains an object with type is `"sticker"`, the same object will contain the following fields: `url`, `stickerID`, `packID`, `frameCount`, `frameRate`, `framesPerRow`, `framesPerCol`, `spriteURI`, `spriteURI2x`, `height`, `width`, `caption`, `description`.
 

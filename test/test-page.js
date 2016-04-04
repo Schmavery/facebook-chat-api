@@ -68,28 +68,33 @@ describe('Login As Page:', function() {
 
   it('should send text message object (user)', function (done){
     var body = "text-msg-obj-" + Date.now();
-    listen(done, function (msg) {
-      return msg.type === 'message' && msg.body === body;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === false
+    );
     api.sendMessage({body: body}, userID, checkErr(done));
   });
 
   it('should send sticker message object (user)', function (done){
     var stickerID = '767334526626290';
-    listen(done, function (msg) {
-      return msg.type === 'message' &&
-        msg.attachments.length > 0 &&
-        msg.attachments[0].type === 'sticker' &&
-        msg.attachments[0].stickerID === stickerID;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.attachments.length > 0 &&
+      msg.attachments[0].type === 'sticker' &&
+      msg.attachments[0].stickerID === stickerID &&
+      msg.isGroup === false
+    );
     api.sendMessage({sticker: stickerID}, userID, checkErr(done));
   });
 
   it('should send basic string (user)', function (done){
     var body = "basic-str-" + Date.now();
-    listen(done, function (msg) {
-      return (msg.type === 'message' && msg.body === body);
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === false
+    );
     api.sendMessage(body, userID, checkErr(done));
   });
 

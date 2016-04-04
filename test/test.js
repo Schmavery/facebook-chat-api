@@ -44,6 +44,13 @@ describe('Login:', function() {
       api = localAPI;
       stopListening = api.listen(function (err, msg) {
         if (err) throw err;
+        if (msg.type === "message") {
+          assert(msg.senderID && !isNaN(msg.senderID));
+          assert(msg.threadID && !isNaN(msg.threadID));
+          assert(msg.timestamp && !isNaN(msg.timestamp));
+          assert(msg.messageID != null && msg.messageID.length > 0);
+          assert(msg.body != null || msg.attachments.length > 0);
+        }
         // Removes matching function and calls corresponding done
         tests = tests.filter(function(test) {
           return !(test.matcher(msg) && (test.done() || true));
@@ -64,28 +71,33 @@ describe('Login:', function() {
 
   it('should send text message object (user)', function (done){
     var body = "text-msg-obj-" + Date.now();
-    listen(done, function (msg) {
-      return msg.type === 'message' && msg.body === body;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === false
+    );
     api.sendMessage({body: body}, userID, checkErr(done));
   });
 
   it('should send sticker message object (user)', function (done){
     var stickerID = '767334526626290';
-    listen(done, function (msg) {
-      return msg.type === 'message' &&
-        msg.attachments.length > 0 &&
-        msg.attachments[0].type === 'sticker' &&
-        msg.attachments[0].stickerID === stickerID;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.attachments.length > 0 &&
+      msg.attachments[0].type === 'sticker' &&
+      msg.attachments[0].stickerID === stickerID &&
+      msg.isGroup === false
+    );
     api.sendMessage({sticker: stickerID}, userID, checkErr(done));
   });
 
   it('should send basic string (user)', function (done){
     var body = "basic-str-" + Date.now();
-    listen(done, function (msg) {
-      return (msg.type === 'message' && msg.body === body);
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === false
+    );
     api.sendMessage(body, userID, checkErr(done));
   });
 
@@ -124,9 +136,9 @@ describe('Login:', function() {
       inc++;
     }
 
-    listen(doneHack, function (msg) {
-      return msg.type === 'message' && msg.body === body;
-    });
+    listen(doneHack, msg =>
+      msg.type === 'message' && msg.body === body
+    );
     api.sendMessage(body, userIDs, function(err, info){
       checkErr(done)(err);
       groupChatID = info.threadID;
@@ -136,9 +148,11 @@ describe('Login:', function() {
 
   it('should send text message object (group)', function (done){
     var body = "text-msg-obj-" + Date.now();
-    listen(done, function (msg) {
-      return msg.type === 'message' && msg.body === body;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === true
+    );
     api.sendMessage({body: body}, groupChatID, function(err, info){
       checkErr(done)(err);
       assert(groupChatID === info.threadID);
@@ -147,9 +161,11 @@ describe('Login:', function() {
 
   it('should send basic string (group)', function (done){
     var body = "basic-str-" + Date.now();
-    listen(done, function (msg) {
-      return msg.type === 'message' && msg.body === body;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === true
+    );
     api.sendMessage(body, groupChatID, function(err, info) {
       checkErr(done)(err);
       assert(groupChatID === info.threadID);

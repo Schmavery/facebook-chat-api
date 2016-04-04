@@ -346,16 +346,16 @@ function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
 }
 
 function formatDeltaMessage(m){
-  //console.log(m);
-  var delta = m.delta;
+  var md = m.delta.messageMetadata;
   return {
     type: "message",
-    senderID: delta.messageMetadata.actorFbId,
-    body: delta.body,
-    threadID: (delta.messageMetadata.threadKey.threadFbId || delta.messageMetadata.threadKey.otherUserFbId).toString(),
-    messageID: delta.messageMetadata.messageId,
-    attachments: (delta.attachments || []).map(v => _formatAttachment(v.mercury)),
-    timestamp: delta.messageMetadata.timestamp,
+    senderID: md.actorFbId,
+    body: m.delta.body,
+    threadID: (md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString(),
+    messageID: md.messageId,
+    attachments: (m.delta.attachments || []).map(v => _formatAttachment(v.mercury)),
+    timestamp: md.timestamp,
+    isGroup: !!md.threadKey.threadFbId
   }
 }
 
@@ -380,6 +380,7 @@ function formatMessage(m) {
   };
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();
+  obj.isGroup = obj.participantIDs.length > 2;
 
   return obj;
 }
