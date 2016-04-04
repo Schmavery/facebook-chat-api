@@ -33,7 +33,6 @@ module.exports = function(defaultFuncs, api, ctx) {
           var userData = userRes[threadID];
           var info = {
             participantIDs: threadData.participants.map(id => id.split(':').pop()),
-            info: resData.payload,
             name: threadData.name || userData.name,
             snippet: threadData.snippet,
             messageCount: threadData.message_count,

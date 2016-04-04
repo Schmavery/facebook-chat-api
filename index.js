@@ -27,9 +27,6 @@ function setOptions(globalOptions, options) {
       case 'forceLogin':
         globalOptions.forceLogin = options.forceLogin;
         break;
-      case 'disableDelta':
-        globalOptions.disableDelta = options.disableDelta;
-        break;
       default:
         log.warn('Unrecognized option given to setOptions', key);
         break;

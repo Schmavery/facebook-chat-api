@@ -149,7 +149,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               });
               break;
             case 'delta':
-              if (v.delta.class !== "NewMessage" || ctx.globalOptions.pageID || ctx.globalOptions.disableDelta){
+              if (v.delta.class !== "NewMessage" || ctx.globalOptions.pageID){
                 return;
               }
               var fmtMsg = utils.formatDeltaMessage(v);
@@ -159,55 +159,6 @@ module.exports = function(defaultFuncs, api, ctx) {
               }
 
               return globalCallback(null, fmtMsg);
-              break;
-            case 'messaging':
-              ctx.disableDelta = true;
-              if (ctx.globalOptions.listenEvents && handleMessagingEvents(v)) {
-                // globalCallback got called if handleMessagingEvents returned true
-                return;
-              }
-
-              if(ctx.globalOptions.pageID ||
-                v.event !== "deliver" ||
-                (!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID)) {
-                return;
-              }
-
-
-              atLeastOne = true;
-              var message = utils.formatMessage(v);
-
-              // The participants array is caped at 5, we need to query more to
-              // get them.
-              if(message.participantIDs.length < 5) {
-                if (ctx.loggedIn) return globalCallback(null, message);
-                else return;
-              }
-
-              var participantsForm = {};
-              var threadID = message.threadID;
-              participantsForm['threads[thread_fbids][0]'] = threadID;
-              //participantsForm['messages[thread_fbids][' + threadID + '][offset]'] = 0;
-              //participantsForm['messages[thread_fbids][' + threadID + '][timestamp]'] = '';
-              //participantsForm['messages[thread_fbids][' + threadID + '][limit]'] = 10;
-              if(ctx.globalOptions.pageId) participantsForm.request_user_id = ctx.globalOptions.pageId;
-
-              defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_info.php", ctx.jar, participantsForm)
-              .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
-              .then(function(resData) {
-                message.participantIDs = resData.payload.threads[0].participants.map(id=>id.split(':').pop());
-                message.participants = message.participantIDs;
-                api.getUserInfo(message.participantIDs, function(err, firstThread) {
-                  if (err) {
-                    throw err;
-                  }
-
-                  message.participantsInfo = Object.keys(firstThread).map(key => firstThread[key]);
-                  // Rename this?
-                  message.participantNames = message.participantsInfo.map(v => v.name);
-                  return globalCallback(null, message);
-                });
-              });
               break;
             case 'pages_messaging':
               if(!ctx.globalOptions.pageID ||
