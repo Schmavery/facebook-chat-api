@@ -342,7 +342,7 @@ __Arguments__
 * `threadID`: A threadID corresponding to the target chat
 * `start`: The ith message in the chat from which to start retrieving history.
 * `end`: The jth message in the chat to which retrieving history.
-* `timestamp`: Used to described the start time. If set, will query messages from `timestamp` to `Date.now()`.
+* `timestamp`: Used to described the end time. If set, will query messages up to and including `timestamp`.
 * `callback(error, history)`: If error is null, history will contain an array of message objects.
 
 ---------------------------------------
