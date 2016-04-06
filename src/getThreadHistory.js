@@ -18,7 +18,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       var key = (Object.keys(res).length > 0) ? "user_ids" : "thread_fbids";
         form['messages['+key+'][' + threadID + '][offset]'] = start;
         form['messages['+key+'][' + threadID + '][timestamp]'] = timestamp;
-        form['messages['+key+'][' + threadID + '][limit]'] = end - start + 1;
+        form['messages['+key+'][' + threadID + '][limit]'] = end - start;
 
         if(ctx.globalOptions.pageId) form.request_user_id = ctx.globalOptions.pageId;
 
