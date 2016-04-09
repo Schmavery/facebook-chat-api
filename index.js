@@ -92,6 +92,7 @@ function buildAPI(globalOptions, html, jar) {
     'setTitle',
     'acceptMessageRequest',
     'ignoreMessageRequest',
+    'getMessageRequests'
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID);
