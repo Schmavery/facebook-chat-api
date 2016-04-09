@@ -160,11 +160,6 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               return globalCallback(null, fmtMsg);
               break;
-            case 'inbox':
-              // Could be message request
-              // Have to use getMessageRequests() for more infomation.
-              return globalCallback(null, v);
-              break;
             case 'pages_messaging':
               if(!ctx.globalOptions.pageID ||
                 v.event !== "deliver" ||

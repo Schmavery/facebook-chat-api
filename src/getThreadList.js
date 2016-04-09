@@ -4,9 +4,13 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function getThreadList(start, end, callback) {
+  return function getThreadList(start, end, isPending, callback) {
     if(!callback && utils.getType(end) !== 'Number') {
       throw {error: "please pass an number as a second argument."};
+    }
+
+    if(!callback && utils.getType(isPending) !== 'Boolean') {
+      throw {error: "please pass a Boolean as a third argument."};
     }
 
     if(!callback) {
@@ -15,11 +19,16 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     if (end <= start) end = start + 20;
 
-    var form = {
-      'client' : 'mercury',
-      'inbox[offset]' : start,
-      'inbox[limit]' : end - start,
+    var messageBox = 'inbox';
+    if (isPending) {
+      messageBox = 'pending';
     };
+
+    var form = {
+      'client': 'mercury'
+    }
+    form[messageBox + '[offset]'] = start;
+    form[messageBox + '[limit]'] = end - start;
 
     if(ctx.globalOptions.pageID) {
       form.request_user_id = ctx.globalOptions.pageID;

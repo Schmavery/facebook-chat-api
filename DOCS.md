@@ -27,6 +27,7 @@
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
 * [`api.setOptions`](#setOptions)
 * [`api.setTitle`](#setTitle)
+* [`api.handleMessageRequests`](#handleMessageRequests)
 
 ---------------------------------------
 
@@ -359,7 +360,7 @@ __Arguments__
 ---------------------------------------
 
 <a name="getThreadList" />
-### api.getThreadList(start, end, callback)
+### api.getThreadList(start, end, isPending, callback)
 
 Will return information about threads.
 
@@ -367,6 +368,7 @@ __Arguments__
 
 * `start`: Start index in the list of recently used threads.
 * `end`: End index.
+* `isPending`: Boolean indicating that it will return the thread list of message requests.
 * `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: `threadID`, <del>`participants`</del>, `participantIDs`, `formerParticipants`, `name`, `snippet`, `snippetHasAttachment`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteSettings`, `isCanonicalUser`, `isCanonical`, `canonicalFbid`, `isSubscribed`, `rootMessageThreadingID`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `composerEnabled`, `blockedParticipants`, `lastMessageID`.
 
 ---------------------------------------
@@ -738,5 +740,18 @@ __Arguments__
 * `newTitle`: A string representing the new title.
 * `threadID`: A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation.
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the threadID where the message was sent.
+
+---------------------------------------
+
+<a name="handleMessageRequests" />
+### api.handleMessageRequests(threadID, isAccept, [callback])
+
+Accept or ignore message request(s) with thread id `threadID`.
+
+__Arguments__
+
+* `threadID`: A string, number, or array representing a thread. It happens to be someone's userId in the case of a one to one conversation or an array of userIds when starting a new group chat.
+* `isAccept`: Boolean indicating the new status to assign to the message request(s).
+* `callback(err)`: A callback called when the query is done (with an error or with null).
 
 ---------------------------------------
