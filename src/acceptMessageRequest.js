@@ -10,7 +10,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     var form = {
-      client: 'mercury',
+      client: 'mercury'
     };
 
     if(utils.getType(requestOrRequests) !== "Array") {
