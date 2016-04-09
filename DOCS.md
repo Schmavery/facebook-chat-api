@@ -602,7 +602,7 @@ Various types of message can be sent:
 * *Sticker:* set a field `sticker` to the desired sticker ID.
 * *File or image:* Set field `attachment` to a readable stream or an array of readable streams.
 * *URL:* set a field `url` to the desired URL.
-* *Emoji:* set field `body` to the desired emoji as a string and set field `emoji` with size of the emoji (`small`, `medium`, `large`)
+* *Emoji:* set field `body` to the desired emoji as a string and set field `emoji` with size of the emoji (`small` and `medium`)
 
 Note that a message can only be a regular message (which can be empty) and optionally one of the following: a sticker, an attachment or a url.
 
