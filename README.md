@@ -6,6 +6,8 @@ Cool projects using facebook-chat-api:
 - [Kassy](https://github.com/mrkno/Kassy) - Kassy is a modular, easily extensible general purpose chat bot
 - [Marc Zuckerbot](https://github.com/bsansouci/marc-zuckerbot) - Facebook chat bot
 - [Marc Thuckerbot](https://github.com/bsansouci/lisp-bot) - Programmable lisp bot
+- [Larry Pudding Dog Bot](https://github.com/Larry850806/facebook-chat-bot) - A facebook bot using mongodb for database
+
 
 ## Install
 ```bash
