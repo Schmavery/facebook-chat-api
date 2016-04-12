@@ -20,7 +20,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         form['messages['+key+'][' + threadID + '][timestamp]'] = timestamp;
         form['messages['+key+'][' + threadID + '][limit]'] = end - start;
 
-        if(ctx.globalOptions.pageId) form.request_user_id = ctx.globalOptions.pageId;
+        if(ctx.globalOptions.pageID) form.request_user_id = ctx.globalOptions.pageID;
 
         defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_info.php", ctx.jar, form)
         .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
