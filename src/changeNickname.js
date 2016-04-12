@@ -5,6 +5,7 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function changeNickname(nickname, threadID, participantID, callback) {
+    callback = callback || function() {};
 
     var form = {
       'nickname': nickname,

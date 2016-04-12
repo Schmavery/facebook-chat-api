@@ -240,7 +240,7 @@ __Arguments__
 * `nickname`: String containing a nickname. For reset of nickname left it empty
 * `threadID`: String representing the ID of the thread.
 * `participantID`: String representing the ID of the user.
-* `callback(err)`: A callback called when the change is done (either with an error or null).
+* `callback(err)`: An optional callback called when the change is done (either with an error or null).
 
 __Example__
 
