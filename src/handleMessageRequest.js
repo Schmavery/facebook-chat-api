@@ -4,8 +4,8 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function handleMessageRequests(threadID, isAccept, callback) {
-    if(!callback && utils.getType(isAccept) === 'Function') {
+  return function handleMessageRequest(threadID, accept, callback) {
+    if(utils.getType(accept) !== 'Boolean') {
       throw {error: "please pass a boolean as a second argument."};
     }
 
@@ -21,10 +21,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       threadID = [threadID];
     }
 
-    var messageBox = 'other';
-    if (isAccept) {
-      messageBox = 'inbox';
-    };
+    var messageBox = accept ? "inbox" : "other";
 
     for (var i = 0; i < threadID.length; i++) {
       form[messageBox + '[' + i + ']'] = threadID[i];
@@ -41,7 +38,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in handleMessageRequests", err);
+        log.error("Error in handleMessageRequest", err);
         return callback(err);
       });
   };

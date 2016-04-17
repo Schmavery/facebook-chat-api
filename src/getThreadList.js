@@ -4,12 +4,12 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function getThreadList(start, end, isPending, callback) {
+  return function getThreadList(start, end, pending, callback) {
     if(!callback && utils.getType(end) !== 'Number') {
       throw {error: "please pass an number as a second argument."};
     }
 
-    if(!callback && utils.getType(isPending) !== 'Boolean') {
+    if(!callback && utils.getType(pending) !== 'Boolean') {
       throw {error: "please pass a Boolean as a third argument."};
     }
 
@@ -19,10 +19,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     if (end <= start) end = start + 20;
 
-    var messageBox = 'inbox';
-    if (isPending) {
-      messageBox = 'pending';
-    };
+    var messageBox = pending ? "pending" : "inbox";
 
     var form = {
       'client': 'mercury'
