@@ -16,11 +16,11 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback(err);
       }
       var key = (Object.keys(userRes).length > 0) ? "user_ids" : "thread_fbids";
-        form['threads['+key+'][0]'] = threadID;
+      form['threads['+key+'][0]'] = threadID;
 
-        if(ctx.globalOptions.pageId) form.request_user_id = ctx.globalOptions.pageId;
+      if(ctx.globalOptions.pageId) form.request_user_id = ctx.globalOptions.pageId;
 
-        defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_info.php", ctx.jar, form)
+      defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_info.php", ctx.jar, form)
         .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
         .then(function(resData) {
           if (resData.error) {
@@ -33,7 +33,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           var userData = userRes[threadID];
           var info = {
             participantIDs: threadData.participants.map(id => id.split(':').pop()),
-            name: threadData.name || userData.name,
+            name: threadData.name != null ? threadData.name : userData.name,
             snippet: threadData.snippet,
             messageCount: threadData.message_count,
             emoji: threadData.custom_like_icon,
