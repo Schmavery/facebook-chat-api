@@ -108,7 +108,7 @@ describe('Login:', function() {
         assert(info.participantIDs != null && info.participantIDs.length > 0);
         assert(!info.participantIDs.some(isNaN));
         assert(!info.participantIDs.some(v => v.length == 0));
-        assert(info.name != null && info.name.length > 0);
+        assert(info.name != null);
         assert(info.messageCount != null && !isNaN(info.messageCount));
         assert(info.hasOwnProperty('emoji'));
         assert(info.hasOwnProperty('nicknames'));
@@ -119,7 +119,7 @@ describe('Login:', function() {
 
 
   it('should get the history of the chat (user)', function (done) {
-    api.getThreadHistory(userID, 0, 5, Date.now(), function(err, data) {
+    api.getThreadHistory(userID, 0, 5, null, function(err, data) {
       checkErr(done)(err);
       assert(getType(data) === "Array");
       assert(data.every(function(v) {return getType(v) == "Object";}));
@@ -201,7 +201,7 @@ describe('Login:', function() {
   });
 
   it('should get the history of the chat (group)', function (done) {
-    api.getThreadHistory(groupChatID, 0, 5, Date.now(), function(err, data) {
+    api.getThreadHistory(groupChatID, 0, 5, null, function(err, data) {
       checkErr(done)(err);
       assert(getType(data) === "Array");
       assert(data.every(function(v) {return getType(v) == "Object";}));
@@ -251,7 +251,7 @@ describe('Login:', function() {
         assert(info.participantIDs != null && info.participantIDs.length > 0);
         assert(!info.participantIDs.some(isNaN));
         assert(!info.participantIDs.some(v => v.length == 0));
-        assert(info.name != null && info.name.length > 0);
+        assert(info.name != null);
         assert(info.messageCount != null && !isNaN(info.messageCount));
         assert(info.hasOwnProperty('emoji'));
         assert(info.hasOwnProperty('nicknames'));
