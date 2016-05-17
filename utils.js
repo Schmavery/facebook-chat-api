@@ -401,9 +401,9 @@ function formatTyp(event) {
     isTyping: !!event.st,
     from: event.from.toString(),
     threadID: (event.to || event.thread_fbid || event.from).toString(),
-    fromMobile: !!event.from_mobile,
-    // TODO: remove this in the next release
-    from_mobile: !!event.from_mobile,
+    // When receiving typ indication from mobile, `from_mobile` isn't set.
+    // If it is, we just use that value.
+    fromMobile: event.hasOwnProperty('from_mobile') ? event.from_mobile : true,
     userID: (event.realtime_viewer_fbid || event.from).toString(),
     type: 'typ',
   };
