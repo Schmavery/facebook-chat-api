@@ -71,7 +71,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       'message_batch[0][thread_id]' : '',
       'message_batch[0][timestamp]' : Date.now(),
       'message_batch[0][timestamp_absolute]' : 'Today',
-      'message_batch[0][timestamp_relative]' : utils.genTimestampRelative(),
+      'message_batch[0][timestamp_relative]' : utils.generateTimestampRelative(),
       'message_batch[0][timestamp_time_passed]' : '0',
     };
 

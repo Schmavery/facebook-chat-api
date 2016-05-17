@@ -339,11 +339,10 @@ describe('Login:', function() {
 
   it('should get the list of friends', function (done) {
     api.getFriendsList(function(err, data) {
-      try{
+      try {
       checkErr(done)(err);
       assert(getType(data) === "Array");
       data.map(v => {
-        assert(getType(v.alternateName) === "String");
         assert(getType(v.firstName) === "String");
         assert(getType(v.gender) === "String");
         assert(getType(v.userID) === "String");

@@ -38,7 +38,7 @@ module.exports = function(defaultFuncs, api, ctx) {
             messageCount: threadData.message_count,
             emoji: threadData.custom_like_icon,
             nicknames: threadData.custom_nickname,
-            color: threadData.customColor,
+            color: threadData.custom_color,
           };
           callback(null, info);
 

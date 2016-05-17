@@ -230,6 +230,11 @@ function getGUID() {
 
 function _formatAttachment(attachment1, attachment2) {
   // TODO: THIS IS REALLY BAD
+  // This is an attempt at fixing Facebook's inconsistencies. Sometimes they give us
+  // two attachement objects, but sometimes only one. They each contain part of the
+  // data that you'd want so we merge them for convenience.
+  // Instead of having a bunch of if statements guarding every access to image_data,
+  // we set it to empty object and use the fact that it'll return undefined.
   attachment2 = attachment2 || {id:"", image_data: {}};
 
   switch (attachment1.attach_type) {
@@ -269,7 +274,6 @@ function _formatAttachment(attachment1, attachment2) {
         previewUrl: attachment1.preview_url,
         previewWidth: attachment1.preview_width,
         previewHeight: attachment1.preview_height,
-        facebookUrl: attachment1.url, // wtf is this?
         ID: attachment2.id.toString(),
         filename: attachment2.filename,
         mimeType: attachment2.mime_type,
@@ -432,6 +436,9 @@ function getFrom(str, startToken, endToken) {
 
   var lastHalf = str.substring(start);
   var end = lastHalf.indexOf(endToken);
+  if (end === -1) {
+    throw Error("Could not find endTime `" + endToken + "` in the given string.");
+  }
   return lastHalf.substring(0, end);
 }
 
@@ -454,7 +461,7 @@ function getSignatureID(){
   return Math.floor(Math.random() * 2147483648).toString(16);
 }
 
-function genTimestampRelative() {
+function generateTimestampRelative() {
   var d = new Date();
   return d.getHours() + ":" + padZeros(d.getMinutes());
 }
@@ -470,8 +477,6 @@ function makeDefaults(html, userID) {
   var revision = getFrom(html, "revision\":",",");
 
   function mergeWithDefaults(obj) {
-    if (!obj) return {};
-
     var newObj = {
       __user: userID,
       __req: (reqCounter++).toString(36),
@@ -566,7 +571,7 @@ function parseAndCheckLogin(jar, defaultFuncs) {
 function saveCookies(jar) {
   return function(res) {
     var cookies = res.headers['set-cookie'] || [];
-    cookies.map(function (c) {
+    cookies.forEach(function (c) {
       if (c.indexOf(".facebook.com") > -1) {
         jar.setCookie(c, "https://www.facebook.com");
       }
@@ -665,7 +670,7 @@ module.exports = {
   arrToForm: arrToForm,
   getSignatureID: getSignatureID,
   getJar: request.jar,
-  genTimestampRelative: genTimestampRelative,
+  generateTimestampRelative: generateTimestampRelative,
   makeDefaults: makeDefaults,
   parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,

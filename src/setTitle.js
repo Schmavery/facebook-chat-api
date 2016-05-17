@@ -23,7 +23,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       'message_batch[0][coordinates]' : '',
       'message_batch[0][timestamp]' : Date.now(),
       'message_batch[0][timestamp_absolute]' : 'Today',
-      'message_batch[0][timestamp_relative]' : utils.genTimestampRelative(),
+      'message_batch[0][timestamp_relative]' : utils.generateTimestampRelative(),
       'message_batch[0][timestamp_time_passed]' : '0',
       'message_batch[0][is_unread]' : false,
       'message_batch[0][is_cleared]' : false,
