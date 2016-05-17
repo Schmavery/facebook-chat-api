@@ -160,6 +160,11 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               return globalCallback(null, fmtMsg);
               break;
+            case 'messaging':
+              if (handleMessagingEvents(v)) {
+                return;
+              }
+              break;
             case 'pages_messaging':
               if(!ctx.globalOptions.pageID ||
                 v.event !== "deliver" ||
