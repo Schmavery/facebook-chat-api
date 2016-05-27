@@ -168,3 +168,4 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 - [MarkovsInequality](https://github.com/logicx24/MarkovsInequality) - Extensible chat bot adding useful functions to Facebook Messenger
 - [AllanBot](https://github.com/AllanWang/AllanBot-Public) - Extensive module that combines the facebook api with firebase to create numerous functions; no coding experience is required to implement this.
 - [Larry Pudding Dog Bot](https://github.com/Larry850806/facebook-chat-bot) - A facebook bot you can easily customize the response
+- [fbash](https://github.com/avikj/fbash) - Run commands on your computer's terminal over Facebook Messenger
