@@ -4,6 +4,7 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
+  // muteSecond: -1=permanent mute, 0=unmute, 60=one minute, 3600=one hour, etc.
   return function muteChat(threadID, muteSecond, callback) {
     if(!callback) {
       callback = function() {};

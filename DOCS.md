@@ -21,6 +21,7 @@
 * [`api.listen`](#listen)
 * [`api.logout`](#logout)
 * [`api.markAsRead`](#markAsRead)
+* [`api.muteChat`](#muteChat)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
 * [`api.searchForThread`](#searchForThread)
 * [`api.sendMessage`](#sendMessage)
@@ -592,6 +593,34 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     api.listen(function callback(err, message) {
         // Marks message as read immediately after they're sent
         api.markAsRead(message.threadID);
+    });
+});
+```
+
+---------------------------------------
+
+<a name="muteChat" />
+### api.muteChat(threadID, muteSecond, [callback])
+
+Mute a chat for a period of time, or unmute a chat.
+
+__Arguments__
+
+* `threadID` - The ID of the chat you want to mute.
+* `muteSecond` - Mute the chat for this amount of seconds. Use `0` to unmute a chat. Use '-1' to mute a chat indefinitely.
+* `callback(err)` - A callback called when the operation is done maybe with an object representing an error.
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+
+    api.listen(function callback(err, message) {
+        // Mute all incoming chats for one minute
+        api.muteChat(message.threadID, 60);
     });
 });
 ```
