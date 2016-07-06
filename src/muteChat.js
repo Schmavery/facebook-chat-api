@@ -12,7 +12,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     var form = {
       thread_fbid: threadID,
-      mute_settings: muteSecond
+      mute_settings: muteSeconds
     }
 
     defaultFuncs

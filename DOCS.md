@@ -600,14 +600,14 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 ---------------------------------------
 
 <a name="muteChat" />
-### api.muteChat(threadID, muteSecond, [callback])
+### api.muteChat(threadID, muteSeconds, [callback])
 
 Mute a chat for a period of time, or unmute a chat.
 
 __Arguments__
 
 * `threadID` - The ID of the chat you want to mute.
-* `muteSecond` - Mute the chat for this amount of seconds. Use `0` to unmute a chat. Use '-1' to mute a chat indefinitely.
+* `muteSeconds` - Mute the chat for this amount of seconds. Use `0` to unmute a chat. Use '-1' to mute a chat indefinitely.
 * `callback(err)` - A callback called when the operation is done maybe with an object representing an error.
 
 __Example__
