@@ -5,7 +5,7 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   // muteSecond: -1=permanent mute, 0=unmute, 60=one minute, 3600=one hour, etc.
-  return function muteChat(threadID, muteSeconds, callback) {
+  return function muteThread(threadID, muteSeconds, callback) {
     if(!callback) {
       callback = function() {};
     }
@@ -27,7 +27,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in muteChat", err);
+        log.error("Error in muteThread", err);
         return callback(err);
       });
   };

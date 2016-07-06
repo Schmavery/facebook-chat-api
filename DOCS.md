@@ -599,8 +599,8 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 
 ---------------------------------------
 
-<a name="muteChat" />
-### api.muteChat(threadID, muteSeconds, [callback])
+<a name="muteThread" />
+### api.muteThread(threadID, muteSeconds, [callback])
 
 Mute a chat for a period of time, or unmute a chat.
 
@@ -620,7 +620,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 
     api.listen(function callback(err, message) {
         // Mute all incoming chats for one minute
-        api.muteChat(message.threadID, 60);
+        api.muteThread(message.threadID, 60);
     });
 });
 ```
