@@ -5,14 +5,15 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   // muteSecond: -1=permanent mute, 0=unmute, 60=one minute, 3600=one hour, etc.
-  return function muteChat(threadID, muteSecond, callback) {
+  return function muteChat(threadID, muteSeconds, callback) {
     if(!callback) {
       callback = function() {};
     }
 
-    var form = {};
-    form["thread_fbid"] = threadID;
-    form["mute_settings"] = muteSecond;
+    var form = {
+      thread_fbid: threadID,
+      mute_settings: muteSecond
+    }
 
     defaultFuncs
       .post("https://www.facebook.com/ajax/mercury/change_mute_thread.php", ctx.jar, form)
