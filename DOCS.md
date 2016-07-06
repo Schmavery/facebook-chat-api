@@ -21,7 +21,7 @@
 * [`api.listen`](#listen)
 * [`api.logout`](#logout)
 * [`api.markAsRead`](#markAsRead)
-* [`api.muteChat`](#muteChat)
+* [`api.muteThread`](#muteThread)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
 * [`api.searchForThread`](#searchForThread)
 * [`api.sendMessage`](#sendMessage)
