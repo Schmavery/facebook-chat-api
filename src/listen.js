@@ -148,6 +148,14 @@ module.exports = function(defaultFuncs, api, ctx) {
                 }
               });
               break;
+            case 'messaging':
+              if (v.event === 'read_receipt') {
+                // "read_receipt" event triggers when other people read the user's messages.
+                return globalCallback(null, utils.formatReadReceipt(v));
+              } else if  (v.event === 'read') {
+                // "read event" triggers when the user read other people's messages.
+                return globalCallback(null, utils.formatRead(v));
+              }  
             case 'delta':
               if (v.delta.class !== "NewMessage" || ctx.globalOptions.pageID){
                 return;
