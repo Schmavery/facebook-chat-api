@@ -18,6 +18,7 @@
 * [`api.deleteThread`](#deleteThread)
 * [`api.getUserID`](#getUserID)
 * [`api.getUserInfo`](#getUserInfo)
+* [`api.handleMessageRequest`](#handleMessageRequest)
 * [`api.listen`](#listen)
 * [`api.logout`](#logout)
 * [`api.markAsRead`](#markAsRead)
@@ -360,7 +361,7 @@ __Arguments__
 ---------------------------------------
 
 <a name="getThreadList" />
-### api.getThreadList(start, end, callback)
+### api.getThreadList(start, end, pending, callback)
 
 Will return information about threads.
 
@@ -368,6 +369,7 @@ __Arguments__
 
 * `start`: Start index in the list of recently used threads.
 * `end`: End index.
+* `pending`: Optional boolean, set to true if you want the list of message requests; set to false or remove the argument if you want the inbox threads
 * `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: `threadID`, <del>`participants`</del>, `participantIDs`, `formerParticipants`, `name`, `snippet`, `snippetHasAttachment`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteSettings`, `isCanonicalUser`, `isCanonical`, `canonicalFbid`, `isSubscribed`, `rootMessageThreadingID`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `composerEnabled`, `blockedParticipants`, `lastMessageID`.
 
 ---------------------------------------
@@ -453,6 +455,19 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     });
 });
 ```
+
+---------------------------------------
+
+<a name="handleMessageRequest" />
+### api.handleMessageRequest(threadID, accept, [callback])
+
+Accept or ignore message request(s) with thread id `threadID`.
+
+__Arguments__
+
+* `threadID`: A threadID or array of threadIDs corresponding to the target thread(s). Can be numbers or strings.
+* `accept`: Boolean indicating the new status to assign to the message request(s); true for inbox, false to others.
+* `callback(err)`: A callback called when the query is done (with an error or with null).
 
 ---------------------------------------
 
