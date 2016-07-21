@@ -25,9 +25,9 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     boxType = boxType.toLowerCase();
-    if (boxType == 'archived') {
+    if (boxType === 'archived') {
       boxType = 'action:archived';
-    } else if (boxType != 'inbox' && boxType != 'pending') {
+    } else if (boxType !== 'inbox' && boxType !== 'pending') {
       throw {
         error: "boxType can only be one of the following: inbox, pending, archived"
       }
