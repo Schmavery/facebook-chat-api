@@ -465,7 +465,7 @@ Accept or ignore message request(s) with thread id `threadID`.
 
 __Arguments__
 
-* `threadID`: A string, number, or array representing a thread. It happens to be someone's userId in the case of a one to one conversation or an array of userIds when starting a new group chat.
+* `threadID`: A threadID or array of threadIDs corresponding to the target thread(s). Can be numbers or strings.
 * `accept`: Boolean indicating the new status to assign to the message request(s); true for inbox, false to others.
 * `callback(err)`: A callback called when the query is done (with an error or with null).
 
