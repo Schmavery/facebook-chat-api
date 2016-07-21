@@ -24,7 +24,6 @@ module.exports = function(defaultFuncs, api, ctx) {
       }
     }
 
-    type = type.toLowerCase();
     if (type === 'archived') {
       type = 'action:archived';
     } else if (type !== 'inbox' && type !== 'pending') {
