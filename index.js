@@ -82,7 +82,7 @@ function buildAPI(globalOptions, html, jar) {
     'getThreadList',
     'getUserID',
     'getUserInfo',
-    'handleMessageRequests',
+    'handleMessageRequest',
     'listen',
     'logout',
     'markAsRead',
