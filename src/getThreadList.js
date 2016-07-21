@@ -4,16 +4,16 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function getThreadList(start, end, boxType, callback) {
+  return function getThreadList(start, end, type, callback) {
     if (utils.getType(callback) === 'Undefined') {
       if (utils.getType(end) !== 'Number') {
         throw {
           error: "Please pass a number as a second argument."
         };
-      } else if (utils.getType(boxType) === 'Function') {
-        callback = boxType;
-        boxType = 'inbox'; //default to inbox
-      } else if (utils.getType(boxType) != 'String') {
+      } else if (utils.getType(type) === 'Function') {
+        callback = type;
+        type = 'inbox'; //default to inbox
+      } else if (utils.getType(type) != 'String') {
         throw {
           error: "Please pass a String as a third argument. Your options are: inbox, pending, and archived"
         };
@@ -24,12 +24,12 @@ module.exports = function(defaultFuncs, api, ctx) {
       }
     }
 
-    boxType = boxType.toLowerCase();
-    if (boxType === 'archived') {
-      boxType = 'action:archived';
-    } else if (boxType !== 'inbox' && boxType !== 'pending') {
+    type = type.toLowerCase();
+    if (type === 'archived') {
+      type = 'action:archived';
+    } else if (type !== 'inbox' && type !== 'pending') {
       throw {
-        error: "boxType can only be one of the following: inbox, pending, archived"
+        error: "type can only be one of the following: inbox, pending, archived"
       }
     }
 
@@ -39,8 +39,8 @@ module.exports = function(defaultFuncs, api, ctx) {
       'client': 'mercury'
     };
 
-    form[boxType + '[offset]'] = start;
-    form[boxType + '[limit]'] = end - start;
+    form[type + '[offset]'] = start;
+    form[type + '[limit]'] = end - start;
 
     if (ctx.globalOptions.pageID) {
       form.request_user_id = ctx.globalOptions.pageID;
