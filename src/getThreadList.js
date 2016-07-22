@@ -13,7 +13,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       } else if (utils.getType(type) === 'Function') {
         callback = type;
         type = 'inbox'; //default to inbox
-      } else if (utils.getType(type) != 'String') {
+      } else if (utils.getType(type) !== 'String') {
         throw {
           error: "Please pass a String as a third argument. Your options are: inbox, pending, and archived"
         };
