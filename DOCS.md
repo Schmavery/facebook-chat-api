@@ -361,7 +361,7 @@ __Arguments__
 ---------------------------------------
 
 <a name="getThreadList" />
-### api.getThreadList(start, end, pending, callback)
+### api.getThreadList(start, end, type, callback)
 
 Will return information about threads.
 
@@ -369,7 +369,7 @@ __Arguments__
 
 * `start`: Start index in the list of recently used threads.
 * `end`: End index.
-* `pending`: Optional boolean, set to true if you want the list of message requests; set to false or remove the argument if you want the inbox threads
+* `type`: Optional String, can be 'inbox', 'pending', or 'archived'. Inbox is default.
 * `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: `threadID`, <del>`participants`</del>, `participantIDs`, `formerParticipants`, `name`, `snippet`, `snippetHasAttachment`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteSettings`, `isCanonicalUser`, `isCanonical`, `canonicalFbid`, `isSubscribed`, `rootMessageThreadingID`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `composerEnabled`, `blockedParticipants`, `lastMessageID`.
 
 ---------------------------------------

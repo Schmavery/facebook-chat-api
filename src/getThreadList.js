@@ -4,18 +4,18 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function getThreadList(start, end, pending, callback) {
+  return function getThreadList(start, end, type, callback) {
     if (utils.getType(callback) === 'Undefined') {
       if (utils.getType(end) !== 'Number') {
         throw {
           error: "Please pass a number as a second argument."
         };
-      } else if (utils.getType(pending) === 'Function') {
-        callback = pending;
-        pending = false; //default to inbox
-      } else if (utils.getType(pending) != 'Boolean') {
+      } else if (utils.getType(type) === 'Function') {
+        callback = type;
+        type = 'inbox'; //default to inbox
+      } else if (utils.getType(type) !== 'String') {
         throw {
-          error: "Please pass a Boolean as a third argument."
+          error: "Please pass a String as a third argument. Your options are: inbox, pending, and archived"
         };
       } else {
         throw {
@@ -24,16 +24,22 @@ module.exports = function(defaultFuncs, api, ctx) {
       }
     }
 
-    if (end <= start) end = start + 20;
+    if (type === 'archived') {
+      type = 'action:archived';
+    } else if (type !== 'inbox' && type !== 'pending') {
+      throw {
+        error: "type can only be one of the following: inbox, pending, archived"
+      }
+    }
 
-    var messageBox = pending ? "pending" : "inbox";
+    if (end <= start) end = start + 20;
 
     var form = {
       'client': 'mercury'
     };
 
-    form[messageBox + '[offset]'] = start;
-    form[messageBox + '[limit]'] = end - start;
+    form[type + '[offset]'] = start;
+    form[type + '[limit]'] = end - start;
 
     if (ctx.globalOptions.pageID) {
       form.request_user_id = ctx.globalOptions.pageID;
