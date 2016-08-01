@@ -633,7 +633,7 @@ function formatThread(data) {
     composerEnabled: data.composer_enabled,
     blockedParticipants: data.blocked_participants,
     lastMessageID: data.last_message_id,
-    customTagNames: data.page_thread_info.customTagNames
+    customTagNames: typeof data.page_thread_info != 'undefined' ? data.page_thread_info.customTagNames : undefined
   };
 }
 
