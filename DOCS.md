@@ -11,7 +11,6 @@
 * [`api.getAppState`](#getAppState)
 * [`api.getCurrentUserID`](#getCurrentUserID)
 * [`api.getFriendsList`](#getFriendsList)
-* [`api.getOnlineUsers`](#getOnlineUsers)
 * [`api.getThreadHistory`](#getThreadHistory)
 * [`api.getThreadInfo`](#getThreadInfo)
 * [`api.getThreadList`](#getThreadList)
@@ -318,20 +317,6 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
   });
 });
 ```
-
----------------------------------------
-
-<a name="getOnlineUsers" />
-### api.getOnlineUsers([callback])
-
-Obtains users currently online and calls the callback with a list of the online users.
-
-__Arguments__
-
-* `callback(err, arr)`: A callback called when the query is done (either with an error or with null followed by an array `arr`). `arr`
-is an array of objects with the following keys: `lastActive`, `userID` and `status`. `status` is one of `['offline', 'idle', 'active', 'mobile']`.
-
-Look at [listen](#listen) for details on how to get updated presence.
 
 ---------------------------------------
 

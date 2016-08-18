@@ -76,7 +76,6 @@ function buildAPI(globalOptions, html, jar) {
     'deleteThread',
     'getCurrentUserID',
     'getFriendsList',
-    'getOnlineUsers',
     'getThreadHistory',
     'getThreadInfo',
     'getThreadList',
