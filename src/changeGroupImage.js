@@ -48,31 +48,31 @@ module.exports = function(defaultFuncs, api, ctx) {
     var messageAndOTID = utils.generateOfflineThreadingID();
     var form = {
       'client' : 'mercury',
-      'message_batch[0][action_type]' : 'ma-type:log-message',
-      'message_batch[0][author]' : 'fbid:' + ctx.userID,
-      'message_batch[0][author_email]' : '',
-      'message_batch[0][ephemeral_ttl_mode]' : '0',
-      'message_batch[0][is_filtered_content]' : false,
-      'message_batch[0][is_filtered_content_account]' : false,
-      'message_batch[0][is_filtered_content_bh]' : false,
-      'message_batch[0][is_filtered_content_invalid_app]' : false,
-      'message_batch[0][is_filtered_content_quasar]' : false,
-      'message_batch[0][is_forward]' : false,
-      'message_batch[0][is_spoof_warning]' : false,
-      'message_batch[0][is_unread]' : false,
-      'message_batch[0][log_message_type]' : 'log:thread-image',
-      'message_batch[0][manual_retry_cnt]' : '0',
-      'message_batch[0][message_id]' : messageAndOTID,
-      'message_batch[0][offline_threading_id]' : messageAndOTID,
-      'message_batch[0][source]' : 'source:chat:web',
-      'message_batch[0][source_tags][0]' : 'source:chat',
-      'message_batch[0][status]' : '0',
-      'message_batch[0][thread_fbid]' : threadID,
-      'message_batch[0][thread_id]' : '',
-      'message_batch[0][timestamp]' : Date.now(),
-      'message_batch[0][timestamp_absolute]' : 'Today',
-      'message_batch[0][timestamp_relative]' : utils.generateTimestampRelative(),
-      'message_batch[0][timestamp_time_passed]' : '0',
+      'action_type' : 'ma-type:log-message',
+      'author' : 'fbid:' + ctx.userID,
+      'author_email' : '',
+      'ephemeral_ttl_mode' : '0',
+      'is_filtered_content' : false,
+      'is_filtered_content_account' : false,
+      'is_filtered_content_bh' : false,
+      'is_filtered_content_invalid_app' : false,
+      'is_filtered_content_quasar' : false,
+      'is_forward' : false,
+      'is_spoof_warning' : false,
+      'is_unread' : false,
+      'log_message_type' : 'log:thread-image',
+      'manual_retry_cnt' : '0',
+      'message_id' : messageAndOTID,
+      'offline_threading_id' : messageAndOTID,
+      'source' : 'source:chat:web',
+      'source_tags[0]' : 'source:chat',
+      'status' : '0',
+      'thread_fbid' : threadID,
+      'thread_id' : '',
+      'timestamp' : Date.now(),
+      'timestamp_absolute' : 'Today',
+      'timestamp_relative' : utils.generateTimestampRelative(),
+      'timestamp_time_passed' : '0',
     };
 
     handleUpload(image, function (err, payload) {
@@ -80,14 +80,14 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback(err);
       }
 
-      form['message_batch[0][log_message_data][image][fbid]'] = payload[0]['fbid'];
-      form['message_batch[0][log_message_data][image][filename]'] = payload[0]['filename'];
-      form['message_batch[0][log_message_data][image][filetype]'] = payload[0]['filetype'];
-      form['message_batch[0][log_message_data][image][image_id]'] = payload[0]['image_id'];
-      form['message_batch[0][log_message_data][image][src]'] = payload[0]['src'];
+      form['log_message_data[image][fbid]'] = payload[0]['fbid'];
+      form['log_message_data[image][filename]'] = payload[0]['filename'];
+      form['log_message_data[image][filetype]'] = payload[0]['filetype'];
+      form['log_message_data[image][image_id]'] = payload[0]['image_id'];
+      form['log_message_data[image][src]'] = payload[0]['src'];
 
       defaultFuncs
-        .post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
+        .post("https://www.facebook.com/messaging/send/", ctx.jar, form)
         .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
         .then(function(resData) {
           // check for errors here
