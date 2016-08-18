@@ -293,19 +293,6 @@ describe('Login:', function() {
     });
   });
 
-  it('should get a list of online users', function (done){
-    api.getOnlineUsers(function(err, res) {
-      checkErr(done)(err);
-      assert(getType(res) === "Array");
-      res.map(function(v) {
-        assert(v.lastActive);
-        assert(v.userID);
-        assert(v.status);
-      });
-      done();
-    });
-  });
-
 
   it('should get the right user info', function (done) {
     api.getUserInfo(userID, function(err, data) {
