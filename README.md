@@ -161,8 +161,10 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 6. I'm getting some crazy weird syntax error like `SyntaxError: Unexpected token [`!!!
 > Please try to update your version of node.js before submitting an issue of this nature.  We like to use new language features.
 
+
 <a name="projects" />
 ## Projects using this API
+
 - [Kassy](https://github.com/mrkno/Kassy) - Kassy is a modular, easily extensible general purpose chat bot
 - [Marc Zuckerbot](https://github.com/bsansouci/marc-zuckerbot) - Facebook chat bot
 - [Marc Thuckerbot](https://github.com/bsansouci/lisp-bot) - Programmable lisp bot
