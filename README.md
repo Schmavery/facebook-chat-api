@@ -4,7 +4,7 @@ This API is still the only way to automate chat functionalities on a user accoun
 
 _Disclaimer_: We are not responsible if your account gets banned for spammy activities such as sending lots of messages to people you don't know, sending messages very quickly, sending spammy looking URLs, logging in and out very quickly... Be responsible Facebook citizens.
 
-See [below](#projects) for projects using this API.
+See [below](#projects-using-this-api) for projects using this API.
 
 ## Install
 ```bash
@@ -163,8 +163,6 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 
 
 ## Projects using this API
-
-<a name="projects"></a>
 
 - [Kassy](https://github.com/mrkno/Kassy) - Kassy is a modular, easily extensible general purpose chat bot
 - [Marc Zuckerbot](https://github.com/bsansouci/marc-zuckerbot) - Facebook chat bot
