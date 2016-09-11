@@ -524,7 +524,7 @@ If enabled through [setOptions](#setOptions), this will also return presence, (`
 - `type`: The string "presence".
 - `timestamp`: How old the information is.
 - `userID`: The ID of the user whose status this packet is describing
-- `online`: An boolean value represents is this user online. Or will be undefined when occur a unknown situation for API.
+- `online`: A boolean value represents is this user online. Or will be undefined when occur a unknown situation for API.
 
 __Example__
 
