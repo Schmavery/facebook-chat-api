@@ -646,7 +646,7 @@ function formatPresence(presence, userID) {
     type: "presence",
     timestamp: presence.la * 1000,
     userID: userID,
-    online: (presence.ol === 0) ? true : false
+    online: (presence.ol === 0) ? true : (presence.ol === -1) ? false : undefined
   };
 }
 
