@@ -4,7 +4,7 @@ This API is still the only way to automate chat functionalities on a user accoun
 
 _Disclaimer_: We are not responsible if your account gets banned for spammy activities such as sending lots of messages to people you don't know, sending messages very quickly, sending spammy looking URLs, logging in and out very quickly... Be responsible Facebook citizens.
 
-See [below](#projects) for projects using this API.
+See [below](#projects-using-this-api) for projects using this API.
 
 ## Install
 ```bash
@@ -161,8 +161,9 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 6. I'm getting some crazy weird syntax error like `SyntaxError: Unexpected token [`!!!
 > Please try to update your version of node.js before submitting an issue of this nature.  We like to use new language features.
 
-<a name="projects" />
+
 ## Projects using this API
+
 - [Kassy](https://github.com/mrkno/Kassy) - Kassy is a modular, easily extensible general purpose chat bot
 - [Marc Zuckerbot](https://github.com/bsansouci/marc-zuckerbot) - Facebook chat bot
 - [Marc Thuckerbot](https://github.com/bsansouci/lisp-bot) - Programmable lisp bot
@@ -170,3 +171,4 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 - [AllanBot](https://github.com/AllanWang/AllanBot-Public) - Extensive module that combines the facebook api with firebase to create numerous functions; no coding experience is required to implement this.
 - [Larry Pudding Dog Bot](https://github.com/Larry850806/facebook-chat-bot) - A facebook bot you can easily customize the response
 - [fbash](https://github.com/avikj/fbash) - Run commands on your computer's terminal over Facebook Messenger
+- [Klink](https://github.com/KeNt178/klink) - This Chrome extension will 1-click share the link of your active tab over Facebook Messenger
