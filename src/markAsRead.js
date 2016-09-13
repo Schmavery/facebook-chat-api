@@ -11,6 +11,10 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     var form = {};
     form["ids[" + threadID + "]"] = true;
+    form["watermarkTimestamp"] = new Date().getTime();
+    form["shouldSendReadReceipt"] = true;
+    form["commerce_last_message_type"] = "non_ad";
+    form["titanOriginatedThreadId"] = utils.generateThreadingID(ctx.clientID);
 
     defaultFuncs
       .post("https://www.facebook.com/ajax/mercury/change_read_status.php", ctx.jar, form)
