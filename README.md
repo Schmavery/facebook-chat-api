@@ -25,6 +25,11 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 });
 ```
 
+Result:
+
+<img width="517" alt="screen shot 2016-11-04 at 14 36 00" src="https://cloud.githubusercontent.com/assets/4534692/20023545/f8c24130-a29d-11e6-9ef7-47568bdbc1f2.png">
+
+
 ## Documentation
 
 * [`login`](DOCS.md#login)
