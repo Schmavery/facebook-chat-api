@@ -325,6 +325,8 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 
 Takes a threadID, start and end numbers, a timestamp, and a callback.
 
+__note__: if you're getting a 500 error, it's possible that you're requesting too many messages. Try reducing that number and see if that works.
+
 __Arguments__
 * `threadID`: A threadID corresponding to the target chat
 * `start`: The ith message in the chat from which to start retrieving history.
