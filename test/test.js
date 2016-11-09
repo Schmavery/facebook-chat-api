@@ -338,7 +338,6 @@ describe('Login:', function() {
         assert(getType(v.profilePicture) === "String");
         assert(getType(v.type) === "String");
         assert(v.hasOwnProperty("profileUrl"));  // This can be null if the account is disabled
-        assert(getType(v.vanity) === "String");
         assert(getType(v.isBirthday) === "Boolean");
       })
       done();

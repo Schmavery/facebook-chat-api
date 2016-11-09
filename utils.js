@@ -395,7 +395,7 @@ function formatEvent(m) {
     threadID: m.thread_fbid.toString(),
     logMessageType: m.log_message_type,
     logMessageData: m.log_message_data ? Object.assign(m.log_message_data, {
-      removed_participants: (m.log_message_data.removed_participants || []).map(v => v.split("fbid:")[1],
+      removed_participants: (m.log_message_data.removed_participants || []).map(v => v.split("fbid:")[2]),
     }) : {},
     logMessageBody: m.log_message_body,
     author: m.author.split(":")[1]
