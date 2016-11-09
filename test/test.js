@@ -226,7 +226,7 @@ describe('Login:', function() {
     listen(done, function (msg) {
       return msg.type === 'event' &&
         msg.logMessageType === 'log:unsubscribe' &&
-        msg.logMessageData.removed_participants.indexOf('fbid:' + id) > -1;
+        msg.logMessageData.removed_participants.indexOf(id) > -1;
     });
     api.removeUserFromGroup(id, groupChatID, checkErr(done));
   });
