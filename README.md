@@ -25,6 +25,11 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 });
 ```
 
+Result:
+
+<img width="517" alt="screen shot 2016-11-04 at 14 36 00" src="https://cloud.githubusercontent.com/assets/4534692/20023545/f8c24130-a29d-11e6-9ef7-47568bdbc1f2.png">
+
+
 ## Documentation
 
 * [`login`](DOCS.md#login)
@@ -140,17 +145,16 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 ## FAQS
 
 1. How do I run tests?
->For tests, create a `test-config.json` file that resembles `example-config.json` and put it in the `test` directory. From the root >directory, run `npm test`.
+> For tests, create a `test-config.json` file that resembles `example-config.json` and put it in the `test` directory. From the root >directory, run `npm test`.
 
 2. Why doesn't `sendMessage` always work when I'm logged in as a page?
->Pages can't start conversations with users directly; this is to prevent pages from spamming users.
+> Pages can't start conversations with users directly; this is to prevent pages from spamming users.
 
 3. What do I do when `login` doesn't work?
->First check that you can login to Facebook using the website. If login approvals are enabled, you might be logging in incorrectly. For how to handle login approvals, read our docs on [`login`](DOCS.md#login).
+> First check that you can login to Facebook using the website. If login approvals are enabled, you might be logging in incorrectly. For how to handle login approvals, read our docs on [`login`](DOCS.md#login).
 
 4. How can I avoid logging in every time?  Can I log into a previous session?
->We support caching everything relevant for you to bypass login. `api.getAppState()` returns an object that you can save and
->pass into login as `{appState: mySavedAppState}` instead of the credentials object.  If this fails, your session has expired.
+> We support caching everything relevant for you to bypass login. `api.getAppState()` returns an object that you can save and pass into login as `{appState: mySavedAppState}` instead of the credentials object.  If this fails, your session has expired.
 
 5. Do you support sending messages as a page?
 > Yes, set the pageID option on login (this doesn't work if you set it using api.setOptions, it affects the login process).
@@ -161,6 +165,13 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 6. I'm getting some crazy weird syntax error like `SyntaxError: Unexpected token [`!!!
 > Please try to update your version of node.js before submitting an issue of this nature.  We like to use new language features.
 
+7. I don't want all of these logging messages!
+> You can use `api.setOptions` to silence the logging. You get the `api` object from `login` (see example above). Do 
+> ```js
+> api.setOptions({
+>   logLevel: "silent"
+> });
+> ```
 
 ## Projects using this API
 
