@@ -91,14 +91,14 @@ describe('Login:', function() {
     api.sendMessage({sticker: stickerID}, userID, checkErr(done));
   });
 
+  var basicUserBody = "basic-str-" + Date.now();
   it('should send basic string (user)', function (done){
-    var body = "basic-str-" + Date.now();
     listen(done, msg =>
       msg.type === 'message' &&
-      msg.body === body &&
+      msg.body === basicUserBody &&
       msg.isGroup === false
     );
-    api.sendMessage(body, userID, checkErr(done));
+    api.sendMessage(basicUserBody, userID, checkErr(done));
   });
 
   it('should get thread info (user)', function (done){
@@ -123,6 +123,16 @@ describe('Login:', function() {
       checkErr(done)(err);
       assert(getType(data) === "Array");
       assert(data.every(function(v) {return getType(v) == "Object";}));
+      done();
+    });
+  });
+
+  it('should search (user)', function (done) {
+    api.searchForMessages("basic", userID, false, (err, obj) => {
+      if (err) done(err);
+
+      assert(obj && obj.length > 0);
+      assert(obj[0].body === basicUserBody);
       done();
     });
   });
@@ -159,14 +169,14 @@ describe('Login:', function() {
     });
   });
 
+  var basicGroupBody = "basic-str-" + Date.now();
   it('should send basic string (group)', function (done){
-    var body = "basic-str-" + Date.now();
     listen(done, msg =>
       msg.type === 'message' &&
-      msg.body === body &&
+      msg.body === basicGroupBody &&
       msg.isGroup === true
     );
-    api.sendMessage(body, groupChatID, function(err, info) {
+    api.sendMessage(basicGroupBody, groupChatID, function(err, info) {
       checkErr(done)(err);
       assert(groupChatID === info.threadID);
     });
@@ -258,6 +268,16 @@ describe('Login:', function() {
         assert(info.hasOwnProperty('color'));
         done();
       });
+  });
+
+  it('should search (group)', function (done) {
+    api.searchForMessages("basic", groupChatID, true, (err, obj) => {
+      if (err) done(err);
+
+      assert(obj && obj.length == 1);
+      assert(obj[0].body === basicGroupBody);
+      done();
+    });
   });
 
 
