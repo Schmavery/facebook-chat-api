@@ -127,12 +127,57 @@ describe('Login:', function() {
     });
   });
 
-  it('should search (user)', function (done) {
-    api.searchForMessages("basic", userID, false, (err, obj) => {
+  var messageID;
+  it('should search initial (user)', function (done) {
+    api.searchForMessages("basic", userID, false, 0, (err, obj) => {
       if (err) done(err);
 
       assert(obj && obj.length > 0);
       assert(obj[0].body === basicUserBody);
+      assert(!!obj[0].message_id);
+      messageID = obj[0].message_id;
+      // console.log("id in method", messageID);
+      done();
+    });
+  });
+
+  it('should search more (user)', function (done) {
+    api.searchForMessages("basic", userID, false, 5, (err, obj) => {
+      if (err) done(err);
+
+      assert(obj);
+      // console.log(obj.length);
+      done();
+    });
+  });
+
+  it('should search context (user)', function (done) {
+    // console.log("id in next method", messageID);
+    api.searchContext(messageID, userID, false, 6, undefined, (err, obj) => {
+      if (err) done(err);
+
+      assert(obj);
+      // console.log(obj.length);
+      done();
+    });
+  });
+
+  it('should search context up (user)', function (done) {
+    api.searchContext(messageID, userID, false, 16, 'up', (err, obj) => {
+      if (err) done(err);
+
+      //assert(obj);
+      //console.log(obj.length);
+      done();
+    });
+  });
+
+  it('should search context down (user)', function (done) {
+    api.searchContext(messageID, userID, false, 16, 'down', (err, obj) => {
+      if (err) done(err);
+
+      // assert(obj);
+      // console.log(obj.length);
       done();
     });
   });
@@ -271,7 +316,7 @@ describe('Login:', function() {
   });
 
   it('should search (group)', function (done) {
-    api.searchForMessages("basic", groupChatID, true, (err, obj) => {
+    api.searchForMessages("basic", groupChatID, true, 0, (err, obj) => {
       if (err) done(err);
 
       assert(obj && obj.length == 1);
