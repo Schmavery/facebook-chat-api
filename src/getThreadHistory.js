@@ -51,7 +51,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               delete v.author;
             });
 
-            callback(null, resData.payload.actions.map(utils.formatMessage));
+            callback(null, resData.payload.actions.map(utils.formatMessage).filter(utils.filterOutErrors));
           });
         })
         .catch(function(err) {

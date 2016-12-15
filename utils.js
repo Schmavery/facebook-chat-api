@@ -228,6 +228,16 @@ function getGUID() {
   return id;
 }
 
+function filterOutErrors(message) {
+  var hasErrors = message.attachments.some(att => att.type === "error");
+
+  if (hasErrors) {
+    log.warn("Message contains error attachments", message);
+  }
+
+  return !hasErrors;
+}
+
 function _formatAttachment(attachment1, attachment2) {
   // TODO: THIS IS REALLY BAD
   // This is an attempt at fixing Facebook's inconsistencies. Sometimes they give us
@@ -333,6 +343,15 @@ function _formatAttachment(attachment1, attachment2) {
         width: attachment1.metadata.dimensions.width,
         height: attachment1.metadata.dimensions.height,
         duration: attachment1.metadata.duration,
+      };
+    case "error":
+      return {
+        type: "error",
+
+        // Save error attachments because we're unsure of their format,
+        // and whether there are cases they contain something useful for debugging.
+        attachment1: attachment1,
+        attachment2: attachment2
       };
     default:
       throw new Error("unrecognized attach_file `" + JSON.stringify(attachment1) + "`");
@@ -677,6 +696,7 @@ module.exports = {
   parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,
   getType: getType,
+  filterOutErrors: filterOutErrors,
   formatMessage: formatMessage,
   formatDeltaMessage: formatDeltaMessage,
   formatEvent: formatEvent,
