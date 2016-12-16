@@ -183,3 +183,4 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 - [Larry Pudding Dog Bot](https://github.com/Larry850806/facebook-chat-bot) - A facebook bot you can easily customize the response
 - [fbash](https://github.com/avikj/fbash) - Run commands on your computer's terminal over Facebook Messenger
 - [Klink](https://github.com/KeNt178/klink) - This Chrome extension will 1-click share the link of your active tab over Facebook Messenger
+- [Botyo](https://github.com/ivkos/botyo) - Modular bot designed for group chat rooms on Facebook
