@@ -228,16 +228,6 @@ function getGUID() {
   return id;
 }
 
-function filterOutErrors(message) {
-  var hasErrors = message.attachments.some(att => att.type === "error");
-
-  if (hasErrors) {
-    log.warn("Message contains error attachments", message);
-  }
-
-  return !hasErrors;
-}
-
 function _formatAttachment(attachment1, attachment2) {
   // TODO: THIS IS REALLY BAD
   // This is an attempt at fixing Facebook's inconsistencies. Sometimes they give us
@@ -696,7 +686,6 @@ module.exports = {
   parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,
   getType: getType,
-  filterOutErrors: filterOutErrors,
   formatMessage: formatMessage,
   formatDeltaMessage: formatDeltaMessage,
   formatEvent: formatEvent,
