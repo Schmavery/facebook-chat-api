@@ -334,6 +334,15 @@ function _formatAttachment(attachment1, attachment2) {
         height: attachment1.metadata.dimensions.height,
         duration: attachment1.metadata.duration,
       };
+    case "error":
+      return {
+        type: "error",
+
+        // Save error attachments because we're unsure of their format,
+        // and whether there are cases they contain something useful for debugging.
+        attachment1: attachment1,
+        attachment2: attachment2
+      };
     default:
       throw new Error("unrecognized attach_file `" + JSON.stringify(attachment1) + "`");
   }
