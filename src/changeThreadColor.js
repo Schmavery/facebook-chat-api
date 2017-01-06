@@ -5,6 +5,9 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function changeThreadColor(color, threadID, callback) {
+    if(!callback) {
+      callback = function() {};
+    }
     var form = {
       'color_choice' : color,
       'thread_or_other_fbid' : threadID
