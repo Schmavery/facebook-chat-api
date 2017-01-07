@@ -2,6 +2,7 @@
 
 * [`login`](#login)
 * [`api.addUserToGroup`](#addUserToGroup)
+* [`api.blockUser`](DOCS.md#blockUser)
 * [`api.changeArchivedStatus`](#changeArchivedStatus)
 * [`api.changeGroupImage`](#changeGroupImage)
 * [`api.changeThreadColor`](#changeThreadColor)
@@ -28,6 +29,7 @@
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
 * [`api.setOptions`](#setOptions)
 * [`api.setTitle`](#setTitle)
+* [`api.unblockUser`](DOCS.md#unblockUser)
 
 ---------------------------------------
 
@@ -119,6 +121,18 @@ __Arguments__
 
 * `userID`: User ID or array of user IDs.
 * `threadID`: Group chat ID.
+* `callback(err)`: A callback called when the query is done (either with an error or with no arguments).
+
+---------------------------------------
+
+<a name="blockUser" />
+### api.blockUser(userID, [callback])
+
+Prevents a user from privately contacting you. (Messages in a group chat will still be seen by both parties).
+
+__Arguments__
+
+* `userID`: User ID.
 * `callback(err)`: A callback called when the query is done (either with an error or with no arguments).
 
 ---------------------------------------
@@ -771,5 +785,17 @@ __Arguments__
 * `newTitle`: A string representing the new title.
 * `threadID`: A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation.
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the threadID where the message was sent.
+
+---------------------------------------
+
+<a name="unblockUser" />
+### api.unblockUser(userID, [callback])
+
+Allows a previously blocked user to contact you again.
+
+__Arguments__
+
+* `userID`: User ID.
+* `callback(err)`: A callback called when the query is done (either with an error or with no arguments).
 
 ---------------------------------------

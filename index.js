@@ -67,6 +67,7 @@ function buildAPI(globalOptions, html, jar) {
 
   var apiFuncNames = [
     'addUserToGroup',
+    'blockUser',
     'changeArchivedStatus',
     'changeGroupImage',
     'changeThreadColor',
@@ -91,6 +92,7 @@ function buildAPI(globalOptions, html, jar) {
     'sendMessage',
     'sendTypingIndicator',
     'setTitle',
+    'unblockUser',
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID);

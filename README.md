@@ -34,6 +34,7 @@ Result:
 
 * [`login`](DOCS.md#login)
 * [`api.addUserToGroup`](DOCS.md#addUserToGroup)
+* [`api.blockUser`](DOCS.md#blockUser)
 * [`api.changeArchivedStatus`](DOCS.md#changeArchivedStatus)
 * [`api.changeGroupImage`](DOCS.md#changeGroupImage)
 * [`api.changeThreadColor`](DOCS.md#changeThreadColor)
@@ -60,6 +61,7 @@ Result:
 * [`api.sendTypingIndicator`](DOCS.md#sendTypingIndicator)
 * [`api.setOptions`](DOCS.md#setOptions)
 * [`api.setTitle`](DOCS.md#setTitle)
+* [`api.unblockUser`](DOCS.md#unblockUser)
 
 ## Main Functionality
 
