@@ -268,18 +268,19 @@ function _formatAttachment(attachment1, attachment2) {
     case "photo":
       return {
         type: "photo",
-        name: attachment1.name, // Do we need this?
-        hiresUrl: attachment1.hires_url,
+        ID: attachment1.metadata.fbid.toString(),
         thumbnailUrl: attachment1.thumbnail_url,
         previewUrl: attachment1.preview_url,
         previewWidth: attachment1.preview_width,
         previewHeight: attachment1.preview_height,
-        ID: attachment2.id.toString(),
-        filename: attachment2.filename,
-        mimeType: attachment2.mime_type,
-        url: attachment2.image_data.url,
-        width:attachment2.image_data.width,
-        height:attachment2.image_data.height,
+
+        largePreviewUrl: attachment1.large_preview_url,
+        largePreviewWidth: attachment1.large_preview_width,
+        largePreviewHeight: attachment1.large_preview_height,
+        
+        //url: attachment2.image_data.url,
+        width: attachment1.metadata.dimensions.split(',')[0],
+        height: attachment1.metadata.dimensions.split(',')[1],
       };
     case "animated_image":
       return {
