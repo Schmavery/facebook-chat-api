@@ -236,6 +236,8 @@ function _formatAttachment(attachment1, attachment2) {
   // Instead of having a bunch of if statements guarding every access to image_data,
   // we set it to empty object and use the fact that it'll return undefined.
   attachment2 = attachment2 || {id:"", image_data: {}};
+  var fileName = attachment1.filename
+  attachment1 = attachment1.mercury ? attachment1.mercury : attachment1
 
   switch (attachment1.attach_type) {
     case "sticker":
@@ -269,7 +271,9 @@ function _formatAttachment(attachment1, attachment2) {
       return {
         type: "photo",
         ID: attachment1.metadata.fbid.toString(),
+        filename: fileName,
         thumbnailUrl: attachment1.thumbnail_url,
+        
         previewUrl: attachment1.preview_url,
         previewWidth: attachment1.preview_width,
         previewHeight: attachment1.preview_height,
@@ -278,7 +282,7 @@ function _formatAttachment(attachment1, attachment2) {
         largePreviewWidth: attachment1.large_preview_width,
         largePreviewHeight: attachment1.large_preview_height,
         
-        //url: attachment2.image_data.url,
+        url: attachment1.metadata.url,
         width: attachment1.metadata.dimensions.split(',')[0],
         height: attachment1.metadata.dimensions.split(',')[1],
       };
@@ -367,7 +371,7 @@ function formatDeltaMessage(m){
     body: m.delta.body,
     threadID: (md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString(),
     messageID: md.messageId,
-    attachments: (m.delta.attachments || []).map(v => _formatAttachment(v.mercury)),
+    attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
     timestamp: md.timestamp,
     isGroup: !!md.threadKey.threadFbId
   }
