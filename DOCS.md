@@ -124,19 +124,6 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="changeBlockedStatus" />
-### api.changeBlockedStatus(userID, block, [callback])
-
-Prevents a user from privately contacting you. (Messages in a group chat will still be seen by both parties).
-
-__Arguments__
-
-* `userID`: User ID.
-* `block`: Boolean indicating whether to block or unblock the user (true for block).
-* `callback(err)`: A callback called when the query is done (either with an error or with no arguments).
-
----------------------------------------
-
 <a name="changeArchivedStatus" />
 ### api.changeArchivedStatus(threadOrThreads, archive, [callback])
 
@@ -160,6 +147,19 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     });
 });
 ```
+
+---------------------------------------
+
+<a name="changeBlockedStatus" />
+### api.changeBlockedStatus(userID, block, [callback])
+
+Prevents a user from privately contacting you. (Messages in a group chat will still be seen by both parties).
+
+__Arguments__
+
+* `userID`: User ID.
+* `block`: Boolean indicating whether to block or unblock the user (true for block).
+* `callback(err)`: A callback called when the query is done (either with an error or with no arguments).
 
 ---------------------------------------
 
