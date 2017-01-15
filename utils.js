@@ -445,7 +445,7 @@ function formatEvent(m) {
 
   return {
     type: "event",
-    threadID: m.messageMetadata.threadKey.threadFbId,
+    threadID: m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId,
     logMessageType: logMessageType,
     logMessageData: logMessageData,
     logMessageBody: m.messageMetadata.adminText,
