@@ -132,42 +132,46 @@ module.exports = function(defaultFuncs, api, ctx) {
                 }
               });
               break;
-            case 'mercury':
-              if(ctx.globalOptions.pageID || !ctx.globalOptions.listenEvents){
-               return;
+            case 'delta':
+              if (ctx.globalOptions.pageID || (v.delta.class !== "NewMessage" && !ctx.globalOptions.listenEvents)) return
+
+              if (v.delta.class == "NewMessage") {
+                (function resolveAttachmentUrl(i) {
+                  if (i == v.delta.attachments.length) {
+                    var fmtMsg = utils.formatDeltaMessage(v);
+                    return (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) ? undefined : globalCallback(null, fmtMsg);
+                  } else {
+                    if (v.delta.attachments[i].mercury.attach_type == 'photo') {
+                      defaultFuncs
+                        .get("https://www.facebook.com/mercury/attachments/photo/?photo_id=" + v.delta.attachments[i].fbid, ctx.jar, {})
+                        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+                        .then(function (resData) {
+                          if (!resData.error) v.delta.attachments[i].mercury.url = resData.jsmods.require[0][3][0]
+                          return resolveAttachmentUrl(i + 1);
+                        })
+                    }
+                  }
+                })(0)
+                break;
               }
 
-              v.actions.map(function(v2) {
-                var formattedEvent = utils.formatEvent(v2);
-                if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID) {
-                  return;
-                }
+              switch (v.delta.class) {
+                case 'AdminTextMessage':
+                  switch (v.delta.type) {
+                    case 'change_thread_theme':
+                    case 'change_thread_nickname':
+                    case 'change_thread_icon':
+                      break;
+                    default:
+                      return;
+                  }
+                case 'ThreadName':
+                case 'ParticipantsAddedToGroupThread':
+                case 'ParticipantLeftGroupThread':
+                  return (!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID || !ctx.loggedIn) ? undefined : globalCallback(null, utils.formatEvent(v.delta));
+              }
 
-                if (ctx.loggedIn) {
-                  return globalCallback(null, formattedEvent);
-                }
-              });
               break;
-			case 'delta':
-				if (v.delta.class !== "NewMessage" || ctx.globalOptions.pageID) return
-				(function resolveAttachmentUrl(i) {
-					if (i == v.delta.attachments.length) {
-						var fmtMsg = utils.formatDeltaMessage(v);
-						if (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) return;
-						return globalCallback(null, fmtMsg);
-					} else {
-						if (v.delta.attachments[i].mercury.attach_type == 'photo') {
-						defaultFuncs
-							.get("https://www.facebook.com/mercury/attachments/photo/?photo_id=" + v.delta.attachments[i].fbid, ctx.jar, {})
-							.then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
-							.then(function (resData) {
-								if (!resData.error) v.delta.attachments[i].mercury.url = resData.jsmods.require[0][3][0]
-								return resolveAttachmentUrl(i + 1);
-							})
-						}
-					}
-				})(0)
-				break;
             case 'messaging':
               if (handleMessagingEvents(v)) {
                 return;

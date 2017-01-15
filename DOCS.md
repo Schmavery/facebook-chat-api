@@ -511,10 +511,11 @@ If enabled through [setOptions](#setOptions), this will also handle events. In t
 - `threadID`: The threadID representing the thread in which the message was sent.
 
 If `type` is `"event"` then the object will also have those fields:
-- `logMessageType`: String representing the type of event (`"log:thread-name"`, `"log:unsubscribe"`, `"log:subscribe"`, ...)
+- `logMessageType`: String representing the type of event (`log:subscribe`, `log:unsubscribe`, `log:thread-name`, `log:thread-color`, `log:thread-icon`, `log:user-nickname`)
 - `logMessageData`: Data relevant to the event.
 - `logMessageBody`: String printed in the chat.
 - `author`: The person who performed the event.
+- `threadID`: The thread which the event was performed in.
 
 If `type` is `"typ"` then the object will have the following fields:
 - `isTyping`: Boolean representing whether or not a person started typing.

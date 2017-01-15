@@ -404,15 +404,52 @@ function formatMessage(m) {
 }
 
 function formatEvent(m) {
+  var logMessageType;
+  var logMessageData;
+
+  // log:thread-color => {theme_color}
+  // log:user-nickname => {participant_id, nickname}
+  // log:thread-icon => {thread_icon}
+  // log:thread-name => {name}
+  // log:subscribe => {addedParticipants - [Array]}
+  // log:unsubscribe => {leftParticipantFbId}
+
+  switch (m.class) {
+    case 'AdminTextMessage':
+      logMessageData = m.untypedData;
+      switch (m.type) {
+        case 'change_thread_theme':
+          logMessageType = "log:thread-color";
+          break;
+        case 'change_thread_nickname':
+          logMessageType = "log:user-nickname";
+          break;
+        case 'change_thread_icon':
+          logMessageType = "log:thread-icon";
+          break;
+      }
+      break;
+    case 'ThreadName':
+      logMessageType = "log:thread-name";
+      logMessageData = { name: m.name };
+      break;
+    case 'ParticipantsAddedToGroupThread':
+      logMessageType = "log:subscribe";
+      logMessageData = { addedParticipants: m.addedParticipants }
+      break;
+    case 'ParticipantLeftGroupThread':
+      logMessageType = "log:unsubscribe";
+      logMessageData = { leftParticipantFbId: m.leftParticipantFbId }
+      break;
+  }
+
   return {
     type: "event",
-    threadID: m.thread_fbid.toString(),
-    logMessageType: m.log_message_type,
-    logMessageData: m.log_message_data ? Object.assign(m.log_message_data, {
-      removed_participants: (m.log_message_data.removed_participants || []).map(v => v.split("fbid:")[1]),
-    }) : {},
-    logMessageBody: m.log_message_body,
-    author: m.author.split(":")[1]
+    threadID: m.messageMetadata.threadKey.threadFbId,
+    logMessageType: logMessageType,
+    logMessageData: logMessageData,
+    logMessageBody: m.messageMetadata.adminText,
+    author: m.messageMetadata.actorFbId
   };
 }
 
