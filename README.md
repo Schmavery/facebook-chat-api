@@ -34,8 +34,8 @@ Result:
 
 * [`login`](DOCS.md#login)
 * [`api.addUserToGroup`](DOCS.md#addUserToGroup)
-* [`api.blockUser`](DOCS.md#blockUser)
 * [`api.changeArchivedStatus`](DOCS.md#changeArchivedStatus)
+* [`api.changeBlockedStatus`](DOCS.md#changeBlockedStatus)
 * [`api.changeGroupImage`](DOCS.md#changeGroupImage)
 * [`api.changeThreadColor`](DOCS.md#changeThreadColor)
 * [`api.changeThreadEmoji`](DOCS.md#changeThreadEmoji)
@@ -61,7 +61,6 @@ Result:
 * [`api.sendTypingIndicator`](DOCS.md#sendTypingIndicator)
 * [`api.setOptions`](DOCS.md#setOptions)
 * [`api.setTitle`](DOCS.md#setTitle)
-* [`api.unblockUser`](DOCS.md#unblockUser)
 
 ## Main Functionality
 
@@ -168,7 +167,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 > Please try to update your version of node.js before submitting an issue of this nature.  We like to use new language features.
 
 7. I don't want all of these logging messages!
-> You can use `api.setOptions` to silence the logging. You get the `api` object from `login` (see example above). Do 
+> You can use `api.setOptions` to silence the logging. You get the `api` object from `login` (see example above). Do
 > ```js
 > api.setOptions({
 >   logLevel: "silent"
