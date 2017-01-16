@@ -657,7 +657,7 @@ function formatPresence(presence, userID) {
     type: "presence",
     timestamp: presence.la * 1000,
     userID: userID,
-    statuses: presence.p
+    statuses: presence.a
   };
 }
 
