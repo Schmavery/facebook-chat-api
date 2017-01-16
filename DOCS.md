@@ -526,7 +526,7 @@ If enabled through [setOptions](#setOptions), this will also return presence, (`
 - `type`: The string "presence".
 - `timestamp`: How old the information is.
 - `userID`: The ID of the user whose status this packet is describing
-- `statuses`: An object with the following fields: `fbAppStatus`, `messengerStatus`, `otherStatus`, `status` and `webStatus`. All can contain any of the following values: `"active"`, `"idle"`, `"invisible"`, `"offline"`.
+- `online`: A boolean value represents is this user online. Or will be undefined when occur a unknown situation for API.
 
 __Example__
 
