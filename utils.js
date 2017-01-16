@@ -236,6 +236,8 @@ function _formatAttachment(attachment1, attachment2) {
   // Instead of having a bunch of if statements guarding every access to image_data,
   // we set it to empty object and use the fact that it'll return undefined.
   attachment2 = attachment2 || {id:"", image_data: {}};
+  var fileName = attachment1.filename
+  attachment1 = attachment1.mercury ? attachment1.mercury : attachment1
 
   switch (attachment1.attach_type) {
     case "sticker":
@@ -268,18 +270,21 @@ function _formatAttachment(attachment1, attachment2) {
     case "photo":
       return {
         type: "photo",
-        name: attachment1.name, // Do we need this?
-        hiresUrl: attachment1.hires_url,
+        ID: attachment1.metadata.fbid.toString(),
+        filename: fileName,
         thumbnailUrl: attachment1.thumbnail_url,
+        
         previewUrl: attachment1.preview_url,
         previewWidth: attachment1.preview_width,
         previewHeight: attachment1.preview_height,
-        ID: attachment2.id.toString(),
-        filename: attachment2.filename,
-        mimeType: attachment2.mime_type,
-        url: attachment2.image_data.url,
-        width:attachment2.image_data.width,
-        height:attachment2.image_data.height,
+
+        largePreviewUrl: attachment1.large_preview_url,
+        largePreviewWidth: attachment1.large_preview_width,
+        largePreviewHeight: attachment1.large_preview_height,
+        
+        url: attachment1.metadata.url,
+        width: attachment1.metadata.dimensions.split(',')[0],
+        height: attachment1.metadata.dimensions.split(',')[1],
       };
     case "animated_image":
       return {
@@ -366,7 +371,7 @@ function formatDeltaMessage(m){
     body: m.delta.body,
     threadID: (md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString(),
     messageID: md.messageId,
-    attachments: (m.delta.attachments || []).map(v => _formatAttachment(v.mercury)),
+    attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
     timestamp: md.timestamp,
     isGroup: !!md.threadKey.threadFbId
   }
@@ -400,15 +405,52 @@ function formatMessage(m) {
 }
 
 function formatEvent(m) {
+  var logMessageType;
+  var logMessageData;
+
+  // log:thread-color => {theme_color}
+  // log:user-nickname => {participant_id, nickname}
+  // log:thread-icon => {thread_icon}
+  // log:thread-name => {name}
+  // log:subscribe => {addedParticipants - [Array]}
+  // log:unsubscribe => {leftParticipantFbId}
+
+  switch (m.class) {
+    case 'AdminTextMessage':
+      logMessageData = m.untypedData;
+      switch (m.type) {
+        case 'change_thread_theme':
+          logMessageType = "log:thread-color";
+          break;
+        case 'change_thread_nickname':
+          logMessageType = "log:user-nickname";
+          break;
+        case 'change_thread_icon':
+          logMessageType = "log:thread-icon";
+          break;
+      }
+      break;
+    case 'ThreadName':
+      logMessageType = "log:thread-name";
+      logMessageData = { name: m.name };
+      break;
+    case 'ParticipantsAddedToGroupThread':
+      logMessageType = "log:subscribe";
+      logMessageData = { addedParticipants: m.addedParticipants }
+      break;
+    case 'ParticipantLeftGroupThread':
+      logMessageType = "log:unsubscribe";
+      logMessageData = { leftParticipantFbId: m.leftParticipantFbId }
+      break;
+  }
+
   return {
     type: "event",
-    threadID: m.thread_fbid.toString(),
-    logMessageType: m.log_message_type,
-    logMessageData: m.log_message_data ? Object.assign(m.log_message_data, {
-      removed_participants: (m.log_message_data.removed_participants || []).map(v => v.split("fbid:")[1]),
-    }) : {},
-    logMessageBody: m.log_message_body,
-    author: m.author.split(":")[1]
+    threadID: m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId,
+    logMessageType: logMessageType,
+    logMessageData: logMessageData,
+    logMessageBody: m.messageMetadata.adminText,
+    author: m.messageMetadata.actorFbId
   };
 }
 

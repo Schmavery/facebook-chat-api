@@ -3,6 +3,7 @@
 * [`login`](#login)
 * [`api.addUserToGroup`](#addUserToGroup)
 * [`api.changeArchivedStatus`](#changeArchivedStatus)
+* [`api.changeBlockedStatus`](#changeBlockedStatus)
 * [`api.changeGroupImage`](#changeGroupImage)
 * [`api.changeThreadColor`](#changeThreadColor)
 * [`api.changeThreadEmoji`](#changeThreadEmoji)
@@ -146,6 +147,19 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     });
 });
 ```
+
+---------------------------------------
+
+<a name="changeBlockedStatus" />
+### api.changeBlockedStatus(userID, block, [callback])
+
+Prevents a user from privately contacting you. (Messages in a group chat will still be seen by both parties).
+
+__Arguments__
+
+* `userID`: User ID.
+* `block`: Boolean indicating whether to block or unblock the user (true for block).
+* `callback(err)`: A callback called when the query is done (either with an error or with no arguments).
 
 ---------------------------------------
 
@@ -481,12 +495,12 @@ If `type` is `message`, the object will contain the following fields:
 
 If `attachments` contains an object with type `"sticker"`, the object will contain the following fields: `url`, `stickerID`, `packID`, `frameCount`, `frameRate`, `framesPerRow`, `framesPerCol`, `spriteURI`, `spriteURI2x`, `height`, `width`, `caption`, `description`.
 
-If `attachments` contains an object with type `"file"`, the object will contain the following fields: `name`, `url`, `ID`, `fileSize`, Malicious`, `mimeType`.
+If `attachments` contains an object with type `"file"`, the object will contain the following fields: `name`, `url`, `ID`, `fileSize`, `isMalicious`, `mimeType`.
 
 If `attachments` contains an object with type `"photo"`, the object will contain the following fields:
 `name`, `hiresUrl`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `facebookUrl`, `ID`, `filename`, `mimeType`, `url`, `width`, `height`.
 
-If `attachments` contains an object with type `"animated_image"`, the object will contain the following fields: `name`, `facebookUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `thumbnailUrl`, `ID`, `filename`, `mimeType`, `width`, `height`, `url`, `rawGifImage`, `rawWebpImage`, `animatedGifUrl`, `animatedGifPreviewUrl`, `animatedWebpUrl`, `animatedWebpPreviewUrl`
+If `attachments` contains an object with type `"animated_image"`, the object will contain the following fields: `ID`, `filename`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `largePreviewUrl`, `largePreviewWidth`, `largePreviewHeight`, `url`, `width`, `height`.
 
 If `attachments` contains an object with type `"share"`, the object will contain the following fields: `description`, `ID`, `subattachments`, `animatedImageSize`, `width`, `height`, `image`, `playable`, `duration`, `source`, `title`, `facebookUrl`, `url`.
 
@@ -497,10 +511,11 @@ If enabled through [setOptions](#setOptions), this will also handle events. In t
 - `threadID`: The threadID representing the thread in which the message was sent.
 
 If `type` is `"event"` then the object will also have those fields:
-- `logMessageType`: String representing the type of event (`"log:thread-name"`, `"log:unsubscribe"`, `"log:subscribe"`, ...)
+- `logMessageType`: String representing the type of event (`log:subscribe`, `log:unsubscribe`, `log:thread-name`, `log:thread-color`, `log:thread-icon`, `log:user-nickname`)
 - `logMessageData`: Data relevant to the event.
 - `logMessageBody`: String printed in the chat.
 - `author`: The person who performed the event.
+- `threadID`: The thread which the event was performed in.
 
 If `type` is `"typ"` then the object will have the following fields:
 - `isTyping`: Boolean representing whether or not a person started typing.

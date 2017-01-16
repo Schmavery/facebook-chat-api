@@ -67,6 +67,7 @@ function buildAPI(globalOptions, html, jar) {
   var apiFuncNames = [
     'addUserToGroup',
     'changeArchivedStatus',
+    'changeBlockedStatus',
     'changeGroupImage',
     'changeThreadColor',
     'changeThreadEmoji',
