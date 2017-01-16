@@ -3,7 +3,6 @@
 var utils = require("./utils");
 var cheerio = require("cheerio");
 var log = require("npmlog");
-var fs = require("fs");
 
 function setOptions(globalOptions, options) {
   Object.keys(options).map(function(key) {
