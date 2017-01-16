@@ -5,7 +5,9 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function getThreadHistory(threadID, start, end, timestamp, callback) {
-    if(!callback) callback = function() {};
+    if(!callback) {
+      throw {error: "getThreadHistory: need callback"};
+    }
 
     var form = {
       'client' : 'mercury'
