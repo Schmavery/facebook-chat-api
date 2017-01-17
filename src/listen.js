@@ -168,7 +168,10 @@ module.exports = function(defaultFuncs, api, ctx) {
                 case 'ThreadName':
                 case 'ParticipantsAddedToGroupThread':
                 case 'ParticipantLeftGroupThread':
-                  return (!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID || !ctx.loggedIn) ? undefined : globalCallback(null, utils.formatEvent(v.delta));
+                  var formattedEvent = utils.formatEvent(v.delta);
+                  return (!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID || !ctx.loggedIn)
+                    ? undefined
+                    : globalCallback(null, formattedEvent);
               }
 
               break;
