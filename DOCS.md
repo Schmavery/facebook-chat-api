@@ -282,8 +282,8 @@ Creates a poll with the specified title and optional poll options, which can als
 __Arguments__
 * `title`: String containing a title for the poll.
 * `threadID`: String representing the ID of the thread.
-* `options`: An optional array of dictionaries with `text: string` and `selected: bool` fields representing initial options for the poll and their initial states, respectively.
-* `callback(err)`: An optional callback called when the poll is posted (either with an error or null).
+* `options`: An optional `string : bool` dictionary to specify initial poll options and their initial states (selected/not selected), respectively.
+* `callback(err)`: An optional callback called when the poll is posted (either with an error or null) – can omit the `options` parameter and use this as the third parameter if desired.
 
 __Example__
 
@@ -293,13 +293,10 @@ var login = require("facebook-chat-api");
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
     if(err) return console.error(err);
 
-    api.createPoll("Example Poll", "0000000000000", [{
-      text: "Option 1",
-      selected: false
-    }, {
-      text: "Option 2",
-      selected: true
-    }], function callback(err) {
+    api.createPoll("Example Poll", "0000000000000", {
+      "Option 1": false,
+      "Option 2": true
+    }, function callback(err) {
         if(err) return console.error(err);
     });
 });

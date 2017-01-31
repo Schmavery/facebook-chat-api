@@ -6,7 +6,11 @@ var log = require("npmlog");
 module.exports = function(defaultFuncs, api, ctx) {
   return function createPoll(title, threadID, options, callback) {
     if(!callback) {
-      callback = function() {};
+      if(utils.getType(options) == "Function") {
+        callback = options;
+      } else {
+        callback = function() {};
+      }
     }
     if(!options) {
       options = []; // Initial poll options are optional
@@ -18,9 +22,13 @@ module.exports = function(defaultFuncs, api, ctx) {
     };
 
     // Set fields for options (and whether they are selected initially by the posting user)
-    for(var i = 0; i < options.length; i++) {
-      form['option_text_array[' + i + ']'] = encodeURIComponent(options[i].text);
-      form['option_is_selected_array[' + i + ']'] = (options[i].selected ? '1' : '0');
+    var ind = 0;
+    for(var opt in options) {
+      if(options.hasOwnProperty(opt)) {
+        form['option_text_array[' + ind + ']'] = encodeURIComponent(opt);
+        form['option_is_selected_array[' + ind + ']'] = (options[opt] ? '1' : '0');
+        ind++;
+      }
     }
 
     defaultFuncs
@@ -30,7 +38,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (resData.payload.status != 'success') {
           throw resData;
         }
-        
+
         return callback();
       })
       .catch(function(err) {
