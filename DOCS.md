@@ -8,6 +8,7 @@
 * [`api.changeThreadColor`](#changeThreadColor)
 * [`api.changeThreadEmoji`](#changeThreadEmoji)
 * [`api.changeNickname`](#changeNickname)
+* [`api.createPoll`](#createPoll)
 * [`api.deleteMessage`](#deleteMessage)
 * [`api.getAppState`](#getAppState)
 * [`api.getCurrentUserID`](#getCurrentUserID)
@@ -252,7 +253,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 Will change the thread user nickname to the one provided.
 
 __Arguments__
-* `nickname`: String containing a nickname. For reset of nickname left it empty
+* `nickname`: String containing a nickname. Leave empty to reset nickname.
 * `threadID`: String representing the ID of the thread.
 * `participantID`: String representing the ID of the user.
 * `callback(err)`: An optional callback called when the change is done (either with an error or null).
@@ -266,6 +267,39 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     if(err) return console.error(err);
 
     api.changeNickname("Example", "0000000000000", "0000000000000", function callback(err) {
+        if(err) return console.error(err);
+    });
+});
+```
+
+---------------------------------------
+
+<a name="createPoll" />
+### api.createPoll(title, threadID, [options, callback])
+
+Creates a poll with the specified title and optional poll options, which can also be initially selected by the logged-in user.
+
+__Arguments__
+* `title`: String containing a title for the poll.
+* `threadID`: String representing the ID of the thread.
+* `options`: An optional array of dictionaries with `text: string` and `selected: bool` fields representing initial options for the poll and their initial states, respectively.
+* `callback(err)`: An optional callback called when the poll is posted (either with an error or null).
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+
+    api.createPoll("Example Poll", "0000000000000", [{
+      text: "Option 1",
+      selected: false
+    }, {
+      text: "Option 2",
+      selected: true
+    }], function callback(err) {
         if(err) return console.error(err);
     });
 });
