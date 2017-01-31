@@ -13,7 +13,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       }
     }
     if(!options) {
-      options = []; // Initial poll options are optional
+      options = {}; // Initial poll options are optional
     }
 
     var form = {
