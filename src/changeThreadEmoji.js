@@ -5,6 +5,9 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function changeThreadEmoji(emoji, threadID, callback) {
+    if(!callback) {
+      callback = function() {};
+    }
     var form = {
       'emoji_choice' : emoji,
       'thread_or_other_fbid' : threadID
