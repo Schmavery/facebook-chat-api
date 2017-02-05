@@ -656,13 +656,28 @@ function formatCookie(arr, url) {
   return arr[0]+"="+arr[1]+"; Path=" + arr[3] + "; Domain="+url+".com";
 }
 
+function getName(data) {
+  if (data.name) {
+    return data.name;
+  } else if(data.participants.length === 2 && data.other_user_fbid) {
+    if (data.custom_nickname) {
+      return data.custom_nickname[data.other_user_fbid];
+    } else {
+      return data.other_user_fbid;
+    }
+  } else {
+    return data.participants.map(function(v) { return v.replace('fbid:', ''); }).join(', ');
+  }
+  return '';
+}
+
 function formatThread(data) {
   return {
     threadID: data.thread_fbid.toString(),
     participants: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
     participantIDs: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
     formerParticipants: data.former_participants,
-    name: data.name,
+    name: getName(data),
     snippet: data.snippet,
     snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,
