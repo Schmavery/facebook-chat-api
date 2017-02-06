@@ -664,7 +664,6 @@ function formatThread(data) {
     formerParticipants: data.former_participants,
     name: data.name,
     customNicknames: data.custom_nickname,
-    otherUserID: data.other_user_fbid,
     snippet: data.snippet,
     snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,
