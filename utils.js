@@ -663,7 +663,7 @@ function formatThread(data) {
     participantIDs: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
     formerParticipants: data.former_participants,
     name: data.name,
-    customNicknames: data.custom_nickname,
+    nicknames: data.custom_nickname,
     snippet: data.snippet,
     snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,
