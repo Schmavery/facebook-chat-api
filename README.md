@@ -48,6 +48,7 @@ Result:
 * [`api.getThreadHistory`](DOCS.md#getThreadHistory)
 * [`api.getThreadInfo`](DOCS.md#getThreadInfo)
 * [`api.getThreadList`](DOCS.md#getThreadList)
+* [`api.getThreadPictures`](DOCS.md#getThreadPictures)
 * [`api.getUserID`](DOCS.md#getUserID)
 * [`api.getUserInfo`](DOCS.md#getUserInfo)
 * [`api.handleMessageRequest`](DOCS.md#handleMessageRequest)

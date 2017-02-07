@@ -80,6 +80,7 @@ function buildAPI(globalOptions, html, jar) {
     'getThreadHistory',
     'getThreadInfo',
     'getThreadList',
+    'getThreadPictures',
     'getUserID',
     'getUserInfo',
     'handleMessageRequest',
