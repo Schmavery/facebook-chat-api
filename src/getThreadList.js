@@ -26,9 +26,9 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     if (type === 'archived') {
       type = 'action:archived';
-    } else if (type !== 'inbox' && type !== 'pending') {
+    } else if (type !== 'inbox' && type !== 'pending' && type !== 'other') {
       throw {
-        error: "type can only be one of the following: inbox, pending, archived"
+        error: "type can only be one of the following: inbox, pending, archived, other"
       }
     }
 

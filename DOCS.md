@@ -401,7 +401,7 @@ __Arguments__
 
 * `start`: Start index in the list of recently used threads.
 * `end`: End index.
-* `type`: Optional String, can be 'inbox', 'pending', or 'archived'. Inbox is default.
+* `type`: Optional String, can be 'inbox', 'pending', 'archived' or 'other'. Inbox is default.
 * `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: `threadID`, <del>`participants`</del>, `participantIDs`, `formerParticipants`, `name`, `nicknames`, `snippet`, `snippetHasAttachment`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteSettings`, `isCanonicalUser`, `isCanonical`, `canonicalFbid`, `isSubscribed`, `rootMessageThreadingID`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `composerEnabled`, `blockedParticipants`, `lastMessageID`.
 
 ---------------------------------------
