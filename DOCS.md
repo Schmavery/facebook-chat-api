@@ -16,6 +16,7 @@
 * [`api.getThreadHistory`](#getThreadHistory)
 * [`api.getThreadInfo`](#getThreadInfo)
 * [`api.getThreadList`](#getThreadList)
+* [`api.getThreadPictures`](#getThreadPictures)
 * [`api.deleteThread`](#deleteThread)
 * [`api.getUserID`](#getUserID)
 * [`api.getUserInfo`](#getUserInfo)
@@ -403,6 +404,20 @@ __Arguments__
 * `end`: End index.
 * `type`: Optional String, can be 'inbox', 'pending', or 'archived'. Inbox is default.
 * `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: `threadID`, <del>`participants`</del>, `participantIDs`, `formerParticipants`, `name`, `nicknames`, `snippet`, `snippetHasAttachment`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteSettings`, `isCanonicalUser`, `isCanonical`, `canonicalFbid`, `isSubscribed`, `rootMessageThreadingID`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `composerEnabled`, `blockedParticipants`, `lastMessageID`.
+
+---------------------------------------
+
+<a name="getThreadPictures" />
+### api.getThreadPictures(threadID, offset, limit, callback)
+
+Returns pictures sent in the thread.
+
+__Arguments__
+
+* `threadID`: A threadID corresponding to the target chat
+* `offset`: Start index of picture to retrieve, where 0 is the most recent picture
+* `limit`: Number of pictures to get, incrementing from the offset index
+* `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of objects with `uri`, `width`, and `height`.
 
 ---------------------------------------
 
