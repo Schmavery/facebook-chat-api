@@ -57,6 +57,7 @@ Result:
 * [`api.markAsRead`](DOCS.md#markAsRead)
 * [`api.muteThread`](DOCS.md#muteThread)
 * [`api.removeUserFromGroup`](DOCS.md#removeUserFromGroup)
+* [`api.resolvePhotoUrl`](DOCS.md#resolvePhotoUrl)
 * [`api.searchForThread`](DOCS.md#searchForThread)
 * [`api.sendMessage`](DOCS.md#sendMessage)
 * [`api.sendTypingIndicator`](DOCS.md#sendTypingIndicator)

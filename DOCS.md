@@ -26,6 +26,7 @@
 * [`api.markAsRead`](#markAsRead)
 * [`api.muteThread`](#muteThread)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
+* [`api.resolvePhotoUrl`](#resolvePhotoUrl)
 * [`api.searchForThread`](#searchForThread)
 * [`api.sendMessage`](#sendMessage)
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
@@ -700,6 +701,19 @@ __Arguments__
 * `userID`: User ID.
 * `threadID`: Group chat ID.
 * `callback(err)`: A callback called when the query is done (either with an error or with no arguments).
+
+---------------------------------------
+
+<a name="resolvePhotoUrl" />
+### api.resolvePhotoUrl(photoID, callback)
+
+Resolves the URL to the full-size photo, given its ID. This function is useful for retrieving the full-size photo URL
+of image attachments in messages, returned by [`api.getThreadHistory`](#getThreadHistory).
+
+__Arguments__
+
+* `photoID`: Photo ID.
+* `callback(err, url)`: A callback called when the query is done (either with an error or with the photo's URL). `url` is a string with the photo's URL. 
 
 ---------------------------------------
 
