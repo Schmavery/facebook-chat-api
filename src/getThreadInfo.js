@@ -52,7 +52,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           callback(null, info);
 
         }).catch(function(err) {
-          log.error("Error in getThreadInfo", err);
+          log.error("getThreadInfo", err);
           return callback(err);
         });
     });

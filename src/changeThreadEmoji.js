@@ -27,7 +27,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in changeThreadEmoji", err);
+        log.error("changeThreadEmoji", err);
         return callback(err);
       });
   };

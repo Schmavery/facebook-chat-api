@@ -30,7 +30,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in changeNickname", err);
+        log.error("changeNickname", err);
         return callback(err);
       });
   };

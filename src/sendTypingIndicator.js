@@ -35,7 +35,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           return callback();
         })
         .catch(function(err) {
-          log.error("Error in sendTypingIndicator", err);
+          log.error("sendTypingIndicator", err);
           return callback(err);
         });
     });

@@ -61,7 +61,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in setTitle", err);
+        log.error("setTitle", err);
         return callback(err);
       });
   };

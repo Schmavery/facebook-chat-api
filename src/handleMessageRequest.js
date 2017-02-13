@@ -40,7 +40,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in handleMessageRequest", err);
+        log.error("handleMessageRequest", err);
         return callback(err);
       });
   };
