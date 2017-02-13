@@ -4,12 +4,19 @@ var utils = require("./utils");
 var cheerio = require("cheerio");
 var log = require("npmlog");
 
+var defaultLogRecordSize = 100;
+log.maxRecordSize = defaultLogRecordSize;
+
 function setOptions(globalOptions, options) {
   Object.keys(options).map(function(key) {
     switch (key) {
       case 'logLevel':
         log.level = options.logLevel;
         globalOptions.logLevel = options.logLevel;
+        break;
+      case 'logRecordSize':
+        log.maxRecordSize = options.logRecordSize;
+        globalOptions.logRecordSize = options.logRecordSize;
         break;
       case 'selfListen':
         globalOptions.selfListen = options.selfListen;
@@ -424,6 +431,7 @@ function login(loginData, options, callback) {
     listenEvents: false,
     updatePresence: false,
     forceLogin: false,
+    logRecordSize: defaultLogRecordSize
   };
 
   setOptions(globalOptions, options);
