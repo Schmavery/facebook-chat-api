@@ -48,7 +48,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null, data.map(formatData));
       })
       .catch(function(err) {
-        log.error("Error in getUserID", err);
+        log.error("getUserID", err);
         return callback(err);
       });
   };

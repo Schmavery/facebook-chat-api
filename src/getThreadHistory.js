@@ -57,7 +57,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           });
         })
         .catch(function(err) {
-          log.error("Error in getThreadHistory", err);
+          log.error("getThreadHistory", err);
           return callback(err);
         });
     });

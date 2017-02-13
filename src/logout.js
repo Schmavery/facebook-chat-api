@@ -44,11 +44,11 @@ module.exports = function(defaultFuncs, api, ctx) {
       })
       .then(function() {
         ctx.loggedIn = false;
-        log.info("Logged out successfully.");
+        log.info("logout", "Logged out successfully.");
         callback();
       })
       .catch(function(err) {
-        log.error("Error in logout", err);
+        log.error("logout", err);
         return callback(err);
       });
   };

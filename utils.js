@@ -575,9 +575,9 @@ function makeDefaults(html, userID) {
 function parseAndCheckLogin(jar, defaultFuncs) {
   return function(data) {
     return bluebird.try(function() {
-      log.verbose("parseAndCheckLogin: " + data.body);
+      log.verbose("parseAndCheckLogin", data.body);
       if (data.statusCode >= 500 && data.statusCode < 600) {
-        log.warn("parseAndCheckLogin: Got status code " + data.statusCode + " retrying...");
+        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " retrying...");
         var url = data.request.uri.protocol + "//" + data.request.uri.hostname + data.request.uri.pathname;
         if (data.request.headers['Content-Type'].split(";")[0] === "multipart/form-data") {
           return defaultFuncs

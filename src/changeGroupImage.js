@@ -31,7 +31,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null, resData);
       })
       .catch(function(err) {
-        log.error("Error in handleUpload", err);
+        log.error("handleUpload", err);
         return callback(err);
       });
   }
@@ -99,7 +99,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           return callback();
         })
         .catch(function(err) {
-          log.error("Error in uploading group image", err);
+          log.error("changeGroupImage", err);
           return callback(err);
         });
 

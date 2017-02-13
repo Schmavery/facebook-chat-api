@@ -27,7 +27,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in changeThreadColor", err);
+        log.error("changeThreadColor", err);
         return callback(err);
       });
   };

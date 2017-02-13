@@ -38,7 +38,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("ERROR in removeUserFromGroup --> ", err);
+        log.error("removeUserFromGroup", err);
         return callback(err);
       });
   };
