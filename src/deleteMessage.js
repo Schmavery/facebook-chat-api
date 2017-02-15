@@ -32,7 +32,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in deleteMessage", err);
+        log.error("deleteMessage", err);
         return callback(err);
       });
   };

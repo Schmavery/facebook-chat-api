@@ -32,7 +32,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in deleteThread", err);
+        log.error("deleteThread", err);
         return callback(err);
       });
   };

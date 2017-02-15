@@ -26,9 +26,9 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     if (type === 'archived') {
       type = 'action:archived';
-    } else if (type !== 'inbox' && type !== 'pending') {
+    } else if (type !== 'inbox' && type !== 'pending' && type !== 'other') {
       throw {
-        error: "type can only be one of the following: inbox, pending, archived"
+        error: "type can only be one of the following: inbox, pending, archived, other"
       }
     }
 
@@ -52,11 +52,11 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (resData.error) {
           throw resData;
         }
-        log.verbose("Response in getThreadList: " + JSON.stringify(resData.payload.threads));
+        log.verbose("getThreadList", JSON.stringify(resData.payload.threads));
         return callback(null, (resData.payload.threads || []).map(utils.formatThread));
       })
       .catch(function(err) {
-        log.error("Error in getThreadList", err);
+        log.error("getThreadList", err);
         return callback(err);
       });
   };

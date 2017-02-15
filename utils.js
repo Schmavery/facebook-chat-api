@@ -575,9 +575,9 @@ function makeDefaults(html, userID) {
 function parseAndCheckLogin(jar, defaultFuncs) {
   return function(data) {
     return bluebird.try(function() {
-      log.verbose("parseAndCheckLogin: " + data.body);
+      log.verbose("parseAndCheckLogin", data.body);
       if (data.statusCode >= 500 && data.statusCode < 600) {
-        log.warn("parseAndCheckLogin: Got status code " + data.statusCode + " retrying...");
+        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " retrying...");
         var url = data.request.uri.protocol + "//" + data.request.uri.hostname + data.request.uri.pathname;
         if (data.request.headers['Content-Type'].split(";")[0] === "multipart/form-data") {
           return defaultFuncs
@@ -663,6 +663,7 @@ function formatThread(data) {
     participantIDs: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
     formerParticipants: data.former_participants,
     name: data.name,
+    nicknames: data.custom_nickname,
     snippet: data.snippet,
     snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,

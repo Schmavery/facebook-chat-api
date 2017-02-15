@@ -47,7 +47,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null, resData);
       })
       .catch(function(err) {
-        log.error("Error in uploadAttachment", err);
+        log.error("uploadAttachment", err);
         return callback(err);
       });
   }
@@ -74,7 +74,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null, resData.payload.share_data.share_params);
       })
       .catch(function(err) {
-        log.error("Error in getUrl", err);
+        log.error("getUrl", err);
         return callback(err);
       });
   }
@@ -91,7 +91,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       }
       form['specific_to_list[' + (threadID.length) + ']'] = "fbid:" + ctx.userID;
       form['client_thread_id'] = "root:" + messageAndOTID;
-      log.info("Sending message to multiple users: " + threadID);
+      log.info("sendMessage", "Sending message to multiple users: " + threadID);
     } else {
       // This means that threadID is the id of a user, and the chat
       // is a single person chat
@@ -125,7 +125,8 @@ module.exports = function(defaultFuncs, api, ctx) {
 
         if (resData.error) {
           if (resData.error === 1545012) {
-            log.warn("Got error 1545012. This might mean that you're not part of the conversation " + threadID);
+            log.warn("sendMessage", "Got error 1545012. This might mean that you're not part of the conversation "
+              + threadID);
           }
           return callback(resData);
         }
@@ -140,7 +141,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback(null, messageInfo);
       })
       .catch(function(err) {
-        log.error("ERROR in sendMessage --> ", err);
+        log.error("sendMessage", err);
         return callback(err);
       });
   }
