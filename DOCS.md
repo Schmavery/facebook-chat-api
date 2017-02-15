@@ -34,6 +34,35 @@
 
 ---------------------------------------
 
+### Password safety
+
+**Read this** before you _copy+paste_ examples from below.
+
+You should not store Facebook password in your scripts.
+There are few good reasons:
+* People who are standing behind you may look at your "code" and get your password if it is on the screen
+* Backups of source files may be readable by someone else. "_There is nothing secret in my code, why should I ever password protect my backups_"
+* You can't push your code to Github (or any onther service) without removing your password from the file.  Remember: Even if you undo your accidential commit with password, Git doesn't delete it, that commit is just not used but is still readable by everybody.
+* If you change your password in the future (maybe it leaked because _someone_ stored password in source file… oh… well…) you will have to change every occurrence in your scripts
+
+Preferred method is to have `login.js` that saves `AppState` to a file and then use that file from all your scripts.
+This way you can put password in your code for a minute, login to facebook and then remove it.
+
+If you want to be even more safe:  _login.js_ can get password with `require("readline")` or with environment variables like this:
+```js
+var credentials = {
+    email: process.env.FB_EMAIL,
+    password: process.env.FB_PASSWORD
+}
+```
+```bash
+FB_EMAIL="john.doe@example.com"
+FB_PASSWORD="MySuperHardP@ssw0rd"
+nodejs login.js
+```
+
+---------------------------------------
+
 <a name="login"/>
 ### login(credentials[, options], callback)
 
