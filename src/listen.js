@@ -68,7 +68,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
     .then(function(resData) {
       var now = Date.now();
-      log.info("listen", "Got answer in " + now - tmpPrev);
+      log.info("listen", "Got answer in " + (now - tmpPrev));
       tmpPrev = now;
 
       if(resData && resData.t === "lb") {
