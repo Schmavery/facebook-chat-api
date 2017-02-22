@@ -691,25 +691,6 @@ function formatThread(data) {
   };
 }
 
-function resolvePhotoUrl(photoID, defaultFuncs, ctx, callback) {
-  defaultFuncs
-    .get("https://www.facebook.com/mercury/attachments/photo", ctx.jar, { photo_id: photoID })
-    .then(parseAndCheckLogin(ctx.jar, defaultFuncs))
-    .then(resData => {
-      if (resData.error) {
-        throw resData;
-      }
-
-      var photoUrl = resData.jsmods.require[0][3][0];
-
-      return callback(null, photoUrl);
-    })
-    .catch(err => {
-      log.error("Error in resolvePhotoUrl", err);
-      return callback(err);
-    });
-}
-
 
 function getType(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1);
@@ -748,7 +729,6 @@ module.exports = {
   makeDefaults: makeDefaults,
   parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,
-  resolvePhotoUrl: resolvePhotoUrl,
   getType: getType,
   formatMessage: formatMessage,
   formatDeltaMessage: formatDeltaMessage,
