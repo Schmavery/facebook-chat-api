@@ -2,7 +2,6 @@
 
 var utils = require("../utils");
 var log = require("npmlog");
-var resolvePhotoUrlModule = require("./resolvePhotoUrl");
 
 var msgsRecv = 0;
 var identity = function() {};
@@ -18,8 +17,6 @@ module.exports = function(defaultFuncs, api, ctx) {
       currentlyRunning = null;
     }
   };
-
-  var resolvePhotoUrl = resolvePhotoUrlModule(defaultFuncs, api, ctx);
 
   var prev = Date.now();
   var tmpPrev = Date.now();
@@ -145,7 +142,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                     return (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) ? undefined : globalCallback(null, fmtMsg);
                   } else {
                     if (v.delta.attachments[i].mercury.attach_type == 'photo') {
-                      resolvePhotoUrl(v.delta.attachments[i].fbid, (err, url) => {
+                      api.resolvePhotoUrl(v.delta.attachments[i].fbid, (err, url) => {
                         if (!err) v.delta.attachments[i].mercury.metadata.url = url;
                         return resolveAttachmentUrl(i + 1);
                       });
