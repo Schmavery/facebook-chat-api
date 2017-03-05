@@ -652,11 +652,15 @@ Difference between `"read_receipt"` and `"read"`:
 - `"read"` event triggers when the user read other people's messages.
 
 <a name="presence" />
-If enabled through [setOptions](#setOptions), this will also return presence, (`type` will be `"presence"`), which is the online status of the user's friends. The object given to the callback will have the following fields:
+If enabled through [setOptions](#setOptions), this will also return presence or buddyList, (`type` will be `"presence"` or `"buddyList"`), which is the online status of the user's friends. The object given for presence to the callback will have the following fields:
 - `type`: The string "presence".
 - `timestamp`: How old the information is.
 - `userID`: The ID of the user whose status this packet is describing
 - `statuses`: The online status of the user. `0` means the user is idle (away for 2 minutes) and `2` means the user is online.
+
+The object given for buddyList to the callback will have the following fields:
+- `type`: The string "buddyList".
+- `buddyList`: array with (almost) all users presences (array fields are same as in `presence`, so `timestamp`, `userID` and `statuses`)
 
 __Example__
 
