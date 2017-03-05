@@ -2,7 +2,7 @@ var login = require('../index.js');
 var fs = require('fs');
 var assert = require('assert');
 
-var conf = JSON.parse(fs.readFileSync('test/test-config.json', 'utf8'));
+var conf =  JSON.parse(process.env.testconfig || fs.readFileSync('test/test-config.json', 'utf8'));
 var credentials = {
   email: conf.user.email,
   password: conf.user.password,
@@ -31,6 +31,7 @@ function checkErr(done){
 
 describe('Login As Page:', function() {
   var api = null;
+  process.on('SIGINT', () => api && !api.logout() && console.log("Logged out :)"));
   var tests = [];
   var stopListening;
   this.timeout(20000);
@@ -67,28 +68,33 @@ describe('Login As Page:', function() {
 
   it('should send text message object (user)', function (done){
     var body = "text-msg-obj-" + Date.now();
-    listen(done, function (msg) {
-      return msg.type === 'message' && msg.body === body;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === false
+    );
     api.sendMessage({body: body}, userID, checkErr(done));
   });
 
   it('should send sticker message object (user)', function (done){
     var stickerID = '767334526626290';
-    listen(done, function (msg) {
-      return msg.type === 'message' &&
-        msg.attachments.length > 0 &&
-        msg.attachments[0].type === 'sticker' &&
-        msg.attachments[0].stickerID === stickerID;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.attachments.length > 0 &&
+      msg.attachments[0].type === 'sticker' &&
+      msg.attachments[0].stickerID === stickerID &&
+      msg.isGroup === false
+    );
     api.sendMessage({sticker: stickerID}, userID, checkErr(done));
   });
 
   it('should send basic string (user)', function (done){
     var body = "basic-str-" + Date.now();
-    listen(done, function (msg) {
-      return (msg.type === 'message' && msg.body === body);
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === false
+    );
     api.sendMessage(body, userID, checkErr(done));
   });
 
@@ -96,19 +102,6 @@ describe('Login As Page:', function() {
     var stopType = api.sendTypingIndicator(userID, function(err) {
       checkErr(done)(err);
       stopType();
-      done();
-    });
-  });
-
-  it('should get a list of online users', function (done){
-    api.getOnlineUsers(function(err, res) {
-      checkErr(done)(err);
-      assert(getType(res) === "Array");
-      res.map(function(v) {
-        assert(v.lastActive);
-        assert(v.userID);
-        assert(v.status);
-      });
       done();
     });
   });

@@ -230,7 +230,14 @@ function getGUID() {
 
 function _formatAttachment(attachment1, attachment2) {
   // TODO: THIS IS REALLY BAD
+  // This is an attempt at fixing Facebook's inconsistencies. Sometimes they give us
+  // two attachement objects, but sometimes only one. They each contain part of the
+  // data that you'd want so we merge them for convenience.
+  // Instead of having a bunch of if statements guarding every access to image_data,
+  // we set it to empty object and use the fact that it'll return undefined.
   attachment2 = attachment2 || {id:"", image_data: {}};
+  var fileName = attachment1.filename
+  attachment1 = attachment1.mercury ? attachment1.mercury : attachment1
 
   switch (attachment1.attach_type) {
     case "sticker":
@@ -263,19 +270,21 @@ function _formatAttachment(attachment1, attachment2) {
     case "photo":
       return {
         type: "photo",
-        name: attachment1.name, // Do we need this?
-        hiresUrl: attachment1.hires_url,
+        ID: attachment1.metadata.fbid.toString(),
+        filename: fileName,
         thumbnailUrl: attachment1.thumbnail_url,
+        
         previewUrl: attachment1.preview_url,
         previewWidth: attachment1.preview_width,
         previewHeight: attachment1.preview_height,
-        facebookUrl: attachment1.url, // wtf is this?
-        ID: attachment2.id.toString(),
-        filename: attachment2.filename,
-        mimeType: attachment2.mime_type,
-        url: attachment2.image_data.url,
-        width:attachment2.image_data.width,
-        height:attachment2.image_data.height,
+
+        largePreviewUrl: attachment1.large_preview_url,
+        largePreviewWidth: attachment1.large_preview_width,
+        largePreviewHeight: attachment1.large_preview_height,
+        
+        url: attachment1.metadata.url,
+        width: attachment1.metadata.dimensions.split(',')[0],
+        height: attachment1.metadata.dimensions.split(',')[1],
       };
     case "animated_image":
       return {
@@ -330,6 +339,15 @@ function _formatAttachment(attachment1, attachment2) {
         height: attachment1.metadata.dimensions.height,
         duration: attachment1.metadata.duration,
       };
+    case "error":
+      return {
+        type: "error",
+
+        // Save error attachments because we're unsure of their format,
+        // and whether there are cases they contain something useful for debugging.
+        attachment1: attachment1,
+        attachment2: attachment2
+      };
     default:
       throw new Error("unrecognized attach_file `" + JSON.stringify(attachment1) + "`");
   }
@@ -346,16 +364,16 @@ function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
 }
 
 function formatDeltaMessage(m){
-  //console.log(m);
-  var delta = m.delta;
+  var md = m.delta.messageMetadata;
   return {
     type: "message",
-    senderID: delta.messageMetadata.actorFbId,
-    body: delta.body,
-    threadID: (delta.messageMetadata.threadKey.threadFbId || delta.messageMetadata.threadKey.otherUserFbId).toString(),
-    messageID: delta.messageMetadata.messageId,
-    attachments: (delta.attachments || []).map(v => _formatAttachment(v.mercury)),
-    timestamp: delta.messageMetadata.timestamp,
+    senderID: md.actorFbId,
+    body: m.delta.body,
+    threadID: (md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString(),
+    messageID: md.messageId,
+    attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
+    timestamp: md.timestamp,
+    isGroup: !!md.threadKey.threadFbId
   }
 }
 
@@ -377,21 +395,62 @@ function formatMessage(m) {
     timestampAbsolute: originalMessage.timestamp_absolute,
     timestampRelative: originalMessage.timestamp_relative,
     timestampDatetime: originalMessage.timestamp_datetime,
+    tags: originalMessage.tags 
   };
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();
+  obj.isGroup = obj.participantIDs.length > 2;
 
   return obj;
 }
 
 function formatEvent(m) {
+  var logMessageType;
+  var logMessageData;
+
+  // log:thread-color => {theme_color}
+  // log:user-nickname => {participant_id, nickname}
+  // log:thread-icon => {thread_icon}
+  // log:thread-name => {name}
+  // log:subscribe => {addedParticipants - [Array]}
+  // log:unsubscribe => {leftParticipantFbId}
+
+  switch (m.class) {
+    case 'AdminTextMessage':
+      logMessageData = m.untypedData;
+      switch (m.type) {
+        case 'change_thread_theme':
+          logMessageType = "log:thread-color";
+          break;
+        case 'change_thread_nickname':
+          logMessageType = "log:user-nickname";
+          break;
+        case 'change_thread_icon':
+          logMessageType = "log:thread-icon";
+          break;
+      }
+      break;
+    case 'ThreadName':
+      logMessageType = "log:thread-name";
+      logMessageData = { name: m.name };
+      break;
+    case 'ParticipantsAddedToGroupThread':
+      logMessageType = "log:subscribe";
+      logMessageData = { addedParticipants: m.addedParticipants }
+      break;
+    case 'ParticipantLeftGroupThread':
+      logMessageType = "log:unsubscribe";
+      logMessageData = { leftParticipantFbId: m.leftParticipantFbId }
+      break;
+  }
+
   return {
     type: "event",
-    threadID: m.thread_fbid.toString(),
-    logMessageType: m.log_message_type,
-    logMessageData: m.log_message_data,
-    logMessageBody: m.log_message_body,
-    author: m.author.split(":")[1]
+    threadID: m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId,
+    logMessageType: logMessageType,
+    logMessageData: logMessageData,
+    logMessageBody: m.messageMetadata.adminText,
+    author: m.messageMetadata.actorFbId
   };
 }
 
@@ -400,9 +459,9 @@ function formatTyp(event) {
     isTyping: !!event.st,
     from: event.from.toString(),
     threadID: (event.to || event.thread_fbid || event.from).toString(),
-    fromMobile: !!event.from_mobile,
-    // TODO: remove this in the next release
-    from_mobile: !!event.from_mobile,
+    // When receiving typ indication from mobile, `from_mobile` isn't set.
+    // If it is, we just use that value.
+    fromMobile: event.hasOwnProperty('from_mobile') ? event.from_mobile : true,
     userID: (event.realtime_viewer_fbid || event.from).toString(),
     type: 'typ',
   };
@@ -431,6 +490,9 @@ function getFrom(str, startToken, endToken) {
 
   var lastHalf = str.substring(start);
   var end = lastHalf.indexOf(endToken);
+  if (end === -1) {
+    throw Error("Could not find endTime `" + endToken + "` in the given string.");
+  }
   return lastHalf.substring(0, end);
 }
 
@@ -453,7 +515,7 @@ function getSignatureID(){
   return Math.floor(Math.random() * 2147483648).toString(16);
 }
 
-function genTimestampRelative() {
+function generateTimestampRelative() {
   var d = new Date();
   return d.getHours() + ":" + padZeros(d.getMinutes());
 }
@@ -469,8 +531,6 @@ function makeDefaults(html, userID) {
   var revision = getFrom(html, "revision\":",",");
 
   function mergeWithDefaults(obj) {
-    if (!obj) return {};
-
     var newObj = {
       __user: userID,
       __req: (reqCounter++).toString(36),
@@ -515,9 +575,9 @@ function makeDefaults(html, userID) {
 function parseAndCheckLogin(jar, defaultFuncs) {
   return function(data) {
     return bluebird.try(function() {
-      log.verbose("parseAndCheckLogin: " + data.body);
+      log.verbose("parseAndCheckLogin", data.body);
       if (data.statusCode >= 500 && data.statusCode < 600) {
-        log.warn("parseAndCheckLogin: Got status code " + data.statusCode + " retrying...");
+        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " retrying...");
         var url = data.request.uri.protocol + "//" + data.request.uri.hostname + data.request.uri.pathname;
         if (data.request.headers['Content-Type'].split(";")[0] === "multipart/form-data") {
           return defaultFuncs
@@ -565,7 +625,7 @@ function parseAndCheckLogin(jar, defaultFuncs) {
 function saveCookies(jar) {
   return function(res) {
     var cookies = res.headers['set-cookie'] || [];
-    cookies.map(function (c) {
+    cookies.forEach(function (c) {
       if (c.indexOf(".facebook.com") > -1) {
         jar.setCookie(c, "https://www.facebook.com");
       }
@@ -603,6 +663,7 @@ function formatThread(data) {
     participantIDs: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
     formerParticipants: data.former_participants,
     name: data.name,
+    nicknames: data.custom_nickname,
     snippet: data.snippet,
     snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,
@@ -640,7 +701,7 @@ function formatPresence(presence, userID) {
     type: "presence",
     timestamp: presence.la * 1000,
     userID: userID,
-    statuses: presence.p
+    statuses: presence.a
   };
 }
 
@@ -664,7 +725,7 @@ module.exports = {
   arrToForm: arrToForm,
   getSignatureID: getSignatureID,
   getJar: request.jar,
-  genTimestampRelative: genTimestampRelative,
+  generateTimestampRelative: generateTimestampRelative,
   makeDefaults: makeDefaults,
   parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,

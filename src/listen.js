@@ -68,7 +68,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
     .then(function(resData) {
       var now = Date.now();
-      log.info("Got answer in ", now - tmpPrev);
+      log.info("listen", "Got answer in " + (now - tmpPrev));
       tmpPrev = now;
 
       if(resData && resData.t === "lb") {
@@ -132,82 +132,50 @@ module.exports = function(defaultFuncs, api, ctx) {
                 }
               });
               break;
-            case 'mercury':
-              if(ctx.globalOptions.pageID || !ctx.globalOptions.listenEvents){
-               return;
-              }
-
-              v.actions.map(function(v2) {
-                var formattedEvent = utils.formatEvent(v2);
-                if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID) {
-                  return;
-                }
-
-                if (ctx.loggedIn) {
-                  return globalCallback(null, formattedEvent);
-                }
-              });
-              break;
             case 'delta':
-              if (v.delta.class !== "NewMessage" || ctx.globalOptions.pageID || ctx.globalOptions.disableDelta){
-                return;
-              }
-              var fmtMsg = utils.formatDeltaMessage(v);
+              if (ctx.globalOptions.pageID || (v.delta.class !== "NewMessage" && !ctx.globalOptions.listenEvents)) return
 
-              if (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID){
-                return;
+              if (v.delta.class == "NewMessage") {
+                (function resolveAttachmentUrl(i) {
+                  if (i == v.delta.attachments.length) {
+                    var fmtMsg = utils.formatDeltaMessage(v);
+                    return (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) ? undefined : globalCallback(null, fmtMsg);
+                  } else {
+                    if (v.delta.attachments[i].mercury.attach_type == 'photo') {
+                      api.resolvePhotoUrl(v.delta.attachments[i].fbid, (err, url) => {
+                        if (!err) v.delta.attachments[i].mercury.metadata.url = url;
+                        return resolveAttachmentUrl(i + 1);
+                      });
+                    }
+                  }
+                })(0)
+                break;
               }
 
-              return globalCallback(null, fmtMsg);
+              switch (v.delta.class) {
+                case 'AdminTextMessage':
+                  switch (v.delta.type) {
+                    case 'change_thread_theme':
+                    case 'change_thread_nickname':
+                    case 'change_thread_icon':
+                      break;
+                    default:
+                      return;
+                  }
+                case 'ThreadName':
+                case 'ParticipantsAddedToGroupThread':
+                case 'ParticipantLeftGroupThread':
+                  var formattedEvent = utils.formatEvent(v.delta);
+                  return (!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID || !ctx.loggedIn)
+                    ? undefined
+                    : globalCallback(null, formattedEvent);
+              }
+
               break;
             case 'messaging':
-              ctx.disableDelta = true;
-              if (ctx.globalOptions.listenEvents && handleMessagingEvents(v)) {
-                // globalCallback got called if handleMessagingEvents returned true
+              if (handleMessagingEvents(v)) {
                 return;
               }
-
-              if(ctx.globalOptions.pageID ||
-                v.event !== "deliver" ||
-                (!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID)) {
-                return;
-              }
-
-
-              atLeastOne = true;
-              var message = utils.formatMessage(v);
-
-              // The participants array is caped at 5, we need to query more to
-              // get them.
-              if(message.participantIDs.length < 5) {
-                if (ctx.loggedIn) return globalCallback(null, message);
-                else return;
-              }
-
-              var participantsForm = {};
-              var threadID = message.threadID;
-              participantsForm['threads[thread_fbids][0]'] = threadID;
-              //participantsForm['messages[thread_fbids][' + threadID + '][offset]'] = 0;
-              //participantsForm['messages[thread_fbids][' + threadID + '][timestamp]'] = '';
-              //participantsForm['messages[thread_fbids][' + threadID + '][limit]'] = 10;
-              if(ctx.globalOptions.pageId) participantsForm.request_user_id = ctx.globalOptions.pageId;
-
-              defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_info.php", ctx.jar, participantsForm)
-              .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
-              .then(function(resData) {
-                message.participantIDs = resData.payload.threads[0].participants.map(id=>id.split(':').pop());
-                message.participants = message.participantIDs;
-                api.getUserInfo(message.participantIDs, function(err, firstThread) {
-                  if (err) {
-                    throw err;
-                  }
-
-                  message.participantsInfo = Object.keys(firstThread).map(key => firstThread[key]);
-                  // Rename this?
-                  message.participantNames = message.participantsInfo.map(v => v.name);
-                  return globalCallback(null, message);
-                });
-              });
               break;
             case 'pages_messaging':
               if(!ctx.globalOptions.pageID ||
@@ -256,9 +224,9 @@ module.exports = function(defaultFuncs, api, ctx) {
     })
     .catch(function(err) {
       if (err.code === 'ETIMEDOUT') {
-        log.info("Suppressed timeout error.");
+        log.info("listen", "Suppressed timeout error.");
       } else {
-        log.error("ERROR in listen --> ", err);
+        log.error("listen", err);
         globalCallback(err);
       }
       if (currentlyRunning) {

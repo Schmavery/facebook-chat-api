@@ -49,7 +49,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       return callback(null, formatData(resData.payload.profiles));
     })
     .catch(function(err) {
-      log.error("Error in getUserInfo", err);
+      log.error("getUserInfo", err);
       return callback(err);
     });
   };
