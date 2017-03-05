@@ -142,13 +142,10 @@ module.exports = function(defaultFuncs, api, ctx) {
                     return (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) ? undefined : globalCallback(null, fmtMsg);
                   } else {
                     if (v.delta.attachments[i].mercury.attach_type == 'photo') {
-                      defaultFuncs
-                        .get("https://www.facebook.com/mercury/attachments/photo/?photo_id=" + v.delta.attachments[i].fbid, ctx.jar, {})
-                        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
-                        .then(function (resData) {
-                          if (!resData.error) v.delta.attachments[i].mercury.url = resData.jsmods.require[0][3][0]
-                          return resolveAttachmentUrl(i + 1);
-                        })
+                      api.resolvePhotoUrl(v.delta.attachments[i].fbid, (err, url) => {
+                        if (!err) v.delta.attachments[i].mercury.metadata.url = url;
+                        return resolveAttachmentUrl(i + 1);
+                      });
                     }
                   }
                 })(0)
