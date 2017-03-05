@@ -696,6 +696,15 @@ function getType(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1);
 }
 
+function formatProxyPresence(presence, userID) {
+  if(presence.lat === undefined) return null;
+  return {
+    timestamp: presence.lat * 1000,
+    userID: userID,
+    statuses: presence.p === undefined ? 0 : presence.p
+  };
+}
+
 function formatPresence(presence, userID) {
   return {
     type: "presence",
@@ -733,6 +742,7 @@ module.exports = {
   formatMessage: formatMessage,
   formatDeltaMessage: formatDeltaMessage,
   formatEvent: formatEvent,
+  formatProxyPresence: formatProxyPresence,
   formatPresence: formatPresence,
   formatTyp: formatTyp,
   formatCookie: formatCookie,
