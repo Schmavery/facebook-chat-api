@@ -198,7 +198,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       if (msg.emojiSize != "small" && msg.emojiSize != "medium" && msg.emojiSize != "large") {
         return callback({error: "emojiSize property is invalid"});
       }
-      if ((form['body'] != null || form['body'] != "") == false) {
+      if (form['body'] != null && form['body'] != "") {
         return callback({error: "body is not empty"});
       }
       form['body'] = msg.emoji;
