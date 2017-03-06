@@ -188,21 +188,21 @@ module.exports = function(defaultFuncs, api, ctx) {
   }
   
   function handleEmoji(msg, form, callback, cb) {
+    if (msg.emojiSize != null && msg.emoji == null) {
+      return callback({error: "emoji property is empty"});
+    }
     if (msg.emoji) {
-      if(msg.emojiSize == null)
-      {
-        return callback({error: "emojiSize property is empty"});
+      if (msg.emojiSize == null) {
+        msg.emojiSize = "medium";
       }
-      if(msg.emojiSize != "mini" && msg.emojiSize != "medium" && msg.emojiSize != "large")
-      {
+      if (msg.emojiSize != "small" && msg.emojiSize != "medium" && msg.emojiSize != "large") {
         return callback({error: "emojiSize property is invalid"});
       }
-      if(msg.emoji.length > 3)
-      {
-        return callback({error: "Invalid emoji"});
+      if ((form['body'] != null || form['body'] != "") == false) {
+        return callback({error: "body is not empty"});
       }
-      form['message_batch[0][body]'] = msg.emoji;
-      form['message_batch[0][tags][0]'] = "hot_emoji_size:" + msg.emojiSize;
+      form['body'] = msg.emoji;
+      form['tags[0]'] = "hot_emoji_size:" + msg.emojiSize;
     }
     cb();
   }
