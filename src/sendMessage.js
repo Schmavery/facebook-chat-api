@@ -8,6 +8,8 @@ var allowedProperties = {
   attachment: true,
   url: true,
   sticker: true,
+  emoji: true,
+  emojiSize: true,
   body: true,
 };
 
@@ -184,6 +186,26 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
     cb();
   }
+  
+  function handleEmoji(msg, form, callback, cb) {
+    if (msg.emojiSize != null && msg.emoji == null) {
+      return callback({error: "emoji property is empty"});
+    }
+    if (msg.emoji) {
+      if (msg.emojiSize == null) {
+        msg.emojiSize = "medium";
+      }
+      if (msg.emojiSize != "small" && msg.emojiSize != "medium" && msg.emojiSize != "large") {
+        return callback({error: "emojiSize property is invalid"});
+      }
+      if (form['body'] != null && form['body'] != "") {
+        return callback({error: "body is not empty"});
+      }
+      form['body'] = msg.emoji;
+      form['tags[0]'] = "hot_emoji_size:" + msg.emojiSize;
+    }
+    cb();
+  }
 
   function handleAttachment(msg, form, callback, cb) {
     if (msg.attachment) {
@@ -280,6 +302,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     handleSticker(msg, form, callback,
       () => handleAttachment(msg, form, callback,
         () => handleUrl(msg, form, callback,
-          () => send(form, threadID, messageAndOTID, callback))));
+          () => handleEmoji(msg, form, callback,
+            () => send(form, threadID, messageAndOTID, callback)))));
   };
 };
