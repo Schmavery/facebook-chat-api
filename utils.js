@@ -273,7 +273,7 @@ function _formatAttachment(attachment1, attachment2) {
         ID: attachment1.metadata.fbid.toString(),
         filename: fileName,
         thumbnailUrl: attachment1.thumbnail_url,
-        
+
         previewUrl: attachment1.preview_url,
         previewWidth: attachment1.preview_width,
         previewHeight: attachment1.preview_height,
@@ -281,7 +281,7 @@ function _formatAttachment(attachment1, attachment2) {
         largePreviewUrl: attachment1.large_preview_url,
         largePreviewWidth: attachment1.large_preview_width,
         largePreviewHeight: attachment1.large_preview_height,
-        
+
         url: attachment1.metadata.url,
         width: attachment1.metadata.dimensions.split(',')[0],
         height: attachment1.metadata.dimensions.split(',')[1],
@@ -323,6 +323,8 @@ function _formatAttachment(attachment1, attachment2) {
         source: attachment1.share.source,
         title: attachment1.share.title,
         facebookUrl: attachment1.share.uri,
+        target: attachment1.share.target,
+        styleList: attachment1.share.style_list,
         url: attachment2.href,
       };
     case "video":
@@ -395,7 +397,7 @@ function formatMessage(m) {
     timestampAbsolute: originalMessage.timestamp_absolute,
     timestampRelative: originalMessage.timestamp_relative,
     timestampDatetime: originalMessage.timestamp_datetime,
-    tags: originalMessage.tags 
+    tags: originalMessage.tags
   };
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();

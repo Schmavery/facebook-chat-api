@@ -13,6 +13,8 @@ var userIDs = conf.userIDs;
 var options = { selfListen: true, listenEvents: true, logLevel: "silent"};
 var pageOptions = {logLevel: 'silent', pageID: conf.pageID};
 var getType = require('../utils').getType;
+var formatDeltaMessage = require('../utils').formatDeltaMessage;
+var shareAttachmentFixture = require('./data/shareAttach');
 
 var userID = conf.user.id;
 
@@ -260,8 +262,6 @@ describe('Login:', function() {
       });
   });
 
-
-
   it('should retrieve a list of threads', function (done) {
     api.getThreadList(0, 20, function(err, res) {
       checkErr(done)(err);
@@ -345,6 +345,15 @@ describe('Login:', function() {
       done(e);
     }
     });
+  });
+
+  it('should parse share attachment correctly', function () {
+    var formatted = formatDeltaMessage(shareAttachmentFixture);
+    assert(formatted.attachments[0].type === "share");
+    assert(formatted.attachments[0].title === "search engines");
+    assert(formatted.attachments[0].target.items[0].name === "search engines");
+    assert(formatted.attachments[0].target.items[0].call_to_actions.length === 3);
+    assert(formatted.attachments[0].target.items[0].call_to_actions[0].title === "Google");
   });
 
   it('should log out', function (done) {
