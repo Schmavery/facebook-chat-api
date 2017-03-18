@@ -617,7 +617,7 @@ If `attachments` contains an object with type `"photo"`, the object will contain
 
 If `attachments` contains an object with type `"animated_image"`, the object will contain the following fields: `ID`, `filename`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `largePreviewUrl`, `largePreviewWidth`, `largePreviewHeight`, `url`, `width`, `height`.
 
-If `attachments` contains an object with type `"share"`, the object will contain the following fields: `description`, `ID`, `subattachments`, `animatedImageSize`, `width`, `height`, `image`, `playable`, `duration`, `source`, `title`, `facebookUrl`, `url`.
+If `attachments` contains an object with type `"share"`, the object will contain the following fields: `description`, `ID`, `subattachments`, `animatedImageSize`, `width`, `height`, `image`, `playable`, `duration`, `source`, `title`, `facebookUrl`, `target`, `styleList`, `url`.
 
 If `attachments` contains an object with type `"video"`, the object will contain the following fields: `filename`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `ID`, `url`, `width`, `height`, `duration`.
 
@@ -790,7 +790,7 @@ of image attachments in messages, returned by [`api.getThreadHistory`](#getThrea
 __Arguments__
 
 * `photoID`: Photo ID.
-* `callback(err, url)`: A callback called when the query is done (either with an error or with the photo's URL). `url` is a string with the photo's URL. 
+* `callback(err, url)`: A callback called when the query is done (either with an error or with the photo's URL). `url` is a string with the photo's URL.
 
 ---------------------------------------
 
