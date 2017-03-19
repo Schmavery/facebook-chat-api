@@ -622,7 +622,7 @@ If `attachments` contains an object with type `"share"`, the object will contain
 If `attachments` contains an object with type `"video"`, the object will contain the following fields: `filename`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `ID`, `url`, `width`, `height`, `duration`.
 
 If enabled through [setOptions](#setOptions), this will also handle events. In this case, `message` will be either a message (see above) or an event object with the following fields:
-- `type`: The string `"event"` or `"typ"`
+- `type`: The string `"event"`, `"typ"`, `"read_receipt"` or `"read"`
 - `threadID`: The threadID representing the thread in which the message was sent.
 
 If `type` is `"event"` then the object will also have those fields:
@@ -652,11 +652,11 @@ Difference between `"read_receipt"` and `"read"`:
 - `"read"` event triggers when the user read other people's messages.
 
 <a name="presence"></a>
-If enabled through [setOptions](#setOptions), this will also return presence, (`type` will be `"presence"`), which is the online status of the user's friends. The object given to the callback will have the following fields:
-- `type`: The string "presence".
+If enabled through [setOptions](#setOptions), `message` could also be a presence object, (`type` will be `"presence"`), which is the online status of the user's friends. That object given to the callback will have the following fields:
+- `type`: The string `"presence"`.
 - `timestamp`: How old the information is.
 - `userID`: The ID of the user whose status this packet is describing
-- `statuses`: The online status of the user. `0` means the user is idle (away for 2 minutes) and `2` means the user is online.
+- `statuses`: The online status of the user. `0` means the user is idle (away for 2 minutes) and `2` means the user is online (we don't know what 1 or above 2 is...).
 
 __Example__
 
