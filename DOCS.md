@@ -64,7 +64,7 @@ nodejs login.js
 
 ---------------------------------------
 
-<a name="login"/>
+<a name="login"></a>
 ### login(credentials[, options], callback)
 
 This function is returned by `require(...)` and is the main entry point to the API.
@@ -156,7 +156,7 @@ __Review Recent Login__: Sometimes Facebook will ask you to review your recent l
 
 ---------------------------------------
 
-<a name="addUserToGroup" />
+<a name="addUserToGroup"></a>
 ### api.addUserToGroup(userID, threadID[, callback])
 
 Adds a user (or array of users) to a group chat.
@@ -169,7 +169,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="changeArchivedStatus" />
+<a name="changeArchivedStatus"></a>
 ### api.changeArchivedStatus(threadOrThreads, archive[, callback])
 
 Given a threadID, or an array of threadIDs, will set the archive status of the threads to `archive`. Archiving a thread will hide it from the logged-in user's inbox until the next time a message is sent or received.
@@ -196,7 +196,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="changeBlockedStatus" />
+<a name="changeBlockedStatus"></a>
 ### api.changeBlockedStatus(userID, block[, callback])
 
 Prevents a user from privately contacting you. (Messages in a group chat will still be seen by both parties).
@@ -209,7 +209,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="changeGroupImage" />
+<a name="changeGroupImage"></a>
 ### api.changeGroupImage(image, threadID[, callback])
 
 Will change the group chat's image to the given image.
@@ -236,7 +236,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="changeNickname" />
+<a name="changeNickname"></a>
 ### api.changeNickname(nickname, threadID, participantID[, callback])
 
 Will change the thread user nickname to the one provided.
@@ -264,7 +264,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="changeThreadColor" />
+<a name="changeThreadColor"></a>
 ### api.changeThreadColor(color, threadID[, callback])
 
 Will change the thread color to the given hex string color ("#0000ff"). Set it
@@ -294,7 +294,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="changeThreadEmoji" />
+<a name="changeThreadEmoji"></a>
 ### api.changeThreadEmoji(emoji, threadID[, callback])
 
 Will change the thread emoji to the one provided.
@@ -323,7 +323,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="createPoll" />
+<a name="createPoll"></a>
 ### api.createPoll(title, threadID[, options][, callback])
 
 Creates a poll with the specified title and optional poll options, which can also be initially selected by the logged-in user.
@@ -354,7 +354,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="deleteMessage" />
+<a name="deleteMessage"></a>
 ### api.deleteMessage(messageOrMessages[, callback])
 
 Takes a messageID or an array of messageIDs and deletes the corresponding message.
@@ -385,7 +385,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="deleteThread" />
+<a name="deleteThread"></a>
 ### api.deleteThread(threadOrThreads[, callback])
 
 Given a threadID, or an array of threadIDs, will delete the threads from your account. Note that this does *not* remove the messages from Facebook's servers - anyone who hasn't deleted the thread can still view all of the messages.
@@ -412,21 +412,21 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="getAppState" />
+<a name="getAppState"></a>
 ### api.getAppState()
 
 Returns current appState which can be saved to a file or stored in a variable.
 
 ---------------------------------------
 
-<a name="getCurrentUserID" />
+<a name="getCurrentUserID"></a>
 ### api.getCurrentUserID()
 
 Returns the currently logged-in user's Facebook user ID.
 
 ---------------------------------------
 
-<a name="getFriendsList" />
+<a name="getFriendsList"></a>
 ### api.getFriendsList(callback)
 
 Returns an array of objects with some information about your friends.
@@ -454,7 +454,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="getThreadHistory" />
+<a name="getThreadHistory"></a>
 ### api.getThreadHistory(threadID, start, end, timestamp[, callback])
 
 Takes a threadID, start and end numbers, a timestamp, and a callback.
@@ -470,7 +470,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="getThreadInfo" />
+<a name="getThreadInfo"></a>
 ### api.getThreadInfo(threadID[, callback])
 
 Takes a threadID and a callback.  Works for both single-user and group threads.
@@ -481,7 +481,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="getThreadList" />
+<a name="getThreadList"></a>
 ### api.getThreadList(start, end, type, callback)
 
 Will return information about threads.
@@ -495,7 +495,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="getThreadPictures" />
+<a name="getThreadPictures"></a>
 ### api.getThreadPictures(threadID, offset, limit, callback)
 
 Returns pictures sent in the thread.
@@ -509,7 +509,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="getUserID" />
+<a name="getUserID"></a>
 ### api.getUserID(name, callback)
 
 Given the full name of a Facebook user, the call will perform a Facebook Graph search and return all corresponding IDs (order determined by Facebook).
@@ -541,7 +541,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="getUserInfo" />
+<a name="getUserInfo"></a>
 ### api.getUserInfo(ids, callback)
 
 Will get some information about the given users.
@@ -574,7 +574,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="handleMessageRequest" />
+<a name="handleMessageRequest"></a>
 ### api.handleMessageRequest(threadID, accept[, callback])
 
 Accept or ignore message request(s) with thread id `threadID`.
@@ -587,7 +587,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="listen" />
+<a name="listen"></a>
 ### api.listen(callback)
 
 Will call `callback` when a new message is received on this account.
@@ -651,7 +651,7 @@ Difference between `"read_receipt"` and `"read"`:
 - `"read_receipt"` event triggers when other people read the user's messages.
 - `"read"` event triggers when the user read other people's messages.
 
-<a name="presence" />
+<a name="presence"></a>
 If enabled through [setOptions](#setOptions), this will also return presence, (`type` will be `"presence"`), which is the online status of the user's friends. The object given to the callback will have the following fields:
 - `type`: The string "presence".
 - `timestamp`: How old the information is.
@@ -696,7 +696,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="logout" />
+<a name="logout"></a>
 ### api.logout([callback])
 
 Logs out the current user.
@@ -707,7 +707,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="markAsRead" />
+<a name="markAsRead"></a>
 ### api.markAsRead(threadID[, callback])
 
 Given a threadID will mark all the unread messages as read. Facebook will take a couple of seconds to show that you've read the messages.
@@ -737,7 +737,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="muteThread" />
+<a name="muteThread"></a>
 ### api.muteThread(threadID, muteSeconds[, callback])
 
 Mute a chat for a period of time, or unmute a chat.
@@ -768,7 +768,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="removeUserFromGroup" />
+<a name="removeUserFromGroup"></a>
 ### api.removeUserFromGroup(userID, threadID[, callback])
 
 Removes a user from a group chat.
@@ -781,7 +781,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="resolvePhotoUrl" />
+<a name="resolvePhotoUrl"></a>
 ### api.resolvePhotoUrl(photoID, callback)
 
 Resolves the URL to the full-size photo, given its ID. This function is useful for retrieving the full-size photo URL
@@ -794,7 +794,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="searchForThread" />
+<a name="searchForThread"></a>
 ### api.searchForThread(name, callback)
 
 > This part is outdated.
@@ -808,7 +808,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="sendMessage" />
+<a name="sendMessage"></a>
 ### api.sendMessage(message, threadID[, callback])
 
 Sends the given message to the threadID.
@@ -866,7 +866,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="sendTypingIndicator" />
+<a name="sendTypingIndicator"></a>
 ### api.sendTypingIndicator(threadID[, callback])
 
 Sends a "USERNAME is typing" indicator to other members of the thread indicated by threadID.  This indication will disappear after 30 second or when the `end` function is called. The `end` function is returned by `api.sendTypingIndicator`.
@@ -878,7 +878,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="setOptions" />
+<a name="setOptions"></a>
 ### api.setOptions(options)
 
 Sets various configurable options for the api.
@@ -927,7 +927,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="setTitle" />
+<a name="setTitle"></a>
 ### api.setTitle(newTitle, threadID[, callback])
 
 Sets the title of the group chat with thread id `threadID` to `newTitle`.
