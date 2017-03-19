@@ -469,6 +469,17 @@ function formatTyp(event) {
   };
 }
 
+function formatDeltaReadReceipt(delta) {
+  // otherUserFbId seems to be used as both the readerID and the threadID in a 1-1 chat.
+  // In a group chat actorFbId is used for the reader and threadFbId for the thread.
+  return {
+    reader: (delta.threadKey.otherUserFbId || delta.actorFbId).toString(),
+    time: delta.actionTimestampMs,
+    threadID: (delta.threadKey.otherUserFbId || delta.threadKey.threadFbId).toString(),
+    type: 'read_receipt'
+  };
+}
+
 function formatReadReceipt(event) {
   return {
     reader: event.reader.toString(),
