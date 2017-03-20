@@ -25,7 +25,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     var ind = 0;
     for(var opt in options) {
       if(options.hasOwnProperty(opt)) {
-        form['option_text_array[' + ind + ']'] = encodeURIComponent(opt);
+        form['option_text_array[' + ind + ']'] = opt;
         form['option_is_selected_array[' + ind + ']'] = (options[opt] ? '1' : '0');
         ind++;
       }

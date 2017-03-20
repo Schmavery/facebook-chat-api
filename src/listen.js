@@ -70,7 +70,6 @@ module.exports = function(defaultFuncs, api, ctx) {
       var now = Date.now();
       log.info("listen", "Got answer in " + (now - tmpPrev));
       tmpPrev = now;
-
       if(resData && resData.t === "lb") {
         form.sticky_token = resData.lb_info.sticky;
         form.sticky_pool = resData.lb_info.pool;
@@ -169,6 +168,8 @@ module.exports = function(defaultFuncs, api, ctx) {
                         if (!err) v.delta.attachments[i].mercury.metadata.url = url;
                         return resolveAttachmentUrl(i + 1);
                       });
+                    } else {
+                      return resolveAttachmentUrl(i + 1);
                     }
                   }
                 })(0)
@@ -185,6 +186,8 @@ module.exports = function(defaultFuncs, api, ctx) {
                     default:
                       return;
                   }
+                case 'ReadReceipt':
+                   return globalCallback(null, utils.formatDeltaReadReceipt(v.delta));
                 case 'ThreadName':
                 case 'ParticipantsAddedToGroupThread':
                 case 'ParticipantLeftGroupThread':
