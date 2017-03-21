@@ -748,6 +748,7 @@ module.exports = {
   formatEvent: formatEvent,
   formatPresence: formatPresence,
   formatTyp: formatTyp,
+  formatDeltaReadReceipt: formatDeltaReadReceipt,
   formatCookie: formatCookie,
   formatThread: formatThread,
   formatReadReceipt: formatReadReceipt,
