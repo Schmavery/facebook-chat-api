@@ -224,3 +224,4 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 - [fbash](https://github.com/avikj/fbash) - Run commands on your computer's terminal over Facebook Messenger
 - [Klink](https://github.com/KeNt178/klink) - This Chrome extension will 1-click share the link of your active tab over Facebook Messenger
 - [Botyo](https://github.com/ivkos/botyo) - Modular bot designed for group chat rooms on Facebook
+- [matrix-puppet-facebook](https://github.com/matrix-hacks/matrix-puppet-facebook) - A facebook bridge for [matrix](https://matrix.org)
