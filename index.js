@@ -423,7 +423,7 @@ function loginHelper(appState, email, password, globalOptions, callback) {
 }
 
 function login(loginData, options, callback) {
-  if(utils.getType(options) === 'Function') {
+  if(utils.getType(options) === 'Function' || utils.getType(options) === 'AsyncFunction') {
     callback = options;
     options = {};
   }
