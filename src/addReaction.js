@@ -13,7 +13,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       data: {
         client_mutation_id: 1,
         actor_id: ctx.userID,
-        action: "ADD_RECTION",
+        action: "ADD_REACTION",
         message_id: messageID,
         reaction: reaction        
       }
@@ -24,18 +24,20 @@ module.exports = function(defaultFuncs, api, ctx) {
       variables: JSON.stringify(variables),
       dpr: 1
     };
-    
+
     defaultFuncs
-      .get("https://www.messenger.com/webgraphql/mutation/", ctx.jar, qs)
+      .postFormData("https://www.messenger.com/webgraphql/mutation/", ctx.jar, {}, qs)
       .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
-      .then(resData => {
-        if (resData.error) {
+      .then(function(resData) {
+        if (!resData) {
+          throw {error: "addReaction returned empty object."};
+        }
+        if(resData.error) {
           throw resData;
         }
-        
-        return callback(null);
+        callback(null);
       })
-      .catch(err => {
+      .catch(function(err) {
         log.error("addReaction", err);
         return callback(err);
       });
