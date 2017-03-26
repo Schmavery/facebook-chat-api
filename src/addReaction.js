@@ -20,7 +20,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     };
     
     var qs = {
-      doc_id: threadID,
+      doc_id: "1491398900900362",
       variables: JSON.stringify(variables),
       dpr: 1
     };
