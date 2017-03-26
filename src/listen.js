@@ -70,7 +70,6 @@ module.exports = function(defaultFuncs, api, ctx) {
       var now = Date.now();
       log.info("listen", "Got answer in " + (now - tmpPrev));
       tmpPrev = now;
-
       if(resData && resData.t === "lb") {
         form.sticky_token = resData.lb_info.sticky;
         form.sticky_pool = resData.lb_info.pool;
@@ -142,13 +141,12 @@ module.exports = function(defaultFuncs, api, ctx) {
                     return (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) ? undefined : globalCallback(null, fmtMsg);
                   } else {
                     if (v.delta.attachments[i].mercury.attach_type == 'photo') {
-                      defaultFuncs
-                        .get("https://www.facebook.com/mercury/attachments/photo/?photo_id=" + v.delta.attachments[i].fbid, ctx.jar, {})
-                        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
-                        .then(function (resData) {
-                          if (!resData.error) v.delta.attachments[i].mercury.url = resData.jsmods.require[0][3][0]
-                          return resolveAttachmentUrl(i + 1);
-                        })
+                      api.resolvePhotoUrl(v.delta.attachments[i].fbid, (err, url) => {
+                        if (!err) v.delta.attachments[i].mercury.metadata.url = url;
+                        return resolveAttachmentUrl(i + 1);
+                      });
+                    } else {
+                      return resolveAttachmentUrl(i + 1);
                     }
                   }
                 })(0)
@@ -165,6 +163,8 @@ module.exports = function(defaultFuncs, api, ctx) {
                     default:
                       return;
                   }
+                case 'ReadReceipt':
+                   return globalCallback(null, utils.formatDeltaReadReceipt(v.delta));
                 case 'ThreadName':
                 case 'ParticipantsAddedToGroupThread':
                 case 'ParticipantLeftGroupThread':

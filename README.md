@@ -7,19 +7,27 @@ _Disclaimer_: We are not responsible if your account gets banned for spammy acti
 See [below](#projects-using-this-api) for projects using this API.
 
 ## Install
+If you just want to use facebook-chat-api, you should use this command:
 ```bash
 npm install facebook-chat-api
+```
+It will download facebook-chat-api from NPM repositories
+
+### Bleeding edge
+If you want to use bleeding edge (directly from github) to test new features or submit bug report, this is the command for you:
+```bash
+npm install Schmavery/facebook-chat-api
 ```
 
 ## Example Usage
 ```javascript
-var login = require("facebook-chat-api");
+const login = require("facebook-chat-api");
 
 // Create simple echo bot
-login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
     if(err) return console.error(err);
 
-    api.listen(function callback(err, message) {
+    api.listen((err, message) => {
         api.sendMessage(message.body, message.threadID);
     });
 });
@@ -37,9 +45,10 @@ Result:
 * [`api.changeArchivedStatus`](DOCS.md#changeArchivedStatus)
 * [`api.changeBlockedStatus`](DOCS.md#changeBlockedStatus)
 * [`api.changeGroupImage`](DOCS.md#changeGroupImage)
+* [`api.changeNickname`](DOCS.md#changeNickname)
 * [`api.changeThreadColor`](DOCS.md#changeThreadColor)
 * [`api.changeThreadEmoji`](DOCS.md#changeThreadEmoji)
-* [`api.changeNickname`](DOCS.md#changeNickname)
+* [`api.createPoll`](DOCS.md#createPoll)
 * [`api.deleteMessage`](DOCS.md#deleteMessage)
 * [`api.deleteThread`](DOCS.md#deleteThread)
 * [`api.getAppState`](DOCS.md#getAppState)
@@ -57,6 +66,7 @@ Result:
 * [`api.markAsRead`](DOCS.md#markAsRead)
 * [`api.muteThread`](DOCS.md#muteThread)
 * [`api.removeUserFromGroup`](DOCS.md#removeUserFromGroup)
+* [`api.resolvePhotoUrl`](DOCS.md#resolvePhotoUrl)
 * [`api.searchForThread`](DOCS.md#searchForThread)
 * [`api.sendMessage`](DOCS.md#sendMessage)
 * [`api.sendTypingIndicator`](DOCS.md#sendTypingIndicator)
@@ -73,6 +83,7 @@ Various types of message can be sent:
 * *Sticker:* set a field `sticker` to the desired sticker ID.
 * *File or image:* Set field `attachment` to a readable stream or an array of readable streams.
 * *URL:* set a field `url` to the desired URL.
+* *Emoji:* set field `emoji` to the desired emoji as a string and set field `emojiSize` with size of the emoji (`small`, `medium`, `large`)
 
 Note that a message can only be a regular message (which can be empty) and optionally one of the following: a sticker, an attachment or a url.
 
@@ -80,27 +91,51 @@ __Tip__: to find your own ID, you can look inside the cookies. The `userID` is u
 
 __Example (Basic Message)__
 ```js
-login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+const login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
     if(err) return console.error(err);
 
-    var yourID = 0000000000000;
-    var msg = {body: "Hey!"};
+    var yourID = "000000000000000";
+    var msg = "Hey!";
     api.sendMessage(msg, yourID);
 });
 ```
 
 __Example (File upload)__
 ```js
-login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+const login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
     if(err) return console.error(err);
 
     // Note this example uploads an image called image.jpg
-    var yourID = 0000000000000;
+    var yourID = "000000000000000";
     var msg = {
-      body: "Hey!",
-      attachment: fs.createReadStream(__dirname + '/image.jpg')
+        body: "Hey!",
+        attachment: fs.createReadStream(__dirname + '/image.jpg')
     }
     api.sendMessage(msg, yourID);
+});
+```
+
+------------------------------------
+### Saving session.
+
+To avoid logging in every time you should save AppState (cookies etc.) to a file, then you can use it without having password in your scripts.
+
+__Example__
+
+```js
+const fs = require("fs");
+const login = require("facebook-chat-api");
+
+var credentials = {email: "FB_EMAIL", password: "FB_PASSWORD"};
+
+login(credentials, (err, api) => {
+    if(err) return console.error(err);
+
+    fs.writeFileSync('appstate.json', JSON.stringify(api.getAppState()));
 });
 ```
 
@@ -109,36 +144,39 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 ### Listening to a chat
 #### api.listen(callback)
 
-Listen watches for messages sent in a chat. By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true})`. This will by default ignore messages sent by the current account, you can enable listening to your own messages with `api.setOptions({selfListen: true})`.
+Listen watches for messages sent in a chat. By default this won't receive events (joining/leaving a chat, title change etc…) but it can be activated with `api.setOptions({listenEvents: true})`. This will by default ignore messages sent by the current account, you can enable listening to your own messages with `api.setOptions({selfListen: true})`.
 
 __Example__
 
 ```js
-// Simple echo bot. He'll repeat anything that you say.
-// Will stop when you say '/stop'
+const fs = require("fs");
+const login = require("facebook-chat-api");
 
-login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+// Simple echo bot. It will repeat everything that you say.
+// Will stop when you say '/stop'
+login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
     if(err) return console.error(err);
 
     api.setOptions({listenEvents: true});
 
-    var stopListening = api.listen(function(err, event) {
+    var stopListening = api.listen((err, event) => {
         if(err) return console.error(err);
 
+        api.markAsRead(event.threadID, (err) => {
+            if(err) console.error(err);
+        });
+
         switch(event.type) {
-          case "message":
-            if(event.body === '/stop') {
-              api.sendMessage("Goodbye...", event.threadID);
-              return stopListening();
-            }
-            api.markAsRead(event.threadID, function(err) {
-              if(err) console.log(err);
-            });
-            api.sendMessage("TEST BOT: " + event.body, event.threadID);
-            break;
-          case "event":
-            console.log(event);
-            break;
+            case "message":
+                if(event.body === '/stop') {
+                    api.sendMessage("Goodbye…", event.threadID);
+                    return stopListening();
+                }
+                api.sendMessage("TEST BOT: " + event.body, event.threadID);
+                break;
+            case "event":
+                console.log(event);
+                break;
         }
     });
 });
@@ -161,7 +199,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 5. Do you support sending messages as a page?
 > Yes, set the pageID option on login (this doesn't work if you set it using api.setOptions, it affects the login process).
 > ```js
-> login(credentials, {pageID: xxxxx}, function(api) { ... }
+> login(credentials, {pageID: "000000000000000"}, (err, api) => { … }
 > ```
 
 6. I'm getting some crazy weird syntax error like `SyntaxError: Unexpected token [`!!!
@@ -171,7 +209,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 > You can use `api.setOptions` to silence the logging. You get the `api` object from `login` (see example above). Do
 > ```js
 > api.setOptions({
->   logLevel: "silent"
+>     logLevel: "silent"
 > });
 > ```
 
@@ -186,3 +224,4 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
 - [fbash](https://github.com/avikj/fbash) - Run commands on your computer's terminal over Facebook Messenger
 - [Klink](https://github.com/KeNt178/klink) - This Chrome extension will 1-click share the link of your active tab over Facebook Messenger
 - [Botyo](https://github.com/ivkos/botyo) - Modular bot designed for group chat rooms on Facebook
+- [matrix-puppet-facebook](https://github.com/matrix-hacks/matrix-puppet-facebook) - A facebook bridge for [matrix](https://matrix.org)
