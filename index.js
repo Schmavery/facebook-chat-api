@@ -72,6 +72,7 @@ function buildAPI(globalOptions, html, jar) {
   };
 
   var apiFuncNames = [
+    'addReaction',
     'addUserToGroup',
     'changeArchivedStatus',
     'changeBlockedStatus',
