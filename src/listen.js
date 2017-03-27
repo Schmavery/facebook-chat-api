@@ -154,6 +154,8 @@ module.exports = function(defaultFuncs, api, ctx) {
               }
 
               switch (v.delta.class) {
+                case 'ReadReceipt':
+                  return globalCallback(null, utils.formatDeltaReadReceipt(v.delta));
                 case 'AdminTextMessage':
                   switch (v.delta.type) {
                     case 'change_thread_theme':
@@ -163,9 +165,6 @@ module.exports = function(defaultFuncs, api, ctx) {
                     default:
                       return;
                   }
-                  break;
-                case 'ReadReceipt':
-                   return globalCallback(null, utils.formatDeltaReadReceipt(v.delta));
                 case 'ThreadName':
                 case 'ParticipantsAddedToGroupThread':
                 case 'ParticipantLeftGroupThread':
