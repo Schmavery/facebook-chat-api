@@ -595,11 +595,11 @@ function parseAndCheckLogin(jar, defaultFuncs) {
         if (data.request.headers['Content-Type'].split(";")[0] === "multipart/form-data") {
           return defaultFuncs
             .postFormData(url, jar, data.request.formData, {})
-            .then(parseAndCheckLogin(jar));
+            .then(parseAndCheckLogin(jar, defaultFuncs));
         } else {
           return defaultFuncs
             .post(url, jar, data.request.formData)
-            .then(parseAndCheckLogin(jar));
+            .then(parseAndCheckLogin(jar, defaultFuncs));
         }
       }
       if (data.statusCode !== 200) throw new Error("parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.");
