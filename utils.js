@@ -584,21 +584,38 @@ function makeDefaults(html, userID, ctx) {
   };
 }
 
-function parseAndCheckLogin(ctx, defaultFuncs) {
+function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
+  if (retryCount == undefined) {
+    retryCount = 0;
+  }
   return function(data) {
     return bluebird.try(function() {
       log.verbose("parseAndCheckLogin", data.body);
       if (data.statusCode >= 500 && data.statusCode < 600) {
-        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " retrying...");
+        if (retryCount == 5) {
+          throw {
+            error: "Request retry failed. Check the `res` and `statusCode` property on this error.",
+            statusCode: data.statusCode,
+            res: data.body
+          };
+        }
+        retryCount++;
+        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " - " + retryCount + ". attempt to retry in 5 seconds...");
         var url = data.request.uri.protocol + "//" + data.request.uri.hostname + data.request.uri.pathname;
         if (data.request.headers['Content-Type'].split(";")[0] === "multipart/form-data") {
-          return defaultFuncs
-            .postFormData(url, ctx.jar, data.request.formData, {})
-            .then(parseAndCheckLogin(ctx, defaultFuncs));
+          return bluebird
+            .delay(5000)
+            .then(function() {
+              return defaultFuncs.postFormData(url, ctx.jar, data.request.formData, {});
+            })
+            .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         } else {
-          return defaultFuncs
-            .post(url, ctx.jar, data.request.formData)
-            .then(parseAndCheckLogin(ctx, defaultFuncs));
+          return bluebird
+            .delay(5000)
+            .then(function() {
+              return post(url, ctx.jar, data.request.formData);
+            })
+            .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         }
       }
       if (data.statusCode !== 200) throw new Error("parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.");
