@@ -163,6 +163,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                     default:
                       return;
                   }
+                  break;
                 case 'ReadReceipt':
                    return globalCallback(null, utils.formatDeltaReadReceipt(v.delta));
                 case 'ThreadName':
