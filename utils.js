@@ -727,6 +727,7 @@ function getType(obj) {
 function formatProxyPresence(presence, userID) {
   if(presence.lat === undefined) return null;
   return {
+    type: "presence",
     timestamp: presence.lat * 1000,
     userID: userID,
     statuses: presence.p === undefined ? 0 : presence.p
