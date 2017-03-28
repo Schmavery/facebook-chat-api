@@ -117,12 +117,30 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               return globalCallback(null, utils.formatTyp(v));
               break;
+            case 'chatproxy-presence':
+              // TODO: what happens when you're logged in as a page?
+              if(!ctx.globalOptions.updatePresence) {
+                return;
+              }
+              
+              
+              if (ctx.loggedIn) {
+                for(var userID in v.buddyList) {
+                  var formattedPresence = utils.formatProxyPresence(v.buddyList[userID], userID);
+                  if(formattedPresence != null)
+                  {
+                    globalCallback(null, formattedPresence);
+                  }
+                }
+                return;
+              }
+              
+              break;
             case 'buddylist_overlay':
               // TODO: what happens when you're logged in as a page?
               if(!ctx.globalOptions.updatePresence) {
                 return;
               }
-
               // There should be only one key inside overlay
               Object.keys(v.overlay).map(function(userID) {
                 var formattedPresence = utils.formatPresence(v.overlay[userID], userID);
