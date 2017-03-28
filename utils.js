@@ -601,7 +601,7 @@ function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
         }
         retryCount++;
         var retryTime = Math.floor(Math.random() * 5000);
-        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " - " + retryCount + ". attempt to retry in " + retryTime + " seconds...");
+        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " - " + retryCount + ". attempt to retry in " + retryTime + " milliseconds...");
         var url = data.request.uri.protocol + "//" + data.request.uri.hostname + data.request.uri.pathname;
         if (data.request.headers['Content-Type'].split(";")[0] === "multipart/form-data") {
           return bluebird
