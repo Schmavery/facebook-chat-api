@@ -123,23 +123,18 @@ module.exports = function(defaultFuncs, api, ctx) {
                 return;
               }
               
-              var buddyList = [];
-              var presence = null;
               
-              for(var userID in v.buddyList) {
-                presence = utils.formatProxyPresence(v.buddyList[userID], userID);
-                if(presence != null)
-                {
-                  buddyList.push(presence);
+              if (ctx.loggedIn) {
+                for(var userID in v.buddyList) {
+                  var formattedPresence = utils.formatProxyPresence(v.buddyList[userID], userID);
+                  if(formattedPresence != null)
+                  {
+                    globalCallback(null, formattedPresence);
+                  }
                 }
+                return;
               }
               
-              if(ctx.loggedIn) {
-                return globalCallback(null, {
-                  type: "buddyList",
-                  buddyList: buddyList
-                });
-              }
               break;
             case 'buddylist_overlay':
               // TODO: what happens when you're logged in as a page?
