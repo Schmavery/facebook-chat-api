@@ -592,7 +592,7 @@ function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
     return bluebird.try(function() {
       log.verbose("parseAndCheckLogin", data.body);
       if (data.statusCode >= 500 && data.statusCode < 600) {
-        if (retryCount == 5) {
+        if (retryCount >= 5) {
           throw {
             error: "Request retry failed. Check the `res` and `statusCode` property on this error.",
             statusCode: data.statusCode,
@@ -600,20 +600,21 @@ function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
           };
         }
         retryCount++;
-        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " - " + retryCount + ". attempt to retry in 5 seconds...");
+        var retryTime = Math.floor(Math.random() * 5000);
+        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " - " + retryCount + ". attempt to retry in " + retryTime + " seconds...");
         var url = data.request.uri.protocol + "//" + data.request.uri.hostname + data.request.uri.pathname;
         if (data.request.headers['Content-Type'].split(";")[0] === "multipart/form-data") {
           return bluebird
-            .delay(5000)
+            .delay(retryTime)
             .then(function() {
               return defaultFuncs.postFormData(url, ctx.jar, data.request.formData, {});
             })
             .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         } else {
           return bluebird
-            .delay(5000)
+            .delay(retryTime)
             .then(function() {
-              return post(url, ctx.jar, data.request.formData);
+              return defaultFuncs.post(url, ctx.jar, data.request.formData);
             })
             .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         }
