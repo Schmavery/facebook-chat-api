@@ -20,7 +20,7 @@ function getHeaders(url) {
 
 function isReadableStream(obj) {
   return obj instanceof stream.Stream &&
-    getType(obj._read) === 'Function' &&
+    (getType(obj._read) === 'Function' || getType(obj._read) === 'AsyncFunction') &&
     getType(obj._readableState) === 'Object';
 }
 

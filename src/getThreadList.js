@@ -10,7 +10,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         throw {
           error: "Please pass a number as a second argument."
         };
-      } else if (utils.getType(type) === 'Function') {
+      } else if (utils.getType(type) === 'Function' || utils.getType(type) === 'AsyncFunction') {
         callback = type;
         type = 'inbox'; //default to inbox
       } else if (utils.getType(type) !== 'String') {

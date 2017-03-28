@@ -5,7 +5,7 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function setTitle(newTitle, threadID, callback) {
-    if(!callback && utils.getType(threadID) === 'Function') {
+    if(!callback && (utils.getType(threadID) === 'Function' || utils.getType(threadID) === 'AsyncFunction')) {
       throw {error: "please pass a threadID as a second argument."};
     }
 
