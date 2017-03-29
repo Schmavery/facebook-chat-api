@@ -32,7 +32,7 @@ module.exports = function (defaultFuncs, api, ctx) {
             var day = data.response[userID].montage_thread.userDays.edges[i].node;
             if (day.blob_attachments && day.blob_attachments[0]) {
               var formattedDay = {
-                "messageId": day.blob_attachments[0].id,
+                "messageID": day.blob_attachments[0].id,
                 "type": day.blob_attachments[0].type,
                 "timestamp": day.timestamp * 1000,
               };
