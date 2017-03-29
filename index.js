@@ -72,7 +72,6 @@ function buildAPI(globalOptions, html, jar) {
   };
 
   var apiFuncNames = [
-    'addReaction',
     'addUserToGroup',
     'changeArchivedStatus',
     'changeBlockedStatus',
@@ -101,6 +100,7 @@ function buildAPI(globalOptions, html, jar) {
     'searchForThread',
     'sendMessage',
     'sendTypingIndicator',
+    'setMessageReaction',
     'setTitle',
   ];
 
