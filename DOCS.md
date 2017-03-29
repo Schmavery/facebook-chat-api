@@ -31,6 +31,7 @@
 * [`api.sendMessage`](#sendMessage)
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
 * [`api.setOptions`](#setOptions)
+* [`api.setMessageReaction`](#setMessageReaction)
 * [`api.setTitle`](#setTitle)
 
 ---------------------------------------
@@ -651,6 +652,14 @@ Difference between `"read_receipt"` and `"read"`:
 - `"read_receipt"` event triggers when other people read the user's messages.
 - `"read"` event triggers when the user read other people's messages.
 
+If `type` is `"message_reaction"`, then the object will have following fields (enabled `listenEvents` required):
+- `"reaction"`: Contains reaction emoji
+- `"userId"`: The reaction senders ID
+- `"senderId"`: ID of author the message, where has been reaction added
+- `"messageId"`: The ID of message
+- `"threadId"`: ID of thread where has been message sent
+- `"offlineThreadingId"`: The offline message ID
+
 <a name="presence"></a>
 If enabled through [setOptions](#setOptions), `message` could also be a presence object, (`type` will be `"presence"`), which is the online status of the user's friends. That object given to the callback will have the following fields:
 - `type`: The string `"presence"`.
@@ -924,6 +933,30 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
     });
 });
 ```
+
+---------------------------------------
+
+<a name="setMessageReaction"></a>
+### api.setMessageReaction(reaction, messageID[, callback])
+
+Sets reaction on message
+
+__Arguments__
+
+* `reaction`: A string contains `emoji`, `emoji shortcut`, `emoji in unicode` or left `empty string` for delete reaction (look down for list of supported emojis)
+* `messageID`: A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation.
+* `callback(err)` - A callback called when sending the reaction is done.
+
+__Supported Emojis__
+
+* 😍 - Unicode: `\uD83D\uDE0D`, Shortcut: `:heart_eyes:`
+* 😆 - Unicode: `\uD83D\uDE06`, Shortcut: `:laughing:`
+* 😮 - Unicode: `\uD83D\uDE2E`, Shortcut: `:open_mouth:`
+* 😢 - Unicode: `\uD83D\uDE22`, Shortcut: `:cry:`
+* 😠 - Unicode: `\uD83D\uDE20`, Shortcut: `:angry:`
+* 👍 - Unicode: `\uD83D\uDC4D`, Shortcut: `:thumbsup:`
+* 👎 - Unicode: `\uD83D\uDC4E`, Shortcut: `:thumbsdown:`
+
 
 ---------------------------------------
 
