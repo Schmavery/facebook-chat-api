@@ -152,6 +152,20 @@ module.exports = function(defaultFuncs, api, ctx) {
                 })(0)
                 break;
               }
+              
+              if (v.delta.class == "ClientPayload") {
+                var clientPayload = utils.decodeClientPayload(v.delta.payload);
+                if (clientPayload && clientPayload.deltas) {
+                  for (var i in clientPayload.deltas) {
+                    var delta = clientPayload.deltas[i];
+                    if (delta.deltaMessageReaction) {
+                      delta.deltaMessageReaction.type = "message_reaction";
+                      globalCallback(null, delta.deltaMessageReaction);
+                    }
+                  }
+                  return;
+                }
+              }
 
               switch (v.delta.class) {
                 case 'ReadReceipt':
