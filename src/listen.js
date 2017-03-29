@@ -160,6 +160,9 @@ module.exports = function(defaultFuncs, api, ctx) {
                     var delta = clientPayload.deltas[i];
                     if (delta.deltaMessageReaction) {
                       delta.deltaMessageReaction.type = "message_reaction";
+                      delta.threadId = delta.threadKey.threadFbId;
+                      delete delta.threadKey;
+                      delete delta.action;
                       globalCallback(null, delta.deltaMessageReaction);
                     }
                   }
