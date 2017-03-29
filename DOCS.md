@@ -608,6 +608,7 @@ If `type` is `message`, the object will contain the following fields:
   + `messageID`: A string representing the message ID.
   + `attachments`: An array of attachments to the message.
   + `isGroup`: boolean, true if this thread is a group thread (more than 2 participants).
+  + `reactions`: An array of reactions with key as userID and value as emoji
 
 If `attachments` contains an object with type `"sticker"`, the object will contain the following fields: `url`, `stickerID`, `packID`, `frameCount`, `frameRate`, `framesPerRow`, `framesPerCol`, `spriteURI`, `spriteURI2x`, `height`, `width`, `caption`, `description`.
 

@@ -375,7 +375,8 @@ function formatDeltaMessage(m){
     messageID: md.messageId,
     attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
     timestamp: md.timestamp,
-    isGroup: !!md.threadKey.threadFbId
+    isGroup: !!md.threadKey.threadFbId,
+    reactions: originalMessage.reactions ? originalMessage.reactions : []
   }
 }
 
