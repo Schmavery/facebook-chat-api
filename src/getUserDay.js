@@ -22,8 +22,6 @@ module.exports = function (defaultFuncs, api, ctx) {
         if (err) {
           throw err;
         }
-        console.log(JSON.stringify(data, null, 2));
-        return;
         var days = [];
         if (data.response &&
             data.response[userID] &&
@@ -40,6 +38,9 @@ module.exports = function (defaultFuncs, api, ctx) {
               };
               if (day.blob_attachments[0].type == "MessageImage") {
                 formattedDay.uri = day.blob_attachments[0].image.uri;
+              }
+              else if (day.blob_attachments[0].type == "MessageVideo") {
+                formattedDay.uri = day.blob_attachments[0].playable_url;
               }
               days.push(formattedDay);
             }
