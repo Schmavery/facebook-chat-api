@@ -3,8 +3,6 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-var clientMutationId = 0;
-
 module.exports = function(defaultFuncs, api, ctx) {
   return function setMessageReaction(reaction, messageID, callback) {
     if(!callback) {
@@ -43,7 +41,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     
     var variables = {
       data: {
-        client_mutation_id: clientMutationId++,
+        client_mutation_id: ctx.clientMutationId++,
         actor_id: ctx.userID,
         action: reaction == "" ? "REMOVE_REACTION" : "ADD_REACTION",
         message_id: messageID,
