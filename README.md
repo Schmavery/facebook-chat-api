@@ -60,6 +60,7 @@ Result:
 * [`api.getThreadPictures`](DOCS.md#getThreadPictures)
 * [`api.getUserID`](DOCS.md#getUserID)
 * [`api.getUserInfo`](DOCS.md#getUserInfo)
+* [`api.getUserDay`](DOCS.md#getUserDay)
 * [`api.handleMessageRequest`](DOCS.md#handleMessageRequest)
 * [`api.listen`](DOCS.md#listen)
 * [`api.logout`](DOCS.md#logout)
