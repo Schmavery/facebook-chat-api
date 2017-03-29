@@ -4,15 +4,13 @@ var utils = require("../utils");
 var log = require("npmlog");
 var bluebird = require("bluebird");
 
-var lastBatchQueryIndex = 0;
-
 module.exports = function (defaultFuncs, api, ctx) {
   return function executeGraphQueryBatch(query, callback) {
     if (!callback) {
       callback = function () {};
     }
     
-    var queryName = "q" + lastBatchQueryIndex++;
+    var queryName = "q" + ctx.lastBatchQueryIndex++;
     var queries = {};
     queries[queryName] = {
       priority: 0,
