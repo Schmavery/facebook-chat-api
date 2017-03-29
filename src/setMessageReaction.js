@@ -15,7 +15,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       data: {
         client_mutation_id: clientMutationId++,
         actor_id: ctx.userID,
-        action: "ADD_REACTION",
+        action: reaction == "" ? "REMOVE_REACTION" : "ADD_REACTION",
         message_id: messageID,
         reaction: reaction        
       }
