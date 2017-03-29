@@ -6,7 +6,7 @@ var log = require("npmlog");
 var clientMutationId = 0;
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function setMessageReaction(reaction, threadID, messageID, callback) {
+  return function setMessageReaction(reaction, messageID, callback) {
     if(!callback) {
       callback = function() {};
     }
