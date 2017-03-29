@@ -397,7 +397,8 @@ function formatMessage(m) {
     timestampAbsolute: originalMessage.timestamp_absolute,
     timestampRelative: originalMessage.timestamp_relative,
     timestampDatetime: originalMessage.timestamp_datetime,
-    tags: originalMessage.tags
+    tags: originalMessage.tags,
+    reactions: originalMessage.reactions ? originalMessage.reactions : []
   };
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();
