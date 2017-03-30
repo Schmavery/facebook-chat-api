@@ -22,16 +22,22 @@ module.exports = function(defaultFuncs, api, ctx) {
         break;
       case ":heart_eyes:":
         reaction = "\uD83D\uDE0D";
+        break;
       case ":laughing:":
         reaction = "\uD83D\uDE06";
+        break;
       case ":open_mouth:":
         reaction = "\uD83D\uDE2E";
+        break;
       case ":cry:":
         reaction = "\uD83D\uDE22";
+        break;
       case ":angry:":
         reaction = "\uD83D\uDE20";
+        break;
       case ":thumbsup:":
         reaction = "\uD83D\uDC4D";
+        break;
       case ":thumbsdown:":
         reaction = "\uD83D\uDC4E";
         break;
