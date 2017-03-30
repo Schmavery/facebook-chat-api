@@ -11,6 +11,7 @@
 * [`api.createPoll`](#createPoll)
 * [`api.deleteMessage`](#deleteMessage)
 * [`api.deleteThread`](#deleteThread)
+* [`api.forwardAttachment`](#forwardAttachment)
 * [`api.getAppState`](#getAppState)
 * [`api.getCurrentUserID`](#getCurrentUserID)
 * [`api.getFriendsList`](#getFriendsList)
@@ -409,6 +410,18 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
     });
 });
 ```
+
+---------------------------------------
+
+<a name="forwardAttachment"></a>
+### api.forwardAttachment(attachmentID, userOrUsers[, callback])
+
+Takes a userID or an array of userIDs and forward the corresponding attachment.
+
+__Arguments__
+* `attachmentID`: A attachment ID (usualy `attribute.ID` property)
+* `userOrUsers`: A userID string or usersID string array
+* `callback(err)`: A callback called when the query is done (either with an error or null).
 
 ---------------------------------------
 
