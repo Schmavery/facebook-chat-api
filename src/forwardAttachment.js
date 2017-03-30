@@ -10,7 +10,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     var form = {
-      attachment_id: attachmentId,
+      attachment_id: attachmentID,
     };
 
     if(utils.getType(userOrUsers) !== "Array") {
