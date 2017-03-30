@@ -397,7 +397,8 @@ function formatMessage(m) {
     timestampAbsolute: originalMessage.timestamp_absolute,
     timestampRelative: originalMessage.timestamp_relative,
     timestampDatetime: originalMessage.timestamp_datetime,
-    tags: originalMessage.tags
+    tags: originalMessage.tags,
+    reactions: originalMessage.reactions ? originalMessage.reactions : []
   };
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();
@@ -761,6 +762,13 @@ function formatPresence(presence, userID) {
   };
 }
 
+function decodeClientPayload(payload) {
+  /*
+  Special function which Client using to "encode" clients JSON payload
+  */
+  return JSON.parse(String.fromCharCode.apply(null, payload));
+}
+
 function getAppState(jar){
   return jar
     .getCookies("https://www.facebook.com")
@@ -800,5 +808,6 @@ module.exports = {
   generatePresence: generatePresence,
   generateAccessiblityCookie: generateAccessiblityCookie,
   formatDate: formatDate,
+  decodeClientPayload: decodeClientPayload,
   getAppState: getAppState,
 };

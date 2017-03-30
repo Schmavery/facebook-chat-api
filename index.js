@@ -61,7 +61,8 @@ function buildAPI(globalOptions, html, jar) {
     clientID: clientID,
     globalOptions: globalOptions,
     loggedIn: true,
-    access_token: 'NONE'
+    access_token: 'NONE',
+    clientMutationId: 0
   };
 
   var api = {
@@ -100,6 +101,7 @@ function buildAPI(globalOptions, html, jar) {
     'searchForThread',
     'sendMessage',
     'sendTypingIndicator',
+    'setMessageReaction',
     'setTitle',
   ];
 

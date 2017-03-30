@@ -172,6 +172,26 @@ module.exports = function(defaultFuncs, api, ctx) {
                 })(0)
                 break;
               }
+              
+              if (v.delta.class == "ClientPayload") {
+                var clientPayload = utils.decodeClientPayload(v.delta.payload);
+                if (clientPayload && clientPayload.deltas) {
+                  for (var i in clientPayload.deltas) {
+                    var delta = clientPayload.deltas[i];
+                    if (delta.deltaMessageReaction) {
+                      globalCallback(null, {
+                        type: "message_reaction",
+                        threadId: delta.deltaMessageReaction.threadKey.threadFbId ? delta.deltaMessageReaction.threadKey.threadFbId : delta.deltaMessageReaction.threadKey.otherUserFbId,
+                        messageId: delta.deltaMessageReaction.messageId,
+                        reaction: delta.deltaMessageReaction.reaction,
+                        senderId: delta.deltaMessageReaction.senderId,
+                        userId: delta.deltaMessageReaction.userId
+                      });
+                    }
+                  }
+                  return;
+                }
+              }
 
               switch (v.delta.class) {
                 case 'ReadReceipt':
