@@ -30,8 +30,8 @@
 * [`api.searchForThread`](#searchForThread)
 * [`api.sendMessage`](#sendMessage)
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
-* [`api.setOptions`](#setOptions)
 * [`api.setMessageReaction`](#setMessageReaction)
+* [`api.setOptions`](#setOptions)
 * [`api.setTitle`](#setTitle)
 
 ---------------------------------------
@@ -887,6 +887,31 @@ __Arguments__
 
 ---------------------------------------
 
+<a name="setMessageReaction"></a>
+### api.setMessageReaction(reaction, messageID[, callback])
+
+Sets reaction on message
+
+__Arguments__
+
+* `reaction`: A string containing either an emoji, an emoji in unicode, or an emoji shortcut (see list of supported emojis below). The string can be left empty ("") in order to remove a reaction.
+* `messageID`: A string representing the message ID.
+* `callback(err)` - A callback called when sending the reaction is done.
+
+__Supported Emojis__
+
+|Emoji|Text|Unicode|Shortcuts|
+|---|---|---|---|
+|😍|`😍`|`\uD83D\uDE0D`|`:love:`, `:heart_eyes:`|
+|😆|`😆`|`\uD83D\uDE06`|`:haha:`, `:laughing:`|
+|😮|`😮`|`\uD83D\uDE2E`|`:wow:`, `:open_mouth:`|
+|😢|`😢`|`\uD83D\uDE22`|`:sad:`, `:cry:`|
+|😠|`😠`|`\uD83D\uDE20`|`:angry:`|
+|👍|`👍`|`\uD83D\uDC4D`|`:like:`, `:thumbsup:`|
+|👎|`👎`|`\uD83D\uDC4E`|`:dislike:`, `:thumbsdown:`|
+
+---------------------------------------
+
 <a name="setOptions"></a>
 ### api.setOptions(options)
 
@@ -933,30 +958,6 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
     });
 });
 ```
-
----------------------------------------
-
-<a name="setMessageReaction"></a>
-### api.setMessageReaction(reaction, messageID[, callback])
-
-Sets reaction on message
-
-__Arguments__
-
-* `reaction`: A string contains `emoji`, `emoji shortcut`, `emoji in unicode` or left `empty string` for delete reaction (look down for list of supported emojis)
-* `messageID`: A string representing the message ID.
-* `callback(err)` - A callback called when sending the reaction is done.
-
-__Supported Emojis__
-
-* 😍 - Unicode: `\uD83D\uDE0D`, Shortcut: `:heart_eyes:` or `:love:`
-* 😆 - Unicode: `\uD83D\uDE06`, Shortcut: `:laughing:` or `:haha:`
-* 😮 - Unicode: `\uD83D\uDE2E`, Shortcut: `:open_mouth:` or `:wow:`
-* 😢 - Unicode: `\uD83D\uDE22`, Shortcut: `:cry:` or `:sad:`
-* 😠 - Unicode: `\uD83D\uDE20`, Shortcut: `:angry:`
-* 👍 - Unicode: `\uD83D\uDC4D`, Shortcut: `:thumbsup:` or `:like:`
-* 👎 - Unicode: `\uD83D\uDC4E`, Shortcut: `:thumbsdown:` or `:dislike:`
-
 
 ---------------------------------------
 
