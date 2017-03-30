@@ -21,24 +21,31 @@ module.exports = function(defaultFuncs, api, ctx) {
         //valid
         break;
       case ":heart_eyes:":
+      case ":love:":
         reaction = "\uD83D\uDE0D";
         break;
       case ":laughing:":
+      case ":haha:":
         reaction = "\uD83D\uDE06";
         break;
       case ":open_mouth:":
+      case ":wow:":
         reaction = "\uD83D\uDE2E";
         break;
       case ":cry:":
+      case ":sad:":
         reaction = "\uD83D\uDE22";
         break;
       case ":angry:":
+      case ":angery:":
         reaction = "\uD83D\uDE20";
         break;
       case ":thumbsup:":
+      case ":like:":
         reaction = "\uD83D\uDC4D";
         break;
       case ":thumbsdown:":
+      case ":dislike:":
         reaction = "\uD83D\uDC4E";
         break;
       default:

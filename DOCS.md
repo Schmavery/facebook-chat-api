@@ -949,13 +949,13 @@ __Arguments__
 
 __Supported Emojis__
 
-* 😍 - Unicode: `\uD83D\uDE0D`, Shortcut: `:heart_eyes:`
-* 😆 - Unicode: `\uD83D\uDE06`, Shortcut: `:laughing:`
-* 😮 - Unicode: `\uD83D\uDE2E`, Shortcut: `:open_mouth:`
-* 😢 - Unicode: `\uD83D\uDE22`, Shortcut: `:cry:`
-* 😠 - Unicode: `\uD83D\uDE20`, Shortcut: `:angry:`
-* 👍 - Unicode: `\uD83D\uDC4D`, Shortcut: `:thumbsup:`
-* 👎 - Unicode: `\uD83D\uDC4E`, Shortcut: `:thumbsdown:`
+* 😍 - Unicode: `\uD83D\uDE0D`, Shortcut: `:heart_eyes:` or `:love:`
+* 😆 - Unicode: `\uD83D\uDE06`, Shortcut: `:laughing:` or `:haha:`
+* 😮 - Unicode: `\uD83D\uDE2E`, Shortcut: `:open_mouth:` or `:wow:`
+* 😢 - Unicode: `\uD83D\uDE22`, Shortcut: `:cry:` or `:sad:`
+* 😠 - Unicode: `\uD83D\uDE20`, Shortcut: `:angry:` or `:angery:`
+* 👍 - Unicode: `\uD83D\uDC4D`, Shortcut: `:thumbsup:` or `:like:`
+* 👎 - Unicode: `\uD83D\uDC4E`, Shortcut: `:thumbsdown:` or `:dislike:`
 
 
 ---------------------------------------
