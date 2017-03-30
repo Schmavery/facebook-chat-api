@@ -71,6 +71,7 @@ Result:
 * [`api.sendMessage`](DOCS.md#sendMessage)
 * [`api.sendTypingIndicator`](DOCS.md#sendTypingIndicator)
 * [`api.setOptions`](DOCS.md#setOptions)
+* [`api.setMessageReaction`](DOCS.md#setMessageReaction)
 * [`api.setTitle`](DOCS.md#setTitle)
 
 ## Main Functionality
