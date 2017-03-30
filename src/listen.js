@@ -161,7 +161,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                     if (delta.deltaMessageReaction) {
                       globalCallback(null, {
                         type: "message_reaction",
-                        threadId: delta.deltaMessageReaction.threadKey.otherUserFbId,
+                        threadId: delta.deltaMessageReaction.threadKey.threadFbId ? delta.deltaMessageReaction.threadKey.threadFbId : delta.deltaMessageReaction.threadKey.otherUserFbId,
                         messageId: delta.deltaMessageReaction.messageId,
                         reaction: delta.deltaMessageReaction.reaction,
                         senderId: delta.deltaMessageReaction.senderId,
