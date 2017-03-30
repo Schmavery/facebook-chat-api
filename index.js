@@ -83,6 +83,7 @@ function buildAPI(globalOptions, html, jar) {
     'createPoll',
     'deleteMessage',
     'deleteThread',
+    'forwardAttachment',
     'getCurrentUserID',
     'getFriendsList',
     'getThreadHistory',
