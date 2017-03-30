@@ -34,8 +34,9 @@ module.exports = function(defaultFuncs, api, ctx) {
         reaction = "\uD83D\uDC4D";
       case ":thumbsdown:":
         reaction = "\uD83D\uDC4E";
+        break;
       default:
-        return callback({error: "reaction is not valid emoji"});
+        return callback({error: "Reaction is not a valid emoji."});
         break;
     }
     

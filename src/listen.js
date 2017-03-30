@@ -166,8 +166,8 @@ module.exports = function(defaultFuncs, api, ctx) {
                       globalCallback(null, delta.deltaMessageReaction);
                     }
                   }
-                  return;
                 }
+                return;
               }
 
               switch (v.delta.class) {
