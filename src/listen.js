@@ -159,15 +159,18 @@ module.exports = function(defaultFuncs, api, ctx) {
                   for (var i in clientPayload.deltas) {
                     var delta = clientPayload.deltas[i];
                     if (delta.deltaMessageReaction) {
-                      delta.deltaMessageReaction.type = "message_reaction";
-                      delta.threadId = delta.threadKey.threadFbId;
-                      delete delta.threadKey;
-                      delete delta.action;
-                      globalCallback(null, delta.deltaMessageReaction);
+                      globalCallback(null, {
+                        type: "message_reaction",
+                        threadId: delta.deltaMessageReaction.threadKey.otherUserFbId,
+                        messageId: delta.deltaMessageReaction.messageId,
+                        reaction: delta.deltaMessageReaction.reaction,
+                        senderId: delta.deltaMessageReaction.senderId,
+                        userId: delta.deltaMessageReaction.userId
+                      });
                     }
                   }
+                  return;
                 }
-                return;
               }
 
               switch (v.delta.class) {
