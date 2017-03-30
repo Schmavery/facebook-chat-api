@@ -944,7 +944,7 @@ Sets reaction on message
 __Arguments__
 
 * `reaction`: A string contains `emoji`, `emoji shortcut`, `emoji in unicode` or left `empty string` for delete reaction (look down for list of supported emojis)
-* `messageID`: A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation.
+* `messageID`: A string representing the message ID.
 * `callback(err)` - A callback called when sending the reaction is done.
 
 __Supported Emojis__
