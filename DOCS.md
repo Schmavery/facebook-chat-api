@@ -419,7 +419,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 Takes a userID or an array of userIDs and forward the corresponding attachment.
 
 __Arguments__
-* `attachmentID`: A attachment ID (usualy `attribute.ID` property)
+* `attachmentID`: The ID field in the attachment object. Not all attachment have IDs: recorded audio and arbitrary files don't for example.
 * `userOrUsers`: A userID string or usersID string array
 * `callback(err)`: A callback called when the query is done (either with an error or null).
 

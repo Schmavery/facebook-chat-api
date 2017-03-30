@@ -26,7 +26,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     defaultFuncs
-      .post("https://www.messenger.com/mercury/attachments/forward/?dpr=1", ctx.jar, form)
+      .post("https://www.messenger.com/mercury/attachments/forward/", ctx.jar, form)
       .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {
