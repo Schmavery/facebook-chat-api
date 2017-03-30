@@ -953,7 +953,7 @@ __Supported Emojis__
 * 😆 - Unicode: `\uD83D\uDE06`, Shortcut: `:laughing:` or `:haha:`
 * 😮 - Unicode: `\uD83D\uDE2E`, Shortcut: `:open_mouth:` or `:wow:`
 * 😢 - Unicode: `\uD83D\uDE22`, Shortcut: `:cry:` or `:sad:`
-* 😠 - Unicode: `\uD83D\uDE20`, Shortcut: `:angry:` or `:angery:`
+* 😠 - Unicode: `\uD83D\uDE20`, Shortcut: `:angry:`
 * 👍 - Unicode: `\uD83D\uDC4D`, Shortcut: `:thumbsup:` or `:like:`
 * 👎 - Unicode: `\uD83D\uDC4E`, Shortcut: `:thumbsdown:` or `:dislike:`
 

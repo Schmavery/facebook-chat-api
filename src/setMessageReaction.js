@@ -37,7 +37,6 @@ module.exports = function(defaultFuncs, api, ctx) {
         reaction = "\uD83D\uDE22";
         break;
       case ":angry:":
-      case ":angery:":
         reaction = "\uD83D\uDE20";
         break;
       case ":thumbsup:":
