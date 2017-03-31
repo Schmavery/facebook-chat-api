@@ -384,7 +384,7 @@ function formatMessage(m) {
   var obj = {
     type: "message",
     senderName: originalMessage.sender_name,
-    senderID: originalMessage.sender_fbid.toString(),
+    senderID: originalMessage.sender_fbid.toString().substr(originalMessage.sender_fbid.toString().indexOf(':')+1), //Strip "fbid:"
     participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
     participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return v.toString();}) : [originalMessage.sender_fbid]),
     body: originalMessage.body,
