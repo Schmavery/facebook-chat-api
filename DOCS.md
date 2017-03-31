@@ -417,7 +417,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 <a name="forwardAttachment"></a>
 ### api.forwardAttachment(attachmentID, userOrUsers[, callback])
 
-Takes a userID or an array of userIDs and forward the corresponding attachment.
+Forwards corresponding attachment to given userID or to every user from an array of userIDs
 
 __Arguments__
 * `attachmentID`: The ID field in the attachment object. Not all attachment have IDs: recorded audio and arbitrary files don't for example.
