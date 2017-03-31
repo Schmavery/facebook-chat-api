@@ -369,9 +369,9 @@ function formatDeltaMessage(m){
   var md = m.delta.messageMetadata;
   return {
     type: "message",
-    senderID: md.actorFbId,
+    senderID: formatID(md.actorFbId),
     body: m.delta.body,
-    threadID: (md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString(),
+    threadID: formatID((md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()),
     messageID: md.messageId,
     attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
     timestamp: md.timestamp,
@@ -380,7 +380,11 @@ function formatDeltaMessage(m){
 }
 
 function formatID(id){
-  return id.replace(/(fb)?id[:.]/, "");
+  if(id != undefined && id != null){
+    return id.replace(/(fb)?id[:.]/, "");
+  }else{
+    return id;
+  }
 }
 
 function formatMessage(m) {
@@ -453,7 +457,7 @@ function formatEvent(m) {
 
   return {
     type: "event",
-    threadID: m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId,
+    threadID: formatID(m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId),
     logMessageType: logMessageType,
     logMessageData: logMessageData,
     logMessageBody: m.messageMetadata.adminText,
@@ -465,7 +469,7 @@ function formatTyp(event) {
   return {
     isTyping: !!event.st,
     from: event.from.toString(),
-    threadID: (event.to || event.thread_fbid || event.from).toString(),
+    threadID: formatID((event.to || event.thread_fbid || event.from).toString()),
     // When receiving typ indication from mobile, `from_mobile` isn't set.
     // If it is, we just use that value.
     fromMobile: event.hasOwnProperty('from_mobile') ? event.from_mobile : true,
@@ -480,7 +484,7 @@ function formatDeltaReadReceipt(delta) {
   return {
     reader: (delta.threadKey.otherUserFbId || delta.actorFbId).toString(),
     time: delta.actionTimestampMs,
-    threadID: (delta.threadKey.otherUserFbId || delta.threadKey.threadFbId).toString(),
+    threadID: formatID((delta.threadKey.otherUserFbId || delta.threadKey.threadFbId).toString()),
     type: 'read_receipt'
   };
 }
@@ -489,14 +493,14 @@ function formatReadReceipt(event) {
   return {
     reader: event.reader.toString(),
     time: event.time,
-    threadID: (event.thread_fbid || event.reader).toString(),
+    threadID: formatID((event.thread_fbid || event.reader).toString()),
     type: 'read_receipt',
   };
 }
 
 function formatRead(event) {
   return {
-    threadID: ((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString(),
+    threadID: formatID(((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString()),
     time: event.timestamp,
     type: 'read'
   };
@@ -694,9 +698,9 @@ function formatCookie(arr, url) {
 
 function formatThread(data) {
   return {
-    threadID: data.thread_fbid.toString(),
-    participants: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
-    participantIDs: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
+    threadID: formatID(data.thread_fbid.toString()),
+    participants: data.participants.map(function(v) { return formatID(v.replace('fbid:', '')); }),
+    participantIDs: data.participants.map(function(v) { return formatID(v.replace('fbid:', '')); }),
     formerParticipants: data.former_participants,
     name: data.name,
     nicknames: data.custom_nickname,
@@ -712,7 +716,7 @@ function formatThread(data) {
     muteSettings: data.muteSettings,
     isCanonicalUser: data.is_canonical_user,
     isCanonical: data.is_canonical,
-    canonicalFbid: data.canonical_fbid,
+    canonicalFbid: formatID(data.canonical_fbid),
     isSubscribed: data.is_subscribed,
     rootMessageThreadingID: data.root_message_threading_id,
     folder: data.folder,
