@@ -70,14 +70,14 @@ Result:
 * [`api.searchForThread`](DOCS.md#searchForThread)
 * [`api.sendMessage`](DOCS.md#sendMessage)
 * [`api.sendTypingIndicator`](DOCS.md#sendTypingIndicator)
-* [`api.setOptions`](DOCS.md#setOptions)
 * [`api.setMessageReaction`](DOCS.md#setMessageReaction)
+* [`api.setOptions`](DOCS.md#setOptions)
 * [`api.setTitle`](DOCS.md#setTitle)
 
 ## Main Functionality
 
 ### Sending a message
-#### api.sendMessage(message, threadID, [callback])
+#### api.sendMessage(message, threadID[, callback])
 
 Various types of message can be sent:
 * *Regular:* set field `body` to the desired message as a string.
