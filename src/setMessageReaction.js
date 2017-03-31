@@ -8,7 +8,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     if(!callback) {
       callback = function() {};
     }
-    
+
     switch (reaction) {
       case "\uD83D\uDE0D": //:heart_eyes:
       case "\uD83D\uDE06": //:laughing:
@@ -51,17 +51,17 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback({error: "Reaction is not a valid emoji."});
         break;
     }
-    
+
     var variables = {
       data: {
         client_mutation_id: ctx.clientMutationId++,
         actor_id: ctx.userID,
         action: reaction == "" ? "REMOVE_REACTION" : "ADD_REACTION",
         message_id: messageID,
-        reaction: reaction        
+        reaction: reaction
       }
     };
-    
+
     var qs = {
       doc_id: "1491398900900362",
       variables: JSON.stringify(variables),
@@ -73,7 +73,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
       .then(function(resData) {
         if (!resData) {
-          throw {error: "addReaction returned empty object."};
+          throw {error: "setReaction returned empty object."};
         }
         if(resData.error) {
           throw resData;
@@ -81,7 +81,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null);
       })
       .catch(function(err) {
-        log.error("addReaction", err);
+        log.error("setReaction", err);
         return callback(err);
       });
   };
