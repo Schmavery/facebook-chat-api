@@ -181,7 +181,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                         type: "message_reaction",
                         threadId: delta.deltaMessageReaction.threadKey.threadFbId ? delta.deltaMessageReaction.threadKey.threadFbId : delta.deltaMessageReaction.threadKey.otherUserFbId,
                         messageId: delta.deltaMessageReaction.messageId,
-                        reaction: delta.deltaMessageReaction.reaction,
+                        reaction: decodeURIComponent(escape(delta.deltaMessageReaction.reaction)),
                         senderId: delta.deltaMessageReaction.senderId,
                         userId: delta.deltaMessageReaction.userId
                       });
