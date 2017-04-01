@@ -667,11 +667,11 @@ Difference between `"read_receipt"` and `"read"`:
 
 If `type` is `"message_reaction"`, then the object will have following fields (enabled `listenEvents` required):
 - `"reaction"`: Contains reaction emoji
-- `"userId"`: The reaction senders ID
-- `"senderId"`: ID of author the message, where has been reaction added
-- `"messageId"`: The ID of message
-- `"threadId"`: ID of thread where has been message sent
-- `"offlineThreadingId"`: The offline message ID
+- `"userID"`: The reaction senders ID
+- `"senderID"`: ID of author the message, where has been reaction added
+- `"messageID"`: The ID of message
+- `"threadID"`: ID of thread where has been message sent
+- `"offlineThreadingID"`: The offline message ID
 
 <a name="presence"></a>
 If enabled through [setOptions](#setOptions), `message` could also be a presence object, (`type` will be `"presence"`), which is the online status of the user's friends. That object given to the callback will have the following fields:
@@ -838,7 +838,7 @@ Sends the given message to the threadID.
 __Arguments__
 
 * `message`: A string (for backward compatibility) or a message object as described below.
-* `threadID`: A string, number, or array representing a thread. It happens to be someone's userId in the case of a one to one conversation or an array of userIds when starting a new group chat.
+* `threadID`: A string, number, or array representing a thread. It happens to be someone's userID in the case of a one to one conversation or an array of userIDs when starting a new group chat.
 * `callback(err, messageInfo)`: A callback called when sending the message is done (either with an error or with an confirmation object). `messageInfo` contains the `threadID` where the message was sent and a `messageID`, as well as the `timestamp` of the message.
 
 __Message Object__:
@@ -984,7 +984,7 @@ Note: This will not work if the thread id corresponds to a single-user chat or i
 __Arguments__
 
 * `newTitle`: A string representing the new title.
-* `threadID`: A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation.
+* `threadID`: A string or number representing a thread. It happens to be someone's userID in the case of a one to one conversation.
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the threadID where the message was sent.
 
 ---------------------------------------

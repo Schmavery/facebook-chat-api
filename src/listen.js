@@ -124,8 +124,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               if(!ctx.globalOptions.updatePresence) {
                 return;
               }
-              
-              
+
               if (ctx.loggedIn) {
                 for(var userID in v.buddyList) {
                   var formattedPresence = utils.formatProxyPresence(v.buddyList[userID], userID);
@@ -136,7 +135,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 }
                 return;
               }
-              
+
               break;
             case 'buddylist_overlay':
               // TODO: what happens when you're logged in as a page?
@@ -172,7 +171,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 })(0)
                 break;
               }
-              
+
               if (v.delta.class == "ClientPayload") {
                 var clientPayload = utils.decodeClientPayload(v.delta.payload);
                 if (clientPayload && clientPayload.deltas) {
@@ -181,11 +180,11 @@ module.exports = function(defaultFuncs, api, ctx) {
                     if (delta.deltaMessageReaction) {
                       globalCallback(null, {
                         type: "message_reaction",
-                        threadId: delta.deltaMessageReaction.threadKey.threadFbId ? delta.deltaMessageReaction.threadKey.threadFbId : delta.deltaMessageReaction.threadKey.otherUserFbId,
-                        messageId: delta.deltaMessageReaction.messageId,
+                        threadID: delta.deltaMessageReaction.threadKey.threadFbId ? delta.deltaMessageReaction.threadKey.threadFbId : delta.deltaMessageReaction.threadKey.otherUserFbId,
+                        messageID: delta.deltaMessageReaction.messageId,
                         reaction: decodeURIComponent(escape(delta.deltaMessageReaction.reaction)),
-                        senderId: delta.deltaMessageReaction.senderId,
-                        userId: delta.deltaMessageReaction.userId
+                        senderID: delta.deltaMessageReaction.senderId,
+                        userID: delta.deltaMessageReaction.userId
                       });
                     }
                   }
