@@ -25,7 +25,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         if(ctx.globalOptions.pageID) form.request_user_id = ctx.globalOptions.pageID;
 
         defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_info.php", ctx.jar, form)
-        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+        .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function(resData) {
           if (resData.error) {
             throw resData;

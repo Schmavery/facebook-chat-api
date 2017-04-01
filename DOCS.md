@@ -11,6 +11,7 @@
 * [`api.createPoll`](#createPoll)
 * [`api.deleteMessage`](#deleteMessage)
 * [`api.deleteThread`](#deleteThread)
+* [`api.forwardAttachment`](#forwardAttachment)
 * [`api.getAppState`](#getAppState)
 * [`api.getCurrentUserID`](#getCurrentUserID)
 * [`api.getFriendsList`](#getFriendsList)
@@ -31,6 +32,7 @@
 * [`api.searchForThread`](#searchForThread)
 * [`api.sendMessage`](#sendMessage)
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
+* [`api.setMessageReaction`](#setMessageReaction)
 * [`api.setOptions`](#setOptions)
 * [`api.setTitle`](#setTitle)
 
@@ -413,6 +415,18 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
+<a name="forwardAttachment"></a>
+### api.forwardAttachment(attachmentID, userOrUsers[, callback])
+
+Forwards corresponding attachment to given userID or to every user from an array of userIDs
+
+__Arguments__
+* `attachmentID`: The ID field in the attachment object. Not all attachment have IDs: recorded audio and arbitrary files don't for example.
+* `userOrUsers`: A userID string or usersID string array
+* `callback(err)`: A callback called when the query is done (either with an error or null).
+
+---------------------------------------
+
 <a name="getAppState"></a>
 ### api.getAppState()
 
@@ -664,6 +678,14 @@ Difference between `"read_receipt"` and `"read"`:
 - `"read_receipt"` event triggers when other people read the user's messages.
 - `"read"` event triggers when the user read other people's messages.
 
+If `type` is `"message_reaction"`, then the object will have following fields (enabled `listenEvents` required):
+- `"reaction"`: Contains reaction emoji
+- `"userId"`: The reaction senders ID
+- `"senderId"`: ID of author the message, where has been reaction added
+- `"messageId"`: The ID of message
+- `"threadId"`: ID of thread where has been message sent
+- `"offlineThreadingId"`: The offline message ID
+
 <a name="presence"></a>
 If enabled through [setOptions](#setOptions), `message` could also be a presence object, (`type` will be `"presence"`), which is the online status of the user's friends. That object given to the callback will have the following fields:
 - `type`: The string `"presence"`.
@@ -888,6 +910,31 @@ __Arguments__
 
 * `threadID`: Group chat ID.
 * `callback(err)`: A callback called when the query is done (with an error or with null).
+
+---------------------------------------
+
+<a name="setMessageReaction"></a>
+### api.setMessageReaction(reaction, messageID[, callback])
+
+Sets reaction on message
+
+__Arguments__
+
+* `reaction`: A string containing either an emoji, an emoji in unicode, or an emoji shortcut (see list of supported emojis below). The string can be left empty ("") in order to remove a reaction.
+* `messageID`: A string representing the message ID.
+* `callback(err)` - A callback called when sending the reaction is done.
+
+__Supported Emojis__
+
+|Emoji|Text|Unicode|Shortcuts|
+|---|---|---|---|
+|😍|`😍`|`\uD83D\uDE0D`|`:love:`, `:heart_eyes:`|
+|😆|`😆`|`\uD83D\uDE06`|`:haha:`, `:laughing:`|
+|😮|`😮`|`\uD83D\uDE2E`|`:wow:`, `:open_mouth:`|
+|😢|`😢`|`\uD83D\uDE22`|`:sad:`, `:cry:`|
+|😠|`😠`|`\uD83D\uDE20`|`:angry:`|
+|👍|`👍`|`\uD83D\uDC4D`|`:like:`, `:thumbsup:`|
+|👎|`👎`|`\uD83D\uDC4E`|`:dislike:`, `:thumbsdown:`|
 
 ---------------------------------------
 

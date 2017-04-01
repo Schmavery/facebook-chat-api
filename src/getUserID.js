@@ -5,7 +5,7 @@ var log = require("npmlog");
 
 function formatData(data) {
   return {
-    userID: data.uid.toString(),
+    userID: utils.formatID(data.uid.toString()),
     photoUrl: data.photo,
     indexRank: data.index_rank,
     name: data.text,
@@ -33,7 +33,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .get("https://www.facebook.com/ajax/typeahead/search.php", ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {
           throw resData;

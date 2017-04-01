@@ -1,0 +1,56 @@
+From ef12ebc94920a2abb8b278548f8a582719b6231d Mon Sep 17 00:00:00 2001
+From: Benjamin San Souci <benjamin.sansouci@gmail.com>
+Date: Sat, 18 Mar 2017 18:04:08 -0700
+Subject: [PATCH] Add support for delta ReadReceipt
+
+---
+ src/listen.js |  3 ++-
+ utils.js      | 11 +++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/src/listen.js b/src/listen.js
+index 732c43c..1aa9e11 100644
+--- a/src/listen.js
++++ b/src/listen.js
+@@ -70,7 +70,6 @@ module.exports = function(defaultFuncs, api, ctx) {
+       var now = Date.now();
+       log.info("listen", "Got answer in " + (now - tmpPrev));
+       tmpPrev = now;
+-
+       if(resData && resData.t === "lb") {
+         form.sticky_token = resData.lb_info.sticky;
+         form.sticky_pool = resData.lb_info.pool;
+@@ -164,6 +163,8 @@ module.exports = function(defaultFuncs, api, ctx) {
+                     default:
+                       return;
+                   }
++                case 'ReadReceipt':
++                   return globalCallback(null, utils.formatDeltaReadReceipt(v.delta));
+                 case 'ThreadName':
+                 case 'ParticipantsAddedToGroupThread':
+                 case 'ParticipantLeftGroupThread':
+diff --git a/utils.js b/utils.js
+index 7311be9..155cdf0 100644
+--- a/utils.js
++++ b/utils.js
+@@ -469,6 +469,17 @@ function formatTyp(event) {
+   };
+ }
+ 
++function formatDeltaReadReceipt(delta) {
++  // otherUserFbId seems to be used as both the readerID and the threadID in a 1-1 chat.
++  // In a group chat actorFbId is used for the reader and threadFbId for the thread.
++  return {
++    reader: (delta.threadKey.otherUserFbId || delta.actorFbId).toString(),
++    time: delta.actionTimestampMs,
++    threadID: (delta.threadKey.otherUserFbId || delta.threadKey.threadFbId).toString(),
++    type: 'read_receipt'
++  };
++}
++
+ function formatReadReceipt(event) {
+   return {
+     reader: event.reader.toString(),
+-- 
+2.7.4
+

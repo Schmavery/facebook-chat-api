@@ -19,7 +19,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     defaultFuncs
       .post("https://www.facebook.com/ajax/mercury/change_read_status.php", ctx.jar, form)
       .then(utils.saveCookies(ctx.jar))
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {
           throw resData;

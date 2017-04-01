@@ -62,7 +62,8 @@ function buildAPI(globalOptions, html, jar) {
     globalOptions: globalOptions,
     loggedIn: true,
     access_token: 'NONE',
-    lastBatchQueryIndex: 0
+    lastBatchQueryIndex: 0,
+    clientMutationId: 0
   };
 
   var api = {
@@ -84,6 +85,7 @@ function buildAPI(globalOptions, html, jar) {
     'deleteMessage',
     'deleteThread',
     'executeGraphQueryBatch',
+    'forwardAttachment',
     'getCurrentUserID',
     'getFriendsList',
     'getThreadHistory',
@@ -103,10 +105,11 @@ function buildAPI(globalOptions, html, jar) {
     'searchForThread',
     'sendMessage',
     'sendTypingIndicator',
+    'setMessageReaction',
     'setTitle',
   ];
 
-  var defaultFuncs = utils.makeDefaults(html, userID);
+  var defaultFuncs = utils.makeDefaults(html, userID, ctx);
 
   // Load all api functions in a loop
   apiFuncNames.map(function(v) {

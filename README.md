@@ -51,6 +51,7 @@ Result:
 * [`api.createPoll`](DOCS.md#createPoll)
 * [`api.deleteMessage`](DOCS.md#deleteMessage)
 * [`api.deleteThread`](DOCS.md#deleteThread)
+* [`api.forwardAttachment`](DOCS.md#forwardAttachment)
 * [`api.getAppState`](DOCS.md#getAppState)
 * [`api.getCurrentUserID`](DOCS.md#getCurrentUserID)
 * [`api.getFriendsList`](DOCS.md#getFriendsList)
@@ -71,13 +72,14 @@ Result:
 * [`api.searchForThread`](DOCS.md#searchForThread)
 * [`api.sendMessage`](DOCS.md#sendMessage)
 * [`api.sendTypingIndicator`](DOCS.md#sendTypingIndicator)
+* [`api.setMessageReaction`](DOCS.md#setMessageReaction)
 * [`api.setOptions`](DOCS.md#setOptions)
 * [`api.setTitle`](DOCS.md#setTitle)
 
 ## Main Functionality
 
 ### Sending a message
-#### api.sendMessage(message, threadID, [callback])
+#### api.sendMessage(message, threadID[, callback])
 
 Various types of message can be sent:
 * *Regular:* set field `body` to the desired message as a string.

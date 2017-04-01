@@ -11,7 +11,7 @@ module.exports = function (defaultFuncs, api, ctx) {
 
     defaultFuncs
       .get("https://www.facebook.com/mercury/attachments/photo", ctx.jar, { photo_id: photoID })
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(resData => {
         if (resData.error) {
           throw resData;
