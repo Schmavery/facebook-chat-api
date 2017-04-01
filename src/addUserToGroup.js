@@ -58,7 +58,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     defaultFuncs.post("https://www.facebook.com/messaging/send/", ctx.jar, form)
-    .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+    .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
     .then(function(resData) {
       if (!resData) {
         throw {error: "Add to group failed."};

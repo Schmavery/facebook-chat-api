@@ -55,6 +55,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
   }
 
+  var serverNumber = '0';
+
   function listen() {
     if(currentlyRunning == null || !ctx.loggedIn) {
       return;
@@ -64,8 +66,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     prev = ~~(Date.now() / 1000);
     var presence = utils.generatePresence(ctx.userID);
     ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
-    utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
-    .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+    utils.get("https://"+serverNumber+"-edge-chat.facebook.com/pull", ctx.jar, form)
+    .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
     .then(function(resData) {
       var now = Date.now();
       log.info("listen", "Got answer in " + (now - tmpPrev));
@@ -228,6 +230,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     .catch(function(err) {
       if (err.code === 'ETIMEDOUT') {
         log.info("listen", "Suppressed timeout error.");
+      } else if (err.code === 'EAI_AGAIN') {
+        serverNumber = (~~(Math.random() * 6)).toString();
       } else {
         log.error("listen", err);
         globalCallback(err);

@@ -533,14 +533,13 @@ function generateTimestampRelative() {
   return d.getHours() + ":" + padZeros(d.getMinutes());
 }
 
-function makeDefaults(html, userID) {
+function makeDefaults(html, userID, ctx) {
   var reqCounter = 1;
   var fb_dtsg = getFrom(html, "name=\"fb_dtsg\" value=\"", "\"");
-  var ttstamp = "";
+  var ttstamp = "2";
   for (var i = 0; i < fb_dtsg.length; i++) {
     ttstamp += fb_dtsg.charCodeAt(i);
   }
-  ttstamp += '2';
   var revision = getFrom(html, "revision\":",",");
 
   function mergeWithDefaults(obj) {
@@ -549,8 +548,8 @@ function makeDefaults(html, userID) {
       __req: (reqCounter++).toString(36),
       __rev: revision,
       __a: 1,
-      fb_dtsg: fb_dtsg,
-      ttstamp: ttstamp,
+      fb_dtsg: ctx.fb_dtsg ? ctx.fb_dtsg : fb_dtsg,
+      ttstamp: ctx.ttstamp ? ctx.ttstamp : ttstamp,
     };
 
     if(!obj) return newObj;
@@ -585,7 +584,7 @@ function makeDefaults(html, userID) {
   };
 }
 
-function parseAndCheckLogin(jar, defaultFuncs) {
+function parseAndCheckLogin(ctx, defaultFuncs) {
   return function(data) {
     return bluebird.try(function() {
       log.verbose("parseAndCheckLogin", data.body);
@@ -594,12 +593,12 @@ function parseAndCheckLogin(jar, defaultFuncs) {
         var url = data.request.uri.protocol + "//" + data.request.uri.hostname + data.request.uri.pathname;
         if (data.request.headers['Content-Type'].split(";")[0] === "multipart/form-data") {
           return defaultFuncs
-            .postFormData(url, jar, data.request.formData, {})
-            .then(parseAndCheckLogin(jar));
+            .postFormData(url, ctx.jar, data.request.formData, {})
+            .then(parseAndCheckLogin(ctx, defaultFuncs));
         } else {
           return defaultFuncs
-            .post(url, jar, data.request.formData)
-            .then(parseAndCheckLogin(jar));
+            .post(url, ctx.jar, data.request.formData)
+            .then(parseAndCheckLogin(ctx, defaultFuncs));
         }
       }
       if (data.statusCode !== 200) throw new Error("parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.");
@@ -623,8 +622,24 @@ function parseAndCheckLogin(jar, defaultFuncs) {
         res.jsmods.require[0][3][0] = res.jsmods.require[0][3][0].replace("_js_", "");
         var cookie = formatCookie(res.jsmods.require[0][3], "facebook");
         var cookie2 = formatCookie(res.jsmods.require[0][3], "messenger");
-        jar.setCookie(cookie, "https://www.facebook.com");
-        jar.setCookie(cookie2, "https://www.messenger.com");
+        ctx.jar.setCookie(cookie, "https://www.facebook.com");
+        ctx.jar.setCookie(cookie2, "https://www.messenger.com");
+      }
+      // On every request we check if we got a DTSG and we mutate the context so that we use the latest
+      // one for the next requests.
+      if (res.jsmods
+          && Array.isArray(res.jsmods.require)) {
+        var arr = res.jsmods.require;
+        for(var i in arr) {
+          if (arr[i][0] === "DTSG" && arr[i][1] === "setToken") {
+            ctx.fb_dtsg = arr[i][3][0];
+          }
+        }
+        // Update ttstamp since that depends on fb_dtsg it seems.
+        ctx.ttstamp = "2";
+        for (var i = 0; i < ctx.fb_dtsg.length; i++) {
+          ctx.ttstamp += ctx.fb_dtsg.charCodeAt(i);
+        }
       }
 
       if (res.error === 1357001) {
