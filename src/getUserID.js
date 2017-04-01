@@ -5,7 +5,7 @@ var log = require("npmlog");
 
 function formatData(data) {
   return {
-    userID: data.uid.toString(),
+    userID: utils.formatID(data.uid.toString()),
     photoUrl: data.photo,
     indexRank: data.index_rank,
     name: data.text,

@@ -369,7 +369,7 @@ function formatDeltaMessage(m){
   var md = m.delta.messageMetadata;
   return {
     type: "message",
-    senderID: formatID(md.actorFbId),
+    senderID: formatID(md.actorFbId.toString()),
     body: m.delta.body,
     threadID: formatID((md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()),
     messageID: md.messageId,
@@ -396,7 +396,7 @@ function formatMessage(m) {
     participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
     participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return formatID(v.toString());}) : [formatID(originalMessage.sender_fbid)]),
     body: originalMessage.body,
-    threadID: formatID(originalMessage.thread_fbid || originalMessage.other_user_fbid),
+    threadID: formatID((originalMessage.thread_fbid || originalMessage.other_user_fbid).toString()),
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
     messageID: originalMessage.mid ? originalMessage.mid.toString() : originalMessage.message_id,
@@ -457,7 +457,7 @@ function formatEvent(m) {
 
   return {
     type: "event",
-    threadID: formatID(m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId),
+    threadID: formatID((m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId).toString()),
     logMessageType: logMessageType,
     logMessageData: logMessageData,
     logMessageBody: m.messageMetadata.adminText,
@@ -699,15 +699,15 @@ function formatCookie(arr, url) {
 function formatThread(data) {
   return {
     threadID: formatID(data.thread_fbid.toString()),
-    participants: data.participants.map(function(v) { return formatID(v.replace('fbid:', '')); }),
-    participantIDs: data.participants.map(function(v) { return formatID(v.replace('fbid:', '')); }),
+    participants: data.participants.map(formatID),
+    participantIDs: data.participants.map(formatID),
     formerParticipants: data.former_participants,
     name: data.name,
     nicknames: data.custom_nickname,
     snippet: data.snippet,
     snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,
-    snippetSender: (data.snippet_sender || '').replace('fbid:', ''),
+    snippetSender: formatID((data.snippet_sender || '').toString()),
     unreadCount: data.unread_count,
     messageCount: data.message_count,
     imageSrc: data.image_src,
@@ -716,7 +716,7 @@ function formatThread(data) {
     muteSettings: data.muteSettings,
     isCanonicalUser: data.is_canonical_user,
     isCanonical: data.is_canonical,
-    canonicalFbid: formatID(data.canonical_fbid),
+    canonicalFbid: formatID((data.canonical_fbid || '').toString()),
     isSubscribed: data.is_subscribed,
     rootMessageThreadingID: data.root_message_threading_id,
     folder: data.folder,
@@ -787,6 +787,7 @@ module.exports = {
   parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,
   getType: getType,
+  formatID: formatID,
   formatMessage: formatMessage,
   formatDeltaMessage: formatDeltaMessage,
   formatEvent: formatEvent,
