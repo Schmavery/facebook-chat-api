@@ -408,6 +408,36 @@ function formatMessage(m) {
 }
 
 function formatEvent(m) {
+  var originalMessage = m.message ? m.message : m;
+  var logMessageType = originalMessage.log_message_type;
+  var logMessageData;
+  if (logMessageType === 'log:generic-admin-text') {
+    logMessageData = originalMessage.log_message_data.untypedData;
+  } else {
+    logMessageData = originalMessage.log_message_data;
+  }
+
+  return Object.assign(
+    formatMessage(originalMessage),
+    {
+      type: "event",
+      logMessageType: logMessageType,
+      logMessageData: logMessageData,
+      logMessageBody: originalMessage.log_message_body
+    }
+  );
+}
+
+function formatHistoryMessage(m) {
+  switch(m.action_type) {
+    case "ma-type:log-message":
+      return formatEvent(m);
+    default:
+      return formatMessage(m);
+  }
+}
+
+function formatDeltaEvent(m) {
   var logMessageType;
   var logMessageData;
 
@@ -779,9 +809,10 @@ module.exports = {
   parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,
   getType: getType,
+  formatHistoryMessage: formatHistoryMessage,
   formatMessage: formatMessage,
+  formatDeltaEvent: formatDeltaEvent,
   formatDeltaMessage: formatDeltaMessage,
-  formatEvent: formatEvent,
   formatProxyPresence: formatProxyPresence,
   formatPresence: formatPresence,
   formatTyp: formatTyp,
