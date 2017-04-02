@@ -184,7 +184,8 @@ module.exports = function(defaultFuncs, api, ctx) {
                         messageID: delta.deltaMessageReaction.messageId,
                         reaction: decodeURIComponent(escape(delta.deltaMessageReaction.reaction)),
                         senderID: delta.deltaMessageReaction.senderId,
-                        userID: delta.deltaMessageReaction.userId
+                        userID: delta.deltaMessageReaction.userId,
+                        timestamp: v.ofd_ts
                       });
                     }
                   }

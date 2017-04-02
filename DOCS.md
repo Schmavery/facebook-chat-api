@@ -666,12 +666,13 @@ Difference between `"read_receipt"` and `"read"`:
 - `"read"` event triggers when the user read other people's messages.
 
 If `type` is `"message_reaction"`, then the object will have following fields (enabled `listenEvents` required):
-- `"reaction"`: Contains reaction emoji
-- `"userID"`: The reaction senders ID
-- `"senderID"`: ID of author the message, where has been reaction added
-- `"messageID"`: The ID of message
-- `"threadID"`: ID of thread where has been message sent
-- `"offlineThreadingID"`: The offline message ID
+- `reaction`: Contains reaction emoji
+- `userID`: ID of the reaction sender
+- `senderID`: ID of the author the message, where has been reaction added
+- `messageID`: The ID of the message
+- `threadID`: ID of the thread where the message has been sent
+- `offlineThreadingID`: The offline message ID
+- `timestamp`: Unix Timestamp (in miliseconds) when the reaction was sent
 
 <a name="presence"></a>
 If enabled through [setOptions](#setOptions), `message` could also be a presence object, (`type` will be `"presence"`), which is the online status of the user's friends. That object given to the callback will have the following fields:
