@@ -15,7 +15,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post("https://www.messenger.com/messaging/save_thread_emoji/?source=thread_settings&__pc=EXP1%3Amessengerdotcom_pkg", ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error === 1357031) {
           throw {error: "Trying to change emoji of a chat that doesn't exist. Have at least one message in the thread before trying to change the emoji."};

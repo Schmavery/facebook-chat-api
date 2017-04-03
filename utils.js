@@ -369,13 +369,21 @@ function formatDeltaMessage(m){
   var md = m.delta.messageMetadata;
   return {
     type: "message",
-    senderID: md.actorFbId,
+    senderID: formatID(md.actorFbId.toString()),
     body: m.delta.body,
-    threadID: (md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString(),
+    threadID: formatID((md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()),
     messageID: md.messageId,
     attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
     timestamp: md.timestamp,
     isGroup: !!md.threadKey.threadFbId
+  }
+}
+
+function formatID(id){
+  if(id != undefined && id != null){
+    return id.replace(/(fb)?id[:.]/, "");
+  }else{
+    return id;
   }
 }
 
@@ -384,11 +392,11 @@ function formatMessage(m) {
   var obj = {
     type: "message",
     senderName: originalMessage.sender_name,
-    senderID: originalMessage.sender_fbid.toString(),
+    senderID: formatID(originalMessage.sender_fbid.toString()),
     participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
-    participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return v.toString();}) : [originalMessage.sender_fbid]),
+    participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return formatID(v.toString());}) : [formatID(originalMessage.sender_fbid)]),
     body: originalMessage.body,
-    threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.thread_fbid || originalMessage.other_user_fbid,
+    threadID: formatID((originalMessage.thread_fbid || originalMessage.other_user_fbid).toString()),
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
     messageID: originalMessage.mid ? originalMessage.mid.toString() : originalMessage.message_id,
@@ -449,7 +457,7 @@ function formatEvent(m) {
 
   return {
     type: "event",
-    threadID: m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId,
+    threadID: formatID((m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId).toString()),
     logMessageType: logMessageType,
     logMessageData: logMessageData,
     logMessageBody: m.messageMetadata.adminText,
@@ -461,7 +469,7 @@ function formatTyp(event) {
   return {
     isTyping: !!event.st,
     from: event.from.toString(),
-    threadID: (event.to || event.thread_fbid || event.from).toString(),
+    threadID: formatID((event.to || event.thread_fbid || event.from).toString()),
     // When receiving typ indication from mobile, `from_mobile` isn't set.
     // If it is, we just use that value.
     fromMobile: event.hasOwnProperty('from_mobile') ? event.from_mobile : true,
@@ -476,7 +484,7 @@ function formatDeltaReadReceipt(delta) {
   return {
     reader: (delta.threadKey.otherUserFbId || delta.actorFbId).toString(),
     time: delta.actionTimestampMs,
-    threadID: (delta.threadKey.otherUserFbId || delta.threadKey.threadFbId).toString(),
+    threadID: formatID((delta.threadKey.otherUserFbId || delta.threadKey.threadFbId).toString()),
     type: 'read_receipt'
   };
 }
@@ -485,14 +493,14 @@ function formatReadReceipt(event) {
   return {
     reader: event.reader.toString(),
     time: event.time,
-    threadID: (event.thread_fbid || event.reader).toString(),
+    threadID: formatID((event.thread_fbid || event.reader).toString()),
     type: 'read_receipt',
   };
 }
 
 function formatRead(event) {
   return {
-    threadID: ((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString(),
+    threadID: formatID(((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString()),
     time: event.timestamp,
     type: 'read'
   };
@@ -534,14 +542,13 @@ function generateTimestampRelative() {
   return d.getHours() + ":" + padZeros(d.getMinutes());
 }
 
-function makeDefaults(html, userID) {
+function makeDefaults(html, userID, ctx) {
   var reqCounter = 1;
   var fb_dtsg = getFrom(html, "name=\"fb_dtsg\" value=\"", "\"");
-  var ttstamp = "";
+  var ttstamp = "2";
   for (var i = 0; i < fb_dtsg.length; i++) {
     ttstamp += fb_dtsg.charCodeAt(i);
   }
-  ttstamp += '2';
   var revision = getFrom(html, "revision\":",",");
 
   function mergeWithDefaults(obj) {
@@ -550,8 +557,8 @@ function makeDefaults(html, userID) {
       __req: (reqCounter++).toString(36),
       __rev: revision,
       __a: 1,
-      fb_dtsg: fb_dtsg,
-      ttstamp: ttstamp,
+      fb_dtsg: ctx.fb_dtsg ? ctx.fb_dtsg : fb_dtsg,
+      ttstamp: ctx.ttstamp ? ctx.ttstamp : ttstamp,
     };
 
     if(!obj) return newObj;
@@ -586,7 +593,7 @@ function makeDefaults(html, userID) {
   };
 }
 
-function parseAndCheckLogin(jar, defaultFuncs, retryCount) {
+function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
   if (retryCount == undefined) {
     retryCount = 0;
   }
@@ -609,16 +616,16 @@ function parseAndCheckLogin(jar, defaultFuncs, retryCount) {
           return bluebird
             .delay(retryTime)
             .then(function() {
-              return defaultFuncs.postFormData(url, jar, data.request.formData, {});
+              return defaultFuncs.postFormData(url, ctx.jar, data.request.formData, {});
             })
-            .then(parseAndCheckLogin(jar, defaultFuncs, retryCount));
+            .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         } else {
           return bluebird
             .delay(retryTime)
             .then(function() {
-              return defaultFuncs.post(url, jar, data.request.formData);
+              return defaultFuncs.post(url, ctx.jar, data.request.formData);
             })
-            .then(parseAndCheckLogin(jar, defaultFuncs, retryCount));
+            .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         }
       }
       if (data.statusCode !== 200) throw new Error("parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.");
@@ -642,8 +649,24 @@ function parseAndCheckLogin(jar, defaultFuncs, retryCount) {
         res.jsmods.require[0][3][0] = res.jsmods.require[0][3][0].replace("_js_", "");
         var cookie = formatCookie(res.jsmods.require[0][3], "facebook");
         var cookie2 = formatCookie(res.jsmods.require[0][3], "messenger");
-        jar.setCookie(cookie, "https://www.facebook.com");
-        jar.setCookie(cookie2, "https://www.messenger.com");
+        ctx.jar.setCookie(cookie, "https://www.facebook.com");
+        ctx.jar.setCookie(cookie2, "https://www.messenger.com");
+      }
+      // On every request we check if we got a DTSG and we mutate the context so that we use the latest
+      // one for the next requests.
+      if (res.jsmods
+          && Array.isArray(res.jsmods.require)) {
+        var arr = res.jsmods.require;
+        for(var i in arr) {
+          if (arr[i][0] === "DTSG" && arr[i][1] === "setToken") {
+            ctx.fb_dtsg = arr[i][3][0];
+          }
+        }
+        // Update ttstamp since that depends on fb_dtsg it seems.
+        ctx.ttstamp = "2";
+        for (var i = 0; i < ctx.fb_dtsg.length; i++) {
+          ctx.ttstamp += ctx.fb_dtsg.charCodeAt(i);
+        }
       }
 
       if (res.error === 1357001) {
@@ -690,16 +713,16 @@ function formatCookie(arr, url) {
 
 function formatThread(data) {
   return {
-    threadID: data.thread_fbid.toString(),
-    participants: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
-    participantIDs: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
+    threadID: formatID(data.thread_fbid.toString()),
+    participants: data.participants.map(formatID),
+    participantIDs: data.participants.map(formatID),
     formerParticipants: data.former_participants,
     name: data.name,
     nicknames: data.custom_nickname,
     snippet: data.snippet,
     snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,
-    snippetSender: (data.snippet_sender || '').replace('fbid:', ''),
+    snippetSender: formatID((data.snippet_sender || '').toString()),
     unreadCount: data.unread_count,
     messageCount: data.message_count,
     imageSrc: data.image_src,
@@ -708,7 +731,7 @@ function formatThread(data) {
     muteSettings: data.muteSettings,
     isCanonicalUser: data.is_canonical_user,
     isCanonical: data.is_canonical,
-    canonicalFbid: data.canonical_fbid,
+    canonicalFbid: formatID((data.canonical_fbid || '').toString()),
     isSubscribed: data.is_subscribed,
     rootMessageThreadingID: data.root_message_threading_id,
     folder: data.folder,
@@ -779,6 +802,7 @@ module.exports = {
   parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,
   getType: getType,
+  formatID: formatID,
   formatMessage: formatMessage,
   formatDeltaMessage: formatDeltaMessage,
   formatEvent: formatEvent,
