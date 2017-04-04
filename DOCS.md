@@ -469,18 +469,43 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 ---------------------------------------
 
 <a name="getThreadHistory"></a>
-### api.getThreadHistory(threadID, start, end, timestamp[, callback])
+### api.getThreadHistory(threadID, amount, timestamp[, callback])
 
-Takes a threadID, start and end numbers, a timestamp, and a callback.
+Takes a threadID, amount number, a timestamp, and a callback.
 
 __note__: if you're getting a 500 error, it's possible that you're requesting too many messages. Try reducing that number and see if that works.
 
 __Arguments__
 * `threadID`: A threadID corresponding to the target chat
-* `start`: The ith message in the chat from which to start retrieving history.
-* `end`: The jth message in the chat to which retrieving history.
-* `timestamp`: Used to described the end time. If set, will query messages up to and including `timestamp`.
+* `amount`: The amount of messages to *request*
+* `timestamp`: Used to described the time of the most recent message to load. If timestamp is `undefined`, facebook will load the most recent messages.
 * `callback(error, history)`: If error is null, history will contain an array of message objects.
+
+__Example__
+
+To load 50 messages at a time, we can use `undefined` as the timestamp to retrieve the most recent messages and use the timestamp of the earliest message to load the next 50.
+
+```js
+var timestamp = undefined;
+
+function loadNextThreadHistory(api){
+    api.getThreadHistory(threadID, 50, timestamp, (err, history) => {
+        if(err) return console.error(err);
+
+        /*
+            Since the timestamp is from a previous loaded message, 
+            that message will be included in this history so we can discard it unless it is the first load.
+        */
+        if(timestamp != undefined) history.pop();
+
+        /*
+            Handle message history
+        */
+
+        timestamp = history[0].timestamp;
+    });
+}
+```
 
 ---------------------------------------
 
