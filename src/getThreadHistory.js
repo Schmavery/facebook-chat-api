@@ -4,7 +4,7 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function getThreadHistory(threadID, start, end, timestamp, callback) {
+  return function getThreadHistory(threadID, amount, timestamp, callback) {
     if(!callback) {
       throw {error: "getThreadHistory: need callback"};
     }
@@ -18,9 +18,9 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback(err);
       }
       var key = (Object.keys(res).length > 0) ? "user_ids" : "thread_fbids";
-        form['messages['+key+'][' + threadID + '][offset]'] = start;
+        form['messages['+key+'][' + threadID + '][offset]'] = 0;
         form['messages['+key+'][' + threadID + '][timestamp]'] = timestamp;
-        form['messages['+key+'][' + threadID + '][limit]'] = end - start;
+        form['messages['+key+'][' + threadID + '][limit]'] = amount;
 
         if(ctx.globalOptions.pageID) form.request_user_id = ctx.globalOptions.pageID;
 
