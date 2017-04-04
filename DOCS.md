@@ -471,7 +471,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 <a name="getThreadHistory"></a>
 ### api.getThreadHistory(threadID, amount, timestamp[, callback])
 
-Takes a threadID, amount number, a timestamp, and a callback.
+Takes a threadID, number of messages, a timestamp, and a callback.
 
 __note__: if you're getting a 500 error, it's possible that you're requesting too many messages. Try reducing that number and see if that works.
 
