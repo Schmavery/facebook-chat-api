@@ -660,13 +660,15 @@ function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
         for(var i in arr) {
           if (arr[i][0] === "DTSG" && arr[i][1] === "setToken") {
             ctx.fb_dtsg = arr[i][3][0];
+
+            // Update ttstamp since that depends on fb_dtsg
+            ctx.ttstamp = "2";
+            for (var i = 0; i < ctx.fb_dtsg.length; i++) {
+              ctx.ttstamp += ctx.fb_dtsg.charCodeAt(i);
+            }
           }
         }
-        // Update ttstamp since that depends on fb_dtsg it seems.
-        ctx.ttstamp = "2";
-        for (var i = 0; i < ctx.fb_dtsg.length; i++) {
-          ctx.ttstamp += ctx.fb_dtsg.charCodeAt(i);
-        }
+        
       }
 
       if (res.error === 1357001) {
