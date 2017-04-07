@@ -11,6 +11,7 @@
 * [`api.createPoll`](#createPoll)
 * [`api.deleteMessage`](#deleteMessage)
 * [`api.deleteThread`](#deleteThread)
+* [`api.forwardAttachment`](#forwardAttachment)
 * [`api.getAppState`](#getAppState)
 * [`api.getCurrentUserID`](#getCurrentUserID)
 * [`api.getFriendsList`](#getFriendsList)
@@ -413,6 +414,18 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
+<a name="forwardAttachment"></a>
+### api.forwardAttachment(attachmentID, userOrUsers[, callback])
+
+Forwards corresponding attachment to given userID or to every user from an array of userIDs
+
+__Arguments__
+* `attachmentID`: The ID field in the attachment object. Not all attachment have IDs: recorded audio and arbitrary files don't for example.
+* `userOrUsers`: A userID string or usersID string array
+* `callback(err)`: A callback called when the query is done (either with an error or null).
+
+---------------------------------------
+
 <a name="getAppState"></a>
 ### api.getAppState()
 
@@ -456,18 +469,43 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 ---------------------------------------
 
 <a name="getThreadHistory"></a>
-### api.getThreadHistory(threadID, start, end, timestamp[, callback])
+### api.getThreadHistory(threadID, amount, timestamp[, callback])
 
-Takes a threadID, start and end numbers, a timestamp, and a callback.
+Takes a threadID, number of messages, a timestamp, and a callback.
 
 __note__: if you're getting a 500 error, it's possible that you're requesting too many messages. Try reducing that number and see if that works.
 
 __Arguments__
 * `threadID`: A threadID corresponding to the target chat
-* `start`: The ith message in the chat from which to start retrieving history.
-* `end`: The jth message in the chat to which retrieving history.
-* `timestamp`: Used to described the end time. If set, will query messages up to and including `timestamp`.
+* `amount`: The amount of messages to *request*
+* `timestamp`: Used to described the time of the most recent message to load. If timestamp is `undefined`, facebook will load the most recent messages.
 * `callback(error, history)`: If error is null, history will contain an array of message objects.
+
+__Example__
+
+To load 50 messages at a time, we can use `undefined` as the timestamp to retrieve the most recent messages and use the timestamp of the earliest message to load the next 50.
+
+```js
+var timestamp = undefined;
+
+function loadNextThreadHistory(api){
+    api.getThreadHistory(threadID, 50, timestamp, (err, history) => {
+        if(err) return console.error(err);
+
+        /*
+            Since the timestamp is from a previous loaded message, 
+            that message will be included in this history so we can discard it unless it is the first load.
+        */
+        if(timestamp != undefined) history.pop();
+
+        /*
+            Handle message history
+        */
+
+        timestamp = history[0].timestamp;
+    });
+}
+```
 
 ---------------------------------------
 
@@ -653,12 +691,13 @@ Difference between `"read_receipt"` and `"read"`:
 - `"read"` event triggers when the user read other people's messages.
 
 If `type` is `"message_reaction"`, then the object will have following fields (enabled `listenEvents` required):
-- `"reaction"`: Contains reaction emoji
-- `"userId"`: The reaction senders ID
-- `"senderId"`: ID of author the message, where has been reaction added
-- `"messageId"`: The ID of message
-- `"threadId"`: ID of thread where has been message sent
-- `"offlineThreadingId"`: The offline message ID
+- `reaction`: Contains reaction emoji
+- `userID`: ID of the reaction sender
+- `senderID`: ID of the author the message, where has been reaction added
+- `messageID`: The ID of the message
+- `threadID`: ID of the thread where the message has been sent
+- `offlineThreadingID`: The offline message ID
+- `timestamp`: Unix Timestamp (in miliseconds) when the reaction was sent
 
 <a name="presence"></a>
 If enabled through [setOptions](#setOptions), `message` could also be a presence object, (`type` will be `"presence"`), which is the online status of the user's friends. That object given to the callback will have the following fields:
@@ -825,7 +864,7 @@ Sends the given message to the threadID.
 __Arguments__
 
 * `message`: A string (for backward compatibility) or a message object as described below.
-* `threadID`: A string, number, or array representing a thread. It happens to be someone's userId in the case of a one to one conversation or an array of userIds when starting a new group chat.
+* `threadID`: A string, number, or array representing a thread. It happens to be someone's userID in the case of a one to one conversation or an array of userIDs when starting a new group chat.
 * `callback(err, messageInfo)`: A callback called when sending the message is done (either with an error or with an confirmation object). `messageInfo` contains the `threadID` where the message was sent and a `messageID`, as well as the `timestamp` of the message.
 
 __Message Object__:
@@ -971,7 +1010,7 @@ Note: This will not work if the thread id corresponds to a single-user chat or i
 __Arguments__
 
 * `newTitle`: A string representing the new title.
-* `threadID`: A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation.
+* `threadID`: A string or number representing a thread. It happens to be someone's userID in the case of a one to one conversation.
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the threadID where the message was sent.
 
 ---------------------------------------

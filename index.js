@@ -83,6 +83,7 @@ function buildAPI(globalOptions, html, jar) {
     'createPoll',
     'deleteMessage',
     'deleteThread',
+    'forwardAttachment',
     'getCurrentUserID',
     'getFriendsList',
     'getThreadHistory',
@@ -105,7 +106,7 @@ function buildAPI(globalOptions, html, jar) {
     'setTitle',
   ];
 
-  var defaultFuncs = utils.makeDefaults(html, userID);
+  var defaultFuncs = utils.makeDefaults(html, userID, ctx);
 
   // Load all api functions in a loop
   apiFuncNames.map(function(v) {

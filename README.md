@@ -51,6 +51,7 @@ Result:
 * [`api.createPoll`](DOCS.md#createPoll)
 * [`api.deleteMessage`](DOCS.md#deleteMessage)
 * [`api.deleteThread`](DOCS.md#deleteThread)
+* [`api.forwardAttachment`](DOCS.md#forwardAttachment)
 * [`api.getAppState`](DOCS.md#getAppState)
 * [`api.getCurrentUserID`](DOCS.md#getCurrentUserID)
 * [`api.getFriendsList`](DOCS.md#getFriendsList)

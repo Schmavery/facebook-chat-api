@@ -55,6 +55,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
   }
 
+  var serverNumber = '0';
+
   function listen() {
     if(currentlyRunning == null || !ctx.loggedIn) {
       return;
@@ -64,8 +66,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     prev = ~~(Date.now() / 1000);
     var presence = utils.generatePresence(ctx.userID);
     ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
-    utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
-    .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+    utils.get("https://"+serverNumber+"-edge-chat.facebook.com/pull", ctx.jar, form)
+    .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
     .then(function(resData) {
       var now = Date.now();
       log.info("listen", "Got answer in " + (now - tmpPrev));
@@ -122,8 +124,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               if(!ctx.globalOptions.updatePresence) {
                 return;
               }
-              
-              
+
               if (ctx.loggedIn) {
                 for(var userID in v.buddyList) {
                   var formattedPresence = utils.formatProxyPresence(v.buddyList[userID], userID);
@@ -134,7 +135,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 }
                 return;
               }
-              
+
               break;
             case 'buddylist_overlay':
               // TODO: what happens when you're logged in as a page?
@@ -170,7 +171,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 })(0)
                 break;
               }
-              
+
               if (v.delta.class == "ClientPayload") {
                 var clientPayload = utils.decodeClientPayload(v.delta.payload);
                 if (clientPayload && clientPayload.deltas) {
@@ -179,11 +180,12 @@ module.exports = function(defaultFuncs, api, ctx) {
                     if (delta.deltaMessageReaction) {
                       globalCallback(null, {
                         type: "message_reaction",
-                        threadId: delta.deltaMessageReaction.threadKey.threadFbId ? delta.deltaMessageReaction.threadKey.threadFbId : delta.deltaMessageReaction.threadKey.otherUserFbId,
-                        messageId: delta.deltaMessageReaction.messageId,
-                        reaction: delta.deltaMessageReaction.reaction,
-                        senderId: delta.deltaMessageReaction.senderId,
-                        userId: delta.deltaMessageReaction.userId
+                        threadID: delta.deltaMessageReaction.threadKey.threadFbId ? delta.deltaMessageReaction.threadKey.threadFbId : delta.deltaMessageReaction.threadKey.otherUserFbId,
+                        messageID: delta.deltaMessageReaction.messageId,
+                        reaction: decodeURIComponent(escape(delta.deltaMessageReaction.reaction)),
+                        senderID: delta.deltaMessageReaction.senderId,
+                        userID: delta.deltaMessageReaction.userId,
+                        timestamp: v.ofd_ts
                       });
                     }
                   }
@@ -266,6 +268,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     .catch(function(err) {
       if (err.code === 'ETIMEDOUT') {
         log.info("listen", "Suppressed timeout error.");
+      } else if (err.code === 'EAI_AGAIN') {
+        serverNumber = (~~(Math.random() * 6)).toString();
       } else {
         log.error("listen", err);
         globalCallback(err);

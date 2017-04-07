@@ -13,7 +13,7 @@ module.exports = function (defaultFuncs, api, ctx) {
       defaultFuncs
         .post("https://www.facebook.com/nfx/block_messages/?thread_fbid=" + userID + "&location=www_chat_head", ctx.jar, {})
         .then(utils.saveCookies(ctx.jar))
-        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+        .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function (resData) {
           if (resData.error) {
             throw resData;
@@ -21,7 +21,7 @@ module.exports = function (defaultFuncs, api, ctx) {
           defaultFuncs
             .post("https://www.facebook.com" + /action="(.+?)"+?/.exec(resData.jsmods.markup[0][1].__html)[1].replace(/&amp;/g, "&"), ctx.jar, {})
             .then(utils.saveCookies(ctx.jar))
-            .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+            .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
             .then(function (_resData) {
               if (_resData.error) {
                 throw _resData;
@@ -39,7 +39,7 @@ module.exports = function (defaultFuncs, api, ctx) {
       defaultFuncs
         .post("https://www.facebook.com/ajax/nfx/messenger_undo_block.php?story_location=messenger&context=%7B%22reportable_ent_token%22%3A%22" + userID + "%22%2C%22initial_action_name%22%3A%22BLOCK_MESSAGES%22%7D&", ctx.jar, {})
         .then(utils.saveCookies(ctx.jar))
-        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+        .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function (resData) {
           if (resData.error) {
             throw resData;
