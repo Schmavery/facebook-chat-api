@@ -413,6 +413,7 @@ function formatEvent(m) {
   var logMessageData;
   if (logMessageType === 'log:generic-admin-text') {
     logMessageData = originalMessage.log_message_data.untypedData;
+    logMessageType = getAdminTextMessageType(originalMessage.log_message_data.message_type);
   } else {
     logMessageData = originalMessage.log_message_data;
   }
@@ -437,6 +438,20 @@ function formatHistoryMessage(m) {
   }
 }
 
+// Get a more readable message type for AdminTextMessages
+function getAdminTextMessageType(type) {
+  switch (type) {
+    case 'change_thread_theme':
+      return "log:thread-color";
+    case 'change_thread_nickname':
+      return "log:user-nickname";
+    case 'change_thread_icon':
+      return "log:thread-icon";
+    default:
+      return type;
+  }
+}
+
 function formatDeltaEvent(m) {
   var logMessageType;
   var logMessageData;
@@ -451,17 +466,7 @@ function formatDeltaEvent(m) {
   switch (m.class) {
     case 'AdminTextMessage':
       logMessageData = m.untypedData;
-      switch (m.type) {
-        case 'change_thread_theme':
-          logMessageType = "log:thread-color";
-          break;
-        case 'change_thread_nickname':
-          logMessageType = "log:user-nickname";
-          break;
-        case 'change_thread_icon':
-          logMessageType = "log:thread-icon";
-          break;
-      }
+      logMessageType = getAdminTextMessageType(m.type);
       break;
     case 'ThreadName':
       logMessageType = "log:thread-name";
