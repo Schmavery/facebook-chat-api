@@ -104,6 +104,7 @@ function buildAPI(globalOptions, html, jar) {
     'sendTypingIndicator',
     'setMessageReaction',
     'setTitle',
+    'getAllIDs',
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID, ctx);

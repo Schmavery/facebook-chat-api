@@ -19,6 +19,7 @@
 * [`api.getThreadInfo`](#getThreadInfo)
 * [`api.getThreadList`](#getThreadList)
 * [`api.getThreadPictures`](#getThreadPictures)
+* [`api.getAllIDs`](#getAllIDs)
 * [`api.getUserID`](#getUserID)
 * [`api.getUserInfo`](#getUserInfo)
 * [`api.handleMessageRequest`](#handleMessageRequest)
@@ -548,6 +549,37 @@ __Arguments__
 
 ---------------------------------------
 
+<a name="getAllIDs"></a>
+### api.getAllIDs(name, allowNonUsers, callback)
+
+Given the full name of a Facebook user (or page/bot if allowNonUsers is true), the call will perform a Facebook Graph search and return all corresponding IDs (order determined by Facebook).
+
+__Arguments__
+
+* `name` - A string being the name of the person you're looking for.
+* `allowNonUsers` - Allow returning of all types not just users, good for finding bots.
+* `callback(err, obj)` - A callback called when the search is done (either with an error or with the resulting object). `obj` is an array which contains all of the users that facebook graph search found, ordered by "importance".
+
+__Example__
+
+```js
+const fs = require("fs");
+const login = require("facebook-chat-api");
+
+login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
+    if(err) return console.error(err);
+
+    api.getAllIDs("Marc Zuckerbot", true, (err, data) => {
+        if(err) return console.error(err);
+
+        // Send the message to the best match (best by Facebook's criteria)
+        var msg = "Hello!"
+        var threadID = data[0].userID;
+        api.sendMessage(msg, threadID);
+    });
+});
+```
+---------------------------------------
 <a name="getUserID"></a>
 ### api.getUserID(name, callback)
 
