@@ -11,6 +11,7 @@ var allowedProperties = {
   emoji: true,
   emojiSize: true,
   body: true,
+  mentions: true,
 };
 
 module.exports = function(defaultFuncs, api, ctx) {
@@ -236,6 +237,20 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
   }
 
+  function handleMention(msg, form, callback, cb) {
+    if (msg.mentions) {
+        for (let i=0; i < msg.mentions.length; i++) {
+            let mention = msg.mentions[i];
+            let tag = mention.tag || '';
+            let id = mention.id || 0;
+            form['profile_xmd[' + i + '][offset]'] = msg.body.indexOf(tag);
+            form['profile_xmd[' + i + '][length]'] = tag.length;
+            form['profile_xmd[' + i + '][id]'] = id;
+        }
+    }
+    cb();
+  }
+
   return function sendMessage(msg, threadID, callback) {
     if(!callback && (utils.getType(threadID) === 'Function' || utils.getType(threadID) === 'AsyncFunction')) {
       return callback({error: "Pass a threadID as a second argument."});
@@ -303,6 +318,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       () => handleAttachment(msg, form, callback,
         () => handleUrl(msg, form, callback,
           () => handleEmoji(msg, form, callback,
-            () => send(form, threadID, messageAndOTID, callback)))));
+            () => handleMention(msg, form, callback,
+              () => send(form, threadID, messageAndOTID, callback))))));
   };
 };
