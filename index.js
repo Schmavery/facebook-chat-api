@@ -438,6 +438,7 @@ function login(loginData, options, callback) {
     selfListen: false,
     listenEvents: false,
     updatePresence: false,
+    updateBuddylist: false,
     forceLogin: false,
     logRecordSize: defaultLogRecordSize
   };
