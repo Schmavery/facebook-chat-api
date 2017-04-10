@@ -30,6 +30,9 @@ function setOptions(globalOptions, options) {
       case 'updatePresence':
         globalOptions.updatePresence = options.updatePresence;
         break;
+      case 'updateBuddylist':
+        globalOptions.updateBuddylist = options.updateBuddylist;
+        break;
       case 'forceLogin':
         globalOptions.forceLogin = options.forceLogin;
         break;
