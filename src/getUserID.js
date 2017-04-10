@@ -13,6 +13,7 @@ function formatData(data) {
     profileUrl: data.path,
     category: data.category,
     score: data.score,
+    type: data.type,
   };
 }
 
@@ -40,10 +41,6 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
 
         var data = resData.payload.entries;
-
-        if(data[0].type !== "user") {
-          throw {error: "Couldn't find a user with name " + name + ". Bes match: " + data[0].path};
-        }
 
         callback(null, data.map(formatData));
       })
