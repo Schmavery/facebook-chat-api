@@ -121,7 +121,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               break;
             case 'chatproxy-presence':
               // TODO: what happens when you're logged in as a page?
-              if(!ctx.globalOptions.updatePresence || !ctx.globalOptions.updateBuddylist) {
+              if(!ctx.globalOptions.updatePresence) {
                 return;
               }
 
@@ -138,7 +138,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               break;
             case 'buddylist_overlay':
               // TODO: what happens when you're logged in as a page?
-              if(!ctx.globalOptions.updatePresence) {
+              if(!ctx.globalOptions.updateBuddylist) {
                 return;
               }
               // There should be only one key inside overlay
