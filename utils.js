@@ -370,7 +370,7 @@ function formatDeltaMessage(m){
   return {
     type: "message",
     senderID: formatID(md.actorFbId.toString()),
-    body: m.delta.body,
+    body: m.delta.body || "",
     threadID: formatID((md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()),
     messageID: md.messageId,
     attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
@@ -395,7 +395,7 @@ function formatMessage(m) {
     senderID: formatID(originalMessage.sender_fbid.toString()),
     participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
     participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return formatID(v.toString());}) : [formatID(originalMessage.sender_fbid)]),
-    body: originalMessage.body,
+    body: originalMessage.body || "",
     threadID: formatID((originalMessage.thread_fbid || originalMessage.other_user_fbid).toString()),
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
