@@ -30,8 +30,8 @@ function setOptions(globalOptions, options) {
       case 'updatePresence':
         globalOptions.updatePresence = options.updatePresence;
         break;
-      case 'updateBuddylist':
-        globalOptions.updateBuddylist = options.updateBuddylist;
+      case 'batchPresence':
+        globalOptions.batchPresence = options.batchPresence;
         break;
       case 'forceLogin':
         globalOptions.forceLogin = options.forceLogin;
@@ -438,7 +438,7 @@ function login(loginData, options, callback) {
     selfListen: false,
     listenEvents: false,
     updatePresence: false,
-    updateBuddylist: false,
+    batchPresence: false,
     forceLogin: false,
     logRecordSize: defaultLogRecordSize
   };
