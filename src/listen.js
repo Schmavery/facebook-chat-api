@@ -138,7 +138,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               break;
             case 'buddylist_overlay':
               // TODO: what happens when you're logged in as a page?
-              if(!ctx.globalOptions.updateBuddylist) {
+              if(!ctx.globalOptions.batchPresence) {
                 return;
               }
               // There should be only one key inside overlay
