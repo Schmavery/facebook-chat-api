@@ -243,17 +243,20 @@ module.exports = function(defaultFuncs, api, ctx) {
         const mention = msg.mentions[i];
 
         const tag = mention.tag;
-        if (typeof tag !== "string")
+        if (typeof tag !== "string") {
           return callback({error: "Mention tags must be strings."});
+        }
 
         const offset = msg.body.indexOf(tag, mention.fromIndex || 0);
 
-        if (offset < 0)
+        if (offset < 0) {
           log.warn("handleMention", "Mention for \"" + tag +
             "\" not found in message string.");
+        }
 
-        if (mention.id == null)
+        if (mention.id == null) {
           log.warn("handleMention", "Mention id should be non-null.");
+        }
 
         const id = mention.id || 0;
         form['profile_xmd[' + i + '][offset]'] = offset;
