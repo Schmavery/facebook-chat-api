@@ -493,7 +493,7 @@ function loadNextThreadHistory(api){
         if(err) return console.error(err);
 
         /*
-            Since the timestamp is from a previous loaded message, 
+            Since the timestamp is from a previous loaded message,
             that message will be included in this history so we can discard it unless it is the first load.
         */
         if(timestamp != undefined) history.pop();
@@ -875,6 +875,9 @@ Various types of message can be sent:
 * *File or image:* Set field `attachment` to a readable stream or an array of readable streams.
 * *URL:* set a field `url` to the desired URL.
 * *Emoji:* set field `emoji` to the desired emoji as a string and set field `emojiSize` with size of the emoji (`small`, `medium`, `large`)
+* *Mentions:* set field `mentions` to an array of objects. Objects should have the `tag` field set to the text that should be highlighted in the mention. The object should have an `id` field, where the `id` is the user id of the person being mentioned. The instance of `tag` that is highlighted is determined through indexOf, an optional `fromIndex`
+can be passed in to specify the start index to start searching for the `tag` text
+in `body` (default=0). (See below for an example.)
 
 Note that a message can only be a regular message (which can be empty) and optionally one of the following: a sticker, an attachment or a url.
 
@@ -909,6 +912,30 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
         attachment: fs.createReadStream(__dirname + '/image.jpg')
     }
     api.sendMessage(msg, yourID);
+});
+```
+
+__Example (Mention)__
+```js
+const login = require("facebook-chat-api");
+
+login({email: "EMAIL", password: "PASSWORD"}, (err, api) => {
+    if(err) return console.error(err);
+
+    api.listen((err, message) => {
+        if (message && message.body) {
+            // Getting the actual sender name from ID involves calling
+            // `api.getThreadInfo` and `api.getUserInfo`
+            api.sendMessage({
+                body: 'Hello @Sender! @Sender!',
+                mentions: [{
+                     tag: '@Sender',
+                     id: message.senderID,
+                     fromIndex: 9, // Highlight the second occurrence of @Sender
+                }],
+            }, message.threadID);
+        }
+    });
 });
 ```
 

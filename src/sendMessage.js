@@ -11,6 +11,7 @@ var allowedProperties = {
   emoji: true,
   emojiSize: true,
   body: true,
+  mentions: true,
 };
 
 module.exports = function(defaultFuncs, api, ctx) {
@@ -186,7 +187,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
     cb();
   }
-  
+
   function handleEmoji(msg, form, callback, cb) {
     if (msg.emojiSize != null && msg.emoji == null) {
       return callback({error: "emoji property is empty"});
@@ -234,6 +235,36 @@ module.exports = function(defaultFuncs, api, ctx) {
     } else {
       cb();
     }
+  }
+
+  function handleMention(msg, form, callback, cb) {
+    if (msg.mentions) {
+      for (let i=0; i < msg.mentions.length; i++) {
+        const mention = msg.mentions[i];
+
+        const tag = mention.tag;
+        if (typeof tag !== "string") {
+          return callback({error: "Mention tags must be strings."});
+        }
+
+        const offset = msg.body.indexOf(tag, mention.fromIndex || 0);
+
+        if (offset < 0) {
+          log.warn("handleMention", "Mention for \"" + tag +
+            "\" not found in message string.");
+        }
+
+        if (mention.id == null) {
+          log.warn("handleMention", "Mention id should be non-null.");
+        }
+
+        const id = mention.id || 0;
+        form['profile_xmd[' + i + '][offset]'] = offset;
+        form['profile_xmd[' + i + '][length]'] = tag.length;
+        form['profile_xmd[' + i + '][id]'] = id;
+      }
+    }
+    cb();
   }
 
   return function sendMessage(msg, threadID, callback) {
@@ -303,6 +334,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       () => handleAttachment(msg, form, callback,
         () => handleUrl(msg, form, callback,
           () => handleEmoji(msg, form, callback,
-            () => send(form, threadID, messageAndOTID, callback)))));
+            () => handleMention(msg, form, callback,
+              () => send(form, threadID, messageAndOTID, callback))))));
   };
 };
