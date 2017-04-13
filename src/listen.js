@@ -121,7 +121,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               break;
             case 'chatproxy-presence':
               // TODO: what happens when you're logged in as a page?
-              if(!ctx.globalOptions.updatePresence) {
+              if(!ctx.globalOptions.batchPresence || !ctx.globalOptions.updatePresence) {
                 return;
               }
 
