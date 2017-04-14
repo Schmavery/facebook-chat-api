@@ -944,7 +944,7 @@ login({email: "EMAIL", password: "PASSWORD"}, (err, api) => {
 <a name="sendTypingIndicator"></a>
 ### api.sendTypingIndicator(threadID[, callback])
 
-Sends a "USERNAME is typing" indicator to other members of the thread indicated by threadID.  This indication will disappear after 30 second or when the `end` function is called. The `end` function is returned by `api.sendTypingIndicator`.
+Sends a "USERNAME is typing" indicator to other members of the thread indicated by `threadID`. This indication will disappear after 30 second or when the `end` function is called. The `end` function is returned by `api.sendTypingIndicator`.
 
 __Arguments__
 
