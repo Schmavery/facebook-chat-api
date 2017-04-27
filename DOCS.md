@@ -469,18 +469,43 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 ---------------------------------------
 
 <a name="getThreadHistory"></a>
-### api.getThreadHistory(threadID, start, end, timestamp[, callback])
+### api.getThreadHistory(threadID, amount, timestamp[, callback])
 
-Takes a threadID, start and end numbers, a timestamp, and a callback.
+Takes a threadID, number of messages, a timestamp, and a callback.
 
 __note__: if you're getting a 500 error, it's possible that you're requesting too many messages. Try reducing that number and see if that works.
 
 __Arguments__
 * `threadID`: A threadID corresponding to the target chat
-* `start`: The ith message in the chat from which to start retrieving history.
-* `end`: The jth message in the chat to which retrieving history.
-* `timestamp`: Used to described the end time. If set, will query messages up to and including `timestamp`.
+* `amount`: The amount of messages to *request*
+* `timestamp`: Used to described the time of the most recent message to load. If timestamp is `undefined`, facebook will load the most recent messages.
 * `callback(error, history)`: If error is null, history will contain an array of message objects.
+
+__Example__
+
+To load 50 messages at a time, we can use `undefined` as the timestamp to retrieve the most recent messages and use the timestamp of the earliest message to load the next 50.
+
+```js
+var timestamp = undefined;
+
+function loadNextThreadHistory(api){
+    api.getThreadHistory(threadID, 50, timestamp, (err, history) => {
+        if(err) return console.error(err);
+
+        /*
+            Since the timestamp is from a previous loaded message,
+            that message will be included in this history so we can discard it unless it is the first load.
+        */
+        if(timestamp != undefined) history.pop();
+
+        /*
+            Handle message history
+        */
+
+        timestamp = history[0].timestamp;
+    });
+}
+```
 
 ---------------------------------------
 
@@ -526,12 +551,12 @@ __Arguments__
 <a name="getUserID"></a>
 ### api.getUserID(name, callback)
 
-Given the full name of a Facebook user, the call will perform a Facebook Graph search and return all corresponding IDs (order determined by Facebook).
+Given the full name or vanity name of a Facebook user, event, page, group or app, the call will perform a Facebook Graph search and return all corresponding IDs (order determined by Facebook).
 
 __Arguments__
 
-* `name` - A string being the name of the person you're looking for.
-* `callback(err, obj)` - A callback called when the search is done (either with an error or with the resulting object). `obj` is an array which contains all of the users that facebook graph search found, ordered by "importance".
+* `name` - A string being the name of the item you're looking for.
+* `callback(err, obj)` - A callback called when the search is done (either with an error or with the resulting object). `obj` is an array which contains all of the items that facebook graph search found, ordered by "importance".  Each item in the array has the following properties: `userID`,`photoUrl`,`indexRank`, `name`, `isVerified`, `profileUrl`, `category`, `score`, `type` (type is generally user, group, page, event or app).
 
 __Example__
 
@@ -563,7 +588,7 @@ Will get some information about the given users.
 __Arguments__
 
 * `ids` - Either a string/number for one ID or an array of strings/numbers for a batched query.
-* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from userId to another object containing the following properties: `name`, `firstName`, `vanity`, `thumbSrc`, `profileUrl`, `gender`, `type`, `isFriend`, `isBirthday`, `searchTokens`, `alternateName`.
+* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from userId to another object containing the following properties: `name`, `firstName`, `vanity` (user's chosen facebook handle, if any), `thumbSrc`, `profileUrl`, `gender`, `type` (type is generally user, group, page, event or app), `isFriend`, `isBirthday`, `searchTokens`, `alternateName`.
 
 __Example__
 
@@ -850,6 +875,9 @@ Various types of message can be sent:
 * *File or image:* Set field `attachment` to a readable stream or an array of readable streams.
 * *URL:* set a field `url` to the desired URL.
 * *Emoji:* set field `emoji` to the desired emoji as a string and set field `emojiSize` with size of the emoji (`small`, `medium`, `large`)
+* *Mentions:* set field `mentions` to an array of objects. Objects should have the `tag` field set to the text that should be highlighted in the mention. The object should have an `id` field, where the `id` is the user id of the person being mentioned. The instance of `tag` that is highlighted is determined through indexOf, an optional `fromIndex`
+can be passed in to specify the start index to start searching for the `tag` text
+in `body` (default=0). (See below for an example.)
 
 Note that a message can only be a regular message (which can be empty) and optionally one of the following: a sticker, an attachment or a url.
 
@@ -887,12 +915,36 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 });
 ```
 
+__Example (Mention)__
+```js
+const login = require("facebook-chat-api");
+
+login({email: "EMAIL", password: "PASSWORD"}, (err, api) => {
+    if(err) return console.error(err);
+
+    api.listen((err, message) => {
+        if (message && message.body) {
+            // Getting the actual sender name from ID involves calling
+            // `api.getThreadInfo` and `api.getUserInfo`
+            api.sendMessage({
+                body: 'Hello @Sender! @Sender!',
+                mentions: [{
+                     tag: '@Sender',
+                     id: message.senderID,
+                     fromIndex: 9, // Highlight the second occurrence of @Sender
+                }],
+            }, message.threadID);
+        }
+    });
+});
+```
+
 ---------------------------------------
 
 <a name="sendTypingIndicator"></a>
 ### api.sendTypingIndicator(threadID[, callback])
 
-Sends a "USERNAME is typing" indicator to other members of the thread indicated by threadID.  This indication will disappear after 30 second or when the `end` function is called. The `end` function is returned by `api.sendTypingIndicator`.
+Sends a "USERNAME is typing" indicator to other members of the thread indicated by `threadID`. This indication will disappear after 30 second or when the `end` function is called. The `end` function is returned by `api.sendTypingIndicator`.
 
 __Arguments__
 

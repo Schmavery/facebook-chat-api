@@ -370,7 +370,7 @@ function formatDeltaMessage(m){
   return {
     type: "message",
     senderID: formatID(md.actorFbId.toString()),
-    body: m.delta.body,
+    body: m.delta.body || "",
     threadID: formatID((md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()),
     messageID: md.messageId,
     attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
@@ -395,7 +395,7 @@ function formatMessage(m) {
     senderID: formatID(originalMessage.sender_fbid.toString()),
     participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
     participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return formatID(v.toString());}) : [formatID(originalMessage.sender_fbid)]),
-    body: originalMessage.body,
+    body: originalMessage.body || "",
     threadID: formatID((originalMessage.thread_fbid || originalMessage.other_user_fbid).toString()),
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
@@ -416,6 +416,51 @@ function formatMessage(m) {
 }
 
 function formatEvent(m) {
+  var originalMessage = m.message ? m.message : m;
+  var logMessageType = originalMessage.log_message_type;
+  var logMessageData;
+  if (logMessageType === 'log:generic-admin-text') {
+    logMessageData = originalMessage.log_message_data.untypedData;
+    logMessageType = getAdminTextMessageType(originalMessage.log_message_data.message_type);
+  } else {
+    logMessageData = originalMessage.log_message_data;
+  }
+
+  return Object.assign(
+    formatMessage(originalMessage),
+    {
+      type: "event",
+      logMessageType: logMessageType,
+      logMessageData: logMessageData,
+      logMessageBody: originalMessage.log_message_body
+    }
+  );
+}
+
+function formatHistoryMessage(m) {
+  switch(m.action_type) {
+    case "ma-type:log-message":
+      return formatEvent(m);
+    default:
+      return formatMessage(m);
+  }
+}
+
+// Get a more readable message type for AdminTextMessages
+function getAdminTextMessageType(type) {
+  switch (type) {
+    case 'change_thread_theme':
+      return "log:thread-color";
+    case 'change_thread_nickname':
+      return "log:user-nickname";
+    case 'change_thread_icon':
+      return "log:thread-icon";
+    default:
+      return type;
+  }
+}
+
+function formatDeltaEvent(m) {
   var logMessageType;
   var logMessageData;
 
@@ -429,17 +474,7 @@ function formatEvent(m) {
   switch (m.class) {
     case 'AdminTextMessage':
       logMessageData = m.untypedData;
-      switch (m.type) {
-        case 'change_thread_theme':
-          logMessageType = "log:thread-color";
-          break;
-        case 'change_thread_nickname':
-          logMessageType = "log:user-nickname";
-          break;
-        case 'change_thread_icon':
-          logMessageType = "log:thread-icon";
-          break;
-      }
+      logMessageType = getAdminTextMessageType(m.type);
       break;
     case 'ThreadName':
       logMessageType = "log:thread-name";
@@ -660,13 +695,15 @@ function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
         for(var i in arr) {
           if (arr[i][0] === "DTSG" && arr[i][1] === "setToken") {
             ctx.fb_dtsg = arr[i][3][0];
+
+            // Update ttstamp since that depends on fb_dtsg
+            ctx.ttstamp = "2";
+            for (var i = 0; i < ctx.fb_dtsg.length; i++) {
+              ctx.ttstamp += ctx.fb_dtsg.charCodeAt(i);
+            }
           }
         }
-        // Update ttstamp since that depends on fb_dtsg it seems.
-        ctx.ttstamp = "2";
-        for (var i = 0; i < ctx.fb_dtsg.length; i++) {
-          ctx.ttstamp += ctx.fb_dtsg.charCodeAt(i);
-        }
+        
       }
 
       if (res.error === 1357001) {
@@ -802,10 +839,11 @@ module.exports = {
   parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,
   getType: getType,
+  formatHistoryMessage: formatHistoryMessage,
   formatID: formatID,
   formatMessage: formatMessage,
+  formatDeltaEvent: formatDeltaEvent,
   formatDeltaMessage: formatDeltaMessage,
-  formatEvent: formatEvent,
   formatProxyPresence: formatProxyPresence,
   formatPresence: formatPresence,
   formatTyp: formatTyp,
