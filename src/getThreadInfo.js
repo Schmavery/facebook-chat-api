@@ -38,19 +38,9 @@ module.exports = function(defaultFuncs, api, ctx) {
               error: "ThreadData is null"
             };
           }
-
-          // var info = {
-          //   participantIDs: threadData.participants.map(id => id.split(':').pop()),
-          //   name: userData != null && userData.name != null ? userData.name : threadData.name,
-          //   snippet: threadData.snippet,
-          //   messageCount: threadData.message_count,
-          //   emoji: threadData.custom_like_icon,
-          //   nicknames: threadData.custom_nickname,
-          //   color: threadData.custom_color,
-          //   lastReadTimestamp: threadData.last_read_timestamp,
-          // };
-          threadData.name = userData != null && userData.name != null ? userData.name : threadData.name;
           
+          threadData.name = userData != null && userData.name != null ? userData.name : threadData.name;
+
           callback(null, utils.formatThread(threadData));
 
         }).catch(function(err) {
