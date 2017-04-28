@@ -40,7 +40,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           }
           
           threadData.name = userData != null && userData.name != null ? userData.name : threadData.name;
-          threadData.imageSrc = userData != null && userData.thumbSrc != null ? userData.thumbSrc : threadData.imageSrc;
+          threadData.image_src = userData != null && userData.thumbSrc != null ? userData.thumbSrc : threadData.imageSrc;
 
           callback(null, utils.formatThread(threadData));
 
