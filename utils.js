@@ -779,7 +779,10 @@ function formatThread(data) {
     canReply: data.can_reply,
     composerEnabled: data.composer_enabled,
     blockedParticipants: data.blocked_participants,
-    lastMessageID: data.last_message_id
+    lastMessageID: data.last_message_id,
+    emoji: data.custom_like_icon,
+    color: data.custom_color,
+    lastReadTimestamp: data.last_read_timestamp
   };
 }
 

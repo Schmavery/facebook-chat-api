@@ -516,7 +516,9 @@ Takes a threadID and a callback.  Works for both single-user and group threads.
 
 __Arguments__
 * `threadID`: A threadID corresponding to the target thread.
-* `callback(err, info)`: If `err` is `null`, `info` will contain `participantIDs`, `name`, `snippet`, `messageCount`, `emoji`, `nicknames`, and `color`.  The last three will be null if custom values are not set for the thread.
+* `callback(err, info)`: If `err` is `null`, `info` will contain the following propertis: `threadID`, <del>`participants`</del>, `participantIDs`, `formerParticipants`, `name`, `nicknames`, `snippet`, `snippetHasAttachment`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteSettings`, `isCanonicalUser`, `isCanonical`, `canonicalFbid`, `isSubscribed`, `rootMessageThreadingID`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `composerEnabled`, `blockedParticipants`, `lastMessageID, emoji, color, lastReadTimestamp`.
+
+Some of the properties may be null if they are unset. E.g. `emoji`, `color`, or `nicknames`.
 
 ---------------------------------------
 
@@ -530,7 +532,9 @@ __Arguments__
 * `start`: Start index in the list of recently used threads.
 * `end`: End index.
 * `type`: Optional String, can be 'inbox', 'pending', or 'archived'. Inbox is default.
-* `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: `threadID`, <del>`participants`</del>, `participantIDs`, `formerParticipants`, `name`, `nicknames`, `snippet`, `snippetHasAttachment`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteSettings`, `isCanonicalUser`, `isCanonical`, `canonicalFbid`, `isSubscribed`, `rootMessageThreadingID`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `composerEnabled`, `blockedParticipants`, `lastMessageID`.
+* `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: `threadID`, <del>`participants`</del>, `participantIDs`, `formerParticipants`, `name`, `nicknames`, `snippet`, `snippetHasAttachment`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteSettings`, `isCanonicalUser`, `isCanonical`, `canonicalFbid`, `isSubscribed`, `rootMessageThreadingID`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `composerEnabled`, `blockedParticipants`, `lastMessageID, emoji, color, lastReadTimestamp`.
+
+Some of the properties may be null if they are unset. E.g. `emoji`, `color`, `nicknames`, or `imageSrc`.
 
 ---------------------------------------
 
