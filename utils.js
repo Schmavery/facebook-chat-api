@@ -177,6 +177,7 @@ function presenceDecode(str) {
 
 function generatePresence(userID) {
   var time = Date.now();
+  var a = 'p_' + userID; 
   return "E" + presenceEncode(JSON.stringify({
     "v": 3,
     "time": parseInt(time / 1000, 10),
@@ -191,7 +192,7 @@ function generatePresence(userID) {
       "at": time
     },
     "ch":{
-      ["p_" + userID]: 0
+      a: 0
     }
   }))
 }
