@@ -10,5 +10,10 @@
 
 ## 1.3.0 (04-01-2017)
 * [New] [changeBlockedStatus](/DOCS.md#changeBlockedStatus): combines blockUser & unblockUser functions
-* [changeThreadColor](/DOCS.md#changeThreadColor): Callback is now optional
-* [Internal] [getThreadHistory](/DOCS.md#getThreadHistory): Callback arrays will be error filtered before returned
+* [changeThreadColor](/DOCS.md#changeThreadColor): callback is now optional
+* [Internal] [getThreadHistory](/DOCS.md#getThreadHistory): callback arrays will be error filtered before returned
+
+## 1.2.0 (08-18-2016)
+* [New] [muteThread](/DOCS.md#muteThread): mute a chat for a period of time, or unmute a chat
+* [New] [handleMessageRequest](/DOCS.md#handleMessageRequest): accept or ignore message request(s)
+* [getThreadList](/DOCS.md#getThreadList): optional type argument; can be 'inbox', 'pending', or 'archived'. Inbox is default
