@@ -6,6 +6,8 @@ _Disclaimer_: We are not responsible if your account gets banned for spammy acti
 
 See [below](#projects) for projects using this API.
 
+See the [full changelog](/CHANGELOG.md) for release details.
+
 ## Install
 ```bash
 npm install facebook-chat-api
