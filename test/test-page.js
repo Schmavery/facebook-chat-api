@@ -2,7 +2,7 @@ var login = require('../index.js');
 var fs = require('fs');
 var assert = require('assert');
 
-var conf = JSON.parse(fs.readFileSync('test/test-config.json', 'utf8'));
+var conf =  JSON.parse(process.env.testconfig || fs.readFileSync('test/test-config.json', 'utf8'));
 var credentials = {
   email: conf.user.email,
   password: conf.user.password,
@@ -102,19 +102,6 @@ describe('Login As Page:', function() {
     var stopType = api.sendTypingIndicator(userID, function(err) {
       checkErr(done)(err);
       stopType();
-      done();
-    });
-  });
-
-  it('should get a list of online users', function (done){
-    api.getOnlineUsers(function(err, res) {
-      checkErr(done)(err);
-      assert(getType(res) === "Array");
-      res.map(function(v) {
-        assert(v.lastActive);
-        assert(v.userID);
-        assert(v.status);
-      });
       done();
     });
   });

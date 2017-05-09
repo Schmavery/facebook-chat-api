@@ -41,7 +41,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       form["ids[" + i + "]"] = v;
     });
     defaultFuncs.post("https://www.facebook.com/chat/user_info/", ctx.jar, form)
-    .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+    .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
     .then(function(resData) {
       if (resData.error) {
         throw resData;
@@ -49,7 +49,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       return callback(null, formatData(resData.payload.profiles));
     })
     .catch(function(err) {
-      log.error("Error in getUserInfo", err);
+      log.error("getUserInfo", err);
       return callback(err);
     });
   };

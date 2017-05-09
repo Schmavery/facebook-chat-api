@@ -15,7 +15,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post("https://www.messenger.com/messaging/save_thread_nickname/?source=thread_settings&dpr=1", ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error === 1545014) {
           throw {error: "Trying to change nickname of user isn't in thread"};
@@ -30,7 +30,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in changeNickname", err);
+        log.error("changeNickname", err);
         return callback(err);
       });
   };

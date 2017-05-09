@@ -20,7 +20,7 @@ function getHeaders(url) {
 
 function isReadableStream(obj) {
   return obj instanceof stream.Stream &&
-    getType(obj._read) === 'Function' &&
+    (getType(obj._read) === 'Function' || getType(obj._read) === 'AsyncFunction') &&
     getType(obj._readableState) === 'Object';
 }
 
@@ -236,6 +236,8 @@ function _formatAttachment(attachment1, attachment2) {
   // Instead of having a bunch of if statements guarding every access to image_data,
   // we set it to empty object and use the fact that it'll return undefined.
   attachment2 = attachment2 || {id:"", image_data: {}};
+  var fileName = attachment1.filename
+  attachment1 = attachment1.mercury ? attachment1.mercury : attachment1
 
   switch (attachment1.attach_type) {
     case "sticker":
@@ -268,18 +270,21 @@ function _formatAttachment(attachment1, attachment2) {
     case "photo":
       return {
         type: "photo",
-        name: attachment1.name, // Do we need this?
-        hiresUrl: attachment1.hires_url,
+        ID: attachment1.metadata.fbid.toString(),
+        filename: fileName,
         thumbnailUrl: attachment1.thumbnail_url,
+
         previewUrl: attachment1.preview_url,
         previewWidth: attachment1.preview_width,
         previewHeight: attachment1.preview_height,
-        ID: attachment2.id.toString(),
-        filename: attachment2.filename,
-        mimeType: attachment2.mime_type,
-        url: attachment2.image_data.url,
-        width:attachment2.image_data.width,
-        height:attachment2.image_data.height,
+
+        largePreviewUrl: attachment1.large_preview_url,
+        largePreviewWidth: attachment1.large_preview_width,
+        largePreviewHeight: attachment1.large_preview_height,
+
+        url: attachment1.metadata.url,
+        width: attachment1.metadata.dimensions.split(',')[0],
+        height: attachment1.metadata.dimensions.split(',')[1],
       };
     case "animated_image":
       return {
@@ -318,6 +323,8 @@ function _formatAttachment(attachment1, attachment2) {
         source: attachment1.share.source,
         title: attachment1.share.title,
         facebookUrl: attachment1.share.uri,
+        target: attachment1.share.target,
+        styleList: attachment1.share.style_list,
         url: attachment2.href,
       };
     case "video":
@@ -333,6 +340,15 @@ function _formatAttachment(attachment1, attachment2) {
         width: attachment1.metadata.dimensions.width,
         height: attachment1.metadata.dimensions.height,
         duration: attachment1.metadata.duration,
+      };
+    case "error":
+      return {
+        type: "error",
+
+        // Save error attachments because we're unsure of their format,
+        // and whether there are cases they contain something useful for debugging.
+        attachment1: attachment1,
+        attachment2: attachment2
       };
     default:
       throw new Error("unrecognized attach_file `" + JSON.stringify(attachment1) + "`");
@@ -353,13 +369,21 @@ function formatDeltaMessage(m){
   var md = m.delta.messageMetadata;
   return {
     type: "message",
-    senderID: md.actorFbId,
-    body: m.delta.body,
-    threadID: (md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString(),
+    senderID: formatID(md.actorFbId.toString()),
+    body: m.delta.body || "",
+    threadID: formatID((md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()),
     messageID: md.messageId,
-    attachments: (m.delta.attachments || []).map(v => _formatAttachment(v.mercury)),
+    attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
     timestamp: md.timestamp,
     isGroup: !!md.threadKey.threadFbId
+  }
+}
+
+function formatID(id){
+  if(id != undefined && id != null){
+    return id.replace(/(fb)?id[:.]/, "");
+  }else{
+    return id;
   }
 }
 
@@ -368,11 +392,11 @@ function formatMessage(m) {
   var obj = {
     type: "message",
     senderName: originalMessage.sender_name,
-    senderID: originalMessage.sender_fbid.toString(),
+    senderID: formatID(originalMessage.sender_fbid.toString()),
     participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
-    participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return v.toString();}) : [originalMessage.sender_fbid]),
-    body: originalMessage.body,
-    threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.thread_fbid || originalMessage.other_user_fbid,
+    participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return formatID(v.toString());}) : [formatID(originalMessage.sender_fbid)]),
+    body: originalMessage.body || "",
+    threadID: formatID((originalMessage.thread_fbid || originalMessage.other_user_fbid).toString()),
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
     messageID: originalMessage.mid ? originalMessage.mid.toString() : originalMessage.message_id,
@@ -381,6 +405,8 @@ function formatMessage(m) {
     timestampAbsolute: originalMessage.timestamp_absolute,
     timestampRelative: originalMessage.timestamp_relative,
     timestampDatetime: originalMessage.timestamp_datetime,
+    tags: originalMessage.tags,
+    reactions: originalMessage.reactions ? originalMessage.reactions : []
   };
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();
@@ -390,13 +416,87 @@ function formatMessage(m) {
 }
 
 function formatEvent(m) {
+  var originalMessage = m.message ? m.message : m;
+  var logMessageType = originalMessage.log_message_type;
+  var logMessageData;
+  if (logMessageType === 'log:generic-admin-text') {
+    logMessageData = originalMessage.log_message_data.untypedData;
+    logMessageType = getAdminTextMessageType(originalMessage.log_message_data.message_type);
+  } else {
+    logMessageData = originalMessage.log_message_data;
+  }
+
+  return Object.assign(
+    formatMessage(originalMessage),
+    {
+      type: "event",
+      logMessageType: logMessageType,
+      logMessageData: logMessageData,
+      logMessageBody: originalMessage.log_message_body
+    }
+  );
+}
+
+function formatHistoryMessage(m) {
+  switch(m.action_type) {
+    case "ma-type:log-message":
+      return formatEvent(m);
+    default:
+      return formatMessage(m);
+  }
+}
+
+// Get a more readable message type for AdminTextMessages
+function getAdminTextMessageType(type) {
+  switch (type) {
+    case 'change_thread_theme':
+      return "log:thread-color";
+    case 'change_thread_nickname':
+      return "log:user-nickname";
+    case 'change_thread_icon':
+      return "log:thread-icon";
+    default:
+      return type;
+  }
+}
+
+function formatDeltaEvent(m) {
+  var logMessageType;
+  var logMessageData;
+
+  // log:thread-color => {theme_color}
+  // log:user-nickname => {participant_id, nickname}
+  // log:thread-icon => {thread_icon}
+  // log:thread-name => {name}
+  // log:subscribe => {addedParticipants - [Array]}
+  // log:unsubscribe => {leftParticipantFbId}
+
+  switch (m.class) {
+    case 'AdminTextMessage':
+      logMessageData = m.untypedData;
+      logMessageType = getAdminTextMessageType(m.type);
+      break;
+    case 'ThreadName':
+      logMessageType = "log:thread-name";
+      logMessageData = { name: m.name };
+      break;
+    case 'ParticipantsAddedToGroupThread':
+      logMessageType = "log:subscribe";
+      logMessageData = { addedParticipants: m.addedParticipants }
+      break;
+    case 'ParticipantLeftGroupThread':
+      logMessageType = "log:unsubscribe";
+      logMessageData = { leftParticipantFbId: m.leftParticipantFbId }
+      break;
+  }
+
   return {
     type: "event",
-    threadID: m.thread_fbid.toString(),
-    logMessageType: m.log_message_type,
-    logMessageData: m.log_message_data,
-    logMessageBody: m.log_message_body,
-    author: m.author.split(":")[1]
+    threadID: formatID((m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId).toString()),
+    logMessageType: logMessageType,
+    logMessageData: logMessageData,
+    logMessageBody: m.messageMetadata.adminText,
+    author: m.messageMetadata.actorFbId
   };
 }
 
@@ -404,7 +504,7 @@ function formatTyp(event) {
   return {
     isTyping: !!event.st,
     from: event.from.toString(),
-    threadID: (event.to || event.thread_fbid || event.from).toString(),
+    threadID: formatID((event.to || event.thread_fbid || event.from).toString()),
     // When receiving typ indication from mobile, `from_mobile` isn't set.
     // If it is, we just use that value.
     fromMobile: event.hasOwnProperty('from_mobile') ? event.from_mobile : true,
@@ -413,18 +513,29 @@ function formatTyp(event) {
   };
 }
 
+function formatDeltaReadReceipt(delta) {
+  // otherUserFbId seems to be used as both the readerID and the threadID in a 1-1 chat.
+  // In a group chat actorFbId is used for the reader and threadFbId for the thread.
+  return {
+    reader: (delta.threadKey.otherUserFbId || delta.actorFbId).toString(),
+    time: delta.actionTimestampMs,
+    threadID: formatID((delta.threadKey.otherUserFbId || delta.threadKey.threadFbId).toString()),
+    type: 'read_receipt'
+  };
+}
+
 function formatReadReceipt(event) {
   return {
     reader: event.reader.toString(),
     time: event.time,
-    threadID: (event.thread_fbid || event.reader).toString(),
+    threadID: formatID((event.thread_fbid || event.reader).toString()),
     type: 'read_receipt',
   };
 }
 
 function formatRead(event) {
   return {
-    threadID: ((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString(),
+    threadID: formatID(((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString()),
     time: event.timestamp,
     type: 'read'
   };
@@ -466,14 +577,13 @@ function generateTimestampRelative() {
   return d.getHours() + ":" + padZeros(d.getMinutes());
 }
 
-function makeDefaults(html, userID) {
+function makeDefaults(html, userID, ctx) {
   var reqCounter = 1;
   var fb_dtsg = getFrom(html, "name=\"fb_dtsg\" value=\"", "\"");
-  var ttstamp = "";
+  var ttstamp = "2";
   for (var i = 0; i < fb_dtsg.length; i++) {
     ttstamp += fb_dtsg.charCodeAt(i);
   }
-  ttstamp += '2';
   var revision = getFrom(html, "revision\":",",");
 
   function mergeWithDefaults(obj) {
@@ -482,8 +592,8 @@ function makeDefaults(html, userID) {
       __req: (reqCounter++).toString(36),
       __rev: revision,
       __a: 1,
-      fb_dtsg: fb_dtsg,
-      ttstamp: ttstamp,
+      fb_dtsg: ctx.fb_dtsg ? ctx.fb_dtsg : fb_dtsg,
+      ttstamp: ctx.ttstamp ? ctx.ttstamp : ttstamp,
     };
 
     if(!obj) return newObj;
@@ -518,21 +628,39 @@ function makeDefaults(html, userID) {
   };
 }
 
-function parseAndCheckLogin(jar, defaultFuncs) {
+function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
+  if (retryCount == undefined) {
+    retryCount = 0;
+  }
   return function(data) {
     return bluebird.try(function() {
-      log.verbose("parseAndCheckLogin: " + data.body);
+      log.verbose("parseAndCheckLogin", data.body);
       if (data.statusCode >= 500 && data.statusCode < 600) {
-        log.warn("parseAndCheckLogin: Got status code " + data.statusCode + " retrying...");
+        if (retryCount >= 5) {
+          throw {
+            error: "Request retry failed. Check the `res` and `statusCode` property on this error.",
+            statusCode: data.statusCode,
+            res: data.body
+          };
+        }
+        retryCount++;
+        var retryTime = Math.floor(Math.random() * 5000);
+        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " - " + retryCount + ". attempt to retry in " + retryTime + " milliseconds...");
         var url = data.request.uri.protocol + "//" + data.request.uri.hostname + data.request.uri.pathname;
         if (data.request.headers['Content-Type'].split(";")[0] === "multipart/form-data") {
-          return defaultFuncs
-            .postFormData(url, jar, data.request.formData, {})
-            .then(parseAndCheckLogin(jar));
+          return bluebird
+            .delay(retryTime)
+            .then(function() {
+              return defaultFuncs.postFormData(url, ctx.jar, data.request.formData, {});
+            })
+            .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         } else {
-          return defaultFuncs
-            .post(url, jar, data.request.formData)
-            .then(parseAndCheckLogin(jar));
+          return bluebird
+            .delay(retryTime)
+            .then(function() {
+              return defaultFuncs.post(url, ctx.jar, data.request.formData);
+            })
+            .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         }
       }
       if (data.statusCode !== 200) throw new Error("parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.");
@@ -556,8 +684,26 @@ function parseAndCheckLogin(jar, defaultFuncs) {
         res.jsmods.require[0][3][0] = res.jsmods.require[0][3][0].replace("_js_", "");
         var cookie = formatCookie(res.jsmods.require[0][3], "facebook");
         var cookie2 = formatCookie(res.jsmods.require[0][3], "messenger");
-        jar.setCookie(cookie, "https://www.facebook.com");
-        jar.setCookie(cookie2, "https://www.messenger.com");
+        ctx.jar.setCookie(cookie, "https://www.facebook.com");
+        ctx.jar.setCookie(cookie2, "https://www.messenger.com");
+      }
+      // On every request we check if we got a DTSG and we mutate the context so that we use the latest
+      // one for the next requests.
+      if (res.jsmods
+          && Array.isArray(res.jsmods.require)) {
+        var arr = res.jsmods.require;
+        for(var i in arr) {
+          if (arr[i][0] === "DTSG" && arr[i][1] === "setToken") {
+            ctx.fb_dtsg = arr[i][3][0];
+
+            // Update ttstamp since that depends on fb_dtsg
+            ctx.ttstamp = "2";
+            for (var i = 0; i < ctx.fb_dtsg.length; i++) {
+              ctx.ttstamp += ctx.fb_dtsg.charCodeAt(i);
+            }
+          }
+        }
+        
       }
 
       if (res.error === 1357001) {
@@ -604,15 +750,16 @@ function formatCookie(arr, url) {
 
 function formatThread(data) {
   return {
-    threadID: data.thread_fbid.toString(),
-    participants: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
-    participantIDs: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
+    threadID: formatID(data.thread_fbid.toString()),
+    participants: data.participants.map(formatID),
+    participantIDs: data.participants.map(formatID),
     formerParticipants: data.former_participants,
     name: data.name,
+    nicknames: data.custom_nickname,
     snippet: data.snippet,
     snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,
-    snippetSender: (data.snippet_sender || '').replace('fbid:', ''),
+    snippetSender: formatID((data.snippet_sender || '').toString()),
     unreadCount: data.unread_count,
     messageCount: data.message_count,
     imageSrc: data.image_src,
@@ -621,7 +768,7 @@ function formatThread(data) {
     muteSettings: data.muteSettings,
     isCanonicalUser: data.is_canonical_user,
     isCanonical: data.is_canonical,
-    canonicalFbid: data.canonical_fbid,
+    canonicalFbid: formatID((data.canonical_fbid || '').toString()),
     isSubscribed: data.is_subscribed,
     rootMessageThreadingID: data.root_message_threading_id,
     folder: data.folder,
@@ -632,7 +779,10 @@ function formatThread(data) {
     canReply: data.can_reply,
     composerEnabled: data.composer_enabled,
     blockedParticipants: data.blocked_participants,
-    lastMessageID: data.last_message_id
+    lastMessageID: data.last_message_id,
+    emoji: data.custom_like_icon,
+    color: data.custom_color,
+    lastReadTimestamp: data.last_read_timestamp
   };
 }
 
@@ -641,13 +791,30 @@ function getType(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1);
 }
 
+function formatProxyPresence(presence, userID) {
+  if(presence.lat === undefined) return null;
+  return {
+    type: "presence",
+    timestamp: presence.lat * 1000,
+    userID: userID,
+    statuses: presence.p === undefined ? 0 : presence.p
+  };
+}
+
 function formatPresence(presence, userID) {
   return {
     type: "presence",
     timestamp: presence.la * 1000,
     userID: userID,
-    statuses: presence.p
+    statuses: presence.a
   };
+}
+
+function decodeClientPayload(payload) {
+  /*
+  Special function which Client using to "encode" clients JSON payload
+  */
+  return JSON.parse(String.fromCharCode.apply(null, payload));
 }
 
 function getAppState(jar){
@@ -675,11 +842,15 @@ module.exports = {
   parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,
   getType: getType,
+  formatHistoryMessage: formatHistoryMessage,
+  formatID: formatID,
   formatMessage: formatMessage,
+  formatDeltaEvent: formatDeltaEvent,
   formatDeltaMessage: formatDeltaMessage,
-  formatEvent: formatEvent,
+  formatProxyPresence: formatProxyPresence,
   formatPresence: formatPresence,
   formatTyp: formatTyp,
+  formatDeltaReadReceipt: formatDeltaReadReceipt,
   formatCookie: formatCookie,
   formatThread: formatThread,
   formatReadReceipt: formatReadReceipt,
@@ -687,5 +858,6 @@ module.exports = {
   generatePresence: generatePresence,
   generateAccessiblityCookie: generateAccessiblityCookie,
   formatDate: formatDate,
+  decodeClientPayload: decodeClientPayload,
   getAppState: getAppState,
 };

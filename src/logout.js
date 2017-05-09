@@ -13,7 +13,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post('https://www.facebook.com/bluebar/modern_settings_menu/?help_type=364455653583099&show_contextual_help=1', ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         var elem = resData.jsmods.instances[0][2][0].filter(function(v) {
           return v.value === "logout";
@@ -44,11 +44,11 @@ module.exports = function(defaultFuncs, api, ctx) {
       })
       .then(function() {
         ctx.loggedIn = false;
-        log.info("Logged out successfully.");
+        log.info("logout", "Logged out successfully.");
         callback();
       })
       .catch(function(err) {
-        log.error("Error in logout", err);
+        log.error("logout", err);
         return callback(err);
       });
   };
