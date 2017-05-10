@@ -6,6 +6,8 @@ _Disclaimer_: We are not responsible if your account gets banned for spammy acti
 
 See [below](#projects-using-this-api) for projects using this API.
 
+See the [full changelog](/CHANGELOG.md) for release details.
+
 ## Install
 If you just want to use facebook-chat-api, you should use this command:
 ```bash
