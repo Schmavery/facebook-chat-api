@@ -284,6 +284,11 @@ function loginHelper(appState, email, password, globalOptions, callback) {
     appState.map(function(c) {
       var str = c.key + "=" + c.value + "; expires=" + c.expires + "; domain=" + c.domain + "; path=" + c.path + ";";
       jar.setCookie(str, "http://" + c.domain);
+			if(c.domain.indexOf("facebook.com") > -1)
+			{
+				str = c.key + "=" + c.value + "; expires=" + c.expires + "; domain=messenger.com; path=" + c.path + ";";
+				jar.setCookie(str, "http://messenger.com");
+			}
     });
 
     // Load the main page.
