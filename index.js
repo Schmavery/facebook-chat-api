@@ -100,6 +100,7 @@ function buildAPI(globalOptions, html, jar) {
     'removeUserFromGroup',
     'resolvePhotoUrl',
     'searchForThread',
+    'sendDirectMessage',
     'sendMessage',
     'sendTypingIndicator',
     'setMessageReaction',
