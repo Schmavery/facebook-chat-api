@@ -824,25 +824,6 @@ function getAppState(jar){
     .concat(jar.getCookies("https://www.messenger.com"));
 }
 
-function getEmojiUrl(c, size) {
-  /*
-    Resolves Facebook Messenger emoji image asset URL for an emoji character.
-    Supported sizes are 32, 64, and 128.
-    Note that the actual size of the image will be 1.5 times the requested size
-    (size of 128 will return an image that is 192×192px).
-  */
-  const baseUrl = 'https://static.xx.fbcdn.net/images/emoji.php/v8/z%s/%s';
-
-  let ending = util.format('1.5/%s/%s.png', size, c.codePointAt(0).toString(16));
-  let base = 317426846;
-  for (let i = 0; i < ending.length; i++) {
-    base = (base << 5) - base + ending.charCodeAt(i);
-  }
-
-  let hashed = (base & 255).toString(16);
-  return util.format(baseUrl, hashed, ending);
-}
-
 module.exports = {
   isReadableStream: isReadableStream,
   get: get,
@@ -879,5 +860,4 @@ module.exports = {
   formatDate: formatDate,
   decodeClientPayload: decodeClientPayload,
   getAppState: getAppState,
-  getEmojiUrl: getEmojiUrl,
 };
