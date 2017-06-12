@@ -1,4 +1,8 @@
 # Changelog
+## 1.5.0 (unreleased)
+* [Breaking change] [getThreadList](/DOCS.md#getThreadList): Removes deprecated fields in returned object, adds some new fields ([#488](https://github.com/Schmavery/facebook-chat-api/pull/488))
+* [Breaking change] [getThreadInfo](/DOCS.md#getThreadInfo): Removes deprecated fields in returned object, adds some new fields ([#488](https://github.com/Schmavery/facebook-chat-api/pull/488))
+
 ## 1.4.0 (2017-04-28)
 * [Breaking change] [getThreadHistory](/DOCS.md#getThreadHistory): update parameters - no more start & end params; replaced with amount ([#453](https://github.com/Schmavery/facebook-chat-api/pull/453))
 * [New] [setMessageReaction](/DOCS.md#setMessageReaction): set reaction on message ([#427](https://github.com/Schmavery/facebook-chat-api/pull/427), [#437](https://github.com/Schmavery/facebook-chat-api/pull/437), [#445](https://github.com/Schmavery/facebook-chat-api/pull/445))
