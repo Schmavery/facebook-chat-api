@@ -533,10 +533,8 @@ __Arguments__
 | timestamp |  |
 | serverTimestamp |  |
 | muteUntil | Timestamp at which the thread will no longer be muted. The timestamp will be -1 if the thread is muted indefinitely or null if the thread is not muted. |
-| mentionsMuteMode |  |
 | isCanonicalUser | True if the other user in a canonical thread is a user, false if the other user is a page or group. |
 | isCanonical | True if the thread is a private chat to a single user, false for group chats. |
-| isPinProtected |  |
 | isSubscribed |  |
 | folder | The folder that the thread is in. Can be one of: <ul><li>'inbox'</li><li>'archive'</li></ul> |
 | isArchived | True if the thread is archived, false if not |
@@ -552,7 +550,6 @@ __Arguments__
 | color | String form of the custom color in hexadecimal form. |
 | adminIDs | Array of user IDs of the admins of the thread. Empty array if unset. |
 | threadType | 1 for a canonical thread, 2 for a group chat thread. |
-| reactionsMuteMode |  |
 
 ---------------------------------------
 
