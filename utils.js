@@ -764,10 +764,8 @@ function formatThread(data) {
     timestamp: data.timestamp,
     serverTimestamp: data.server_timestamp, // what is this?
     muteUntil: data.mute_until,
-    mentionsMuteMode: data.mentions_mute_mode,
     isCanonicalUser: data.is_canonical_user,
     isCanonical: data.is_canonical,
-    isPinProtected: data.is_pin_protected,
     isSubscribed: data.is_subscribed,
     folder: data.folder,
     isArchived: data.is_archived,
@@ -782,8 +780,7 @@ function formatThread(data) {
     emoji: data.custom_like_icon,
     color: data.custom_color,
     adminIDs: data.admin_ids,
-    threadType: data.thread_type,
-    reactionsMuteMode: data.reactions_mute_mode
+    threadType: data.thread_type
   };
 }
 
