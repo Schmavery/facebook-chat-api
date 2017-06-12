@@ -14,6 +14,7 @@
 * [`api.forwardAttachment`](#forwardAttachment)
 * [`api.getAppState`](#getAppState)
 * [`api.getCurrentUserID`](#getCurrentUserID)
+* [`api.getEmojiUrl`](#getEmojiUrl)
 * [`api.getFriendsList`](#getFriendsList)
 * [`api.getThreadHistory`](#getThreadHistory)
 * [`api.getThreadInfo`](#getThreadInfo)
@@ -437,6 +438,41 @@ Returns current appState which can be saved to a file or stored in a variable.
 ### api.getCurrentUserID()
 
 Returns the currently logged-in user's Facebook user ID.
+
+---------------------------------------
+
+<a name="getEmojiUrl"></a>
+### api.getEmojiUrl(c, size[, pixelRatio])
+
+Returns the URL to a Facebook Messenger-style emoji image asset.
+
+__note__: This function will return a URL regardless of whether the image at the URL actually exists.
+This can happen if, for example, Messenger does not have an image asset for the requested emoji.
+
+__Arguments__
+
+* `c` - The emoji character
+* `size` - The width and height of the emoji image; supported sizes are 32, 64, and 128
+* `pixelRatio` - The pixel ratio of the emoji image; supported ratios are '1.0' and '1.5' (default is '1.0')
+
+__Example__
+
+```js
+const fs = require("fs");
+const login = require("facebook-chat-api");
+
+login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
+    if(err) return console.error(err);
+
+    // Prints https://static.xx.fbcdn.net/images/emoji.php/v8/z9c/1.0/128/1f40d.png
+    console.log('Snake emoji, 128px (128x128 with pixel ratio of 1.0');
+    console.log(api.getEmojiUrl('\ud83d\udc0d', 128));
+
+    // Prints https://static.xx.fbcdn.net/images/emoji.php/v8/ze1/1.5/128/1f40d.png
+    console.log('Snake emoji, 192px (128x128 with pixel ratio of 1.5');
+    console.log(api.getEmojiUrl('\ud83d\udc0d', 128, '1.5'));
+});
+```
 
 ---------------------------------------
 
