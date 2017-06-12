@@ -753,11 +753,9 @@ function formatThread(data) {
     threadID: formatID(data.thread_fbid.toString()),
     participants: data.participants.map(formatID),
     participantIDs: data.participants.map(formatID),
-    formerParticipants: data.former_participants,
     name: data.name,
     nicknames: data.custom_nickname,
     snippet: data.snippet,
-    snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,
     snippetSender: formatID((data.snippet_sender || '').toString()),
     unreadCount: data.unread_count,
@@ -765,24 +763,24 @@ function formatThread(data) {
     imageSrc: data.image_src,
     timestamp: data.timestamp,
     serverTimestamp: data.server_timestamp, // what is this?
-    muteSettings: data.muteSettings,
+    muteUntil: data.mute_until,
     isCanonicalUser: data.is_canonical_user,
     isCanonical: data.is_canonical,
-    canonicalFbid: formatID((data.canonical_fbid || '').toString()),
     isSubscribed: data.is_subscribed,
-    rootMessageThreadingID: data.root_message_threading_id,
     folder: data.folder,
     isArchived: data.is_archived,
     recipientsLoadable: data.recipients_loadable,
     hasEmailParticipant: data.has_email_participant,
     readOnly: data.read_only,
     canReply: data.can_reply,
-    composerEnabled: data.composer_enabled,
-    blockedParticipants: data.blocked_participants,
-    lastMessageID: data.last_message_id,
+    cannotReplyReason: data.cannot_reply_reason,
+    lastMessageTimestamp: data.last_message_timestamp,
+    lastReadTimestamp: data.last_read_timestamp,
+    lastMessageType: data.last_message_type,
     emoji: data.custom_like_icon,
     color: data.custom_color,
-    lastReadTimestamp: data.last_read_timestamp
+    adminIDs: data.admin_ids,
+    threadType: data.thread_type
   };
 }
 
