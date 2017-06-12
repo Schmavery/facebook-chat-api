@@ -516,9 +516,43 @@ Takes a threadID and a callback.  Works for both single-user and group threads.
 
 __Arguments__
 * `threadID`: A threadID corresponding to the target thread.
-* `callback(err, info)`: If `err` is `null`, `info` will contain the following properties: `threadID`, <del>`participants`</del>, `participantIDs`, `name`, `nicknames`, `snippet`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteUntil`, `mentionsMuteMode`, `isCanonicalUser`, `isCanonical`, `isPinProtected`, `isSubscribed`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `cannotReplyReason`, `lastMessageTimestamp`, `lastReadTimestamp`, `lastMessageType`, `emoji`, `color`, `adminIDs`, `threadType`, `reactionsMuteMode`.
+* `callback(err, info)`: If `err` is `null`, `info` will contain the following properties: * `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: 
 
-Some of the properties may be null if they are unset. E.g. `emoji`, `color`, or `nicknames`.
+| Key   |      Description      |
+|----------|:-------------:|
+| threadID | ID of the thread |
+| participantIDs |    Array of user IDs in the thread   |
+| name | Name of the thread. Usually the name of the user. In group chats, this will be empty if the name of the group chat is unset. |
+| nicknames |    Map of nicknames for members of the thread. If there are no nicknames set, this will be null.   |
+| snippet | This is the preview message for the thread and is usually the last message in the thread. |
+| snippetAttachments | If the snippet uses attachments (e.g. emoji's), this will be an array of the attachments. |
+| snippetSender | The ID of the author of the snippet |
+| unreadCount | Number of unread messages |
+| messageCount | Number of messages |
+| imageSrc | URL to the group chat photo. Null if unset or a canonical thread. |
+| timestamp |  |
+| serverTimestamp |  |
+| muteUntil | Timestamp at which the thread will no longer be muted. The timestamp will be -1 if the thread is muted forever or null if the thread is not muted. |
+| mentionsMuteMode |  |
+| isCanonicalUser | True if the other user in a canonical thread is a user, false if the other user is a page or group. |
+| isCanonical | True if the thread is a private chat to a single user, false for group chats. |
+| isPinProtected |  |
+| isSubscribed |  |
+| folder | The folder that the thread is in. Can be one of: <ul><li>'inbox'</li><li>'archive'</li></ul> |
+| isArchived | True if the thread is archived, false if not |
+| recipientsLoadable |  |
+| hasEmailParticipant |  |
+| readOnly |  |
+| canReply | True if the current user can reply in the thread |
+| cannotReplyReason | If canReply is false, this will be a string stating why. Null if canReply is true. |
+| lastMessageTimestamp | Timestamp of the last message. |
+| lastReadTimestamp | Timestamp of the last message that is marked as 'read' by the current user. |
+| lastMessageType | Message type of the last message. |
+| emoji | Object with key 'emoji' whose value is the emoji unicode character. Null if unset. |
+| color | String form of the custom color in hexadecimal form. |
+| adminIDs | Array of user IDs of the admins of the thread. Empty array if unset. |
+| threadType | 1 for a canonical thread, 2 for a group chat thread. |
+| reactionsMuteMode |  |
 
 ---------------------------------------
 
@@ -532,9 +566,43 @@ __Arguments__
 * `start`: Start index in the list of recently used threads.
 * `end`: End index.
 * `type`: Optional String, can be 'inbox', 'pending', or 'archived'. Inbox is default.
-* `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: `threadID`, <del>`participants`</del>, `participantIDs`, `name`, `nicknames`, `snippet`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteUntil`, `mentionsMuteMode`, `isCanonicalUser`, `isCanonical`, `isPinProtected`, `isSubscribed`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `cannotReplyReason`, `lastMessageTimestamp`, `lastReadTimestamp`, `lastMessageType`, `emoji`, `color`, `adminIDs`, `threadType`, `reactionsMuteMode`.
+* `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: 
 
-Some of the properties may be null if they are unset. E.g. `emoji`, `color`, `nicknames`, or `imageSrc`.
+| Key   |      Description      |
+|----------|:-------------:|
+| threadID | ID of the thread |
+| participantIDs |    Array of user IDs in the thread   |
+| name | Name of the thread. Usually the name of the user. In group chats, this will be empty if the name of the group chat is unset. |
+| nicknames |    Map of nicknames for members of the thread. If there are no nicknames set, this will be null.   |
+| snippet | This is the preview message for the thread and is usually the last message in the thread. |
+| snippetAttachments | If the snippet uses attachments (e.g. emoji's), this will be an array of the attachments. |
+| snippetSender | The ID of the author of the snippet |
+| unreadCount | Number of unread messages |
+| messageCount | Number of messages |
+| imageSrc | URL to the group chat photo. Null if unset or a canonical thread. |
+| timestamp |  |
+| serverTimestamp |  |
+| muteUntil | Timestamp at which the thread will no longer be muted. The timestamp will be -1 if the thread is muted forever or null if the thread is not muted. |
+| mentionsMuteMode |  |
+| isCanonicalUser | True if the other user in a canonical thread is a user, false if the other user is a page or group. |
+| isCanonical | True if the thread is a private chat to a single user, false for group chats. |
+| isPinProtected |  |
+| isSubscribed |  |
+| folder | The folder that the thread is in. Can be one of: <ul><li>'inbox'</li><li>'archive'</li></ul> |
+| isArchived | True if the thread is archived, false if not |
+| recipientsLoadable |  |
+| hasEmailParticipant |  |
+| readOnly |  |
+| canReply | True if the current user can reply in the thread |
+| cannotReplyReason | If canReply is false, this will be a string stating why. Null if canReply is true. |
+| lastMessageTimestamp | Timestamp of the last message. |
+| lastReadTimestamp | Timestamp of the last message that is marked as 'read' by the current user. |
+| lastMessageType | Message type of the last message. |
+| emoji | Object with key 'emoji' whose value is the emoji unicode character. Null if unset. |
+| color | String form of the custom color in hexadecimal form. |
+| adminIDs | Array of user IDs of the admins of the thread. Empty array if unset. |
+| threadType | 1 for a canonical thread, 2 for a group chat thread. |
+| reactionsMuteMode |  |
 
 ---------------------------------------
 
