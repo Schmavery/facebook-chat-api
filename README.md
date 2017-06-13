@@ -230,3 +230,4 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 - [Botyo](https://github.com/ivkos/botyo) - Modular bot designed for group chat rooms on Facebook
 - [matrix-puppet-facebook](https://github.com/matrix-hacks/matrix-puppet-facebook) - A facebook bridge for [matrix](https://matrix.org)
 - [facebot](https://github.com/Weetbix/facebot) - A facebook bridge for Slack.
+- [TestMyBot](https://github.com/codeforequity-at/testmybot) - Test Automation Framework for Chatbots
