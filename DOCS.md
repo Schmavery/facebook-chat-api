@@ -111,10 +111,9 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
 __Example (AppState loaded from file)__
 
 ```js
-const fs = require("fs");
 const login = require("facebook-chat-api");
 
-login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
+login({appState: require('appstate.json')}, (err, api) => {
     if(err) return console.error(err);
     // Here you can use the api
 });
