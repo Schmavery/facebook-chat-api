@@ -219,7 +219,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ## Projects using this API
 
-- [Messer] (https://github.com/mjkaufer/Messer) - Command-line messaging for Facebook Messenger
+- [Messer](https://github.com/mjkaufer/Messer) - Command-line messaging for Facebook Messenger
 - [Kassy](https://github.com/mrkno/Kassy) - Kassy is a modular, easily extensible general purpose chat bot
 - [Marc Zuckerbot](https://github.com/bsansouci/marc-zuckerbot) - Facebook chat bot
 - [Marc Thuckerbot](https://github.com/bsansouci/lisp-bot) - Programmable lisp bot
