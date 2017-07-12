@@ -778,7 +778,7 @@ The message object will contain different fields based on its type (as determine
 	</tr>
 	<tr>
 		<td><code>type</code></td>
-		<td>For this event type, this will always be the string <code>"message"</code></td>.</td>
+		<td>For this event type, this will always be the string <code>"message"</code>.</td>
 	</tr>
 	<tr>
 		<td rowspan="6">
@@ -798,7 +798,7 @@ The message object will contain different fields based on its type (as determine
 	</tr>
 	<tr>
 		<td><code>logMessageType</code></td>
-		<td>String representing the type of event (<code>log:subscribe</code></td>, <code>log:unsubscribe</code></td>, <code>log:thread-name</code></td>, <code>log:thread-color</code></td>, <code>log:thread-icon</code></td>, <code>log:user-nickname</code></td>)</td>
+		<td>String representing the type of event (<code>log:subscribe</code>, <code>log:unsubscribe</code>, <code>log:thread-name</code>, <code>log:thread-color</code>, <code>log:thread-icon</code>, <code>log:user-nickname</code>)</td>
 	</tr>
 	<tr>
 		<td><code>threadID</code></td>
@@ -928,7 +928,7 @@ The message object will contain different fields based on its type (as determine
 
 __Attachments__
 
-Similar to how messages can vary based on their `type`, so too can the `attachments` within to `"message"` events. Each attachment will consist of an object of one of the following types:
+Similar to how messages can vary based on their `type`, so too can the `attachments` within `"message"` events. Each attachment will consist of an object of one of the following types:
 
 | Attachment Type | Fields |
 | --------------- | ------ |
