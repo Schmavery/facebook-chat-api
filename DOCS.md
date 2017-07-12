@@ -750,178 +750,178 @@ The message object will contain different fields based on its type (as determine
 	</tr>
 	<tr>
 		<td rowspan="7">
-			`"message"`  
+			<code>"message"</code><br />
 			A message was sent to a thread.
 		</td>
-		<td>`attachments`</td>
+		<td><code>attachments</code></td>
 		<td>An array of attachments to the message. Attachments vary in type, see the attachments table below.</td>
 	</tr>
 	<tr>
-		<td>`body`</td>
+		<td><code>body</code></td>
 		<td>The string corresponding to the message that was just received.</td>
 	</tr>
 	<tr>
-		<td>`isGroup`</td>
+		<td><code>isGroup</code></td>
 		<td>boolean, true if this thread is a group thread (more than 2 participants).</td>
 	</tr>
 	<tr>
-		<td>`messageID`</td>
+		<td><code>messageID</code></td>
 		<td>A string representing the message ID.</td>
 	</tr>
 	<tr>
-		<td>`senderID`</td>
+		<td><code>senderID</code></td>
 		<td>The id of the person who sent the message in the chat with threadID.</td>
 	</tr>
 	<tr>
-		<td>`threadID`</td>
+		<td><code>threadID</code></td>
 		<td>The threadID representing the thread in which the message was sent.</td>
 	</tr>
 	<tr>
-		<td>`type`</td>
-		<td>For this event type, this will always be the string `"message"`.</td>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"message"</code></td>.</td>
 	</tr>
 	<tr>
 		<td rowspan="6">
-			`"event"`  
+			<code>"event"</code><br />
 			An event occurred within a thread.
 		</td>
-		<td>`author`</td>
+		<td><code>author</code></td>
 		<td>The person who performed the event.</td>
 	</tr>
 	<tr>
-		<td>`logMessageBody`</td>
+		<td><code>logMessageBody</code></td>
 		<td>String printed in the chat.</td>
 	</tr>
 	<tr>
-		<td>`logMessageData`</td>
+		<td><code>logMessageData</code></td>
 		<td>Data relevant to the event.</td>
 	</tr>
 	<tr>
-		<td>`logMessageType`</td>
-		<td>String representing the type of event (`log:subscribe`, `log:unsubscribe`, `log:thread-name`, `log:thread-color`, `log:thread-icon`, `log:user-nickname`)</td>
+		<td><code>logMessageType</code></td>
+		<td>String representing the type of event (<code>log:subscribe</code></td>, <code>log:unsubscribe</code></td>, <code>log:thread-name</code></td>, <code>log:thread-color</code></td>, <code>log:thread-icon</code></td>, <code>log:user-nickname</code></td>)</td>
 	</tr>
 	<tr>
-		<td>`threadID`</td>
+		<td><code>threadID</code></td>
 		<td>The threadID representing the thread in which the message was sent.</td>
 	</tr>
 	<tr>
-		<td>`type`</td>
-		<td>For this event type, this will always be the string `"event"`.</td>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"event"</code>.</td>
 	</tr>
 	<tr>
 		<td rowspan="5">
-			`"typ"`  
+			<code>"typ"</code><br />
 			A user in a thread is typing.
 		</td>
-		<td>`from`</td>
+		<td><code>from</code></td>
 		<td>ID of the user who started/stopped typing.</td>
 	</tr>
 	<tr>
-		<td>`fromMobile`</td>
+		<td><code>fromMobile</code></td>
 		<td>Boolean representing whether or not the person's using a mobile device to type.</td>
 	</tr>
 	<tr>
-		<td>`isTyping`</td>
+		<td><code>isTyping</code></td>
 		<td>Boolean representing whether or not a person started typing.</td>
 	</tr>
 	<tr>
-		<td>`threadID`</td>
+		<td><code>threadID</code></td>
 		<td>The threadID representing the thread in which a user is typing.</td>
 	</tr>
 	<tr>
-		<td>`type`</td>
-		<td>For this event type, this will always be the string `"typ"`.</td>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"typ"</code>.</td>
 	</tr>
 	<tr>
 		<td rowspan="3">
-			`"read"`  
+			<code>"read"</code><br />
 			The current API user has read a message.
 		</td>
-		<td>`threadID`</td>
+		<td><code>threadID</code></td>
 		<td>The threadID representing the thread in which the message was sent.</td>
 	</tr>
 	<tr>
-		<td>`time`</td>
+		<td><code>time</code></td>
 		<td>The time at which the user read the message.</td>
 	</tr>
 	<tr>
-		<td>`type`</td>
-		<td>For this event type, this will always be the string `"read"`.</td>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"read"</code>.</td>
 	</tr>
 	<tr>
 		<td rowspan="4">
-			`"read_receipt"`  
+			<code>"read_receipt"</code><br />
 			A user within a thread has seen a message sent by the API user.
 		</td>
-		<td>`reader`</td>
+		<td><code>reader</code></td>
 		<td>ID of the user who just read the message.</td>
 	</tr>
 	<tr>
-		<td>`threadID`</td>
+		<td><code>threadID</code></td>
 		<td>The thread in which the message was read.</td>
 	</tr>
 	<tr>
-		<td>`time`</td>
+		<td><code>time</code></td>
 		<td>The time at which the reader read the message.</td>
 	</tr>
 	<tr>
-		<td>`type`</td>
-		<td>For this event type, this will always be the string `"read_receipt"`.</td>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"read_receipt"</code>.</td>
 	</tr>
 	<tr>
 		<td rowspan="8">
-			`"message_reaction"`  
+			<code>"message_reaction"</code><br />
 			A user has sent a reaction to a message.
 		</td>
-		<td>`messageID`</td>
+		<td><code>messageID</code></td>
 		<td>The ID of the message</td>
 	</tr>
 	<tr>
-		<td>`offlineThreadingID`</td>
+		<td><code>offlineThreadingID</code></td>
 		<td>The offline message ID</td>
 	</tr>
 	<tr>
-		<td>`reaction`</td>
+		<td><code>reaction</code></td>
 		<td>Contains reaction emoji</td>
 	</tr>
 	<tr>
-		<td>`senderID`</td>
+		<td><code>senderID</code></td>
 		<td>ID of the author the message, where has been reaction added</td>
 	</tr>
 	<tr>
-		<td>`threadID`</td>
+		<td><code>threadID</code></td>
 		<td>ID of the thread where the message has been sent</td>
 	</tr>
 	<tr>
-		<td>`timestamp`</td>
+		<td><code>timestamp</code></td>
 		<td>Unix Timestamp (in miliseconds) when the reaction was sent</td>
 	</tr>
 	<tr>
-		<td>`type`</td>
-		<td>For this event type, this will always be the string `"message_reaction"`.</td>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"message_reaction"</code>.</td>
 	</tr>
 	<tr>
-		<td>`userID`</td>
+		<td><code>userID</code></td>
 		<td>ID of the reaction sender</td>
 	</tr>
 	<tr>
 		<td rowspan="4"><a name="presence"></a>
-			`"presence"`  
+			<code>"presence"</code><br />
 			The online status of the user's friends.
 		</td>
-		<td>`statuses`</td>
-		<td>The online status of the user. `0` means the user is idle (away for 2 minutes) and `2` means the user is online (we don't know what 1 or above 2 means...).</td>
+		<td><code>statuses</code></td>
+		<td>The online status of the user. <code>0</code> means the user is idle (away for 2 minutes) and <code>2</code> means the user is online (we don't know what 1 or above 2 means...).</td>
 	</tr>
 	<tr>
-		<td>`timestamp`</td>
+		<td><code>timestamp</code></td>
 		<td>How old the presence information is.</td>
 	</tr>
 	<tr>
-		<td>`type`</td>
-		<td>For this event type, this will always be the string `"presence"`.</td>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"presence"</code>.</td>
 	</tr>
 	<tr>
-		<td>`userID`</td>
+		<td><code>userID</code></td>
 		<td>The ID of the user whose status this packet is describing.</td>
 	</tr>
 </table>
@@ -930,38 +930,14 @@ __Attachments__
 
 Similar to how messages can vary based on their `type`, so too can the `attachments` within to `"message"` events. Each attachment will consist of an object of one of the following types:
 
-<table>
-	<tr>
-		<th>Attachment Type</th>
-		<th>Fields</th>
-	</tr>
-	<tr>
-		<td>`"sticker"`</td>
-		<td>`caption`, `description`, `frameCount`, `frameRate`, `framesPerCol`, `framesPerRow`, `height`, `packID`, `spriteURI2x`, `spriteURI`, `stickerID`, `type`, `url`, `width`</td>
-	</tr>
-	<tr>
-		<td>`"file"`</td>
-		<td>`fileSize`, `ID`, `isMalicious`, `mimeType`, `name`, `type`, `url`</td>
-	</tr>
-	<tr>
-		<td>`"photo"`</td>
-		<td>`facebookUrl`, `filename`, `height`, `hiresUrl`, `ID`, `mimeType`, `name`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width`</td>
-	</tr>
-	<tr>
-		<td>`"animated_image"`</td>
-		<td>`filename`, `height`, `ID`, `largePreviewHeight`, `largePreviewUrl`, `largePreviewWidth`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width`</td>
-	</tr>
-
-	<tr>
-		<td>`"share"`</td>
-		<td>`animatedImageSize`, `description`, `duration`, `facebookUrl`, `height`, `ID`, `image`, `playable`, `source`, `styleList`, `subattachments`, `target`, `title`, `type`, `url`, `width`</td>
-	</tr>
-
-	<tr>
-		<td>`"video"`</td>
-		<td>`duration`, `filename`, `height`, `ID`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width`</td>
-	</tr>
-</table>
+| Attachment Type | Fields |
+| --------------- | ------ |
+| `"sticker"` | `caption`, `description`, `frameCount`, `frameRate`, `framesPerCol`, `framesPerRow`, `height`, `packID`, `spriteURI2x`, `spriteURI`, `stickerID`, `type`, `url`, `width` |
+| `"file"` | `fileSize`, `ID`, `isMalicious`, `mimeType`, `name`, `type`, `url` |
+| `"photo"` | `facebookUrl`, `filename`, `height`, `hiresUrl`, `ID`, `mimeType`, `name`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
+| `"animated_image"` | `filename`, `height`, `ID`, `largePreviewHeight`, `largePreviewUrl`, `largePreviewWidth`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
+| `"share"` | `animatedImageSize`, `description`, `duration`, `facebookUrl`, `height`, `ID`, `image`, `playable`, `source`, `styleList`, `subattachments`, `target`, `title`, `type`, `url`, `width` |
+| `"video"` | `duration`, `filename`, `height`, `ID`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
 
 __Example__
 
