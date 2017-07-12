@@ -552,7 +552,7 @@ Takes a threadID and a callback.  Works for both single-user and group threads.
 
 __Arguments__
 * `threadID`: A threadID corresponding to the target thread.
-* `callback(err, info)`: If `err` is `null`, `info` will contain the following properties: * `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: 
+* `callback(err, info)`: If `err` is `null`, `info` will contain the following properties: * `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties:
 
 | Key   |      Description      |
 |----------|:-------------:|
@@ -599,7 +599,7 @@ __Arguments__
 * `start`: Start index in the list of recently used threads.
 * `end`: End index.
 * `type`: Optional String, can be 'inbox', 'pending', or 'archived'. Inbox is default.
-* `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: 
+* `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties:
 
 | Key   |      Description      |
 |----------|:-------------:|
@@ -740,73 +740,204 @@ __Arguments__
 
 __Message__
 
-If `type` is `message`, the object will contain the following fields:
+The message object will contain different fields based on its type (as determined by its `type` field). By default, the only type that will be listened for is `message`. If enabled through [setOptions](#setOptions), the message object may alternatively represent an event e.g. a read receipt. The available event types are as follows:
 
-  + `senderID`: The id of the person who sent the message in the chat with threadID.
-  + `body`: The string corresponding to the message that was just received.
-  + `threadID`: The threadID representing the thread in which the message was sent.
-  + `messageID`: A string representing the message ID.
-  + `attachments`: An array of attachments to the message.
-  + `isGroup`: boolean, true if this thread is a group thread (more than 2 participants).
+<table>
+	<tr>
+		<th>Event Type</th>
+		<th>Field</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td rowspan="7">
+			<code>"message"</code><br />
+			A message was sent to a thread.
+		</td>
+		<td><code>attachments</code></td>
+		<td>An array of attachments to the message. Attachments vary in type, see the attachments table below.</td>
+	</tr>
+	<tr>
+		<td><code>body</code></td>
+		<td>The string corresponding to the message that was just received.</td>
+	</tr>
+	<tr>
+		<td><code>isGroup</code></td>
+		<td>boolean, true if this thread is a group thread (more than 2 participants).</td>
+	</tr>
+	<tr>
+		<td><code>messageID</code></td>
+		<td>A string representing the message ID.</td>
+	</tr>
+	<tr>
+		<td><code>senderID</code></td>
+		<td>The id of the person who sent the message in the chat with threadID.</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which the message was sent.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"message"</code>.</td>
+	</tr>
+	<tr>
+		<td rowspan="6">
+			<code>"event"</code><br />
+			An event occurred within a thread.
+		</td>
+		<td><code>author</code></td>
+		<td>The person who performed the event.</td>
+	</tr>
+	<tr>
+		<td><code>logMessageBody</code></td>
+		<td>String printed in the chat.</td>
+	</tr>
+	<tr>
+		<td><code>logMessageData</code></td>
+		<td>Data relevant to the event.</td>
+	</tr>
+	<tr>
+		<td><code>logMessageType</code></td>
+		<td>String representing the type of event (<code>log:subscribe</code>, <code>log:unsubscribe</code>, <code>log:thread-name</code>, <code>log:thread-color</code>, <code>log:thread-icon</code>, <code>log:user-nickname</code>)</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which the message was sent.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"event"</code>.</td>
+	</tr>
+	<tr>
+		<td rowspan="5">
+			<code>"typ"</code><br />
+			A user in a thread is typing.
+		</td>
+		<td><code>from</code></td>
+		<td>ID of the user who started/stopped typing.</td>
+	</tr>
+	<tr>
+		<td><code>fromMobile</code></td>
+		<td>Boolean representing whether or not the person's using a mobile device to type.</td>
+	</tr>
+	<tr>
+		<td><code>isTyping</code></td>
+		<td>Boolean representing whether or not a person started typing.</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which a user is typing.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"typ"</code>.</td>
+	</tr>
+	<tr>
+		<td rowspan="3">
+			<code>"read"</code><br />
+			The current API user has read a message.
+		</td>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which the message was sent.</td>
+	</tr>
+	<tr>
+		<td><code>time</code></td>
+		<td>The time at which the user read the message.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"read"</code>.</td>
+	</tr>
+	<tr>
+		<td rowspan="4">
+			<code>"read_receipt"</code><br />
+			A user within a thread has seen a message sent by the API user.
+		</td>
+		<td><code>reader</code></td>
+		<td>ID of the user who just read the message.</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>The thread in which the message was read.</td>
+	</tr>
+	<tr>
+		<td><code>time</code></td>
+		<td>The time at which the reader read the message.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"read_receipt"</code>.</td>
+	</tr>
+	<tr>
+		<td rowspan="8">
+			<code>"message_reaction"</code><br />
+			A user has sent a reaction to a message.
+		</td>
+		<td><code>messageID</code></td>
+		<td>The ID of the message</td>
+	</tr>
+	<tr>
+		<td><code>offlineThreadingID</code></td>
+		<td>The offline message ID</td>
+	</tr>
+	<tr>
+		<td><code>reaction</code></td>
+		<td>Contains reaction emoji</td>
+	</tr>
+	<tr>
+		<td><code>senderID</code></td>
+		<td>ID of the author the message, where has been reaction added</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>ID of the thread where the message has been sent</td>
+	</tr>
+	<tr>
+		<td><code>timestamp</code></td>
+		<td>Unix Timestamp (in miliseconds) when the reaction was sent</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"message_reaction"</code>.</td>
+	</tr>
+	<tr>
+		<td><code>userID</code></td>
+		<td>ID of the reaction sender</td>
+	</tr>
+	<tr>
+		<td rowspan="4"><a name="presence"></a>
+			<code>"presence"</code><br />
+			The online status of the user's friends.
+		</td>
+		<td><code>statuses</code></td>
+		<td>The online status of the user. <code>0</code> means the user is idle (away for 2 minutes) and <code>2</code> means the user is online (we don't know what 1 or above 2 means...).</td>
+	</tr>
+	<tr>
+		<td><code>timestamp</code></td>
+		<td>How old the presence information is.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"presence"</code>.</td>
+	</tr>
+	<tr>
+		<td><code>userID</code></td>
+		<td>The ID of the user whose status this packet is describing.</td>
+	</tr>
+</table>
 
-If `attachments` contains an object with type `"sticker"`, the object will contain the following fields: `url`, `stickerID`, `packID`, `frameCount`, `frameRate`, `framesPerRow`, `framesPerCol`, `spriteURI`, `spriteURI2x`, `height`, `width`, `caption`, `description`.
+__Attachments__
 
-If `attachments` contains an object with type `"file"`, the object will contain the following fields: `name`, `url`, `ID`, `fileSize`, `isMalicious`, `mimeType`.
+Similar to how messages can vary based on their `type`, so too can the `attachments` within `"message"` events. Each attachment will consist of an object of one of the following types:
 
-If `attachments` contains an object with type `"photo"`, the object will contain the following fields:
-`name`, `hiresUrl`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `facebookUrl`, `ID`, `filename`, `mimeType`, `url`, `width`, `height`.
-
-If `attachments` contains an object with type `"animated_image"`, the object will contain the following fields: `ID`, `filename`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `largePreviewUrl`, `largePreviewWidth`, `largePreviewHeight`, `url`, `width`, `height`.
-
-If `attachments` contains an object with type `"share"`, the object will contain the following fields: `description`, `ID`, `subattachments`, `animatedImageSize`, `width`, `height`, `image`, `playable`, `duration`, `source`, `title`, `facebookUrl`, `target`, `styleList`, `url`.
-
-If `attachments` contains an object with type `"video"`, the object will contain the following fields: `filename`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `ID`, `url`, `width`, `height`, `duration`.
-
-If enabled through [setOptions](#setOptions), this will also handle events. In this case, `message` will be either a message (see above) or an event object with the following fields:
-- `type`: The string `"event"`, `"typ"`, `"read_receipt"` or `"read"`
-- `threadID`: The threadID representing the thread in which the message was sent.
-
-If `type` is `"event"` then the object will also have those fields:
-- `logMessageType`: String representing the type of event (`log:subscribe`, `log:unsubscribe`, `log:thread-name`, `log:thread-color`, `log:thread-icon`, `log:user-nickname`)
-- `logMessageData`: Data relevant to the event.
-- `logMessageBody`: String printed in the chat.
-- `author`: The person who performed the event.
-- `threadID`: The thread which the event was performed in.
-
-If `type` is `"typ"` then the object will have the following fields:
-- `isTyping`: Boolean representing whether or not a person started typing.
-- `from`: ID of the user who started/stopped typing.
-- `threadID`: Current threadID.
-- `fromMobile`: Boolean representing whether or not the person's using a mobile device to type.
-
-If `type` is `"read_receipt"` then the object will have the following fields:
-- `reader`: ID of the user who just read the message.
-- `time`: The time at which the reader read the message.
-- `threadID`: The thread in which the message was read.
-
-If `type` is `"read"` then the object will have the following fields:
-- `threadID`: The threadID representing the thread in which the message was sent.
-- `time`: The time at which the user read the message.
-
-Difference between `"read_receipt"` and `"read"`:
-- `"read_receipt"` event triggers when other people read the user's messages.
-- `"read"` event triggers when the user read other people's messages.
-
-If `type` is `"message_reaction"`, then the object will have following fields (enabled `listenEvents` required):
-- `reaction`: Contains reaction emoji
-- `userID`: ID of the reaction sender
-- `senderID`: ID of the author the message, where has been reaction added
-- `messageID`: The ID of the message
-- `threadID`: ID of the thread where the message has been sent
-- `offlineThreadingID`: The offline message ID
-- `timestamp`: Unix Timestamp (in miliseconds) when the reaction was sent
-
-<a name="presence"></a>
-If enabled through [setOptions](#setOptions), `message` could also be a presence object, (`type` will be `"presence"`), which is the online status of the user's friends. That object given to the callback will have the following fields:
-- `type`: The string `"presence"`.
-- `timestamp`: How old the information is.
-- `userID`: The ID of the user whose status this packet is describing
-- `statuses`: The online status of the user. `0` means the user is idle (away for 2 minutes) and `2` means the user is online (we don't know what 1 or above 2 is...).
+| Attachment Type | Fields |
+| --------------- | ------ |
+| `"sticker"` | `caption`, `description`, `frameCount`, `frameRate`, `framesPerCol`, `framesPerRow`, `height`, `packID`, `spriteURI2x`, `spriteURI`, `stickerID`, `type`, `url`, `width` |
+| `"file"` | `fileSize`, `ID`, `isMalicious`, `mimeType`, `name`, `type`, `url` |
+| `"photo"` | `facebookUrl`, `filename`, `height`, `hiresUrl`, `ID`, `mimeType`, `name`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
+| `"animated_image"` | `filename`, `height`, `ID`, `largePreviewHeight`, `largePreviewUrl`, `largePreviewWidth`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
+| `"share"` | `animatedImageSize`, `description`, `duration`, `facebookUrl`, `height`, `ID`, `image`, `playable`, `source`, `styleList`, `subattachments`, `target`, `title`, `type`, `url`, `width` |
+| `"video"` | `duration`, `filename`, `height`, `ID`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
 
 __Example__
 
