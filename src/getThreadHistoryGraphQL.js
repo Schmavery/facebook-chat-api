@@ -21,7 +21,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
         // FB, and there doesn't seem to be many drawbacks.
         type: "image",
         filename: attachment.filename,
-        ID: attachment.legacy_attachment_id, 
+        attachmentID: attachment.legacy_attachment_id,
         previewHeight: attachment.preview.height, 
         previewUrl: attachment.preview.uri, 
         previewWidth: attachment.preview.width, 
@@ -29,7 +29,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
         
         // New
         attributionApp: attachment.attribution_app ? {
-          ID: attachment.attribution_app.id,
+          attributionAppID: attachment.attribution_app.id,
           name: attachment.attribution_app.name,
           logo: attachment.attribution_app.square_logo,
         } : null,
@@ -69,7 +69,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
         filename: attachment.filename,
         height: attachment.original_dimensions.y,
         width: attachment.original_dimensions.x,
-        ID: attachment.legacy_attachment_id,
+        attachmentID: attachment.legacy_attachment_id,
         url: attachment.playable_url,
         
         // New
@@ -87,8 +87,8 @@ function formatAttachmentsGraphQLResponse(attachment) {
         fileSize: 0,
         mimeType: "", // ?
         name: "",
-        
-        ID: attachment.url_shimhash, // Should be good enough as an ID
+
+        attachmentID: attachment.url_shimhash, // Should be good enough as an ID
         isMalicious: attachment.is_malicious,
         type: "file",
         url: attachment.url,
@@ -118,7 +118,7 @@ function formatExtensibleAttachment(attachment) {
 
       type: "share",
       description: attachment.story_attachment.description.text,
-      ID: attachment.legacy_attachment_id,
+      attachmentID: attachment.legacy_attachment_id,
       title: attachment.story_attachment.title_with_entities.text,
       subattachments: attachment.story_attachment.subattachments,
       url: attachment.story_attachment.url,
@@ -340,7 +340,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null, formatMessagesGraphQLResponse(resData[0]));
       })
       .catch(function(err) {
-        log.error("getThreadHistory", err);
+        log.error("getThreadHistoryGraphQL", err);
         return callback(err);
       });
   };
