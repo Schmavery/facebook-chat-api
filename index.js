@@ -108,6 +108,7 @@ function buildAPI(globalOptions, html, jar) {
     
     // Beta features
     'getThreadHistoryGraphQL',
+    'getThreadInfoGraphQL',
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID, ctx);
