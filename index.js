@@ -105,6 +105,9 @@ function buildAPI(globalOptions, html, jar) {
     'sendTypingIndicator',
     'setMessageReaction',
     'setTitle',
+    
+    // Beta features
+    'getThreadHistoryGraphQL',
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID, ctx);

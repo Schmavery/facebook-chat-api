@@ -121,7 +121,16 @@ describe('Login:', function() {
 
 
   it('should get the history of the chat (user)', function (done) {
-    api.getThreadHistory(userID, 0, 5, null, function(err, data) {
+    api.getThreadHistory(userID, 5, null, function(err, data) {
+      checkErr(done)(err);
+      assert(getType(data) === "Array");
+      assert(data.every(function(v) {return getType(v) == "Object";}));
+      done();
+    });
+  });
+  
+  it('should get the history of the chat (user) (graphql)', function (done) {
+    api.getThreadHistoryGraphQL(userID, 5, null, function(err, data) {
       checkErr(done)(err);
       assert(getType(data) === "Array");
       assert(data.every(function(v) {return getType(v) == "Object";}));
@@ -203,7 +212,16 @@ describe('Login:', function() {
   });
 
   it('should get the history of the chat (group)', function (done) {
-    api.getThreadHistory(groupChatID, 0, 5, null, function(err, data) {
+    api.getThreadHistory(groupChatID, 5, null, function(err, data) {
+      checkErr(done)(err);
+      assert(getType(data) === "Array");
+      assert(data.every(function(v) {return getType(v) == "Object";}));
+      done();
+    });
+  });
+  
+  it('should get the history of the chat (group) (graphql)', function (done) {
+    api.getThreadHistoryGraphQL(groupChatID, 5, null, function(err, data) {
       checkErr(done)(err);
       assert(getType(data) === "Array");
       assert(data.every(function(v) {return getType(v) == "Object";}));
@@ -223,12 +241,12 @@ describe('Login:', function() {
     api.setTitle(title, groupChatID, checkErr(done));
   });
 
-  it('should kick user', function (done){
+  it('should kick user', function (done) {
     var id = userIDs[0];
     listen(done, function (msg) {
       return msg.type === 'event' &&
         msg.logMessageType === 'log:unsubscribe' &&
-        msg.logMessageData.removed_participants.indexOf(id) > -1;
+        msg.logMessageData.leftParticipantFbId === id;
     });
     api.removeUserFromGroup(id, groupChatID, checkErr(done));
   });
@@ -238,7 +256,8 @@ describe('Login:', function() {
     listen(done, function (msg) {
       return (msg.type === 'event' &&
         msg.logMessageType === 'log:subscribe' &&
-        msg.logMessageData.added_participants.indexOf('fbid:'+id) > -1);
+        msg.logMessageData.addedParticipants.length > 0 &&
+        msg.logMessageData.addedParticipants[0].userFbId === id);
     });
     // TODO: we don't check for errors inside this because FB changed and
     // returns an error, even though we receive the event that the user was
@@ -246,7 +265,7 @@ describe('Login:', function() {
     api.addUserToGroup(id, groupChatID, function() {});
   });
 
-  it('should get thread info (group)', function (done){
+  xit('should get thread info (group)', function (done){
       api.getThreadInfo(groupChatID, (err, info) => {
         if (err) done(err);
 
