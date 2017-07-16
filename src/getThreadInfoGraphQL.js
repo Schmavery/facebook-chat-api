@@ -44,7 +44,6 @@ function formatThreadGraphQLResponse(data) {
     messageCount: messageThread.message_count,
     timestamp: messageThread.updated_time_precise,
     isPinProtected: messageThread.is_pin_protected,
-    // @TODO Fill this up.
     eventReminders: messageThread.event_reminders ? messageThread.event_reminders.nodes.map(formatEventReminders) : null,
     relatedPageThread: messageThread.related_page_thread,
     reactionsMuteMode: messageThread.reactions_mute_mode.toLowerCase(),
@@ -91,7 +90,6 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (resData[resData.length - 1].error_results !== 0) {
           throw new Error("well darn there was an error_result")
         }
-        console.log(JSON.stringify(resData[0], null, 2));
 
         callback(null, formatThreadGraphQLResponse(resData[0]));
       })

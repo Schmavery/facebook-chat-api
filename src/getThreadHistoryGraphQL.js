@@ -335,7 +335,6 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (resData[resData.length - 1].error_results !== 0) {
           throw new Error("well darn there was an error_result")
         }
-        console.log(JSON.stringify(resData[0], null, 2));
 
         callback(null, formatMessagesGraphQLResponse(resData[0]));
       })
