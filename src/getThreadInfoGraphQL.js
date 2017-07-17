@@ -36,7 +36,7 @@ function formatThreadGraphQLResponse(data) {
 
   return {
     threadID: threadID,
-    name: messageThread.name,
+    threadName: messageThread.name,
     participantIDs: messageThread.all_participants.nodes.map(function(d){
       return d.messaging_actor.id;
     }),
