@@ -97,6 +97,18 @@ function formatAttachmentsGraphQLResponse(attachment) {
         contentType: attachment.content_type,
         filename: attachment.filename,
       }
+    case "MessageAudio":
+      return {
+        attachmentID: attachment.url_shimhash, // Copied from above
+
+        type: "audio",
+        audioType: attachment.audio_type,
+        durationInMs: attachment.playable_duration_in_ms,
+        url: attachment.playable_url,
+
+        isVoiceMail: attachment.is_voicemail,
+        filename: attachment.filename,
+      }  
     default:
       return {error: "Don't know about attachment type " + attachment.__typename};
   }
