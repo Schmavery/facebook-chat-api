@@ -262,6 +262,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         form['profile_xmd[' + i + '][offset]'] = offset;
         form['profile_xmd[' + i + '][length]'] = tag.length;
         form['profile_xmd[' + i + '][id]'] = id;
+	form['profile_xmd[' + i + '][type]'] = 'p';
       }
     }
     cb();
