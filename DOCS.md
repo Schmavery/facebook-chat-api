@@ -22,6 +22,7 @@
 * [`api.getThreadPictures`](#getThreadPictures)
 * [`api.getUserID`](#getUserID)
 * [`api.getUserInfo`](#getUserInfo)
+* [`api.getValidThreadColors`](#getValidThreadColors)
 * [`api.handleMessageRequest`](#handleMessageRequest)
 * [`api.listen`](#listen)
 * [`api.logout`](#logout)
@@ -712,6 +713,29 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
     });
 });
 ```
+
+---------------------------------------
+
+<a name="getValidThreadColors"></a>
+### api.getValidThreadColors()
+
+Returns a list of all hexadecimal values currently accepted by [`api.changeThreadColor`](#changeThreadColor). These colors, listed below, are the ones present in the palette UI used for selecting thread colors on the Messenger client. Due to Facebook backend changes, the thread color can no longer be set to an arbitrary hex value.
+
+- `null` (default blue)
+- `#44BEC7`
+- `#FFC300`
+- `#FA3C4C`
+- `#D696BB`
+- `#6699CC`
+- `#13CF13`
+- `#FF7E29`
+- `#E68585`
+- `#7646FF`
+- `#20CEF5`
+- `#67B868`
+- `#D4A88C`
+- `#FF5CA1`
+- `#A695C7`
 
 ---------------------------------------
 
