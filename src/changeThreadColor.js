@@ -9,7 +9,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       callback = function() {};
     }
     var form = {
-      'color_choice' : color,
+      'color_choice' : color.toLowerCase(), // API only accepts lowercase letters in hex string
       'thread_or_other_fbid' : threadID
     };
 
