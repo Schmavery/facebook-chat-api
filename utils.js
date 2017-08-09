@@ -366,7 +366,6 @@ function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
 }
 
 function formatDeltaMessage(m){
-  console.log(m)
   var md = m.delta.messageMetadata;
   return {
     type: "message",
