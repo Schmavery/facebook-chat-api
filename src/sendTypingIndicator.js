@@ -12,7 +12,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       thread: threadID
     };
 
-    // Check if thread is single person chat or group chat
+    // Check if thread is a single person chat or a group chat
     // More info on this is in api.sendMessage
     api.getUserInfo(threadID, function(err, res) {
       if (err) {
@@ -26,7 +26,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
       defaultFuncs
         .post("https://www.facebook.com/ajax/messaging/typ.php", ctx.jar, form)
-        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+        .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function(resData) {
           if(resData.error) {
             throw resData;
@@ -42,15 +42,24 @@ module.exports = function(defaultFuncs, api, ctx) {
   }
 
   return function sendTypingIndicator(threadID, callback) {
-    if(!callback) {
-      throw {error: "sendTypingIndicator: need callback"};
+    if (utils.getType(callback) !== 'Function' && utils.getType(callback) !== 'AsyncFunction') {
+      if (callback) {
+        log.warn("sendTypingIndicator", "callback is not a function - ignoring.");
+      }
+      callback = () => {};
     }
 
     makeTypingIndicator(true, threadID, callback);
 
-    // TODO: document that we return the stop/cancel functions now
     return function end(cb) {
-      makeTypingIndicator(false, threadID, cb || function() {});
+      if (utils.getType(cb) !== 'Function' && utils.getType(cb) !== 'AsyncFunction') {
+        if (cb) {
+          log.warn("sendTypingIndicator", "callback is not a function - ignoring.");
+        }
+        cb = () => {};
+      }
+
+      makeTypingIndicator(false, threadID, cb);
     };
   };
 };

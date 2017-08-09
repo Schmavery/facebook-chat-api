@@ -1,10 +1,13 @@
-# Quick Start Guide
+# Unofficial Facebook Chat API
 Facebook now has an official API for chat bots [here](https://developers.facebook.com/docs/messenger-platform).
-This API is still the only way to automate chat functionalities on a user account. We do this by emulating the browser. This means doing the exact same GET/POST requests and tricking Facebook into thinking we're accessing the website normally. Because we're doing it this way, this API won't work with an auth token but requires the credentials of a Facebook account.
+
+This API is the only way to automate chat functionalities on a user account. We do this by emulating the browser. This means doing the exact same GET/POST requests and tricking Facebook into thinking we're accessing the website normally. Because we're doing it this way, this API won't work with an auth token but requires the credentials of a Facebook account.
 
 _Disclaimer_: We are not responsible if your account gets banned for spammy activities such as sending lots of messages to people you don't know, sending messages very quickly, sending spammy looking URLs, logging in and out very quickly... Be responsible Facebook citizens.
 
 See [below](#projects-using-this-api) for projects using this API.
+
+See the [full changelog](/CHANGELOG.md) for release details.
 
 ## Install
 If you just want to use facebook-chat-api, you should use this command:
@@ -51,6 +54,7 @@ Result:
 * [`api.createPoll`](DOCS.md#createPoll)
 * [`api.deleteMessage`](DOCS.md#deleteMessage)
 * [`api.deleteThread`](DOCS.md#deleteThread)
+* [`api.forwardAttachment`](DOCS.md#forwardAttachment)
 * [`api.getAppState`](DOCS.md#getAppState)
 * [`api.getCurrentUserID`](DOCS.md#getCurrentUserID)
 * [`api.getFriendsList`](DOCS.md#getFriendsList)
@@ -70,19 +74,21 @@ Result:
 * [`api.searchForThread`](DOCS.md#searchForThread)
 * [`api.sendMessage`](DOCS.md#sendMessage)
 * [`api.sendTypingIndicator`](DOCS.md#sendTypingIndicator)
+* [`api.setMessageReaction`](DOCS.md#setMessageReaction)
 * [`api.setOptions`](DOCS.md#setOptions)
 * [`api.setTitle`](DOCS.md#setTitle)
 
 ## Main Functionality
 
 ### Sending a message
-#### api.sendMessage(message, threadID, [callback])
+#### api.sendMessage(message, threadID[, callback])
 
 Various types of message can be sent:
 * *Regular:* set field `body` to the desired message as a string.
 * *Sticker:* set a field `sticker` to the desired sticker ID.
 * *File or image:* Set field `attachment` to a readable stream or an array of readable streams.
 * *URL:* set a field `url` to the desired URL.
+* *Emoji:* set field `emoji` to the desired emoji as a string and set field `emojiSize` with size of the emoji (`small`, `medium`, `large`)
 
 Note that a message can only be a regular message (which can be empty) and optionally one of the following: a sticker, an attachment or a url.
 
@@ -214,7 +220,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ## Projects using this API
 
-- [Kassy](https://github.com/mrkno/Kassy) - Kassy is a modular, easily extensible general purpose chat bot
+- [Messer](https://github.com/mjkaufer/Messer) - Command-line messaging for Facebook Messenger
+- [Concierge](https://github.com/concierge/Concierge) - Concierge is a highly modular, easily extensible general purpose chat bot with a built in package manager
 - [Marc Zuckerbot](https://github.com/bsansouci/marc-zuckerbot) - Facebook chat bot
 - [Marc Thuckerbot](https://github.com/bsansouci/lisp-bot) - Programmable lisp bot
 - [MarkovsInequality](https://github.com/logicx24/MarkovsInequality) - Extensible chat bot adding useful functions to Facebook Messenger
@@ -223,3 +230,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 - [fbash](https://github.com/avikj/fbash) - Run commands on your computer's terminal over Facebook Messenger
 - [Klink](https://github.com/KeNt178/klink) - This Chrome extension will 1-click share the link of your active tab over Facebook Messenger
 - [Botyo](https://github.com/ivkos/botyo) - Modular bot designed for group chat rooms on Facebook
+- [matrix-puppet-facebook](https://github.com/matrix-hacks/matrix-puppet-facebook) - A facebook bridge for [matrix](https://matrix.org)
+- [facebot](https://github.com/Weetbix/facebot) - A facebook bridge for Slack.
+- [TestMyBot](https://github.com/codeforequity-at/testmybot) - Test Automation Framework for Chatbots
+- [Messenger-CLI](https://github.com/AstroCB/Messenger-CLI) - A command-line interface for sending and receiving messages through Facebook Messenger.

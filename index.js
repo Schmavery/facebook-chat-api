@@ -61,7 +61,8 @@ function buildAPI(globalOptions, html, jar) {
     clientID: clientID,
     globalOptions: globalOptions,
     loggedIn: true,
-    access_token: 'NONE'
+    access_token: 'NONE',
+    clientMutationId: 0
   };
 
   var api = {
@@ -82,7 +83,9 @@ function buildAPI(globalOptions, html, jar) {
     'createPoll',
     'deleteMessage',
     'deleteThread',
+    'forwardAttachment',
     'getCurrentUserID',
+    'getEmojiUrl',
     'getFriendsList',
     'getThreadHistory',
     'getThreadInfo',
@@ -100,10 +103,15 @@ function buildAPI(globalOptions, html, jar) {
     'searchForThread',
     'sendMessage',
     'sendTypingIndicator',
+    'setMessageReaction',
     'setTitle',
+    
+    // Beta features
+    'getThreadHistoryGraphQL',
+    'getThreadInfoGraphQL',
   ];
 
-  var defaultFuncs = utils.makeDefaults(html, userID);
+  var defaultFuncs = utils.makeDefaults(html, userID, ctx);
 
   // Load all api functions in a loop
   apiFuncNames.map(function(v) {
@@ -423,7 +431,7 @@ function loginHelper(appState, email, password, globalOptions, callback) {
 }
 
 function login(loginData, options, callback) {
-  if(utils.getType(options) === 'Function') {
+  if(utils.getType(options) === 'Function' || utils.getType(options) === 'AsyncFunction') {
     callback = options;
     options = {};
   }

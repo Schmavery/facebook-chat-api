@@ -11,8 +11,10 @@
 * [`api.createPoll`](#createPoll)
 * [`api.deleteMessage`](#deleteMessage)
 * [`api.deleteThread`](#deleteThread)
+* [`api.forwardAttachment`](#forwardAttachment)
 * [`api.getAppState`](#getAppState)
 * [`api.getCurrentUserID`](#getCurrentUserID)
+* [`api.getEmojiUrl`](#getEmojiUrl)
 * [`api.getFriendsList`](#getFriendsList)
 * [`api.getThreadHistory`](#getThreadHistory)
 * [`api.getThreadInfo`](#getThreadInfo)
@@ -30,6 +32,7 @@
 * [`api.searchForThread`](#searchForThread)
 * [`api.sendMessage`](#sendMessage)
 * [`api.sendTypingIndicator`](#sendTypingIndicator)
+* [`api.setMessageReaction`](#setMessageReaction)
 * [`api.setOptions`](#setOptions)
 * [`api.setTitle`](#setTitle)
 
@@ -64,7 +67,7 @@ nodejs login.js
 
 ---------------------------------------
 
-<a name="login"/>
+<a name="login"></a>
 ### login(credentials[, options], callback)
 
 This function is returned by `require(...)` and is the main entry point to the API.
@@ -156,7 +159,7 @@ __Review Recent Login__: Sometimes Facebook will ask you to review your recent l
 
 ---------------------------------------
 
-<a name="addUserToGroup" />
+<a name="addUserToGroup"></a>
 ### api.addUserToGroup(userID, threadID[, callback])
 
 Adds a user (or array of users) to a group chat.
@@ -169,7 +172,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="changeArchivedStatus" />
+<a name="changeArchivedStatus"></a>
 ### api.changeArchivedStatus(threadOrThreads, archive[, callback])
 
 Given a threadID, or an array of threadIDs, will set the archive status of the threads to `archive`. Archiving a thread will hide it from the logged-in user's inbox until the next time a message is sent or received.
@@ -196,7 +199,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="changeBlockedStatus" />
+<a name="changeBlockedStatus"></a>
 ### api.changeBlockedStatus(userID, block[, callback])
 
 Prevents a user from privately contacting you. (Messages in a group chat will still be seen by both parties).
@@ -209,7 +212,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="changeGroupImage" />
+<a name="changeGroupImage"></a>
 ### api.changeGroupImage(image, threadID[, callback])
 
 Will change the group chat's image to the given image.
@@ -236,7 +239,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="changeNickname" />
+<a name="changeNickname"></a>
 ### api.changeNickname(nickname, threadID, participantID[, callback])
 
 Will change the thread user nickname to the one provided.
@@ -264,7 +267,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="changeThreadColor" />
+<a name="changeThreadColor"></a>
 ### api.changeThreadColor(color, threadID[, callback])
 
 Will change the thread color to the given hex string color ("#0000ff"). Set it
@@ -294,7 +297,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="changeThreadEmoji" />
+<a name="changeThreadEmoji"></a>
 ### api.changeThreadEmoji(emoji, threadID[, callback])
 
 Will change the thread emoji to the one provided.
@@ -323,7 +326,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="createPoll" />
+<a name="createPoll"></a>
 ### api.createPoll(title, threadID[, options][, callback])
 
 Creates a poll with the specified title and optional poll options, which can also be initially selected by the logged-in user.
@@ -354,7 +357,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="deleteMessage" />
+<a name="deleteMessage"></a>
 ### api.deleteMessage(messageOrMessages[, callback])
 
 Takes a messageID or an array of messageIDs and deletes the corresponding message.
@@ -385,7 +388,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="deleteThread" />
+<a name="deleteThread"></a>
 ### api.deleteThread(threadOrThreads[, callback])
 
 Given a threadID, or an array of threadIDs, will delete the threads from your account. Note that this does *not* remove the messages from Facebook's servers - anyone who hasn't deleted the thread can still view all of the messages.
@@ -412,21 +415,68 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="getAppState" />
+<a name="forwardAttachment"></a>
+### api.forwardAttachment(attachmentID, userOrUsers[, callback])
+
+Forwards corresponding attachment to given userID or to every user from an array of userIDs
+
+__Arguments__
+* `attachmentID`: The ID field in the attachment object. Not all attachment have IDs: recorded audio and arbitrary files don't for example.
+* `userOrUsers`: A userID string or usersID string array
+* `callback(err)`: A callback called when the query is done (either with an error or null).
+
+---------------------------------------
+
+<a name="getAppState"></a>
 ### api.getAppState()
 
 Returns current appState which can be saved to a file or stored in a variable.
 
 ---------------------------------------
 
-<a name="getCurrentUserID" />
+<a name="getCurrentUserID"></a>
 ### api.getCurrentUserID()
 
 Returns the currently logged-in user's Facebook user ID.
 
 ---------------------------------------
 
-<a name="getFriendsList" />
+<a name="getEmojiUrl"></a>
+### api.getEmojiUrl(c, size[, pixelRatio])
+
+Returns the URL to a Facebook Messenger-style emoji image asset.
+
+__note__: This function will return a URL regardless of whether the image at the URL actually exists.
+This can happen if, for example, Messenger does not have an image asset for the requested emoji.
+
+__Arguments__
+
+* `c` - The emoji character
+* `size` - The width and height of the emoji image; supported sizes are 32, 64, and 128
+* `pixelRatio` - The pixel ratio of the emoji image; supported ratios are '1.0' and '1.5' (default is '1.0')
+
+__Example__
+
+```js
+const fs = require("fs");
+const login = require("facebook-chat-api");
+
+login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
+    if(err) return console.error(err);
+
+    // Prints https://static.xx.fbcdn.net/images/emoji.php/v8/z9c/1.0/128/1f40d.png
+    console.log('Snake emoji, 128px (128x128 with pixel ratio of 1.0');
+    console.log(api.getEmojiUrl('\ud83d\udc0d', 128));
+
+    // Prints https://static.xx.fbcdn.net/images/emoji.php/v8/ze1/1.5/128/1f40d.png
+    console.log('Snake emoji, 192px (128x128 with pixel ratio of 1.5');
+    console.log(api.getEmojiUrl('\ud83d\udc0d', 128, '1.5'));
+});
+```
+
+---------------------------------------
+
+<a name="getFriendsList"></a>
 ### api.getFriendsList(callback)
 
 Returns an array of objects with some information about your friends.
@@ -454,34 +504,92 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="getThreadHistory" />
-### api.getThreadHistory(threadID, start, end, timestamp[, callback])
+<a name="getThreadHistory"></a>
+### api.getThreadHistory(threadID, amount, timestamp[, callback])
 
-Takes a threadID, start and end numbers, a timestamp, and a callback.
+Takes a threadID, number of messages, a timestamp, and a callback.
 
 __note__: if you're getting a 500 error, it's possible that you're requesting too many messages. Try reducing that number and see if that works.
 
 __Arguments__
 * `threadID`: A threadID corresponding to the target chat
-* `start`: The ith message in the chat from which to start retrieving history.
-* `end`: The jth message in the chat to which retrieving history.
-* `timestamp`: Used to described the end time. If set, will query messages up to and including `timestamp`.
+* `amount`: The amount of messages to *request*
+* `timestamp`: Used to described the time of the most recent message to load. If timestamp is `undefined`, facebook will load the most recent messages.
 * `callback(error, history)`: If error is null, history will contain an array of message objects.
+
+__Example__
+
+To load 50 messages at a time, we can use `undefined` as the timestamp to retrieve the most recent messages and use the timestamp of the earliest message to load the next 50.
+
+```js
+var timestamp = undefined;
+
+function loadNextThreadHistory(api){
+    api.getThreadHistory(threadID, 50, timestamp, (err, history) => {
+        if(err) return console.error(err);
+
+        /*
+            Since the timestamp is from a previous loaded message,
+            that message will be included in this history so we can discard it unless it is the first load.
+        */
+        if(timestamp != undefined) history.pop();
+
+        /*
+            Handle message history
+        */
+
+        timestamp = history[0].timestamp;
+    });
+}
+```
 
 ---------------------------------------
 
-<a name="getThreadInfo" />
+<a name="getThreadInfo"></a>
 ### api.getThreadInfo(threadID[, callback])
 
 Takes a threadID and a callback.  Works for both single-user and group threads.
 
 __Arguments__
 * `threadID`: A threadID corresponding to the target thread.
-* `callback(err, info)`: If `err` is `null`, `info` will contain `participantIDs`, `name`, `snippet`, `messageCount`, `emoji`, `nicknames`, and `color`.  The last three will be null if custom values are not set for the thread.
+* `callback(err, info)`: If `err` is `null`, `info` will contain the following properties: * `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties:
+
+| Key   |      Description      |
+|----------|:-------------:|
+| threadID | ID of the thread |
+| participantIDs |    Array of user IDs in the thread   |
+| name | Name of the thread. Usually the name of the user. In group chats, this will be empty if the name of the group chat is unset. |
+| nicknames |    Map of nicknames for members of the thread. If there are no nicknames set, this will be null.   |
+| snippet | This is the preview message for the thread and is usually the last message in the thread. |
+| snippetAttachments | If the snippet uses attachments (e.g. emoji's), this will be an array of the attachments. |
+| snippetSender | The ID of the author of the snippet |
+| unreadCount | Number of unread messages |
+| messageCount | Number of messages |
+| imageSrc | URL to the group chat photo. Null if unset or a canonical thread. |
+| timestamp |  |
+| serverTimestamp |  |
+| muteUntil | Timestamp at which the thread will no longer be muted. The timestamp will be -1 if the thread is muted indefinitely or null if the thread is not muted. |
+| isCanonicalUser | True if the other user in a canonical thread is a user, false if the other user is a page or group. |
+| isCanonical | True if the thread is a private chat to a single user, false for group chats. |
+| isSubscribed |  |
+| folder | The folder that the thread is in. Can be one of: <ul><li>'inbox'</li><li>'archive'</li></ul> |
+| isArchived | True if the thread is archived, false if not |
+| recipientsLoadable |  |
+| hasEmailParticipant |  |
+| readOnly |  |
+| canReply | True if the current user can reply in the thread |
+| cannotReplyReason | If canReply is false, this will be a string stating why. Null if canReply is true. |
+| lastMessageTimestamp | Timestamp of the last message. |
+| lastReadTimestamp | Timestamp of the last message that is marked as 'read' by the current user. |
+| lastMessageType | Message type of the last message. |
+| emoji | Object with key 'emoji' whose value is the emoji unicode character. Null if unset. |
+| color | String form of the custom color in hexadecimal form. |
+| adminIDs | Array of user IDs of the admins of the thread. Empty array if unset. |
+| threadType | 1 for a canonical thread, 2 for a group chat thread. |
 
 ---------------------------------------
 
-<a name="getThreadList" />
+<a name="getThreadList"></a>
 ### api.getThreadList(start, end, type, callback)
 
 Will return information about threads.
@@ -491,11 +599,44 @@ __Arguments__
 * `start`: Start index in the list of recently used threads.
 * `end`: End index.
 * `type`: Optional String, can be 'inbox', 'pending', or 'archived'. Inbox is default.
-* `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: `threadID`, <del>`participants`</del>, `participantIDs`, `formerParticipants`, `name`, `nicknames`, `snippet`, `snippetHasAttachment`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteSettings`, `isCanonicalUser`, `isCanonical`, `canonicalFbid`, `isSubscribed`, `rootMessageThreadingID`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `composerEnabled`, `blockedParticipants`, `lastMessageID`.
+* `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties:
+
+| Key   |      Description      |
+|----------|:-------------:|
+| threadID | ID of the thread |
+| participantIDs |    Array of user IDs in the thread   |
+| name | Name of the thread. Usually the name of the user. In group chats, this will be empty if the name of the group chat is unset. |
+| nicknames |    Map of nicknames for members of the thread. If there are no nicknames set, this will be null.   |
+| snippet | This is the preview message for the thread and is usually the last message in the thread. |
+| snippetAttachments | If the snippet uses attachments (e.g. emoji's), this will be an array of the attachments. |
+| snippetSender | The ID of the author of the snippet |
+| unreadCount | Number of unread messages |
+| messageCount | Number of messages |
+| imageSrc | URL to the group chat photo. Null if unset or a canonical thread. |
+| timestamp |  |
+| serverTimestamp |  |
+| muteUntil | Timestamp at which the thread will no longer be muted. The timestamp will be -1 if the thread is muted indefinitely or null if the thread is not muted. |
+| isCanonicalUser | True if the other user in a canonical thread is a user, false if the other user is a page or group. |
+| isCanonical | True if the thread is a private chat to a single user, false for group chats. |
+| isSubscribed |  |
+| folder | The folder that the thread is in. Can be one of: <ul><li>'inbox'</li><li>'archive'</li></ul> |
+| isArchived | True if the thread is archived, false if not |
+| recipientsLoadable |  |
+| hasEmailParticipant |  |
+| readOnly |  |
+| canReply | True if the current user can reply in the thread |
+| cannotReplyReason | If canReply is false, this will be a string stating why. Null if canReply is true. |
+| lastMessageTimestamp | Timestamp of the last message. |
+| lastReadTimestamp | Timestamp of the last message that is marked as 'read' by the current user. |
+| lastMessageType | Message type of the last message. |
+| emoji | Object with key 'emoji' whose value is the emoji unicode character. Null if unset. |
+| color | String form of the custom color in hexadecimal form. |
+| adminIDs | Array of user IDs of the admins of the thread. Empty array if unset. |
+| threadType | 1 for a canonical thread, 2 for a group chat thread. |
 
 ---------------------------------------
 
-<a name="getThreadPictures" />
+<a name="getThreadPictures"></a>
 ### api.getThreadPictures(threadID, offset, limit, callback)
 
 Returns pictures sent in the thread.
@@ -509,15 +650,15 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="getUserID" />
+<a name="getUserID"></a>
 ### api.getUserID(name, callback)
 
-Given the full name of a Facebook user, the call will perform a Facebook Graph search and return all corresponding IDs (order determined by Facebook).
+Given the full name or vanity name of a Facebook user, event, page, group or app, the call will perform a Facebook Graph search and return all corresponding IDs (order determined by Facebook).
 
 __Arguments__
 
-* `name` - A string being the name of the person you're looking for.
-* `callback(err, obj)` - A callback called when the search is done (either with an error or with the resulting object). `obj` is an array which contains all of the users that facebook graph search found, ordered by "importance".
+* `name` - A string being the name of the item you're looking for.
+* `callback(err, obj)` - A callback called when the search is done (either with an error or with the resulting object). `obj` is an array which contains all of the items that facebook graph search found, ordered by "importance".  Each item in the array has the following properties: `userID`,`photoUrl`,`indexRank`, `name`, `isVerified`, `profileUrl`, `category`, `score`, `type` (type is generally user, group, page, event or app).
 
 __Example__
 
@@ -541,7 +682,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="getUserInfo" />
+<a name="getUserInfo"></a>
 ### api.getUserInfo(ids, callback)
 
 Will get some information about the given users.
@@ -549,7 +690,7 @@ Will get some information about the given users.
 __Arguments__
 
 * `ids` - Either a string/number for one ID or an array of strings/numbers for a batched query.
-* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from userId to another object containing the following properties: `name`, `firstName`, `vanity`, `thumbSrc`, `profileUrl`, `gender`, `type`, `isFriend`, `isBirthday`, `searchTokens`, `alternateName`.
+* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from userId to another object containing the following properties: `name`, `firstName`, `vanity` (user's chosen facebook handle, if any), `thumbSrc`, `profileUrl`, `gender`, `type` (type is generally user, group, page, event or app), `isFriend`, `isBirthday`, `searchTokens`, `alternateName`.
 
 __Example__
 
@@ -574,7 +715,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="handleMessageRequest" />
+<a name="handleMessageRequest"></a>
 ### api.handleMessageRequest(threadID, accept[, callback])
 
 Accept or ignore message request(s) with thread id `threadID`.
@@ -587,7 +728,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="listen" />
+<a name="listen"></a>
 ### api.listen(callback)
 
 Will call `callback` when a new message is received on this account.
@@ -599,64 +740,204 @@ __Arguments__
 
 __Message__
 
-If `type` is `message`, the object will contain the following fields:
+The message object will contain different fields based on its type (as determined by its `type` field). By default, the only type that will be listened for is `message`. If enabled through [setOptions](#setOptions), the message object may alternatively represent an event e.g. a read receipt. The available event types are as follows:
 
-  + `senderID`: The id of the person who sent the message in the chat with threadID.
-  + `body`: The string corresponding to the message that was just received.
-  + `threadID`: The threadID representing the thread in which the message was sent.
-  + `messageID`: A string representing the message ID.
-  + `attachments`: An array of attachments to the message.
-  + `isGroup`: boolean, true if this thread is a group thread (more than 2 participants).
+<table>
+	<tr>
+		<th>Event Type</th>
+		<th>Field</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td rowspan="7">
+			<code>"message"</code><br />
+			A message was sent to a thread.
+		</td>
+		<td><code>attachments</code></td>
+		<td>An array of attachments to the message. Attachments vary in type, see the attachments table below.</td>
+	</tr>
+	<tr>
+		<td><code>body</code></td>
+		<td>The string corresponding to the message that was just received.</td>
+	</tr>
+	<tr>
+		<td><code>isGroup</code></td>
+		<td>boolean, true if this thread is a group thread (more than 2 participants).</td>
+	</tr>
+	<tr>
+		<td><code>messageID</code></td>
+		<td>A string representing the message ID.</td>
+	</tr>
+	<tr>
+		<td><code>senderID</code></td>
+		<td>The id of the person who sent the message in the chat with threadID.</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which the message was sent.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"message"</code>.</td>
+	</tr>
+	<tr>
+		<td rowspan="6">
+			<code>"event"</code><br />
+			An event occurred within a thread.
+		</td>
+		<td><code>author</code></td>
+		<td>The person who performed the event.</td>
+	</tr>
+	<tr>
+		<td><code>logMessageBody</code></td>
+		<td>String printed in the chat.</td>
+	</tr>
+	<tr>
+		<td><code>logMessageData</code></td>
+		<td>Data relevant to the event.</td>
+	</tr>
+	<tr>
+		<td><code>logMessageType</code></td>
+		<td>String representing the type of event (<code>log:subscribe</code>, <code>log:unsubscribe</code>, <code>log:thread-name</code>, <code>log:thread-color</code>, <code>log:thread-icon</code>, <code>log:user-nickname</code>)</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which the message was sent.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"event"</code>.</td>
+	</tr>
+	<tr>
+		<td rowspan="5">
+			<code>"typ"</code><br />
+			A user in a thread is typing.
+		</td>
+		<td><code>from</code></td>
+		<td>ID of the user who started/stopped typing.</td>
+	</tr>
+	<tr>
+		<td><code>fromMobile</code></td>
+		<td>Boolean representing whether or not the person's using a mobile device to type.</td>
+	</tr>
+	<tr>
+		<td><code>isTyping</code></td>
+		<td>Boolean representing whether or not a person started typing.</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which a user is typing.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"typ"</code>.</td>
+	</tr>
+	<tr>
+		<td rowspan="3">
+			<code>"read"</code><br />
+			The current API user has read a message.
+		</td>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which the message was sent.</td>
+	</tr>
+	<tr>
+		<td><code>time</code></td>
+		<td>The time at which the user read the message.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"read"</code>.</td>
+	</tr>
+	<tr>
+		<td rowspan="4">
+			<code>"read_receipt"</code><br />
+			A user within a thread has seen a message sent by the API user.
+		</td>
+		<td><code>reader</code></td>
+		<td>ID of the user who just read the message.</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>The thread in which the message was read.</td>
+	</tr>
+	<tr>
+		<td><code>time</code></td>
+		<td>The time at which the reader read the message.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"read_receipt"</code>.</td>
+	</tr>
+	<tr>
+		<td rowspan="8">
+			<code>"message_reaction"</code><br />
+			A user has sent a reaction to a message.
+		</td>
+		<td><code>messageID</code></td>
+		<td>The ID of the message</td>
+	</tr>
+	<tr>
+		<td><code>offlineThreadingID</code></td>
+		<td>The offline message ID</td>
+	</tr>
+	<tr>
+		<td><code>reaction</code></td>
+		<td>Contains reaction emoji</td>
+	</tr>
+	<tr>
+		<td><code>senderID</code></td>
+		<td>ID of the author the message, where has been reaction added</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>ID of the thread where the message has been sent</td>
+	</tr>
+	<tr>
+		<td><code>timestamp</code></td>
+		<td>Unix Timestamp (in miliseconds) when the reaction was sent</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"message_reaction"</code>.</td>
+	</tr>
+	<tr>
+		<td><code>userID</code></td>
+		<td>ID of the reaction sender</td>
+	</tr>
+	<tr>
+		<td rowspan="4"><a name="presence"></a>
+			<code>"presence"</code><br />
+			The online status of the user's friends.
+		</td>
+		<td><code>statuses</code></td>
+		<td>The online status of the user. <code>0</code> means the user is idle (away for 2 minutes) and <code>2</code> means the user is online (we don't know what 1 or above 2 means...).</td>
+	</tr>
+	<tr>
+		<td><code>timestamp</code></td>
+		<td>How old the presence information is.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"presence"</code>.</td>
+	</tr>
+	<tr>
+		<td><code>userID</code></td>
+		<td>The ID of the user whose status this packet is describing.</td>
+	</tr>
+</table>
 
-If `attachments` contains an object with type `"sticker"`, the object will contain the following fields: `url`, `stickerID`, `packID`, `frameCount`, `frameRate`, `framesPerRow`, `framesPerCol`, `spriteURI`, `spriteURI2x`, `height`, `width`, `caption`, `description`.
+__Attachments__
 
-If `attachments` contains an object with type `"file"`, the object will contain the following fields: `name`, `url`, `ID`, `fileSize`, `isMalicious`, `mimeType`.
+Similar to how messages can vary based on their `type`, so too can the `attachments` within `"message"` events. Each attachment will consist of an object of one of the following types:
 
-If `attachments` contains an object with type `"photo"`, the object will contain the following fields:
-`name`, `hiresUrl`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `facebookUrl`, `ID`, `filename`, `mimeType`, `url`, `width`, `height`.
-
-If `attachments` contains an object with type `"animated_image"`, the object will contain the following fields: `ID`, `filename`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `largePreviewUrl`, `largePreviewWidth`, `largePreviewHeight`, `url`, `width`, `height`.
-
-If `attachments` contains an object with type `"share"`, the object will contain the following fields: `description`, `ID`, `subattachments`, `animatedImageSize`, `width`, `height`, `image`, `playable`, `duration`, `source`, `title`, `facebookUrl`, `url`.
-
-If `attachments` contains an object with type `"video"`, the object will contain the following fields: `filename`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `ID`, `url`, `width`, `height`, `duration`.
-
-If enabled through [setOptions](#setOptions), this will also handle events. In this case, `message` will be either a message (see above) or an event object with the following fields:
-- `type`: The string `"event"` or `"typ"`
-- `threadID`: The threadID representing the thread in which the message was sent.
-
-If `type` is `"event"` then the object will also have those fields:
-- `logMessageType`: String representing the type of event (`log:subscribe`, `log:unsubscribe`, `log:thread-name`, `log:thread-color`, `log:thread-icon`, `log:user-nickname`)
-- `logMessageData`: Data relevant to the event.
-- `logMessageBody`: String printed in the chat.
-- `author`: The person who performed the event.
-- `threadID`: The thread which the event was performed in.
-
-If `type` is `"typ"` then the object will have the following fields:
-- `isTyping`: Boolean representing whether or not a person started typing.
-- `from`: ID of the user who started/stopped typing.
-- `threadID`: Current threadID.
-- `fromMobile`: Boolean representing whether or not the person's using a mobile device to type.
-
-If `type` is `"read_receipt"` then the object will have the following fields:
-- `reader`: ID of the user who just read the message.
-- `time`: The time at which the reader read the message.
-- `threadID`: The thread in which the message was read.
-
-If `type` is `"read"` then the object will have the following fields:
-- `threadID`: The threadID representing the thread in which the message was sent.
-- `time`: The time at which the user read the message.
-
-Difference between `"read_receipt"` and `"read"`:
-- `"read_receipt"` event triggers when other people read the user's messages.
-- `"read"` event triggers when the user read other people's messages.
-
-<a name="presence" />
-If enabled through [setOptions](#setOptions), this will also return presence, (`type` will be `"presence"`), which is the online status of the user's friends. The object given to the callback will have the following fields:
-- `type`: The string "presence".
-- `timestamp`: How old the information is.
-- `userID`: The ID of the user whose status this packet is describing
-- `statuses`: The online status of the user. `0` means the user is idle (away for 2 minutes) and `2` means the user is online.
+| Attachment Type | Fields |
+| --------------- | ------ |
+| `"sticker"` | `caption`, `description`, `frameCount`, `frameRate`, `framesPerCol`, `framesPerRow`, `height`, `packID`, `spriteURI2x`, `spriteURI`, `stickerID`, `type`, `url`, `width` |
+| `"file"` | `fileSize`, `ID`, `isMalicious`, `mimeType`, `name`, `type`, `url` |
+| `"photo"` | `facebookUrl`, `filename`, `height`, `hiresUrl`, `ID`, `mimeType`, `name`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
+| `"animated_image"` | `filename`, `height`, `ID`, `largePreviewHeight`, `largePreviewUrl`, `largePreviewWidth`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
+| `"share"` | `animatedImageSize`, `description`, `duration`, `facebookUrl`, `height`, `ID`, `image`, `playable`, `source`, `styleList`, `subattachments`, `target`, `title`, `type`, `url`, `width` |
+| `"video"` | `duration`, `filename`, `height`, `ID`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
 
 __Example__
 
@@ -696,7 +977,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="logout" />
+<a name="logout"></a>
 ### api.logout([callback])
 
 Logs out the current user.
@@ -707,7 +988,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="markAsRead" />
+<a name="markAsRead"></a>
 ### api.markAsRead(threadID[, callback])
 
 Given a threadID will mark all the unread messages as read. Facebook will take a couple of seconds to show that you've read the messages.
@@ -737,7 +1018,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="muteThread" />
+<a name="muteThread"></a>
 ### api.muteThread(threadID, muteSeconds[, callback])
 
 Mute a chat for a period of time, or unmute a chat.
@@ -768,7 +1049,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="removeUserFromGroup" />
+<a name="removeUserFromGroup"></a>
 ### api.removeUserFromGroup(userID, threadID[, callback])
 
 Removes a user from a group chat.
@@ -781,7 +1062,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="resolvePhotoUrl" />
+<a name="resolvePhotoUrl"></a>
 ### api.resolvePhotoUrl(photoID, callback)
 
 Resolves the URL to the full-size photo, given its ID. This function is useful for retrieving the full-size photo URL
@@ -790,11 +1071,11 @@ of image attachments in messages, returned by [`api.getThreadHistory`](#getThrea
 __Arguments__
 
 * `photoID`: Photo ID.
-* `callback(err, url)`: A callback called when the query is done (either with an error or with the photo's URL). `url` is a string with the photo's URL. 
+* `callback(err, url)`: A callback called when the query is done (either with an error or with the photo's URL). `url` is a string with the photo's URL.
 
 ---------------------------------------
 
-<a name="searchForThread" />
+<a name="searchForThread"></a>
 ### api.searchForThread(name, callback)
 
 > This part is outdated.
@@ -808,7 +1089,7 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="sendMessage" />
+<a name="sendMessage"></a>
 ### api.sendMessage(message, threadID[, callback])
 
 Sends the given message to the threadID.
@@ -816,7 +1097,7 @@ Sends the given message to the threadID.
 __Arguments__
 
 * `message`: A string (for backward compatibility) or a message object as described below.
-* `threadID`: A string, number, or array representing a thread. It happens to be someone's userId in the case of a one to one conversation or an array of userIds when starting a new group chat.
+* `threadID`: A string, number, or array representing a thread. It happens to be someone's userID in the case of a one to one conversation or an array of userIDs when starting a new group chat.
 * `callback(err, messageInfo)`: A callback called when sending the message is done (either with an error or with an confirmation object). `messageInfo` contains the `threadID` where the message was sent and a `messageID`, as well as the `timestamp` of the message.
 
 __Message Object__:
@@ -826,6 +1107,10 @@ Various types of message can be sent:
 * *Sticker:* set a field `sticker` to the desired sticker ID.
 * *File or image:* Set field `attachment` to a readable stream or an array of readable streams.
 * *URL:* set a field `url` to the desired URL.
+* *Emoji:* set field `emoji` to the desired emoji as a string and set field `emojiSize` with size of the emoji (`small`, `medium`, `large`)
+* *Mentions:* set field `mentions` to an array of objects. Objects should have the `tag` field set to the text that should be highlighted in the mention. The object should have an `id` field, where the `id` is the user id of the person being mentioned. The instance of `tag` that is highlighted is determined through indexOf, an optional `fromIndex`
+can be passed in to specify the start index to start searching for the `tag` text
+in `body` (default=0). (See below for an example.)
 
 Note that a message can only be a regular message (which can be empty) and optionally one of the following: a sticker, an attachment or a url.
 
@@ -863,12 +1148,36 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 });
 ```
 
+__Example (Mention)__
+```js
+const login = require("facebook-chat-api");
+
+login({email: "EMAIL", password: "PASSWORD"}, (err, api) => {
+    if(err) return console.error(err);
+
+    api.listen((err, message) => {
+        if (message && message.body) {
+            // Getting the actual sender name from ID involves calling
+            // `api.getThreadInfo` and `api.getUserInfo`
+            api.sendMessage({
+                body: 'Hello @Sender! @Sender!',
+                mentions: [{
+                     tag: '@Sender',
+                     id: message.senderID,
+                     fromIndex: 9, // Highlight the second occurrence of @Sender
+                }],
+            }, message.threadID);
+        }
+    });
+});
+```
+
 ---------------------------------------
 
-<a name="sendTypingIndicator" />
+<a name="sendTypingIndicator"></a>
 ### api.sendTypingIndicator(threadID[, callback])
 
-Sends a "USERNAME is typing" indicator to other members of the thread indicated by threadID.  This indication will disappear after 30 second or when the `end` function is called. The `end` function is returned by `api.sendTypingIndicator`.
+Sends a "USERNAME is typing" indicator to other members of the thread indicated by `threadID`. This indication will disappear after 30 second or when the `end` function is called. The `end` function is returned by `api.sendTypingIndicator`.
 
 __Arguments__
 
@@ -877,7 +1186,32 @@ __Arguments__
 
 ---------------------------------------
 
-<a name="setOptions" />
+<a name="setMessageReaction"></a>
+### api.setMessageReaction(reaction, messageID[, callback])
+
+Sets reaction on message
+
+__Arguments__
+
+* `reaction`: A string containing either an emoji, an emoji in unicode, or an emoji shortcut (see list of supported emojis below). The string can be left empty ("") in order to remove a reaction.
+* `messageID`: A string representing the message ID.
+* `callback(err)` - A callback called when sending the reaction is done.
+
+__Supported Emojis__
+
+|Emoji|Text|Unicode|Shortcuts|
+|---|---|---|---|
+|😍|`😍`|`\uD83D\uDE0D`|`:love:`, `:heart_eyes:`|
+|😆|`😆`|`\uD83D\uDE06`|`:haha:`, `:laughing:`|
+|😮|`😮`|`\uD83D\uDE2E`|`:wow:`, `:open_mouth:`|
+|😢|`😢`|`\uD83D\uDE22`|`:sad:`, `:cry:`|
+|😠|`😠`|`\uD83D\uDE20`|`:angry:`|
+|👍|`👍`|`\uD83D\uDC4D`|`:like:`, `:thumbsup:`|
+|👎|`👎`|`\uD83D\uDC4E`|`:dislike:`, `:thumbsdown:`|
+
+---------------------------------------
+
+<a name="setOptions"></a>
 ### api.setOptions(options)
 
 Sets various configurable options for the api.
@@ -926,7 +1260,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="setTitle" />
+<a name="setTitle"></a>
 ### api.setTitle(newTitle, threadID[, callback])
 
 Sets the title of the group chat with thread id `threadID` to `newTitle`.
@@ -936,7 +1270,7 @@ Note: This will not work if the thread id corresponds to a single-user chat or i
 __Arguments__
 
 * `newTitle`: A string representing the new title.
-* `threadID`: A string or number representing a thread. It happens to be someone's userId in the case of a one to one conversation.
+* `threadID`: A string or number representing a thread. It happens to be someone's userID in the case of a one to one conversation.
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the threadID where the message was sent.
 
 ---------------------------------------

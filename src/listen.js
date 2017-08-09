@@ -55,6 +55,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
   }
 
+  var serverNumber = '0';
+
   function listen() {
     if(currentlyRunning == null || !ctx.loggedIn) {
       return;
@@ -64,13 +66,12 @@ module.exports = function(defaultFuncs, api, ctx) {
     prev = ~~(Date.now() / 1000);
     var presence = utils.generatePresence(ctx.userID);
     ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
-    utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
-    .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+    utils.get("https://"+serverNumber+"-edge-chat.facebook.com/pull", ctx.jar, form)
+    .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
     .then(function(resData) {
       var now = Date.now();
       log.info("listen", "Got answer in " + (now - tmpPrev));
       tmpPrev = now;
-
       if(resData && resData.t === "lb") {
         form.sticky_token = resData.lb_info.sticky;
         form.sticky_pool = resData.lb_info.pool;
@@ -118,12 +119,29 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               return globalCallback(null, utils.formatTyp(v));
               break;
-            case 'buddylist_overlay':
+            case 'chatproxy-presence':
               // TODO: what happens when you're logged in as a page?
               if(!ctx.globalOptions.updatePresence) {
                 return;
               }
 
+              if (ctx.loggedIn) {
+                for(var userID in v.buddyList) {
+                  var formattedPresence = utils.formatProxyPresence(v.buddyList[userID], userID);
+                  if(formattedPresence != null)
+                  {
+                    globalCallback(null, formattedPresence);
+                  }
+                }
+                return;
+              }
+
+              break;
+            case 'buddylist_overlay':
+              // TODO: what happens when you're logged in as a page?
+              if(!ctx.globalOptions.updatePresence) {
+                return;
+              }
               // There should be only one key inside overlay
               Object.keys(v.overlay).map(function(userID) {
                 var formattedPresence = utils.formatPresence(v.overlay[userID], userID);
@@ -146,13 +164,38 @@ module.exports = function(defaultFuncs, api, ctx) {
                         if (!err) v.delta.attachments[i].mercury.metadata.url = url;
                         return resolveAttachmentUrl(i + 1);
                       });
+                    } else {
+                      return resolveAttachmentUrl(i + 1);
                     }
                   }
                 })(0)
                 break;
               }
 
+              if (v.delta.class == "ClientPayload") {
+                var clientPayload = utils.decodeClientPayload(v.delta.payload);
+                if (clientPayload && clientPayload.deltas) {
+                  for (var i in clientPayload.deltas) {
+                    var delta = clientPayload.deltas[i];
+                    if (delta.deltaMessageReaction) {
+                      globalCallback(null, {
+                        type: "message_reaction",
+                        threadID: delta.deltaMessageReaction.threadKey.threadFbId ? delta.deltaMessageReaction.threadKey.threadFbId : delta.deltaMessageReaction.threadKey.otherUserFbId,
+                        messageID: delta.deltaMessageReaction.messageId,
+                        reaction: decodeURIComponent(escape(delta.deltaMessageReaction.reaction)),
+                        senderID: delta.deltaMessageReaction.senderId,
+                        userID: delta.deltaMessageReaction.userId,
+                        timestamp: v.ofd_ts
+                      });
+                    }
+                  }
+                  return;
+                }
+              }
+
               switch (v.delta.class) {
+                case 'ReadReceipt':
+                  return globalCallback(null, utils.formatDeltaReadReceipt(v.delta));
                 case 'AdminTextMessage':
                   switch (v.delta.type) {
                     case 'change_thread_theme':
@@ -165,7 +208,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 case 'ThreadName':
                 case 'ParticipantsAddedToGroupThread':
                 case 'ParticipantLeftGroupThread':
-                  var formattedEvent = utils.formatEvent(v.delta);
+                  var formattedEvent = utils.formatDeltaEvent(v.delta);
                   return (!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID || !ctx.loggedIn)
                     ? undefined
                     : globalCallback(null, formattedEvent);
@@ -225,6 +268,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     .catch(function(err) {
       if (err.code === 'ETIMEDOUT') {
         log.info("listen", "Suppressed timeout error.");
+      } else if (err.code === 'EAI_AGAIN') {
+        serverNumber = (~~(Math.random() * 6)).toString();
       } else {
         log.error("listen", err);
         globalCallback(err);

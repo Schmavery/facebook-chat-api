@@ -10,7 +10,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         throw {
           error: "Please pass a number as a second argument."
         };
-      } else if (utils.getType(type) === 'Function') {
+      } else if (utils.getType(type) === 'Function' || utils.getType(type) === 'AsyncFunction') {
         callback = type;
         type = 'inbox'; //default to inbox
       } else if (utils.getType(type) !== 'String') {
@@ -47,7 +47,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post("https://www.facebook.com/ajax/mercury/threadlist_info.php", ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {
           throw resData;

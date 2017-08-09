@@ -20,7 +20,7 @@ function getHeaders(url) {
 
 function isReadableStream(obj) {
   return obj instanceof stream.Stream &&
-    getType(obj._read) === 'Function' &&
+    (getType(obj._read) === 'Function' || getType(obj._read) === 'AsyncFunction') &&
     getType(obj._readableState) === 'Object';
 }
 
@@ -273,7 +273,7 @@ function _formatAttachment(attachment1, attachment2) {
         ID: attachment1.metadata.fbid.toString(),
         filename: fileName,
         thumbnailUrl: attachment1.thumbnail_url,
-        
+
         previewUrl: attachment1.preview_url,
         previewWidth: attachment1.preview_width,
         previewHeight: attachment1.preview_height,
@@ -281,7 +281,7 @@ function _formatAttachment(attachment1, attachment2) {
         largePreviewUrl: attachment1.large_preview_url,
         largePreviewWidth: attachment1.large_preview_width,
         largePreviewHeight: attachment1.large_preview_height,
-        
+
         url: attachment1.metadata.url,
         width: attachment1.metadata.dimensions.split(',')[0],
         height: attachment1.metadata.dimensions.split(',')[1],
@@ -323,6 +323,8 @@ function _formatAttachment(attachment1, attachment2) {
         source: attachment1.share.source,
         title: attachment1.share.title,
         facebookUrl: attachment1.share.uri,
+        target: attachment1.share.target,
+        styleList: attachment1.share.style_list,
         url: attachment2.href,
       };
     case "video":
@@ -367,13 +369,21 @@ function formatDeltaMessage(m){
   var md = m.delta.messageMetadata;
   return {
     type: "message",
-    senderID: md.actorFbId,
-    body: m.delta.body,
-    threadID: (md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString(),
+    senderID: formatID(md.actorFbId.toString()),
+    body: m.delta.body || "",
+    threadID: formatID((md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()),
     messageID: md.messageId,
     attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
     timestamp: md.timestamp,
     isGroup: !!md.threadKey.threadFbId
+  }
+}
+
+function formatID(id){
+  if(id != undefined && id != null){
+    return id.replace(/(fb)?id[:.]/, "");
+  }else{
+    return id;
   }
 }
 
@@ -382,11 +392,11 @@ function formatMessage(m) {
   var obj = {
     type: "message",
     senderName: originalMessage.sender_name,
-    senderID: originalMessage.sender_fbid.toString(),
+    senderID: formatID(originalMessage.sender_fbid.toString()),
     participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
-    participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return v.toString();}) : [originalMessage.sender_fbid]),
-    body: originalMessage.body,
-    threadID: originalMessage.tid && originalMessage.tid.split(".")[0] === "id" ? originalMessage.tid.split('.')[1] : originalMessage.thread_fbid || originalMessage.other_user_fbid,
+    participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return formatID(v.toString());}) : [formatID(originalMessage.sender_fbid)]),
+    body: originalMessage.body || "",
+    threadID: formatID((originalMessage.thread_fbid || originalMessage.other_user_fbid).toString()),
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
     location: originalMessage.coordinates ? originalMessage.coordinates : null,
     messageID: originalMessage.mid ? originalMessage.mid.toString() : originalMessage.message_id,
@@ -395,7 +405,8 @@ function formatMessage(m) {
     timestampAbsolute: originalMessage.timestamp_absolute,
     timestampRelative: originalMessage.timestamp_relative,
     timestampDatetime: originalMessage.timestamp_datetime,
-    tags: originalMessage.tags 
+    tags: originalMessage.tags,
+    reactions: originalMessage.reactions ? originalMessage.reactions : []
   };
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();
@@ -405,6 +416,51 @@ function formatMessage(m) {
 }
 
 function formatEvent(m) {
+  var originalMessage = m.message ? m.message : m;
+  var logMessageType = originalMessage.log_message_type;
+  var logMessageData;
+  if (logMessageType === 'log:generic-admin-text') {
+    logMessageData = originalMessage.log_message_data.untypedData;
+    logMessageType = getAdminTextMessageType(originalMessage.log_message_data.message_type);
+  } else {
+    logMessageData = originalMessage.log_message_data;
+  }
+
+  return Object.assign(
+    formatMessage(originalMessage),
+    {
+      type: "event",
+      logMessageType: logMessageType,
+      logMessageData: logMessageData,
+      logMessageBody: originalMessage.log_message_body
+    }
+  );
+}
+
+function formatHistoryMessage(m) {
+  switch(m.action_type) {
+    case "ma-type:log-message":
+      return formatEvent(m);
+    default:
+      return formatMessage(m);
+  }
+}
+
+// Get a more readable message type for AdminTextMessages
+function getAdminTextMessageType(type) {
+  switch (type) {
+    case 'change_thread_theme':
+      return "log:thread-color";
+    case 'change_thread_nickname':
+      return "log:user-nickname";
+    case 'change_thread_icon':
+      return "log:thread-icon";
+    default:
+      return type;
+  }
+}
+
+function formatDeltaEvent(m) {
   var logMessageType;
   var logMessageData;
 
@@ -418,17 +474,7 @@ function formatEvent(m) {
   switch (m.class) {
     case 'AdminTextMessage':
       logMessageData = m.untypedData;
-      switch (m.type) {
-        case 'change_thread_theme':
-          logMessageType = "log:thread-color";
-          break;
-        case 'change_thread_nickname':
-          logMessageType = "log:user-nickname";
-          break;
-        case 'change_thread_icon':
-          logMessageType = "log:thread-icon";
-          break;
-      }
+      logMessageType = getAdminTextMessageType(m.type);
       break;
     case 'ThreadName':
       logMessageType = "log:thread-name";
@@ -446,7 +492,7 @@ function formatEvent(m) {
 
   return {
     type: "event",
-    threadID: m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId,
+    threadID: formatID((m.messageMetadata.threadKey.threadFbId || m.messageMetadata.threadKey.otherUserFbId).toString()),
     logMessageType: logMessageType,
     logMessageData: logMessageData,
     logMessageBody: m.messageMetadata.adminText,
@@ -458,7 +504,7 @@ function formatTyp(event) {
   return {
     isTyping: !!event.st,
     from: event.from.toString(),
-    threadID: (event.to || event.thread_fbid || event.from).toString(),
+    threadID: formatID((event.to || event.thread_fbid || event.from).toString()),
     // When receiving typ indication from mobile, `from_mobile` isn't set.
     // If it is, we just use that value.
     fromMobile: event.hasOwnProperty('from_mobile') ? event.from_mobile : true,
@@ -467,18 +513,29 @@ function formatTyp(event) {
   };
 }
 
+function formatDeltaReadReceipt(delta) {
+  // otherUserFbId seems to be used as both the readerID and the threadID in a 1-1 chat.
+  // In a group chat actorFbId is used for the reader and threadFbId for the thread.
+  return {
+    reader: (delta.threadKey.otherUserFbId || delta.actorFbId).toString(),
+    time: delta.actionTimestampMs,
+    threadID: formatID((delta.threadKey.otherUserFbId || delta.threadKey.threadFbId).toString()),
+    type: 'read_receipt'
+  };
+}
+
 function formatReadReceipt(event) {
   return {
     reader: event.reader.toString(),
     time: event.time,
-    threadID: (event.thread_fbid || event.reader).toString(),
+    threadID: formatID((event.thread_fbid || event.reader).toString()),
     type: 'read_receipt',
   };
 }
 
 function formatRead(event) {
   return {
-    threadID: ((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString(),
+    threadID: formatID(((event.chat_ids && event.chat_ids[0]) || (event.thread_fbids && event.thread_fbids[0])).toString()),
     time: event.timestamp,
     type: 'read'
   };
@@ -497,7 +554,17 @@ function getFrom(str, startToken, endToken) {
 }
 
 function makeParsable(html) {
-  return html.replace(/for\s*\(\s*;\s*;\s*\)\s*;\s*/, "");
+  var withoutForLoop = html.replace(/for\s*\(\s*;\s*;\s*\)\s*;\s*/, "");
+  
+  // (What the fuck FB, why windows style newlines?)
+  // So sometimes FB will send us base multiple objects in the same response.
+  // They're all valid JSON, one after the other, at the top level. We detect
+  // that and make it parse-able by JSON.parse.
+  //       Ben - July 15th 2017
+  var maybeMultipleObjects = withoutForLoop.split("}\r\n{");
+  if (maybeMultipleObjects.length === 1) return maybeMultipleObjects;
+  
+  return "[" + maybeMultipleObjects.join("},{") + "]";
 }
 
 function arrToForm(form) {
@@ -520,25 +587,63 @@ function generateTimestampRelative() {
   return d.getHours() + ":" + padZeros(d.getMinutes());
 }
 
-function makeDefaults(html, userID) {
+function makeDefaults(html, userID, ctx) {
   var reqCounter = 1;
   var fb_dtsg = getFrom(html, "name=\"fb_dtsg\" value=\"", "\"");
-  var ttstamp = "";
+  
+  // @Hack Ok we've done hacky things, this is definitely on top 5.
+  // We totally assume the object is flat and try parsing until a }.
+  // If it works though it's cool because we get a bunch of extra data things.
+  // 
+  // Update: we don't need this. Leaving it in in case we ever do.
+  //       Ben - July 15th 2017
+  
+  // var siteData = getFrom(html, "[\"SiteData\",[],", "},");
+  // try {
+  //   siteData = JSON.parse(siteData + "}");
+  // } catch(e) {
+  //   log.warn("makeDefaults", "Couldn't parse SiteData. Won't have access to some variables.");
+  //   siteData = {};
+  // }
+  
+  var ttstamp = "2";
   for (var i = 0; i < fb_dtsg.length; i++) {
     ttstamp += fb_dtsg.charCodeAt(i);
   }
-  ttstamp += '2';
   var revision = getFrom(html, "revision\":",",");
 
   function mergeWithDefaults(obj) {
+    // @TODO This is missing a key called __dyn.
+    // After some investigation it seems like __dyn is some sort of set that FB
+    // calls BitMap. It seems like certain responses have a "define" key in the
+    // res.jsmods arrays. I think the code iterates over those and calls `set`
+    // on the bitmap for each of those keys. Then it calls 
+    // bitmap.toCompressedString() which returns what __dyn is.
+    // 
+    // So far the API has been working without this.
+    // 
+    //              Ben - July 15th 2017
     var newObj = {
       __user: userID,
       __req: (reqCounter++).toString(36),
       __rev: revision,
       __a: 1,
-      fb_dtsg: fb_dtsg,
-      ttstamp: ttstamp,
+      // __af: siteData.features,
+      fb_dtsg: ctx.fb_dtsg ? ctx.fb_dtsg : fb_dtsg,
+      jazoest: ctx.ttstamp ? ctx.ttstamp : ttstamp,
+      // __spin_r: siteData.__spin_r,
+      // __spin_b: siteData.__spin_b,
+      // __spin_t: siteData.__spin_t,
     };
+    
+    // @TODO this is probably not needed.
+    //         Ben - July 15th 2017
+    // if (siteData.be_key) {
+    //   newObj[siteData.be_key] = siteData.be_mode;
+    // }
+    // if (siteData.pkg_cohort_key) {
+    //   newObj[siteData.pkg_cohort_key] = siteData.pkg_cohort;
+    // }
 
     if(!obj) return newObj;
 
@@ -549,7 +654,7 @@ function makeDefaults(html, userID) {
         }
       }
     }
-
+    
     return newObj;
   }
 
@@ -572,21 +677,39 @@ function makeDefaults(html, userID) {
   };
 }
 
-function parseAndCheckLogin(jar, defaultFuncs) {
+function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
+  if (retryCount == undefined) {
+    retryCount = 0;
+  }
   return function(data) {
     return bluebird.try(function() {
       log.verbose("parseAndCheckLogin", data.body);
       if (data.statusCode >= 500 && data.statusCode < 600) {
-        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " retrying...");
+        if (retryCount >= 5) {
+          throw {
+            error: "Request retry failed. Check the `res` and `statusCode` property on this error.",
+            statusCode: data.statusCode,
+            res: data.body
+          };
+        }
+        retryCount++;
+        var retryTime = Math.floor(Math.random() * 5000);
+        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " - " + retryCount + ". attempt to retry in " + retryTime + " milliseconds...");
         var url = data.request.uri.protocol + "//" + data.request.uri.hostname + data.request.uri.pathname;
         if (data.request.headers['Content-Type'].split(";")[0] === "multipart/form-data") {
-          return defaultFuncs
-            .postFormData(url, jar, data.request.formData, {})
-            .then(parseAndCheckLogin(jar));
+          return bluebird
+            .delay(retryTime)
+            .then(function() {
+              return defaultFuncs.postFormData(url, ctx.jar, data.request.formData, {});
+            })
+            .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         } else {
-          return defaultFuncs
-            .post(url, jar, data.request.formData)
-            .then(parseAndCheckLogin(jar));
+          return bluebird
+            .delay(retryTime)
+            .then(function() {
+              return defaultFuncs.post(url, ctx.jar, data.request.formData);
+            })
+            .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         }
       }
       if (data.statusCode !== 200) throw new Error("parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.");
@@ -601,7 +724,7 @@ function parseAndCheckLogin(jar, defaultFuncs) {
           res: data.body
         };
       }
-
+      
       // TODO: handle multiple cookies?
       if (res.jsmods
           && res.jsmods.require
@@ -610,8 +733,27 @@ function parseAndCheckLogin(jar, defaultFuncs) {
         res.jsmods.require[0][3][0] = res.jsmods.require[0][3][0].replace("_js_", "");
         var cookie = formatCookie(res.jsmods.require[0][3], "facebook");
         var cookie2 = formatCookie(res.jsmods.require[0][3], "messenger");
-        jar.setCookie(cookie, "https://www.facebook.com");
-        jar.setCookie(cookie2, "https://www.messenger.com");
+        ctx.jar.setCookie(cookie, "https://www.facebook.com");
+        ctx.jar.setCookie(cookie2, "https://www.messenger.com");
+      }
+      
+      // On every request we check if we got a DTSG and we mutate the context so that we use the latest
+      // one for the next requests.
+      if (res.jsmods
+          && Array.isArray(res.jsmods.require)) {
+        var arr = res.jsmods.require;
+        for(var i in arr) {
+          if (arr[i][0] === "DTSG" && arr[i][1] === "setToken") {
+            ctx.fb_dtsg = arr[i][3][0];
+
+            // Update ttstamp since that depends on fb_dtsg
+            ctx.ttstamp = "2";
+            for (var i = 0; i < ctx.fb_dtsg.length; i++) {
+              ctx.ttstamp += ctx.fb_dtsg.charCodeAt(i);
+            }
+          }
+        }
+        
       }
 
       if (res.error === 1357001) {
@@ -658,42 +800,53 @@ function formatCookie(arr, url) {
 
 function formatThread(data) {
   return {
-    threadID: data.thread_fbid.toString(),
-    participants: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
-    participantIDs: data.participants.map(function(v) { return v.replace('fbid:', ''); }),
-    formerParticipants: data.former_participants,
+    threadID: formatID(data.thread_fbid.toString()),
+    participants: data.participants.map(formatID),
+    participantIDs: data.participants.map(formatID),
     name: data.name,
     nicknames: data.custom_nickname,
     snippet: data.snippet,
-    snippetHasAttachment: data.snippet_has_attachment,
     snippetAttachments: data.snippet_attachments,
-    snippetSender: (data.snippet_sender || '').replace('fbid:', ''),
+    snippetSender: formatID((data.snippet_sender || '').toString()),
     unreadCount: data.unread_count,
     messageCount: data.message_count,
     imageSrc: data.image_src,
     timestamp: data.timestamp,
     serverTimestamp: data.server_timestamp, // what is this?
-    muteSettings: data.muteSettings,
+    muteUntil: data.mute_until,
     isCanonicalUser: data.is_canonical_user,
     isCanonical: data.is_canonical,
-    canonicalFbid: data.canonical_fbid,
     isSubscribed: data.is_subscribed,
-    rootMessageThreadingID: data.root_message_threading_id,
     folder: data.folder,
     isArchived: data.is_archived,
     recipientsLoadable: data.recipients_loadable,
     hasEmailParticipant: data.has_email_participant,
     readOnly: data.read_only,
     canReply: data.can_reply,
-    composerEnabled: data.composer_enabled,
-    blockedParticipants: data.blocked_participants,
-    lastMessageID: data.last_message_id
+    cannotReplyReason: data.cannot_reply_reason,
+    lastMessageTimestamp: data.last_message_timestamp,
+    lastReadTimestamp: data.last_read_timestamp,
+    lastMessageType: data.last_message_type,
+    emoji: data.custom_like_icon,
+    color: data.custom_color,
+    adminIDs: data.admin_ids,
+    threadType: data.thread_type
   };
 }
 
 
 function getType(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1);
+}
+
+function formatProxyPresence(presence, userID) {
+  if(presence.lat === undefined) return null;
+  return {
+    type: "presence",
+    timestamp: presence.lat * 1000,
+    userID: userID,
+    statuses: presence.p === undefined ? 0 : presence.p
+  };
 }
 
 function formatPresence(presence, userID) {
@@ -703,6 +856,13 @@ function formatPresence(presence, userID) {
     userID: userID,
     statuses: presence.a
   };
+}
+
+function decodeClientPayload(payload) {
+  /*
+  Special function which Client using to "encode" clients JSON payload
+  */
+  return JSON.parse(String.fromCharCode.apply(null, payload));
 }
 
 function getAppState(jar){
@@ -730,11 +890,15 @@ module.exports = {
   parseAndCheckLogin: parseAndCheckLogin,
   saveCookies: saveCookies,
   getType: getType,
+  formatHistoryMessage: formatHistoryMessage,
+  formatID: formatID,
   formatMessage: formatMessage,
+  formatDeltaEvent: formatDeltaEvent,
   formatDeltaMessage: formatDeltaMessage,
-  formatEvent: formatEvent,
+  formatProxyPresence: formatProxyPresence,
   formatPresence: formatPresence,
   formatTyp: formatTyp,
+  formatDeltaReadReceipt: formatDeltaReadReceipt,
   formatCookie: formatCookie,
   formatThread: formatThread,
   formatReadReceipt: formatReadReceipt,
@@ -742,5 +906,6 @@ module.exports = {
   generatePresence: generatePresence,
   generateAccessiblityCookie: generateAccessiblityCookie,
   formatDate: formatDate,
+  decodeClientPayload: decodeClientPayload,
   getAppState: getAppState,
 };
