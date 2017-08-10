@@ -374,7 +374,7 @@ function formatDeltaMessage(m){
     threadID: formatID((md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()),
     messageID: md.messageId,
     attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
-    mentions: (m.delta.data === undefined) ? "" : JSON.parse(m.delta.data.prng).map(u => u.i),
+    mentions: (m.delta.data === undefined) ? [] : JSON.parse(m.delta.data.prng).map(u => u.i),
     timestamp: md.timestamp,
     isGroup: !!md.threadKey.threadFbId
   }
