@@ -62,6 +62,7 @@ function buildAPI(globalOptions, html, jar) {
     globalOptions: globalOptions,
     loggedIn: true,
     access_token: 'NONE',
+    lastBatchQueryIndex: 0,
     clientMutationId: 0
   };
 
@@ -83,6 +84,7 @@ function buildAPI(globalOptions, html, jar) {
     'createPoll',
     'deleteMessage',
     'deleteThread',
+    'executeGraphQueryBatch',
     'forwardAttachment',
     'getCurrentUserID',
     'getEmojiUrl',
@@ -93,6 +95,7 @@ function buildAPI(globalOptions, html, jar) {
     'getThreadPictures',
     'getUserID',
     'getUserInfo',
+    'getUserDay',
     'handleMessageRequest',
     'listen',
     'logout',

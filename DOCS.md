@@ -22,6 +22,7 @@
 * [`api.getThreadPictures`](#getThreadPictures)
 * [`api.getUserID`](#getUserID)
 * [`api.getUserInfo`](#getUserInfo)
+* [`api.getUserDay`](#getUserDay)
 * [`api.handleMessageRequest`](#handleMessageRequest)
 * [`api.listen`](#listen)
 * [`api.logout`](#logout)
@@ -712,6 +713,18 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
     });
 });
 ```
+
+---------------------------------------
+
+<a name="getUserDay"></a>
+### api.getUserDay(userID, callback)
+
+Get latest users days images or videos
+
+__Arguments__
+
+* `userID` - The User ID
+* `callback(err, obj)` - A callback called when the query is done (either with an error or with an confirmation object). `obj` is a mapping from days to another object containing the following properties: `type` (`MessageImage` or `MessageVideo`), `timestamp`, `messageID` and `uri` (contains url for image or video).
 
 ---------------------------------------
 
