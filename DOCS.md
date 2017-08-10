@@ -22,7 +22,7 @@
 * [`api.getThreadPictures`](#getThreadPictures)
 * [`api.getUserID`](#getUserID)
 * [`api.getUserInfo`](#getUserInfo)
-* [`api.getValidThreadColors`](#getValidThreadColors)
+* [`api.validThreadColors`](#validThreadColors)
 * [`api.handleMessageRequest`](#handleMessageRequest)
 * [`api.listen`](#listen)
 * [`api.logout`](#logout)
@@ -716,26 +716,26 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 ---------------------------------------
 
-<a name="getValidThreadColors"></a>
-### api.getValidThreadColors()
+<a name="validThreadColors"></a>
+### api.validThreadColors
 
-Returns an array of all hexadecimal values currently accepted by [`api.changeThreadColor`](#changeThreadColor). These colors, listed below, are the ones present in the palette UI used for selecting thread colors on the Messenger client. Due to Facebook backend changes, the thread color can no longer be set to an arbitrary hex value.
+Returns a dictionary mapping names of all currently valid thread colors to their hexadecimal values that are accepted by [`api.changeThreadColor`](#changeThreadColor). These colors, listed below, are the ones present in the palette UI used for selecting thread colors on the Messenger client. Due to Facebook backend changes, the thread color can no longer be set to an arbitrary hex value.
 
-- `null` (default blue – not included in the returned array)
-- `#44bec7`
-- `#ffc300`
-- `#fa3c4c`
-- `#d696bb`
-- `#6699cc`
-- `#13cf13`
-- `#ff7e29`
-- `#e68585`
-- `#7646ff`
-- `#20cef5`
-- `#67b868`
-- `#d4a88c`
-- `#ff5ca1`
-- `#a695c7`
+- MessengerBlue: `null`
+- Viking: `#44bec7`
+- GoldenPoppy: `#ffc300`
+- RadicalRed: `#fa3c4c`
+- Shocking: `#d696bb`
+- PictonBlue: `#6699cc`
+- FreeSpeechGreen: `#13cf13`
+- Pumpkin: `#ff7e29`
+- LightCoral: `#e68585`
+- MediumSlateBlue: `#7646ff`
+- DeepSkyBlue: `#20cef5`
+- Fern: `#67b868`
+- Cameo: `#d4a88c`
+- BrilliantRose: `#ff5ca1`
+- BilobaFlower: `#a695c7`
 
 ---------------------------------------
 

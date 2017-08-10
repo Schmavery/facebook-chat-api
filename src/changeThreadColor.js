@@ -8,15 +8,13 @@ module.exports = function(defaultFuncs, api, ctx) {
     if(!callback) {
       callback = function() {};
     }
-    var validatedColor = color;
 
-    if(validatedColor !== null) {
-        validatedColor = color.toLowerCase(); // API only accepts lowercase letters in hex string
-
-        var validColors = api.getValidThreadColors();
-        if(!validColors.includes(validatedColor)) {
-            throw {error: "The color you are trying to use is not a valid thread color. Use api.getValidThreadColors() to find acceptable values."};
-        }
+    var validatedColor = (color !== null) ? color.toLowerCase() : color; // API only accepts lowercase letters in hex string
+    var colorList = Object.keys(api.validThreadColors).map(function(name) {
+      return api.validThreadColors[name];
+    });
+    if(!colorList.includes(validatedColor)) {
+        throw {error: "The color you are trying to use is not a valid thread color. Use api.validThreadColors to find acceptable values."};
     }
 
     var form = {
