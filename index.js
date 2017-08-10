@@ -93,6 +93,7 @@ function buildAPI(globalOptions, html, jar) {
     'getThreadPictures',
     'getUserID',
     'getUserInfo',
+    'threadColors',
     'handleMessageRequest',
     'listen',
     'logout',

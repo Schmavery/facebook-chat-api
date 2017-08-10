@@ -22,6 +22,7 @@
 * [`api.getThreadPictures`](#getThreadPictures)
 * [`api.getUserID`](#getUserID)
 * [`api.getUserInfo`](#getUserInfo)
+* [`api.threadColors`](#threadColors)
 * [`api.handleMessageRequest`](#handleMessageRequest)
 * [`api.listen`](#listen)
 * [`api.logout`](#logout)
@@ -712,6 +713,29 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
     });
 });
 ```
+
+---------------------------------------
+
+<a name="threadColors"></a>
+### api.threadColors
+
+A dictionary mapping names of all currently valid thread colors to their hexadecimal values that are accepted by [`api.changeThreadColor`](#changeThreadColor). These colors, listed below, are the ones present in the palette UI used for selecting thread colors on the Messenger client.
+
+- MessengerBlue: `null`
+- Viking: `#44bec7`
+- GoldenPoppy: `#ffc300`
+- RadicalRed: `#fa3c4c`
+- Shocking: `#d696bb`
+- PictonBlue: `#6699cc`
+- FreeSpeechGreen: `#13cf13`
+- Pumpkin: `#ff7e29`
+- LightCoral: `#e68585`
+- MediumSlateBlue: `#7646ff`
+- DeepSkyBlue: `#20cef5`
+- Fern: `#67b868`
+- Cameo: `#d4a88c`
+- BrilliantRose: `#ff5ca1`
+- BilobaFlower: `#a695c7`
 
 ---------------------------------------
 
