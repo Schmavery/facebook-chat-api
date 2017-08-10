@@ -18,6 +18,7 @@ module.exports = function(defaultFuncs, api, ctx) {
             throw {error: "The color you are trying to use is not a valid thread color. Use api.getValidThreadColors() to find acceptable values."};
         }
     }
+
     var form = {
       'color_choice' : loweredColor,
       'thread_or_other_fbid' : threadID
