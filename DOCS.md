@@ -721,7 +721,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
 Returns an array of all hexadecimal values currently accepted by [`api.changeThreadColor`](#changeThreadColor). These colors, listed below, are the ones present in the palette UI used for selecting thread colors on the Messenger client. Due to Facebook backend changes, the thread color can no longer be set to an arbitrary hex value.
 
-- `null` (default blue)
+- `null` (default blue – not included in the returned array)
 - `#44bec7`
 - `#ffc300`
 - `#fa3c4c`
