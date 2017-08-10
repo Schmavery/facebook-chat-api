@@ -764,6 +764,10 @@ The message object will contain different fields based on its type (as determine
 		<td><code>isGroup</code></td>
 		<td>boolean, true if this thread is a group thread (more than 2 participants).</td>
 	</tr>
+    <tr>
+        <td><code>mentions</code></td>
+        <td>An array of the IDs of people mentioned/tagged in the message.</td>
+    </tr>
 	<tr>
 		<td><code>messageID</code></td>
 		<td>A string representing the message ID.</td>
