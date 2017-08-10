@@ -10,11 +10,11 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     var validatedColor = (color !== null) ? color.toLowerCase() : color; // API only accepts lowercase letters in hex string
-    var colorList = Object.keys(api.validThreadColors).map(function(name) {
-      return api.validThreadColors[name];
+    var colorList = Object.keys(api.threadColors).map(function(name) {
+      return api.threadColors[name];
     });
     if(!colorList.includes(validatedColor)) {
-        throw {error: "The color you are trying to use is not a valid thread color. Use api.validThreadColors to find acceptable values."};
+        throw {error: "The color you are trying to use is not a valid thread color. Use api.threadColors to find acceptable values."};
     }
 
     var form = {
