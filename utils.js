@@ -368,11 +368,12 @@ function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
 function formatDeltaMessage(m){
   var md = m.delta.messageMetadata;
 
-  var mentions_id = (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng).map(u => u.i);
-  var mentions_offset = (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng).map(u => u.o);
-  var mentions_length = (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng).map(u => u.l);
+  var mdata = (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng);
+  var m_id = mdata.map(u => u.i);
+  var m_offset = mdata.map(u => u.o);
+  var m_length = mdata.map(u => u.l);
   var mentions = {};
-  for (var i = 0; i < mentions_id.length; i++) mentions[mentions_id[i]] = m.delta.body.substring(mentions_offset[i], mentions_length[i] + mentions_offset[i]);
+  for (var i = 0; i < m_id.length; i++) mentions[m_id[i]] = m.delta.body.substring(m_offset[i], m_length[i] + m_offset[i]);
   
   return {
     type: "message",
