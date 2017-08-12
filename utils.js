@@ -372,7 +372,7 @@ function formatDeltaMessage(m){
   var mentions_offset = (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng).map(u => u.o);
   var mentions_length = (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng).map(u => u.l);
   var mentions = {};
-  for (var i = 0; i < mentions_id.length; i++) mentions[mentions_id[i]] = m.delta.body.substring(mentions_offset[i], mentions_offset[i] + mentions_length[i]);
+  for (var i = 0; i < mentions_id.length; i++) mentions[mentions_id[i]] = m.delta.body.substring(mentions_offset[i], mentions_length[i] + mentions_offset[i]);
   
   return {
     type: "message",
