@@ -790,7 +790,7 @@ The message object will contain different fields based on its type (as determine
 	</tr>
     <tr>
         <td><code>mentions</code></td>
-        <td>An array of the IDs of people mentioned/tagged in the message.</td>
+        <td>An object containing people mentioned/tagged in the message in the format { id: name }</td>
     </tr>
 	<tr>
 		<td><code>messageID</code></td>

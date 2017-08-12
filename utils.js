@@ -367,6 +367,13 @@ function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
 
 function formatDeltaMessage(m){
   var md = m.delta.messageMetadata;
+
+  var mentions_id = (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng).map(u => u.i);
+  var mentions_offset = (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng).map(u => u.o);
+  var mentions_length = (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng).map(u => u.l);
+  var mentions = {};
+  for (var i = 0; i < mentions_id.length; i++) mentions[mentions_id[i]] = m.delta.body.substring(mentions_offset[i], mentions_offset[i] + mentions_length[i]);
+  
   return {
     type: "message",
     senderID: formatID(md.actorFbId.toString()),
@@ -374,7 +381,7 @@ function formatDeltaMessage(m){
     threadID: formatID((md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()),
     messageID: md.messageId,
     attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
-    mentions: (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng).map(u => u.i),
+    mentions: mentions,
     timestamp: md.timestamp,
     isGroup: !!md.threadKey.threadFbId
   }
