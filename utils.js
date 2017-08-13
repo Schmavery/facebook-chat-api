@@ -373,7 +373,7 @@ function formatDeltaMessage(m){
   var m_offset = mdata.map(u => u.o);
   var m_length = mdata.map(u => u.l);
   var mentions = {};
-  for (var i = 0; i < m_id.length; i++) mentions[m_id[i]] = m.delta.body.substring(m_offset[i], m_length[i] + m_offset[i]);
+  for (var i = 0; i < m_id.length; i++) mentions[m_id[i]] = m.delta.body.substring(m_offset[i], m_offset[i] + m_length[i]);
   
   return {
     type: "message",
