@@ -367,6 +367,16 @@ function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
 
 function formatDeltaMessage(m){
   var md = m.delta.messageMetadata;
+
+  var mdata = (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng);
+  var m_id = mdata.map(u => u.i);
+  var m_offset = mdata.map(u => u.o);
+  var m_length = mdata.map(u => u.l);
+  var mentions = {};
+  for (var i = 0; i < m_id.length; i++) {
+    mentions[m_id[i]] = m.delta.body.substring(m_offset[i], m_offset[i] + m_length[i]);
+  }
+  
   return {
     type: "message",
     senderID: formatID(md.actorFbId.toString()),
@@ -374,7 +384,7 @@ function formatDeltaMessage(m){
     threadID: formatID((md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()),
     messageID: md.messageId,
     attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
-    mentions: (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng).map(u => u.i),
+    mentions: mentions,
     timestamp: md.timestamp,
     isGroup: !!md.threadKey.threadFbId
   }
