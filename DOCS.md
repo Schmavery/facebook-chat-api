@@ -762,6 +762,7 @@ __Arguments__
 
 - `callback(error, message)`: A callback called every time the logged-in account receives a new message.
 
+<a name="message"></a>
 __Message__
 
 The message object will contain different fields based on its type (as determined by its `type` field). By default, the only type that will be listened for is `message`. If enabled through [setOptions](#setOptions), the message object may alternatively represent an event e.g. a read receipt. The available event types are as follows:
@@ -803,6 +804,10 @@ The message object will contain different fields based on its type (as determine
 	<tr>
 		<td><code>threadID</code></td>
 		<td>The threadID representing the thread in which the message was sent.</td>
+	</tr>
+  <tr>
+		<td><code>isUnread</code></td>
+		<td>Boolean representing whether or not the message was read.</td>
 	</tr>
 	<tr>
 		<td><code>type</code></td>

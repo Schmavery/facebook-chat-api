@@ -418,7 +418,7 @@ function formatMessage(m) {
     timestampDatetime: originalMessage.timestamp_datetime,
     tags: originalMessage.tags,
     reactions: originalMessage.reactions ? originalMessage.reactions : [],
-    is_unread: originalMessage.is_unread
+    isUnread: originalMessage.is_unread
   };
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();
