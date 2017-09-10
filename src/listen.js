@@ -4,16 +4,14 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 var msgsRecv = 0;
-var identity = function() {};
 
 module.exports = function(defaultFuncs, api, ctx) {
   var currentlyRunning = null;
   var globalCallback = [];
-  globalCallback.push(identity);
 
   // Stop all listening
   var stopListening = function() {
-    globalCallback = identity;
+    globalCallback = [];
     if(currentlyRunning) {
       clearTimeout(currentlyRunning);
       currentlyRunning = null;
