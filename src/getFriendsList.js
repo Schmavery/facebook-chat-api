@@ -11,8 +11,7 @@ var GENDERS = {
   2: 'male_singular',
   3: 'female_singular_guess',
   4: 'male_singular_guess',
-  5: 'mixed_singular',
-  5: 'mixed_plural',
+  5: 'mixed',
   6: 'neuter_singular',
   7: 'unknown_singular',
   8: 'female_plural',
@@ -28,8 +27,8 @@ function formatData(obj) {
       alternateName: user.alternateName,
       firstName: user.firstName,
       gender: GENDERS[user.gender],
-      userID: user.id.toString(),
-      isFriend: user.is_friend,
+      userID: utils.formatID(user.id.toString()),
+      isFriend: (user.is_friend != null && user.is_friend) ? true : false,
       fullName: user.name,
       profilePicture: user.thumbSrc,
       type: user.type,
@@ -48,7 +47,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .postFormData("https://www.facebook.com/chat/user_info_all", ctx.jar, {}, {viewer: ctx.userID})
-      .then(utils.parseAndCheckLogin)
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (!resData) {
           throw {error: "getFriendsList returned empty object."};
@@ -59,7 +58,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null, formatData(resData.payload));
       })
       .catch(function(err) {
-        log.error("Error in getFriendsList", err);
+        log.error("getFriendsList", err);
         return callback(err);
       });
   };

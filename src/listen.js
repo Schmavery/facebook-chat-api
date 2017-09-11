@@ -4,14 +4,17 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 var msgsRecv = 0;
+var identity = function() {};
 
 module.exports = function(defaultFuncs, api, ctx) {
-  var shouldStop = false;
   var currentlyRunning = null;
+  var globalCallback = identity;
+
   var stopListening = function() {
-    shouldStop = true;
+    globalCallback = identity;
     if(currentlyRunning) {
       clearTimeout(currentlyRunning);
+      currentlyRunning = null;
     }
   };
 
@@ -32,23 +35,43 @@ module.exports = function(defaultFuncs, api, ctx) {
     'msgs_recv':msgsRecv
   };
 
-  var globalCallback = null;
+  /**
+   * Get an object maybe representing an event. Handles events it wants to handle
+   * and returns true if it did handle an event (and called the globalCallback).
+   * Returns false otherwise.
+   */
+  function handleMessagingEvents(event) {
+    switch (event.event) {
+      // "read_receipt" event triggers when other people read the user's messages.
+      case 'read_receipt':
+        globalCallback(null, utils.formatReadReceipt(event));
+        return true;
+      // "read event" triggers when the user read other people's messages.
+      case 'read':
+        globalCallback(null, utils.formatRead(event));
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  var serverNumber = '0';
 
   function listen() {
-    if(shouldStop || !ctx.loggedIn) {
+    if(currentlyRunning == null || !ctx.loggedIn) {
       return;
     }
 
     form.idle = ~~(Date.now() / 1000) - prev;
     prev = ~~(Date.now() / 1000);
-
-    utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
-    .then(utils.parseAndCheckLogin)
+    var presence = utils.generatePresence(ctx.userID);
+    ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
+    utils.get("https://"+serverNumber+"-edge-chat.facebook.com/pull", ctx.jar, form)
+    .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
     .then(function(resData) {
       var now = Date.now();
-      log.info("Got answer in ", now - tmpPrev);
+      log.info("listen", "Got answer in " + (now - tmpPrev));
       tmpPrev = now;
-
       if(resData && resData.t === "lb") {
         form.sticky_token = resData.lb_info.sticky;
         form.sticky_pool = resData.lb_info.pool;
@@ -94,85 +117,107 @@ module.exports = function(defaultFuncs, api, ctx) {
                 return;
               }
 
-              globalCallback(null, utils.formatTyp(v));
+              return globalCallback(null, utils.formatTyp(v));
+              break;
+            case 'chatproxy-presence':
+              // TODO: what happens when you're logged in as a page?
+              if(!ctx.globalOptions.updatePresence) {
+                return;
+              }
+
+              if (ctx.loggedIn) {
+                for(var userID in v.buddyList) {
+                  var formattedPresence = utils.formatProxyPresence(v.buddyList[userID], userID);
+                  if(formattedPresence != null)
+                  {
+                    globalCallback(null, formattedPresence);
+                  }
+                }
+                return;
+              }
+
               break;
             case 'buddylist_overlay':
               // TODO: what happens when you're logged in as a page?
               if(!ctx.globalOptions.updatePresence) {
                 return;
               }
-
               // There should be only one key inside overlay
               Object.keys(v.overlay).map(function(userID) {
                 var formattedPresence = utils.formatPresence(v.overlay[userID], userID);
-                if(!shouldStop && ctx.loggedIn) {
-                  globalCallback(null, formattedPresence);
+                if(ctx.loggedIn) {
+                  return globalCallback(null, formattedPresence);
                 }
               });
               break;
-            case 'mercury':
-              if(ctx.globalOptions.pageID || !ctx.globalOptions.listenEvents){
-               return;
+            case 'delta':
+              if (ctx.globalOptions.pageID || (v.delta.class !== "NewMessage" && !ctx.globalOptions.listenEvents)) return
+
+              if (v.delta.class == "NewMessage") {
+                (function resolveAttachmentUrl(i) {
+                  if (i == v.delta.attachments.length) {
+                    var fmtMsg = utils.formatDeltaMessage(v);
+                    return (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) ? undefined : globalCallback(null, fmtMsg);
+                  } else {
+                    if (v.delta.attachments[i].mercury.attach_type == 'photo') {
+                      api.resolvePhotoUrl(v.delta.attachments[i].fbid, (err, url) => {
+                        if (!err) v.delta.attachments[i].mercury.metadata.url = url;
+                        return resolveAttachmentUrl(i + 1);
+                      });
+                    } else {
+                      return resolveAttachmentUrl(i + 1);
+                    }
+                  }
+                })(0)
+                break;
               }
 
-              v.actions.map(function(v2) {
-                var formattedEvent = utils.formatEvent(v2);
-                if(!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID) {
+              if (v.delta.class == "ClientPayload") {
+                var clientPayload = utils.decodeClientPayload(v.delta.payload);
+                if (clientPayload && clientPayload.deltas) {
+                  for (var i in clientPayload.deltas) {
+                    var delta = clientPayload.deltas[i];
+                    if (delta.deltaMessageReaction) {
+                      globalCallback(null, {
+                        type: "message_reaction",
+                        threadID: delta.deltaMessageReaction.threadKey.threadFbId ? delta.deltaMessageReaction.threadKey.threadFbId : delta.deltaMessageReaction.threadKey.otherUserFbId,
+                        messageID: delta.deltaMessageReaction.messageId,
+                        reaction: decodeURIComponent(escape(delta.deltaMessageReaction.reaction)),
+                        senderID: delta.deltaMessageReaction.senderId,
+                        userID: delta.deltaMessageReaction.userId,
+                        timestamp: v.ofd_ts
+                      });
+                    }
+                  }
                   return;
                 }
+              }
 
-                if (!shouldStop && ctx.loggedIn) {
-                  globalCallback(null, formattedEvent);
-                }
-              });
+              switch (v.delta.class) {
+                case 'ReadReceipt':
+                  return globalCallback(null, utils.formatDeltaReadReceipt(v.delta));
+                case 'AdminTextMessage':
+                  switch (v.delta.type) {
+                    case 'change_thread_theme':
+                    case 'change_thread_nickname':
+                    case 'change_thread_icon':
+                      break;
+                    default:
+                      return;
+                  }
+                case 'ThreadName':
+                case 'ParticipantsAddedToGroupThread':
+                case 'ParticipantLeftGroupThread':
+                  var formattedEvent = utils.formatDeltaEvent(v.delta);
+                  return (!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID || !ctx.loggedIn)
+                    ? undefined
+                    : globalCallback(null, formattedEvent);
+              }
+
               break;
             case 'messaging':
-              if(ctx.globalOptions.pageID ||
-                v.event !== "deliver" ||
-                (!ctx.globalOptions.selfListen && v.message.sender_fbid.toString() === ctx.userID)) {
+              if (handleMessagingEvents(v)) {
                 return;
-              }
-
-              atLeastOne = true;
-              var message = utils.formatMessage(v);
-
-              // The participants array is caped at 5, we need to query more to
-              // get them.
-              if(message.participantIDs.length >= 5) {
-                api.searchForThread(message.threadName, function(err, res) {
-                  if (err) {
-                    globalCallback(err);
-                  }
-
-                  // we take the first thread among all the returned threads
-                  var firstThread = res.filter(function(v) {
-                    return v.threadID === message.threadID;
-                  })[0];
-                  if (!firstThread) {
-                    return globalCallback({error: "Couldn't retrieve thread participants for thread with name " + message.threadName + " and ID " + message.threadID});
-                  }
-
-                  message.participantIDs = firstThread.participants;
-                  api.getUserInfo(firstThread.participants, function(err, firstThread) {
-                    if (err) {
-                      throw err;
-                    }
-
-                    message.participantsInfo = Object.keys(firstThread).map(function(key) {
-                      return firstThread[key];
-                    });
-                    // Rename this?
-                    message.participantNames = message.participantsInfo.map(function(v) {
-                      return v.name;
-                    });
-                    globalCallback(null, message);
-                  });
-                });
-                return;
-              }
-
-              if (!shouldStop && ctx.loggedIn) {
-                globalCallback(null, message);
               }
               break;
             case 'pages_messaging':
@@ -185,8 +230,8 @@ module.exports = function(defaultFuncs, api, ctx) {
               }
 
               atLeastOne = true;
-              if (!shouldStop && ctx.loggedIn) {
-                globalCallback(null, utils.formatMessage(v));
+              if (ctx.loggedIn) {
+                return globalCallback(null, utils.formatMessage(v));
               }
               break;
           }
@@ -215,13 +260,23 @@ module.exports = function(defaultFuncs, api, ctx) {
       if(resData.tr) {
         form.traceid = resData.tr;
       }
-      currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
-
+      if (currentlyRunning) {
+        currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
+      }
+      return;
     })
     .catch(function(err) {
-      log.error("ERROR in listen --> ", err);
-      globalCallback(err);
-      currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
+      if (err.code === 'ETIMEDOUT') {
+        log.info("listen", "Suppressed timeout error.");
+      } else if (err.code === 'EAI_AGAIN') {
+        serverNumber = (~~(Math.random() * 6)).toString();
+      } else {
+        log.error("listen", err);
+        globalCallback(err);
+      }
+      if (currentlyRunning) {
+        currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
+      }
     });
   }
 

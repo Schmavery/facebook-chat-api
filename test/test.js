@@ -2,7 +2,7 @@ var login = require('../index.js');
 var fs = require('fs');
 var assert = require('assert');
 
-var conf = JSON.parse(fs.readFileSync('test/test-config.json', 'utf8'));
+var conf = JSON.parse(process.env.testconfig || fs.readFileSync('test/test-config.json', 'utf8'));
 var credentials = {
   email: conf.user.email,
   password: conf.user.password,
@@ -13,6 +13,8 @@ var userIDs = conf.userIDs;
 var options = { selfListen: true, listenEvents: true, logLevel: "silent"};
 var pageOptions = {logLevel: 'silent', pageID: conf.pageID};
 var getType = require('../utils').getType;
+var formatDeltaMessage = require('../utils').formatDeltaMessage;
+var shareAttachmentFixture = require('./data/shareAttach');
 
 var userID = conf.user.id;
 
@@ -27,6 +29,7 @@ function checkErr(done){
 
 describe('Login:', function() {
   var api = null;
+  process.on('SIGINT', () => api && !api.logout() && console.log("Logged out :)"));
   var tests = [];
   var stopListening;
   this.timeout(20000);
@@ -43,6 +46,13 @@ describe('Login:', function() {
       api = localAPI;
       stopListening = api.listen(function (err, msg) {
         if (err) throw err;
+        if (msg.type === "message") {
+          assert(msg.senderID && !isNaN(msg.senderID));
+          assert(msg.threadID && !isNaN(msg.threadID));
+          assert(msg.timestamp && !isNaN(msg.timestamp));
+          assert(msg.messageID != null && msg.messageID.length > 0);
+          assert(msg.body != null || msg.attachments.length > 0);
+        }
         // Removes matching function and calls corresponding done
         tests = tests.filter(function(test) {
           return !(test.matcher(msg) && (test.done() || true));
@@ -63,33 +73,64 @@ describe('Login:', function() {
 
   it('should send text message object (user)', function (done){
     var body = "text-msg-obj-" + Date.now();
-    listen(done, function (msg) {
-      return msg.type === 'message' && msg.body === body;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === false
+    );
     api.sendMessage({body: body}, userID, checkErr(done));
   });
 
   it('should send sticker message object (user)', function (done){
     var stickerID = '767334526626290';
-    listen(done, function (msg) {
-      return msg.type === 'message' &&
-        msg.attachments.length > 0 &&
-        msg.attachments[0].type === 'sticker' &&
-        msg.attachments[0].stickerID === stickerID;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.attachments.length > 0 &&
+      msg.attachments[0].type === 'sticker' &&
+      msg.attachments[0].stickerID === stickerID &&
+      msg.isGroup === false
+    );
     api.sendMessage({sticker: stickerID}, userID, checkErr(done));
   });
 
   it('should send basic string (user)', function (done){
     var body = "basic-str-" + Date.now();
-    listen(done, function (msg) {
-      return (msg.type === 'message' && msg.body === body);
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === false
+    );
     api.sendMessage(body, userID, checkErr(done));
   });
 
+  it('should get thread info (user)', function (done){
+      api.getThreadInfo(userID, (err, info) => {
+        if (err) done(err);
+
+        assert(info.participantIDs != null && info.participantIDs.length > 0);
+        assert(!info.participantIDs.some(isNaN));
+        assert(!info.participantIDs.some(v => v.length == 0));
+        assert(info.name != null);
+        assert(info.messageCount != null && !isNaN(info.messageCount));
+        assert(info.hasOwnProperty('emoji'));
+        assert(info.hasOwnProperty('nicknames'));
+        assert(info.hasOwnProperty('color'));
+        done();
+      });
+  });
+
+
   it('should get the history of the chat (user)', function (done) {
-    api.getThreadHistory(userID, 0, 5, Date.now(), function(err, data) {
+    api.getThreadHistory(userID, 5, null, function(err, data) {
+      checkErr(done)(err);
+      assert(getType(data) === "Array");
+      assert(data.every(function(v) {return getType(v) == "Object";}));
+      done();
+    });
+  });
+  
+  it('should get the history of the chat (user) (graphql)', function (done) {
+    api.getThreadHistoryGraphQL(userID, 5, null, function(err, data) {
       checkErr(done)(err);
       assert(getType(data) === "Array");
       assert(data.every(function(v) {return getType(v) == "Object";}));
@@ -99,20 +140,30 @@ describe('Login:', function() {
 
   it('should create a chat', function (done){
     var body = "new-chat-" + Date.now();
-    listen(done, function (msg) {
-      return msg.type === 'message' && msg.body === body;
-    });
+    var inc = 0;
+
+    function doneHack(){
+      if (inc === 1) return done();
+      inc++;
+    }
+
+    listen(doneHack, msg =>
+      msg.type === 'message' && msg.body === body
+    );
     api.sendMessage(body, userIDs, function(err, info){
       checkErr(done)(err);
       groupChatID = info.threadID;
+      doneHack();
     });
   });
 
   it('should send text message object (group)', function (done){
     var body = "text-msg-obj-" + Date.now();
-    listen(done, function (msg) {
-      return msg.type === 'message' && msg.body === body;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === true
+    );
     api.sendMessage({body: body}, groupChatID, function(err, info){
       checkErr(done)(err);
       assert(groupChatID === info.threadID);
@@ -121,9 +172,11 @@ describe('Login:', function() {
 
   it('should send basic string (group)', function (done){
     var body = "basic-str-" + Date.now();
-    listen(done, function (msg) {
-      return msg.type === 'message' && msg.body === body;
-    });
+    listen(done, msg =>
+      msg.type === 'message' &&
+      msg.body === body &&
+      msg.isGroup === true
+    );
     api.sendMessage(body, groupChatID, function(err, info) {
       checkErr(done)(err);
       assert(groupChatID === info.threadID);
@@ -159,7 +212,16 @@ describe('Login:', function() {
   });
 
   it('should get the history of the chat (group)', function (done) {
-    api.getThreadHistory(groupChatID, 0, 5, Date.now(), function(err, data) {
+    api.getThreadHistory(groupChatID, 5, null, function(err, data) {
+      checkErr(done)(err);
+      assert(getType(data) === "Array");
+      assert(data.every(function(v) {return getType(v) == "Object";}));
+      done();
+    });
+  });
+  
+  it('should get the history of the chat (group) (graphql)', function (done) {
+    api.getThreadHistoryGraphQL(groupChatID, 5, null, function(err, data) {
       checkErr(done)(err);
       assert(getType(data) === "Array");
       assert(data.every(function(v) {return getType(v) == "Object";}));
@@ -179,24 +241,44 @@ describe('Login:', function() {
     api.setTitle(title, groupChatID, checkErr(done));
   });
 
-  it('should kick user', function (done){
+  it('should kick user', function (done) {
     var id = userIDs[0];
     listen(done, function (msg) {
       return msg.type === 'event' &&
         msg.logMessageType === 'log:unsubscribe' &&
-        msg.logMessageData.removed_participants.indexOf('fbid:' + id) > -1;
+        msg.logMessageData.leftParticipantFbId === id;
     });
     api.removeUserFromGroup(id, groupChatID, checkErr(done));
   });
 
-  it('should add user', function (done){
+  it('should add user', function (done) {
     var id = userIDs[0];
     listen(done, function (msg) {
       return (msg.type === 'event' &&
         msg.logMessageType === 'log:subscribe' &&
-        msg.logMessageData.added_participants.indexOf('fbid:'+id) > -1);
+        msg.logMessageData.addedParticipants.length > 0 &&
+        msg.logMessageData.addedParticipants[0].userFbId === id);
     });
-    api.addUserToGroup(id, groupChatID, checkErr(done));
+    // TODO: we don't check for errors inside this because FB changed and
+    // returns an error, even though we receive the event that the user was
+    // added
+    api.addUserToGroup(id, groupChatID, function() {});
+  });
+
+  xit('should get thread info (group)', function (done){
+      api.getThreadInfo(groupChatID, (err, info) => {
+        if (err) done(err);
+
+        assert(info.participantIDs != null && info.participantIDs.length > 0);
+        assert(!info.participantIDs.some(isNaN));
+        assert(!info.participantIDs.some(v => v.length == 0));
+        assert(info.name != null);
+        assert(info.messageCount != null && !isNaN(info.messageCount));
+        assert(info.hasOwnProperty('emoji'));
+        assert(info.hasOwnProperty('nicknames'));
+        assert(info.hasOwnProperty('color'));
+        done();
+      });
   });
 
   it('should retrieve a list of threads', function (done) {
@@ -226,24 +308,6 @@ describe('Login:', function() {
     var stopType = api.sendTypingIndicator(groupChatID, function(err) {
       checkErr(done)(err);
       stopType();
-      done();
-    });
-  });
-
-  it('should get a list of online users', function (done){
-    api.getOnlineUsers(function(err, res) {
-      checkErr(done)(err);
-      assert(getType(res) === "Array");
-      res.map(function(v) {
-        assert(v.timestamp);
-        assert(v.userID);
-        assert(v.statuses);
-        assert(v.statuses.status);
-        assert(v.statuses.webStatus);
-        assert(v.statuses.fbAppStatus);
-        assert(v.statuses.messengerStatus);
-        assert(v.statuses.otherStatus);
-      });
       done();
     });
   });
@@ -280,12 +344,35 @@ describe('Login:', function() {
   });
 
   it('should get the list of friends', function (done) {
-    api.getFriendsList(userID, function(err, data) {
+    api.getFriendsList(function(err, data) {
+      try {
       checkErr(done)(err);
       assert(getType(data) === "Array");
-      assert(data.every(function(v) {return !isNaN(v);}));
+      data.map(v => {
+        assert(getType(v.firstName) === "String");
+        assert(getType(v.gender) === "String");
+        assert(getType(v.userID) === "String");
+        assert(getType(v.isFriend) === "Boolean");
+        assert(getType(v.fullName) === "String");
+        assert(getType(v.profilePicture) === "String");
+        assert(getType(v.type) === "String");
+        assert(v.hasOwnProperty("profileUrl"));  // This can be null if the account is disabled
+        assert(getType(v.isBirthday) === "Boolean");
+      })
       done();
+    } catch(e){
+      done(e);
+    }
     });
+  });
+
+  it('should parse share attachment correctly', function () {
+    var formatted = formatDeltaMessage(shareAttachmentFixture);
+    assert(formatted.attachments[0].type === "share");
+    assert(formatted.attachments[0].title === "search engines");
+    assert(formatted.attachments[0].target.items[0].name === "search engines");
+    assert(formatted.attachments[0].target.items[0].call_to_actions.length === 3);
+    assert(formatted.attachments[0].target.items[0].call_to_actions[0].title === "Google");
   });
 
   it('should log out', function (done) {

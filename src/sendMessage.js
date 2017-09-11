@@ -4,6 +4,16 @@ var utils = require("../utils");
 var log = require("npmlog");
 var bluebird = require("bluebird");
 
+var allowedProperties = {
+  attachment: true,
+  url: true,
+  sticker: true,
+  emoji: true,
+  emojiSize: true,
+  body: true,
+  mentions: true,
+};
+
 module.exports = function(defaultFuncs, api, ctx) {
   function uploadAttachment(attachments, callback) {
     var uploads = [];
@@ -16,10 +26,12 @@ module.exports = function(defaultFuncs, api, ctx) {
 
       var form = {
         upload_1024: attachments[i],
+        'voice_clip': 'true',
       };
+
       uploads.push(defaultFuncs
         .postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, {})
-        .then(utils.parseAndCheckLogin)
+        .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function (resData) {
           if (resData.error) {
             throw resData;
@@ -38,70 +50,171 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null, resData);
       })
       .catch(function(err) {
-        log.error("Error in uploadAttachment", err);
+        log.error("uploadAttachment", err);
         return callback(err);
       });
   }
 
-  return function sendMessage(msg, threadID, callback) {
-    if(!callback && utils.getType(threadID) === 'Function') {
-      throw {error: "please pass a threadID as a second argument."};
-    }
-    if(!callback) {
-      callback = function() {};
-    }
-
-    var msgType = utils.getType(msg);
-    var threadIDType = utils.getType(threadID);
-
-    if(msgType !== "String" && msgType !== "Object") {
-      throw {error: "Message should be of type string or object and not " + threadIDType + "."};
-    }
-
-    // Changing this to accomodate an array of users
-    if(threadIDType !== "Array" && threadIDType !== "Number" && threadIDType !== "String") {
-      throw {error: "ThreadID should be of type number, string, or array and not " + threadIDType + "."};
-    }
-
-    if (msgType === "String") {
-      msg = { body: msg };
-    }
-
-    var messageAndOTID = utils.generateOfflineThreadingID();
-
+  function getUrl(url, callback) {
     var form = {
-      'client' : 'mercury',
-      'message_batch[0][action_type]' : 'ma-type:user-generated-message',
-      'message_batch[0][author]' : 'fbid:' + ctx.userID,
-      'message_batch[0][timestamp]' : Date.now(),
-      'message_batch[0][timestamp_absolute]' : 'Today',
-      'message_batch[0][timestamp_relative]' : utils.genTimestampRelative(),
-      'message_batch[0][timestamp_time_passed]' : '0',
-      'message_batch[0][is_unread]' : false,
-      'message_batch[0][is_cleared]' : false,
-      'message_batch[0][is_forward]' : false,
-      'message_batch[0][is_filtered_content]' : false,
-      'message_batch[0][is_spoof_warning]' : false,
-      'message_batch[0][source]' : 'source:chat:web',
-      'message_batch[0][source_tags][0]' : 'source:chat',
-      'message_batch[0][body]' : msg.body ? msg.body.toString() : "",
-      'message_batch[0][html_body]' : false,
-      'message_batch[0][ui_push_phase]' : 'V3',
-      'message_batch[0][status]' : '0',
-      'message_batch[0][offline_threading_id]' : messageAndOTID,
-      'message_batch[0][message_id]' : messageAndOTID,
-      'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientID),
-      'message_batch[0][manual_retry_cnt]' : '0',
-      'message_batch[0][has_attachment]' : false,
-      'message_batch[0][signatureID]' : utils.getSignatureID(),
+      image_height: 960,
+      image_width: 960,
+      uri: url
     };
 
+    defaultFuncs
+      .post("https://www.facebook.com/message_share_attachment/fromURI/", ctx.jar, form)
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
+      .then(function(resData) {
+        if (resData.error) {
+          return callback(resData);
+        }
+
+        if (!resData.payload) {
+          return callback({error: 'Invalid url'});
+        }
+
+        callback(null, resData.payload.share_data.share_params);
+      })
+      .catch(function(err) {
+        log.error("getUrl", err);
+        return callback(err);
+      });
+  }
+
+  function sendContent(form, threadID, isSingleUser, messageAndOTID, callback) {
+    // There are three cases here:
+    // 1. threadID is of type array, where we're starting a new group chat with users
+    //    specified in the array.
+    // 2. User is sending a message to a specific user.
+    // 3. No additional form params and the message goes to an existing group chat.
+    if(utils.getType(threadID) === "Array") {
+      for (var i  = 0; i < threadID.length; i++) {
+        form['specific_to_list[' + i + ']'] = "fbid:" + threadID[i];
+      }
+      form['specific_to_list[' + (threadID.length) + ']'] = "fbid:" + ctx.userID;
+      form['client_thread_id'] = "root:" + messageAndOTID;
+      log.info("sendMessage", "Sending message to multiple users: " + threadID);
+    } else {
+      // This means that threadID is the id of a user, and the chat
+      // is a single person chat
+      if(isSingleUser) {
+        form['specific_to_list[0]'] = "fbid:" + threadID;
+        form['specific_to_list[1]'] = "fbid:" + ctx.userID;
+        form['other_user_fbid'] = threadID;
+      } else {
+        form['thread_fbid'] = threadID;
+      }
+    }
+
+    if(ctx.globalOptions.pageID) {
+      form['author'] = "fbid:" + ctx.globalOptions.pageID;
+      form['specific_to_list[1]'] = "fbid:" + ctx.globalOptions.pageID;
+      form['creator_info[creatorID]'] = ctx.userID;
+      form['creator_info[creatorType]'] = "direct_admin";
+      form['creator_info[labelType]'] = "sent_message";
+      form['creator_info[pageID]'] = ctx.globalOptions.pageID;
+      form['request_user_id'] = ctx.globalOptions.pageID;
+      form['creator_info[profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userID;
+    }
+
+    defaultFuncs
+      .post("https://www.facebook.com/messaging/send/", ctx.jar, form)
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
+      .then(function(resData) {
+        if (!resData) {
+          return callback({error: "Send message failed."});
+        }
+
+        if (resData.error) {
+          if (resData.error === 1545012) {
+            log.warn("sendMessage", "Got error 1545012. This might mean that you're not part of the conversation "
+              + threadID);
+          }
+          return callback(resData);
+        }
+
+        var messageInfo = resData.payload.actions.reduce(function(p, v) {
+          return {
+            threadID: v.thread_fbid,
+            messageID: v.message_id,
+            timestamp: v.timestamp
+          } || p; }, null);
+
+        return callback(null, messageInfo);
+      })
+      .catch(function(err) {
+        log.error("sendMessage", err);
+        return callback(err);
+      });
+  }
+
+  function send(form, threadID, messageAndOTID, callback) {
+    // We're doing a query to this to check if the given id is the id of
+    // a user or of a group chat. The form will be different depending
+    // on that.
+    if(utils.getType(threadID) === "Array") {
+      sendContent(form, threadID, false, messageAndOTID, callback);
+    } else {
+      api.getUserInfo(threadID, function(err, res) {
+        if(err) {
+          return callback(err);
+        }
+        sendContent(form, threadID, Object.keys(res).length > 0, messageAndOTID, callback);
+      });
+    }
+  }
+
+  function handleUrl(msg, form, callback, cb) {
+    if (msg.url) {
+      form['shareable_attachment[share_type]'] = '100';
+      getUrl(msg.url, function (err, params) {
+        if (err) {
+          return callback(err);
+        }
+
+        form['shareable_attachment[share_params]'] = params;
+        cb();
+      });
+    } else {
+      cb();
+    }
+  }
+
+  function handleSticker(msg, form, callback, cb) {
+    if (msg.sticker) {
+      form['sticker_id'] = msg.sticker;
+    }
+    cb();
+  }
+
+  function handleEmoji(msg, form, callback, cb) {
+    if (msg.emojiSize != null && msg.emoji == null) {
+      return callback({error: "emoji property is empty"});
+    }
+    if (msg.emoji) {
+      if (msg.emojiSize == null) {
+        msg.emojiSize = "medium";
+      }
+      if (msg.emojiSize != "small" && msg.emojiSize != "medium" && msg.emojiSize != "large") {
+        return callback({error: "emojiSize property is invalid"});
+      }
+      if (form['body'] != null && form['body'] != "") {
+        return callback({error: "body is not empty"});
+      }
+      form['body'] = msg.emoji;
+      form['tags[0]'] = "hot_emoji_size:" + msg.emojiSize;
+    }
+    cb();
+  }
+
+  function handleAttachment(msg, form, callback, cb) {
     if (msg.attachment) {
-      form['message_batch[0][has_attachment]'] = true;
-      form['message_batch[0][image_ids]'] = [];
-      form['message_batch[0][gif_ids]'] = [];
-      form['message_batch[0][file_ids]'] = [];
-      form['message_batch[0][video_ids]'] = [];
+      form['image_ids'] = [];
+      form['gif_ids'] = [];
+      form['file_ids'] = [];
+      form['video_ids'] = [];
+      form['audio_ids'] = [];
 
       if (utils.getType(msg.attachment) !== 'Array') {
         msg.attachment = [msg.attachment];
@@ -115,108 +228,114 @@ module.exports = function(defaultFuncs, api, ctx) {
         files.forEach(function (file) {
           var key = Object.keys(file);
           var type = key[0]; // image_id, file_id, etc
-          form['message_batch[0][' + type + 's]'].push(file[type]); // push the id
+          form['' + type + 's'].push(file[type]); // push the id
         });
-
-        send();
+        cb();
       });
-    } else if (msg.url) {
-      form['message_batch[0][has_attachment]'] = true;
-      form['message_batch[0][shareable_attachment][share_type]'] = 100;
-      api.getUrl(msg.url, function (err, params) {
-        if (err) {
-          return callback(err);
-        }
-
-        form['message_batch[0][shareable_attachment][share_params]'] = params;
-        send();
-      });
-    } else if (msg.sticker) {
-      form['message_batch[0][has_attachment]'] = true;
-      form['message_batch[0][sticker_id]'] = msg.sticker;
-
-      // Sticker can't be combined with body
-      delete msg.body;
-
-      send();
     } else {
-      send();
+      cb();
     }
+  }
 
-    function sendContent(isSingleUser) {
-      // There are three cases here:
-      // 1. threadID is of type array, where we're starting a new group chat with users
-      //    specified in the array.
-      // 2. User is sending a message to a specific user.
-      // 3. No additional form params and the message goes to an existing group chat.
-      if(threadIDType === "Array") {
-        for (var i  = 0; i < threadID.length; i++) {
-          form['message_batch[0][specific_to_list][' + i + ']'] = "fbid:" + threadID[i];
+  function handleMention(msg, form, callback, cb) {
+    if (msg.mentions) {
+      for (let i=0; i < msg.mentions.length; i++) {
+        const mention = msg.mentions[i];
+
+        const tag = mention.tag;
+        if (typeof tag !== "string") {
+          return callback({error: "Mention tags must be strings."});
         }
-        form['message_batch[0][specific_to_list][' + (threadID.length) + ']'] = "fbid:" + ctx.userID;
-        log.info("Sending message to multiple users: " + threadID);
-      } else {
-        form['message_batch[0][thread_fbid]'] = threadID;
-        // This means that threadID is the id of a user, and the chat
-        // is a single person chat
-        if(isSingleUser) {
-          form['message_batch[0][client_thread_id]'] = "user:" + threadID;
-          form['message_batch[0][specific_to_list][0]'] = "fbid:" + threadID;
-          form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.userID;
+
+        const offset = msg.body.indexOf(tag, mention.fromIndex || 0);
+
+        if (offset < 0) {
+          log.warn("handleMention", "Mention for \"" + tag +
+            "\" not found in message string.");
         }
-      }
 
-      if(ctx.globalOptions.pageID) {
-        form['message_batch[0][author]'] = "fbid:" + ctx.globalOptions.pageID;
-        form['message_batch[0][specific_to_list][1]'] = "fbid:" + ctx.globalOptions.pageID;
-        form['message_batch[0][creator_info][creatorID]'] = ctx.userID;
-        form['message_batch[0][creator_info][creatorType]'] = "direct_admin";
-        form['message_batch[0][creator_info][labelType]'] = "sent_message";
-        form['message_batch[0][creator_info][pageID]'] = ctx.globalOptions.pageID;
-        form['request_user_id'] = ctx.globalOptions.pageID;
-        form['message_batch[0][creator_info][profileURI]'] = "https://www.facebook.com/profile.php?id=" + ctx.userID;
-      }
+        if (mention.id == null) {
+          log.warn("handleMention", "Mention id should be non-null.");
+        }
 
-      defaultFuncs
-        .post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
-        .then(utils.parseAndCheckLogin)
-        .then(function(resData) {
-          if (!resData) {
-            throw {error: "Send message failed."};
-          }
-          if(resData.error) {
-            throw resData;
-          }
-
-          var messageInfo = resData.payload.actions.reduce(function(p, v) {
-            return {
-              threadID: v.thread_fbid,
-              messageID: v.message_id,
-              timestamp: v.timestamp
-            } || p; }, null);
-
-          return callback(null, messageInfo);
-        })
-        .catch(function(err) {
-          log.error("ERROR in sendMessage --> ", err);
-          return callback(err);
-        });
-    }
-
-    function send() {
-      // We're doing a query to this to check if the given id is the id of
-      // a user or of a group chat. The form will be different depending
-      // on that.
-      if(threadIDType === "Array") {
-        sendContent(false);
-      } else {
-        api.getUserInfo(threadID, function(err, res) {
-          if(err) {
-            return callback(err);
-          }
-          sendContent(Object.keys(res).length > 0);
-        });
+        const id = mention.id || 0;
+        form['profile_xmd[' + i + '][offset]'] = offset;
+        form['profile_xmd[' + i + '][length]'] = tag.length;
+        form['profile_xmd[' + i + '][id]'] = id;
+	form['profile_xmd[' + i + '][type]'] = 'p';
       }
     }
+    cb();
+  }
+
+  return function sendMessage(msg, threadID, callback) {
+    if(!callback && (utils.getType(threadID) === 'Function' || utils.getType(threadID) === 'AsyncFunction')) {
+      return callback({error: "Pass a threadID as a second argument."});
+    }
+    if(!callback) {
+      callback = function() {};
+    }
+
+    var msgType = utils.getType(msg);
+    var threadIDType = utils.getType(threadID);
+
+    if(msgType !== "String" && msgType !== "Object") {
+      return callback({error: "Message should be of type string or object and not " + msgType + "."});
+    }
+
+    // Changing this to accomodate an array of users
+    if(threadIDType !== "Array" && threadIDType !== "Number" && threadIDType !== "String") {
+      return callback({error: "ThreadID should be of type number, string, or array and not " + threadIDType + "."});
+    }
+
+    if (msgType === "String") {
+      msg = { body: msg };
+    }
+
+    var disallowedProperties = Object.keys(msg).filter(prop => !allowedProperties[prop]);
+    if (disallowedProperties.length > 0) {
+      return callback({error: "Dissallowed props: `" + disallowedProperties.join(', ') + "`"});
+    }
+
+    var messageAndOTID = utils.generateOfflineThreadingID();
+
+    var form = {
+      'client' : 'mercury',
+      'action_type' : 'ma-type:user-generated-message',
+      'author' : 'fbid:' + ctx.userID,
+      'timestamp' : Date.now(),
+      'timestamp_absolute' : 'Today',
+      'timestamp_relative' : utils.generateTimestampRelative(),
+      'timestamp_time_passed' : '0',
+      'is_unread' : false,
+      'is_cleared' : false,
+      'is_forward' : false,
+      'is_filtered_content' : false,
+      'is_filtered_content_bh':false,
+      'is_filtered_content_account':false,
+      'is_filtered_content_quasar':false,
+      'is_filtered_content_invalid_app':false,
+      'is_spoof_warning' : false,
+      'source' : 'source:chat:web',
+      'source_tags[0]' : 'source:chat',
+      'body' : msg.body ? msg.body.toString() : "",
+      'html_body' : false,
+      'ui_push_phase' : 'V3',
+      'status' : '0',
+      'offline_threading_id' : messageAndOTID,
+      'message_id' : messageAndOTID,
+      'threading_id': utils.generateThreadingID(ctx.clientID),
+      'ephemeral_ttl_mode:': '0',
+      'manual_retry_cnt' : '0',
+      'has_attachment' : !!(msg.attachment || msg.url || msg.sticker),
+      'signatureID' : utils.getSignatureID(),
+    };
+
+    handleSticker(msg, form, callback,
+      () => handleAttachment(msg, form, callback,
+        () => handleUrl(msg, form, callback,
+          () => handleEmoji(msg, form, callback,
+            () => handleMention(msg, form, callback,
+              () => send(form, threadID, messageAndOTID, callback))))));
   };
 };
