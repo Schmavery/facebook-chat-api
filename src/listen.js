@@ -4,14 +4,14 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 var msgsRecv = 0;
-var identity = function() {};
 
 module.exports = function(defaultFuncs, api, ctx) {
   var currentlyRunning = null;
-  var globalCallback = identity;
+  var globalCallback = [];
 
+  // Stop all listening
   var stopListening = function() {
-    globalCallback = identity;
+    globalCallback = [];
     if(currentlyRunning) {
       clearTimeout(currentlyRunning);
       currentlyRunning = null;
@@ -44,11 +44,11 @@ module.exports = function(defaultFuncs, api, ctx) {
     switch (event.event) {
       // "read_receipt" event triggers when other people read the user's messages.
       case 'read_receipt':
-        globalCallback(null, utils.formatReadReceipt(event));
+        globalCallback.forEach(function (t) { t(null, utils.formatReadReceipt(event)) });
         return true;
       // "read event" triggers when the user read other people's messages.
       case 'read':
-        globalCallback(null, utils.formatRead(event));
+          globalCallback.forEach(function (t) { t(null, utils.formatRead(event)) });
         return true;
       default:
         return false;
@@ -117,7 +117,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 return;
               }
 
-              return globalCallback(null, utils.formatTyp(v));
+              return globalCallback.forEach(function (t) { t(null, utils.formatTyp(v)) });;
               break;
             case 'chatproxy-presence':
               // TODO: what happens when you're logged in as a page?
@@ -130,7 +130,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                   var formattedPresence = utils.formatProxyPresence(v.buddyList[userID], userID);
                   if(formattedPresence != null)
                   {
-                    globalCallback(null, formattedPresence);
+                      globalCallback.forEach(function (t) { t(null, formattedPresence) });
                   }
                 }
                 return;
@@ -146,7 +146,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               Object.keys(v.overlay).map(function(userID) {
                 var formattedPresence = utils.formatPresence(v.overlay[userID], userID);
                 if(ctx.loggedIn) {
-                  return globalCallback(null, formattedPresence);
+                    globalCallback.forEach(function (t) { t(null, formattedPresence) });
                 }
               });
               break;
@@ -157,7 +157,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 (function resolveAttachmentUrl(i) {
                   if (i == v.delta.attachments.length) {
                     var fmtMsg = utils.formatDeltaMessage(v);
-                    return (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) ? undefined : globalCallback(null, fmtMsg);
+                    return (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) ? undefined : globalCallback.forEach(function (t) { t(null, formattedPresence) });
                   } else {
                     if (v.delta.attachments[i].mercury.attach_type == 'photo') {
                       api.resolvePhotoUrl(v.delta.attachments[i].fbid, (err, url) => {
@@ -178,15 +178,16 @@ module.exports = function(defaultFuncs, api, ctx) {
                   for (var i in clientPayload.deltas) {
                     var delta = clientPayload.deltas[i];
                     if (delta.deltaMessageReaction) {
-                      globalCallback(null, {
-                        type: "message_reaction",
-                        threadID: delta.deltaMessageReaction.threadKey.threadFbId ? delta.deltaMessageReaction.threadKey.threadFbId : delta.deltaMessageReaction.threadKey.otherUserFbId,
-                        messageID: delta.deltaMessageReaction.messageId,
-                        reaction: decodeURIComponent(escape(delta.deltaMessageReaction.reaction)),
-                        senderID: delta.deltaMessageReaction.senderId,
-                        userID: delta.deltaMessageReaction.userId,
-                        timestamp: v.ofd_ts
-                      });
+                      var m = {
+                          type: "message_reaction",
+                          threadID: delta.deltaMessageReaction.threadKey.threadFbId ? delta.deltaMessageReaction.threadKey.threadFbId : delta.deltaMessageReaction.threadKey.otherUserFbId,
+                          messageID: delta.deltaMessageReaction.messageId,
+                          reaction: decodeURIComponent(escape(delta.deltaMessageReaction.reaction)),
+                          senderID: delta.deltaMessageReaction.senderId,
+                          userID: delta.deltaMessageReaction.userId,
+                          timestamp: v.ofd_ts
+                      };
+                        globalCallback.forEach(function (t) { t(null, m) });
                     }
                   }
                   return;
@@ -195,7 +196,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               switch (v.delta.class) {
                 case 'ReadReceipt':
-                  return globalCallback(null, utils.formatDeltaReadReceipt(v.delta));
+                  return globalCallback.forEach(function (t) { t(null, utils.formatDeltaReadReceipt(v.delta)) });
                 case 'AdminTextMessage':
                   switch (v.delta.type) {
                     case 'change_thread_theme':
@@ -211,7 +212,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                   var formattedEvent = utils.formatDeltaEvent(v.delta);
                   return (!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID || !ctx.loggedIn)
                     ? undefined
-                    : globalCallback(null, formattedEvent);
+                    : globalCallback.forEach(function (t) { t(null, formattedEvent)});
               }
 
               break;
@@ -231,7 +232,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               atLeastOne = true;
               if (ctx.loggedIn) {
-                return globalCallback(null, utils.formatMessage(v));
+                return globalCallback.forEach(function (t) { t(null, utils.formatMessage(v)) });
               }
               break;
           }
@@ -272,7 +273,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         serverNumber = (~~(Math.random() * 6)).toString();
       } else {
         log.error("listen", err);
-        globalCallback(err);
+        globalCallback.forEach(function (t) { t(err) });
       }
       if (currentlyRunning) {
         currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
@@ -281,7 +282,7 @@ module.exports = function(defaultFuncs, api, ctx) {
   }
 
   return function(callback) {
-    globalCallback = callback;
+    globalCallback.push(callback);
 
     if (!currentlyRunning) {
       currentlyRunning = setTimeout(listen, Math.random() * 200 + 50, callback);
