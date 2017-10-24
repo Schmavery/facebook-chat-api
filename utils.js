@@ -783,6 +783,8 @@ function saveCookies(jar) {
       if (c.indexOf(".facebook.com") > -1) {
         jar.setCookie(c, "https://www.facebook.com");
       }
+      var c2 = c.replace(/domain=\.facebook\.com/, "domain=.messenger.com");
+      jar.setCookie(c2, "https://www.messenger.com");
     });
     return res;
   };
