@@ -506,7 +506,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 ---------------------------------------
 
 <a name="getThreadHistory"></a>
-### api.getThreadHistory(threadID, amount, timestamp[, callback])
+### api.getThreadHistory(threadID, amount, timestamp, callback)
 
 Takes a threadID, number of messages, a timestamp, and a callback.
 
