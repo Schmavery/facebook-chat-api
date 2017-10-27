@@ -21,7 +21,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       if (ctx.globalOptions.pageId) form.request_user_id = ctx.globalOptions.pageId;
 
       defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_info.php", ctx.jar, form)
-        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+        .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function(resData) {
           if (resData.error) {
             throw resData;
@@ -38,21 +38,14 @@ module.exports = function(defaultFuncs, api, ctx) {
               error: "ThreadData is null"
             };
           }
+          
+          threadData.name = userData != null && userData.name != null ? userData.name : threadData.name;
+          threadData.image_src = userData != null && userData.thumbSrc != null ? userData.thumbSrc : threadData.image_src;
 
-          var info = {
-            participantIDs: threadData.participants.map(id => id.split(':').pop()),
-            name: userData != null && userData.name != null ? userData.name : threadData.name,
-            snippet: threadData.snippet,
-            messageCount: threadData.message_count,
-            emoji: threadData.custom_like_icon,
-            nicknames: threadData.custom_nickname,
-            color: threadData.custom_color,
-            lastReadTimestamp: threadData.last_read_timestamp,
-          };
-          callback(null, info);
+          callback(null, utils.formatThread(threadData));
 
         }).catch(function(err) {
-          log.error("Error in getThreadInfo", err);
+          log.error("getThreadInfo", err);
           return callback(err);
         });
     });

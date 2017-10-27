@@ -5,7 +5,7 @@ var log = require("npmlog");
 
 function formatData(data) {
   return {
-    userID: data.uid.toString(),
+    userID: utils.formatID(data.uid.toString()),
     photoUrl: data.photo,
     indexRank: data.index_rank,
     name: data.text,
@@ -13,6 +13,7 @@ function formatData(data) {
     profileUrl: data.path,
     category: data.category,
     score: data.score,
+    type: data.type,
   };
 }
 
@@ -33,7 +34,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .get("https://www.facebook.com/ajax/typeahead/search.php", ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {
           throw resData;
@@ -41,14 +42,10 @@ module.exports = function(defaultFuncs, api, ctx) {
 
         var data = resData.payload.entries;
 
-        if(data[0].type !== "user") {
-          throw {error: "Couldn't find a user with name " + name + ". Bes match: " + data[0].path};
-        }
-
         callback(null, data.map(formatData));
       })
       .catch(function(err) {
-        log.error("Error in getUserID", err);
+        log.error("getUserID", err);
         return callback(err);
       });
   };

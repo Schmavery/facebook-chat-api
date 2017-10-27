@@ -5,7 +5,7 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function addUserToGroup(userID, threadID, callback) {
-    if(!callback && utils.getType(threadID) === 'Function') {
+    if(!callback && (utils.getType(threadID) === 'Function' || utils.getType(threadID) === 'AsyncFunction')) {
       throw {error: "please pass a threadID as a second argument."};
     }
 
@@ -58,7 +58,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     defaultFuncs.post("https://www.facebook.com/messaging/send/", ctx.jar, form)
-    .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+    .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
     .then(function(resData) {
       if (!resData) {
         throw {error: "Add to group failed."};
@@ -70,7 +70,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       return callback();
     })
     .catch(function(err) {
-      log.error("ERROR in addUserToGroup --> ", err);
+      log.error("addUserToGroup", err);
       return callback(err);
     });
   };

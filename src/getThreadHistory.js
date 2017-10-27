@@ -4,8 +4,10 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function getThreadHistory(threadID, start, end, timestamp, callback) {
-    if(!callback) callback = function() {};
+  return function getThreadHistory(threadID, amount, timestamp, callback) {
+    if(!callback) {
+      throw {error: "getThreadHistory: need callback"};
+    }
 
     var form = {
       'client' : 'mercury'
@@ -16,14 +18,14 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback(err);
       }
       var key = (Object.keys(res).length > 0) ? "user_ids" : "thread_fbids";
-        form['messages['+key+'][' + threadID + '][offset]'] = start;
+        form['messages['+key+'][' + threadID + '][offset]'] = 0;
         form['messages['+key+'][' + threadID + '][timestamp]'] = timestamp;
-        form['messages['+key+'][' + threadID + '][limit]'] = end - start;
+        form['messages['+key+'][' + threadID + '][limit]'] = amount;
 
         if(ctx.globalOptions.pageID) form.request_user_id = ctx.globalOptions.pageID;
 
         defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_info.php", ctx.jar, form)
-        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+        .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function(resData) {
           if (resData.error) {
             throw resData;
@@ -46,16 +48,18 @@ module.exports = function(defaultFuncs, api, ctx) {
             if (err) return callback(err); //callback({error: "Could not retrieve user information in getThreadHistory."});
 
             resData.payload.actions.forEach(function (v) {
-              v.sender_name = data[v.author.split(":").pop()].name;
+              var sender = data[v.author.split(":").pop()]
+              if (sender) v.sender_name = sender.name;
+              else v.sender_name = 'Facebook User'
               v.sender_fbid = v.author;
               delete v.author;
             });
 
-            callback(null, resData.payload.actions.map(utils.formatMessage));
+            callback(null, resData.payload.actions.map(utils.formatHistoryMessage));
           });
         })
         .catch(function(err) {
-          log.error("Error in getThreadHistory", err);
+          log.error("getThreadHistory", err);
           return callback(err);
         });
     });

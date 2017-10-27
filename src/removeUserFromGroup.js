@@ -5,7 +5,7 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function removeUserFromGroup(userID, threadID, callback) {
-    if(!callback && utils.getType(threadID) === 'Function') {
+    if(!callback && (utils.getType(threadID) === 'Function' || utils.getType(threadID) === 'AsyncFunction')) {
       throw {error: "please pass a threadID as a second argument."};
     }
     if (utils.getType(threadID) !== "Number" && utils.getType(threadID) !== "String") {
@@ -26,7 +26,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post("https://www.facebook.com/chat/remove_participants", ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (!resData) {
           throw {error: "Remove from group failed."};
@@ -38,7 +38,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("ERROR in removeUserFromGroup --> ", err);
+        log.error("removeUserFromGroup", err);
         return callback(err);
       });
   };

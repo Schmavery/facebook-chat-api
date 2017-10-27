@@ -31,7 +31,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post("https://www.facebook.com/ajax/mercury/move_thread.php", ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {
           throw resData;
@@ -40,7 +40,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in handleMessageRequest", err);
+        log.error("handleMessageRequest", err);
         return callback(err);
       });
   };

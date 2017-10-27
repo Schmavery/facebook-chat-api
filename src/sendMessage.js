@@ -8,7 +8,10 @@ var allowedProperties = {
   attachment: true,
   url: true,
   sticker: true,
+  emoji: true,
+  emojiSize: true,
   body: true,
+  mentions: true,
 };
 
 module.exports = function(defaultFuncs, api, ctx) {
@@ -28,7 +31,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
       uploads.push(defaultFuncs
         .postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, {})
-        .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+        .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function (resData) {
           if (resData.error) {
             throw resData;
@@ -47,7 +50,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null, resData);
       })
       .catch(function(err) {
-        log.error("Error in uploadAttachment", err);
+        log.error("uploadAttachment", err);
         return callback(err);
       });
   }
@@ -61,7 +64,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post("https://www.facebook.com/message_share_attachment/fromURI/", ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {
           return callback(resData);
@@ -74,7 +77,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null, resData.payload.share_data.share_params);
       })
       .catch(function(err) {
-        log.error("Error in getUrl", err);
+        log.error("getUrl", err);
         return callback(err);
       });
   }
@@ -91,7 +94,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       }
       form['specific_to_list[' + (threadID.length) + ']'] = "fbid:" + ctx.userID;
       form['client_thread_id'] = "root:" + messageAndOTID;
-      log.info("Sending message to multiple users: " + threadID);
+      log.info("sendMessage", "Sending message to multiple users: " + threadID);
     } else {
       // This means that threadID is the id of a user, and the chat
       // is a single person chat
@@ -117,7 +120,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post("https://www.facebook.com/messaging/send/", ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (!resData) {
           return callback({error: "Send message failed."});
@@ -125,7 +128,8 @@ module.exports = function(defaultFuncs, api, ctx) {
 
         if (resData.error) {
           if (resData.error === 1545012) {
-            log.warn("Got error 1545012. This might mean that you're not part of the conversation " + threadID);
+            log.warn("sendMessage", "Got error 1545012. This might mean that you're not part of the conversation "
+              + threadID);
           }
           return callback(resData);
         }
@@ -140,7 +144,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback(null, messageInfo);
       })
       .catch(function(err) {
-        log.error("ERROR in sendMessage --> ", err);
+        log.error("sendMessage", err);
         return callback(err);
       });
   }
@@ -184,6 +188,26 @@ module.exports = function(defaultFuncs, api, ctx) {
     cb();
   }
 
+  function handleEmoji(msg, form, callback, cb) {
+    if (msg.emojiSize != null && msg.emoji == null) {
+      return callback({error: "emoji property is empty"});
+    }
+    if (msg.emoji) {
+      if (msg.emojiSize == null) {
+        msg.emojiSize = "medium";
+      }
+      if (msg.emojiSize != "small" && msg.emojiSize != "medium" && msg.emojiSize != "large") {
+        return callback({error: "emojiSize property is invalid"});
+      }
+      if (form['body'] != null && form['body'] != "") {
+        return callback({error: "body is not empty"});
+      }
+      form['body'] = msg.emoji;
+      form['tags[0]'] = "hot_emoji_size:" + msg.emojiSize;
+    }
+    cb();
+  }
+
   function handleAttachment(msg, form, callback, cb) {
     if (msg.attachment) {
       form['image_ids'] = [];
@@ -213,8 +237,39 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
   }
 
+  function handleMention(msg, form, callback, cb) {
+    if (msg.mentions) {
+      for (let i=0; i < msg.mentions.length; i++) {
+        const mention = msg.mentions[i];
+
+        const tag = mention.tag;
+        if (typeof tag !== "string") {
+          return callback({error: "Mention tags must be strings."});
+        }
+
+        const offset = msg.body.indexOf(tag, mention.fromIndex || 0);
+
+        if (offset < 0) {
+          log.warn("handleMention", "Mention for \"" + tag +
+            "\" not found in message string.");
+        }
+
+        if (mention.id == null) {
+          log.warn("handleMention", "Mention id should be non-null.");
+        }
+
+        const id = mention.id || 0;
+        form['profile_xmd[' + i + '][offset]'] = offset;
+        form['profile_xmd[' + i + '][length]'] = tag.length;
+        form['profile_xmd[' + i + '][id]'] = id;
+	form['profile_xmd[' + i + '][type]'] = 'p';
+      }
+    }
+    cb();
+  }
+
   return function sendMessage(msg, threadID, callback) {
-    if(!callback && utils.getType(threadID) === 'Function') {
+    if(!callback && (utils.getType(threadID) === 'Function' || utils.getType(threadID) === 'AsyncFunction')) {
       return callback({error: "Pass a threadID as a second argument."});
     }
     if(!callback) {
@@ -279,6 +334,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     handleSticker(msg, form, callback,
       () => handleAttachment(msg, form, callback,
         () => handleUrl(msg, form, callback,
-          () => send(form, threadID, messageAndOTID, callback))));
+          () => handleEmoji(msg, form, callback,
+            () => handleMention(msg, form, callback,
+              () => send(form, threadID, messageAndOTID, callback))))));
   };
 };

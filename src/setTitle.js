@@ -5,7 +5,7 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function setTitle(newTitle, threadID, callback) {
-    if(!callback && utils.getType(threadID) === 'Function') {
+    if(!callback && (utils.getType(threadID) === 'Function' || utils.getType(threadID) === 'AsyncFunction')) {
       throw {error: "please pass a threadID as a second argument."};
     }
 
@@ -44,7 +44,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post("https://www.facebook.com/messaging/send/", ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error && resData.error === 1545012){
           throw {error: "Cannot change chat title: Not member of chat."};
@@ -61,7 +61,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function(err) {
-        log.error("Error in setTitle", err);
+        log.error("setTitle", err);
         return callback(err);
       });
   };
