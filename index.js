@@ -106,7 +106,7 @@ function buildAPI(globalOptions, html, jar) {
     'sendTypingIndicator',
     'setMessageReaction',
     'setTitle',
-    
+
     // Beta features
     'getThreadHistoryGraphQL',
     'getThreadInfoGraphQL',
@@ -177,6 +177,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
 
         // This means the account has login approvals turned on.
         if (headers.location.indexOf('https://www.facebook.com/checkpoint/') > -1) {
+          log.info("login", "You have login approvals turned on.");
           var nextURL = 'https://www.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php';
 
           return utils
@@ -196,8 +197,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
               });
 
               var form = utils.arrToForm(arr);
-              if (html.indexOf("Enter Security Code to Continue") > -1 ||
-                  html.indexOf("Enter Your Login Code") > -1) {
+              if (html.indexOf("checkpoint/?next") > -1) {
                 throw {
                   error: 'login-approval',
                   continue: function(code) {
