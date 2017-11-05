@@ -398,6 +398,30 @@ function _formatAttachment(attachment1, attachment2) {
         animatedWebpUrl: blob.animated_image.uri,
         animatedWebpPreviewUrl: blob.preview_image.uri,
       };
+    case "MessageVideo":
+      return {
+        type: "video",
+        filename: blob.filename,
+        thumbnailUrl: blob.large_image.uri,
+        previewUrl: blob.large_image.uri,
+        previewWidth: blob.large_image.width,
+        previewHeight: blob.large_image.height,
+        ID: blob.legacy_attachment_id,
+        url: blob.playable_url,
+        width: blob.original_dimensions.x,
+        height: blob.original_dimensions.y,
+        duration: blob.playable_duration_in_ms,
+      };
+    case "MessageAudio":
+      return {
+        type: "audio",
+        audioType: blob.audio_type,
+        isVoiceMail: blob.is_voicemail,
+        filename: blob.filename,
+        ID: blob.url_shimhash,
+        url: blob.playable_url,
+        durationInMs: blob.playable_duration_in_ms,
+      };
     case "StickerAttachment":
         return {
           type: "sticker",
