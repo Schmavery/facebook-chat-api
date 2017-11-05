@@ -442,20 +442,20 @@ function _formatAttachment(attachment1, attachment2) {
     case "ExtensibleAttachment":
       return {
         type: "share",
-        description: blob.story_attachment.description.text,
-        ID: blob.legacy_attachment_id,
-        subattachments: blob.story_attachment.subattachments,
-        width: blob.story_attachment.media.image.width,
-        height: blob.story_attachment.media.image.height,
-        image: blob.story_attachment.media.image.uri,
-        playable: blob.story_attachment.media.is_playable,
-        duration: blob.story_attachment.media.playable_duration_in_ms,
-        source: blob.story_attachment.source.text,
-        title: blob.story_attachment.title_with_entities.text,
-        facebookUrl: blob.story_attachment.url,
-        target: blob.story_attachment.target,
-        styleList: blob.story_attachment.style_list,
-        url: blob.story_attachment.url
+        description: blob.story_attachment.description ? blob.story_attachment.description.text : '',
+        ID: blob.legacy_attachment_id ? blob.legacy_attachment_id : 0,
+        subattachments: blob.story_attachment.subattachments ? blob.story_attachment.subattachments : '',
+        width: (blob.story_attachment.media && blob.story_attachment.media.image) ? blob.story_attachment.media.image.width : 0,
+        height: (blob.story_attachment.media && blob.story_attachment.media.image) ? blob.story_attachment.media.image.height : 0,
+        image: (blob.story_attachment.media && blob.story_attachment.media.image) ? blob.story_attachment.media.image.uri : '',
+        playable: (blob.story_attachment.media && blob.story_attachment.media.is_playable) ? blob.story_attachment.media.is_playable : false,
+        duration: (blob.story_attachment.media && blob.story_attachment.media.playable_duration_in_ms) ? blob.story_attachment.media.playable_duration_in_ms : 0,
+        source: blob.story_attachment.source ? blob.story_attachment.source.text : '',
+        title: blob.story_attachment.title_with_entities ? blob.story_attachment.title_with_entities.text : '',
+        facebookUrl: blob.story_attachment.url ? blob.story_attachment.url : '',
+        target: blob.story_attachment.target ? blob.story_attachment.target : '',
+        styleList: blob.story_attachment.style_list ? blob.story_attachment.style_list : null,
+        url: blob.story_attachment.url ? blob.story_attachment.url : ''
       };
     case "MessageFile":
       return {
