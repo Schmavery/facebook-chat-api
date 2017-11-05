@@ -103,7 +103,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
 
         type: "audio",
         audioType: attachment.audio_type,
-        durationInMs: attachment.playable_duration_in_ms,
+        duration: attachment.playable_duration_in_ms,
         url: attachment.playable_url,
 
         isVoiceMail: attachment.is_voicemail,
@@ -141,7 +141,7 @@ function formatExtensibleAttachment(attachment) {
       thumbnailUrl: (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri,
       thumbnailWidth: (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width,
       thumbnailHeight: (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height,
-      durationMs: attachment.story_attachment.media.playable_duration_in_ms,
+      duration: attachment.story_attachment.media.playable_duration_in_ms,
       playableUrl: attachment.story_attachment.media.playable_url,
       
       // Format example:
