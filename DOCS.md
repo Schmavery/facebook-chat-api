@@ -971,6 +971,7 @@ Similar to how messages can vary based on their `type`, so too can the `attachme
 | `"animated_image"` | `filename`, `height`, `ID`, `largePreviewHeight`, `largePreviewUrl`, `largePreviewWidth`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
 | `"share"` | `animatedImageSize`, `description`, `duration`, `facebookUrl`, `height`, `ID`, `image`, `playable`, `source`, `styleList`, `subattachments`, `target`, `title`, `type`, `url`, `width` |
 | `"video"` | `duration`, `filename`, `height`, `ID`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
+| `"audio"` | `duration`, `audioType`, `filename`, `isVoiceMail`, `ID`, `url` |
 
 __Example__
 

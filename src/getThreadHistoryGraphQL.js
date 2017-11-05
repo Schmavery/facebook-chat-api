@@ -73,7 +73,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
         url: attachment.playable_url,
         
         // New
-        durationInMs: attachment.playable_duration_in_ms,
+        duration: attachment.playable_duration_in_ms,
         thumbnailWidth: attachment.large_image.width,
         thumbnailHeight: attachment.large_image.height,
         // Not sure what this is.

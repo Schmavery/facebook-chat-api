@@ -420,7 +420,7 @@ function _formatAttachment(attachment1, attachment2) {
         filename: blob.filename,
         ID: blob.url_shimhash,
         url: blob.playable_url,
-        durationInMs: blob.playable_duration_in_ms,
+        duration: blob.playable_duration_in_ms,
       };
     case "StickerAttachment":
         return {
