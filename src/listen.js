@@ -156,7 +156,12 @@ module.exports = function(defaultFuncs, api, ctx) {
               if (v.delta.class == "NewMessage") {
                 (function resolveAttachmentUrl(i) {
                   if (i == v.delta.attachments.length) {
-                    var fmtMsg = utils.formatDeltaMessage(v);
+                    var fmtMsg;
+                    try {
+                      fmtMsg = utils.formatDeltaMessage(v);
+                    } catch (err) {
+                      return globalCallback(err);
+                    }
                     return (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) ? undefined : globalCallback(null, fmtMsg);
                   } else {
                     if (v.delta.attachments[i].mercury.attach_type == 'photo') {
