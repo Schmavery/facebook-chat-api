@@ -44,11 +44,35 @@ module.exports = function(defaultFuncs, api, ctx) {
     switch (event.event) {
       // "read_receipt" event triggers when other people read the user's messages.
       case 'read_receipt':
-        globalCallback(null, utils.formatReadReceipt(event));
+        var fmtMsg;
+        try {
+          fmtMsg = utils.formatReadReceipt(event);
+        } catch (err) {
+          globalCallback({
+            error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+            detail: err,
+            res: event,
+            type: "parse_error",
+          });
+          return true;
+        }
+        globalCallback(null, fmtMsg);
         return true;
       // "read event" triggers when the user read other people's messages.
       case 'read':
-        globalCallback(null, utils.formatRead(event));
+        var fmtMsg;
+        try {
+          fmtMsg = utils.formatRead(event);
+        } catch (err) {
+          globalCallback({
+            error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+            detail: err,
+            res: event,
+            type: "parse_error",
+          });
+          return true;
+        }
+        globalCallback(null, fmtMsg);
         return true;
       default:
         return false;
@@ -116,9 +140,18 @@ module.exports = function(defaultFuncs, api, ctx) {
                 (!ctx.globalOptions.selfListen && v.from.toString() === ctx.userID)) {
                 return;
               }
-
-              return globalCallback(null, utils.formatTyp(v));
-              break;
+              var fmtMsg;
+              try {
+                fmtMsg = utils.formatTyp(v);
+              } catch (err) {
+                return globalCallback({
+                  error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+                  detail: err,
+                  res: v,
+                  type: "parse_error",
+                });
+              }
+              return globalCallback(null, fmtMsg);
             case 'chatproxy-presence':
               // TODO: what happens when you're logged in as a page?
               if(!ctx.globalOptions.updatePresence) {
@@ -127,9 +160,19 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               if (ctx.loggedIn) {
                 for(var userID in v.buddyList) {
-                  var formattedPresence = utils.formatProxyPresence(v.buddyList[userID], userID);
-                  if(formattedPresence != null)
-                  {
+                  var formattedPresence;
+                  try {
+                    formattedPresence = utils.formatProxyPresence(v.buddyList[userID], userID);
+                  } catch (err) {
+                    return globalCallback({
+                      error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+                      detail: err,
+                      res: v.buddyList[userID],
+                      type: "parse_error",
+                    });
+                  }
+                  
+                  if(formattedPresence != null) {
                     globalCallback(null, formattedPresence);
                   }
                 }
@@ -144,7 +187,17 @@ module.exports = function(defaultFuncs, api, ctx) {
               }
               // There should be only one key inside overlay
               Object.keys(v.overlay).map(function(userID) {
-                var formattedPresence = utils.formatPresence(v.overlay[userID], userID);
+                var formattedPresence;
+                try {
+                 formattedPresence = utils.formatPresence(v.overlay[userID], userID);
+                } catch (err) {
+                  return globalCallback({
+                    error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+                    detail: err,
+                    res: v.overlay[userID],
+                    type: "parse_error",
+                  });
+                }
                 if(ctx.loggedIn) {
                   return globalCallback(null, formattedPresence);
                 }
@@ -160,7 +213,12 @@ module.exports = function(defaultFuncs, api, ctx) {
                     try {
                       fmtMsg = utils.formatDeltaMessage(v);
                     } catch (err) {
-                      return globalCallback(err);
+                      return globalCallback({
+                        error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+                        detail: err,
+                        res: v,
+                        type: "parse_error",
+                      });
                     }
                     return (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) ? undefined : globalCallback(null, fmtMsg);
                   } else {
@@ -200,7 +258,18 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               switch (v.delta.class) {
                 case 'ReadReceipt':
-                  return globalCallback(null, utils.formatDeltaReadReceipt(v.delta));
+                  var fmtMsg;
+                  try {
+                    fmtMsg = utils.formatDeltaReadReceipt(v.delta);
+                  } catch (err) {
+                    return globalCallback({
+                      error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+                      detail: err,
+                      res: v.delta,
+                      type: "parse_error",
+                    });
+                  }
+                  return globalCallback(null, fmtMsg);
                 case 'AdminTextMessage':
                   switch (v.delta.type) {
                     case 'change_thread_theme':
@@ -213,7 +282,17 @@ module.exports = function(defaultFuncs, api, ctx) {
                 case 'ThreadName':
                 case 'ParticipantsAddedToGroupThread':
                 case 'ParticipantLeftGroupThread':
-                  var formattedEvent = utils.formatDeltaEvent(v.delta);
+                  var formattedEvent;
+                  try {
+                    formattedEvent = utils.formatDeltaEvent(v.delta);
+                  } catch (err) {
+                    return globalCallback({
+                      error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+                      detail: err,
+                      res: v.delta,
+                      type: "parse_error",
+                    });
+                  }
                   return (!ctx.globalOptions.selfListen && formattedEvent.author.toString() === ctx.userID || !ctx.loggedIn)
                     ? undefined
                     : globalCallback(null, formattedEvent);
@@ -236,7 +315,18 @@ module.exports = function(defaultFuncs, api, ctx) {
 
               atLeastOne = true;
               if (ctx.loggedIn) {
-                return globalCallback(null, utils.formatMessage(v));
+                var fmtMsg;
+                try {
+                  fmtMsg = utils.formatMessage(v);
+                } catch (err) {
+                  return globalCallback({
+                    error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+                    detail: err,
+                    res: v,
+                    type: "parse_error",
+                  });
+                }
+                return globalCallback(null, fmtMsg);
               }
               break;
           }
