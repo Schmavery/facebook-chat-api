@@ -56,6 +56,24 @@ function formatAttachmentsGraphQLResponse(attachment) {
         largePreviewHeight: attachment.large_preview.height,
         largePreviewWidth: attachment.large_preview.width,
       };
+    case "MessageAnimatedImage": 
+      return {
+        type: "image",
+        filename: attachment.filename,
+        attachmentID: attachment.legacy_attachment_id,
+        previewHeight: attachment.preview_image.height, 
+        previewUrl: attachment.preview_image.uri, 
+        previewWidth: attachment.preview_image.width, 
+        largePreviewUrl: attachment.animated_image.uri, 
+        largePreviewHeight: attachment.animated_image.height,
+        largePreviewWidth: attachment.animated_image.width,
+	
+        attributionApp: attachment.attribution_app ? {
+          attributionAppID: attachment.attribution_app.id,
+          name: attachment.attribution_app.name,
+          logo: attachment.attribution_app.square_logo,
+        } : null,
+      }
     case "MessageVideo":
       return {
         // Deprecated fields.
@@ -129,20 +147,20 @@ function formatExtensibleAttachment(attachment) {
       target:"",
 
       type: "share",
-      description: attachment.story_attachment.description.text,
+      description: (attachment.story_attachment.description == null) ? null : attachment.story_attachment.description.text,
       attachmentID: attachment.legacy_attachment_id,
       title: attachment.story_attachment.title_with_entities.text,
       subattachments: attachment.story_attachment.subattachments,
       url: attachment.story_attachment.url,
-      source: attachment.story_attachment.source.text,
-      playable: attachment.story_attachment.media.is_playable,
+      source: (attachment.story_attachment.source == null) ? null : attachment.story_attachment.source.text,
+      playable: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.is_playable,
       
       // New
-      thumbnailUrl: (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri,
-      thumbnailWidth: (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width,
-      thumbnailHeight: (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height,
-      duration: attachment.story_attachment.media.playable_duration_in_ms,
-      playableUrl: attachment.story_attachment.media.playable_url,
+      thumbnailUrl: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null : (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri,
+      thumbnailWidth: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width,
+      thumbnailHeight: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height,
+      duration: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.playable_duration_in_ms,
+      playableUrl: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.playable_url,
       
       // Format example:
       // 
@@ -175,6 +193,10 @@ function formatReactionsGraphQL(reaction) {
 }
 
 function formatEventData(event) {
+  if(event == null) {
+    return {};  
+  }
+  
   switch (event.__typename) {
     case "ThemeColorExtensibleMessageAdminText":
       return {
@@ -189,6 +211,42 @@ function formatEventData(event) {
       return {
         threadIcon: event.thread_icon,
       }
+    case "InstantGameUpdateExtensibleMessageAdminText":
+      return {
+        gameID: event.game.id,
+        update_type: event.update_type,
+        collapsed_text: event.collapsed_text,
+        expanded_text: event.expanded_text,
+        instant_game_update_data: event.instant_game_update_data,
+      }
+    case "GameScoreExtensibleMessageAdminText":
+      return {
+        game_type: event.game_type,
+      }	  
+    case "RtcCallLogExtensibleMessageAdminText":
+      return {
+        event: event.event,
+        is_video_call: event.is_video_call,
+        server_info_data: event.server_info_data,
+      }	
+    case "GroupPollExtensibleMessageAdminText":
+      return {
+        event_type: event.event_type,
+        total_count: event.total_count,
+        question: event.question,
+      }
+    // never data
+    case "ParticipantJoinedGroupCallExtensibleMessageAdminText":
+    case "ThreadEphemeralTtlModeExtensibleMessageAdminText":
+    case "StartedSharingVideoExtensibleMessageAdminText":
+    case "LightweightEventCreateExtensibleMessageAdminText":
+    case "LightweightEventNotifyExtensibleMessageAdminText":
+    case "LightweightEventNotifyBeforeEventExtensibleMessageAdminText":	
+    case "LightweightEventUpdateTitleExtensibleMessageAdminText":
+    case "LightweightEventUpdateTimeExtensibleMessageAdminText":
+    case "LightweightEventUpdateLocationExtensibleMessageAdminText": 
+    case "LightweightEventDeleteExtensibleMessageAdminText":
+      return {}
     default:
       return {error: "Don't know what to with event data type " + event.__typename}
   }
@@ -257,6 +315,26 @@ function formatMessagesGraphQLResponse(data) {
           eventData: {
             threadName: d.thread_name,
           },
+        };
+      case "ThreadImageMessage":
+        return {
+          type: "event",
+          messageID: d.message_id,
+          threadID: threadID,
+          // Can be either "GROUP" or ONE_TO_ONE.
+          threadType: messageThread.thread_type,
+          senderID: d.message_sender.id,
+          timestamp: d.timestamp_precise,
+          eventType: "change_thread_image",
+          snippet: d.snippet,
+          eventData: (d.image_with_metadata == null) ? {} /* removed image */ : { /* image added */
+            threadImage: {
+              attachmentID: d.image_with_metadata.legacy_attachment_id,
+              height: d.image_with_metadata.original_dimensions.x,
+              width: d.image_with_metadata.original_dimensions.y,
+              url: d.image_with_metadata.preview.uri
+            },
+	      },
         };
       case "ParticipantLeftMessage":
         return {
