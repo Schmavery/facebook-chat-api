@@ -50,6 +50,14 @@ function formatThreadGraphQLResponse(data) {
     mentionsMuteMode: messageThread.mentions_mute_mode.toLowerCase(),
     threadType: messageThread.thread_type.toLowerCase(),
     topEmojis: messageThread.top_emojis,
+    emoji: messageThread.customization_info ? messageThread.customization_info.emoji : null,
+    color: messageThread.customization_info && messageThread.customization_info.outgoing_bubble_color ?
+        messageThread.customization_info.outgoing_bubble_color.slice(2) : null,
+    nicknames: messageThread.customization_info && messageThread.customization_info.participant_customizations ?
+        messageThread.customization_info.participant_customizations.reduce(function(res, val) {
+          if (val.nickname) res[val.participant_id] = val.nickname;
+          return res;
+        }, {}) : {}
   };
 }
 
