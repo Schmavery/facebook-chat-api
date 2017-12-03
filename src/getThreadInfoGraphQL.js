@@ -41,7 +41,7 @@ function formatThreadGraphQLResponse(data) {
       return d.messaging_actor.id;
     }),
     unreadCount: messageThread.unread_count,
-    messageCount: messageThread.message_count,
+    messageCount: messageThread.messages_count,
     timestamp: messageThread.updated_time_precise,
     isPinProtected: messageThread.is_pin_protected,
     eventReminders: messageThread.event_reminders ? messageThread.event_reminders.nodes.map(formatEventReminders) : null,
