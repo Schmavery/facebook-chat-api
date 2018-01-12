@@ -579,49 +579,118 @@ __Arguments__
 ---------------------------------------
 
 <a name="getThreadList"></a>
-### api.getThreadList(start, end, type, callback)
+### api.getThreadList(limit, timestamp, tags, callback)
 
-Will return information about threads.
+Returns information about the user's threads.
 
 __Arguments__
 
-* `start`: Start index in the list of recently used threads.
-* `end`: End index.
-* `type`: Optional String, can be 'inbox', 'pending', or 'archived'. Inbox is default.
-* `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties:
+* `limit`: Limit the number of threads to fetch.
+* `timestamp`: Request threads *before* this date. `null` means *now*
+* `tags`: An array describing which folder to fetch. It should be one of these:
+  - `["INBOX"]` *(same as `[]`)*
+  - `["ARCHIVED"]`
+  - `["PENDING"]`
+  - `["OTHER"]`
+  - `["INBOX", "unread"]`
+  - `["ARCHIVED", "unread"]`
+  - `["PENDING", "unread"]`
+  - `["OTHER", "unread"]`
+  *if you find something new, let us know*
 
-| Key   |      Description      |
-|----------|:-------------:|
-| threadID | ID of the thread |
-| participantIDs |    Array of user IDs in the thread   |
-| name | Name of the thread. Usually the name of the user. In group chats, this will be empty if the name of the group chat is unset. |
-| nicknames |    Map of nicknames for members of the thread. If there are no nicknames set, this will be null.   |
-| snippet | This is the preview message for the thread and is usually the last message in the thread. |
-| snippetAttachments | If the snippet uses attachments (e.g. emoji's), this will be an array of the attachments. |
-| snippetSender | The ID of the author of the snippet |
-| unreadCount | Number of unread messages |
-| messageCount | Number of messages |
-| imageSrc | URL to the group chat photo. Null if unset or a canonical thread. |
-| timestamp |  |
-| serverTimestamp |  |
-| muteUntil | Timestamp at which the thread will no longer be muted. The timestamp will be -1 if the thread is muted indefinitely or null if the thread is not muted. |
-| isCanonicalUser | True if the other user in a canonical thread is a user, false if the other user is a page or group. |
-| isCanonical | True if the thread is a private chat to a single user, false for group chats. |
-| isSubscribed |  |
-| folder | The folder that the thread is in. Can be one of: <ul><li>'inbox'</li><li>'archive'</li></ul> |
-| isArchived | True if the thread is archived, false if not |
-| recipientsLoadable |  |
-| hasEmailParticipant |  |
-| readOnly |  |
-| canReply | True if the current user can reply in the thread |
-| cannotReplyReason | If canReply is false, this will be a string stating why. Null if canReply is true. |
-| lastMessageTimestamp | Timestamp of the last message. |
-| lastReadTimestamp | Timestamp of the last message that is marked as 'read' by the current user. |
-| lastMessageType | Message type of the last message. |
-| emoji | Object with key 'emoji' whose value is the emoji unicode character. Null if unset. |
-| color | String form of the custom color in hexadecimal form. |
-| adminIDs | Array of user IDs of the admins of the thread. Empty array if unset. |
-| threadType | 1 for a canonical thread, 2 for a group chat thread. |
+* `callback(err, list)`: Callback called when the query is done (either with an error or with a proper result). `list` is of type _array_ and contains objects with the following properties:
+
+__Thread list__
+
+| Key                  | Description                                                 |
+|----------------------|-------------------------------------------------------------|
+| threadID             | ID of the thread                                            |
+| name                 | The name of the thread                                      |
+| unreadCount          | Amount of unread messages in thread                         |
+| messageCount         | Amount of messages in thread                                |
+| imageSrc             | Link to the thread's image or `null`                        |
+| emoji                | The default emoji in thread (classic like is `null`)        |
+| color                | Thread's message color in `RRGGBB` (default blue is `null`) |
+| nicknames            | An array of `{"userid": "1234", "nickname": "John Doe"}`    |
+| muteUntil            | Timestamp until the mute expires or `null`                  |
+| participants         | An array of participants. See below                         |
+| adminIDs             | An array of thread admin IDs                                |
+| folder               | `INBOX`, `ARCHIVED`, `PENDING` or `OTHER`                   |
+| isGroup              | `true` or `false`                                           |
+| montageThread        | `message_thread:000000` or `null` *not yet tested*          |
+| reactionsMuteMode    | `REACTIONS_NOT_MUTED` or `REACTIONS_MUTED`                  |
+| mentionsMuteMode     | `MENTIONS_NOT_MUTED` or `MENTIONS_MUTED`                    |
+| isArchived           | `true` or `false`                                           |
+| isSubscribed         | `true` or `false`                                           |
+| timestamp            | timestamp in miliseconds                                    |
+| snippet              | Snippet's text message                                      |
+| snippetAttachments   | Attachments in snippet                                      |
+| snippetSender        | ID of snippet sender                                        |
+| lastMessageTimestamp | timestamp in milliseconds                                   |
+| lastReadTimestamp    | timestamp in milliseconds or `null`                         |
+| cannotReplyReason    | `null`, `"RECIPIENTS_NOT_LOADABLE"` or `"BLOCKED"`          |
+
+__`participants` format__
+
+`accountType` is one of the following:
+- `"User"`
+- `"Page"`
+- `"UnavailableMessagingActor"`
+- `"ReducedMessagingActor"`
+(*there might be more*)
+
+| Key                       | Description                                                   |
+|---------------------------|---------------------------------------------------------------|
+| accountType               | `"User"`                                                      |
+| userID                    | ID of user                                                    |
+| name                      | Full name of user                                             |
+| shortName                 | Short name of user (most likely first name)                   |
+| gender                    | Either `"MALE"`, `"FEMALE"` or `"NEUTER"`                     |
+| url                       | URL of the user's Facebook profile                            |
+| profilePicture            | URL of the profile picture                                    |
+| username                  | Username of user or `null`                                    |
+| isViewerFriend            | Is the user a friend of you?                                  |
+| isMessengerUser           | Does the user use Messenger?                                  |
+| isVerified                | Is the user verified? (Little blue tick mark)                 |
+| isMessageBlockedByViewer  | Is the user blocking messages from you?                       |
+| isViewerCoworker          | Is the user your coworker? *(not yet tested)*                 |
+| isEmployee                | `null`? *(not yet tested)*                                    |
+
+
+| Key                       | Description                                                   |
+|---------------------------|---------------------------------------------------------------|
+| accountType               | `"Page"`                                                      |
+| userID                    | ID of the page                                                |
+| name                      | Name of the fanpage                                           |
+| url                       | URL of the fanpage                                            |
+| profilePicture            | URL of the profile picture                                    |
+| username                  | Username of user or `null`                                    |
+| acceptsMessengerUserFeedback |                                                            |
+| isMessengerUser           | Does the fanpage use Messenger?                               |
+| isVerified                | Is the fanpage verified? (Little blue tick mark)              |
+| isMessengerPlatformBot    | Is the fanpage a bot                                          |
+| isMessageBlockedByViewer  | Is the fanpage blocking messages from you?                    |
+
+
+| Key                       | Description                                                   |
+|---------------------------|---------------------------------------------------------------|
+| accountType               | **1** `"ReducedMessagingActor"` (account requres verification, messages are hidden) or **2** `"UnavailableMessagingActor"` (account disabled/removed) |
+| userID                    | ID of the user                                                |
+| name                      | **1** Name of the user or **2** *Facebook User* in user's language |
+| url                       | `null`                                                        |
+| profilePicture            | URL of the default Facebook profile picture                   |
+| username                  | Username of user or `null`                                    |
+| acceptsMessengerUserFeedback |                                                            |
+| isMessageBlockedByViewer  | Is the user blocking messages from you?                       |
+
+
+In a case that some account type is not supported, we return just this *but you can't rely on it* and log warning to the console
+| Key          | Description             |
+|--------------|-------------------------|
+| accountType  | type, can be anything   |
+| userID       | ID of the account       |
+| name         | Name of the account     |
+
 
 ---------------------------------------
 

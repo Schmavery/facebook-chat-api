@@ -108,6 +108,7 @@ function buildAPI(globalOptions, html, jar) {
     'setTitle',
 
     // Deprecated features
+    "getThreadListDeprecated",
     'getThreadHistoryDeprecated',
     'getThreadInfoDeprecated',
   ];
