@@ -234,3 +234,4 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 - [facebot](https://github.com/Weetbix/facebot) - A facebook bridge for Slack.
 - [TestMyBot](https://github.com/codeforequity-at/testmybot) - Test Automation Framework for Chatbots
 - [Messenger-CLI](https://github.com/AstroCB/Messenger-CLI) - A command-line interface for sending and receiving messages through Facebook Messenger.
+- [AssumeZero-Bot](https://github.com/AstroCB/AssumeZero-Bot) – A highly customizable Facebook Messenger bot for group chats.
