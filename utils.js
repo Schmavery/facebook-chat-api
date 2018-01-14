@@ -236,10 +236,19 @@ function _formatAttachment(attachment1, attachment2) {
   // Instead of having a bunch of if statements guarding every access to image_data,
   // we set it to empty object and use the fact that it'll return undefined.
   attachment2 = attachment2 || {id:"", image_data: {}};
-  var fileName = attachment1.filename
-  attachment1 = attachment1.mercury ? attachment1.mercury : attachment1
-
-  switch (attachment1.attach_type) {
+  var fileName = attachment1.filename;
+  attachment1 = attachment1.mercury ? attachment1.mercury : attachment1;
+  var blob = attachment1.blob_attachment;
+  var type =  blob && blob.__typename ? blob.__typename : attachment1.attach_type;
+  if (! type && attachment1.sticker_attachment){
+    type = "StickerAttachment";
+    blob = attachment1.sticker_attachment;
+  }
+  else if (! type && attachment1.extensible_attachment){
+    type = "ExtensibleAttachment";
+    blob = attachment1.extensible_attachment;
+  }
+  switch (type) {
     case "sticker":
       return {
         type: "sticker",
@@ -350,8 +359,115 @@ function _formatAttachment(attachment1, attachment2) {
         attachment1: attachment1,
         attachment2: attachment2
       };
+    case "MessageImage":
+      return {
+        type: "photo",
+        ID: blob.legacy_attachment_id,
+        filename: blob.filename,
+        thumbnailUrl: blob.thumbnail.uri,
+
+        previewUrl: blob.preview.uri,
+        previewWidth: blob.preview.width,
+        previewHeight: blob.preview.height,
+
+        largePreviewUrl: blob.large_preview.uri,
+        largePreviewWidth: blob.large_preview.width,
+        largePreviewHeight: blob.large_preview.height,
+
+        url: blob.large_preview.uri,
+        width: blob.original_dimensions.x,
+        height: blob.original_dimensions.y,
+      }
+    case "MessageAnimatedImage":
+      return {
+        type: "animated_image",
+        name: blob.filename,
+        facebookUrl: blob.animated_image.uri,
+        previewUrl: blob.preview_image.uri,
+        previewWidth: blob.preview_image.width,
+        previewHeight: blob.preview_image.height,
+        thumbnailUrl: blob.preview_image.uri,
+        ID: blob.legacy_attachment_id,
+        filename: blob.filename,
+        width: blob.animated_image.width,
+        height: blob.animated_image.height,
+        url: blob.animated_image.uri,
+        rawGifImage: blob.animated_image.uri,
+        animatedGifUrl: blob.animated_image.uri,
+        animatedGifPreviewUrl: blob.preview_image.uri,
+        animatedWebpUrl: blob.animated_image.uri,
+        animatedWebpPreviewUrl: blob.preview_image.uri,
+      };
+    case "MessageVideo":
+      return {
+        type: "video",
+        filename: blob.filename,
+        thumbnailUrl: blob.large_image.uri,
+        previewUrl: blob.large_image.uri,
+        previewWidth: blob.large_image.width,
+        previewHeight: blob.large_image.height,
+        ID: blob.legacy_attachment_id,
+        url: blob.playable_url,
+        width: blob.original_dimensions.x,
+        height: blob.original_dimensions.y,
+        duration: blob.playable_duration_in_ms,
+      };
+    case "MessageAudio":
+      return {
+        type: "audio",
+        audioType: blob.audio_type,
+        isVoiceMail: blob.is_voicemail,
+        filename: blob.filename,
+        ID: blob.url_shimhash,
+        url: blob.playable_url,
+        duration: blob.playable_duration_in_ms,
+      };
+    case "StickerAttachment":
+        return {
+          type: "sticker",
+          url: blob.url,
+          stickerID: blob.id,
+          packID: blob.pack.id,
+          frameCount: blob.frame_count,
+          frameRate: blob.frame_rate,
+          framesPerRow: blob.frames_per_row,
+          framesPerCol: blob.frames_per_column,
+          spriteURI: blob.sprite_image,
+          spriteURI2x: blob.sprite_image_2x,
+          height: blob.height,
+          width: blob.width,
+          caption: blob.label,
+          description: blob.label
+        };
+    case "ExtensibleAttachment":
+      return {
+        type: "share",
+        description: blob.story_attachment.description && blob.story_attachement.description.text,
+        ID: blob.legacy_attachment_id,
+        subattachments: blob.story_attachment.subattachments,
+        width: blob.story_attachment.media && blob.story_attachment.media.image && blob.story_attachment.media.image.width,
+        height: blob.story_attachment.media && blob.story_attachment.media.image && blob.story_attachment.media.image.height,
+        image: blob.story_attachment.media && blob.story_attachment.media.image && blob.story_attachment.media.image.uri,
+        playable: blob.story_attachment.media && blob.story_attachment.media.is_playable,
+        duration: blob.story_attachment.media && blob.story_attachment.media.playable_duration_in_ms,
+        source: blob.story_attachment.source.text,
+        title: blob.story_attachment.title_with_entities.text,
+        facebookUrl: blob.story_attachment.url,
+        target: blob.story_attachment.target,
+        styleList: blob.story_attachment.style_list,
+        url: blob.story_attachment.url
+      };
+    case "MessageFile":
+      return {
+        type: "file",
+        name: blob.filename,
+        url: blob.url,
+        ID: blob.message_file_fbid,
+        isMalicious: blob.is_malicious,
+        mimeType: blob.content_type,
+      };
     default:
-      throw new Error("unrecognized attach_file `" + JSON.stringify(attachment1) + "`");
+      throw new Error("unrecognized attach_file of type " + type +  "`" + JSON.stringify(attachment1, null, 4) + " attachment2: " + JSON.stringify(attachment2, null, 4) + "`");
   }
 }
 
@@ -367,6 +483,16 @@ function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
 
 function formatDeltaMessage(m){
   var md = m.delta.messageMetadata;
+
+  var mdata = (m.delta.data === undefined) ? [] : (m.delta.data.prng === undefined) ? [] : JSON.parse(m.delta.data.prng);
+  var m_id = mdata.map(u => u.i);
+  var m_offset = mdata.map(u => u.o);
+  var m_length = mdata.map(u => u.l);
+  var mentions = {};
+  for (var i = 0; i < m_id.length; i++) {
+    mentions[m_id[i]] = m.delta.body.substring(m_offset[i], m_offset[i] + m_length[i]);
+  }
+  
   return {
     type: "message",
     senderID: formatID(md.actorFbId.toString()),
@@ -374,6 +500,7 @@ function formatDeltaMessage(m){
     threadID: formatID((md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()),
     messageID: md.messageId,
     attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
+    mentions: mentions,
     timestamp: md.timestamp,
     isGroup: !!md.threadKey.threadFbId
   }
@@ -406,7 +533,8 @@ function formatMessage(m) {
     timestampRelative: originalMessage.timestamp_relative,
     timestampDatetime: originalMessage.timestamp_datetime,
     tags: originalMessage.tags,
-    reactions: originalMessage.reactions ? originalMessage.reactions : []
+    reactions: originalMessage.reactions ? originalMessage.reactions : [],
+    isUnread: originalMessage.is_unread
   };
 
   if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();

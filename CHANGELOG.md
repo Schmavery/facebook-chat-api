@@ -1,9 +1,13 @@
 # Changelog
 ## 1.5.0 (unreleased)
+* [Fix] Logging in using login approvals (2FA) now work ([#548](https://github.com/Schmavery/facebook-chat-api/pull/548))
+* [New] [listen](/DOCS.md#listen): Adds field `mentions` that stores an array of ids of users tagged in the message ([#510](https://github.com/Schmavery/facebook-chat-api/pull/510))
 * [Breaking change] [getThreadList](/DOCS.md#getThreadList): Removes deprecated fields in returned object, adds some new fields ([#488](https://github.com/Schmavery/facebook-chat-api/pull/488))
 * [Breaking change] [getThreadInfo](/DOCS.md#getThreadInfo): Removes deprecated fields in returned object, adds some new fields ([#488](https://github.com/Schmavery/facebook-chat-api/pull/488))
 * [New] [getEmojiUrl](/DOCS.md#getEmojiUrl): Adds utility function for getting the image URL for a Messenger-style emoji ([#477](https://github.com/Schmavery/facebook-chat-api/pull/477))
 * [Breaking change] [changeThreadColor](/DOCS.md#changeThreadColor): Due to Facebook backend changes, the thread color can no longer be set to an arbitrary hex value. Color validation and `api.threadColors` have been added to facilitate this change ([#512](https://github.com/Schmavery/facebook-chat-api/pull/512))
+* [getThreadHistory](/DOCS.md#getThreadHistory): Fix crash when the author of an old message is no longer available ([#521](https://github.com/Schmavery/facebook-chat-api/pull/521))
+* [New] [message](/DOCS.md#message): Adds field `isUnread` that represents whether or not the message was read ([#519](https://github.com/Schmavery/facebook-chat-api/pull/519))
 
 ## 1.4.0 (2017-04-28)
 * [Breaking change] [getThreadHistory](/DOCS.md#getThreadHistory): update parameters - no more start & end params; replaced with amount ([#453](https://github.com/Schmavery/facebook-chat-api/pull/453))

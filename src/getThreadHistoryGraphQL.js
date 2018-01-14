@@ -73,7 +73,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
         url: attachment.playable_url,
         
         // New
-        durationInMs: attachment.playable_duration_in_ms,
+        duration: attachment.playable_duration_in_ms,
         thumbnailWidth: attachment.large_image.width,
         thumbnailHeight: attachment.large_image.height,
         // Not sure what this is.
@@ -103,7 +103,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
 
         type: "audio",
         audioType: attachment.audio_type,
-        durationInMs: attachment.playable_duration_in_ms,
+        duration: attachment.playable_duration_in_ms,
         url: attachment.playable_url,
 
         isVoiceMail: attachment.is_voicemail,
@@ -134,15 +134,15 @@ function formatExtensibleAttachment(attachment) {
       title: attachment.story_attachment.title_with_entities.text,
       subattachments: attachment.story_attachment.subattachments,
       url: attachment.story_attachment.url,
-      source: attachment.story_attachment.source.text,
-      playable: attachment.story_attachment.media.is_playable,
+      source: (attachment.story_attachment.source != null ? attachment.story_attachment.source.text : ""),
+      playable: (attachment.story_attachment.media != null ? attachment.story_attachment.media.is_playable : ""),
       
       // New
-      thumbnailUrl: (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri,
-      thumbnailWidth: (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width,
-      thumbnailHeight: (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height,
-      durationMs: attachment.story_attachment.media.playable_duration_in_ms,
-      playableUrl: attachment.story_attachment.media.playable_url,
+      thumbnailUrl: (attachment.story_attachment.media != null ? (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri : ""),
+      thumbnailWidth: (attachment.story_attachment.media != null ? (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width : ""),
+      thumbnailHeight: (attachment.story_attachment.media != null ? (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height : ""),
+      duration: (attachment.story_attachment.media != null ? attachment.story_attachment.media.playable_duration_in_ms : ""),
+      playableUrl: (attachment.story_attachment.media != null ? attachment.story_attachment.media.playable_url : ""),
       
       // Format example:
       // 

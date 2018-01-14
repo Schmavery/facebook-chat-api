@@ -506,7 +506,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 ---------------------------------------
 
 <a name="getThreadHistory"></a>
-### api.getThreadHistory(threadID, amount, timestamp[, callback])
+### api.getThreadHistory(threadID, amount, timestamp, callback)
 
 Takes a threadID, number of messages, a timestamp, and a callback.
 
@@ -762,6 +762,7 @@ __Arguments__
 
 - `callback(error, message)`: A callback called every time the logged-in account receives a new message.
 
+<a name="message"></a>
 __Message__
 
 The message object will contain different fields based on its type (as determined by its `type` field). By default, the only type that will be listened for is `message`. If enabled through [setOptions](#setOptions), the message object may alternatively represent an event e.g. a read receipt. The available event types are as follows:
@@ -773,7 +774,7 @@ The message object will contain different fields based on its type (as determine
 		<th>Description</th>
 	</tr>
 	<tr>
-		<td rowspan="7">
+		<td rowspan="8">
 			<code>"message"</code><br />
 			A message was sent to a thread.
 		</td>
@@ -788,6 +789,10 @@ The message object will contain different fields based on its type (as determine
 		<td><code>isGroup</code></td>
 		<td>boolean, true if this thread is a group thread (more than 2 participants).</td>
 	</tr>
+    <tr>
+        <td><code>mentions</code></td>
+        <td>An object containing people mentioned/tagged in the message in the format { id: name }</td>
+    </tr>
 	<tr>
 		<td><code>messageID</code></td>
 		<td>A string representing the message ID.</td>
@@ -799,6 +804,10 @@ The message object will contain different fields based on its type (as determine
 	<tr>
 		<td><code>threadID</code></td>
 		<td>The threadID representing the thread in which the message was sent.</td>
+	</tr>
+  	<tr>
+		<td><code>isUnread</code></td>
+		<td>Boolean representing whether or not the message was read.</td>
 	</tr>
 	<tr>
 		<td><code>type</code></td>
@@ -962,6 +971,7 @@ Similar to how messages can vary based on their `type`, so too can the `attachme
 | `"animated_image"` | `filename`, `height`, `ID`, `largePreviewHeight`, `largePreviewUrl`, `largePreviewWidth`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
 | `"share"` | `animatedImageSize`, `description`, `duration`, `facebookUrl`, `height`, `ID`, `image`, `playable`, `source`, `styleList`, `subattachments`, `target`, `title`, `type`, `url`, `width` |
 | `"video"` | `duration`, `filename`, `height`, `ID`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
+| `"audio"` | `duration`, `audioType`, `filename`, `isVoiceMail`, `ID`, `url` |
 
 __Example__
 

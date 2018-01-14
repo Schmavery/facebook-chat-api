@@ -48,7 +48,9 @@ module.exports = function(defaultFuncs, api, ctx) {
             if (err) return callback(err); //callback({error: "Could not retrieve user information in getThreadHistory."});
 
             resData.payload.actions.forEach(function (v) {
-              v.sender_name = data[v.author.split(":").pop()].name;
+              var sender = data[v.author.split(":").pop()]
+              if (sender) v.sender_name = sender.name;
+              else v.sender_name = 'Facebook User'
               v.sender_fbid = v.author;
               delete v.author;
             });
