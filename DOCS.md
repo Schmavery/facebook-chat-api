@@ -947,7 +947,7 @@ The message object will contain different fields based on its type (as determine
 	</tr>
 	<tr>
 		<td><code>timestamp</code></td>
-		<td>How old the presence information is.</td>
+		<td>The time when the user was last online.</td>
 	</tr>
 	<tr>
 		<td><code>type</code></td>
