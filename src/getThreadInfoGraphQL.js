@@ -72,8 +72,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     var form = {
       "queries": JSON.stringify({
         "o0":{
-          // This doc_id was valid on July 15th 2017.
-          "doc_id":"1527774147243246",
+          // This doc_id is valid as of February 1st, 2018.
+          "doc_id":"1498317363570230",
           "query_params":{
             "id": threadID,
             "message_limit": 0,
