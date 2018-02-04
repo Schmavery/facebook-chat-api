@@ -231,7 +231,7 @@ function getGUID() {
 function _formatAttachment(attachment1, attachment2) {
   // TODO: THIS IS REALLY BAD
   // This is an attempt at fixing Facebook's inconsistencies. Sometimes they give us
-  // two attachement objects, but sometimes only one. They each contain part of the
+  // two attachment objects, but sometimes only one. They each contain part of the
   // data that you'd want so we merge them for convenience.
   // Instead of having a bunch of if statements guarding every access to image_data,
   // we set it to empty object and use the fact that it'll return undefined.
@@ -442,7 +442,7 @@ function _formatAttachment(attachment1, attachment2) {
     case "ExtensibleAttachment":
       return {
         type: "share",
-        description: blob.story_attachment.description && blob.story_attachement.description.text,
+        description: blob.story_attachment.description && blob.story_attachment.description.text,
         ID: blob.legacy_attachment_id,
         subattachments: blob.story_attachment.subattachments,
         width: blob.story_attachment.media && blob.story_attachment.media.image && blob.story_attachment.media.image.width,
