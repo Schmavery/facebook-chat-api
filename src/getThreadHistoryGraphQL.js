@@ -114,8 +114,24 @@ function formatAttachmentsGraphQLResponse(attachment) {
   }
 }
 
+function extractThumbnail(media){
+  if (media){
+    var image = media.animated_image || media.image;
+    
+    if(image){
+      return image;
+    }
+  }
+  return {
+    uri : "",
+    width : "",
+    height : ""
+  };
+}
+
 function formatExtensibleAttachment(attachment) {
   if (attachment.story_attachment) {
+    var thumbnail = extractThumbnail(attachment.story_attachment.media);
     return {
       // Deprecated fields
       animatedImageSize: "",
@@ -138,9 +154,9 @@ function formatExtensibleAttachment(attachment) {
       playable: (attachment.story_attachment.media != null ? attachment.story_attachment.media.is_playable : ""),
       
       // New
-      thumbnailUrl: (attachment.story_attachment.media != null ? (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri : ""),
-      thumbnailWidth: (attachment.story_attachment.media != null ? (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width : ""),
-      thumbnailHeight: (attachment.story_attachment.media != null ? (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height : ""),
+      thumbnailUrl: thumbnail.uri,
+      thumbnailWidth: thumbnail.width,
+      thumbnailHeight: thumbnail.height,
       duration: (attachment.story_attachment.media != null ? attachment.story_attachment.media.playable_duration_in_ms : ""),
       playableUrl: (attachment.story_attachment.media != null ? attachment.story_attachment.media.playable_url : ""),
       
@@ -175,6 +191,7 @@ function formatReactionsGraphQL(reaction) {
 }
 
 function formatEventData(event) {
+    if (!event) return {};
   switch (event.__typename) {
     case "ThemeColorExtensibleMessageAdminText":
       return {
