@@ -450,7 +450,7 @@ function _formatAttachment(attachment1, attachment2) {
         image: blob.story_attachment.media && blob.story_attachment.media.image && blob.story_attachment.media.image.uri,
         playable: blob.story_attachment.media && blob.story_attachment.media.is_playable,
         duration: blob.story_attachment.media && blob.story_attachment.media.playable_duration_in_ms,
-        source: blob.story_attachment.source.text,
+        source: blob.story_attachment.source?blob.story_attachment.source.text:null,
         title: blob.story_attachment.title_with_entities.text,
         facebookUrl: blob.story_attachment.url,
         target: blob.story_attachment.target,
