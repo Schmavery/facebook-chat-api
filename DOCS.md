@@ -774,7 +774,7 @@ The message object will contain different fields based on its type (as determine
 		<th>Description</th>
 	</tr>
 	<tr>
-		<td rowspan="8">
+		<td rowspan="9">
 			<code>"message"</code><br />
 			A message was sent to a thread.
 		</td>
