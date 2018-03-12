@@ -123,9 +123,9 @@ function extractThumbnail(media){
     }
   }
   return {
-    uri : "",
-    width : "",
-    height : ""
+    uri : null,
+    width : null,
+    height : null
   };
 }
 
