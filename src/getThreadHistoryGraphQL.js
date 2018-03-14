@@ -175,6 +175,7 @@ function formatReactionsGraphQL(reaction) {
 }
 
 function formatEventData(event) {
+  if (!event) return {};
   switch (event.__typename) {
     case "ThemeColorExtensibleMessageAdminText":
       return {
@@ -302,6 +303,34 @@ function formatMessagesGraphQLResponse(data) {
           snippet: d.snippet,
           eventType: d.extensible_message_admin_text_type.toLowerCase(),
           eventData: formatEventData(d.extensible_message_admin_text),
+        };
+      case "VoiceCallMessage":
+        return {
+          type: "event",
+          messageID: d.message_id,
+          threadID: threadID,
+          threadType: messageThread.thread_type,
+          senderID: d.message_sender.id,
+          timestamp: d.timestamp_precise,
+          snippet: d.snippet,
+          eventType: "phone_call",
+          eventData: {
+            answered: d.answered
+          },
+        };
+      case "VideoCallMessage":
+        return {
+          type: "event",
+          messageID: d.message_id,
+          threadID: threadID,
+          threadType: messageThread.thread_type,
+          senderID: d.message_sender.id,
+          timestamp: d.timestamp_precise,
+          snippet: d.snippet,
+          eventType: "video_call",
+          eventData: {
+            answered: d.answered
+          },
         };
       default:
         return {error: "Don't know about message type " + d.__typename};
