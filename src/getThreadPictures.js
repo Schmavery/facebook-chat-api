@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 
-var utils = require("../utils");
-var log = require("npmlog");
+var utils = require('../utils');
+var log = require('npmlog');
 
-module.exports = function(defaultFuncs, api, ctx) {
-  return function getThreadPictures(threadID, offset, limit, callback) {
-    if(!callback) {
-      throw {error: "getThreadPictures: need callback"};
+module.exports = function (defaultFuncs, api, ctx) {
+  return function getThreadPictures (threadID, offset, limit, callback) {
+    if (!callback) {
+      throw new Error('getThreadPictures: need callback');
     }
 
     var form = {
@@ -16,21 +16,21 @@ module.exports = function(defaultFuncs, api, ctx) {
     };
 
     defaultFuncs
-      .post("https://www.facebook.com/ajax/messaging/attachments/sharedphotos.php", ctx.jar, form)
+      .post('https://www.facebook.com/ajax/messaging/attachments/sharedphotos.php', ctx.jar, form)
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-      .then(function(resData) {
+      .then(function (resData) {
         if (resData.error) {
           throw resData;
         }
-        return Promise.all(resData.payload.imagesData.map(function(image) {
+        return Promise.all(resData.payload.imagesData.map(function (image) {
           form = {
             'thread_id': threadID,
             'image_id': image.fbid
           };
           return defaultFuncs
-            .post("https://www.facebook.com/ajax/messaging/attachments/sharedphotos.php", ctx.jar, form)
+            .post('https://www.facebook.com/ajax/messaging/attachments/sharedphotos.php', ctx.jar, form)
             .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-            .then(function(resData) {
+            .then(function (resData) {
               if (resData.error) {
                 throw resData;
               }
@@ -41,11 +41,11 @@ module.exports = function(defaultFuncs, api, ctx) {
             });
         }));
       })
-      .then(function(resData) {
+      .then(function (resData) {
         callback(null, resData);
       })
-      .catch(function(err) {
-        log.error("Error in getThreadPictures", err);
+      .catch(function (err) {
+        log.error('Error in getThreadPictures', err);
         callback(err);
       });
   };

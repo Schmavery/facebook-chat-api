@@ -1,8 +1,7 @@
-"use strict";
+'use strict';
 
-var cheerio = require("cheerio");
-var utils = require("../utils");
-var log = require("npmlog");
+var utils = require('../utils');
+var log = require('npmlog');
 
 // [almost] copy pasted from one of FB's minified file (GenderConst)
 var GENDERS = {
@@ -17,48 +16,48 @@ var GENDERS = {
   8: 'female_plural',
   9: 'male_plural',
   10: 'neuter_plural',
-  11: 'unknown_plural',
+  11: 'unknown_plural'
 };
 
-function formatData(obj) {
-  return Object.keys(obj).map(function(key) {
+function formatData (obj) {
+  return Object.keys(obj).map(function (key) {
     var user = obj[key];
     return {
       alternateName: user.alternateName,
       firstName: user.firstName,
       gender: GENDERS[user.gender],
       userID: utils.formatID(user.id.toString()),
-      isFriend: (user.is_friend != null && user.is_friend) ? true : false,
+      isFriend: !!((user.is_friend != null && user.is_friend)),
       fullName: user.name,
       profilePicture: user.thumbSrc,
       type: user.type,
       profileUrl: user.uri,
       vanity: user.vanity,
-      isBirthday: !!user.is_birthday,
-    }
+      isBirthday: !!user.is_birthday
+    };
   });
 }
 
-module.exports = function(defaultFuncs, api, ctx) {
-  return function getFriendsList(callback) {
-    if(!callback) {
-      throw {error: "getFriendsList: need callback"};
+module.exports = function (defaultFuncs, api, ctx) {
+  return function getFriendsList (callback) {
+    if (!callback) {
+      throw new Error('getFriendsList: need callback');
     }
 
     defaultFuncs
-      .postFormData("https://www.facebook.com/chat/user_info_all", ctx.jar, {}, {viewer: ctx.userID})
+      .postFormData('https://www.facebook.com/chat/user_info_all', ctx.jar, {}, {viewer: ctx.userID})
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-      .then(function(resData) {
+      .then(function (resData) {
         if (!resData) {
-          throw {error: "getFriendsList returned empty object."};
+          throw new Error('getFriendsList returned empty object.');
         }
-        if(resData.error) {
+        if (resData.error) {
           throw resData;
         }
         callback(null, formatData(resData.payload));
       })
-      .catch(function(err) {
-        log.error("getFriendsList", err);
+      .catch(function (err) {
+        log.error('getFriendsList', err);
         return callback(err);
       });
   };
