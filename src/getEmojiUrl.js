@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-const util = require("util");
+const util = require('util');
 
-module.exports = function() {
-  return function getEmojiUrl(c, size, pixelRatio) {
+module.exports = function () {
+  return function getEmojiUrl (c, size, pixelRatio) {
     /*
      Resolves Facebook Messenger emoji image asset URL for an emoji character.
      Supported sizes are 32, 64, and 128.

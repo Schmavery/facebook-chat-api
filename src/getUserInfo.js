@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-var utils = require("../utils");
-var log = require("npmlog");
+var utils = require('../utils');
+var log = require('npmlog');
 
-function formatData(data) {
+function formatData (data) {
   var retObj = {};
 
   for (var prop in data) {
@@ -18,39 +18,39 @@ function formatData(data) {
         gender: innerObj.gender,
         type: innerObj.type,
         isFriend: innerObj.is_friend,
-        isBirthday: !!innerObj.is_birthday,
-      }
+        isBirthday: !!innerObj.is_birthday
+      };
     }
   }
 
   return retObj;
 }
 
-module.exports = function(defaultFuncs, api, ctx) {
-  return function getUserInfo(id, callback) {
-    if(!callback) {
-      throw {error: "getUserInfo: need callback"};
+module.exports = function (defaultFuncs, api, ctx) {
+  return function getUserInfo (id, callback) {
+    if (!callback) {
+      throw new Error('getUserInfo: need callback');
     }
 
-    if(utils.getType(id) !== 'Array') {
+    if (utils.getType(id) !== 'Array') {
       id = [id];
     }
 
     var form = {};
-    id.map(function(v, i) {
-      form["ids[" + i + "]"] = v;
+    id.map(function (v, i) {
+      form['ids[' + i + ']'] = v;
     });
-    defaultFuncs.post("https://www.facebook.com/chat/user_info/", ctx.jar, form)
-    .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-    .then(function(resData) {
-      if (resData.error) {
-        throw resData;
-      }
-      return callback(null, formatData(resData.payload.profiles));
-    })
-    .catch(function(err) {
-      log.error("getUserInfo", err);
-      return callback(err);
-    });
+    defaultFuncs.post('https://www.facebook.com/chat/user_info/', ctx.jar, form)
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
+      .then(function (resData) {
+        if (resData.error) {
+          throw resData;
+        }
+        return callback(null, formatData(resData.payload.profiles));
+      })
+      .catch(function (err) {
+        log.error('getUserInfo', err);
+        return callback(err);
+      });
   };
 };

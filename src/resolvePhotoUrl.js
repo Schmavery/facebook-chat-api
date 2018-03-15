@@ -1,16 +1,16 @@
-"use strict";
+'use strict';
 
-var utils = require("../utils");
-var log = require("npmlog");
+var utils = require('../utils');
+var log = require('npmlog');
 
 module.exports = function (defaultFuncs, api, ctx) {
-  return function resolvePhotoUrl(photoID, callback) {
+  return function resolvePhotoUrl (photoID, callback) {
     if (!callback) {
-      throw { error: "resolvePhotoUrl: need callback" };
+      throw new Error('resolvePhotoUrl: need callback');
     }
 
     defaultFuncs
-      .get("https://www.facebook.com/mercury/attachments/photo", ctx.jar, { photo_id: photoID })
+      .get('https://www.facebook.com/mercury/attachments/photo', ctx.jar, { photo_id: photoID })
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(resData => {
         if (resData.error) {
@@ -22,7 +22,7 @@ module.exports = function (defaultFuncs, api, ctx) {
         return callback(null, photoUrl);
       })
       .catch(err => {
-        log.error("resolvePhotoUrl", err);
+        log.error('resolvePhotoUrl', err);
         return callback(err);
       });
   };

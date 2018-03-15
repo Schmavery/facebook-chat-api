@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-var utils = require("../utils");
-var log = require("npmlog");
+var utils = require('../utils');
+var log = require('npmlog');
 
-function formatData(data) {
+function formatData (data) {
   return {
     userID: utils.formatID(data.uid.toString()),
     photoUrl: data.photo,
@@ -13,29 +13,29 @@ function formatData(data) {
     profileUrl: data.path,
     category: data.category,
     score: data.score,
-    type: data.type,
+    type: data.type
   };
 }
 
-module.exports = function(defaultFuncs, api, ctx) {
-  return function getUserID(name, callback) {
-    if(!callback) {
-      throw {error: "getUserID: need callback"};
+module.exports = function (defaultFuncs, api, ctx) {
+  return function getUserID (name, callback) {
+    if (!callback) {
+      throw new Error('getUserID: need callback');
     }
 
     var form = {
-      'value' : name.toLowerCase(),
-      'viewer' : ctx.userID,
-      'rsp' : "search",
-      'context' : "search",
-      'path' : "/home.php",
-      'request_id' : utils.getGUID(),
+      'value': name.toLowerCase(),
+      'viewer': ctx.userID,
+      'rsp': 'search',
+      'context': 'search',
+      'path': '/home.php',
+      'request_id': utils.getGUID()
     };
 
     defaultFuncs
-      .get("https://www.facebook.com/ajax/typeahead/search.php", ctx.jar, form)
+      .get('https://www.facebook.com/ajax/typeahead/search.php', ctx.jar, form)
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-      .then(function(resData) {
+      .then(function (resData) {
         if (resData.error) {
           throw resData;
         }
@@ -44,8 +44,8 @@ module.exports = function(defaultFuncs, api, ctx) {
 
         callback(null, data.map(formatData));
       })
-      .catch(function(err) {
-        log.error("getUserID", err);
+      .catch(function (err) {
+        log.error('getUserID', err);
         return callback(err);
       });
   };

@@ -1,19 +1,19 @@
-"use strict";
+'use strict';
 
-var utils = require("../utils");
-var log = require("npmlog");
+var utils = require('../utils');
+var log = require('npmlog');
 
-module.exports = function(defaultFuncs, api, ctx) {
-  return function deleteMessage(messageOrMessages, callback) {
-    if(!callback) {
-      callback = function(){};
+module.exports = function (defaultFuncs, api, ctx) {
+  return function deleteMessage (messageOrMessages, callback) {
+    if (!callback) {
+      callback = function () {};
     }
 
     var form = {
-      client: 'mercury',
+      client: 'mercury'
     };
 
-    if(utils.getType(messageOrMessages) !== "Array") {
+    if (utils.getType(messageOrMessages) !== 'Array') {
       messageOrMessages = [messageOrMessages];
     }
 
@@ -22,17 +22,17 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     defaultFuncs
-      .post("https://www.facebook.com/ajax/mercury/delete_messages.php", ctx.jar, form)
+      .post('https://www.facebook.com/ajax/mercury/delete_messages.php', ctx.jar, form)
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-      .then(function(resData) {
+      .then(function (resData) {
         if (resData.error) {
           throw resData;
         }
 
         return callback();
       })
-      .catch(function(err) {
-        log.error("deleteMessage", err);
+      .catch(function (err) {
+        log.error('deleteMessage', err);
         return callback(err);
       });
   };
