@@ -774,7 +774,7 @@ The message object will contain different fields based on its type (as determine
 		<th>Description</th>
 	</tr>
 	<tr>
-		<td rowspan="8">
+		<td rowspan="9">
 			<code>"message"</code><br />
 			A message was sent to a thread.
 		</td>
@@ -947,7 +947,7 @@ The message object will contain different fields based on its type (as determine
 	</tr>
 	<tr>
 		<td><code>timestamp</code></td>
-		<td>How old the presence information is.</td>
+		<td>The time when the user was last online.</td>
 	</tr>
 	<tr>
 		<td><code>type</code></td>

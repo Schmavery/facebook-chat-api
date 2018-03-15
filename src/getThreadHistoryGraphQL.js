@@ -446,8 +446,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     var form = {
       "queries": JSON.stringify({
         "o0":{
-          // This doc_id was valid on July 15th 2017.
-          "doc_id":"1527774147243246",
+          // This doc_id was valid on February 2nd 2017.
+          "doc_id":"1498317363570230",
           "query_params":{
             "id": threadID,
             "message_limit": amount,

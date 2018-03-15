@@ -41,7 +41,7 @@ function formatThreadGraphQLResponse(data) {
       return d.messaging_actor.id;
     }),
     unreadCount: messageThread.unread_count,
-    messageCount: messageThread.message_count,
+    messageCount: messageThread.messages_count,
     timestamp: messageThread.updated_time_precise,
     isPinProtected: messageThread.is_pin_protected,
     eventReminders: messageThread.event_reminders ? messageThread.event_reminders.nodes.map(formatEventReminders) : null,
@@ -50,6 +50,14 @@ function formatThreadGraphQLResponse(data) {
     mentionsMuteMode: messageThread.mentions_mute_mode.toLowerCase(),
     threadType: messageThread.thread_type.toLowerCase(),
     topEmojis: messageThread.top_emojis,
+    emoji: messageThread.customization_info ? messageThread.customization_info.emoji : null,
+    color: messageThread.customization_info && messageThread.customization_info.outgoing_bubble_color ?
+        messageThread.customization_info.outgoing_bubble_color.slice(2) : null,
+    nicknames: messageThread.customization_info && messageThread.customization_info.participant_customizations ?
+        messageThread.customization_info.participant_customizations.reduce(function(res, val) {
+          if (val.nickname) res[val.participant_id] = val.nickname;
+          return res;
+        }, {}) : {}
   };
 }
 
@@ -64,8 +72,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     var form = {
       "queries": JSON.stringify({
         "o0":{
-          // This doc_id was valid on July 15th 2017.
-          "doc_id":"1527774147243246",
+          // This doc_id is valid as of February 1st, 2018.
+          "doc_id":"1498317363570230",
           "query_params":{
             "id": threadID,
             "message_limit": 0,
