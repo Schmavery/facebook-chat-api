@@ -8,7 +8,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
     case "MessageImage":
       return {
         // Deprecated fields
-        facebookUrl: "", // ?? 
+        facebookUrl: "", // ??
         hiresUrl: "", // ?
         mimeType: "", // ?
         name: "", // ?
@@ -16,46 +16,64 @@ function formatAttachmentsGraphQLResponse(attachment) {
         url: "",
         width: 0,
         height: 0,
-        
+
         // Both gifs and images have this type now. Just to be consistent with
         // FB, and there doesn't seem to be many drawbacks.
         type: "image",
         filename: attachment.filename,
         attachmentID: attachment.legacy_attachment_id,
-        previewHeight: attachment.preview.height, 
-        previewUrl: attachment.preview.uri, 
-        previewWidth: attachment.preview.width, 
-        thumbnailUrl: attachment.thumbnail.uri, 
-        
+        previewHeight: attachment.preview.height,
+        previewUrl: attachment.preview.uri,
+        previewWidth: attachment.preview.width,
+        thumbnailUrl: attachment.thumbnail.uri,
+
         // New
         attributionApp: attachment.attribution_app ? {
           attributionAppID: attachment.attribution_app.id,
           name: attachment.attribution_app.name,
           logo: attachment.attribution_app.square_logo,
         } : null,
-        
+
         extension: attachment.original_extension,
-        
+
         // @TODO No idea what this is, should we expose it?
         //      Ben - July 15th 2017
-        // renderAsSticker: attachment.render_as_sticker, 
-        
+        // renderAsSticker: attachment.render_as_sticker,
+
         // This is _not_ the real URI, this is still just a large preview.
         // To get the URL we'll need to support a POST query to
-        // 
+        //
         //    https://www.facebook.com/webgraphql/query/
-        // 
+        //
         // With the following query params:
-        // 
+        //
         //    query_id:728987990612546
         //    variables:{"id":"100009069356507","photoID":"10213724771692996"}
         //    dpr:1
-        //    
+        //
         // No special form though.
-        largePreviewUrl: attachment.large_preview.uri, 
+        largePreviewUrl: attachment.large_preview.uri,
         largePreviewHeight: attachment.large_preview.height,
         largePreviewWidth: attachment.large_preview.width,
       };
+    case "MessageAnimatedImage":
+      return {
+        type: "image",
+        filename: attachment.filename,
+        attachmentID: attachment.legacy_attachment_id,
+        previewHeight: attachment.preview_image.height,
+        previewUrl: attachment.preview_image.uri,
+        previewWidth: attachment.preview_image.width,
+        largePreviewUrl: attachment.animated_image.uri,
+        largePreviewHeight: attachment.animated_image.height,
+        largePreviewWidth: attachment.animated_image.width,
+
+        attributionApp: attachment.attribution_app ? {
+          attributionAppID: attachment.attribution_app.id,
+          name: attachment.attribution_app.name,
+          logo: attachment.attribution_app.square_logo,
+        } : null,
+      }
     case "MessageVideo":
       return {
         // Deprecated fields.
@@ -63,7 +81,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
         previewHeight: "",
         previewUrl: "",
         previewWidth: "",
-        
+
         type: "video",
         thumbnailUrl: attachment.large_image.uri,
         filename: attachment.filename,
@@ -71,7 +89,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
         width: attachment.original_dimensions.x,
         attachmentID: attachment.legacy_attachment_id,
         url: attachment.playable_url,
-        
+
         // New
         duration: attachment.playable_duration_in_ms,
         thumbnailWidth: attachment.large_image.width,
@@ -92,7 +110,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
         isMalicious: attachment.is_malicious,
         type: "file",
         url: attachment.url,
-        
+
         // New
         contentType: attachment.content_type,
         filename: attachment.filename,
@@ -108,7 +126,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
 
         isVoiceMail: attachment.is_voicemail,
         filename: attachment.filename,
-      }  
+      }
     default:
       return {error: "Don't know about attachment type " + attachment.__typename};
   }
@@ -129,34 +147,34 @@ function formatExtensibleAttachment(attachment) {
       target:"",
 
       type: "share",
-      description: attachment.story_attachment.description && attachment.story_attachment.description.text,
+      description: (attachment.story_attachment.description == null) ? null : attachment.story_attachment.description.text,
       attachmentID: attachment.legacy_attachment_id,
       title: attachment.story_attachment.title_with_entities.text,
       subattachments: attachment.story_attachment.subattachments,
       url: attachment.story_attachment.url,
-      source: (attachment.story_attachment.source != null ? attachment.story_attachment.source.text : ""),
-      playable: (attachment.story_attachment.media != null ? attachment.story_attachment.media.is_playable : ""),
-      
+      source: (attachment.story_attachment.source == null) ? null : attachment.story_attachment.source.text,
+      playable: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.is_playable,
+
       // New
-      thumbnailUrl: (attachment.story_attachment.media != null ? (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri : ""),
-      thumbnailWidth: (attachment.story_attachment.media != null ? (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width : ""),
-      thumbnailHeight: (attachment.story_attachment.media != null ? (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height : ""),
-      duration: (attachment.story_attachment.media != null ? attachment.story_attachment.media.playable_duration_in_ms : ""),
-      playableUrl: (attachment.story_attachment.media != null ? attachment.story_attachment.media.playable_url : ""),
-      
+      thumbnailUrl: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null : (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri,
+      thumbnailWidth: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width,
+      thumbnailHeight: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height,
+      duration: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.playable_duration_in_ms,
+      playableUrl: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.playable_url,
+
       // Format example:
-      // 
+      //
       //   [{
-      //     key: "width", 
+      //     key: "width",
       //     value: { text: "1280" }
       //   }]
-      // 
+      //
       // That we turn into:
-      //   
+      //
       //   {
       //     width: "1280"
       //   }
-      // 
+      //
       properties: attachment.story_attachment.properties.reduce(function(obj, cur) {
         obj[cur.key] = cur.value.text;
         return obj;
@@ -175,6 +193,10 @@ function formatReactionsGraphQL(reaction) {
 }
 
 function formatEventData(event) {
+  if(event == null) {
+    return {};
+  }
+
   switch (event.__typename) {
     case "ThemeColorExtensibleMessageAdminText":
       return {
@@ -189,6 +211,65 @@ function formatEventData(event) {
       return {
         threadIcon: event.thread_icon,
       }
+    case "InstantGameUpdateExtensibleMessageAdminText":
+      return {
+        gameID: (event.game) ? event.game.id : null,
+        update_type: event.update_type,
+        collapsed_text: event.collapsed_text,
+        expanded_text: event.expanded_text,
+        instant_game_update_data: event.instant_game_update_data,
+      }
+    case "GameScoreExtensibleMessageAdminText":
+      return {
+        game_type: event.game_type,
+      }
+    case "RtcCallLogExtensibleMessageAdminText":
+      return {
+        event: event.event,
+        is_video_call: event.is_video_call,
+        server_info_data: event.server_info_data,
+      }
+    case "GroupPollExtensibleMessageAdminText":
+      return {
+        event_type: event.event_type,
+        total_count: event.total_count,
+        question: event.question,
+      }
+    case "AcceptPendingThreadExtensibleMessageAdminText":
+      return {
+        accepter_id: event.accepter_id,
+        requester_id: event.requester_id
+      }
+    case "ConfirmFriendRequestExtensibleMessageAdminText":
+      return {
+        friend_request_recipient: event.friend_request_recipient,
+        friend_request_sender: event.friend_request_sender
+      }
+    case "AddContactExtensibleMessageAdminText":
+      return {
+        contact_added_id: event.contact_added_id,
+        contact_adder_id: event.contact_adder_id
+      }
+    case "AdExtensibleMessageAdminText":
+      return {
+        ad_client_token: event.ad_client_token,
+        ad_id: event.ad_id,
+        ad_preferences_link: event.ad_preferences_link,
+        ad_properties: event.ad_properties
+      }
+    // never data
+    case "ParticipantJoinedGroupCallExtensibleMessageAdminText":
+    case "ThreadEphemeralTtlModeExtensibleMessageAdminText":
+    case "StartedSharingVideoExtensibleMessageAdminText":
+    case "LightweightEventCreateExtensibleMessageAdminText":
+    case "LightweightEventNotifyExtensibleMessageAdminText":
+    case "LightweightEventNotifyBeforeEventExtensibleMessageAdminText":
+    case "LightweightEventUpdateExtensibleMessageAdminText":
+    case "LightweightEventUpdateTitleExtensibleMessageAdminText":
+    case "LightweightEventUpdateTimeExtensibleMessageAdminText":
+    case "LightweightEventUpdateLocationExtensibleMessageAdminText":
+    case "LightweightEventDeleteExtensibleMessageAdminText":
+      return {}
     default:
       return {error: "Don't know what to with event data type " + event.__typename}
   }
@@ -228,7 +309,7 @@ function formatMessagesGraphQLResponse(data) {
           type: "message",
           attachments: maybeStickerAttachment ? maybeStickerAttachment :
             (d.blob_attachments && d.blob_attachments.length > 0) ? d.blob_attachments.map(formatAttachmentsGraphQLResponse) :
-              (d.extensible_attachment) ? formatExtensibleAttachment(d.extensible_attachment) : 
+              (d.extensible_attachment) ? formatExtensibleAttachment(d.extensible_attachment) :
                 [],
           body: d.message.text,
           // Can be either "GROUP" or ONE_TO_ONE.
@@ -236,7 +317,7 @@ function formatMessagesGraphQLResponse(data) {
           messageID: d.message_id,
           senderID: d.message_sender.id,
           threadID: threadID,
-          
+
           // New
           messageReactions: d.message_reactions ? d.message_reactions.map(formatReactionsGraphQL) : null,
           isSponsered: d.is_sponsored,
@@ -257,6 +338,26 @@ function formatMessagesGraphQLResponse(data) {
           eventData: {
             threadName: d.thread_name,
           },
+        };
+      case "ThreadImageMessage":
+        return {
+          type: "event",
+          messageID: d.message_id,
+          threadID: threadID,
+          // Can be either "GROUP" or ONE_TO_ONE.
+          threadType: messageThread.thread_type,
+          senderID: d.message_sender.id,
+          timestamp: d.timestamp_precise,
+          eventType: "change_thread_image",
+          snippet: d.snippet,
+          eventData: (d.image_with_metadata == null) ? {} /* removed image */ : { /* image added */
+            threadImage: {
+              attachmentID: d.image_with_metadata.legacy_attachment_id,
+              height: d.image_with_metadata.original_dimensions.x,
+              width: d.image_with_metadata.original_dimensions.y,
+              url: d.image_with_metadata.preview.uri
+            },
+	      },
         };
       case "ParticipantLeftMessage":
         return {
@@ -289,6 +390,30 @@ function formatMessagesGraphQLResponse(data) {
             // Array of IDs.
             participantsAdded: d.participants_added.map(function(p) { return p.id; }),
           },
+        };
+      case "VideoCallMessage":
+        return {
+          type: "event",
+          messageID: d.message_id,
+          threadID: threadID,
+          // Can be either "GROUP" or ONE_TO_ONE.
+          threadType: messageThread.thread_type,
+          senderID: d.message_sender.id,
+          timestamp: d.timestamp_precise,
+          eventType: "video_call",
+          snippet: d.snippet,
+        };
+      case "VoiceCallMessage":
+        return {
+          type: "event",
+          messageID: d.message_id,
+          threadID: threadID,
+          // Can be either "GROUP" or ONE_TO_ONE.
+          threadType: messageThread.thread_type,
+          senderID: d.message_sender.id,
+          timestamp: d.timestamp_precise,
+          eventType: "voice_call",
+          snippet: d.snippet,
         };
       case "GenericAdminTextMessage":
         return {
@@ -341,7 +466,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (resData.error) {
           throw resData;
         }
-        // This returns us an array of things. The last one is the success / 
+        // This returns us an array of things. The last one is the success /
         // failure one.
         // @TODO What do we do in this case?
         if (resData[resData.length - 1].error_results !== 0) {
