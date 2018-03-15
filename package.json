@@ -4,7 +4,8 @@
   "description": "Facebook chat API that doesn't rely on XMPP.  Will NOT be deprecated April 30th 2015.",
   "scripts": {
     "test": "node_modules/.bin/mocha",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "eslint index.js utils.js src/*.js --fix"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,13 @@
     "node": ">=4.x"
   },
   "devDependencies": {
+    "eslint": "^4.18.2",
+    "eslint-config-semistandard": "^12.0.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
     "mocha": "^2.2.5"
   }
 }
