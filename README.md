@@ -9,6 +9,8 @@ See [below](#projects-using-this-api) for projects using this API.
 
 See the [full changelog](/CHANGELOG.md) for release details.
 
+[![js-semistandard-style](https://cdn.rawgit.com/flet/semistandard/master/badge.svg)](https://github.com/Flet/semistandard)
+
 ## Install
 If you just want to use facebook-chat-api, you should use this command:
 ```bash
