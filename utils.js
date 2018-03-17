@@ -374,53 +374,63 @@ function _formatAttachment(attachment1, attachment2) {
         largePreviewWidth: blob.large_preview.width,
         largePreviewHeight: blob.large_preview.height,
 
-        url: blob.large_preview.uri,
+        url: blob.large_preview.uri, // @Legacy
         width: blob.original_dimensions.x,
         height: blob.original_dimensions.y,
       }
     case "MessageAnimatedImage":
       return {
         type: "animated_image",
-        name: blob.filename,
-        facebookUrl: blob.animated_image.uri,
+        ID: blob.legacy_attachment_id,
+        filename: blob.filename,
+
         previewUrl: blob.preview_image.uri,
         previewWidth: blob.preview_image.width,
         previewHeight: blob.preview_image.height,
-        thumbnailUrl: blob.preview_image.uri,
-        ID: blob.legacy_attachment_id,
-        filename: blob.filename,
+
+        url: blob.animated_image.uri,
         width: blob.animated_image.width,
         height: blob.animated_image.height,
-        url: blob.animated_image.uri,
-        rawGifImage: blob.animated_image.uri,
-        animatedGifUrl: blob.animated_image.uri,
-        animatedGifPreviewUrl: blob.preview_image.uri,
-        animatedWebpUrl: blob.animated_image.uri,
-        animatedWebpPreviewUrl: blob.preview_image.uri,
+
+        thumbnailUrl: blob.preview_image.uri, // @Legacy
+        name: blob.filename, // @Legacy
+        facebookUrl: blob.animated_image.uri, // @Legacy
+        rawGifImage: blob.animated_image.uri, // @Legacy
+        animatedGifUrl: blob.animated_image.uri, // @Legacy
+        animatedGifPreviewUrl: blob.preview_image.uri, // @Legacy
+        animatedWebpUrl: blob.animated_image.uri, // @Legacy
+        animatedWebpPreviewUrl: blob.preview_image.uri, // @Legacy
       };
     case "MessageVideo":
       return {
         type: "video",
         filename: blob.filename,
-        thumbnailUrl: blob.large_image.uri,
+        ID: blob.legacy_attachment_id,
+
+        thumbnailUrl: blob.large_image.uri, // @Legacy
+
         previewUrl: blob.large_image.uri,
         previewWidth: blob.large_image.width,
         previewHeight: blob.large_image.height,
-        ID: blob.legacy_attachment_id,
+
         url: blob.playable_url,
         width: blob.original_dimensions.x,
         height: blob.original_dimensions.y,
+
         duration: blob.playable_duration_in_ms,
+        videoType: blob.video_type.toLowerCase(),
       };
     case "MessageAudio":
       return {
         type: "audio",
-        audioType: blob.audio_type,
-        isVoiceMail: blob.is_voicemail,
         filename: blob.filename,
         ID: blob.url_shimhash,
-        url: blob.playable_url,
+
+        audioType: blob.audio_type,
         duration: blob.playable_duration_in_ms,
+        url: blob.playable_url,
+
+        isVoiceMail: blob.is_voicemail,
       };
     case "StickerAttachment":
         return {
@@ -1000,40 +1010,41 @@ function getAppState(jar){
     .concat(jar.getCookies("https://www.messenger.com"));
 }
 module.exports = {
-        isReadableStream, 
-        get, 
-        post, 
-        postFormData, 
-        generateThreadingID, 
-        generateOfflineThreadingID, 
-        getGUID, 
-        getFrom, 
-        makeParsable, 
-        arrToForm, 
-        getSignatureID, 
+        isReadableStream,
+        get,
+        post,
+        postFormData,
+        generateThreadingID,
+        generateOfflineThreadingID,
+        getGUID,
+        getFrom,
+        makeParsable,
+        arrToForm,
+        getSignatureID,
         getJar: request.jar,
-        generateTimestampRelative, 
-        makeDefaults, 
-        parseAndCheckLogin, 
-        saveCookies, 
-        getType, 
-        formatHistoryMessage, 
-        formatID, 
-        formatMessage, 
-        formatDeltaEvent, 
-        formatDeltaMessage, 
-        formatProxyPresence, 
-        formatPresence, 
-        formatTyp, 
-        formatDeltaReadReceipt, 
-        formatCookie, 
-        formatThread, 
-        formatReadReceipt, 
-        formatRead, 
-        generatePresence, 
-        generateAccessiblityCookie, 
-        formatDate, 
-        decodeClientPayload, 
-        getAppState
+        generateTimestampRelative,
+        makeDefaults,
+        parseAndCheckLogin,
+        saveCookies,
+        getType,
+        formatHistoryMessage,
+        formatID,
+        formatMessage,
+        formatDeltaEvent,
+        formatDeltaMessage,
+        formatProxyPresence,
+        formatPresence,
+        formatTyp,
+        formatDeltaReadReceipt,
+        formatCookie,
+        formatThread,
+        formatReadReceipt,
+        formatRead,
+        generatePresence,
+        generateAccessiblityCookie,
+        formatDate,
+        decodeClientPayload,
+        getAppState,
+        getAdminTextMessageType
 }
 

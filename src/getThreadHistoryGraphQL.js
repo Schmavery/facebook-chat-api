@@ -7,67 +7,73 @@ function formatAttachmentsGraphQLResponse(attachment) {
   switch (attachment.__typename) {
     case "MessageImage":
       return {
-        // Deprecated fields
-        facebookUrl: "", // ?? 
-        hiresUrl: "", // ?
-        mimeType: "", // ?
-        name: "", // ?
         // You have to query for the real image. See below.
-        url: "",
-        width: 0,
-        height: 0,
-        
-        // Both gifs and images have this type now. Just to be consistent with
-        // FB, and there doesn't seem to be many drawbacks.
-        type: "image",
+        url: attachment.large_preview.uri, // @Legacy
+        width: attachment.large_preview.width, // @Legacy
+        height: attachment.large_preview.height, // @Legacy
+        name: attachment.filename, // @Legacy
+
+        type: "photo",
+        ID: attachment.legacy_attachment_id,
         filename: attachment.filename,
-        attachmentID: attachment.legacy_attachment_id,
-        previewHeight: attachment.preview.height, 
-        previewUrl: attachment.preview.uri, 
-        previewWidth: attachment.preview.width, 
-        thumbnailUrl: attachment.thumbnail.uri, 
-        
-        // New
+        thumbnailUrl: attachment.thumbnail.uri,
+
+        previewUrl: attachment.preview.uri,
+        previewWidth: attachment.preview.width,
+        previewHeight: attachment.preview.height,
+
+        // @Undocumented
         attributionApp: attachment.attribution_app ? {
           attributionAppID: attachment.attribution_app.id,
           name: attachment.attribution_app.name,
           logo: attachment.attribution_app.square_logo,
         } : null,
-        
-        extension: attachment.original_extension,
-        
+
+
         // @TODO No idea what this is, should we expose it?
         //      Ben - July 15th 2017
-        // renderAsSticker: attachment.render_as_sticker, 
-        
+        // renderAsSticker: attachment.render_as_sticker,
+
         // This is _not_ the real URI, this is still just a large preview.
         // To get the URL we'll need to support a POST query to
-        // 
+        //
         //    https://www.facebook.com/webgraphql/query/
-        // 
+        //
         // With the following query params:
-        // 
+        //
         //    query_id:728987990612546
         //    variables:{"id":"100009069356507","photoID":"10213724771692996"}
         //    dpr:1
-        //    
+        //
         // No special form though.
-        largePreviewUrl: attachment.large_preview.uri, 
+        largePreviewUrl: attachment.large_preview.uri,
         largePreviewHeight: attachment.large_preview.height,
         largePreviewWidth: attachment.large_preview.width,
       };
-    case "MessageAnimatedImage": 
+    case "MessageAnimatedImage":
       return {
-        type: "image",
+        type: "animated_image",
+        ID: attachment.legacy_attachment_id,
         filename: attachment.filename,
-        attachmentID: attachment.legacy_attachment_id,
-        previewHeight: attachment.preview_image.height, 
-        previewUrl: attachment.preview_image.uri, 
-        previewWidth: attachment.preview_image.width, 
-        largePreviewUrl: attachment.animated_image.uri, 
-        largePreviewHeight: attachment.animated_image.height,
-        largePreviewWidth: attachment.animated_image.width,
-	
+
+        previewUrl: attachment.preview_image.uri,
+        previewWidth: attachment.preview_image.width,
+        previewHeight: attachment.preview_image.height,
+
+        url: blob.animated_image.uri,
+        width: blob.animated_image.width,
+        height: blob.animated_image.height,
+
+        thumbnailUrl: blob.preview_image.uri, // @Legacy
+        name: attachment.filename, // @Legacy
+        facebookUrl: attachment.animated_image.uri, // @Legacy
+        rawGifImage: blob.animated_image.uri, // @Legacy
+        animatedGifUrl: blob.animated_image.uri, // @Legacy
+        animatedGifPreviewUrl: blob.preview_image.uri, // @Legacy
+        animatedWebpUrl: blob.animated_image.uri, // @Legacy
+        animatedWebpPreviewUrl: blob.preview_image.uri, // @Legacy
+
+        // @Undocumented
         attributionApp: attachment.attribution_app ? {
           attributionAppID: attachment.attribution_app.id,
           name: attachment.attribution_app.name,
@@ -76,57 +82,52 @@ function formatAttachmentsGraphQLResponse(attachment) {
       }
     case "MessageVideo":
       return {
-        // Deprecated fields.
-        duration: 0,
-        previewHeight: "",
-        previewUrl: "",
-        previewWidth: "",
-        
         type: "video",
-        thumbnailUrl: attachment.large_image.uri,
         filename: attachment.filename,
-        height: attachment.original_dimensions.y,
-        width: attachment.original_dimensions.x,
-        attachmentID: attachment.legacy_attachment_id,
+        ID: attachment.legacy_attachment_id,
+
+        thumbnailUrl: blob.large_image.uri, // @Legacy
+
+        previewUrl: attachment.large_image.uri,
+        previewWidth: attachment.large_image.width,
+        previewHeight: attachment.large_image.height,
+
         url: attachment.playable_url,
-        
-        // New
+        width: attachment.original_dimensions.x,
+        height: attachment.original_dimensions.y,
+
         duration: attachment.playable_duration_in_ms,
-        thumbnailWidth: attachment.large_image.width,
-        thumbnailHeight: attachment.large_image.height,
-        // Not sure what this is.
-        //    Ben - July 15th 2017
         videoType: attachment.video_type.toLowerCase(),
       };
       break;
     case "MessageFile":
       return {
+        type: "file",
+
         // Deprecated fields
         fileSize: 0,
-        mimeType: "", // ?
         name: "",
 
-        attachmentID: attachment.url_shimhash, // Should be good enough as an ID
+        ID: attachment.message_file_fbid,
         isMalicious: attachment.is_malicious,
-        type: "file",
         url: attachment.url,
-        
+
         // New
         contentType: attachment.content_type,
         filename: attachment.filename,
       }
     case "MessageAudio":
       return {
-        attachmentID: attachment.url_shimhash, // Copied from above
-
         type: "audio",
+        filename: attachment.filename,
+        ID: attachment.url_shimhash, // Not fowardable
+
         audioType: attachment.audio_type,
         duration: attachment.playable_duration_in_ms,
         url: attachment.playable_url,
 
         isVoiceMail: attachment.is_voicemail,
-        filename: attachment.filename,
-      }  
+      }
     default:
       return {error: "Don't know about attachment type " + attachment.__typename};
   }
@@ -154,27 +155,27 @@ function formatExtensibleAttachment(attachment) {
       url: attachment.story_attachment.url,
       source: (attachment.story_attachment.source == null) ? null : attachment.story_attachment.source.text,
       playable: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.is_playable,
-      
+
       // New
       thumbnailUrl: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null : (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri,
       thumbnailWidth: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width,
       thumbnailHeight: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height,
       duration: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.playable_duration_in_ms,
       playableUrl: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.playable_url,
-      
+
       // Format example:
-      // 
+      //
       //   [{
-      //     key: "width", 
+      //     key: "width",
       //     value: { text: "1280" }
       //   }]
-      // 
+      //
       // That we turn into:
-      //   
+      //
       //   {
       //     width: "1280"
       //   }
-      // 
+      //
       properties: attachment.story_attachment.properties.reduce(function(obj, cur) {
         obj[cur.key] = cur.value.text;
         return obj;
@@ -194,9 +195,9 @@ function formatReactionsGraphQL(reaction) {
 
 function formatEventData(event) {
   if(event == null) {
-    return {};  
+    return {};
   }
-  
+
   switch (event.__typename) {
     case "ThemeColorExtensibleMessageAdminText":
       return {
@@ -222,18 +223,40 @@ function formatEventData(event) {
     case "GameScoreExtensibleMessageAdminText":
       return {
         game_type: event.game_type,
-      }	  
+      }
     case "RtcCallLogExtensibleMessageAdminText":
       return {
         event: event.event,
         is_video_call: event.is_video_call,
         server_info_data: event.server_info_data,
-      }	
+      }
     case "GroupPollExtensibleMessageAdminText":
       return {
         event_type: event.event_type,
         total_count: event.total_count,
         question: event.question,
+      }
+    case "AcceptPendingThreadExtensibleMessageAdminText":
+      return {
+        accepter_id: event.accepter_id,
+        requester_id: event.requester_id
+      }
+    case "ConfirmFriendRequestExtensibleMessageAdminText":
+      return {
+        friend_request_recipient: event.friend_request_recipient,
+        friend_request_sender: event.friend_request_sender
+      }
+    case "AddContactExtensibleMessageAdminText":
+      return {
+        contact_added_id: event.contact_added_id,
+        contact_adder_id: event.contact_adder_id
+      }
+    case "AdExtensibleMessageAdminText":
+      return {
+        ad_client_token: event.ad_client_token,
+        ad_id: event.ad_id,
+        ad_preferences_link: event.ad_preferences_link,
+        ad_properties: event.ad_properties
       }
     // never data
     case "ParticipantJoinedGroupCallExtensibleMessageAdminText":
@@ -241,10 +264,10 @@ function formatEventData(event) {
     case "StartedSharingVideoExtensibleMessageAdminText":
     case "LightweightEventCreateExtensibleMessageAdminText":
     case "LightweightEventNotifyExtensibleMessageAdminText":
-    case "LightweightEventNotifyBeforeEventExtensibleMessageAdminText":	
+    case "LightweightEventNotifyBeforeEventExtensibleMessageAdminText":
     case "LightweightEventUpdateTitleExtensibleMessageAdminText":
     case "LightweightEventUpdateTimeExtensibleMessageAdminText":
-    case "LightweightEventUpdateLocationExtensibleMessageAdminText": 
+    case "LightweightEventUpdateLocationExtensibleMessageAdminText":
     case "LightweightEventDeleteExtensibleMessageAdminText":
       return {}
     default:
@@ -256,7 +279,6 @@ function formatMessagesGraphQLResponse(data) {
   var messageThread = data.o0.data.message_thread;
   var threadID = messageThread.thread_key.thread_fbid ? messageThread.thread_key.thread_fbid : messageThread.thread_key.other_user_id;
 
-  // Can be either "GROUP" or ONE_TO_ONE.
   var messages = messageThread.messages.nodes.map(function(d) {
     switch (d.__typename) {
       case "UserMessage":
@@ -265,20 +287,20 @@ function formatMessagesGraphQLResponse(data) {
         var maybeStickerAttachment;
         if (d.sticker) {
           maybeStickerAttachment = [{
-            caption: d.snippet, // Not sure what the heck caption was.
-            description: d.sticker.label, // Not sure about this one either.
+            type: "sticker",
+            url: d.sticker.url, // Oh yeah thanks, sometimes it's URI sometimes it's URL.
+            stickerID: d.sticker.id,
+            packID: d.sticker.pack.id,
             frameCount: d.sticker.frame_count,
             frameRate: d.sticker.frame_rate,
-            framesPerCol: d.sticker.frames_per_col,
             framesPerRow: d.sticker.frames_per_row,
-            packID: d.sticker.pack.id,
-            spriteURI2x: d.sticker.sprite_image_2x,
+            framesPerCol: d.sticker.frames_per_col,
             spriteURI: d.sticker.sprite_image,
-            stickerID: d.sticker.id,
-            url: d.sticker.url, // Oh yeah thanks, sometimes it's URI sometimes it's URL.
+            spriteURI2x: d.sticker.sprite_image_2x,
             height: d.sticker.height,
             width: d.sticker.width,
-            type: "sticker",
+            caption: d.snippet, // Not sure what the heck caption was.
+            description: d.sticker.label, // Not sure about this one either.
           }];
         }
 
@@ -286,28 +308,26 @@ function formatMessagesGraphQLResponse(data) {
           type: "message",
           attachments: maybeStickerAttachment ? maybeStickerAttachment :
             (d.blob_attachments && d.blob_attachments.length > 0) ? d.blob_attachments.map(formatAttachmentsGraphQLResponse) :
-              (d.extensible_attachment) ? formatExtensibleAttachment(d.extensible_attachment) : 
+              (d.extensible_attachment) ? formatExtensibleAttachment(d.extensible_attachment) :
                 [],
           body: d.message.text,
-          // Can be either "GROUP" or ONE_TO_ONE.
-          threadType: messageThread.thread_type,
+          isGroup: messageThread.thread_type === "GROUP",
           messageID: d.message_id,
           senderID: d.message_sender.id,
           threadID: threadID,
-          
+          timestamp: d.timestamp_precise,
+
           // New
           messageReactions: d.message_reactions ? d.message_reactions.map(formatReactionsGraphQL) : null,
-          isSponsered: d.is_sponsored,
+          isSponsored: d.is_sponsored,
           snippet: d.snippet,
-          timestamp: d.timestamp_precise,
         };
       case "ThreadNameMessage":
         return {
           type: "event",
           messageID: d.message_id,
           threadID: threadID,
-          // Can be either "GROUP" or ONE_TO_ONE.
-          threadType: messageThread.thread_type,
+          isGroup: messageThread.thread_type === "GROUP",
           senderID: d.message_sender.id,
           timestamp: d.timestamp_precise,
           eventType: "change_thread_name",
@@ -315,14 +335,17 @@ function formatMessagesGraphQLResponse(data) {
           eventData: {
             threadName: d.thread_name,
           },
+
+          // @Legacy
+          logMessageType: "log:thread-name",
+          logMessageData: { name: d.thread_name },
         };
       case "ThreadImageMessage":
         return {
           type: "event",
           messageID: d.message_id,
           threadID: threadID,
-          // Can be either "GROUP" or ONE_TO_ONE.
-          threadType: messageThread.thread_type,
+          isGroup: messageThread.thread_type === "GROUP",
           senderID: d.message_sender.id,
           timestamp: d.timestamp_precise,
           eventType: "change_thread_image",
@@ -330,19 +353,21 @@ function formatMessagesGraphQLResponse(data) {
           eventData: (d.image_with_metadata == null) ? {} /* removed image */ : { /* image added */
             threadImage: {
               attachmentID: d.image_with_metadata.legacy_attachment_id,
-              height: d.image_with_metadata.original_dimensions.x,
-              width: d.image_with_metadata.original_dimensions.y,
+              width: d.image_with_metadata.original_dimensions.x,
+              height: d.image_with_metadata.original_dimensions.y,
               url: d.image_with_metadata.preview.uri
             },
-	      },
+  	      },
+
+          // @Legacy
+          logMessageType: "other",
         };
       case "ParticipantLeftMessage":
         return {
           type: "event",
           messageID: d.message_id,
           threadID: threadID,
-          // Can be either "GROUP" or ONE_TO_ONE.
-          threadType: messageThread.thread_type,
+          isGroup: messageThread.thread_type === "GROUP",
           senderID: d.message_sender.id,
           timestamp: d.timestamp_precise,
           eventType: "remove_participants",
@@ -351,14 +376,17 @@ function formatMessagesGraphQLResponse(data) {
             // Array of IDs.
             participantsRemoved: d.participants_removed.map(function(p) { return p.id; }),
           },
+
+          // @Legacy
+          logMessageType: "log:unsubscribe",
+          logMessageData: { leftParticipantFbId: d.participants_removed.map(function(p) { return p.id; }) },
         };
       case "ParticipantsAddedMessage":
         return {
           type: "event",
           messageID: d.message_id,
           threadID: threadID,
-          // Can be either "GROUP" or ONE_TO_ONE.
-          threadType: messageThread.thread_type,
+          isGroup: messageThread.thread_type === "GROUP",
           senderID: d.message_sender.id,
           timestamp: d.timestamp_precise,
           eventType: "add_participants",
@@ -367,19 +395,54 @@ function formatMessagesGraphQLResponse(data) {
             // Array of IDs.
             participantsAdded: d.participants_added.map(function(p) { return p.id; }),
           },
+
+          // @Legacy
+          logMessageType: "log:subscribe",
+          logMessageData: { addedParticipants: d.participants_added.map(function(p) { return p.id; }) },
+        };
+      case "VideoCallMessage":
+        return {
+          type: "event",
+          messageID: d.message_id,
+          threadID: threadID,
+          isGroup: messageThread.thread_type === "GROUP",
+          senderID: d.message_sender.id,
+          timestamp: d.timestamp_precise,
+          eventType: "video_call",
+          snippet: d.snippet,
+
+          // @Legacy
+          logMessageType: "other",
+        };
+      case "VoiceCallMessage":
+        return {
+          type: "event",
+          messageID: d.message_id,
+          threadID: threadID,
+          isGroup: messageThread.thread_type === "GROUP",
+          senderID: d.message_sender.id,
+          timestamp: d.timestamp_precise,
+          eventType: "voice_call",
+          snippet: d.snippet,
+
+          // @Legacy
+          logMessageType: "other",
         };
       case "GenericAdminTextMessage":
         return {
           type: "event",
           messageID: d.message_id,
           threadID: threadID,
-          // Can be either "GROUP" or ONE_TO_ONE.
-          threadType: messageThread.thread_type,
+          isGroup: messageThread.thread_type === "GROUP",
           senderID: d.message_sender.id,
           timestamp: d.timestamp_precise,
           snippet: d.snippet,
           eventType: d.extensible_message_admin_text_type.toLowerCase(),
           eventData: formatEventData(d.extensible_message_admin_text),
+
+          // @Legacy
+          logMessageType: utils.getAdminTextMessageType(d.extensible_message_admin_text_type),
+          logMessageData: d.extensible_message_admin_text, // Maybe different?
         };
       default:
         return {error: "Don't know about message type " + d.__typename};
@@ -419,7 +482,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (resData.error) {
           throw resData;
         }
-        // This returns us an array of things. The last one is the success / 
+        // This returns us an array of things. The last one is the success /
         // failure one.
         // @TODO What do we do in this case?
         if (resData[resData.length - 1].error_results !== 0) {

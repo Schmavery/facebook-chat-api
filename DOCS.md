@@ -422,7 +422,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 Forwards corresponding attachment to given userID or to every user from an array of userIDs
 
 __Arguments__
-* `attachmentID`: The ID field in the attachment object. Not all attachment have IDs: recorded audio and arbitrary files don't for example.
+* `attachmentID`: The ID field in the attachment object. Recorded audio cannot be forwarded.
 * `userOrUsers`: A userID string or usersID string array
 * `callback(err)`: A callback called when the query is done (either with an error or null).
 
@@ -965,13 +965,13 @@ Similar to how messages can vary based on their `type`, so too can the `attachme
 
 | Attachment Type | Fields |
 | --------------- | ------ |
-| `"sticker"` | `caption`, `description`, `frameCount`, `frameRate`, `framesPerCol`, `framesPerRow`, `height`, `packID`, `spriteURI2x`, `spriteURI`, `stickerID`, `type`, `url`, `width` |
-| `"file"` | `fileSize`, `ID`, `isMalicious`, `mimeType`, `name`, `type`, `url` |
-| `"photo"` | `facebookUrl`, `filename`, `height`, `hiresUrl`, `ID`, `mimeType`, `name`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
-| `"animated_image"` | `filename`, `height`, `ID`, `largePreviewHeight`, `largePreviewUrl`, `largePreviewWidth`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
-| `"share"` | `animatedImageSize`, `description`, `duration`, `facebookUrl`, `height`, `ID`, `image`, `playable`, `source`, `styleList`, `subattachments`, `target`, `title`, `type`, `url`, `width` |
-| `"video"` | `duration`, `filename`, `height`, `ID`, `previewHeight`, `previewUrl`, `previewWidth`, `thumbnailUrl`, `type`, `url`, `width` |
-| `"audio"` | `duration`, `audioType`, `filename`, `isVoiceMail`, `ID`, `url` |
+| `"sticker"` | `caption`, `description`, `frameCount`, `frameRate`, `framesPerCol`, `framesPerRow`, `height`, `packID`, `spriteURI2x`, `spriteURI`, `stickerID`, `url`, `width` |
+| `"file"` | `fileSize`, `ID`, `isMalicious`, `mimeType`, `name`, `url` |
+| `"photo"` | `ID`, `filename`, `previewUrl`, `previewWidth`, `previewHeight`, `thumbnailUrl`, `largePreviewUrl`, `largePreviewWidth`, `largePreviewHeight` |
+| `"animated_image"` | `ID`, `filename`, `previewUrl`, `previewWidth`, `previewHeight`, `url`, `width`, `height` |
+| `"video"` | `ID`, `filename`, `previewUrl`, `previewWidth`, `previewHeight`, `url`, `width`, `height`, `duration`, `videoType` |
+| `"audio"` | `ID`, `filename`, `duration`, `audioType`, `isVoiceMail`, `url` |
+| `"share"` | `animatedImageSize`, `description`, `duration`, `facebookUrl`, `height`, `ID`, `image`, `playable`, `source`, `styleList`, `subattachments`, `target`, `title`, `url`, `width` |
 
 __Example__
 
