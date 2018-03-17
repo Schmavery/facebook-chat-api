@@ -147,7 +147,7 @@ function formatExtensibleAttachment(attachment) {
       target:"",
 
       type: "share",
-      description: (attachment.story_attachment.description == null) ? null : attachment.story_attachment.description.text,
+      description: attachment.story_attachment.description && attachment.story_attachment.description.text,
       attachmentID: attachment.legacy_attachment_id,
       title: attachment.story_attachment.title_with_entities.text,
       subattachments: attachment.story_attachment.subattachments,
@@ -399,8 +399,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     var form = {
       "queries": JSON.stringify({
         "o0":{
-          // This doc_id was valid on July 15th 2017.
-          "doc_id":"1527774147243246",
+          // This doc_id was valid on February 2nd 2017.
+          "doc_id":"1498317363570230",
           "query_params":{
             "id": threadID,
             "message_limit": amount,
