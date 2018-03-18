@@ -7,12 +7,6 @@ function formatAttachmentsGraphQLResponse(attachment) {
   switch (attachment.__typename) {
     case "MessageImage":
       return {
-        // You have to query for the real image. See below.
-        url: attachment.large_preview.uri, // @Legacy
-        width: attachment.large_preview.width, // @Legacy
-        height: attachment.large_preview.height, // @Legacy
-        name: attachment.filename, // @Legacy
-
         type: "photo",
         ID: attachment.legacy_attachment_id,
         filename: attachment.filename,
@@ -21,6 +15,16 @@ function formatAttachmentsGraphQLResponse(attachment) {
         previewUrl: attachment.preview.uri,
         previewWidth: attachment.preview.width,
         previewHeight: attachment.preview.height,
+
+        largePreviewUrl: attachment.large_preview.uri,
+        largePreviewHeight: attachment.large_preview.height,
+        largePreviewWidth: attachment.large_preview.width,
+
+        // You have to query for the real image. See below.
+        url: attachment.large_preview.uri, // @Legacy
+        width: attachment.large_preview.width, // @Legacy
+        height: attachment.large_preview.height, // @Legacy
+        name: attachment.filename, // @Legacy
 
         // @Undocumented
         attributionApp: attachment.attribution_app ? {
@@ -46,9 +50,6 @@ function formatAttachmentsGraphQLResponse(attachment) {
         //    dpr:1
         //
         // No special form though.
-        largePreviewUrl: attachment.large_preview.uri,
-        largePreviewHeight: attachment.large_preview.height,
-        largePreviewWidth: attachment.large_preview.width,
       };
     case "MessageAnimatedImage":
       return {
@@ -103,18 +104,16 @@ function formatAttachmentsGraphQLResponse(attachment) {
     case "MessageFile":
       return {
         type: "file",
-
-        // Deprecated fields
-        fileSize: 0,
-        name: "",
-
-        ID: attachment.message_file_fbid,
-        isMalicious: attachment.is_malicious,
-        url: attachment.url,
-
-        // New
-        contentType: attachment.content_type,
         filename: attachment.filename,
+        ID: attachment.message_file_fbid,
+
+        url: attachment.url,
+        isMalicious: attachment.is_malicious,
+        contentType: attachment.content_type,
+
+        name: attachment.filename, // @Legacy
+        mimeType: "", // @Legacy
+        fileSize: -1, // @Legacy
       }
     case "MessageAudio":
       return {
@@ -136,32 +135,22 @@ function formatAttachmentsGraphQLResponse(attachment) {
 function formatExtensibleAttachment(attachment) {
   if (attachment.story_attachment) {
     return {
-      // Deprecated fields
-      animatedImageSize: "",
-      duration:"",
-      facebookUrl:"",
-      height:"",
-      width: "",
-      image:"",
-      playable:"",
-      styleList:"",
-      target:"",
-
       type: "share",
-      description: attachment.story_attachment.description && attachment.story_attachment.description.text,
-      attachmentID: attachment.legacy_attachment_id,
-      title: attachment.story_attachment.title_with_entities.text,
-      subattachments: attachment.story_attachment.subattachments,
+      ID: attachment.legacy_attachment_id,
       url: attachment.story_attachment.url,
-      source: (attachment.story_attachment.source == null) ? null : attachment.story_attachment.source.text,
-      playable: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.is_playable,
 
-      // New
-      thumbnailUrl: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null : (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri,
-      thumbnailWidth: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width,
-      thumbnailHeight: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height,
+      title: attachment.story_attachment.title_with_entities.text,
+      description: attachment.story_attachment.description && attachment.story_attachment.description.text,
+      source: (attachment.story_attachment.source == null) ? null : attachment.story_attachment.source.text,
+
+      image: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null : (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri,
+      width: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width,
+      height: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height,
+      playable: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.is_playable,
       duration: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.playable_duration_in_ms,
       playableUrl: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.playable_url,
+
+      subattachments: attachment.story_attachment.subattachments,
 
       // Format example:
       //
@@ -180,6 +169,15 @@ function formatExtensibleAttachment(attachment) {
         obj[cur.key] = cur.value.text;
         return obj;
       }, {}),
+
+      // Deprecated fields
+      animatedImageSize: "", // @Legacy
+      facebookUrl:"", // @Legacy
+      styleList:"", // @Legacy
+      target:"", // @Legacy
+      thumbnailUrl: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null : (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri, // @Legacy
+      thumbnailWidth: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width, // @Legacy
+      thumbnailHeight: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height, // @Legacy
     };
   } else {
     return {error: "Don't know what to do with extensible_attachment."};
@@ -288,19 +286,26 @@ function formatMessagesGraphQLResponse(data) {
         if (d.sticker) {
           maybeStickerAttachment = [{
             type: "sticker",
-            url: d.sticker.url, // Oh yeah thanks, sometimes it's URI sometimes it's URL.
-            stickerID: d.sticker.id,
+            ID: d.sticker.id,
+            url: d.sticker.url,
+
             packID: d.sticker.pack.id,
+            spriteUrl: d.sticker.sprite_image,
+            spriteUrl2x: d.sticker.sprite_image_2x,
+            width: d.sticker.width,
+            height: d.sticker.height,
+
+            caption: d.snippet, // Not sure what the heck caption was.
+            description: d.sticker.label, // Not sure about this one either.
+
             frameCount: d.sticker.frame_count,
             frameRate: d.sticker.frame_rate,
             framesPerRow: d.sticker.frames_per_row,
             framesPerCol: d.sticker.frames_per_col,
-            spriteURI: d.sticker.sprite_image,
-            spriteURI2x: d.sticker.sprite_image_2x,
-            height: d.sticker.height,
-            width: d.sticker.width,
-            caption: d.snippet, // Not sure what the heck caption was.
-            description: d.sticker.label, // Not sure about this one either.
+
+            stickerID: d.sticker.id, // @Legacy
+            spriteURI: d.sticker.sprite_image, // @Legacy
+            spriteURI2x: d.sticker.sprite_image_2x, // @Legacy
           }];
         }
 

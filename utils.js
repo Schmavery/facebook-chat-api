@@ -236,7 +236,6 @@ function _formatAttachment(attachment1, attachment2) {
   // Instead of having a bunch of if statements guarding every access to image_data,
   // we set it to empty object and use the fact that it'll return undefined.
   attachment2 = attachment2 || {id:"", image_data: {}};
-  var fileName = attachment1.filename;
   attachment1 = attachment1.mercury ? attachment1.mercury : attachment1;
   var blob = attachment1.blob_attachment;
   var type =  blob && blob.__typename ? blob.__typename : attachment1.attach_type;
@@ -248,39 +247,52 @@ function _formatAttachment(attachment1, attachment2) {
     type = "ExtensibleAttachment";
     blob = attachment1.extensible_attachment;
   }
+  // TODO: Determine whether "sticker", "photo", "file" etc are still used
+  // KEEP IN SYNC WITH getThreadHistory
   switch (type) {
     case "sticker":
       return {
         type: "sticker",
+        ID: attachment1.metadata.stickerID.toString(),
         url: attachment1.url,
-        stickerID: attachment1.metadata.stickerID.toString(),
+
         packID: attachment1.metadata.packID.toString(),
+        spriteUrl: attachment1.metadata.spriteURI,
+        spriteUrl2x: attachment1.metadata.spriteURI2x,
+        width: attachment1.metadata.width,
+        height: attachment1.metadata.height,
+
+        caption: attachment2.caption,
+        description: attachment2.description,
+
         frameCount: attachment1.metadata.frameCount,
         frameRate: attachment1.metadata.frameRate,
         framesPerRow: attachment1.metadata.framesPerRow,
         framesPerCol: attachment1.metadata.framesPerCol,
-        spriteURI: attachment1.metadata.spriteURI,
-        spriteURI2x: attachment1.metadata.spriteURI2x,
-        height: attachment1.metadata.height,
-        width: attachment1.metadata.width,
-        caption: attachment2.caption,
-        description: attachment2.description,
+
+        stickerID: attachment1.metadata.stickerID.toString(), // @Legacy
+        spriteURI: attachment1.metadata.spriteURI, // @Legacy
+        spriteURI2x: attachment1.metadata.spriteURI2x, // @Legacy
       };
     case "file":
       return {
         type: "file",
-        name: attachment1.name,
-        url: attachment1.url,
+        filename: attachment1.name,
         ID: attachment2.id.toString(),
-        fileSize: attachment2.file_size,
+        url: attachment1.url,
+
         isMalicious: attachment2.is_malicious,
-        mimeType: attachment2.mime_type,
+        contentType: attachment2.mime_type,
+
+        name: attachment1.name, // @Legacy
+        mimeType: attachment2.mime_type, // @Legacy
+        fileSize: attachment2.file_size, // @Legacy
       };
     case "photo":
       return {
         type: "photo",
         ID: attachment1.metadata.fbid.toString(),
-        filename: fileName,
+        filename: attachment1.fileName,
         thumbnailUrl: attachment1.thumbnail_url,
 
         previewUrl: attachment1.preview_url,
@@ -291,64 +303,78 @@ function _formatAttachment(attachment1, attachment2) {
         largePreviewWidth: attachment1.large_preview_width,
         largePreviewHeight: attachment1.large_preview_height,
 
-        url: attachment1.metadata.url,
-        width: attachment1.metadata.dimensions.split(',')[0],
-        height: attachment1.metadata.dimensions.split(',')[1],
+        url: attachment1.metadata.url, // @Legacy
+        width: attachment1.metadata.dimensions.split(',')[0],  // @Legacy
+        height: attachment1.metadata.dimensions.split(',')[1], // @Legacy
+        name: attachment1.fileName, // @Legacy
       };
     case "animated_image":
       return {
         type: "animated_image",
-        name: attachment1.name,
-        facebookUrl: attachment1.url,
+        ID: attachment2.id.toString(),
+        filename: attachment2.filename,
+
         previewUrl: attachment1.preview_url,
         previewWidth: attachment1.preview_width,
         previewHeight: attachment1.preview_height,
-        thumbnailUrl: attachment1.thumbnail_url,
-        ID: attachment2.id.toString(),
-        filename: attachment2.filename,
-        mimeType: attachment2.mime_type,
+
+        url: attachment2.image_data.url,
         width: attachment2.image_data.width,
         height: attachment2.image_data.height,
-        url: attachment2.image_data.url,
-        rawGifImage: attachment2.image_data.raw_gif_image,
-        rawWebpImage: attachment2.image_data.raw_webp_image,
-        animatedGifUrl: attachment2.image_data.animated_gif_url,
-        animatedGifPreviewUrl: attachment2.image_data.animated_gif_preview_url,
-        animatedWebpUrl: attachment2.image_data.animated_webp_url,
-        animatedWebpPreviewUrl: attachment2.image_data.animated_webp_preview_url,
+
+        name: attachment1.name, // @Legacy
+        facebookUrl: attachment1.url, // @Legacy
+        thumbnailUrl: attachment1.thumbnail_url, // @Legacy
+        mimeType: attachment2.mime_type, // @Legacy
+        rawGifImage: attachment2.image_data.raw_gif_image, // @Legacy
+        rawWebpImage: attachment2.image_data.raw_webp_image, // @Legacy
+        animatedGifUrl: attachment2.image_data.animated_gif_url, // @Legacy
+        animatedGifPreviewUrl: attachment2.image_data.animated_gif_preview_url, // @Legacy
+        animatedWebpUrl: attachment2.image_data.animated_webp_url, // @Legacy
+        animatedWebpPreviewUrl: attachment2.image_data.animated_webp_preview_url, // @Legacy
       };
     case "share":
       return {
         type: "share",
-        description: attachment1.share.description,
         ID: attachment1.share.share_id.toString(),
-        subattachments: attachment1.share.subattachments,
-        animatedImageSize: attachment1.share.media.animated_image_size,
+        url: attachment2.href,
+
+        title: attachment1.share.title,
+        description: attachment1.share.description,
+        source: attachment1.share.source,
+
+        image: attachment1.share.media.image,
         width: attachment1.share.media.image_size.width,
         height: attachment1.share.media.image_size.height,
-        image: attachment1.share.media.image,
         playable: attachment1.share.media.playable,
         duration: attachment1.share.media.duration,
-        source: attachment1.share.source,
-        title: attachment1.share.title,
-        facebookUrl: attachment1.share.uri,
-        target: attachment1.share.target,
-        styleList: attachment1.share.style_list,
-        url: attachment2.href,
+
+        subattachments: attachment1.share.subattachments,
+        properties: {}
+
+        animatedImageSize: attachment1.share.media.animated_image_size, // @Legacy
+        facebookUrl: attachment1.share.uri, // @Legacy
+        target: attachment1.share.target, // @Legacy
+        styleList: attachment1.share.style_list, // @Legacy
       };
     case "video":
       return {
         type: "video",
+        ID: attachment1.metadata.fbid.toString(),
         filename: attachment1.name,
-        thumbnailUrl: attachment1.thumbnail_url,
+
         previewUrl: attachment1.preview_url,
         previewWidth: attachment1.preview_width,
         previewHeight: attachment1.preview_height,
-        ID: attachment1.metadata.fbid.toString(),
+
         url: attachment1.url,
         width: attachment1.metadata.dimensions.width,
         height: attachment1.metadata.dimensions.height,
+
         duration: attachment1.metadata.duration,
+        videoType: "unknown"
+
+        thumbnailUrl: attachment1.thumbnail_url, // @Legacy
       };
     case "error":
       return {
@@ -375,8 +401,9 @@ function _formatAttachment(attachment1, attachment2) {
         largePreviewHeight: blob.large_preview.height,
 
         url: blob.large_preview.uri, // @Legacy
-        width: blob.original_dimensions.x,
-        height: blob.original_dimensions.y,
+        width: blob.original_dimensions.x, // @Legacy
+        height: blob.original_dimensions.y, // @Legacy
+        name: blob.filename, // @Legacy
       }
     case "MessageAnimatedImage":
       return {
@@ -407,8 +434,6 @@ function _formatAttachment(attachment1, attachment2) {
         filename: blob.filename,
         ID: blob.legacy_attachment_id,
 
-        thumbnailUrl: blob.large_image.uri, // @Legacy
-
         previewUrl: blob.large_image.uri,
         previewWidth: blob.large_image.width,
         previewHeight: blob.large_image.height,
@@ -419,6 +444,8 @@ function _formatAttachment(attachment1, attachment2) {
 
         duration: blob.playable_duration_in_ms,
         videoType: blob.video_type.toLowerCase(),
+
+        thumbnailUrl: blob.large_image.uri, // @Legacy
       };
     case "MessageAudio":
       return {
@@ -435,46 +462,68 @@ function _formatAttachment(attachment1, attachment2) {
     case "StickerAttachment":
         return {
           type: "sticker",
+          ID: blob.id,
           url: blob.url,
-          stickerID: blob.id,
+
           packID: blob.pack.id,
+          spriteUrl: blob.sprite_image,
+          spriteUrl2x: blob.sprite_image_2x,
+          width: blob.width,
+          height: blob.height,
+
+          caption: blob.label,
+          description: blob.label
+
           frameCount: blob.frame_count,
           frameRate: blob.frame_rate,
           framesPerRow: blob.frames_per_row,
           framesPerCol: blob.frames_per_column,
-          spriteURI: blob.sprite_image,
-          spriteURI2x: blob.sprite_image_2x,
-          height: blob.height,
-          width: blob.width,
-          caption: blob.label,
-          description: blob.label
+
+          stickerID: blob.id, // @Legacy
+          spriteURI: blob.sprite_image, // @Legacy
+          spriteURI2x: blob.sprite_image_2x, // @Legacy
         };
     case "ExtensibleAttachment":
       return {
         type: "share",
-        description: blob.story_attachment.description && blob.story_attachment.description.text,
         ID: blob.legacy_attachment_id,
-        subattachments: blob.story_attachment.subattachments,
+        url: blob.story_attachment.url,
+
+        title: blob.story_attachment.title_with_entities.text,
+        description: blob.story_attachment.description && blob.story_attachment.description.text,
+        source: blob.story_attachment.source?blob.story_attachment.source.text:null,
+
+        image: blob.story_attachment.media && blob.story_attachment.media.image && blob.story_attachment.media.image.uri,
         width: blob.story_attachment.media && blob.story_attachment.media.image && blob.story_attachment.media.image.width,
         height: blob.story_attachment.media && blob.story_attachment.media.image && blob.story_attachment.media.image.height,
-        image: blob.story_attachment.media && blob.story_attachment.media.image && blob.story_attachment.media.image.uri,
         playable: blob.story_attachment.media && blob.story_attachment.media.is_playable,
         duration: blob.story_attachment.media && blob.story_attachment.media.playable_duration_in_ms,
-        source: blob.story_attachment.source?blob.story_attachment.source.text:null,
-        title: blob.story_attachment.title_with_entities.text,
-        facebookUrl: blob.story_attachment.url,
-        target: blob.story_attachment.target,
-        styleList: blob.story_attachment.style_list,
-        url: blob.story_attachment.url
+        playableUrl: (blob.story_attachment.media == null) ? null : blob.story_attachment.media.playable_url,
+
+        subattachments: blob.story_attachment.subattachments,
+        properties: blob.story_attachment.properties.reduce(function(obj, cur) {
+          obj[cur.key] = cur.value.text;
+          return obj;
+        }, {}),
+
+        facebookUrl: blob.story_attachment.url, // @Legacy
+        target: blob.story_attachment.target, // @Legacy
+        styleList: blob.story_attachment.style_list, // @Legacy
+
       };
     case "MessageFile":
       return {
         type: "file",
-        name: blob.filename,
-        url: blob.url,
+        filename: blob.filename,
         ID: blob.message_file_fbid,
+
+        url: blob.url,
         isMalicious: blob.is_malicious,
-        mimeType: blob.content_type,
+        contentType: blob.content_type,
+
+        name: blob.filename,
+        mimeType: "",
+        fileSize: 01,
       };
     default:
       throw new Error("unrecognized attach_file of type " + type +  "`" + JSON.stringify(attachment1, null, 4) + " attachment2: " + JSON.stringify(attachment2, null, 4) + "`");

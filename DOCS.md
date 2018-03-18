@@ -965,13 +965,13 @@ Similar to how messages can vary based on their `type`, so too can the `attachme
 
 | Attachment Type | Fields |
 | --------------- | ------ |
-| `"sticker"` | `caption`, `description`, `frameCount`, `frameRate`, `framesPerCol`, `framesPerRow`, `height`, `packID`, `spriteURI2x`, `spriteURI`, `stickerID`, `url`, `width` |
-| `"file"` | `fileSize`, `ID`, `isMalicious`, `mimeType`, `name`, `url` |
-| `"photo"` | `ID`, `filename`, `previewUrl`, `previewWidth`, `previewHeight`, `thumbnailUrl`, `largePreviewUrl`, `largePreviewWidth`, `largePreviewHeight` |
+| `"sticker"` | `ID`, `url`, `packID`, `spriteUrl`, `spriteUrl2x`, `width`, `height`, `caption`, `description`, `frameCount`, `frameRate`, `framesPerRow`, `framesPerCol` |
+| `"file"` | `ID`, `filename`, `url`, `isMalicious`, `contentType` |
+| `"photo"` | `ID`, `filename`, `thumbnailUrl`, `previewUrl`, `previewWidth`, `previewHeight`, `largePreviewUrl`, `largePreviewWidth`, `largePreviewHeight` |
 | `"animated_image"` | `ID`, `filename`, `previewUrl`, `previewWidth`, `previewHeight`, `url`, `width`, `height` |
 | `"video"` | `ID`, `filename`, `previewUrl`, `previewWidth`, `previewHeight`, `url`, `width`, `height`, `duration`, `videoType` |
-| `"audio"` | `ID`, `filename`, `duration`, `audioType`, `isVoiceMail`, `url` |
-| `"share"` | `animatedImageSize`, `description`, `duration`, `facebookUrl`, `height`, `ID`, `image`, `playable`, `source`, `styleList`, `subattachments`, `target`, `title`, `url`, `width` |
+| `"audio"` | `ID`, `filename`, `audioType`, `duration`, `url`, `isVoiceMail` |
+| `"share"` | `ID`, `url`, `title`, `description`, `source`, `image`, `width`, `height`, `playable`, `duration`, `playableUrl`, `subattachments`, `properties` |
 
 __Example__
 
