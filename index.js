@@ -108,8 +108,10 @@ function buildAPI(globalOptions, html, jar) {
     'setTitle',
 
     // Beta features
-    'getThreadHistoryGraphQL',
     'getThreadInfoGraphQL',
+
+    // Deprecated features
+    'getThreadHistoryDeprecated',
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID, ctx);
