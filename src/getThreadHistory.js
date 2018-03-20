@@ -310,7 +310,7 @@ function formatMessagesGraphQLResponse(data) {
         }
 
         var mentionsObj = {}
-        d.messages.ranges.forEach(e => {
+        d.message.ranges.forEach(e => {
           mentionsObj[e.entity.id] = d.message.text.substr(e.offset, e.length);
         })
 

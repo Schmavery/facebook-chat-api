@@ -38,7 +38,7 @@ function formatThreadGraphQLResponse(data) {
   var lastM = messageThread.last_message;
   var snippetID = (lastM && lastM.nodes && lastM.nodes[0] && lastM.nodes[0].message_sender && lastM.nodes[0].message_sender.messaging_actor) ?
     lastM.nodes[0].message_sender.messaging_actor.id : null;
-  var snippetText = (lastM && lastM.nodes && lastM.nodes[0] ? lastM.nodes[0].snippet : null;
+  var snippetText = lastM && lastM.nodes && lastM.nodes[0] ? lastM.nodes[0].snippet : null;
   var lastR = messageThread.last_read_receipt;
   var lastReadTimestamp = lastR && lastR.nodes && lastR.nodes[0] && lastR.nodes[0].timestamp_precise ? 
     lastR.nodes[0].timestamp_precise : null;
@@ -82,7 +82,7 @@ function formatThreadGraphQLResponse(data) {
     snippetSender: snippetID,
     snippetAttachments: [],
     serverTimestamp: messageThread.updated_time_precise,
-    imageSrc: messageThread.image ? messageThread.image.uri,
+    imageSrc: messageThread.image ? messageThread.image.uri : null,
     isCanonicalUser: messageThread.is_canonical_neo_user,
     isCanonical: messageThread.thread_type != "GROUP",
     recipientsLoadable: true,

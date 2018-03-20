@@ -350,7 +350,7 @@ function _formatAttachment(attachment1, attachment2) {
         duration: attachment1.share.media.duration,
 
         subattachments: attachment1.share.subattachments,
-        properties: {}
+        properties: {},
 
         animatedImageSize: attachment1.share.media.animated_image_size, // @Legacy
         facebookUrl: attachment1.share.uri, // @Legacy
@@ -372,7 +372,7 @@ function _formatAttachment(attachment1, attachment2) {
         height: attachment1.metadata.dimensions.height,
 
         duration: attachment1.metadata.duration,
-        videoType: "unknown"
+        videoType: "unknown",
 
         thumbnailUrl: attachment1.thumbnail_url, // @Legacy
       };
@@ -472,7 +472,7 @@ function _formatAttachment(attachment1, attachment2) {
           height: blob.height,
 
           caption: blob.label,
-          description: blob.label
+          description: blob.label,
 
           frameCount: blob.frame_count,
           frameRate: blob.frame_rate,
@@ -523,7 +523,7 @@ function _formatAttachment(attachment1, attachment2) {
 
         name: blob.filename,
         mimeType: "",
-        fileSize: 01,
+        fileSize: -1,
       };
     default:
       throw new Error("unrecognized attach_file of type " + type +  "`" + JSON.stringify(attachment1, null, 4) + " attachment2: " + JSON.stringify(attachment2, null, 4) + "`");
