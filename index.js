@@ -107,11 +107,9 @@ function buildAPI(globalOptions, html, jar) {
     'setMessageReaction',
     'setTitle',
 
-    // Beta features
-    'getThreadInfoGraphQL',
-
     // Deprecated features
     'getThreadHistoryDeprecated',
+    'getThreadInfoDeprecated',
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID, ctx);
