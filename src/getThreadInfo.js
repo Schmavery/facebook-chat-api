@@ -25,28 +25,39 @@ function formatEventReminders(reminder) {
       return {
         memberID: member.node.id,
         state: member.guest_list_state.toLowerCase()
-      }
-    }),
-  }
+      };
+    })
+  };
 }
 
 function formatThreadGraphQLResponse(data) {
   var messageThread = data.o0.data.message_thread;
-  var threadID = messageThread.thread_key.thread_fbid ? messageThread.thread_key.thread_fbid : messageThread.thread_key.other_user_id;
+  var threadID = messageThread.thread_key.thread_fbid
+    ? messageThread.thread_key.thread_fbid
+    : messageThread.thread_key.other_user_id;
 
   // Remove me
   var lastM = messageThread.last_message;
-  var snippetID = (lastM && lastM.nodes && lastM.nodes[0] && lastM.nodes[0].message_sender && lastM.nodes[0].message_sender.messaging_actor) ?
-    lastM.nodes[0].message_sender.messaging_actor.id : null;
-  var snippetText = lastM && lastM.nodes && lastM.nodes[0] ? lastM.nodes[0].snippet : null;
+  var snippetID =
+    lastM &&
+    lastM.nodes &&
+    lastM.nodes[0] &&
+    lastM.nodes[0].message_sender &&
+    lastM.nodes[0].message_sender.messaging_actor
+      ? lastM.nodes[0].message_sender.messaging_actor.id
+      : null;
+  var snippetText =
+    lastM && lastM.nodes && lastM.nodes[0] ? lastM.nodes[0].snippet : null;
   var lastR = messageThread.last_read_receipt;
-  var lastReadTimestamp = lastR && lastR.nodes && lastR.nodes[0] && lastR.nodes[0].timestamp_precise ? 
-    lastR.nodes[0].timestamp_precise : null;
+  var lastReadTimestamp =
+    lastR && lastR.nodes && lastR.nodes[0] && lastR.nodes[0].timestamp_precise
+      ? lastR.nodes[0].timestamp_precise
+      : null;
 
   return {
     threadID: threadID,
     threadName: messageThread.name,
-    participantIDs: messageThread.all_participants.nodes.map(function(d){
+    participantIDs: messageThread.all_participants.nodes.map(function(d) {
       return d.messaging_actor.id;
     }),
     unreadCount: messageThread.unread_count,
@@ -58,15 +69,28 @@ function formatThreadGraphQLResponse(data) {
     isArchived: messageThread.has_viewer_archived,
     folder: messageThread.folder,
     cannotReplyReason: messageThread.cannot_reply_reason,
-    eventReminders: messageThread.event_reminders ? messageThread.event_reminders.nodes.map(formatEventReminders) : null,
-    emoji: messageThread.customization_info ? messageThread.customization_info.emoji : null,
-    color: messageThread.customization_info && messageThread.customization_info.outgoing_bubble_color ?
-        messageThread.customization_info.outgoing_bubble_color.slice(2) : null,
-    nicknames: messageThread.customization_info && messageThread.customization_info.participant_customizations ?
-        messageThread.customization_info.participant_customizations.reduce(function(res, val) {
-          if (val.nickname) res[val.participant_id] = val.nickname;
-          return res;
-        }, {}) : {},
+    eventReminders: messageThread.event_reminders
+      ? messageThread.event_reminders.nodes.map(formatEventReminders)
+      : null,
+    emoji: messageThread.customization_info
+      ? messageThread.customization_info.emoji
+      : null,
+    color:
+      messageThread.customization_info &&
+      messageThread.customization_info.outgoing_bubble_color
+        ? messageThread.customization_info.outgoing_bubble_color.slice(2)
+        : null,
+    nicknames:
+      messageThread.customization_info &&
+      messageThread.customization_info.participant_customizations
+        ? messageThread.customization_info.participant_customizations.reduce(
+            function(res, val) {
+              if (val.nickname) res[val.participant_id] = val.nickname;
+              return res;
+            },
+            {}
+          )
+        : {},
     adminIDs: messageThread.thread_admins,
 
     // @Undocumented
@@ -89,33 +113,34 @@ function formatThreadGraphQLResponse(data) {
     hasEmailParticipant: false,
     readOnly: false,
     canReply: messageThread.cannot_reply_reason == null,
-    lastMessageTimestamp: messageThread.last_message ?
-      messageThread.last_message.timestamp_precise : null,
+    lastMessageTimestamp: messageThread.last_message
+      ? messageThread.last_message.timestamp_precise
+      : null,
     lastMessageType: "message",
     lastReadTimestamp: lastReadTimestamp,
-    threadType: messageThread.thread_type == "GROUP" ? 2 : 1,
+    threadType: messageThread.thread_type == "GROUP" ? 2 : 1
   };
 }
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function getThreadInfoGraphQL(threadID, callback) {
-    if(!callback) {
-      throw {error: "getThreadInfoGraphQL: need callback"};
+    if (!callback) {
+      throw { error: "getThreadInfoGraphQL: need callback" };
     }
 
     // `queries` has to be a string. I couldn't tell from the dev console. This
     // took me a really long time to figure out. I deserve a cookie for this.
     var form = {
-      "queries": JSON.stringify({
-        "o0":{
+      queries: JSON.stringify({
+        o0: {
           // This doc_id is valid as of February 1st, 2018.
-          "doc_id":"1498317363570230",
-          "query_params":{
-            "id": threadID,
-            "message_limit": 0,
-            "load_messages": 0,
-            "load_read_receipts": false,
-            "before": null,
+          doc_id: "1498317363570230",
+          query_params: {
+            id: threadID,
+            message_limit: 0,
+            load_messages: 0,
+            load_read_receipts: false,
+            before: null
           }
         }
       })
@@ -128,11 +153,11 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (resData.error) {
           throw resData;
         }
-        // This returns us an array of things. The last one is the success / 
+        // This returns us an array of things. The last one is the success /
         // failure one.
         // @TODO What do we do in this case?
         if (resData[resData.length - 1].error_results !== 0) {
-          throw new Error("well darn there was an error_result")
+          throw new Error("well darn there was an error_result");
         }
 
         callback(null, formatThreadGraphQLResponse(resData[0]));

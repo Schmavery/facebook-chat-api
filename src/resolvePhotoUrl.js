@@ -3,14 +3,16 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-module.exports = function (defaultFuncs, api, ctx) {
+module.exports = function(defaultFuncs, api, ctx) {
   return function resolvePhotoUrl(photoID, callback) {
     if (!callback) {
       throw { error: "resolvePhotoUrl: need callback" };
     }
 
     defaultFuncs
-      .get("https://www.facebook.com/mercury/attachments/photo", ctx.jar, { photo_id: photoID })
+      .get("https://www.facebook.com/mercury/attachments/photo", ctx.jar, {
+        photo_id: photoID
+      })
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(resData => {
         if (resData.error) {

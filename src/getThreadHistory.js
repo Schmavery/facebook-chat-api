@@ -27,12 +27,13 @@ function formatAttachmentsGraphQLResponse(attachment) {
         name: attachment.filename, // @Legacy
 
         // @Undocumented
-        attributionApp: attachment.attribution_app ? {
-          attributionAppID: attachment.attribution_app.id,
-          name: attachment.attribution_app.name,
-          logo: attachment.attribution_app.square_logo,
-        } : null,
-
+        attributionApp: attachment.attribution_app
+          ? {
+              attributionAppID: attachment.attribution_app.id,
+              name: attachment.attribution_app.name,
+              logo: attachment.attribution_app.square_logo
+            }
+          : null
 
         // @TODO No idea what this is, should we expose it?
         //      Ben - July 15th 2017
@@ -75,12 +76,14 @@ function formatAttachmentsGraphQLResponse(attachment) {
         animatedWebpPreviewUrl: blob.preview_image.uri, // @Legacy
 
         // @Undocumented
-        attributionApp: attachment.attribution_app ? {
-          attributionAppID: attachment.attribution_app.id,
-          name: attachment.attribution_app.name,
-          logo: attachment.attribution_app.square_logo,
-        } : null,
-      }
+        attributionApp: attachment.attribution_app
+          ? {
+              attributionAppID: attachment.attribution_app.id,
+              name: attachment.attribution_app.name,
+              logo: attachment.attribution_app.square_logo
+            }
+          : null
+      };
     case "MessageVideo":
       return {
         type: "video",
@@ -98,7 +101,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
         height: attachment.original_dimensions.y,
 
         duration: attachment.playable_duration_in_ms,
-        videoType: attachment.video_type.toLowerCase(),
+        videoType: attachment.video_type.toLowerCase()
       };
       break;
     case "MessageFile":
@@ -113,8 +116,8 @@ function formatAttachmentsGraphQLResponse(attachment) {
 
         name: attachment.filename, // @Legacy
         mimeType: "", // @Legacy
-        fileSize: -1, // @Legacy
-      }
+        fileSize: -1 // @Legacy
+      };
     case "MessageAudio":
       return {
         type: "audio",
@@ -125,10 +128,12 @@ function formatAttachmentsGraphQLResponse(attachment) {
         duration: attachment.playable_duration_in_ms,
         url: attachment.playable_url,
 
-        isVoiceMail: attachment.is_voicemail,
-      }
+        isVoiceMail: attachment.is_voicemail
+      };
     default:
-      return {error: "Don't know about attachment type " + attachment.__typename};
+      return {
+        error: "Don't know about attachment type " + attachment.__typename
+      };
   }
 }
 
@@ -140,15 +145,56 @@ function formatExtensibleAttachment(attachment) {
       url: attachment.story_attachment.url,
 
       title: attachment.story_attachment.title_with_entities.text,
-      description: attachment.story_attachment.description && attachment.story_attachment.description.text,
-      source: (attachment.story_attachment.source == null) ? null : attachment.story_attachment.source.text,
+      description:
+        attachment.story_attachment.description &&
+        attachment.story_attachment.description.text,
+      source:
+        attachment.story_attachment.source == null
+          ? null
+          : attachment.story_attachment.source.text,
 
-      image: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null : (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri,
-      width: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width,
-      height: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height,
-      playable: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.is_playable,
-      duration: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.playable_duration_in_ms,
-      playableUrl: (attachment.story_attachment.media == null) ? null : attachment.story_attachment.media.playable_url,
+      image:
+        attachment.story_attachment.media == null
+          ? null
+          : attachment.story_attachment.media.animated_image == null &&
+            attachment.story_attachment.media.image == null
+            ? null
+            : (
+                attachment.story_attachment.media.animated_image ||
+                attachment.story_attachment.media.image
+              ).uri,
+      width:
+        attachment.story_attachment.media == null
+          ? null
+          : attachment.story_attachment.media.animated_image == null &&
+            attachment.story_attachment.media.image == null
+            ? null
+            : (
+                attachment.story_attachment.media.animated_image ||
+                attachment.story_attachment.media.image
+              ).width,
+      height:
+        attachment.story_attachment.media == null
+          ? null
+          : attachment.story_attachment.media.animated_image == null &&
+            attachment.story_attachment.media.image == null
+            ? null
+            : (
+                attachment.story_attachment.media.animated_image ||
+                attachment.story_attachment.media.image
+              ).height,
+      playable:
+        attachment.story_attachment.media == null
+          ? null
+          : attachment.story_attachment.media.is_playable,
+      duration:
+        attachment.story_attachment.media == null
+          ? null
+          : attachment.story_attachment.media.playable_duration_in_ms,
+      playableUrl:
+        attachment.story_attachment.media == null
+          ? null
+          : attachment.story_attachment.media.playable_url,
 
       subattachments: attachment.story_attachment.subattachments,
 
@@ -165,97 +211,128 @@ function formatExtensibleAttachment(attachment) {
       //     width: "1280"
       //   }
       //
-      properties: attachment.story_attachment.properties.reduce(function(obj, cur) {
+      properties: attachment.story_attachment.properties.reduce(function(
+        obj,
+        cur
+      ) {
         obj[cur.key] = cur.value.text;
         return obj;
-      }, {}),
+      },
+      {}),
 
       // Deprecated fields
       animatedImageSize: "", // @Legacy
-      facebookUrl:"", // @Legacy
-      styleList:"", // @Legacy
-      target:"", // @Legacy
-      thumbnailUrl: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null : (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).uri, // @Legacy
-      thumbnailWidth: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).width, // @Legacy
-      thumbnailHeight: (attachment.story_attachment.media == null) ? null : (attachment.story_attachment.media.animated_image == null && attachment.story_attachment.media.image == null) ? null :  (attachment.story_attachment.media.animated_image || attachment.story_attachment.media.image).height, // @Legacy
+      facebookUrl: "", // @Legacy
+      styleList: "", // @Legacy
+      target: "", // @Legacy
+      thumbnailUrl:
+        attachment.story_attachment.media == null
+          ? null
+          : attachment.story_attachment.media.animated_image == null &&
+            attachment.story_attachment.media.image == null
+            ? null
+            : (
+                attachment.story_attachment.media.animated_image ||
+                attachment.story_attachment.media.image
+              ).uri, // @Legacy
+      thumbnailWidth:
+        attachment.story_attachment.media == null
+          ? null
+          : attachment.story_attachment.media.animated_image == null &&
+            attachment.story_attachment.media.image == null
+            ? null
+            : (
+                attachment.story_attachment.media.animated_image ||
+                attachment.story_attachment.media.image
+              ).width, // @Legacy
+      thumbnailHeight:
+        attachment.story_attachment.media == null
+          ? null
+          : attachment.story_attachment.media.animated_image == null &&
+            attachment.story_attachment.media.image == null
+            ? null
+            : (
+                attachment.story_attachment.media.animated_image ||
+                attachment.story_attachment.media.image
+              ).height // @Legacy
     };
   } else {
-    return {error: "Don't know what to do with extensible_attachment."};
+    return { error: "Don't know what to do with extensible_attachment." };
   }
 }
 
 function formatReactionsGraphQL(reaction) {
   return {
     reaction: reaction.reaction,
-    userID: reaction.user.id,
-  }
+    userID: reaction.user.id
+  };
 }
 
 function formatEventData(event) {
-  if(event == null) {
+  if (event == null) {
     return {};
   }
 
   switch (event.__typename) {
     case "ThemeColorExtensibleMessageAdminText":
       return {
-        color: event.theme_color,
+        color: event.theme_color
       };
     case "ThreadNicknameExtensibleMessageAdminText":
       return {
         nickname: event.nickname,
-        participantID: event.participant_id,
-      }
+        participantID: event.participant_id
+      };
     case "ThreadIconExtensibleMessageAdminText":
       return {
-        threadIcon: event.thread_icon,
-      }
+        threadIcon: event.thread_icon
+      };
     case "InstantGameUpdateExtensibleMessageAdminText":
       return {
         gameID: event.game.id,
         update_type: event.update_type,
         collapsed_text: event.collapsed_text,
         expanded_text: event.expanded_text,
-        instant_game_update_data: event.instant_game_update_data,
-      }
+        instant_game_update_data: event.instant_game_update_data
+      };
     case "GameScoreExtensibleMessageAdminText":
       return {
-        game_type: event.game_type,
-      }
+        game_type: event.game_type
+      };
     case "RtcCallLogExtensibleMessageAdminText":
       return {
         event: event.event,
         is_video_call: event.is_video_call,
-        server_info_data: event.server_info_data,
-      }
+        server_info_data: event.server_info_data
+      };
     case "GroupPollExtensibleMessageAdminText":
       return {
         event_type: event.event_type,
         total_count: event.total_count,
-        question: event.question,
-      }
+        question: event.question
+      };
     case "AcceptPendingThreadExtensibleMessageAdminText":
       return {
         accepter_id: event.accepter_id,
         requester_id: event.requester_id
-      }
+      };
     case "ConfirmFriendRequestExtensibleMessageAdminText":
       return {
         friend_request_recipient: event.friend_request_recipient,
         friend_request_sender: event.friend_request_sender
-      }
+      };
     case "AddContactExtensibleMessageAdminText":
       return {
         contact_added_id: event.contact_added_id,
         contact_adder_id: event.contact_adder_id
-      }
+      };
     case "AdExtensibleMessageAdminText":
       return {
         ad_client_token: event.ad_client_token,
         ad_id: event.ad_id,
         ad_preferences_link: event.ad_preferences_link,
         ad_properties: event.ad_properties
-      }
+      };
     // never data
     case "ParticipantJoinedGroupCallExtensibleMessageAdminText":
     case "ThreadEphemeralTtlModeExtensibleMessageAdminText":
@@ -267,15 +344,19 @@ function formatEventData(event) {
     case "LightweightEventUpdateTimeExtensibleMessageAdminText":
     case "LightweightEventUpdateLocationExtensibleMessageAdminText":
     case "LightweightEventDeleteExtensibleMessageAdminText":
-      return {}
+      return {};
     default:
-      return {error: "Don't know what to with event data type " + event.__typename}
+      return {
+        error: "Don't know what to with event data type " + event.__typename
+      };
   }
 }
 
 function formatMessagesGraphQLResponse(data) {
   var messageThread = data.o0.data.message_thread;
-  var threadID = messageThread.thread_key.thread_fbid ? messageThread.thread_key.thread_fbid : messageThread.thread_key.other_user_id;
+  var threadID = messageThread.thread_key.thread_fbid
+    ? messageThread.thread_key.thread_fbid
+    : messageThread.thread_key.other_user_id;
 
   var messages = messageThread.messages.nodes.map(function(d) {
     switch (d.__typename) {
@@ -284,42 +365,47 @@ function formatMessagesGraphQLResponse(data) {
         // been considering them as attachments.
         var maybeStickerAttachment;
         if (d.sticker) {
-          maybeStickerAttachment = [{
-            type: "sticker",
-            ID: d.sticker.id,
-            url: d.sticker.url,
+          maybeStickerAttachment = [
+            {
+              type: "sticker",
+              ID: d.sticker.id,
+              url: d.sticker.url,
 
-            packID: d.sticker.pack.id,
-            spriteUrl: d.sticker.sprite_image,
-            spriteUrl2x: d.sticker.sprite_image_2x,
-            width: d.sticker.width,
-            height: d.sticker.height,
+              packID: d.sticker.pack.id,
+              spriteUrl: d.sticker.sprite_image,
+              spriteUrl2x: d.sticker.sprite_image_2x,
+              width: d.sticker.width,
+              height: d.sticker.height,
 
-            caption: d.snippet, // Not sure what the heck caption was.
-            description: d.sticker.label, // Not sure about this one either.
+              caption: d.snippet, // Not sure what the heck caption was.
+              description: d.sticker.label, // Not sure about this one either.
 
-            frameCount: d.sticker.frame_count,
-            frameRate: d.sticker.frame_rate,
-            framesPerRow: d.sticker.frames_per_row,
-            framesPerCol: d.sticker.frames_per_col,
+              frameCount: d.sticker.frame_count,
+              frameRate: d.sticker.frame_rate,
+              framesPerRow: d.sticker.frames_per_row,
+              framesPerCol: d.sticker.frames_per_col,
 
-            stickerID: d.sticker.id, // @Legacy
-            spriteURI: d.sticker.sprite_image, // @Legacy
-            spriteURI2x: d.sticker.sprite_image_2x, // @Legacy
-          }];
+              stickerID: d.sticker.id, // @Legacy
+              spriteURI: d.sticker.sprite_image, // @Legacy
+              spriteURI2x: d.sticker.sprite_image_2x // @Legacy
+            }
+          ];
         }
 
-        var mentionsObj = {}
+        var mentionsObj = {};
         d.message.ranges.forEach(e => {
           mentionsObj[e.entity.id] = d.message.text.substr(e.offset, e.length);
-        })
+        });
 
         return {
           type: "message",
-          attachments: maybeStickerAttachment ? maybeStickerAttachment :
-            (d.blob_attachments && d.blob_attachments.length > 0) ? d.blob_attachments.map(formatAttachmentsGraphQLResponse) :
-              (d.extensible_attachment) ? formatExtensibleAttachment(d.extensible_attachment) :
-                [],
+          attachments: maybeStickerAttachment
+            ? maybeStickerAttachment
+            : d.blob_attachments && d.blob_attachments.length > 0
+              ? d.blob_attachments.map(formatAttachmentsGraphQLResponse)
+              : d.extensible_attachment
+                ? formatExtensibleAttachment(d.extensible_attachment)
+                : [],
           body: d.message.text,
           isGroup: messageThread.thread_type === "GROUP",
           messageID: d.message_id,
@@ -331,9 +417,11 @@ function formatMessagesGraphQLResponse(data) {
           isUnread: d.unread,
 
           // New
-          messageReactions: d.message_reactions ? d.message_reactions.map(formatReactionsGraphQL) : null,
+          messageReactions: d.message_reactions
+            ? d.message_reactions.map(formatReactionsGraphQL)
+            : null,
           isSponsored: d.is_sponsored,
-          snippet: d.snippet,
+          snippet: d.snippet
         };
       case "ThreadNameMessage":
         return {
@@ -346,13 +434,13 @@ function formatMessagesGraphQLResponse(data) {
           eventType: "change_thread_name",
           snippet: d.snippet,
           eventData: {
-            threadName: d.thread_name,
+            threadName: d.thread_name
           },
 
           // @Legacy
           author: d.message_sender.id,
           logMessageType: "log:thread-name",
-          logMessageData: { name: d.thread_name },
+          logMessageData: { name: d.thread_name }
         };
       case "ThreadImageMessage":
         return {
@@ -364,19 +452,26 @@ function formatMessagesGraphQLResponse(data) {
           timestamp: d.timestamp_precise,
           eventType: "change_thread_image",
           snippet: d.snippet,
-          eventData: (d.image_with_metadata == null) ? {} /* removed image */ : { /* image added */
-            threadImage: {
-              attachmentID: d.image_with_metadata.legacy_attachment_id,
-              width: d.image_with_metadata.original_dimensions.x,
-              height: d.image_with_metadata.original_dimensions.y,
-              url: d.image_with_metadata.preview.uri
-            },
-          },
+          eventData:
+            d.image_with_metadata == null
+              ? {} /* removed image */
+              : {
+                  /* image added */
+                  threadImage: {
+                    attachmentID: d.image_with_metadata.legacy_attachment_id,
+                    width: d.image_with_metadata.original_dimensions.x,
+                    height: d.image_with_metadata.original_dimensions.y,
+                    url: d.image_with_metadata.preview.uri
+                  }
+                },
 
           // @Legacy
           logMessageType: "log:thread-icon",
-          logMessageData: { thread_icon: d.image_with_metadata ?
-            d.image_with_metadata.preview.uri : null },
+          logMessageData: {
+            thread_icon: d.image_with_metadata
+              ? d.image_with_metadata.preview.uri
+              : null
+          }
         };
       case "ParticipantLeftMessage":
         return {
@@ -390,12 +485,18 @@ function formatMessagesGraphQLResponse(data) {
           snippet: d.snippet,
           eventData: {
             // Array of IDs.
-            participantsRemoved: d.participants_removed.map(function(p) { return p.id; }),
+            participantsRemoved: d.participants_removed.map(function(p) {
+              return p.id;
+            })
           },
 
           // @Legacy
           logMessageType: "log:unsubscribe",
-          logMessageData: { leftParticipantFbId: d.participants_removed.map(function(p) { return p.id; }) },
+          logMessageData: {
+            leftParticipantFbId: d.participants_removed.map(function(p) {
+              return p.id;
+            })
+          }
         };
       case "ParticipantsAddedMessage":
         return {
@@ -409,12 +510,18 @@ function formatMessagesGraphQLResponse(data) {
           snippet: d.snippet,
           eventData: {
             // Array of IDs.
-            participantsAdded: d.participants_added.map(function(p) { return p.id; }),
+            participantsAdded: d.participants_added.map(function(p) {
+              return p.id;
+            })
           },
 
           // @Legacy
           logMessageType: "log:subscribe",
-          logMessageData: { addedParticipants: d.participants_added.map(function(p) { return p.id; }) },
+          logMessageData: {
+            addedParticipants: d.participants_added.map(function(p) {
+              return p.id;
+            })
+          }
         };
       case "VideoCallMessage":
         return {
@@ -428,7 +535,7 @@ function formatMessagesGraphQLResponse(data) {
           snippet: d.snippet,
 
           // @Legacy
-          logMessageType: "other",
+          logMessageType: "other"
         };
       case "VoiceCallMessage":
         return {
@@ -442,7 +549,7 @@ function formatMessagesGraphQLResponse(data) {
           snippet: d.snippet,
 
           // @Legacy
-          logMessageType: "other",
+          logMessageType: "other"
         };
       case "GenericAdminTextMessage":
         return {
@@ -457,35 +564,42 @@ function formatMessagesGraphQLResponse(data) {
           eventData: formatEventData(d.extensible_message_admin_text),
 
           // @Legacy
-          logMessageType: utils.getAdminTextMessageType(d.extensible_message_admin_text_type),
-          logMessageData: d.extensible_message_admin_text, // Maybe different?
+          logMessageType: utils.getAdminTextMessageType(
+            d.extensible_message_admin_text_type
+          ),
+          logMessageData: d.extensible_message_admin_text // Maybe different?
         };
       default:
-        return {error: "Don't know about message type " + d.__typename};
+        return { error: "Don't know about message type " + d.__typename };
     }
   });
   return messages;
 }
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function getThreadHistoryGraphQL(threadID, amount, timestamp, callback) {
-    if(!callback) {
-      throw {error: "getThreadHistoryGraphQL: need callback"};
+  return function getThreadHistoryGraphQL(
+    threadID,
+    amount,
+    timestamp,
+    callback
+  ) {
+    if (!callback) {
+      throw { error: "getThreadHistoryGraphQL: need callback" };
     }
 
     // `queries` has to be a string. I couldn't tell from the dev console. This
     // took me a really long time to figure out. I deserve a cookie for this.
     var form = {
-      "queries": JSON.stringify({
-        "o0":{
+      queries: JSON.stringify({
+        o0: {
           // This doc_id was valid on February 2nd 2017.
-          "doc_id":"1498317363570230",
-          "query_params":{
-            "id": threadID,
-            "message_limit": amount,
-            "load_messages": 1,
-            "load_read_receipts": false,
-            "before": timestamp
+          doc_id: "1498317363570230",
+          query_params: {
+            id: threadID,
+            message_limit: amount,
+            load_messages: 1,
+            load_read_receipts: false,
+            before: timestamp
           }
         }
       })
@@ -502,7 +616,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         // failure one.
         // @TODO What do we do in this case?
         if (resData[resData.length - 1].error_results !== 0) {
-          throw new Error("well darn there was an error_result")
+          throw new Error("well darn there was an error_result");
         }
 
         callback(null, formatMessagesGraphQLResponse(resData[0]));

@@ -5,7 +5,7 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function markAsRead(threadID, callback) {
-    if(!callback) {
+    if (!callback) {
       callback = function() {};
     }
 
@@ -17,7 +17,11 @@ module.exports = function(defaultFuncs, api, ctx) {
     form["titanOriginatedThreadId"] = utils.generateThreadingID(ctx.clientID);
 
     defaultFuncs
-      .post("https://www.facebook.com/ajax/mercury/change_read_status.php", ctx.jar, form)
+      .post(
+        "https://www.facebook.com/ajax/mercury/change_read_status.php",
+        ctx.jar,
+        form
+      )
       .then(utils.saveCookies(ctx.jar))
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {

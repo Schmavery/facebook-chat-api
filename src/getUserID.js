@@ -13,23 +13,23 @@ function formatData(data) {
     profileUrl: data.path,
     category: data.category,
     score: data.score,
-    type: data.type,
+    type: data.type
   };
 }
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function getUserID(name, callback) {
-    if(!callback) {
-      throw {error: "getUserID: need callback"};
+    if (!callback) {
+      throw { error: "getUserID: need callback" };
     }
 
     var form = {
-      'value' : name.toLowerCase(),
-      'viewer' : ctx.userID,
-      'rsp' : "search",
-      'context' : "search",
-      'path' : "/home.php",
-      'request_id' : utils.getGUID(),
+      value: name.toLowerCase(),
+      viewer: ctx.userID,
+      rsp: "search",
+      context: "search",
+      path: "/home.php",
+      request_id: utils.getGUID()
     };
 
     defaultFuncs
