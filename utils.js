@@ -583,15 +583,15 @@ function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
   attachmentMap = shareMap || attachmentMap;
   return attachments
     ? attachments.map(function(val, i) {
-        if (
-          !attachmentMap ||
+      if (
+        !attachmentMap ||
           !attachmentIds ||
           !attachmentMap[attachmentIds[i]]
-        ) {
-          return _formatAttachment(val);
-        }
-        return _formatAttachment(val, attachmentMap[attachmentIds[i]]);
-      })
+      ) {
+        return _formatAttachment(val);
+      }
+      return _formatAttachment(val, attachmentMap[attachmentIds[i]]);
+    })
     : [];
 }
 
@@ -647,8 +647,8 @@ function formatMessage(m) {
       : [originalMessage.sender_name.split(" ")[0]],
     participantIDs: originalMessage.group_thread_info
       ? originalMessage.group_thread_info.participant_ids.map(function(v) {
-          return formatID(v.toString());
-        })
+        return formatID(v.toString());
+      })
       : [formatID(originalMessage.sender_fbid)],
     body: originalMessage.body || "",
     threadID: formatID(
@@ -882,7 +882,7 @@ function generateTimestampRelative() {
 
 function makeDefaults(html, userID, ctx) {
   var reqCounter = 1;
-  var fb_dtsg = getFrom(html, 'name="fb_dtsg" value="', '"');
+  var fb_dtsg = getFrom(html, "name=\"fb_dtsg\" value=\"", "\"");
 
   // @Hack Ok we've done hacky things, this is definitely on top 5.
   // We totally assume the object is flat and try parsing until a }.
@@ -903,7 +903,7 @@ function makeDefaults(html, userID, ctx) {
   for (var i = 0; i < fb_dtsg.length; i++) {
     ttstamp += fb_dtsg.charCodeAt(i);
   }
-  var revision = getFrom(html, 'revision":', ",");
+  var revision = getFrom(html, "revision\":", ",");
 
   function mergeWithDefaults(obj) {
     // @TODO This is missing a key called __dyn.

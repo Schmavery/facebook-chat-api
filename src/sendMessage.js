@@ -285,7 +285,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (offset < 0) {
           log.warn(
             "handleMention",
-            'Mention for "' + tag + '" not found in message string.'
+            "Mention for \"" + tag + "\" not found in message string."
           );
         }
 

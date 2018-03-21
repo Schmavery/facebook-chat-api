@@ -84,12 +84,12 @@ function formatThreadGraphQLResponse(data) {
       messageThread.customization_info &&
       messageThread.customization_info.participant_customizations
         ? messageThread.customization_info.participant_customizations.reduce(
-            function(res, val) {
-              if (val.nickname) res[val.participant_id] = val.nickname;
-              return res;
-            },
-            {}
-          )
+          function(res, val) {
+            if (val.nickname) res[val.participant_id] = val.nickname;
+            return res;
+          },
+          {}
+        )
         : {},
     adminIDs: messageThread.thread_admins,
 
