@@ -29,10 +29,10 @@ function formatAttachmentsGraphQLResponse(attachment) {
         // @Undocumented
         attributionApp: attachment.attribution_app
           ? {
-              attributionAppID: attachment.attribution_app.id,
-              name: attachment.attribution_app.name,
-              logo: attachment.attribution_app.square_logo
-            }
+            attributionAppID: attachment.attribution_app.id,
+            name: attachment.attribution_app.name,
+            logo: attachment.attribution_app.square_logo
+          }
           : null
 
         // @TODO No idea what this is, should we expose it?
@@ -78,10 +78,10 @@ function formatAttachmentsGraphQLResponse(attachment) {
         // @Undocumented
         attributionApp: attachment.attribution_app
           ? {
-              attributionAppID: attachment.attribution_app.id,
-              name: attachment.attribution_app.name,
-              logo: attachment.attribution_app.square_logo
-            }
+            attributionAppID: attachment.attribution_app.id,
+            name: attachment.attribution_app.name,
+            logo: attachment.attribution_app.square_logo
+          }
           : null
       };
     case "MessageVideo":
@@ -160,9 +160,9 @@ function formatExtensibleAttachment(attachment) {
             attachment.story_attachment.media.image == null
             ? null
             : (
-                attachment.story_attachment.media.animated_image ||
+              attachment.story_attachment.media.animated_image ||
                 attachment.story_attachment.media.image
-              ).uri,
+            ).uri,
       width:
         attachment.story_attachment.media == null
           ? null
@@ -170,9 +170,9 @@ function formatExtensibleAttachment(attachment) {
             attachment.story_attachment.media.image == null
             ? null
             : (
-                attachment.story_attachment.media.animated_image ||
+              attachment.story_attachment.media.animated_image ||
                 attachment.story_attachment.media.image
-              ).width,
+            ).width,
       height:
         attachment.story_attachment.media == null
           ? null
@@ -180,9 +180,9 @@ function formatExtensibleAttachment(attachment) {
             attachment.story_attachment.media.image == null
             ? null
             : (
-                attachment.story_attachment.media.animated_image ||
+              attachment.story_attachment.media.animated_image ||
                 attachment.story_attachment.media.image
-              ).height,
+            ).height,
       playable:
         attachment.story_attachment.media == null
           ? null
@@ -232,9 +232,9 @@ function formatExtensibleAttachment(attachment) {
             attachment.story_attachment.media.image == null
             ? null
             : (
-                attachment.story_attachment.media.animated_image ||
+              attachment.story_attachment.media.animated_image ||
                 attachment.story_attachment.media.image
-              ).uri, // @Legacy
+            ).uri, // @Legacy
       thumbnailWidth:
         attachment.story_attachment.media == null
           ? null
@@ -242,9 +242,9 @@ function formatExtensibleAttachment(attachment) {
             attachment.story_attachment.media.image == null
             ? null
             : (
-                attachment.story_attachment.media.animated_image ||
+              attachment.story_attachment.media.animated_image ||
                 attachment.story_attachment.media.image
-              ).width, // @Legacy
+            ).width, // @Legacy
       thumbnailHeight:
         attachment.story_attachment.media == null
           ? null
@@ -252,9 +252,9 @@ function formatExtensibleAttachment(attachment) {
             attachment.story_attachment.media.image == null
             ? null
             : (
-                attachment.story_attachment.media.animated_image ||
+              attachment.story_attachment.media.animated_image ||
                 attachment.story_attachment.media.image
-              ).height // @Legacy
+            ).height // @Legacy
     };
   } else {
     return { error: "Don't know what to do with extensible_attachment." };
@@ -456,14 +456,14 @@ function formatMessagesGraphQLResponse(data) {
             d.image_with_metadata == null
               ? {} /* removed image */
               : {
-                  /* image added */
-                  threadImage: {
-                    attachmentID: d.image_with_metadata.legacy_attachment_id,
-                    width: d.image_with_metadata.original_dimensions.x,
-                    height: d.image_with_metadata.original_dimensions.y,
-                    url: d.image_with_metadata.preview.uri
-                  }
-                },
+                /* image added */
+                threadImage: {
+                  attachmentID: d.image_with_metadata.legacy_attachment_id,
+                  width: d.image_with_metadata.original_dimensions.x,
+                  height: d.image_with_metadata.original_dimensions.y,
+                  url: d.image_with_metadata.preview.uri
+                }
+              },
 
           // @Legacy
           logMessageType: "log:thread-icon",

@@ -296,7 +296,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                               .threadFbId
                               ? delta.deltaMessageReaction.threadKey.threadFbId
                               : delta.deltaMessageReaction.threadKey
-                                  .otherUserFbId,
+                                .otherUserFbId,
                             messageID: delta.deltaMessageReaction.messageId,
                             reaction: delta.deltaMessageReaction.reaction,
                             senderID: delta.deltaMessageReaction.senderId,

@@ -28,9 +28,9 @@ module.exports = function(defaultFuncs, api, ctx) {
         })[0][1].__html;
 
         var form = {
-          fb_dtsg: utils.getFrom(html, '"fb_dtsg" value="', '"'),
-          ref: utils.getFrom(html, '"ref" value="', '"'),
-          h: utils.getFrom(html, '"h" value="', '"')
+          fb_dtsg: utils.getFrom(html, "\"fb_dtsg\" value=\"", "\""),
+          ref: utils.getFrom(html, "\"ref\" value=\"", "\""),
+          h: utils.getFrom(html, "\"h\" value=\"", "\"")
         };
 
         return utils
