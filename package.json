@@ -5,7 +5,7 @@
   "scripts": {
     "test": "node_modules/.bin/mocha",
     "start": "node server.js",
-    "prettier": "prettier utils.js src/* --write"
+    "lint": "eslint --ext .js index.js util.js src --fix"
   },
   "repository": {
     "type": "git",
@@ -25,13 +25,15 @@
     "bluebird": "^2.9.27",
     "cheerio": "^0.19.0",
     "npmlog": "^1.2.0",
-    "prettier": "^1.11.1",
     "request": "^2.53.0"
   },
   "engines": {
     "node": ">=4.x"
   },
   "devDependencies": {
+    "eslint": "^4.19.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
     "mocha": "^2.2.5"
   }
 }
