@@ -639,52 +639,187 @@ __`participants` format__
 - `"ReducedMessagingActor"`
 (*there might be more*)
 
-| Key                       | Description                                                   |
-|---------------------------|---------------------------------------------------------------|
-| accountType               | `"User"`                                                      |
-| userID                    | ID of user                                                    |
-| name                      | Full name of user                                             |
-| shortName                 | Short name of user (most likely first name)                   |
-| gender                    | Either `"MALE"`, `"FEMALE"` or `"NEUTER"`                     |
-| url                       | URL of the user's Facebook profile                            |
-| profilePicture            | URL of the profile picture                                    |
-| username                  | Username of user or `null`                                    |
-| isViewerFriend            | Is the user a friend of you?                                  |
-| isMessengerUser           | Does the user use Messenger?                                  |
-| isVerified                | Is the user verified? (Little blue tick mark)                 |
-| isMessageBlockedByViewer  | Is the user blocking messages from you?                       |
-| isViewerCoworker          | Is the user your coworker? *(not yet tested)*                 |
-| isEmployee                | `null`? *(not yet tested)*                                    |
+<table>
+<tr>
+<th>Account type</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+<tr>
+<td rowspan="13">User</td>
+<td>userID</td>
+<td>ID of user</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Full name of user</td>
+</tr>
+<tr>
+<td>shortName</td>
+<td>Short name of user (most likely first name)</td>
+</tr>
+<tr>
+<td>gender</td>
+<td>Either         
+<code>"MALE"</code>,         
+<code>"FEMALE"</code> or         
+<code>"NEUTER"</code>
+</td>
+</tr>
+<tr>
+<td>url</td>
+<td>URL of the user's Facebook profile</td>
+</tr>
+<tr>
+<td>profilePicture</td>
+<td>URL of the profile picture</td>
+</tr>
+<tr>
+<td>username</td>
+<td>Username of user or         
+<code>null</code>
+</td>
+</tr>
+<tr>
+<td>isViewerFriend</td>
+<td>Is the user a friend of you?</td>
+</tr>
+<tr>
+<td>isMessengerUser</td>
+<td>Does the user use Messenger?</td>
+</tr>
+<tr>
+<td>isVerified</td>
+<td>Is the user verified? (Little blue tick mark)</td>
+</tr>
+<tr>
+<td>isMessageBlockedByViewer</td>
+<td>Is the user blocking messages from you?</td>
+</tr>
+<tr>
+<td>isViewerCoworker</td>
+<td>Is the user your coworker?         
+<em>(not yet tested)</em>
+</td>
+</tr>
+<tr>
+<td>isEmployee</td>
+<td>
+<code>null</code>?         
+<em>(not yet tested)</em>
+</td>
+</tr>
 
+<tr>
+<td rowspan="10">Page</td>
+<td>userID</td>
+<td>ID of the page</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Name of the fanpage</td>
+</tr>
+<tr>
+<td>url</td>
+<td>URL of the fanpage</td>
+</tr>
+<tr>
+<td>profilePicture</td>
+<td>URL of the profile picture</td>
+</tr>
+<tr>
+<td>username</td>
+<td>Username of user or         
+<code>null</code>
+</td>
+</tr>
+<tr>
+<td>acceptsMessengerUserFeedback</td>
+<td></td>
+</tr>
+<tr>
+<td>isMessengerUser</td>
+<td>Does the fanpage use Messenger?</td>
+</tr>
+<tr>
+<td>isVerified</td>
+<td>Is the fanpage verified? (Little blue tick mark)</td>
+</tr>
+<tr>
+<td>isMessengerPlatformBot</td>
+<td>Is the fanpage a bot</td>
+</tr>
+<tr>
+<td>isMessageBlockedByViewer</td>
+<td>Is the fanpage blocking messages from you?</td>
+</tr>
 
-| Key                       | Description                                                   |
-|---------------------------|---------------------------------------------------------------|
-| accountType               | `"Page"`                                                      |
-| userID                    | ID of the page                                                |
-| name                      | Name of the fanpage                                           |
-| url                       | URL of the fanpage                                            |
-| profilePicture            | URL of the profile picture                                    |
-| username                  | Username of user or `null`                                    |
-| acceptsMessengerUserFeedback |                                                            |
-| isMessengerUser           | Does the fanpage use Messenger?                               |
-| isVerified                | Is the fanpage verified? (Little blue tick mark)              |
-| isMessengerPlatformBot    | Is the fanpage a bot                                          |
-| isMessageBlockedByViewer  | Is the fanpage blocking messages from you?                    |
-
-
-| Key                       | Description                                                   |
-|---------------------------|---------------------------------------------------------------|
-| accountType               | **1** `"ReducedMessagingActor"` (account requres verification, messages are hidden) or **2** `"UnavailableMessagingActor"` (account disabled/removed) |
-| userID                    | ID of the user                                                |
-| name                      | **1** Name of the user or **2** *Facebook User* in user's language |
-| url                       | `null`                                                        |
-| profilePicture            | URL of the default Facebook profile picture                   |
-| username                  | Username of user or `null`                                    |
-| acceptsMessengerUserFeedback |                                                            |
-| isMessageBlockedByViewer  | Is the user blocking messages from you?                       |
+<tr>
+<td rowspan="7">ReducedMessagingActor<br />(account requres verification,<br />messages are hidden)</td>
+<td>userID</td>
+<td>ID of the user</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Name of the user</td>
+</tr>
+<tr>
+<td>url</td>
+<td>
+<code>null</code>
+</td>
+</tr>
+<tr>
+<td>profilePicture</td>
+<td>URL of the default Facebook profile picture</td>
+</tr>
+<tr>
+<td>username</td>
+<td>Username of user</td>
+</td>
+</tr>
+<tr>
+<td>acceptsMessengerUserFeedback</td>
+<td></td>
+</tr>
+<tr>
+<td>isMessageBlockedByViewer</td>
+<td>Is the user blocking messages from you?</td>
+</tr>
+<tr>
+<td rowspan="7">UnavailableMessagingActor<br />(account disabled/removed)</td>
+<td>userID</td>
+<td>ID of the user</td>
+</tr>
+<tr>
+<td>name</td>
+<td><em>Facebook User</em> in user's language</td>
+</tr>
+<tr>
+<td>url</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td>profilePicture</td>
+<td>URL of the default Facebook profile picture</td>
+</tr>
+<tr>
+<td>username</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td>acceptsMessengerUserFeedback</td>
+<td></td>
+</tr>
+<tr>
+<td>isMessageBlockedByViewer</td>
+<td>Is the user blocking messages from you?</td>
+</tr>
+</table>
 
 
 In a case that some account type is not supported, we return just this *but you can't rely on it* and log warning to the console
+
 | Key          | Description             |
 |--------------|-------------------------|
 | accountType  | type, can be anything   |
