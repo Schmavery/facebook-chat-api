@@ -1,6 +1,7 @@
 "use strict";
 
 var utils = require("../utils");
+var graphQLUtils = require("./graphQLUtils");
 var log = require("npmlog");
 
 var msgsRecv = 0;
@@ -142,6 +143,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
 
         var atLeastOne = false;
+        var pendingForceFetch = [];
         if (resData.ms) {
           msgsRecv += resData.ms.length;
           resData.ms
@@ -234,6 +236,10 @@ module.exports = function(defaultFuncs, api, ctx) {
                   });
                   break;
                 case "delta":
+                  if (v.delta.class === "ForcedFetch") {
+                    pendingForceFetch.push(v.delta);
+                    return;
+                  }
                   if (
                     ctx.globalOptions.pageID ||
                     (v.delta.class !== "NewMessage" &&
@@ -407,8 +413,17 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
         return {
           resData: resData,
-          atLeastOne: atLeastOne,
+          atLeastOne: atLeastOne || pendingForceFetch.length > 0,
+          pendingForceFetch: pendingForceFetch,
         };
+      })
+      .then(function(res) {
+        var pending = (res && res.pendingForceFetch) || [];
+        var promises = pending.map(e =>
+          graphQLUtils.loadMessage(ctx, defaultFuncs, e.threadKey.otherUserFbId, e.messageId)
+            .then(fmtMsg => globalCallback(null, fmtMsg)));
+        return Promise.all(promises)
+          .then(() => res)
       })
       .then(function(res) {
         if (res && res.atLeastOne) {
