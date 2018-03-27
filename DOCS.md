@@ -596,9 +596,10 @@ __Arguments__
   - `["ARCHIVED", "unread"]`
   - `["PENDING", "unread"]`
   - `["OTHER", "unread"]`
-  *if you find something new, let us know*
 
-* `callback(err, list)`: Callback called when the query is done (either with an error or with a proper result). `list` is of type _array_ and contains objects with the following properties:
+*if you find something new, let us know*
+
+* `callback(err, list)`: Callback called when the query is done (either with an error or with a proper result). `list` is an *array* with objects with the following properties:
 
 __Thread list__
 
@@ -617,7 +618,9 @@ __Thread list__
 | adminIDs             | An array of thread admin IDs                                |
 | folder               | `INBOX`, `ARCHIVED`, `PENDING` or `OTHER`                   |
 | isGroup              | `true` or `false`                                           |
-| montageThread        | `message_thread:000000` or `null` *not yet tested*          |
+| customizationEnabled | `false` in one-to-one conversations with `Page` or `ReducedMessagingActor` |
+| participantAddMode   | currently `"ADD"` for groups and `null` otherwise           |
+| montageThread        | `message_thread:000000` or `null` it may be connected to Messenger Day (*not yet tested*) |
 | reactionsMuteMode    | `REACTIONS_NOT_MUTED` or `REACTIONS_MUTED`                  |
 | mentionsMuteMode     | `MENTIONS_NOT_MUTED` or `MENTIONS_MUTED`                    |
 | isArchived           | `true` or `false`                                           |
@@ -637,6 +640,7 @@ __`participants` format__
 - `"Page"`
 - `"UnavailableMessagingActor"`
 - `"ReducedMessagingActor"`
+
 (*there might be more*)
 
 <table>
@@ -646,7 +650,7 @@ __`participants` format__
 <th>Description</th>
 </tr>
 <tr>
-<td rowspan="13">User</td>
+<td rowspan="13"><code>"User"</code></td>
 <td>userID</td>
 <td>ID of user</td>
 </tr>
@@ -660,10 +664,11 @@ __`participants` format__
 </tr>
 <tr>
 <td>gender</td>
-<td>Either         
-<code>"MALE"</code>,         
-<code>"FEMALE"</code> or         
-<code>"NEUTER"</code>
+<td>Either
+<code>"MALE"</code>,
+<code>"FEMALE"</code>,
+<code>"NEUTER"</code> or
+<code>"UNKNOWN"</code>
 </td>
 </tr>
 <tr>
@@ -676,7 +681,7 @@ __`participants` format__
 </tr>
 <tr>
 <td>username</td>
-<td>Username of user or         
+<td>Username of user or
 <code>null</code>
 </td>
 </tr>
@@ -698,20 +703,19 @@ __`participants` format__
 </tr>
 <tr>
 <td>isViewerCoworker</td>
-<td>Is the user your coworker?         
-<em>(not yet tested)</em>
+<td>Is the user your coworker?
 </td>
 </tr>
 <tr>
 <td>isEmployee</td>
 <td>
-<code>null</code>?         
+<code>null</code>?
 <em>(not yet tested)</em>
 </td>
 </tr>
 
 <tr>
-<td rowspan="10">Page</td>
+<td rowspan="10"><code>"Page"</code></td>
 <td>userID</td>
 <td>ID of the page</td>
 </tr>
@@ -729,7 +733,7 @@ __`participants` format__
 </tr>
 <tr>
 <td>username</td>
-<td>Username of user or         
+<td>Username of user or
 <code>null</code>
 </td>
 </tr>
@@ -755,7 +759,7 @@ __`participants` format__
 </tr>
 
 <tr>
-<td rowspan="7">ReducedMessagingActor<br />(account requres verification,<br />messages are hidden)</td>
+<td rowspan="7"><code>"ReducedMessagingActor"</code><br />(account requres verification,<br />messages are hidden)</td>
 <td>userID</td>
 <td>ID of the user</td>
 </tr>
@@ -787,7 +791,7 @@ __`participants` format__
 <td>Is the user blocking messages from you?</td>
 </tr>
 <tr>
-<td rowspan="7">UnavailableMessagingActor<br />(account disabled/removed)</td>
+<td rowspan="7"><code>"UnavailableMessagingActor"</code><br />(account disabled/removed)</td>
 <td>userID</td>
 <td>ID of the user</td>
 </tr>
@@ -801,7 +805,7 @@ __`participants` format__
 </tr>
 <tr>
 <td>profilePicture</td>
-<td>URL of the default Facebook profile picture</td>
+<td>URL of the default **male** Facebook profile picture</td>
 </tr>
 <tr>
 <td>username</td>
@@ -818,7 +822,7 @@ __`participants` format__
 </table>
 
 
-In a case that some account type is not supported, we return just this *but you can't rely on it* and log warning to the console
+In a case that some account type is not supported, we return just this *(but you can't rely on it)* and log a warning to the console:
 
 | Key          | Description             |
 |--------------|-------------------------|

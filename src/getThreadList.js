@@ -18,7 +18,7 @@ function formatParticipants(participants) {
           userID: utils.formatID(p.id.toString()), // do we need .toString()? when it is not a string?
           name: p.name,
           shortName: p.short_name,
-          gender: p.gender, // MALE, FEMALE
+          gender: p.gender,
           url: p.url, // how about making it profileURL
           profilePicture: p.big_image_src.uri,
           username: (p.username||null),
@@ -61,7 +61,7 @@ function formatParticipants(participants) {
           userID: utils.formatID(p.id.toString()),
           name: p.name, // "Facebook User" in user's language
           url: createProfileUrl(p.url, p.username, p.id), // in this case p.url is null all the time
-          profilePicture: p.big_image_src.uri, // in this case it is default facebook photo, we could determine gender using it
+          profilePicture: p.big_image_src.uri, // default male facebook photo
           username: (p.username||null), // maybe we could use it to generate profile URL?
           isMessageBlockedByViewer: p.is_message_blocked_by_viewer, // true/false
         };
@@ -115,9 +115,9 @@ function formatThreadList(data) {
       folder: t.folder,
       isGroup: t.thread_type === "GROUP",
       // rtc_call_data: t.rtc_call_data, // TODO: format and document this
-      // isPinProtected: t.is_pin_protected, // feature from future? always false (2018-03-27)
-      customizationEnabled: t.customization_enabled, // TODO: add to DOCS; false for Page and ReducedMessagingActor
-      participantAddMode: t.participant_add_mode_as_string, // TODO: add to DOCS; "ADD" if "GROUP" and null if "ONE_TO_ONE"
+      // isPinProtected: t.is_pin_protected, // feature from future? always false (2018-03-30)
+      customizationEnabled: t.customization_enabled, // false for ONE_TO_ONE with Page or ReducedMessagingActor
+      participantAddMode: t.participant_add_mode_as_string, // "ADD" if "GROUP" and null if "ONE_TO_ONE"
       montageThread: t.montage_thread?Buffer.from(t.montage_thread.id,"base64").toString():null, // base64 encoded string "message_thread:0000000000000000"
       // it is not userID nor any other ID known to me...
       // can somebody inspect it? where is it used?
@@ -161,7 +161,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     const form = {
       "queries": JSON.stringify({
         "o0": {
-          // This doc_id was valid on 2018-03-22.
+          // This doc_id was valid on 2018-03-30.
           "doc_id": "1349387578499440",
           "query_params": {
             "limit": limit+(timestamp?1:0),
