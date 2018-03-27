@@ -404,7 +404,7 @@ function formatMessagesGraphQLResponse(data) {
             : d.blob_attachments && d.blob_attachments.length > 0
               ? d.blob_attachments.map(formatAttachmentsGraphQLResponse)
               : d.extensible_attachment
-                ? formatExtensibleAttachment(d.extensible_attachment)
+                ? [formatExtensibleAttachment(d.extensible_attachment)]
                 : [],
           body: d.message.text,
           isGroup: messageThread.thread_type === "GROUP",
