@@ -1,6 +1,7 @@
 "use strict";
 
 var utils = require("../utils");
+var graphQLUtils = require("./graphQLUtils");
 var log = require("npmlog");
 
 var msgsRecv = 0;
@@ -141,9 +142,10 @@ module.exports = function(defaultFuncs, api, ctx) {
           return;
         }
 
+        var atLeastOne = false;
+        var pendingForceFetch = [];
         if (resData.ms) {
           msgsRecv += resData.ms.length;
-          var atLeastOne = false;
           resData.ms
             .sort(function(a, b) {
               return a.timestamp - b.timestamp;
@@ -234,6 +236,10 @@ module.exports = function(defaultFuncs, api, ctx) {
                   });
                   break;
                 case "delta":
+                  if (v.delta.class === "ForcedFetch") {
+                    pendingForceFetch.push(v.delta);
+                    return;
+                  }
                   if (
                     ctx.globalOptions.pageID ||
                     (v.delta.class !== "NewMessage" &&
@@ -394,32 +400,6 @@ module.exports = function(defaultFuncs, api, ctx) {
                   break;
               }
             });
-
-          if (atLeastOne) {
-            // Send deliveryReceipt notification to the server
-            var formDeliveryReceipt = {};
-
-            resData.ms
-              .filter(function(v) {
-                return (
-                  v.message &&
-                  v.message.mid &&
-                  v.message.sender_fbid.toString() !== ctx.userID
-                );
-              })
-              .forEach(function(val, i) {
-                formDeliveryReceipt["[" + i + "]"] = val.message.mid;
-              });
-
-            // If there's at least one, we do the post request
-            if (formDeliveryReceipt["[0]"]) {
-              defaultFuncs.post(
-                "https://www.facebook.com/ajax/mercury/delivery_receipts.php",
-                ctx.jar,
-                formDeliveryReceipt
-              );
-            }
-          }
         }
 
         if (resData.seq) {
@@ -431,7 +411,46 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (currentlyRunning) {
           currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
         }
-        return;
+        return {
+          resData: resData,
+          atLeastOne: atLeastOne || pendingForceFetch.length > 0,
+          pendingForceFetch: pendingForceFetch,
+        };
+      })
+      .then(function(res) {
+        var pending = (res && res.pendingForceFetch) || [];
+        var promises = pending.map(e =>
+          graphQLUtils.loadMessage(ctx, defaultFuncs, e.threadKey.otherUserFbId, e.messageId)
+            .then(fmtMsg => globalCallback(null, fmtMsg)));
+        return Promise.all(promises)
+          .then(() => res)
+      })
+      .then(function(res) {
+        if (res && res.atLeastOne) {
+          // Send deliveryReceipt notification to the server
+          var formDeliveryReceipt = {};
+
+          res.resData.ms
+            .filter(function(v) {
+              return (
+                v.message &&
+                v.message.mid &&
+                v.message.sender_fbid.toString() !== ctx.userID
+              );
+            })
+            .forEach(function(val, i) {
+              formDeliveryReceipt["[" + i + "]"] = val.message.mid;
+            });
+
+          // If there's at least one, we do the post request
+          if (formDeliveryReceipt["[0]"]) {
+            defaultFuncs.post(
+              "https://www.facebook.com/ajax/mercury/delivery_receipts.php",
+              ctx.jar,
+              formDeliveryReceipt
+            );
+          }
+        }
       })
       .catch(function(err) {
         if (err.code === "ETIMEDOUT") {

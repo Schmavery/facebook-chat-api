@@ -595,7 +595,27 @@ function graphQLBatch(ctx, defaultFuncs, query) {
     });
 }
 
+function loadMessage(ctx, defaultFuncs, threadID, messageId) {
+  var query = {
+    // This doc_id was valid on March 26th 2018.
+    doc_id: "1801329719924418",
+    query_params: {
+      thread_and_message_id: {
+        thread_id: threadID,
+        message_id: messageId
+      }
+    }
+  };
+
+  return graphQLBatch(ctx, defaultFuncs, query)
+    .then(function(resData) {
+      // TODO@ Figure out how to get the correct thread type
+      return formatMessageGraphQLResponse(threadID, undefined, resData.message);
+    })
+}
+
 module.exports = {
   formatMessageGraphQLResponse,
-  graphQLBatch
-}
+  graphQLBatch,
+  loadMessage
+};
