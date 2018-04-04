@@ -620,7 +620,6 @@ __Thread list__
 | isGroup              | `true` or `false`                                           |
 | customizationEnabled | `false` in one-to-one conversations with `Page` or `ReducedMessagingActor` |
 | participantAddMode   | currently `"ADD"` for groups and `null` otherwise           |
-| montageThread        | `message_thread:000000` or `null` it may be connected to Messenger Day (*not yet tested*) |
 | reactionsMuteMode    | `REACTIONS_NOT_MUTED` or `REACTIONS_MUTED`                  |
 | mentionsMuteMode     | `MENTIONS_NOT_MUTED` or `MENTIONS_MUTED`                    |
 | isArchived           | `true` or `false`                                           |
@@ -650,7 +649,7 @@ __`participants` format__
 <th>Description</th>
 </tr>
 <tr>
-<td rowspan="13"><code>"User"</code></td>
+<td rowspan="12"><code>"User"</code></td>
 <td>userID</td>
 <td>ID of user</td>
 </tr>
@@ -704,13 +703,6 @@ __`participants` format__
 <tr>
 <td>isViewerCoworker</td>
 <td>Is the user your coworker?
-</td>
-</tr>
-<tr>
-<td>isEmployee</td>
-<td>
-<code>null</code>?
-<em>(not yet tested)</em>
 </td>
 </tr>
 

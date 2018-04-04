@@ -116,7 +116,7 @@ function formatThreadList(data) {
       folder: t.folder,
       isGroup: t.thread_type === "GROUP",
       // rtc_call_data: t.rtc_call_data, // TODO: format and document this
-      // isPinProtected: t.is_pin_protected, // feature from future? always false (2018-03-30)
+      // isPinProtected: t.is_pin_protected, // feature from future? always false (2018-04-04)
       customizationEnabled: t.customization_enabled, // false for ONE_TO_ONE with Page or ReducedMessagingActor
       participantAddMode: t.participant_add_mode_as_string, // "ADD" if "GROUP" and null if "ONE_TO_ONE"
       montageThread: t.montage_thread?Buffer.from(t.montage_thread.id,"base64").toString():null, // base64 encoded string "message_thread:0000000000000000"
@@ -144,16 +144,23 @@ function formatThreadList(data) {
 }
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function getThreadList(limit, timestamp, tags, callback) { // TODO: if no tags, use tags as callback
+  return function getThreadList(limit, timestamp, tags, callback) {
+    if (!callback && (utils.getType(tags) === "Function" || utils.getType(tags) === "AsyncFunction")) {
+      callback = tags;
+      tags = [""];
+    }
     if (utils.getType(limit) !== "Number" || limit%1 !== 0 || limit <= 0) {
       throw {error: "getThreadList: limit must be a positive integer"};
     }
     if (utils.getType(timestamp) !== "Null" &&
-       (utils.getType(timestamp) !== "Number" || limit%1 !== 0)) {
-      throw {error: "getThreadList: timestamp must be an integer or null"}; // or maybe not? not tested
+       (utils.getType(timestamp) !== "Number" || timestamp%1 !== 0)) {
+      throw {error: "getThreadList: timestamp must be an integer or null"};
     }
-    if (utils.getType(tags) !== "Array" || limit%1 !== 0) {
-      throw {error: "getThreadList: tags must be an array"}; // or maybe not? not tested
+    if (utils.getType(tags) === "String") {
+      tags = [tags];
+    }
+    if (utils.getType(tags) !== "Array") {
+      throw {error: "getThreadList: tags must be an array"};
     }
     if (utils.getType(callback) !== "Function" && utils.getType(callback) !== "AsyncFunction") {
       throw {error: "getThreadList: need callback"};
@@ -162,7 +169,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     const form = {
       "queries": JSON.stringify({
         "o0": {
-          // This doc_id was valid on 2018-03-30.
+          // This doc_id was valid on 2018-04-04.
           "doc_id": "1349387578499440",
           "query_params": {
             "limit": limit+(timestamp?1:0),
@@ -187,6 +194,12 @@ module.exports = function(defaultFuncs, api, ctx) {
           throw {error: "getThreadList: there was no successful_results", res: resData};
         }
 
+        // When we ask for threads using timestamp from the previous request,
+        // we are getting the last thread repeated as the first thread in this response.
+        // .shift() gets rid of it
+        // It is also the reason for increasing limit by 1 when timestamp is set
+        // this way user asks for 10 threads, we are asking for 11,
+        // but after removing the duplicated one, it is again 10
         if (timestamp) {
           resData[0].o0.data.viewer.message_threads.nodes.shift();
         }
