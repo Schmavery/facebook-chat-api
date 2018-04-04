@@ -111,6 +111,7 @@ function formatThreadList(data) {
       nicknames: mapNicknames(t.customization_info),
       muteUntil: t.mute_until,
       participants: formatParticipants(t.all_participants),
+      participantIDs: formatParticipants(t.all_participants).map(participant => participant.userID),
       adminIDs: t.thread_admins.map(a => a.id),
       folder: t.folder,
       isGroup: t.thread_type === "GROUP",
