@@ -1053,6 +1053,13 @@ function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
           res: data.body
         };
       }
+      
+      // In some cases the response contains only a redirect URL which should be followed
+      if (res.redirect && data.request.method === "GET") {
+        return defaultFuncs
+        .get(res.redirect, ctx.jar)
+        .then(parseAndCheckLogin(ctx, defaultFuncs));
+      }
 
       // TODO: handle multiple cookies?
       if (
