@@ -62,18 +62,18 @@ function formatAttachmentsGraphQLResponse(attachment) {
         previewWidth: attachment.preview_image.width,
         previewHeight: attachment.preview_image.height,
 
-        url: blob.animated_image.uri,
-        width: blob.animated_image.width,
-        height: blob.animated_image.height,
+        url: attachment.animated_image.uri,
+        width: attachment.animated_image.width,
+        height: attachment.animated_image.height,
 
-        thumbnailUrl: blob.preview_image.uri, // @Legacy
+        thumbnailUrl: attachment.preview_image.uri, // @Legacy
         name: attachment.filename, // @Legacy
         facebookUrl: attachment.animated_image.uri, // @Legacy
-        rawGifImage: blob.animated_image.uri, // @Legacy
-        animatedGifUrl: blob.animated_image.uri, // @Legacy
-        animatedGifPreviewUrl: blob.preview_image.uri, // @Legacy
-        animatedWebpUrl: blob.animated_image.uri, // @Legacy
-        animatedWebpPreviewUrl: blob.preview_image.uri, // @Legacy
+        rawGifImage: attachment.animated_image.uri, // @Legacy
+        animatedGifUrl: attachment.animated_image.uri, // @Legacy
+        animatedGifPreviewUrl: attachment.preview_image.uri, // @Legacy
+        animatedWebpUrl: attachment.animated_image.uri, // @Legacy
+        animatedWebpPreviewUrl: attachment.preview_image.uri, // @Legacy
 
         // @Undocumented
         attributionApp: attachment.attribution_app
@@ -90,7 +90,7 @@ function formatAttachmentsGraphQLResponse(attachment) {
         filename: attachment.filename,
         ID: attachment.legacy_attachment_id,
 
-        thumbnailUrl: blob.large_image.uri, // @Legacy
+        thumbnailUrl: attachment.large_image.uri, // @Legacy
 
         previewUrl: attachment.large_image.uri,
         previewWidth: attachment.large_image.width,
