@@ -601,7 +601,9 @@ function formatDeltaMessage(m) {
   var mdata =
     m.delta.data === undefined
       ? []
-      : m.delta.data.prng === undefined ? [] : JSON.parse(m.delta.data.prng);
+      : m.delta.data.prng === undefined
+        ? []
+        : JSON.parse(m.delta.data.prng);
   var m_id = mdata.map(u => u.i);
   var m_offset = mdata.map(u => u.o);
   var m_length = mdata.map(u => u.l);
@@ -1053,12 +1055,12 @@ function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
           res: data.body
         };
       }
-      
+
       // In some cases the response contains only a redirect URL which should be followed
       if (res.redirect && data.request.method === "GET") {
         return defaultFuncs
-        .get(res.redirect, ctx.jar)
-        .then(parseAndCheckLogin(ctx, defaultFuncs));
+          .get(res.redirect, ctx.jar)
+          .then(parseAndCheckLogin(ctx, defaultFuncs));
       }
 
       // TODO: handle multiple cookies?
