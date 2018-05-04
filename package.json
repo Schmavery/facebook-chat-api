@@ -3,8 +3,8 @@
   "version": "1.5.1",
   "description": "Facebook chat API that doesn't rely on XMPP.  Will NOT be deprecated April 30th 2015.",
   "scripts": {
-    "test": "node_modules/.bin/mocha",
-    "prettier": "node_modules/.bin/prettier utils.js src/* --write"
+    "test": "mocha",
+    "prettier": "prettier utils.js src/* --write"
   },
   "repository": {
     "type": "git",
