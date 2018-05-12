@@ -93,15 +93,19 @@ function getThreadName(t) {
 }
 
 function mapNicknames(customizationInfo) {
-  return customizationInfo?customizationInfo.participant_customizations.map(u => {
-    return {"userID": u.participant_id, "nickname": u.nickname};
+  return (customizationInfo && customizationInfo.participant_customizations) ? customizationInfo.participant_customizations.map(u => {
+      return {
+        "userID": u.participant_id,
+        "nickname": u.nickname
+      };
   }):[];
 }
 
 function formatThreadList(data) {
   return data.map(t => {
+    let lastMessageNode = (t.last_message&&t.last_message.nodes&&t.last_message.nodes.length>0)?t.last_message.nodes[0]:null;
     return {
-      threadID: utils.formatID(t.thread_key.thread_fbid || t.thread_key.other_user_id),
+      threadID: t.thread_key?utils.formatID(t.thread_key.thread_fbid || t.thread_key.other_user_id):null, // shall never be null
       name: getThreadName(t),
       unreadCount: t.unread_count,
       messageCount: t.messages_count,
@@ -111,7 +115,6 @@ function formatThreadList(data) {
       nicknames: mapNicknames(t.customization_info),
       muteUntil: t.mute_until,
       participants: formatParticipants(t.all_participants),
-      participantIDs: formatParticipants(t.all_participants).map(participant => participant.userID),
       adminIDs: t.thread_admins.map(a => a.id),
       folder: t.folder,
       isGroup: t.thread_type === "GROUP",
@@ -130,14 +133,17 @@ function formatThreadList(data) {
       timestamp: t.updated_time_precise, // in miliseconds
       // isCanonicalUser: t.is_canonical_neo_user, // is it always false?
       // TODO: how about putting snippet in another object? current implementation does not handle every possibile message type etc.
-      snippet: t.last_message.nodes[0].snippet,
-      snippetAttachments: t.last_message.nodes[0].extensible_attachment, // TODO: not sure if it works
-      snippetSender: utils.formatID((t.last_message.nodes[0].message_sender.messaging_actor.id || "").toString()),
-      lastMessageTimestamp: t.last_message.nodes[0].timestamp_precise, // timestamp in miliseconds
-      lastReadTimestamp: (t.last_read_receipt.nodes[0]?t.last_read_receipt.nodes[0].timestamp_precise:null), // timestamp in miliseconds
+      snippet: lastMessageNode?lastMessageNode.snippet:null,
+      snippetAttachments: lastMessageNode?lastMessageNode.extensible_attachment:null, // TODO: not sure if it works
+      snippetSender: lastMessageNode?utils.formatID((lastMessageNode.message_sender.messaging_actor.id || "").toString()):null,
+      lastMessageTimestamp: lastMessageNode?lastMessageNode.timestamp_precise:null, // timestamp in miliseconds
+      lastReadTimestamp: (t.last_read_receipt&&t.last_read_receipt.nodes.length>0)
+                         ? (t.last_read_receipt.nodes[0]?t.last_read_receipt.nodes[0].timestamp_precise:null)
+                         : null, // timestamp in miliseconds
       cannotReplyReason: t.cannot_reply_reason, // TODO: inspect possible values
 
       // @Legacy
+      participantIDs: formatParticipants(t.all_participants).map(participant => participant.userID),
       threadType: t.thread_type === "GROUP" ? 2 : 1 // "GROUP" or "ONE_TO_ONE"
     };
   });
@@ -149,11 +155,11 @@ module.exports = function(defaultFuncs, api, ctx) {
       callback = tags;
       tags = [""];
     }
-    if (utils.getType(limit) !== "Number" || limit%1 !== 0 || limit <= 0) {
+    if (utils.getType(limit) !== "Number" || !Number.isInteger(limit) || limit <= 0) {
       throw {error: "getThreadList: limit must be a positive integer"};
     }
     if (utils.getType(timestamp) !== "Null" &&
-       (utils.getType(timestamp) !== "Number" || timestamp%1 !== 0)) {
+       (utils.getType(timestamp) !== "Number" || !Number.isInteger(timestamp))) {
       throw {error: "getThreadList: timestamp must be an integer or null"};
     }
     if (utils.getType(tags) === "String") {
