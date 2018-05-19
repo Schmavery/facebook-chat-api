@@ -152,7 +152,7 @@ login(obj, (err, api) => {
     }
 
     // Logged in!
-}
+});
 ```
 
 __Review Recent Login__: Sometimes Facebook will ask you to review your recent logins. This means you've recently logged in from a unrecognized location. This will will result in the callback being called with an error `'review-recent-login'` by default. If you wish to automatically approve all recent logins, you can set the option `forceLogin` to `true` in the `loginOptions`.
