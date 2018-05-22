@@ -579,49 +579,249 @@ __Arguments__
 ---------------------------------------
 
 <a name="getThreadList"></a>
-### api.getThreadList(start, end, type, callback)
+### api.getThreadList(limit, timestamp, tags, callback)
 
-Will return information about threads.
+Returns information about the user's threads.
 
 __Arguments__
 
-* `start`: Start index in the list of recently used threads.
-* `end`: End index.
-* `type`: Optional String, can be 'inbox', 'pending', or 'archived'. Inbox is default.
-* `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties:
+* `limit`: Limit the number of threads to fetch.
+* `timestamp`: Request threads *before* this date. `null` means *now*
+* `tags`: An array describing which folder to fetch. It should be one of these:
+  - `["INBOX"]` *(same as `[]`)*
+  - `["ARCHIVED"]`
+  - `["PENDING"]`
+  - `["OTHER"]`
+  - `["INBOX", "unread"]`
+  - `["ARCHIVED", "unread"]`
+  - `["PENDING", "unread"]`
+  - `["OTHER", "unread"]`
 
-| Key   |      Description      |
-|----------|:-------------:|
-| threadID | ID of the thread |
-| participantIDs |    Array of user IDs in the thread   |
-| name | Name of the thread. Usually the name of the user. In group chats, this will be empty if the name of the group chat is unset. |
-| nicknames |    Map of nicknames for members of the thread. If there are no nicknames set, this will be null.   |
-| snippet | This is the preview message for the thread and is usually the last message in the thread. |
-| snippetAttachments | If the snippet uses attachments (e.g. emoji's), this will be an array of the attachments. |
-| snippetSender | The ID of the author of the snippet |
-| unreadCount | Number of unread messages |
-| messageCount | Number of messages |
-| imageSrc | URL to the group chat photo. Null if unset or a canonical thread. |
-| timestamp |  |
-| serverTimestamp |  |
-| muteUntil | Timestamp at which the thread will no longer be muted. The timestamp will be -1 if the thread is muted indefinitely or null if the thread is not muted. |
-| isCanonicalUser | True if the other user in a canonical thread is a user, false if the other user is a page or group. |
-| isCanonical | True if the thread is a private chat to a single user, false for group chats. |
-| isSubscribed |  |
-| folder | The folder that the thread is in. Can be one of: <ul><li>'inbox'</li><li>'archive'</li></ul> |
-| isArchived | True if the thread is archived, false if not |
-| recipientsLoadable |  |
-| hasEmailParticipant |  |
-| readOnly |  |
-| canReply | True if the current user can reply in the thread |
-| cannotReplyReason | If canReply is false, this will be a string stating why. Null if canReply is true. |
-| lastMessageTimestamp | Timestamp of the last message. |
-| lastReadTimestamp | Timestamp of the last message that is marked as 'read' by the current user. |
-| lastMessageType | Message type of the last message. |
-| emoji | Object with key 'emoji' whose value is the emoji unicode character. Null if unset. |
-| color | String form of the custom color in hexadecimal form. |
-| adminIDs | Array of user IDs of the admins of the thread. Empty array if unset. |
-| threadType | 1 for a canonical thread, 2 for a group chat thread. |
+*if you find something new, let us know*
+
+* `callback(err, list)`: Callback called when the query is done (either with an error or with a proper result). `list` is an *array* with objects with the following properties:
+
+__Thread list__
+
+| Key                  | Description                                                 |
+|----------------------|-------------------------------------------------------------|
+| threadID             | ID of the thread                                            |
+| name                 | The name of the thread                                      |
+| unreadCount          | Amount of unread messages in thread                         |
+| messageCount         | Amount of messages in thread                                |
+| imageSrc             | Link to the thread's image or `null`                        |
+| emoji                | The default emoji in thread (classic like is `null`)        |
+| color                | Thread's message color in `RRGGBB` (default blue is `null`) |
+| nicknames            | An array of `{"userid": "1234", "nickname": "John Doe"}`    |
+| muteUntil            | Timestamp until the mute expires or `null`                  |
+| participants         | An array of participants. See below                         |
+| adminIDs             | An array of thread admin IDs                                |
+| folder               | `INBOX`, `ARCHIVED`, `PENDING` or `OTHER`                   |
+| isGroup              | `true` or `false`                                           |
+| customizationEnabled | `false` in one-to-one conversations with `Page` or `ReducedMessagingActor` |
+| participantAddMode   | currently `"ADD"` for groups and `null` otherwise           |
+| reactionsMuteMode    | `REACTIONS_NOT_MUTED` or `REACTIONS_MUTED`                  |
+| mentionsMuteMode     | `MENTIONS_NOT_MUTED` or `MENTIONS_MUTED`                    |
+| isArchived           | `true` or `false`                                           |
+| isSubscribed         | `true` or `false`                                           |
+| timestamp            | timestamp in miliseconds                                    |
+| snippet              | Snippet's text message                                      |
+| snippetAttachments   | Attachments in snippet                                      |
+| snippetSender        | ID of snippet sender                                        |
+| lastMessageTimestamp | timestamp in milliseconds                                   |
+| lastReadTimestamp    | timestamp in milliseconds or `null`                         |
+| cannotReplyReason    | `null`, `"RECIPIENTS_NOT_LOADABLE"` or `"BLOCKED"`          |
+
+__`participants` format__
+
+`accountType` is one of the following:
+- `"User"`
+- `"Page"`
+- `"UnavailableMessagingActor"`
+- `"ReducedMessagingActor"`
+
+(*there might be more*)
+
+<table>
+<tr>
+<th>Account type</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+<tr>
+<td rowspan="12"><code>"User"</code></td>
+<td>userID</td>
+<td>ID of user</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Full name of user</td>
+</tr>
+<tr>
+<td>shortName</td>
+<td>Short name of user (most likely first name)</td>
+</tr>
+<tr>
+<td>gender</td>
+<td>Either
+<code>"MALE"</code>,
+<code>"FEMALE"</code>,
+<code>"NEUTER"</code> or
+<code>"UNKNOWN"</code>
+</td>
+</tr>
+<tr>
+<td>url</td>
+<td>URL of the user's Facebook profile</td>
+</tr>
+<tr>
+<td>profilePicture</td>
+<td>URL of the profile picture</td>
+</tr>
+<tr>
+<td>username</td>
+<td>Username of user or
+<code>null</code>
+</td>
+</tr>
+<tr>
+<td>isViewerFriend</td>
+<td>Is the user a friend of you?</td>
+</tr>
+<tr>
+<td>isMessengerUser</td>
+<td>Does the user use Messenger?</td>
+</tr>
+<tr>
+<td>isVerified</td>
+<td>Is the user verified? (Little blue tick mark)</td>
+</tr>
+<tr>
+<td>isMessageBlockedByViewer</td>
+<td>Is the user blocking messages from you?</td>
+</tr>
+<tr>
+<td>isViewerCoworker</td>
+<td>Is the user your coworker?
+</td>
+</tr>
+
+<tr>
+<td rowspan="10"><code>"Page"</code></td>
+<td>userID</td>
+<td>ID of the page</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Name of the fanpage</td>
+</tr>
+<tr>
+<td>url</td>
+<td>URL of the fanpage</td>
+</tr>
+<tr>
+<td>profilePicture</td>
+<td>URL of the profile picture</td>
+</tr>
+<tr>
+<td>username</td>
+<td>Username of user or
+<code>null</code>
+</td>
+</tr>
+<tr>
+<td>acceptsMessengerUserFeedback</td>
+<td></td>
+</tr>
+<tr>
+<td>isMessengerUser</td>
+<td>Does the fanpage use Messenger?</td>
+</tr>
+<tr>
+<td>isVerified</td>
+<td>Is the fanpage verified? (Little blue tick mark)</td>
+</tr>
+<tr>
+<td>isMessengerPlatformBot</td>
+<td>Is the fanpage a bot</td>
+</tr>
+<tr>
+<td>isMessageBlockedByViewer</td>
+<td>Is the fanpage blocking messages from you?</td>
+</tr>
+
+<tr>
+<td rowspan="7"><code>"ReducedMessagingActor"</code><br />(account requres verification,<br />messages are hidden)</td>
+<td>userID</td>
+<td>ID of the user</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Name of the user</td>
+</tr>
+<tr>
+<td>url</td>
+<td>
+<code>null</code>
+</td>
+</tr>
+<tr>
+<td>profilePicture</td>
+<td>URL of the default Facebook profile picture</td>
+</tr>
+<tr>
+<td>username</td>
+<td>Username of user</td>
+</td>
+</tr>
+<tr>
+<td>acceptsMessengerUserFeedback</td>
+<td></td>
+</tr>
+<tr>
+<td>isMessageBlockedByViewer</td>
+<td>Is the user blocking messages from you?</td>
+</tr>
+<tr>
+<td rowspan="7"><code>"UnavailableMessagingActor"</code><br />(account disabled/removed)</td>
+<td>userID</td>
+<td>ID of the user</td>
+</tr>
+<tr>
+<td>name</td>
+<td><em>Facebook User</em> in user's language</td>
+</tr>
+<tr>
+<td>url</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td>profilePicture</td>
+<td>URL of the default **male** Facebook profile picture</td>
+</tr>
+<tr>
+<td>username</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td>acceptsMessengerUserFeedback</td>
+<td></td>
+</tr>
+<tr>
+<td>isMessageBlockedByViewer</td>
+<td>Is the user blocking messages from you?</td>
+</tr>
+</table>
+
+
+In a case that some account type is not supported, we return just this *(but you can't rely on it)* and log a warning to the console:
+
+| Key          | Description             |
+|--------------|-------------------------|
+| accountType  | type, can be anything   |
+| userID       | ID of the account       |
+| name         | Name of the account     |
+
 
 ---------------------------------------
 
