@@ -62,6 +62,7 @@ Result:
 * [`api.getAppState`](DOCS.md#getAppState)
 * [`api.getCurrentUserID`](DOCS.md#getCurrentUserID)
 * [`api.getFriendsList`](DOCS.md#getFriendsList)
+* [`api.getLastNotifications`](DOCS.md#getLastNotifications)
 * [`api.getThreadHistory`](DOCS.md#getThreadHistory)
 * [`api.getThreadInfo`](DOCS.md#getThreadInfo)
 * [`api.getThreadList`](DOCS.md#getThreadList)

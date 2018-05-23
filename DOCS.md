@@ -16,6 +16,7 @@
 * [`api.getCurrentUserID`](#getCurrentUserID)
 * [`api.getEmojiUrl`](#getEmojiUrl)
 * [`api.getFriendsList`](#getFriendsList)
+* [`api.getLastNotifications`](#getLastNotifications)
 * [`api.getThreadHistory`](#getThreadHistory)
 * [`api.getThreadInfo`](#getThreadInfo)
 * [`api.getThreadList`](#getThreadList)
@@ -499,6 +500,33 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
         if(err) return console.error(err);
 
         console.log(data.length);
+    });
+});
+```
+
+---------------------------------------
+<a name="getLastNotifications"></a>
+### api.getLastNotifications(callback)
+
+Returns an array of objects with the last notifications of the profile.
+
+__Arguments__
+
+* `callback(err, arr)` - A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of objects with the following fields: `id`, `type`, `thumbnail`, `icon`, `state`, `first_read_time`, `first_seen_time`, `message`, `url`, `creation_time`, `time_text`, `time_verbose`, `alert_id`, `sort_keys`, `previewImage`, `tracking`.
+
+__Example__
+
+```js
+const fs = require("fs");
+const login = require("facebook-chat-api");
+
+login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
+    if(err) return console.error(err);
+
+    api.getLastNotifications((err, data) => {
+        if(err) return console.error(err);
+
+        console.log(data.message);
     });
 });
 ```
