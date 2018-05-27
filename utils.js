@@ -11,7 +11,7 @@ function getHeaders(url) {
     Referer: "https://www.facebook.com/",
     Host: url.replace("https://", "").split("/")[0],
     Origin: "https://www.facebook.com",
-    "User-Agent":
+    "User-Agent": process.env.USER_AGENT || 
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18",
     Connection: "keep-alive"
   };
