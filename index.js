@@ -116,7 +116,7 @@ function buildAPI(globalOptions, html, jar) {
     'getThreadInfoDeprecated',
   ];
 
-  var defaultFuncs = utils.makeDefaults(html, userID, ctx, globalOptions);
+  var defaultFuncs = utils.makeDefaults(html, userID, ctx);
 
   // Load all api functions in a loop
   apiFuncNames.map(function(v) {
@@ -467,3 +467,4 @@ function login(loginData, options, callback) {
 }
 
 module.exports = login;
+

@@ -885,7 +885,7 @@ function generateTimestampRelative() {
   return d.getHours() + ":" + padZeros(d.getMinutes());
 }
 
-function makeDefaults(html, userID, ctx, options) {
+function makeDefaults(html, userID, ctx) {
   var reqCounter = 1;
   var fb_dtsg = getFrom(html, 'name="fb_dtsg" value="', '"');
 
@@ -957,11 +957,11 @@ function makeDefaults(html, userID, ctx, options) {
   }
 
   function postWithDefaults(url, jar, form) {
-    return post(url, jar, mergeWithDefaults(form), options);
+    return post(url, jar, mergeWithDefaults(form), ctx.globalOptions);
   }
 
   function getWithDefaults(url, jar, qs) {
-    return get(url, jar, mergeWithDefaults(qs), options);
+    return get(url, jar, mergeWithDefaults(qs), ctx.globalOptions);
   }
 
   function postFormDataWithDefault(url, jar, form, qs) {
@@ -970,7 +970,7 @@ function makeDefaults(html, userID, ctx, options) {
       jar,
       mergeWithDefaults(form),
       mergeWithDefaults(qs),
-      options
+      ctx.globalOptions 
     );
   }
 
@@ -1277,3 +1277,4 @@ module.exports = {
   getAppState,
   getAdminTextMessageType
 };
+
