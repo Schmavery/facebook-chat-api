@@ -33,7 +33,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           h: utils.getFrom(html, '"h" value="', '"')
         };
 
-        return utils
+        return defaultFuncs
           .post("https://www.facebook.com/logout.php", ctx.jar, form)
           .then(utils.saveCookies(ctx.jar));
       })
@@ -42,7 +42,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           throw { error: "An error occurred when logging out." };
         }
 
-        return utils
+        return defaultFuncs
           .get(res.headers.location, ctx.jar)
           .then(utils.saveCookies(ctx.jar));
       })
