@@ -5,24 +5,28 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function deleteThread(threadOrThreads, callback) {
-    if(!callback) {
-      callback = function(){};
+    if (!callback) {
+      callback = function() {};
     }
 
     var form = {
-      client: 'mercury',
+      client: "mercury"
     };
 
-    if(utils.getType(threadOrThreads) !== "Array") {
+    if (utils.getType(threadOrThreads) !== "Array") {
       threadOrThreads = [threadOrThreads];
     }
 
     for (var i = 0; i < threadOrThreads.length; i++) {
-      form['ids[' + i + ']'] = threadOrThreads[i];
+      form["ids[" + i + "]"] = threadOrThreads[i];
     }
 
     defaultFuncs
-      .post("https://www.facebook.com/ajax/mercury/delete_thread.php", ctx.jar, form)
+      .post(
+        "https://www.facebook.com/ajax/mercury/delete_thread.php",
+        ctx.jar,
+        form
+      )
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {

@@ -107,9 +107,10 @@ function buildAPI(globalOptions, html, jar) {
     'setMessageReaction',
     'setTitle',
 
-    // Beta features
-    'getThreadHistoryGraphQL',
-    'getThreadInfoGraphQL',
+    // Deprecated features
+    "getThreadListDeprecated",
+    'getThreadHistoryDeprecated',
+    'getThreadInfoDeprecated',
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID, ctx);
@@ -315,6 +316,17 @@ function loginHelper(appState, email, password, globalOptions, callback) {
   var api = null;
 
   mainPromise = mainPromise
+    .then(function(res) {
+      // Hacky check for the redirection that happens on some ISPs, which doesn't return statusCode 3xx
+      var reg = /<meta http-equiv="refresh" content="0;url=([^"]+)[^>]+>/;
+      var redirect = reg.exec(res.body);
+      if (redirect && redirect[1]) {
+        return utils
+          .get(redirect[1], jar)
+          .then(utils.saveCookies(jar));
+      }
+      return res;
+    })
     .then(function(res) {
       var html = res.body;
       var stuff = buildAPI(globalOptions, html, jar);

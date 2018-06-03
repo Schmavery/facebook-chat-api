@@ -5,7 +5,7 @@ var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
   return function setMessageReaction(reaction, messageID, callback) {
-    if(!callback) {
+    if (!callback) {
       callback = function() {};
     }
 
@@ -48,7 +48,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         reaction = "\uD83D\uDC4E";
         break;
       default:
-        return callback({error: "Reaction is not a valid emoji."});
+        return callback({ error: "Reaction is not a valid emoji." });
         break;
     }
 
@@ -69,13 +69,18 @@ module.exports = function(defaultFuncs, api, ctx) {
     };
 
     defaultFuncs
-      .postFormData("https://www.messenger.com/webgraphql/mutation/", ctx.jar, {}, qs)
+      .postFormData(
+        "https://www.messenger.com/webgraphql/mutation/",
+        ctx.jar,
+        {},
+        qs
+      )
       .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
       .then(function(resData) {
         if (!resData) {
-          throw {error: "setReaction returned empty object."};
+          throw { error: "setReaction returned empty object." };
         }
-        if(resData.error) {
+        if (resData.error) {
           throw resData;
         }
         callback(null);

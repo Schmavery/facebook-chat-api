@@ -12,7 +12,11 @@ module.exports = function(defaultFuncs, api, ctx) {
     };
 
     defaultFuncs
-      .post('https://www.facebook.com/bluebar/modern_settings_menu/?help_type=364455653583099&show_contextual_help=1', ctx.jar, form)
+      .post(
+        "https://www.facebook.com/bluebar/modern_settings_menu/?help_type=364455653583099&show_contextual_help=1",
+        ctx.jar,
+        form
+      )
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         var elem = resData.jsmods.instances[0][2][0].filter(function(v) {
@@ -24,18 +28,18 @@ module.exports = function(defaultFuncs, api, ctx) {
         })[0][1].__html;
 
         var form = {
-          fb_dtsg: utils.getFrom(html, "\"fb_dtsg\" value=\"", "\""),
-          ref: utils.getFrom(html, "\"ref\" value=\"", "\""),
-          h: utils.getFrom(html, "\"h\" value=\"", "\""),
+          fb_dtsg: utils.getFrom(html, '"fb_dtsg" value="', '"'),
+          ref: utils.getFrom(html, '"ref" value="', '"'),
+          h: utils.getFrom(html, '"h" value="', '"')
         };
 
         return utils
-          .post('https://www.facebook.com/logout.php', ctx.jar, form)
+          .post("https://www.facebook.com/logout.php", ctx.jar, form)
           .then(utils.saveCookies(ctx.jar));
       })
       .then(function(res) {
-        if(!res.headers) {
-          throw {error: "An error occurred when logging out."};
+        if (!res.headers) {
+          throw { error: "An error occurred when logging out." };
         }
 
         return utils
