@@ -7,8 +7,8 @@ module.exports = function(defaultFuncs, api, ctx) {
   function makeTypingIndicator(typ, threadID, callback) {
     var form = {
       typ: +typ,
-      to: '',
-      source: 'mercury-chat',
+      to: "",
+      source: "mercury-chat",
       thread: threadID
     };
 
@@ -20,7 +20,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       }
 
       // If id is single person chat
-      if(Object.keys(res).length > 0) {
+      if (Object.keys(res).length > 0) {
         form.to = threadID;
       }
 
@@ -28,7 +28,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         .post("https://www.facebook.com/ajax/messaging/typ.php", ctx.jar, form)
         .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function(resData) {
-          if(resData.error) {
+          if (resData.error) {
             throw resData;
           }
 
@@ -42,9 +42,15 @@ module.exports = function(defaultFuncs, api, ctx) {
   }
 
   return function sendTypingIndicator(threadID, callback) {
-    if (utils.getType(callback) !== 'Function' && utils.getType(callback) !== 'AsyncFunction') {
+    if (
+      utils.getType(callback) !== "Function" &&
+      utils.getType(callback) !== "AsyncFunction"
+    ) {
       if (callback) {
-        log.warn("sendTypingIndicator", "callback is not a function - ignoring.");
+        log.warn(
+          "sendTypingIndicator",
+          "callback is not a function - ignoring."
+        );
       }
       callback = () => {};
     }
@@ -52,9 +58,15 @@ module.exports = function(defaultFuncs, api, ctx) {
     makeTypingIndicator(true, threadID, callback);
 
     return function end(cb) {
-      if (utils.getType(cb) !== 'Function' && utils.getType(cb) !== 'AsyncFunction') {
+      if (
+        utils.getType(cb) !== "Function" &&
+        utils.getType(cb) !== "AsyncFunction"
+      ) {
         if (cb) {
-          log.warn("sendTypingIndicator", "callback is not a function - ignoring.");
+          log.warn(
+            "sendTypingIndicator",
+            "callback is not a function - ignoring."
+          );
         }
         cb = () => {};
       }
