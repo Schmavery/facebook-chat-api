@@ -32,8 +32,14 @@ module.exports = function(defaultFuncs, api, ctx) {
     state: "active",
     idle: 0,
     cap: "8",
-    msgs_recv: msgsRecv
+    msgs_recv: msgsRecv,
+    qp: "y",
+    pws: "fresh"
   };
+
+  if (ctx.globalOptions.pageID) {
+    form.aiq = ctx.globalOptions.pageID+",0";
+  }
 
   /**
    * Get an object maybe representing an event. Handles events it wants to handle
@@ -234,14 +240,17 @@ module.exports = function(defaultFuncs, api, ctx) {
                   });
                   break;
                 case "delta":
-                  if (
-                    ctx.globalOptions.pageID ||
-                    (v.delta.class !== "NewMessage" &&
-                      !ctx.globalOptions.listenEvents)
+                  if (v.delta.class !== "NewMessage" &&
+                      !ctx.globalOptions.listenEvents
                   )
                     return;
 
                   if (v.delta.class == "NewMessage") {
+                    if (ctx.globalOptions.pageID &&
+                      ctx.globalOptions.pageID != v.queue
+                    )
+                      return;
+
                     (function resolveAttachmentUrl(i) {
                       if (i == v.delta.attachments.length) {
                         var fmtMsg;
