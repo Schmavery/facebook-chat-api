@@ -1090,8 +1090,8 @@ function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
 
             // Update ttstamp since that depends on fb_dtsg
             ctx.ttstamp = "2";
-            for (var i = 0; i < ctx.fb_dtsg.length; i++) {
-              ctx.ttstamp += ctx.fb_dtsg.charCodeAt(i);
+            for (var j = 0; j < ctx.fb_dtsg.length; j++) {
+              ctx.ttstamp += ctx.fb_dtsg.charCodeAt(j);
             }
           }
         }
