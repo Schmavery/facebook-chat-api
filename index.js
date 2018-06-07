@@ -344,7 +344,7 @@ function loginHelper(appState, email, password, globalOptions, callback) {
         .get("https://www.facebook.com/ajax/presence/reconnect.php", ctx.jar, form)
         .then(utils.saveCookies(ctx.jar));
     })
-    .then(function(res) {
+    .then(function(_res) {
       log.info("login", 'Request to pull 1');
       var form = {
         channel : 'p_' + ctx.userID,
