@@ -5,14 +5,13 @@ var request = bluebird.promisify(require("request").defaults({ jar: true }));
 var stream = require("stream");
 var log = require("npmlog");
 
-function getHeaders(url) {
+function getHeaders(url, options) {
   var headers = {
     "Content-Type": "application/x-www-form-urlencoded",
     Referer: "https://www.facebook.com/",
     Host: url.replace("https://", "").split("/")[0],
     Origin: "https://www.facebook.com",
-    "User-Agent":
-      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18",
+    "User-Agent": options.userAgent,
     Connection: "keep-alive"
   };
 
@@ -28,7 +27,7 @@ function isReadableStream(obj) {
   );
 }
 
-function get(url, jar, qs) {
+function get(url, jar, qs, options) {
   // I'm still confused about this
   if (getType(qs) === "Object") {
     for (var prop in qs) {
@@ -38,7 +37,7 @@ function get(url, jar, qs) {
     }
   }
   var op = {
-    headers: getHeaders(url),
+    headers: getHeaders(url, options),
     timeout: 60000,
     qs: qs,
     url: url,
@@ -52,9 +51,9 @@ function get(url, jar, qs) {
   });
 }
 
-function post(url, jar, form) {
+function post(url, jar, form, options) {
   var op = {
-    headers: getHeaders(url),
+    headers: getHeaders(url, options),
     timeout: 60000,
     url: url,
     method: "POST",
@@ -68,8 +67,8 @@ function post(url, jar, form) {
   });
 }
 
-function postFormData(url, jar, form, qs) {
-  var headers = getHeaders(url);
+function postFormData(url, jar, form, qs, options) {
+  var headers = getHeaders(url, options);
   headers["Content-Type"] = "multipart/form-data";
   var op = {
     headers: headers,
@@ -958,11 +957,11 @@ function makeDefaults(html, userID, ctx) {
   }
 
   function postWithDefaults(url, jar, form) {
-    return post(url, jar, mergeWithDefaults(form));
+    return post(url, jar, mergeWithDefaults(form), ctx.globalOptions);
   }
 
   function getWithDefaults(url, jar, qs) {
-    return get(url, jar, mergeWithDefaults(qs));
+    return get(url, jar, mergeWithDefaults(qs), ctx.globalOptions);
   }
 
   function postFormDataWithDefault(url, jar, form, qs) {
@@ -970,7 +969,8 @@ function makeDefaults(html, userID, ctx) {
       url,
       jar,
       mergeWithDefaults(form),
-      mergeWithDefaults(qs)
+      mergeWithDefaults(qs),
+      ctx.globalOptions 
     );
   }
 
@@ -1277,3 +1277,4 @@ module.exports = {
   getAppState,
   getAdminTextMessageType
 };
+

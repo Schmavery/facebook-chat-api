@@ -33,6 +33,9 @@ function setOptions(globalOptions, options) {
       case 'forceLogin':
         globalOptions.forceLogin = options.forceLogin;
         break;
+      case 'userAgent':
+        globalOptions.userAgent = options.userAgent;
+        break;
       default:
         log.warn("setOptions", "Unrecognized option given to setOptions: " + key);
         break;
@@ -168,7 +171,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
 
     log.info("login", "Logging in...");
     return utils
-      .post("https://www.facebook.com/login.php?login_attempt=1&lwv=110", jar, form)
+      .post("https://www.facebook.com/login.php?login_attempt=1&lwv=110", jar, form, loginOptions)
       .then(utils.saveCookies(jar))
       .then(function(res) {
         var headers = res.headers;
@@ -182,7 +185,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
           var nextURL = 'https://www.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php';
 
           return utils
-            .get(headers.location, jar)
+            .get(headers.location, jar, null, loginOptions)
             .then(utils.saveCookies(jar))
             .then(function(res) {
               var html = res.body;
@@ -205,14 +208,14 @@ function makeLogin(jar, email, password, loginOptions, callback) {
                     form.approvals_code = code;
                     form['submit[Continue]'] = 'Continue';
                     return utils
-                      .post(nextURL, jar, form)
+                      .post(nextURL, jar, form, loginOptions)
                       .then(utils.saveCookies(jar))
                       .then(function() {
                         // Use the same form (safe I hope)
                         form.name_action_selected = 'save_device';
 
                         return utils
-                          .post(nextURL, jar, form)
+                          .post(nextURL, jar, form, loginOptions)
                           .then(utils.saveCookies(jar));
                       })
                       .then(function(res) {
@@ -243,14 +246,14 @@ function makeLogin(jar, email, password, loginOptions, callback) {
                 }
 
                 return utils
-                  .post(nextURL, jar, form)
+                  .post(nextURL, jar, form, loginOptions)
                   .then(utils.saveCookies(jar))
                   .then(function() {
                     // Use the same form (safe I hope)
                     form.name_action_selected = 'save_device';
 
                     return utils
-                      .post(nextURL, jar, form)
+                      .post(nextURL, jar, form, loginOptions)
                       .then(utils.saveCookies(jar));
                   })
                   .then(function(res) {
@@ -274,7 +277,7 @@ function makeLogin(jar, email, password, loginOptions, callback) {
         }
 
         return utils
-          .get('https://www.facebook.com/', jar)
+          .get('https://www.facebook.com/', jar, null, loginOptions)
           .then(utils.saveCookies(jar));
       });
   };
@@ -295,18 +298,18 @@ function loginHelper(appState, email, password, globalOptions, callback) {
 
     // Load the main page.
     mainPromise = utils
-      .get('https://www.facebook.com/', jar)
+      .get('https://www.facebook.com/', jar, null, globalOptions)
       .then(utils.saveCookies(jar));
   } else {
     // Open the main page, then we login with the given credentials and finally
     // load the main page again (it'll give us some IDs that we need)
     mainPromise = utils
-      .get("https://www.facebook.com/", null)
+      .get("https://www.facebook.com/", null, null, globalOptions)
       .then(utils.saveCookies(jar))
       .then(makeLogin(jar, email, password, globalOptions, callback))
       .then(function() {
         return utils
-          .get('https://www.facebook.com/', jar)
+          .get('https://www.facebook.com/', jar, null, globalOptions)
           .then(utils.saveCookies(jar));
       });
   }
@@ -322,7 +325,7 @@ function loginHelper(appState, email, password, globalOptions, callback) {
       var redirect = reg.exec(res.body);
       if (redirect && redirect[1]) {
         return utils
-          .get(redirect[1], jar)
+          .get(redirect[1], jar, null, globalOptions)
           .then(utils.saveCookies(jar));
       }
       return res;
@@ -366,7 +369,7 @@ function loginHelper(appState, email, password, globalOptions, callback) {
       ctx.jar.setCookie("a11y=" + utils.generateAccessiblityCookie() + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
 
       return utils
-        .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
+        .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form, globalOptions)
         .then(utils.saveCookies(ctx.jar))
         .then(function(res) {
           var ret = null;
@@ -399,7 +402,7 @@ function loginHelper(appState, email, password, globalOptions, callback) {
 
       log.info("login", "Request to pull 2");
       return utils
-        .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form)
+        .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form, globalOptions)
         .then(utils.saveCookies(ctx.jar));
     })
     .then(function() {
@@ -411,7 +414,7 @@ function loginHelper(appState, email, password, globalOptions, callback) {
       log.info("login", "Request to thread_sync");
 
       return defaultFuncs
-        .post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form)
+        .post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form, globalOptions)
         .then(utils.saveCookies(ctx.jar));
     });
 
@@ -420,14 +423,14 @@ function loginHelper(appState, email, password, globalOptions, callback) {
     mainPromise = mainPromise
       .then(function() {
         return utils
-          .get('https://www.facebook.com/' + ctx.globalOptions.pageID + '/messages/?section=messages&subsection=inbox', ctx.jar);
+          .get('https://www.facebook.com/' + ctx.globalOptions.pageID + '/messages/?section=messages&subsection=inbox', ctx.jar, null, globalOptions);
       })
       .then(function(resData) {
         var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/www.facebook.com\\', '");').split('\\').join('');
         url = url.substring(0, url.length - 1);
 
         return utils
-          .get('https://www.facebook.com' + url, ctx.jar);
+          .get('https://www.facebook.com' + url, ctx.jar, null, globalOptions);
       });
   }
 
@@ -454,7 +457,8 @@ function login(loginData, options, callback) {
     listenEvents: false,
     updatePresence: false,
     forceLogin: false,
-    logRecordSize: defaultLogRecordSize
+    logRecordSize: defaultLogRecordSize,
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"
   };
 
   setOptions(globalOptions, options);
@@ -463,3 +467,4 @@ function login(loginData, options, callback) {
 }
 
 module.exports = login;
+
