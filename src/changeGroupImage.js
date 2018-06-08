@@ -91,14 +91,11 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback(err);
       }
 
-      form["log_message_data[image][fbid]"] = payload[0]["fbid"];
-      form["log_message_data[image][filename]"] = payload[0]["filename"];
-      form["log_message_data[image][filetype]"] = payload[0]["filetype"];
-      form["log_message_data[image][image_id]"] = payload[0]["image_id"];
-      form["log_message_data[image][src]"] = payload[0]["src"];
+      form["thread_image_id"] = payload[0]["image_id"];
+      form["thread_id"] = threadID;
 
       defaultFuncs
-        .post("https://www.facebook.com/messaging/send/", ctx.jar, form)
+        .post("https://www.messenger.com/messaging/set_thread_image/", ctx.jar, form)
         .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function(resData) {
           // check for errors here

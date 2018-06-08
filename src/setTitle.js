@@ -42,12 +42,13 @@ module.exports = function(defaultFuncs, api, ctx) {
       threading_id: utils.generateThreadingID(ctx.clientID),
       manual_retry_cnt: "0",
       thread_fbid: threadID,
-      "log_message_data[name]": newTitle,
+      thread_name: newTitle,
+      thread_id: threadID,
       log_message_type: "log:thread-name"
     };
 
     defaultFuncs
-      .post("https://www.facebook.com/messaging/send/", ctx.jar, form)
+      .post("https://www.messenger.com/messaging/set_thread_name/", ctx.jar, form)
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error && resData.error === 1545012) {
