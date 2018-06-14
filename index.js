@@ -75,14 +75,15 @@ function buildAPI(globalOptions, html, jar) {
     },
   };
 
-  var apiFuncNames = [
+  const apiFuncNames = [
     'addUserToGroup',
+    'changeAdminStatus',
     'changeArchivedStatus',
     'changeBlockedStatus',
     'changeGroupImage',
+    'changeNickname',
     'changeThreadColor',
     'changeThreadEmoji',
-    'changeNickname',
     'createPoll',
     'deleteMessage',
     'deleteThread',
@@ -96,7 +97,6 @@ function buildAPI(globalOptions, html, jar) {
     'getThreadPictures',
     'getUserID',
     'getUserInfo',
-    'threadColors',
     'handleMessageRequest',
     'listen',
     'logout',
@@ -109,6 +109,7 @@ function buildAPI(globalOptions, html, jar) {
     'sendTypingIndicator',
     'setMessageReaction',
     'setTitle',
+    'threadColors',
 
     // Deprecated features
     "getThreadListDeprecated",

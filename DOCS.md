@@ -2,6 +2,7 @@
 
 * [`login`](#login)
 * [`api.addUserToGroup`](#addUserToGroup)
+* [`api.changeAdminStatus`](#changeAdminStatus)
 * [`api.changeArchivedStatus`](#changeArchivedStatus)
 * [`api.changeBlockedStatus`](#changeBlockedStatus)
 * [`api.changeGroupImage`](#changeGroupImage)
@@ -22,7 +23,6 @@
 * [`api.getThreadPictures`](#getThreadPictures)
 * [`api.getUserID`](#getUserID)
 * [`api.getUserInfo`](#getUserInfo)
-* [`api.threadColors`](#threadColors)
 * [`api.handleMessageRequest`](#handleMessageRequest)
 * [`api.listen`](#listen)
 * [`api.logout`](#logout)
@@ -36,6 +36,7 @@
 * [`api.setMessageReaction`](#setMessageReaction)
 * [`api.setOptions`](#setOptions)
 * [`api.setTitle`](#setTitle)
+* [`api.threadColors`](#threadColors)
 
 ---------------------------------------
 
@@ -170,6 +171,43 @@ __Arguments__
 * `userID`: User ID or array of user IDs.
 * `threadID`: Group chat ID.
 * `callback(err)`: A callback called when the query is done (either with an error or with no arguments).
+
+---------------------------------------
+
+<a name="changeAdminStatus"></a>
+### api.changeAdminStatus(threadID, adminIDs, adminStatus[, callback])
+
+Given a adminID, or an array of adminIDs, will set the admin status of the user(s) to `adminStatus`.
+
+__Arguments__
+* `threadID`: ID of a group chat (can't use in one-to-one conversations)
+* `adminIDs`: The id(s) of users you wish to admin/unadmin (string or an array).
+* `adminStatus`: Boolean indicating whether the user(s) should be promoted to admin (`true`) or demoted to a regular user (`false`).
+* `callback(err)`: A callback called when the query is done (either with an error or null).
+
+__Example__
+
+```js
+const fs = require("fs");
+const login = require("facebook-chat-api");
+
+login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
+    if (err) return console.error(err);
+
+    let threadID = "0000000000000000";
+    let newAdmins = ["111111111111111", "222222222222222"];
+    api.changeAdminStatus(threadID, newAdmins, true, editAdminsCallback);
+
+    let adminToRemove = "333333333333333";
+    api.changeAdminStatus(threadID, adminToRemove, false, editAdminsCallback);
+
+});
+
+function editAdminsCallback(err) {
+    if (err) return console.error(err);
+}
+
+```
 
 ---------------------------------------
 
