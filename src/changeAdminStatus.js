@@ -64,6 +64,10 @@ module.exports = function(defaultFuncs, api, ctx) {
           throw { error: "Cannot alter admin status: you are not an admin." };
         }
 
+        if (resData.error && resData.error === 1357031) {
+          throw { error: "Cannot alter admin status: this thread is not a group chat." };
+        }
+
         if (resData.error) {
           throw resData;
         }
