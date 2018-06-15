@@ -393,9 +393,11 @@ function formatMessagesGraphQLResponse(data) {
         }
 
         var mentionsObj = {};
-        d.message.ranges.forEach(e => {
-          mentionsObj[e.entity.id] = d.message.text.substr(e.offset, e.length);
-        });
+		if (d.message !== null) {
+		  d.message.ranges.forEach(e => {
+            mentionsObj[e.entity.id] = d.message.text.substr(e.offset, e.length);
+          });
+		}
 
         return {
           type: "message",
