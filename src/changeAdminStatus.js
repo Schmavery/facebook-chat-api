@@ -6,50 +6,41 @@ var log = require("npmlog");
 module.exports = function(defaultFuncs, api, ctx) {
   return function changeAdminStatus(userIDs, makeAdmin, threadID, callback) {
     if (
-      !callback &&
-      (utils.getType(makeAdmin) === "AsyncFunction" ||
-        utils.getType(makeAdmin) === "AsyncFunction" ||
-        utils.getType(threadID) === "Function" ||
-        utils.getType(threadID) === "AsyncFunction")
+      utils.getType(userIDs) !== "String" &&
+      utils.getType(userIDs) !== "Array"
     ) {
-      throw { error: "please pass makeAdmin and threadID as the second/third arguments." };
+      throw { error: "userIDs must be a string or array" };
+    }
+
+    if (utils.getType(makeAdmin) !== "Boolean") {
+      throw { error: "makeAdmin must be a boolean" };
+    }
+
+    if (utils.getType(threadID) !== "String") {
+      throw { error: "threadID must be a string" };
     }
 
     if (utils.getType(userIDs) === "String") {
       userIDs = [userIDs];
     }
 
+    if (
+      callback &&
+      !(
+        utils.getType(callback) === "Function" ||
+        utils.getType(callback) === "AsyncFunction"
+      )
+    ) {
+      throw { error: "callback must be a function" };
+    }
+
     if (!callback) {
       callback = function() {};
     }
 
-    var messageAndOTID = utils.generateOfflineThreadingID();
     var form = {
-      client: "mercury",
-      action_type: "ma-type:log-message",
-      author: "fbid:" + ctx.userID,
-      author_email: "",
-      coordinates: "",
-      timestamp: Date.now(),
-      timestamp_absolute: "Today",
-      timestamp_relative: utils.generateTimestampRelative(),
-      timestamp_time_passed: "0",
-      is_unread: false,
-      is_cleared: false,
-      is_forward: false,
-      is_filtered_content: false,
-      is_spoof_warning: false,
-      source: "source:chat:web",
-      "source_tags[0]": "source:chat",
-      status: "0",
-      offline_threading_id: messageAndOTID,
-      message_id: messageAndOTID,
-      threading_id: utils.generateThreadingID(ctx.clientID),
-      manual_retry_cnt: "0",
       thread_fbid: threadID,
-      add: makeAdmin,
-      thread_id: threadID,
-      log_message_type: "log:thread-name"
+      add: makeAdmin
     };
 
     for (var i = 0; i < userIDs.length; i++) {
@@ -65,7 +56,9 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
 
         if (resData.error && resData.error === 1357031) {
-          throw { error: "Cannot alter admin status: this thread is not a group chat." };
+          throw {
+            error: "Cannot alter admin status: this thread is not a group chat."
+          };
         }
 
         if (resData.error) {
