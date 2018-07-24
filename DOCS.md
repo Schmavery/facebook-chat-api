@@ -1128,7 +1128,7 @@ The message object will contain different fields based on its type (as determine
 	<tr>
 		<td rowspan="4"><a name="presence"></a>
 			<code>"presence"</code><br />
-			The online status of the user's friends.
+			The online status of the user's friends. Note that receiving this event type needs to be enabled with <code>api.setOptions({ updatePresence: true })</code>
 		</td>
 		<td><code>statuses</code></td>
 		<td>The online status of the user. <code>0</code> means the user is idle (away for 2 minutes) and <code>2</code> means the user is online (we don't know what 1 or above 2 means...).</td>
