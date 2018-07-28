@@ -2,6 +2,7 @@
 
 * [`login`](#login)
 * [`api.addUserToGroup`](#addUserToGroup)
+* [`api.changeAdminStatus`](#changeAdminStatus)
 * [`api.changeArchivedStatus`](#changeArchivedStatus)
 * [`api.changeBlockedStatus`](#changeBlockedStatus)
 * [`api.changeGroupImage`](#changeGroupImage)
@@ -170,6 +171,34 @@ __Arguments__
 * `userID`: User ID or array of user IDs.
 * `threadID`: Group chat ID.
 * `callback(err)`: A callback called when the query is done (either with an error or with no arguments).
+
+---------------------------------------
+
+<a name="changeAdminStatus"></a>
+### api.changeAdminStatus(userIDs, makeAdmin, threadID[, callback])
+
+Given a userID, or an array of userIDs, will set the admin status of the user(s) to `makeAdmin`.
+
+__Arguments__
+* `userIDs`: The id(s) of users you wish to admin/unadmin (either a string indicating a user's ID or an array of them).
+* `makeAdmin`: Boolean indicating whether the user(s) should be promoted to admin (`true`) or demoted to a regular user (`false`).
+* `callback(err)`: A callback called when the query is done (either with an error or null).
+
+__Example__
+
+```js
+const fs = require("fs");
+const login = require("facebook-chat-api");
+
+login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
+    if(err) return console.error(err);
+
+    // Makes user 000000000000000 an admin in thread 111111111111111
+    api.changeAdminStatus("000000000000000", true, "111111111111111", (err) => {
+        if(err) return console.error(err);
+    });
+});
+```
 
 ---------------------------------------
 
