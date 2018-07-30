@@ -1,5 +1,8 @@
 # Changelog
-## 1.5.0 (unreleased)
+## 1.6.1 (unreleased)
+* [New] [changeAdminStatus](/DOCS.md#changeAdminStatus): Function to add/remove admins in group threads ([#659](https://github.com/Schmavery/facebook-chat-api/pull/659))
+
+## 1.5.0
 * [Fix] Logging in using login approvals (2FA) now work ([#548](https://github.com/Schmavery/facebook-chat-api/pull/548))
 * [New] [listen](/DOCS.md#listen): Adds field `mentions` that stores an array of ids of users tagged in the message ([#510](https://github.com/Schmavery/facebook-chat-api/pull/510))
 * [Breaking change] [getThreadList](/DOCS.md#getThreadList): Removes deprecated fields in returned object, adds some new fields ([#488](https://github.com/Schmavery/facebook-chat-api/pull/488))

@@ -49,6 +49,7 @@ Result:
 
 * [`login`](DOCS.md#login)
 * [`api.addUserToGroup`](DOCS.md#addUserToGroup)
+* [`api.changeAdminStatus`](DOCS.md#changeAdminStatus)
 * [`api.changeArchivedStatus`](DOCS.md#changeArchivedStatus)
 * [`api.changeBlockedStatus`](DOCS.md#changeBlockedStatus)
 * [`api.changeGroupImage`](DOCS.md#changeGroupImage)
