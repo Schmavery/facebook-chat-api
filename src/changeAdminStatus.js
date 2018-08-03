@@ -44,14 +44,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {
-          switch (resData.error) {
-            case 1976004:
-              throw { error: "Cannot alter admin status: you are not an admin.", rawResponse: resData };
-            case 1357031:
-              throw { error: "Cannot alter admin status: this thread is not a group chat.", rawResponse: resData };
-            default:
-              throw { error: "Cannot alter admin status: unknown error.", rawResponse: resData };
-          }
+          throw { error: resData.errorSummary, rawResponse: resData };
         }
 
         callback();
