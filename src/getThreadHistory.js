@@ -395,7 +395,10 @@ function formatMessagesGraphQLResponse(data) {
         var mentionsObj = {};
         if (d.message !== null) {
           d.message.ranges.forEach(e => {
-            mentionsObj[e.entity.id] = d.message.text.substr(e.offset, e.length);
+            mentionsObj[e.entity.id] = d.message.text.substr(
+              e.offset,
+              e.length
+            );
           });
         }
 
@@ -408,7 +411,7 @@ function formatMessagesGraphQLResponse(data) {
               : d.extensible_attachment
                 ? [formatExtensibleAttachment(d.extensible_attachment)]
                 : [],
-          body: d.message !== null ? d.message.text : '',
+          body: d.message !== null ? d.message.text : "",
           isGroup: messageThread.thread_type === "GROUP",
           messageID: d.message_id,
           senderID: d.message_sender.id,

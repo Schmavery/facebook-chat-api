@@ -48,7 +48,11 @@ module.exports = function(defaultFuncs, api, ctx) {
     };
 
     defaultFuncs
-      .post("https://www.messenger.com/messaging/set_thread_name/", ctx.jar, form)
+      .post(
+        "https://www.messenger.com/messaging/set_thread_name/",
+        ctx.jar,
+        form
+      )
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error && resData.error === 1545012) {

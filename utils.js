@@ -970,7 +970,7 @@ function makeDefaults(html, userID, ctx) {
       jar,
       mergeWithDefaults(form),
       mergeWithDefaults(qs),
-      ctx.globalOptions 
+      ctx.globalOptions
     );
   }
 
@@ -1277,4 +1277,3 @@ module.exports = {
   getAppState,
   getAdminTextMessageType
 };
-

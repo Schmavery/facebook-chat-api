@@ -95,7 +95,11 @@ module.exports = function(defaultFuncs, api, ctx) {
       form["thread_id"] = threadID;
 
       defaultFuncs
-        .post("https://www.messenger.com/messaging/set_thread_image/", ctx.jar, form)
+        .post(
+          "https://www.messenger.com/messaging/set_thread_image/",
+          ctx.jar,
+          form
+        )
         .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function(resData) {
           // check for errors here

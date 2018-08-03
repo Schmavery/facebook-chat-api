@@ -38,7 +38,7 @@ module.exports = function(defaultFuncs, api, ctx) {
   };
 
   if (ctx.globalOptions.pageID) {
-    form.aiq = ctx.globalOptions.pageID+",0";
+    form.aiq = ctx.globalOptions.pageID + ",0";
   }
 
   /**
@@ -240,13 +240,15 @@ module.exports = function(defaultFuncs, api, ctx) {
                   });
                   break;
                 case "delta":
-                  if (v.delta.class !== "NewMessage" &&
-                      !ctx.globalOptions.listenEvents
+                  if (
+                    v.delta.class !== "NewMessage" &&
+                    !ctx.globalOptions.listenEvents
                   )
                     return;
 
                   if (v.delta.class == "NewMessage") {
-                    if (ctx.globalOptions.pageID &&
+                    if (
+                      ctx.globalOptions.pageID &&
                       ctx.globalOptions.pageID != v.queue
                     )
                       return;
