@@ -1249,13 +1249,14 @@ __Arguments__
 ---------------------------------------
 
 <a name="markAsRead"></a>
-### api.markAsRead(threadID[, callback])
+### api.markAsRead(threadID, [read, [, callback]])
 
 Given a threadID will mark all the unread messages as read. Facebook will take a couple of seconds to show that you've read the messages.
 
 __Arguments__
 
 * `threadID` - The id of the thread in which you want to mark the messages as read.
+* `read` - An optional boolean where `true` means to mark the message as being "read" and `false` means to mark the message as being "unread".
 * `callback(err)` - A callback called when the operation is done maybe with an object representing an error.
 
 __Example__

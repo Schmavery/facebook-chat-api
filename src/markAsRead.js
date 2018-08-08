@@ -4,13 +4,20 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(defaultFuncs, api, ctx) {
-  return function markAsRead(threadID, callback) {
+  return function markAsRead(threadID, read, callback) {
+    if (utils.getType(read) === 'Function' || utils.getType(read) === 'AsyncFunction') {
+      callback = read;
+      read = true;
+    }
+    if (read == undefined) {
+      read = true;
+    }
     if (!callback) {
       callback = function() {};
     }
 
     var form = {};
-    form["ids[" + threadID + "]"] = true;
+    form["ids[" + threadID + "]"] = read;
     form["watermarkTimestamp"] = new Date().getTime();
     form["shouldSendReadReceipt"] = true;
     form["commerce_last_message_type"] = "non_ad";
