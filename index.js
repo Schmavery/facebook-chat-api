@@ -3,6 +3,7 @@
 var utils = require("./utils");
 var cheerio = require("cheerio");
 var log = require("npmlog");
+var request = require('request');
 
 var defaultLogRecordSize = 100;
 log.maxRecordSize = defaultLogRecordSize;
@@ -447,10 +448,33 @@ function loginHelper(appState, email, password, globalOptions, callback) {
     });
 }
 
+function loginWithAccessToken(access_token) {
+
+}
+
 function login(loginData, options, callback) {
   if(utils.getType(options) === 'Function' || utils.getType(options) === 'AsyncFunction') {
     callback = options;
     options = {};
+  }
+
+  if(loginData.access_token) {
+    return utils.exchangeSession(loginData.access_token).then(function (appState) {
+      var globalOptions = {
+        selfListen: false,
+        listenEvents: false,
+        updatePresence: false,
+        forceLogin: false,
+        logRecordSize: defaultLogRecordSize,
+        userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"
+      };
+
+      loginData.appState = appState;
+
+      setOptions(globalOptions, options);
+
+      loginHelper(loginData.appState, loginData.email, loginData.password, globalOptions, callback);
+    })
   }
 
   var globalOptions = {

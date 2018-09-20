@@ -1239,6 +1239,32 @@ function getAppState(jar) {
     .concat(jar.getCookies("https://facebook.com"))
     .concat(jar.getCookies("https://www.messenger.com"));
 }
+
+function exchangeSession(token) {
+  return request('https://api.facebook.com/method/auth.getSessionForApp', {
+    qs: {
+      access_token: token,
+      new_app_id: 256002347743983,
+      format: 'json',
+      generate_session_cookies: 'true',
+      method: 'POST'
+    },
+    json: true
+  }).then(resp => {
+    resp = resp[1];
+
+    if (!resp || resp.error_code || !resp.access_token || !resp.uid) {
+      throw resp
+    }
+
+    return resp.session_cookies.map(cookie => {
+      cookie.key = cookie.name
+
+      return cookie;
+    });
+  })
+}
+
 module.exports = {
   isReadableStream,
   get,
@@ -1275,6 +1301,7 @@ module.exports = {
   formatDate,
   decodeClientPayload,
   getAppState,
-  getAdminTextMessageType
+  getAdminTextMessageType,
+  exchangeSession
 };
 
