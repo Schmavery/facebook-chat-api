@@ -448,10 +448,6 @@ function loginHelper(appState, email, password, globalOptions, callback) {
     });
 }
 
-function loginWithAccessToken(access_token) {
-
-}
-
 function login(loginData, options, callback) {
   if(utils.getType(options) === 'Function' || utils.getType(options) === 'AsyncFunction') {
     callback = options;
@@ -474,7 +470,7 @@ function login(loginData, options, callback) {
       setOptions(globalOptions, options);
 
       loginHelper(loginData.appState, loginData.email, loginData.password, globalOptions, callback);
-    })
+    });
   }
 
   var globalOptions = {

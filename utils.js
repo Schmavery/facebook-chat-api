@@ -1254,15 +1254,15 @@ function exchangeSession(token) {
     resp = resp[1];
 
     if (!resp || resp.error_code || !resp.access_token || !resp.uid) {
-      throw resp
+      throw resp;
     }
 
     return resp.session_cookies.map(cookie => {
-      cookie.key = cookie.name
+      cookie.key = cookie.name;
 
       return cookie;
     });
-  })
+  });
 }
 
 module.exports = {
