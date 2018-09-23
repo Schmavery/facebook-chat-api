@@ -27,11 +27,26 @@ npm install Schmavery/facebook-chat-api
 ```
 
 ## Example Usage
+### Login with username and password
 ```javascript
 const login = require("facebook-chat-api");
 
 // Create simple echo bot
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
+    if(err) return console.error(err);
+
+    api.listen((err, message) => {
+        api.sendMessage(message.body, message.threadID);
+    });
+});
+```
+
+### Login with access_token
+```javascript
+const login = require("facebook-chat-api");
+
+// Create simple echo bot
+login({access_token: "FB_ACCESS_TOKEN"}, (err, api) => {
     if(err) return console.error(err);
 
     api.listen((err, message) => {
