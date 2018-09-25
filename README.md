@@ -26,6 +26,9 @@ If you want to use bleeding edge (directly from github) to test new features or 
 npm install Schmavery/facebook-chat-api
 ```
 
+### How to get a working access_token
+The easiest way to get a working access_token is to visit [view-source:https://www.facebook.com/me](view-source:https://www.facebook.com/me), open search box (Ctrl + F) and search using the keyword __access_token:"__. Your access_token would be the long string starts with EAAA...
+
 ## Example Usage
 ### Login with username and password
 ```javascript
