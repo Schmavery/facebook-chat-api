@@ -455,22 +455,26 @@ function login(loginData, options, callback) {
   }
 
   if(loginData.access_token) {
-    return utils.exchangeSession(loginData.access_token).then(function (appState) {
-      var globalOptions = {
-        selfListen: false,
-        listenEvents: false,
-        updatePresence: false,
-        forceLogin: false,
-        logRecordSize: defaultLogRecordSize,
-        userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"
-      };
+    return utils.exchangeSession(loginData.access_token)
+      .then(function (appState) {
+        var globalOptions = {
+          selfListen: false,
+          listenEvents: false,
+          updatePresence: false,
+          forceLogin: false,
+          logRecordSize: defaultLogRecordSize,
+          userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"
+        };
 
-      loginData.appState = appState;
+        loginData.appState = appState;
 
-      setOptions(globalOptions, options);
+        setOptions(globalOptions, options);
 
-      loginHelper(loginData.appState, loginData.email, loginData.password, globalOptions, callback);
-    });
+        loginHelper(loginData.appState, loginData.email, loginData.password, globalOptions, callback);
+      })
+      .catch(function (e) {
+        log.error(JSON.stringify(e));
+      });
   }
 
   var globalOptions = {
