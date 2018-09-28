@@ -110,6 +110,7 @@ function buildAPI(globalOptions, html, jar) {
     'setMessageReaction',
     'setTitle',
     'threadColors',
+    'startEvent',
 
     // Deprecated features
     "getThreadListDeprecated",
