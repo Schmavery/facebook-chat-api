@@ -608,7 +608,7 @@ __Arguments__
 | isSubscribed |  |
 | folder | The folder that the thread is in. Can be one of: <ul><li>'inbox'</li><li>'archive'</li></ul> |
 | isArchived | True if the thread is archived, false if not |
-| cannotReplyReason | If canReply is false, this will be a string stating why. Null if canReply is true. |
+| cannotReplyReason | If you cannot reply to this thread, this will be a string stating why. Otherwise it will be null. |
 | lastReadTimestamp | Timestamp of the last message that is marked as 'read' by the current user. |
 | emoji | Object with key 'emoji' whose value is the emoji unicode character. Null if unset. |
 | color | String form of the custom color in hexadecimal form. |
