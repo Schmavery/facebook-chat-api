@@ -40,7 +40,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     form["add"] = adminStatus;
 
     defaultFuncs
-      .post("https://www.messenger.com/messaging/save_admins/?dpr=1", ctx.jar, form)
+      .post("https://www.facebook.com/messaging/save_admins/?dpr=1", ctx.jar, form)
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (resData.error) {

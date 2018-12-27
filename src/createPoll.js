@@ -35,7 +35,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post(
-        "https://www.messenger.com/messaging/group_polling/create_poll/?dpr=1",
+        "https://www.facebook.com/messaging/group_polling/create_poll/?dpr=1",
         ctx.jar,
         form
       )
