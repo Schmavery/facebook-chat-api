@@ -70,7 +70,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .postFormData(
-        "https://www.messenger.com/webgraphql/mutation/",
+        "https://www.facebook.com/webgraphql/mutation/",
         ctx.jar,
         {},
         qs

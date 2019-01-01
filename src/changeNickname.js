@@ -15,7 +15,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post(
-        "https://www.messenger.com/messaging/save_thread_nickname/?source=thread_settings&dpr=1",
+        "https://www.facebook.com/messaging/save_thread_nickname/?source=thread_settings&dpr=1",
         ctx.jar,
         form
       )

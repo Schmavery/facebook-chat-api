@@ -27,7 +27,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post(
-        "https://www.messenger.com/mercury/attachments/forward/",
+        "https://www.facebook.com/mercury/attachments/forward/",
         ctx.jar,
         form
       )
