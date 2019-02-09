@@ -312,7 +312,19 @@ module.exports = function(defaultFuncs, api, ctx) {
                             userID: delta.deltaMessageReaction.userId,
                             timestamp: v.ofd_ts
                           });
-                        }
+                        } else if (delta.deltaRecallMessageData) {
+						  globalCallback(null, {
+                            type: "message_unsend",
+                            threadID: delta.deltaRecallMessageData.threadKey.threadFbId 
+							  ? delta.deltaRecallMessageData.threadKey.threadFbId 
+							  : delta.deltaRecallMessageData.threadKey
+								  .otherUserFbId,
+                            messageID: delta.deltaRecallMessageData.messageID,
+                            senderID: delta.deltaRecallMessageData.senderID,
+							deletionTimestamp: delta.deltaRecallMessageData.deletionTimestamp,
+                            timestamp: v.ofd_ts
+                          });
+						}
                       }
                       return;
                     }
