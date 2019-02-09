@@ -37,6 +37,7 @@
 * [`api.setOptions`](#setOptions)
 * [`api.setTitle`](#setTitle)
 * [`api.threadColors`](#threadColors)
+* [`api.unsendMessage`](#unsendMessage)
 
 ---------------------------------------
 
@@ -1533,5 +1534,19 @@ __Arguments__
 * `newTitle`: A string representing the new title.
 * `threadID`: A string or number representing a thread. It happens to be someone's userID in the case of a one to one conversation.
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the threadID where the message was sent.
+
+---------------------------------------
+
+<a name="unsendMessage"></a>
+### api.unsendMessage(messageID[, callback])
+
+Revoke a message from anyone could see that message with `messageID`
+
+Note: This will only work if the message is sent by you and sent less than 10 minutes ago.
+
+__Arguments__
+
+* `messageID`: Group chat ID.
+* `callback(err)`: A callback called when the query is done (with an error or with null).
 
 ---------------------------------------
