@@ -82,6 +82,7 @@ Result:
 * [`api.setMessageReaction`](DOCS.md#setMessageReaction)
 * [`api.setOptions`](DOCS.md#setOptions)
 * [`api.setTitle`](DOCS.md#setTitle)
+* [`api.unsendMessage`](DOCS.md#unsendMessage)
 
 ## Main Functionality
 
