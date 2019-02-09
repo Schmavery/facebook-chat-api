@@ -1184,6 +1184,26 @@ The message object will contain different fields based on its type (as determine
 		<td><code>userID</code></td>
 		<td>The ID of the user whose status this packet is describing.</td>
 	</tr>
+	<tr>
+		<td rowspan="4">
+			<code>"message_unsend"</code><br />
+			A revoke message request for a message from a thread was received.
+		</td>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which the revoke message request was received.</td>
+	</tr>
+	<tr>
+		<td><code>senderID</code></td>
+		<td>The id of the person who request to revoke message on threadID.</td>
+	</tr>
+	<tr>
+		<td><code>messageID</code></td>
+		<td>A string representing the message ID that the person request to revoke message want to.</td>
+	</tr>
+	<tr>
+		<td><code>deletionTimestamp</code></td>
+		<td>The time when the request was sent.</td>
+	</tr>
 </table>
 
 __Attachments__
