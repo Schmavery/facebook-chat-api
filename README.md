@@ -226,6 +226,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 ## Projects using this API
 
 - [Messer](https://github.com/mjkaufer/Messer) - Command-line messaging for Facebook Messenger
+- [messen](https://github.com/tomquirk/messen) - Rapidly build Facebook Messenger apps in Node.js
 - [Concierge](https://github.com/concierge/Concierge) - Concierge is a highly modular, easily extensible general purpose chat bot with a built in package manager
 - [Marc Zuckerbot](https://github.com/bsansouci/marc-zuckerbot) - Facebook chat bot
 - [Marc Thuckerbot](https://github.com/bsansouci/lisp-bot) - Programmable lisp bot
