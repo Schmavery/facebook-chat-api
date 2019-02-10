@@ -37,6 +37,7 @@
 * [`api.setOptions`](#setOptions)
 * [`api.setTitle`](#setTitle)
 * [`api.threadColors`](#threadColors)
+* [`api.unsendMessage`](#unsendMessage)
 
 ---------------------------------------
 
@@ -1183,6 +1184,26 @@ The message object will contain different fields based on its type (as determine
 		<td><code>userID</code></td>
 		<td>The ID of the user whose status this packet is describing.</td>
 	</tr>
+	<tr>
+		<td rowspan="4">
+			<code>"message_unsend"</code><br />
+			A revoke message request for a message from a thread was received.
+		</td>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which the revoke message request was received.</td>
+	</tr>
+	<tr>
+		<td><code>senderID</code></td>
+		<td>The id of the person who request to revoke message on threadID.</td>
+	</tr>
+	<tr>
+		<td><code>messageID</code></td>
+		<td>A string representing the message ID that the person request to revoke message want to.</td>
+	</tr>
+	<tr>
+		<td><code>deletionTimestamp</code></td>
+		<td>The time when the request was sent.</td>
+	</tr>
 </table>
 
 __Attachments__
@@ -1533,5 +1554,19 @@ __Arguments__
 * `newTitle`: A string representing the new title.
 * `threadID`: A string or number representing a thread. It happens to be someone's userID in the case of a one to one conversation.
 * `callback(err, obj)` - A callback called when sending the message is done (either with an error or with an confirmation object). `obj` contains only the threadID where the message was sent.
+
+---------------------------------------
+
+<a name="unsendMessage"></a>
+### api.unsendMessage(messageID[, callback])
+
+Revoke a message from anyone could see that message with `messageID`
+
+Note: This will only work if the message is sent by you and sent less than 10 minutes ago.
+
+__Arguments__
+
+* `messageID`: Group chat ID.
+* `callback(err)`: A callback called when the query is done (with an error or with null).
 
 ---------------------------------------
