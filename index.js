@@ -105,15 +105,14 @@ function buildAPI(globalOptions, html, jar) {
 
   var apiFuncNames = [];
   findFromDir(__dirname + "/src/", /.*\.js$/, true, function(list) {
-	apiFuncNames = list.map(function (a) {
-	  return a.substr(0, a.length - 4);
-	});
+	apiFuncNames = list;
   });
 
   var defaultFuncs = utils.makeDefaults(html, userID, ctx);
 
   // Load all api functions in a loop
-  apiFuncNames.map(function(v) {
+  apiFuncNames.map(function(z) {
+    var v = path.basename(z).substr(0, path.basename(z) - 3);
     api[v] = require('./src/' + v)(defaultFuncs, api, ctx);
   });
 
