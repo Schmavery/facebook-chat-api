@@ -3,9 +3,37 @@
 var utils = require("./utils");
 var cheerio = require("cheerio");
 var log = require("npmlog");
+var fs = require("fs");
+var path = require("path");
 
 var defaultLogRecordSize = 100;
 log.maxRecordSize = defaultLogRecordSize;
+
+function findFromDir(startPath, filter, arrayOutput, callback){
+    if (!fs.existsSync(startPath)){
+        console.log("No such directory: ", startPath);
+        return;
+    }
+	
+    var files = fs.readdirSync(startPath);
+	var arrayFile = [];
+    for (var i = 0; i < files.length; i++){
+        var filename = path.join(startPath, files[i]);
+        var stat = fs.lstatSync(filename);
+        if (stat.isDirectory() && !arrayOutput){
+            fromDir(filename, filter, arrayOutput, callback); //recurse
+        } else {
+			if (!arrayOutput) {
+				if (filter.test(filename)) callback(filename);
+			} else {
+				if (filter.test(filename)) arrayFile[arrayFile.length] = filename;
+			}
+		}
+    };
+	if (arrayOutput) {
+		callback(arrayFile);
+	}
+};
 
 function setOptions(globalOptions, options) {
   Object.keys(options).map(function(key) {
@@ -75,47 +103,12 @@ function buildAPI(globalOptions, html, jar) {
     },
   };
 
-  const apiFuncNames = [
-    'addUserToGroup',
-    'changeAdminStatus',
-    'changeArchivedStatus',
-    'changeBlockedStatus',
-    'changeGroupImage',
-    'changeNickname',
-    'changeThreadColor',
-    'changeThreadEmoji',
-    'createPoll',
-    'deleteMessage',
-    'deleteThread',
-    'forwardAttachment',
-    'getCurrentUserID',
-    'getEmojiUrl',
-    'getFriendsList',
-    'getThreadHistory',
-    'getThreadInfo',
-    'getThreadList',
-    'getThreadPictures',
-    'getUserID',
-    'getUserInfo',
-    'handleMessageRequest',
-    'listen',
-    'logout',
-    'markAsRead',
-    'muteThread',
-    'removeUserFromGroup',
-    'resolvePhotoUrl',
-    'searchForThread',
-    'sendMessage',
-    'sendTypingIndicator',
-    'setMessageReaction',
-    'setTitle',
-    'threadColors',
-
-    // Deprecated features
-    "getThreadListDeprecated",
-    'getThreadHistoryDeprecated',
-    'getThreadInfoDeprecated',
-  ];
+  var apiFuncNames = [];
+  findFromDir(__dirname + "/src/", /.*\.js$/, true, function(list) {
+	apiFuncNames = list.map(function (a) {
+	  return a.substr(0, a.length - 4);
+	});
+  });
 
   var defaultFuncs = utils.makeDefaults(html, userID, ctx);
 
