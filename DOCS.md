@@ -1566,7 +1566,7 @@ Note: This will only work if the message is sent by you and sent less than 10 mi
 
 __Arguments__
 
-* `messageID`: Group chat ID.
+* `messageID`: Message ID you want to unsend.
 * `callback(err)`: A callback called when the query is done (with an error or with null).
 
 ---------------------------------------
