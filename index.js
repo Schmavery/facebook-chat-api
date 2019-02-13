@@ -112,7 +112,7 @@ function buildAPI(globalOptions, html, jar) {
 
   // Load all api functions in a loop
   apiFuncNames.map(function(z) {
-    var v = path.basename(z).substr(0, path.basename(z) - 3);
+    var v = path.basename(z).substr(0, path.basename(z).length - 3);
     api[v] = require('./src/' + v)(defaultFuncs, api, ctx);
   });
 
