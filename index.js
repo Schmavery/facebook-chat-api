@@ -11,7 +11,6 @@ log.maxRecordSize = defaultLogRecordSize;
 
 function findFromDir(startPath, filter, arrayOutput, callback){
     if (!fs.existsSync(startPath)){
-        console.log("No such directory: ", startPath);
         return;
     }
 	
@@ -21,7 +20,7 @@ function findFromDir(startPath, filter, arrayOutput, callback){
         var filename = path.join(startPath, files[i]);
         var stat = fs.lstatSync(filename);
         if (stat.isDirectory() && !arrayOutput){
-            fromDir(filename, filter, arrayOutput, callback); //recurse
+            findFromDir(filename, filter, arrayOutput, callback);
         } else {
 			if (!arrayOutput) {
 				if (filter.test(filename)) callback(filename);
@@ -29,11 +28,11 @@ function findFromDir(startPath, filter, arrayOutput, callback){
 				if (filter.test(filename)) arrayFile[arrayFile.length] = filename;
 			}
 		}
-    };
+    }
 	if (arrayOutput) {
 		callback(arrayFile);
 	}
-};
+}
 
 function setOptions(globalOptions, options) {
   Object.keys(options).map(function(key) {
