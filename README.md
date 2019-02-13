@@ -26,6 +26,9 @@ If you want to use bleeding edge (directly from github) to test new features or 
 npm install Schmavery/facebook-chat-api
 ```
 
+## Testing your bots
+If you want to test your bots without creating another account on Facebook, you can use [Facebook Whitehat Accounts](https://www.facebook.com/whitehat/accounts/).
+
 ## Example Usage
 ```javascript
 const login = require("facebook-chat-api");
