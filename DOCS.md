@@ -29,6 +29,7 @@
 * [`api.markAsRead`](#markAsRead)
 * [`api.muteThread`](#muteThread)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
+* [`api.replyMessage`](#replyMessage)
 * [`api.resolvePhotoUrl`](#resolvePhotoUrl)
 * [`api.searchForThread`](#searchForThread)
 * [`api.sendMessage`](#sendMessage)
@@ -1204,6 +1205,55 @@ The message object will contain different fields based on its type (as determine
 		<td><code>deletionTimestamp</code></td>
 		<td>The time when the request was sent.</td>
 	</tr>
+		<tr>
+		<th>Event Type</th>
+		<th>Field</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td rowspan="10">
+			<code>"message_reply"</code><br />
+			A reply message was sent to a thread.
+		</td>
+		<td><code>attachments</code></td>
+		<td>An array of attachments to the message. Attachments vary in type, see the attachments table below.</td>
+	</tr>
+	<tr>
+		<td><code>body</code></td>
+		<td>The string corresponding to the message that was just received.</td>
+	</tr>
+	<tr>
+		<td><code>isGroup</code></td>
+		<td>boolean, true if this thread is a group thread (more than 2 participants).</td>
+	</tr>
+    <tr>
+        <td><code>mentions</code></td>
+        <td>An object containing people mentioned/tagged in the message in the format { id: name }</td>
+    </tr>
+	<tr>
+		<td><code>messageID</code></td>
+		<td>A string representing the message ID.</td>
+	</tr>
+	<tr>
+		<td><code>senderID</code></td>
+		<td>The id of the person who sent the message in the chat with threadID.</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which the message was sent.</td>
+	</tr>
+  	<tr>
+		<td><code>isUnread</code></td>
+		<td>Boolean representing whether or not the message was read.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"message_reply"</code>.</td>
+	</tr>
+	<tr>
+		<td><code>messageReply</code></td>
+		<td>An object represent a message being replied. Content inside is the same like a normal <code>"message"</code> event.</td>
+	</tr>
 </table>
 
 __Attachments__
@@ -1354,6 +1404,36 @@ __Arguments__
 
 * `photoID`: Photo ID.
 * `callback(err, url)`: A callback called when the query is done (either with an error or with the photo's URL). `url` is a string with the photo's URL.
+
+---------------------------------------
+
+<a name="replyMessage"></a>
+### api.replyMessage(message, threadID, messageID[, callback])
+
+Sends the given message to the threadID.
+
+__Arguments__
+
+* `message`: A string (for backward compatibility) or a message object as described below.
+* `threadID`: A string, number, or array representing a thread. It happens to be someone's userID in the case of a one to one conversation or an array of userIDs when starting a new group chat.
+* `messageID`: A string representing a message.
+* `callback(err, messageInfo)`: A callback called when sending the message is done (either with an error or with an confirmation object). `messageInfo` contains the `threadID` where the message was sent and a `messageID`, as well as the `timestamp` of the message.
+
+__Message Object__:
+
+Various types of message can be sent:
+* *Regular:* set field `body` to the desired message as a string.
+* *Sticker:* set a field `sticker` to the desired sticker ID.
+* *File or image:* Set field `attachment` to a readable stream or an array of readable streams.
+* *URL:* set a field `url` to the desired URL.
+* *Emoji:* set field `emoji` to the desired emoji as a string and set field `emojiSize` with size of the emoji (`small`, `medium`, `large`)
+* *Mentions:* set field `mentions` to an array of objects. Objects should have the `tag` field set to the text that should be highlighted in the mention. The object should have an `id` field, where the `id` is the user id of the person being mentioned. The instance of `tag` that is highlighted is determined through indexOf, an optional `fromIndex`
+can be passed in to specify the start index to start searching for the `tag` text
+in `body` (default=0). (See below for an example.)
+
+Note that a message can only be a regular message (which can be empty) and optionally one of the following: a sticker, an attachment or a url.
+
+__Tip__: to find your own ID, you can look inside the cookies. The `userID` is under the name `c_user`.
 
 ---------------------------------------
 
