@@ -27,6 +27,7 @@
 * [`api.listen`](#listen)
 * [`api.logout`](#logout)
 * [`api.markAsRead`](#markAsRead)
+* [`api.markAsReadAll`](#markAsReadAll)
 * [`api.muteThread`](#muteThread)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
 * [`api.replyMessage`](#replyMessage)
@@ -1347,6 +1348,13 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
     });
 });
 ```
+
+---------------------------------------
+
+<a name="markAsReadAll"></a>
+### api.markAsReadAll([callback]])
+
+This function will mark all of messages in your inbox readed.
 
 ---------------------------------------
 

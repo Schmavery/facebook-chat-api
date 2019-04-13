@@ -76,6 +76,7 @@ Result:
 * [`api.listen`](DOCS.md#listen)
 * [`api.logout`](DOCS.md#logout)
 * [`api.markAsRead`](DOCS.md#markAsRead)
+* [`api.markAsReadAll`](DOCS.md#markAsReadAll)
 * [`api.muteThread`](DOCS.md#muteThread)
 * [`api.removeUserFromGroup`](DOCS.md#removeUserFromGroup)
 * [`api.replyMessage`](DOCS.md#replyMessage)
