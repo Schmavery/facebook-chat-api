@@ -1187,7 +1187,7 @@ The message object will contain different fields based on its type (as determine
 		<td>The ID of the user whose status this packet is describing.</td>
 	</tr>
 	<tr>
-		<td rowspan="4">
+		<td rowspan="5">
 			<code>"message_unsend"</code><br />
 			A revoke message request for a message from a thread was received.
 		</td>
@@ -1205,11 +1205,10 @@ The message object will contain different fields based on its type (as determine
 	<tr>
 		<td><code>deletionTimestamp</code></td>
 		<td>The time when the request was sent.</td>
-	</tr>
-		<tr>
-		<th>Event Type</th>
-		<th>Field</th>
-		<th>Description</th>
+    </tr>
+    <tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"message_unsend"</code>.</td>
 	</tr>
 	<tr>
 		<td rowspan="10">
