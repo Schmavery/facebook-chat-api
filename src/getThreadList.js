@@ -173,6 +173,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     const form = {
+      "av": ctx.globalOptions.pageID,
       "queries": JSON.stringify({
         "o0": {
           // This doc_id was valid on 2018-04-04.
