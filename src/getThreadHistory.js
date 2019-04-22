@@ -592,6 +592,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     // `queries` has to be a string. I couldn't tell from the dev console. This
     // took me a really long time to figure out. I deserve a cookie for this.
     var form = {
+      "av": ctx.globalOptions.pageID,
       queries: JSON.stringify({
         o0: {
           // This doc_id was valid on February 2nd 2017.
