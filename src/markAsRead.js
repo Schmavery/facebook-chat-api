@@ -17,6 +17,12 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     var form = {};
+
+    if (typeof ctx.globalOptions.pageID !== 'undefined') {
+      form["source"] = "PagesManagerMessagesInterface";
+      form["request_user_id"] = ctx.globalOptions.pageID;
+    }
+
     form["ids[" + threadID + "]"] = read;
     form["watermarkTimestamp"] = new Date().getTime();
     form["shouldSendReadReceipt"] = true;
