@@ -30,7 +30,6 @@
 * [`api.markAsReadAll`](#markAsReadAll)
 * [`api.muteThread`](#muteThread)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
-* [`api.replyMessage`](#replyMessage)
 * [`api.resolvePhotoUrl`](#resolvePhotoUrl)
 * [`api.searchForThread`](#searchForThread)
 * [`api.sendMessage`](#sendMessage)
