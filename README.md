@@ -79,7 +79,6 @@ Result:
 * [`api.markAsReadAll`](DOCS.md#markAsReadAll)
 * [`api.muteThread`](DOCS.md#muteThread)
 * [`api.removeUserFromGroup`](DOCS.md#removeUserFromGroup)
-* [`api.replyMessage`](DOCS.md#replyMessage)
 * [`api.resolvePhotoUrl`](DOCS.md#resolvePhotoUrl)
 * [`api.searchForThread`](DOCS.md#searchForThread)
 * [`api.sendMessage`](DOCS.md#sendMessage)
