@@ -104,7 +104,6 @@ function buildAPI(globalOptions, html, jar) {
     'markAsReadAll',
     'muteThread',
     'removeUserFromGroup',
-	'replyMessage',
     'resolvePhotoUrl',
     'searchForThread',
     'sendMessage',
