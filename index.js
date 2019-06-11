@@ -91,6 +91,7 @@ function buildAPI(globalOptions, html, jar) {
     'getCurrentUserID',
     'getEmojiUrl',
     'getFriendsList',
+    'getNotifications',
     'getThreadHistory',
     'getThreadInfo',
     'getThreadList',
