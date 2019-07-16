@@ -250,30 +250,34 @@ module.exports = function(defaultFuncs, api, ctx) {
                     if (clientPayload.deltas && clientPayload.deltas.length && clientPayload.deltas[0].deltaMessageReply){
                       //it is a reply
                       //trigger on same pathway as message
+                      var pseudoReplyMessage;
+                      var pseudoRepliedMessage;
+                      var fmtMsg;
                       try{
-                        let pseudoReplyMessage={
+                        pseudoReplyMessage={
                           delta: clientPayload.deltas[0].deltaMessageReply.message
                         }
                         fmtMsg = utils.formatDeltaMessage(pseudoReplyMessage);
-                        let pseudoRepliedMessage={
+                        pseudoRepliedMessage={
                           delta: clientPayload.deltas[0].deltaMessageReply.repliedToMessage
                         }
                         fmtMsg.repliedTo = utils.formatDeltaMessage(pseudoRepliedMessage);
-                        return !ctx.globalOptions.selfListen &&
-                          fmtMsg.senderID === ctx.userID
-                          ? undefined
-                          : globalCallback(null, fmtMsg);
+                        
                       }catch (e){
                         return globalCallback({
                           error:
                             "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
-                          detail: err,
+                          detail: e,
                           res: v,
                           type: "parse_error"
                         });
                       }
                       
                     }
+                    return !ctx.globalOptions.selfListen &&
+                          fmtMsg.senderID === ctx.userID
+                          ? undefined
+                          : globalCallback(null, fmtMsg);
                   }
                   if (v.delta.class !== "NewMessage" &&
                       !ctx.globalOptions.listenEvents
