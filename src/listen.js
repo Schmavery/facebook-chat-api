@@ -240,6 +240,41 @@ module.exports = function(defaultFuncs, api, ctx) {
                   });
                   break;
                 case "delta":
+                  //special class for replies, which are a type of PlientPayload
+                  if (v.delta.class=="ClientPayload"){
+                    //attempt to decode it anyways
+                    var clientPayload = utils.decodeClientPayload(
+                      v.delta.payload
+                    );
+                    //check that it is a reply
+                    if (clientPayload.deltas && clientPayload.deltas.length && clientPayload.deltas[0].deltaMessageReply){
+                      //it is a reply
+                      //trigger on same pathway as message
+                      try{
+                        let pseudoReplyMessage={
+                          delta: clientPayload.deltas[0].deltaMessageReply.message
+                        }
+                        fmtMsg = utils.formatDeltaMessage(pseudoReplyMessage);
+                        let pseudoRepliedMessage={
+                          delta: clientPayload.deltas[0].deltaMessageReply.repliedToMessage
+                        }
+                        fmtMsg.repliedTo = utils.formatDeltaMessage(pseudoRepliedMessage);
+                        return !ctx.globalOptions.selfListen &&
+                          fmtMsg.senderID === ctx.userID
+                          ? undefined
+                          : globalCallback(null, fmtMsg);
+                      }catch (e){
+                        return globalCallback({
+                          error:
+                            "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+                          detail: err,
+                          res: v,
+                          type: "parse_error"
+                        });
+                      }
+                      
+                    }
+                  }
                   if (v.delta.class !== "NewMessage" &&
                       !ctx.globalOptions.listenEvents
                   )
