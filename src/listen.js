@@ -235,11 +235,6 @@ module.exports = function(defaultFuncs, api, ctx) {
                   });
                   break;
                 case "delta":
-                  if (v.delta.class !== "NewMessage" &&
-				    !ctx.globalOptions.listenEvents
-                  )
-                  return;
-
                   if (v.delta.class == "NewMessage") {
                     if (ctx.globalOptions.pageID &&
                       ctx.globalOptions.pageID != v.queue
@@ -292,7 +287,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                     if (clientPayload && clientPayload.deltas) {
                       for (var i in clientPayload.deltas) {
                         var delta = clientPayload.deltas[i];
-                        if (delta.deltaMessageReaction) {
+                        if (delta.deltaMessageReaction && !!ctx.globalOptions.listenEvents) {
                           globalCallback(null, {
                             type: "message_reaction",
                             threadID: delta.deltaMessageReaction.threadKey
@@ -305,7 +300,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                             userID: delta.deltaMessageReaction.userId,
                             timestamp: v.ofd_ts
                           });
-                        } else if (delta.deltaRecallMessageData) {
+                        } else if (delta.deltaRecallMessageData && !!ctx.globalOptions.listenEvents) {
                           globalCallback(null, {
                             type: "message_unsend",
                             threadID: delta.deltaRecallMessageData.threadKey.threadFbId ?
@@ -383,6 +378,10 @@ module.exports = function(defaultFuncs, api, ctx) {
                     }
                   }
 
+                  if (v.delta.class !== "NewMessage" &&
+                    !ctx.globalOptions.listenEvents
+                  )
+                    return;
                   switch (v.delta.class) {
                     case "ReadReceipt":
                       var fmtMsg;
@@ -406,25 +405,25 @@ module.exports = function(defaultFuncs, api, ctx) {
                         default:
                           return;
                       }
-                    case "ThreadName":
-                    case "ParticipantsAddedToGroupThread":
-                    case "ParticipantLeftGroupThread":
-                      var formattedEvent;
-                      try {
-                        formattedEvent = utils.formatDeltaEvent(v.delta);
-                      } catch (err) {
-                        return globalCallback({
-                          error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
-                          detail: err,
-                          res: v.delta,
-                          type: "parse_error"
-                        });
-                      }
-                      return (!ctx.globalOptions.selfListen &&
-                          formattedEvent.author.toString() === ctx.userID) ||
-                        !ctx.loggedIn ?
-                        undefined :
-                        globalCallback(null, formattedEvent);
+                      case "ThreadName":
+                      case "ParticipantsAddedToGroupThread":
+                      case "ParticipantLeftGroupThread":
+                        var formattedEvent;
+                        try {
+                          formattedEvent = utils.formatDeltaEvent(v.delta);
+                        } catch (err) {
+                          return globalCallback({
+                            error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+                            detail: err,
+                            res: v.delta,
+                            type: "parse_error"
+                          });
+                        }
+                        return (!ctx.globalOptions.selfListen &&
+                            formattedEvent.author.toString() === ctx.userID) ||
+                          !ctx.loggedIn ?
+                          undefined :
+                          globalCallback(null, formattedEvent);
                   }
 
                   break;
