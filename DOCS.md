@@ -1428,7 +1428,7 @@ __Arguments__
 ---------------------------------------
 
 <a name="sendMessage"></a>
-### api.sendMessage(message, threadID[, callback[, messageID])
+### api.sendMessage(message, threadID[, callback[, messageID]])
 
 Sends the given message to the threadID.
 
