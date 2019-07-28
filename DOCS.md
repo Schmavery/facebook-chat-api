@@ -137,6 +137,7 @@ var rl = readline.createInterface({
   output: process.stdout
 });
 
+const obj = {email: "FB_EMAIL", password: "FB_PASSWORD"};
 login(obj, (err, api) => {
     if(err) {
         switch (err.error) {
