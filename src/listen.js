@@ -360,6 +360,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                             body: delta.deltaMessageReply.message.body || "",
                             isGroup: !!delta.deltaMessageReply.message.messageMetadata.threadKey.threadFbId,
                             mentions: mentions,
+                            timestamp: v.ofd_ts,
                             messageReply: {
                               threadID: delta.deltaMessageReply.repliedToMessage.messageMetadata.threadKey.threadFbId ?
                                 delta.deltaMessageReply.repliedToMessage.messageMetadata.threadKey.threadFbId : delta.deltaMessageReply.repliedToMessage.messageMetadata.threadKey
