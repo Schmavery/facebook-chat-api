@@ -356,7 +356,10 @@ module.exports = function(defaultFuncs, api, ctx) {
                               .otherUserFbId,
                             messageID: delta.deltaMessageReply.message.messageMetadata.messageId,
                             senderID: delta.deltaMessageReply.message.messageMetadata.actorFbId,
-                            attachments: delta.deltaMessageReply.message.attachments,
+                            attachments: delta.deltaMessageReply.message.attachments.map(function(att) {
+                              att.blob_attachment = JSON.parse(att.mercuryJSON).blob_attachment;
+                              return att;
+                            }).map(att => utils._formatAttachment(att)),
                             body: delta.deltaMessageReply.message.body || "",
                             isGroup: !!delta.deltaMessageReply.message.messageMetadata.threadKey.threadFbId,
                             mentions: mentions,
@@ -367,7 +370,10 @@ module.exports = function(defaultFuncs, api, ctx) {
                                 .otherUserFbId,
                               messageID: delta.deltaMessageReply.repliedToMessage.messageMetadata.messageId,
                               senderID: delta.deltaMessageReply.repliedToMessage.messageMetadata.actorFbId,
-                              attachments: delta.deltaMessageReply.repliedToMessage.attachments,
+                              attachments: delta.deltaMessageReply.repliedToMessage.attachments.map(function(att) {
+                                att.blob_attachment = JSON.parse(att.mercuryJSON).blob_attachment;
+                                return att;
+                              }).map(att => utils._formatAttachment(att)),
                               body: delta.deltaMessageReply.repliedToMessage.body || "",
                               isGroup: !!delta.deltaMessageReply.repliedToMessage.messageMetadata.threadKey.threadFbId,
                               mentions: rmentions

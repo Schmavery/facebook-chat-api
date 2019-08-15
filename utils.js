@@ -1257,6 +1257,7 @@ module.exports = {
   parseAndCheckLogin,
   saveCookies,
   getType,
+  _formatAttachment,
   formatHistoryMessage,
   formatID,
   formatMessage,
