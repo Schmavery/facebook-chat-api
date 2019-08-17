@@ -1428,7 +1428,7 @@ __Arguments__
 ---------------------------------------
 
 <a name="sendMessage"></a>
-### api.sendMessage(message, threadID[, callback[, messageID]])
+### api.sendMessage(message, threadID[, callback][, messageID])
 
 Sends the given message to the threadID.
 
@@ -1436,7 +1436,7 @@ __Arguments__
 
 * `message`: A string (for backward compatibility) or a message object as described below.
 * `threadID`: A string, number, or array representing a thread. It happens to be someone's userID in the case of a one to one conversation or an array of userIDs when starting a new group chat.
-* `callback(err, messageInfo)`: A callback called when sending the message is done (either with an error or with an confirmation object). `messageInfo` contains the `threadID` where the message was sent and a `messageID`, as well as the `timestamp` of the message.
+* `callback(err, messageInfo)`: (Optional) A callback called when sending the message is done (either with an error or with an confirmation object). `messageInfo` contains the `threadID` where the message was sent and a `messageID`, as well as the `timestamp` of the message.
 * `messageID`: (Optional) A string representing a message you want to reply.
 
 __Message Object__:
