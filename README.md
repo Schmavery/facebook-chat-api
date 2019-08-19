@@ -76,6 +76,7 @@ Result:
 * [`api.listen`](DOCS.md#listen)
 * [`api.logout`](DOCS.md#logout)
 * [`api.markAsRead`](DOCS.md#markAsRead)
+* [`api.markAsReadAll`](DOCS.md#markAsReadAll)
 * [`api.muteThread`](DOCS.md#muteThread)
 * [`api.removeUserFromGroup`](DOCS.md#removeUserFromGroup)
 * [`api.resolvePhotoUrl`](DOCS.md#resolvePhotoUrl)
@@ -90,7 +91,7 @@ Result:
 ## Main Functionality
 
 ### Sending a message
-#### api.sendMessage(message, threadID[, callback])
+#### api.sendMessage(message, threadID[, callback][, messageID])
 
 Various types of message can be sent:
 * *Regular:* set field `body` to the desired message as a string.

@@ -289,7 +289,7 @@ function formatEventData(event) {
       };
     case "InstantGameUpdateExtensibleMessageAdminText":
       return {
-        gameID: event.game.id,
+        gameID: (event.game == null ? null : event.game.id),
         update_type: event.update_type,
         collapsed_text: event.collapsed_text,
         expanded_text: event.expanded_text,

@@ -101,6 +101,7 @@ function buildAPI(globalOptions, html, jar) {
     'listen',
     'logout',
     'markAsRead',
+    'markAsReadAll',
     'muteThread',
     'removeUserFromGroup',
     'resolvePhotoUrl',

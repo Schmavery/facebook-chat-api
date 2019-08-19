@@ -303,7 +303,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     cb();
   }
 
-  return function sendMessage(msg, threadID, callback) {
+  return function sendMessage(msg, threadID, callback, replyToMessage) {
     if (
       !callback &&
       (utils.getType(threadID) === "Function" ||
@@ -311,12 +311,21 @@ module.exports = function(defaultFuncs, api, ctx) {
     ) {
       return callback({ error: "Pass a threadID as a second argument." });
     }
+    if (
+      !replyToMessage &&
+      utils.getType(callback) === "String"
+    ) {
+      replyToMessage = callback;
+      callback = function() {};
+    }
+      
     if (!callback) {
       callback = function() {};
     }
 
     var msgType = utils.getType(msg);
     var threadIDType = utils.getType(threadID);
+    var messageIDType = utils.getType(replyToMessage);
 
     if (msgType !== "String" && msgType !== "Object") {
       return callback({
@@ -334,6 +343,15 @@ module.exports = function(defaultFuncs, api, ctx) {
       return callback({
         error:
           "ThreadID should be of type number, string, or array and not " +
+          threadIDType +
+          "."
+      });
+    }
+    
+    if (messageIDType !== "String") {
+      return callback({
+        error:
+          "MessageID should be of type string and not " +
           threadIDType +
           "."
       });
@@ -383,7 +401,8 @@ module.exports = function(defaultFuncs, api, ctx) {
       "ephemeral_ttl_mode:": "0",
       manual_retry_cnt: "0",
       has_attachment: !!(msg.attachment || msg.url || msg.sticker),
-      signatureID: utils.getSignatureID()
+      signatureID: utils.getSignatureID(),
+      replied_to_message_id: replyToMessage
     };
 
     handleSticker(msg, form, callback, () =>

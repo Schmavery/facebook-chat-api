@@ -27,6 +27,7 @@
 * [`api.listen`](#listen)
 * [`api.logout`](#logout)
 * [`api.markAsRead`](#markAsRead)
+* [`api.markAsReadAll`](#markAsReadAll)
 * [`api.muteThread`](#muteThread)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
 * [`api.resolvePhotoUrl`](#resolvePhotoUrl)
@@ -1186,7 +1187,7 @@ The message object will contain different fields based on its type (as determine
 		<td>The ID of the user whose status this packet is describing.</td>
 	</tr>
 	<tr>
-		<td rowspan="4">
+		<td rowspan="5">
 			<code>"message_unsend"</code><br />
 			A revoke message request for a message from a thread was received.
 		</td>
@@ -1204,6 +1205,54 @@ The message object will contain different fields based on its type (as determine
 	<tr>
 		<td><code>deletionTimestamp</code></td>
 		<td>The time when the request was sent.</td>
+    </tr>
+    <tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"message_unsend"</code>.</td>
+	</tr>
+	<tr>
+		<td rowspan="10">
+			<code>"message_reply"</code><br />
+			A reply message was sent to a thread.
+		</td>
+		<td><code>attachments</code></td>
+		<td>An array of attachments to the message. Attachments vary in type, see the attachments table below.</td>
+	</tr>
+	<tr>
+		<td><code>body</code></td>
+		<td>The string corresponding to the message that was just received.</td>
+	</tr>
+	<tr>
+		<td><code>isGroup</code></td>
+		<td>boolean, true if this thread is a group thread (more than 2 participants).</td>
+	</tr>
+    <tr>
+        <td><code>mentions</code></td>
+        <td>An object containing people mentioned/tagged in the message in the format { id: name }</td>
+    </tr>
+	<tr>
+		<td><code>messageID</code></td>
+		<td>A string representing the message ID.</td>
+	</tr>
+	<tr>
+		<td><code>senderID</code></td>
+		<td>The id of the person who sent the message in the chat with threadID.</td>
+	</tr>
+	<tr>
+		<td><code>threadID</code></td>
+		<td>The threadID representing the thread in which the message was sent.</td>
+	</tr>
+  	<tr>
+		<td><code>isUnread</code></td>
+		<td>Boolean representing whether or not the message was read.</td>
+	</tr>
+	<tr>
+		<td><code>type</code></td>
+		<td>For this event type, this will always be the string <code>"message_reply"</code>.</td>
+	</tr>
+	<tr>
+		<td><code>messageReply</code></td>
+		<td>An object represent a message being replied. Content inside is the same like a normal <code>"message"</code> event.</td>
 	</tr>
 </table>
 
@@ -1271,7 +1320,7 @@ __Arguments__
 ---------------------------------------
 
 <a name="markAsRead"></a>
-### api.markAsRead(threadID, [read, [, callback]])
+### api.markAsRead(threadID, [read[, callback]])
 
 Given a threadID will mark all the unread messages as read. Facebook will take a couple of seconds to show that you've read the messages.
 
@@ -1298,6 +1347,13 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
     });
 });
 ```
+
+---------------------------------------
+
+<a name="markAsReadAll"></a>
+### api.markAsReadAll([callback]])
+
+This function will mark all of messages in your inbox readed.
 
 ---------------------------------------
 
@@ -1373,7 +1429,7 @@ __Arguments__
 ---------------------------------------
 
 <a name="sendMessage"></a>
-### api.sendMessage(message, threadID[, callback])
+### api.sendMessage(message, threadID[, callback][, messageID])
 
 Sends the given message to the threadID.
 
@@ -1381,7 +1437,8 @@ __Arguments__
 
 * `message`: A string (for backward compatibility) or a message object as described below.
 * `threadID`: A string, number, or array representing a thread. It happens to be someone's userID in the case of a one to one conversation or an array of userIDs when starting a new group chat.
-* `callback(err, messageInfo)`: A callback called when sending the message is done (either with an error or with an confirmation object). `messageInfo` contains the `threadID` where the message was sent and a `messageID`, as well as the `timestamp` of the message.
+* `callback(err, messageInfo)`: (Optional) A callback called when sending the message is done (either with an error or with an confirmation object). `messageInfo` contains the `threadID` where the message was sent and a `messageID`, as well as the `timestamp` of the message.
+* `messageID`: (Optional) A string representing a message you want to reply.
 
 __Message Object__:
 
