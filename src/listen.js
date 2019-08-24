@@ -371,12 +371,12 @@ module.exports = function(defaultFuncs, api, ctx) {
                               messageID: delta.deltaMessageReply.repliedToMessage.messageMetadata.messageId,
                               senderID: delta.deltaMessageReply.repliedToMessage.messageMetadata.actorFbId,
                               attachments: delta.deltaMessageReply.repliedToMessage.attachments.map(function(att) {
-								var mercury = JSON.parse(att.mercuryJSON);
-						        if (!mercury.blob_attachment) {
-								  att.blob_attachment = mercury;
-								} else {
-								  att.blob_attachment = mercury.blob_attachment;
-								}
+                                var mercury = JSON.parse(att.mercuryJSON);
+                                if (!mercury.blob_attachment) {
+                                  att.blob_attachment = mercury;
+                                } else {
+                                  att.blob_attachment = mercury.blob_attachment;
+                                }
                                 return att;
                               }).map(att => utils._formatAttachment(att)),
                               body: delta.deltaMessageReply.repliedToMessage.body || "",
