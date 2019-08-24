@@ -358,11 +358,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                             senderID: delta.deltaMessageReply.message.messageMetadata.actorFbId,
                             attachments: delta.deltaMessageReply.message.attachments.map(function(att) {
                               var mercury = JSON.parse(att.mercuryJSON);
-                              if (!mercury.blob_attachment) {
-                                att.blob_attachment = mercury;
-                              } else {
-                                att.blob_attachment = mercury.blob_attachment;
-                              }
+                              Object.assign(att, mercury);
                               return att;
                             }).map(att => utils._formatAttachment(att)),
                             body: delta.deltaMessageReply.message.body || "",
@@ -377,11 +373,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                               senderID: delta.deltaMessageReply.repliedToMessage.messageMetadata.actorFbId,
                               attachments: delta.deltaMessageReply.repliedToMessage.attachments.map(function(att) {
                                 var mercury = JSON.parse(att.mercuryJSON);
-                                if (!mercury.blob_attachment) {
-                                  att.blob_attachment = mercury;
-                                } else {
-                                  att.blob_attachment = mercury.blob_attachment;
-                                }
+                                Object.assign(att, mercury);
                                 return att;
                               }).map(att => utils._formatAttachment(att)),
                               body: delta.deltaMessageReply.repliedToMessage.body || "",
