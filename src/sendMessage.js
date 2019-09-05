@@ -348,7 +348,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       });
     }
     
-    if (messageIDType !== "String") {
+    if (replyToMessage && messageIDType !== 'String') {
       return callback({
         error:
           "MessageID should be of type string and not " +
