@@ -411,6 +411,20 @@ module.exports = function(defaultFuncs, api, ctx) {
                         case "change_thread_nickname":
                         case "change_thread_icon":
                           break;
+                        case "group_poll":
+                          var fmtMsg;
+                          try {
+                            fmtMsg = utils.formatDeltaEvent(v.delta);
+                          } catch (err) {
+                            return globalCallback({
+                              error: "Problem parsing message object. Please open an issue at https://github.com/Schmavery/facebook-chat-api/issues.",
+                              detail: err,
+                              res: v.delta,
+                              type: "parse_error"
+                            });
+                          }
+                          return globalCallback(null, fmtMsg);
+                          break;
                         default:
                           return;
                       }
