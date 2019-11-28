@@ -389,7 +389,7 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
 	}
 }
 
-module.exports = function (df, api, ctx) {
+module.exports = function (defaultFuncs, api, ctx) {
 	var currentlyRunning = null;
 	var globalCallback = identity;
 	return function (callback) {
@@ -424,7 +424,7 @@ module.exports = function (df, api, ctx) {
 
 				if (resData[0].o0.data.viewer.message_threads.sync_sequence_id) {
 					lastSeqId = resData[0].o0.data.viewer.message_threads.sync_sequence_id;
-					listenMqtt(ctx, globalCallback, df);
+					listenMqtt(ctx, globalCallback, defaultFuncs);
 				}
 
 			})
