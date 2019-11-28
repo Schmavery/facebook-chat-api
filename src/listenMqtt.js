@@ -124,7 +124,6 @@ function listenMqtt(ctx, globalCallback, defaultFuncs) {
 }
 
 function parseDelta(ctx, globalCallback, defaultFuncs, v) {
-  console.log(JSON.stringify(v, null, 4));
   if (v.delta.class == "NewMessage") {
     //Not tested for pages
     if (ctx.globalOptions.pageID &&
@@ -177,7 +176,6 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
     if (clientPayload && clientPayload.deltas) {
       for (var i in clientPayload.deltas) {
         var delta = clientPayload.deltas[i];
-        console.log(JSON.stringify(delta, null, 4));
         if (delta.deltaMessageReaction && !!ctx.globalOptions.listenEvents) {
           globalCallback(null, {
             type: "message_reaction",
@@ -428,7 +426,7 @@ module.exports = function (defaultFuncs, api, ctx) {
       .post("https://www.facebook.com/api/graphqlbatch/", ctx.jar, form)
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then((resData) => {
-        if (resData[resData.length - 1].error_results > 0) {
+        if (resData && resData[resData.length - 1].error_results > 0) {
           throw resData[0].o0.errors;
         }
 
