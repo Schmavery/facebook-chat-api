@@ -25,6 +25,7 @@
 * [`api.getUserInfo`](#getUserInfo)
 * [`api.handleMessageRequest`](#handleMessageRequest)
 * [`api.listen`](#listen)
+* [`api.listenMqtt`](#listenMqtt)
 * [`api.logout`](#logout)
 * [`api.markAsRead`](#markAsRead)
 * [`api.markAsReadAll`](#markAsReadAll)
@@ -1305,6 +1306,20 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
     });
 });
 ```
+
+---------------------------------------
+
+<a name="listenMqtt"></a>
+### api.listenMqtt(callback) (Experimental)
+Same as [`api.listen`](#listen) but uses MQTT to recieve data.
+Will call `callback` when a new message is received on this account.
+By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true})`.  This will by default ignore messages sent by the current account, you can enable listening to your own messages with `api.setOptions({selfListen: true})`.
+
+__Arguments__
+
+- `callback(error, message)`: A callback called every time the logged-in account receives a new message.
+
+Messages and Events are the same as [`api.listen`](#listen)
 
 ---------------------------------------
 
