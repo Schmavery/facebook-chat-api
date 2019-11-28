@@ -13,7 +13,7 @@ var WSS_OPTIONS = [
 ]
 var IS_BROWSER = process.title === 'browser'
 
-function buildUrl (opts, client) {
+function buildUrl(opts, client) {
   var url = opts.protocol + '://' + opts.hostname + ':' + opts.port + opts.path
   if (typeof (opts.transformWsUrl) === 'function') {
     url = opts.transformWsUrl(url, opts, client)
@@ -21,7 +21,7 @@ function buildUrl (opts, client) {
   return url
 }
 
-function setDefaultOpts (opts) {
+function setDefaultOpts(opts) {
   if (!opts.hostname) {
     opts.hostname = 'localhost'
   }
@@ -49,7 +49,7 @@ function setDefaultOpts (opts) {
   }
 }
 
-function createWebSocket (client, opts) {
+function createWebSocket(client, opts) {
   var websocketSubProtocol =
     (opts.protocolId === 'MQIsdp') && (opts.protocolVersion === 3)
       ? 'mqttv3.1'
@@ -60,11 +60,11 @@ function createWebSocket (client, opts) {
   return websocket(url, undefined, opts.wsOptions)
 }
 
-function buildBuilder (client, opts) {
+function buildBuilder(client, opts) {
   return createWebSocket(client, opts)
 }
 
-function buildBuilderBrowser (client, opts) {
+function buildBuilderBrowser(client, opts) {
   if (!opts.hostname) {
     opts.hostname = opts.host
   }

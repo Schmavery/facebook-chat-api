@@ -12,7 +12,7 @@ protocols.wss = require('./fbws')
  *
  * @param {Object} [opts] option object
  */
-function parseAuthOptions (opts) {
+function parseAuthOptions(opts) {
   var matches
   if (opts.auth) {
     matches = opts.auth.match(/^(.+):(.+)$/)
@@ -31,7 +31,7 @@ function parseAuthOptions (opts) {
  * @param {String} [brokerUrl] - url of the broker, optional
  * @param {Object} opts - see MqttClient#constructor
  */
-function connect (brokerUrl, opts) {
+function connect(brokerUrl, opts) {
   if ((typeof brokerUrl === 'object') && !opts) {
     opts = brokerUrl
     brokerUrl = null
@@ -115,7 +115,7 @@ function connect (brokerUrl, opts) {
     opts.defaultProtocol = opts.protocol
   }
 
-  function wrapper (client) {
+  function wrapper(client) {
     if (opts.servers) {
       if (!client._reconnectCount || client._reconnectCount === opts.servers.length) {
         client._reconnectCount = 0

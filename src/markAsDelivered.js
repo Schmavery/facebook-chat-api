@@ -3,17 +3,15 @@
 var utils = require("../utils");
 var log = require("npmlog");
 
-module.exports = function(defaultFuncs, api, ctx) {
-
+module.exports = function (defaultFuncs, api, ctx) {
   return function markAsDelivered(threadID, messageID, callback) {
     if (!callback) {
-      callback = function() {};
+      callback = function () { };
     }
 
-	if(!threadID || !messageID)
-	{
-		return callback("Error: messageID or threadID is not defined");
-	}
+    if (!threadID || !messageID) {
+      return callback("Error: messageID or threadID is not defined");
+    }
 
     var form = {};
 
@@ -21,7 +19,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     form["thread_ids[" + threadID + "][0]"] = messageID;
 
 
-   console.log(form);
+    console.log(form);
 
     defaultFuncs
       .post(
@@ -31,14 +29,14 @@ module.exports = function(defaultFuncs, api, ctx) {
       )
       .then(utils.saveCookies(ctx.jar))
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-      .then(function(resData) {
+      .then(function (resData) {
         if (resData.error) {
           throw resData;
         }
 
         return callback();
       })
-      .catch(function(err) {
+      .catch(function (err) {
         log.error("markAsDelivered", err);
         return callback(err);
       });
