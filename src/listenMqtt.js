@@ -6,9 +6,7 @@ var log = require("npmlog");
 var identity = function () { };
 var lastSeqId = 0;
 
-var defaultFuncs = undefined;
-
-function listenMqtt(ctx, globalCallback) {
+function listenMqtt(ctx, globalCallback, defaultFuncs) {
 	var sessionID = Math.floor(Math.random() * 9007199254740991) + 1;
 	var username = {
 		u: ctx.userID,
@@ -90,7 +88,7 @@ function listenMqtt(ctx, globalCallback) {
 			//If it contains more than 1 delta
 			for (var i in jsonMessage.deltas) {
 				var delta = jsonMessage.deltas[i];
-				parseDelta(ctx, globalCallback, { "delta": delta });
+				parseDelta(ctx, globalCallback, defaultFuncs, { "delta": delta });
 			}
 		} else if (topic === "/thread_typing" || topic === "/orca_typing_notifications") {
 			var typ = {
@@ -124,7 +122,7 @@ function listenMqtt(ctx, globalCallback) {
 	});
 }
 
-function parseDelta(ctx, globalCallback, v) {
+function parseDelta(ctx, globalCallback, defaultFuncs, v) {
 	if (v.delta.class == "NewMessage") {
 		//Not tested for pages
 		if (ctx.globalOptions.pageID &&
@@ -394,7 +392,6 @@ function parseDelta(ctx, globalCallback, v) {
 module.exports = function (df, api, ctx) {
 	var currentlyRunning = null;
 	var globalCallback = identity;
-	defaultFuncs = df;
 	return function (callback) {
 		globalCallback = callback;
 		const form = {
@@ -427,7 +424,7 @@ module.exports = function (df, api, ctx) {
 
 				if (resData[0].o0.data.viewer.message_threads.sync_sequence_id) {
 					lastSeqId = resData[0].o0.data.viewer.message_threads.sync_sequence_id;
-					listenMqtt(ctx, globalCallback);
+					listenMqtt(ctx, globalCallback, df);
 				}
 
 			})
