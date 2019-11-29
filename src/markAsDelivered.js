@@ -18,9 +18,6 @@ module.exports = function (defaultFuncs, api, ctx) {
     form["message_ids[0]"] = messageID;
     form["thread_ids[" + threadID + "][0]"] = messageID;
 
-
-    console.log(form);
-
     defaultFuncs
       .post(
         "https://www.facebook.com/ajax/mercury/delivery_receipts.php",

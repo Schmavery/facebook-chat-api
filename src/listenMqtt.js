@@ -325,6 +325,7 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
         default:
           return;
       }
+      break;
     //For group images
     case "ForcedFetch":
       var mid = v.delta.messageId;
