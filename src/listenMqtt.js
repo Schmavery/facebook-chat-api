@@ -330,56 +330,62 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
     case "ForcedFetch":
       var mid = v.delta.messageId;
       var tid = v.delta.threadKey.threadFbId.toString();
-      const form = {
-        "av": ctx.globalOptions.pageID,
-        "queries": JSON.stringify({
-          "o0": {
-            "doc_id": "1768656253222505",
-            "query_params": {
-              "thread_and_message_id": {
-                "thread_id": tid,
-                "message_id": mid,
+      if(mid && tid)
+      {
+        const form = {
+          "av": ctx.globalOptions.pageID,
+          "queries": JSON.stringify({
+            "o0": {
+              "doc_id": "1768656253222505",
+              "query_params": {
+                "thread_and_message_id": {
+                  "thread_id": tid,
+                  "message_id": mid,
+                }
               }
             }
-          }
-        })
-      };
-
-      defaultFuncs
-        .post("https://www.facebook.com/api/graphqlbatch/", ctx.jar, form)
-        .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-        .then((resData) => {
-          if (resData[resData.length - 1].error_results > 0) {
-            throw resData[0].o0.errors;
-          }
-
-          if (resData[resData.length - 1].successful_results === 0) {
-            throw { error: "forcedFetch: there was no successful_results", res: resData };
-          }
-
-          var fetchData = resData[0].o0.data.message;
-
-          (!ctx.globalOptions.selfListen &&
-            formattedEvent.author.toString() === ctx.userID) ||
-            !ctx.loggedIn ?
-            undefined :
-            globalCallback(null, {
-              type: "change_thread_image",
-              threadID: utils.formatID(tid.toString()),
-              snippet: fetchData.snippet,
-              timestamp: fetchData.timestamp_precise,
-              author: fetchData.message_sender.id,
-              image: {
-                attachmentID: fetchData.image_with_metadata.legacy_attachment_id,
-                width: fetchData.image_with_metadata.original_dimensions.x,
-                height: fetchData.image_with_metadata.original_dimensions.y,
-                url: fetchData.image_with_metadata.preview.uri
-              }
-            });
-        })
-        .catch((err) => {
-          log.error("forcedFetch", err);
-        });
+          })
+        };
+  
+        defaultFuncs
+          .post("https://www.facebook.com/api/graphqlbatch/", ctx.jar, form)
+          .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
+          .then((resData) => {
+            if (resData[resData.length - 1].error_results > 0) {
+              throw resData[0].o0.errors;
+            }
+  
+            if (resData[resData.length - 1].successful_results === 0) {
+              throw { error: "forcedFetch: there was no successful_results", res: resData };
+            }
+  
+            var fetchData = resData[0].o0.data.message;
+  
+            if(fetchData && fetchData.__typename === "ThreadImageMessage")
+            {
+              (!ctx.globalOptions.selfListen &&
+                formattedEvent.author.toString() === ctx.userID) ||
+                !ctx.loggedIn ?
+                undefined :
+                globalCallback(null, {
+                  type: "change_thread_image",
+                  threadID: utils.formatID(tid.toString()),
+                  snippet: fetchData.snippet,
+                  timestamp: fetchData.timestamp_precise,
+                  author: fetchData.message_sender.id,
+                  image: {
+                    attachmentID: fetchData.image_with_metadata.legacy_attachment_id,
+                    width: fetchData.image_with_metadata.original_dimensions.x,
+                    height: fetchData.image_with_metadata.original_dimensions.y,
+                    url: fetchData.image_with_metadata.preview.uri
+                  }
+                });
+            }
+          })
+          .catch((err) => {
+            log.error("forcedFetch", err);
+          });
+      }
       break;
     case "ThreadName":
     case "ParticipantsAddedToGroupThread":

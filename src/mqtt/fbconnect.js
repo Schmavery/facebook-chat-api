@@ -1,3 +1,4 @@
+//From MQTT.js (https://github.com/mqttjs/MQTT.js)
 'use strict'
 
 var mqtt = require('mqtt')
@@ -63,19 +64,13 @@ function connect(brokerUrl, opts) {
 
   if (opts.cert && opts.key) {
     if (opts.protocol) {
-      if (['mqtts', 'wss', 'wxs', 'alis'].indexOf(opts.protocol) === -1) {
+      if (['mqtts', 'wss'].indexOf(opts.protocol) === -1) {
         switch (opts.protocol) {
           case 'mqtt':
             opts.protocol = 'mqtts'
             break
           case 'ws':
             opts.protocol = 'wss'
-            break
-          case 'wx':
-            opts.protocol = 'wxs'
-            break
-          case 'ali':
-            opts.protocol = 'alis'
             break
           default:
             throw new Error('Unknown protocol for secure connection: "' + opts.protocol + '"!')
@@ -93,11 +88,7 @@ function connect(brokerUrl, opts) {
       'mqtt',
       'mqtts',
       'ws',
-      'wss',
-      'wx',
-      'wxs',
-      'ali',
-      'alis'
+      'wss'
     ].filter(function (key, index) {
       if (isSecure && index % 2 === 0) {
         // Skip insecure protocols when requesting a secure one.
