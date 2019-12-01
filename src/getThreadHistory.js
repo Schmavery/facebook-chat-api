@@ -352,228 +352,230 @@ function formatEventData(event) {
   }
 }
 
+function formatMessagesGraphQLResponseInternal(threadID, threadType, data) {
+  switch (data.__typename) {
+    case "UserMessage":
+      // Give priority to stickers. They're seen as normal messages but we've
+      // been considering them as attachments.
+      var maybeStickerAttachment;
+      if (data.sticker) {
+        maybeStickerAttachment = [
+          {
+            type: "sticker",
+            ID: data.sticker.id,
+            url: data.sticker.url,
+
+            packID: data.sticker.pack.id,
+            spriteUrl: data.sticker.sprite_image,
+            spriteUrl2x: data.sticker.sprite_image_2x,
+            width: data.sticker.width,
+            height: data.sticker.height,
+
+            caption: data.snippet, // Not sure what the heck caption was.
+            description: data.sticker.label, // Not sure about this one either.
+
+            frameCount: data.sticker.frame_count,
+            frameRate: data.sticker.frame_rate,
+            framesPerRow: data.sticker.frames_per_row,
+            framesPerCol: data.sticker.frames_per_col,
+
+            stickerID: data.sticker.id, // @Legacy
+            spriteURI: data.sticker.sprite_image, // @Legacy
+            spriteURI2x: data.sticker.sprite_image_2x // @Legacy
+          }
+        ];
+      }
+
+      var mentionsObj = {};
+      data.message.ranges.forEach(e => {
+        mentionsObj[e.entity.id] = data.message.text.substr(e.offset, e.length);
+      });
+
+      return {
+        type: "message",
+        attachments: maybeStickerAttachment
+            ? maybeStickerAttachment
+            : data.blob_attachments && data.blob_attachments.length > 0
+                ? data.blob_attachments.map(formatAttachmentsGraphQLResponse)
+                : data.extensible_attachment
+                    ? [formatExtensibleAttachment(data.extensible_attachment)]
+                    : [],
+        body: data.message.text,
+        isGroup: threadType === "GROUP",
+        messageID: data.message_id,
+        senderID: data.message_sender.id,
+        threadID: threadID,
+        timestamp: data.timestamp_precise,
+
+        mentions: mentionsObj,
+        isUnread: data.unread,
+
+        // New
+        messageReactions: data.message_reactions
+            ? data.message_reactions.map(formatReactionsGraphQL)
+            : null,
+        isSponsored: data.is_sponsored,
+        snippet: data.snippet
+      };
+    case "ThreadNameMessage":
+      return {
+        type: "event",
+        messageID: data.message_id,
+        threadID: threadID,
+        isGroup: threadType === "GROUP",
+        senderID: data.message_sender.id,
+        timestamp: data.timestamp_precise,
+        eventType: "change_thread_name",
+        snippet: data.snippet,
+        eventData: {
+          threadName: data.thread_name
+        },
+
+        // @Legacy
+        author: data.message_sender.id,
+        logMessageType: "log:thread-name",
+        logMessageData: { name: data.thread_name }
+      };
+    case "ThreadImageMessage":
+      return {
+        type: "event",
+        messageID: data.message_id,
+        threadID: threadID,
+        isGroup: threadType === "GROUP",
+        senderID: data.message_sender.id,
+        timestamp: data.timestamp_precise,
+        eventType: "change_thread_image",
+        snippet: data.snippet,
+        eventData:
+            data.image_with_metadata == null
+                ? {} /* removed image */
+                : {
+                  /* image added */
+                  threadImage: {
+                    attachmentID: data.image_with_metadata.legacy_attachment_id,
+                    width: data.image_with_metadata.original_dimensions.x,
+                    height: data.image_with_metadata.original_dimensions.y,
+                    url: data.image_with_metadata.preview.uri
+                  }
+                },
+
+        // @Legacy
+        logMessageType: "log:thread-icon",
+        logMessageData: {
+          thread_icon: data.image_with_metadata
+              ? data.image_with_metadata.preview.uri
+              : null
+        }
+      };
+    case "ParticipantLeftMessage":
+      return {
+        type: "event",
+        messageID: data.message_id,
+        threadID: threadID,
+        isGroup: threadType === "GROUP",
+        senderID: data.message_sender.id,
+        timestamp: data.timestamp_precise,
+        eventType: "remove_participants",
+        snippet: data.snippet,
+        eventData: {
+          // Array of IDs.
+          participantsRemoved: data.participants_removed.map(function(p) {
+            return p.id;
+          })
+        },
+
+        // @Legacy
+        logMessageType: "log:unsubscribe",
+        logMessageData: {
+          leftParticipantFbId: data.participants_removed.map(function(p) {
+            return p.id;
+          })
+        }
+      };
+    case "ParticipantsAddedMessage":
+      return {
+        type: "event",
+        messageID: data.message_id,
+        threadID: threadID,
+        isGroup: threadType === "GROUP",
+        senderID: data.message_sender.id,
+        timestamp: data.timestamp_precise,
+        eventType: "add_participants",
+        snippet: data.snippet,
+        eventData: {
+          // Array of IDs.
+          participantsAdded: data.participants_added.map(function(p) {
+            return p.id;
+          })
+        },
+
+        // @Legacy
+        logMessageType: "log:subscribe",
+        logMessageData: {
+          addedParticipants: data.participants_added.map(function(p) {
+            return p.id;
+          })
+        }
+      };
+    case "VideoCallMessage":
+      return {
+        type: "event",
+        messageID: data.message_id,
+        threadID: threadID,
+        isGroup: threadType === "GROUP",
+        senderID: data.message_sender.id,
+        timestamp: data.timestamp_precise,
+        eventType: "video_call",
+        snippet: data.snippet,
+
+        // @Legacy
+        logMessageType: "other"
+      };
+    case "VoiceCallMessage":
+      return {
+        type: "event",
+        messageID: data.message_id,
+        threadID: threadID,
+        isGroup: threadType === "GROUP",
+        senderID: data.message_sender.id,
+        timestamp: data.timestamp_precise,
+        eventType: "voice_call",
+        snippet: data.snippet,
+
+        // @Legacy
+        logMessageType: "other"
+      };
+    case "GenericAdminTextMessage":
+      return {
+        type: "event",
+        messageID: data.message_id,
+        threadID: threadID,
+        isGroup: threadType === "GROUP",
+        senderID: data.message_sender.id,
+        timestamp: data.timestamp_precise,
+        snippet: data.snippet,
+        eventType: data.extensible_message_admin_text_type.toLowerCase(),
+        eventData: formatEventData(data.extensible_message_admin_text),
+
+        // @Legacy
+        logMessageType: utils.getAdminTextMessageType(
+            data.extensible_message_admin_text_type
+        ),
+        logMessageData: data.extensible_message_admin_text // Maybe different?
+      };
+    default:
+      return { error: "Don't know about message type " + data.__typename };
+  }
+}
+
 function formatMessagesGraphQLResponse(data) {
   var messageThread = data.o0.data.message_thread;
   var threadID = messageThread.thread_key.thread_fbid
     ? messageThread.thread_key.thread_fbid
     : messageThread.thread_key.other_user_id;
 
-  var messages = messageThread.messages.nodes.map(function(d) {
-    switch (d.__typename) {
-      case "UserMessage":
-        // Give priority to stickers. They're seen as normal messages but we've
-        // been considering them as attachments.
-        var maybeStickerAttachment;
-        if (d.sticker) {
-          maybeStickerAttachment = [
-            {
-              type: "sticker",
-              ID: d.sticker.id,
-              url: d.sticker.url,
-
-              packID: d.sticker.pack.id,
-              spriteUrl: d.sticker.sprite_image,
-              spriteUrl2x: d.sticker.sprite_image_2x,
-              width: d.sticker.width,
-              height: d.sticker.height,
-
-              caption: d.snippet, // Not sure what the heck caption was.
-              description: d.sticker.label, // Not sure about this one either.
-
-              frameCount: d.sticker.frame_count,
-              frameRate: d.sticker.frame_rate,
-              framesPerRow: d.sticker.frames_per_row,
-              framesPerCol: d.sticker.frames_per_col,
-
-              stickerID: d.sticker.id, // @Legacy
-              spriteURI: d.sticker.sprite_image, // @Legacy
-              spriteURI2x: d.sticker.sprite_image_2x // @Legacy
-            }
-          ];
-        }
-
-        var mentionsObj = {};
-        d.message.ranges.forEach(e => {
-          mentionsObj[e.entity.id] = d.message.text.substr(e.offset, e.length);
-        });
-
-        return {
-          type: "message",
-          attachments: maybeStickerAttachment
-            ? maybeStickerAttachment
-            : d.blob_attachments && d.blob_attachments.length > 0
-              ? d.blob_attachments.map(formatAttachmentsGraphQLResponse)
-              : d.extensible_attachment
-                ? [formatExtensibleAttachment(d.extensible_attachment)]
-                : [],
-          body: d.message.text,
-          isGroup: messageThread.thread_type === "GROUP",
-          messageID: d.message_id,
-          senderID: d.message_sender.id,
-          threadID: threadID,
-          timestamp: d.timestamp_precise,
-
-          mentions: mentionsObj,
-          isUnread: d.unread,
-
-          // New
-          messageReactions: d.message_reactions
-            ? d.message_reactions.map(formatReactionsGraphQL)
-            : null,
-          isSponsored: d.is_sponsored,
-          snippet: d.snippet
-        };
-      case "ThreadNameMessage":
-        return {
-          type: "event",
-          messageID: d.message_id,
-          threadID: threadID,
-          isGroup: messageThread.thread_type === "GROUP",
-          senderID: d.message_sender.id,
-          timestamp: d.timestamp_precise,
-          eventType: "change_thread_name",
-          snippet: d.snippet,
-          eventData: {
-            threadName: d.thread_name
-          },
-
-          // @Legacy
-          author: d.message_sender.id,
-          logMessageType: "log:thread-name",
-          logMessageData: { name: d.thread_name }
-        };
-      case "ThreadImageMessage":
-        return {
-          type: "event",
-          messageID: d.message_id,
-          threadID: threadID,
-          isGroup: messageThread.thread_type === "GROUP",
-          senderID: d.message_sender.id,
-          timestamp: d.timestamp_precise,
-          eventType: "change_thread_image",
-          snippet: d.snippet,
-          eventData:
-            d.image_with_metadata == null
-              ? {} /* removed image */
-              : {
-                  /* image added */
-                  threadImage: {
-                    attachmentID: d.image_with_metadata.legacy_attachment_id,
-                    width: d.image_with_metadata.original_dimensions.x,
-                    height: d.image_with_metadata.original_dimensions.y,
-                    url: d.image_with_metadata.preview.uri
-                  }
-                },
-
-          // @Legacy
-          logMessageType: "log:thread-icon",
-          logMessageData: {
-            thread_icon: d.image_with_metadata
-              ? d.image_with_metadata.preview.uri
-              : null
-          }
-        };
-      case "ParticipantLeftMessage":
-        return {
-          type: "event",
-          messageID: d.message_id,
-          threadID: threadID,
-          isGroup: messageThread.thread_type === "GROUP",
-          senderID: d.message_sender.id,
-          timestamp: d.timestamp_precise,
-          eventType: "remove_participants",
-          snippet: d.snippet,
-          eventData: {
-            // Array of IDs.
-            participantsRemoved: d.participants_removed.map(function(p) {
-              return p.id;
-            })
-          },
-
-          // @Legacy
-          logMessageType: "log:unsubscribe",
-          logMessageData: {
-            leftParticipantFbId: d.participants_removed.map(function(p) {
-              return p.id;
-            })
-          }
-        };
-      case "ParticipantsAddedMessage":
-        return {
-          type: "event",
-          messageID: d.message_id,
-          threadID: threadID,
-          isGroup: messageThread.thread_type === "GROUP",
-          senderID: d.message_sender.id,
-          timestamp: d.timestamp_precise,
-          eventType: "add_participants",
-          snippet: d.snippet,
-          eventData: {
-            // Array of IDs.
-            participantsAdded: d.participants_added.map(function(p) {
-              return p.id;
-            })
-          },
-
-          // @Legacy
-          logMessageType: "log:subscribe",
-          logMessageData: {
-            addedParticipants: d.participants_added.map(function(p) {
-              return p.id;
-            })
-          }
-        };
-      case "VideoCallMessage":
-        return {
-          type: "event",
-          messageID: d.message_id,
-          threadID: threadID,
-          isGroup: messageThread.thread_type === "GROUP",
-          senderID: d.message_sender.id,
-          timestamp: d.timestamp_precise,
-          eventType: "video_call",
-          snippet: d.snippet,
-
-          // @Legacy
-          logMessageType: "other"
-        };
-      case "VoiceCallMessage":
-        return {
-          type: "event",
-          messageID: d.message_id,
-          threadID: threadID,
-          isGroup: messageThread.thread_type === "GROUP",
-          senderID: d.message_sender.id,
-          timestamp: d.timestamp_precise,
-          eventType: "voice_call",
-          snippet: d.snippet,
-
-          // @Legacy
-          logMessageType: "other"
-        };
-      case "GenericAdminTextMessage":
-        return {
-          type: "event",
-          messageID: d.message_id,
-          threadID: threadID,
-          isGroup: messageThread.thread_type === "GROUP",
-          senderID: d.message_sender.id,
-          timestamp: d.timestamp_precise,
-          snippet: d.snippet,
-          eventType: d.extensible_message_admin_text_type.toLowerCase(),
-          eventData: formatEventData(d.extensible_message_admin_text),
-
-          // @Legacy
-          logMessageType: utils.getAdminTextMessageType(
-            d.extensible_message_admin_text_type
-          ),
-          logMessageData: d.extensible_message_admin_text // Maybe different?
-        };
-      default:
-        return { error: "Don't know about message type " + d.__typename };
-    }
-  });
-  return messages;
+  return messageThread.messages.nodes.map(d =>
+    formatMessagesGraphQLResponseInternal(threadID, messageThread.thread_type, d));
 }
 
 module.exports = function(defaultFuncs, api, ctx) {
