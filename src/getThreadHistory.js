@@ -569,7 +569,7 @@ function formatMessagesGraphQLResponseInternal(threadID, threadType, data) {
 }
 
 function formatMessagesGraphQLResponse(data) {
-  var messageThread = data.o0.data.message_thread;
+  var messageThread = data.message_thread;
   var threadID = messageThread.thread_key.thread_fbid
     ? messageThread.thread_key.thread_fbid
     : messageThread.thread_key.other_user_id;
@@ -622,8 +622,10 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (resData[resData.length - 1].error_results !== 0) {
           throw new Error("well darn there was an error_result");
         }
-
-        callback(null, formatMessagesGraphQLResponse(resData[0]));
+        return resData[0].o0.data;
+      })
+      .then(function(resData) {
+        callback(null, formatMessagesGraphQLResponse(resData));
       })
       .catch(function(err) {
         log.error("getThreadHistoryGraphQL", err);
