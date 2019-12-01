@@ -578,6 +578,32 @@ function formatMessagesGraphQLResponse(data) {
     formatMessagesGraphQLResponseInternal(threadID, messageThread.thread_type, d));
 }
 
+function graphQLBatch(ctx, defaultFuncs, query) {
+  // `queries` has to be a string. I couldn't tell from the dev console. This
+  // took me a really long time to figure out. I deserve a cookie for this.
+  var form = {
+    queries: JSON.stringify({
+      o0: query
+    })
+  };
+
+  return defaultFuncs
+    .post("https://www.facebook.com/api/graphqlbatch/", ctx.jar, form)
+    .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
+    .then(function(resData) {
+      if (resData.error) {
+        throw resData;
+      }
+      // This returns us an array of things. The last one is the success /
+      // failure one.
+      // @TODO What do we do in this case?
+      if (resData[resData.length - 1].error_results !== 0) {
+        throw new Error("well darn there was an error_result");
+      }
+      return resData[0].o0.data;
+    })
+}
+
 module.exports = function(defaultFuncs, api, ctx) {
   return function getThreadHistoryGraphQL(
     threadID,
@@ -601,29 +627,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       }
     };
 
-    // `queries` has to be a string. I couldn't tell from the dev console. This
-    // took me a really long time to figure out. I deserve a cookie for this.
-    var form = {
-      queries: JSON.stringify({
-        o0: query
-      })
-    };
-
-    defaultFuncs
-      .post("https://www.facebook.com/api/graphqlbatch/", ctx.jar, form)
-      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-      .then(function(resData) {
-        if (resData.error) {
-          throw resData;
-        }
-        // This returns us an array of things. The last one is the success /
-        // failure one.
-        // @TODO What do we do in this case?
-        if (resData[resData.length - 1].error_results !== 0) {
-          throw new Error("well darn there was an error_result");
-        }
-        return resData[0].o0.data;
-      })
+    graphQLBatch(ctx, defaultFuncs, query)
       .then(function(resData) {
         callback(null, formatMessagesGraphQLResponse(resData));
       })
