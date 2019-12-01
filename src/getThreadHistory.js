@@ -589,21 +589,23 @@ module.exports = function(defaultFuncs, api, ctx) {
       throw { error: "getThreadHistoryGraphQL: need callback" };
     }
 
+    const query = {
+      // This doc_id was valid on February 2nd 2017.
+      doc_id: "1498317363570230",
+      query_params: {
+        id: threadID,
+        message_limit: amount,
+        load_messages: 1,
+        load_read_receipts: false,
+        before: timestamp
+      }
+    };
+
     // `queries` has to be a string. I couldn't tell from the dev console. This
     // took me a really long time to figure out. I deserve a cookie for this.
     var form = {
       queries: JSON.stringify({
-        o0: {
-          // This doc_id was valid on February 2nd 2017.
-          doc_id: "1498317363570230",
-          query_params: {
-            id: threadID,
-            message_limit: amount,
-            load_messages: 1,
-            load_read_receipts: false,
-            before: timestamp
-          }
-        }
+        o0: query
       })
     };
 
