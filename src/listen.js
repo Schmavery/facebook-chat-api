@@ -141,9 +141,9 @@ module.exports = function(defaultFuncs, api, ctx) {
           return;
         }
 
+        var atLeastOne = false;
         if (resData.ms) {
           msgsRecv += resData.ms.length;
-          var atLeastOne = false;
           resData.ms
             .sort(function(a, b) {
               return a.timestamp - b.timestamp;
@@ -394,32 +394,6 @@ module.exports = function(defaultFuncs, api, ctx) {
                   break;
               }
             });
-
-          if (atLeastOne) {
-            // Send deliveryReceipt notification to the server
-            var formDeliveryReceipt = {};
-
-            resData.ms
-              .filter(function(v) {
-                return (
-                  v.message &&
-                  v.message.mid &&
-                  v.message.sender_fbid.toString() !== ctx.userID
-                );
-              })
-              .forEach(function(val, i) {
-                formDeliveryReceipt["[" + i + "]"] = val.message.mid;
-              });
-
-            // If there's at least one, we do the post request
-            if (formDeliveryReceipt["[0]"]) {
-              defaultFuncs.post(
-                "https://www.facebook.com/ajax/mercury/delivery_receipts.php",
-                ctx.jar,
-                formDeliveryReceipt
-              );
-            }
-          }
         }
 
         if (resData.seq) {
@@ -431,7 +405,37 @@ module.exports = function(defaultFuncs, api, ctx) {
         if (currentlyRunning) {
           currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
         }
-        return;
+        return {
+          resData: resData,
+          atLeastOne: atLeastOne,
+        };
+      })
+      .then(function(res) {
+        if (res && res.atLeastOne) {
+          // Send deliveryReceipt notification to the server
+          var formDeliveryReceipt = {};
+
+          res.resData.ms
+            .filter(function(v) {
+              return (
+                v.message &&
+                v.message.mid &&
+                v.message.sender_fbid.toString() !== ctx.userID
+              );
+            })
+            .forEach(function(val, i) {
+              formDeliveryReceipt["[" + i + "]"] = val.message.mid;
+            });
+
+          // If there's at least one, we do the post request
+          if (formDeliveryReceipt["[0]"]) {
+            defaultFuncs.post(
+              "https://www.facebook.com/ajax/mercury/delivery_receipts.php",
+              ctx.jar,
+              formDeliveryReceipt
+            );
+          }
+        }
       })
       .catch(function(err) {
         if (err.code === "ETIMEDOUT") {
