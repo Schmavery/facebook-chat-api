@@ -99,6 +99,7 @@ function buildAPI(globalOptions, html, jar) {
     'getUserInfo',
     'handleMessageRequest',
     'listen',
+    'listenMqtt',
     'logout',
     'markAsRead',
     'markAsReadAll',

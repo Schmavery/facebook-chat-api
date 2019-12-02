@@ -24,6 +24,7 @@
   "dependencies": {
     "bluebird": "^2.9.27",
     "cheerio": "^0.22.0",
+    "mqtt": "^3.0.0",
     "npmlog": "^1.2.0",
     "request": "^2.53.0"
   },
@@ -31,9 +32,9 @@
     "node": ">=4.x"
   },
   "devDependencies": {
+    "eslint": "^4.19.1",
     "mocha": "^2.2.5",
-    "prettier": "^1.11.1",
-    "eslint": "^4.19.1"
+    "prettier": "^1.11.1"
   },
   "eslintConfig": {
     "env": {
