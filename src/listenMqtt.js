@@ -108,7 +108,8 @@ function listenMqtt(ctx, globalCallback, defaultFuncs) {
           var presence = {
             type: "presence",
             userID: userID,
-            timestamp: data["l"],
+            //Convert to ms
+            timestamp: data["l"] * 1000,
             statuses: data["p"]
           };
           globalCallback(null, presence);
@@ -329,7 +330,7 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
     //For group images
     case "ForcedFetch":
       var mid = v.delta.messageId;
-      var tid = v.delta.threadKey.threadFbId.toString();
+      var tid = v.delta.threadKey.threadFbId;
       if(mid && tid) {
         const form = {
           "av": ctx.globalOptions.pageID,
@@ -338,7 +339,7 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
               "doc_id": "1768656253222505",
               "query_params": {
                 "thread_and_message_id": {
-                  "thread_id": tid,
+                  "thread_id": tid.toString(),
                   "message_id": mid,
                 }
               }
