@@ -145,6 +145,11 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
             type: "parse_error"
           });
         }
+        if(fmtMsg) {
+          if(!!ctx.globalOptions.autoMarkDelivery) {
+            markDelivery(ctx, defaultFuncs, fmtMsg.threadID, fmtMsg.messageID);
+          }
+        }
         return !ctx.globalOptions.selfListen &&
           fmtMsg.senderID === ctx.userID ?
           undefined :
@@ -278,6 +283,10 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
             };
           }
 
+          if(!!ctx.globalOptions.autoMarkDelivery) {
+            markDelivery(ctx, defaultFuncs, callbackToReturn.threadID, callbackToReturn.messageID);
+          }
+
           globalCallback(null, callbackToReturn);
         }
       }
@@ -329,6 +338,7 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
       break;
     //For group images
     case "ForcedFetch":
+      if(!v.delta.threadKey) return;
       var mid = v.delta.messageId;
       var tid = v.delta.threadKey.threadFbId;
       if(mid && tid) {
@@ -405,6 +415,67 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
         !ctx.loggedIn ?
         undefined :
         globalCallback(null, formattedEvent);
+  }
+}
+
+function markDelivery(ctx, defaultFuncs, threadID, messageID) {
+  if(defaultFuncs && threadID && messageID) {
+    var form = {};
+
+    form["message_ids[0]"] = messageID;
+    form["thread_ids[" + threadID + "][0]"] = messageID;
+
+    defaultFuncs
+      .post(
+        "https://www.facebook.com/ajax/mercury/delivery_receipts.php",
+        ctx.jar,
+        form
+      )
+      .then(utils.saveCookies(ctx.jar))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
+      .then(function(resData) {
+        if(resData.error) {
+          throw resData;
+        }
+
+        //Delivery Done!
+        if(!!ctx.globalOptions.autoMarkRead) {
+          var form = {};
+
+          if(typeof ctx.globalOptions.pageID !== 'undefined') {
+            form["source"] = "PagesManagerMessagesInterface";
+            form["request_user_id"] = ctx.globalOptions.pageID;
+          }
+
+          form["ids[" + threadID + "]"] = true;
+          form["watermarkTimestamp"] = new Date().getTime();
+          form["shouldSendReadReceipt"] = true;
+          form["commerce_last_message_type"] = "non_ad";
+          form["titanOriginatedThreadId"] = utils.generateThreadingID(ctx.clientID);
+
+          defaultFuncs
+            .post(
+              "https://www.facebook.com/ajax/mercury/change_read_status.php",
+              ctx.jar,
+              form
+            )
+            .then(utils.saveCookies(ctx.jar))
+            .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
+            .then(function(resData) {
+              if(resData.error) {
+                throw resData;
+              }
+
+              //Read Done!
+            })
+            .catch(function(err) {
+              log.error("markAsRead", err);
+            });
+        }
+      })
+      .catch(function(err) {
+        log.error("markAsDelivered", err);
+      });
   }
 }
 

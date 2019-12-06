@@ -36,6 +36,12 @@ function setOptions(globalOptions, options) {
       case 'userAgent':
         globalOptions.userAgent = options.userAgent;
         break;
+      case 'autoMarkDelivery':
+        globalOptions.autoMarkDelivery = options.autoMarkDelivery;
+        break;
+      case 'autoMarkRead':
+        globalOptions.autoMarkRead = options.autoMarkRead;
+        break;
       default:
         log.warn("setOptions", "Unrecognized option given to setOptions: " + key);
         break;
@@ -101,6 +107,7 @@ function buildAPI(globalOptions, html, jar) {
     'listen',
     'listenMqtt',
     'logout',
+    'markAsDelivered',
     'markAsRead',
     'markAsReadAll',
     'muteThread',
@@ -461,6 +468,8 @@ function login(loginData, options, callback) {
     listenEvents: false,
     updatePresence: false,
     forceLogin: false,
+    autoMarkDelivery: true,
+    autoMarkRead: false,
     logRecordSize: defaultLogRecordSize,
     userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"
   };
