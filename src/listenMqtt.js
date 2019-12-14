@@ -246,7 +246,7 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
               delta.deltaMessageReply.message.messageMetadata.threadKey.threadFbId : delta.deltaMessageReply.message.messageMetadata.threadKey
                 .otherUserFbId,
             messageID: delta.deltaMessageReply.message.messageMetadata.messageId,
-            senderID: delta.deltaMessageReply.message.messageMetadata.actorFbId,
+            senderID: delta.deltaMessageReply.message.messageMetadata.actorFbId.toString(),
             attachments: delta.deltaMessageReply.message.attachments.map(function(att) {
               var mercury = JSON.parse(att.mercuryJSON);
               Object.assign(att, mercury);
