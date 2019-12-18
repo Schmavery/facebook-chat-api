@@ -1342,7 +1342,7 @@ __Arguments__
 
 Given a threadID and a messageID will mark that message as delivered. If a message is marked as delivered that tells facebook servers that it was recieved.
 
-You can also mark new messages as delivered automatically. See [api.setOptions](#setOptions).
+You can also mark new messages as delivered automatically. This is enabled by default. See [api.setOptions](#setOptions).
 
 __Arguments__
 

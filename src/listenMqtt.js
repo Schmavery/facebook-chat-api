@@ -7,7 +7,7 @@ var identity = function() {};
 var lastSeqId = 0;
 var client = undefined;
 
-function listenMqtt(ctx, globalCallback, defaultFuncs) {
+function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
   var sessionID = Math.floor(Math.random() * 9007199254740991) + 1;
   var username = {
     u: ctx.userID,
@@ -54,6 +54,7 @@ function listenMqtt(ctx, globalCallback, defaultFuncs) {
   client.on('error', function(err) {
     log.error(err);
     client.end();
+    globalCallback("Connection refused: Server unavailable", null);
   });
 
   client.on('connect', function() {
@@ -89,7 +90,7 @@ function listenMqtt(ctx, globalCallback, defaultFuncs) {
       //If it contains more than 1 delta
       for(var i in jsonMessage.deltas) {
         var delta = jsonMessage.deltas[i];
-        parseDelta(ctx, globalCallback, defaultFuncs, {"delta": delta});
+        parseDelta(defaultFuncs, api, ctx, globalCallback, {"delta": delta});
       }
     } else if(topic === "/thread_typing" || topic === "/orca_typing_notifications") {
       var typ = {
@@ -124,7 +125,7 @@ function listenMqtt(ctx, globalCallback, defaultFuncs) {
   });
 }
 
-function parseDelta(ctx, globalCallback, defaultFuncs, v) {
+function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
   if(v.delta.class == "NewMessage") {
     //Not tested for pages
     if(ctx.globalOptions.pageID &&
@@ -147,7 +148,7 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
         }
         if(fmtMsg) {
           if(!!ctx.globalOptions.autoMarkDelivery) {
-            markDelivery(ctx, defaultFuncs, fmtMsg.threadID, fmtMsg.messageID);
+            markDelivery(ctx, api, fmtMsg.threadID, fmtMsg.messageID);
           }
         }
         return !ctx.globalOptions.selfListen &&
@@ -284,10 +285,13 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
           }
 
           if(!!ctx.globalOptions.autoMarkDelivery) {
-            markDelivery(ctx, defaultFuncs, callbackToReturn.threadID, callbackToReturn.messageID);
+            markDelivery(ctx, api, callbackToReturn.threadID, callbackToReturn.messageID);
           }
 
-          globalCallback(null, callbackToReturn);
+          return !ctx.globalOptions.selfListen &&
+            callbackToReturn.senderID === ctx.userID ?
+            undefined :
+            globalCallback(null, callbackToReturn);
         }
       }
       return;
@@ -298,6 +302,7 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
     !ctx.globalOptions.listenEvents
   )
     return;
+
   switch(v.delta.class) {
     case "ReadReceipt":
       var fmtMsg;
@@ -373,7 +378,7 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
 
             if(fetchData && fetchData.__typename === "ThreadImageMessage") {
               (!ctx.globalOptions.selfListen &&
-                formattedEvent.author.toString() === ctx.userID) ||
+                fetchData.message_sender.id.toString() === ctx.userID) ||
                 !ctx.loggedIn ?
                 undefined :
                 globalCallback(null, {
@@ -418,64 +423,21 @@ function parseDelta(ctx, globalCallback, defaultFuncs, v) {
   }
 }
 
-function markDelivery(ctx, defaultFuncs, threadID, messageID) {
-  if(defaultFuncs && threadID && messageID) {
-    var form = {};
-
-    form["message_ids[0]"] = messageID;
-    form["thread_ids[" + threadID + "][0]"] = messageID;
-
-    defaultFuncs
-      .post(
-        "https://www.facebook.com/ajax/mercury/delivery_receipts.php",
-        ctx.jar,
-        form
-      )
-      .then(utils.saveCookies(ctx.jar))
-      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-      .then(function(resData) {
-        if(resData.error) {
-          throw resData;
-        }
-
-        //Delivery Done!
+function markDelivery(ctx, api, threadID, messageID) {
+  if(threadID && messageID) {
+    api.markAsDelivered(threadID, messageID, (err) => {
+      if(err) {
+        log.error(err);
+      } else {
         if(!!ctx.globalOptions.autoMarkRead) {
-          var form = {};
-
-          if(typeof ctx.globalOptions.pageID !== 'undefined') {
-            form["source"] = "PagesManagerMessagesInterface";
-            form["request_user_id"] = ctx.globalOptions.pageID;
-          }
-
-          form["ids[" + threadID + "]"] = true;
-          form["watermarkTimestamp"] = new Date().getTime();
-          form["shouldSendReadReceipt"] = true;
-          form["commerce_last_message_type"] = "non_ad";
-          form["titanOriginatedThreadId"] = utils.generateThreadingID(ctx.clientID);
-
-          defaultFuncs
-            .post(
-              "https://www.facebook.com/ajax/mercury/change_read_status.php",
-              ctx.jar,
-              form
-            )
-            .then(utils.saveCookies(ctx.jar))
-            .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-            .then(function(resData) {
-              if(resData.error) {
-                throw resData;
-              }
-
-              //Read Done!
-            })
-            .catch(function(err) {
-              log.error("markAsRead", err);
-            });
+          api.markAsRead(threadID, (err) => {
+            if(err) {
+              log.error(err);
+            }
+          });
         }
-      })
-      .catch(function(err) {
-        log.error("markAsDelivered", err);
-      });
+      }
+    });
   }
 }
 
@@ -513,7 +475,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
         if(resData[0].o0.data.viewer.message_threads.sync_sequence_id) {
           lastSeqId = resData[0].o0.data.viewer.message_threads.sync_sequence_id;
-          listenMqtt(ctx, globalCallback, defaultFuncs);
+          listenMqtt(defaultFuncs, api, ctx, globalCallback);
         }
 
       })
