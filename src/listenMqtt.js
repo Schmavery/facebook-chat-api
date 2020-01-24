@@ -94,6 +94,10 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
       entity_fbid: ctx.userID,
     };
 
+    if(ctx.globalOptions.pageID) {
+      queue.entity_fbid = ctx.globalOptions.pageID;
+    }
+
     if(syncToken) {
       topic = "/messenger_sync_get_diffs";
       queue.last_seq_id = lastSeqId;
@@ -117,6 +121,11 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
 
       if(jsonMessage.lastIssuedSeqId) {
         lastSeqId = parseInt(jsonMessage.lastIssuedSeqId);
+      }
+
+      if(jsonMessage.queueEntityId && ctx.globalOptions.pageID &&
+        ctx.globalOptions.pageID != jsonMessage.queueEntityId) {
+        return;
       }
 
       //If it contains more than 1 delta
@@ -160,12 +169,6 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
 
 function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
   if(v.delta.class == "NewMessage") {
-    //Not tested for pages
-    if(ctx.globalOptions.pageID &&
-      ctx.globalOptions.pageID != v.queue
-    )
-      return;
-
     (function resolveAttachmentUrl(i) {
       if(i == v.delta.attachments.length) {
         var fmtMsg;
@@ -388,7 +391,7 @@ function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
               "query_params": {
                 "thread_and_message_id": {
                   "thread_id": tid.toString(),
-                  "message_id": mid,
+                  "message_id": mid.toString(),
                 }
               }
             }
@@ -500,7 +503,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       .post("https://www.facebook.com/api/graphqlbatch/", ctx.jar, form)
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then((resData) => {
-        if(resData && resData[resData.length - 1].error_results > 0) {
+        if(resData && resData.length > 0 && resData[resData.length - 1].error_results > 0) {
           throw resData[0].o0.errors;
         }
 
