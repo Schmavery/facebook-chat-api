@@ -27,6 +27,7 @@
 * [`api.listen`](#listen)
 * [`api.listenMqtt`](#listenMqtt)
 * [`api.logout`](#logout)
+* [`api.markAsDelivered`](#markAsDelivered)
 * [`api.markAsRead`](#markAsRead)
 * [`api.markAsReadAll`](#markAsReadAll)
 * [`api.muteThread`](#muteThread)
@@ -1336,10 +1337,45 @@ __Arguments__
 
 ---------------------------------------
 
+<a name="markAsDelivered"></a>
+### api.markAsDelivered(threadID, messageID[, callback]])
+
+Given a threadID and a messageID will mark that message as delivered. If a message is marked as delivered that tells facebook servers that it was recieved.
+
+You can also mark new messages as delivered automatically. This is enabled by default. See [api.setOptions](#setOptions).
+
+__Arguments__
+
+* `threadID` - The id of the thread in which you want to mark the message as delivered.
+* `messageID` - The id of the message want to mark as delivered.
+* `callback(err)` - A callback called when the operation is done maybe with an object representing an error.
+
+__Example__
+
+```js
+const fs = require("fs");
+const login = require("facebook-chat-api");
+
+login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
+    if(err) return console.error(err);
+
+    api.listen((err, message) => {
+        if(err) return console.error(err);
+
+        // Marks messages as delivered immediately after they're received
+        api.markAsDelivered(message.threadID, message.messageID);
+    });
+});
+```
+
+---------------------------------------
+
 <a name="markAsRead"></a>
 ### api.markAsRead(threadID, [read[, callback]])
 
 Given a threadID will mark all the unread messages as read. Facebook will take a couple of seconds to show that you've read the messages.
+
+You can also mark new messages as read automatically. See [api.setOptions](#setOptions).
 
 __Arguments__
 
@@ -1588,6 +1624,8 @@ __Arguments__
     - `updatePresence`: (Default `false`) Will make [api.listen](#listen) also return `presence` ([api.listen](#presence) for more details).
     - `forceLogin`: (Default `false`) Will automatically approve of any recent logins and continue with the login process.
     - `userAgent`: (Default `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18`) The desired simulated User Agent.
+	- `autoMarkDelivery`: (Default `true`) Will automatically mark new messages as delivered. See [api.markAsDelivered](#markAsDelivered).
+	- `autoMarkRead`: (Default `false`) Will automatically mark new messages as read/seen. See [api.markAsRead](#markAsRead).
 
 __Example__
 
