@@ -31,7 +31,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               actor_id: ctx.userID,
               client_mutation_id: "0",
               source: "SETTINGS",
-              theme_id: api.threadColors[validatedColor],
+              theme_id: validatedColor,
               thread_id: threadID
             }
           }
