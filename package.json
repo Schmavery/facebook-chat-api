@@ -24,6 +24,7 @@
   "dependencies": {
     "bluebird": "^2.9.27",
     "cheerio": "^0.22.0",
+    "deasync": "^0.1.19",
     "mqtt": "^3.0.0",
     "npmlog": "^1.2.0",
     "request": "^2.53.0"

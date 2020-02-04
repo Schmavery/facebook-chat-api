@@ -3,6 +3,7 @@
 var utils = require("./utils");
 var cheerio = require("cheerio");
 var log = require("npmlog");
+var deasync = require("deasync");
 
 var defaultLogRecordSize = 100;
 log.maxRecordSize = defaultLogRecordSize;
@@ -10,6 +11,9 @@ log.maxRecordSize = defaultLogRecordSize;
 function setOptions(globalOptions, options) {
   Object.keys(options).map(function(key) {
     switch (key) {
+      case 'online':
+        globalOptions.online = options.online;
+        break;
       case 'logLevel':
         log.level = options.logLevel;
         globalOptions.logLevel = options.logLevel;
@@ -394,7 +398,7 @@ function loginHelper(appState, email, password, globalOptions, callback) {
         });
     })
     .then(function(resData) {
-      if (resData.t !== 'lb') throw {error: "Bad response from pull 1"};
+      if (resData.t !== 'lb') throw {error: "Bad response from base pull"};
 
       var form = {
         channel : 'p_' + ctx.userID,
@@ -410,23 +414,41 @@ function loginHelper(appState, email, password, globalOptions, callback) {
         sticky_token: resData.lb_info.sticky,
         sticky_pool: resData.lb_info.pool,
       };
-
-      log.info("login", "Request to pull 2");
-      return utils
-        .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form, globalOptions)
-        .then(utils.saveCookies(ctx.jar));
-    })
-    .then(function() {
-      var form = {
-        'client' : 'mercury',
-        'folders[0]': 'inbox',
-        'last_action_timestamp' : '0'
-      };
-      log.info("login", "Request to thread_sync");
-
-      return defaultFuncs
-        .post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form, globalOptions)
-        .then(utils.saveCookies(ctx.jar));
+      var lastOnlineTime = new Date();
+      setTimeout(function () {
+        var done = false;
+        for (;;) {
+          log.info("login", "Request to pull (ping)");
+          done = false;
+          utils.get("https://0-edge-chat.facebook.com/pull", ctx.jar, form, globalOptions)
+            .then(utils.saveCookies(ctx.jar))
+            .then(function () { 
+              done = true;
+            });
+          deasync.loopWhile(function () {
+            return !done;
+          });
+          if (globalOptions.online) {
+            lastOnlineTime = new Date();
+          }
+          form = {
+            channel: 'p_' + ctx.userID,
+            seq: 0,
+            partition: -2,
+            clientid: ctx.clientID,
+            viewer_uid: ctx.userID,
+            uid: ctx.userID,
+            idle: Math.floor((new Date().getTime() - lastOnlineTime.getTime()) / 1000),
+            cap: 8,
+            msgs_recv: 0,
+            sticky_token: resData.lb_info.sticky,
+            sticky_pool: resData.lb_info.pool,
+          };
+          if (globalOptions.online) {
+            form.state = 'active';
+          }
+        }
+      }, 1);
     });
 
   // given a pageID we log in as a page
@@ -471,7 +493,8 @@ function login(loginData, options, callback) {
     autoMarkDelivery: true,
     autoMarkRead: false,
     logRecordSize: defaultLogRecordSize,
-    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18",
+    online: true
   };
 
   setOptions(globalOptions, options);
