@@ -26,7 +26,8 @@
     "cheerio": "^0.22.0",
     "mqtt": "^3.0.0",
     "npmlog": "^1.2.0",
-    "request": "^2.53.0"
+    "request": "^2.53.0",
+    "websocket-stream": "^5.5.0"
   },
   "engines": {
     "node": ">=4.x"
