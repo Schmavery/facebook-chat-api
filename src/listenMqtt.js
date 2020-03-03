@@ -1,8 +1,9 @@
 /* eslint-disable no-redeclare */
 "use strict";
-var fbconnect = require("./mqtt/fbconnect");
 var utils = require("../utils");
 var log = require("npmlog");
+var mqtt = require('mqtt');
+var websocket = require('websocket-stream');
 
 var identity = function () {};
 var mqttClient = undefined;
@@ -66,7 +67,7 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
     username: JSON.stringify(username),
     clean: true,
     wsOptions: {
-      'headers': {
+      headers: {
         'Cookie': cookies,
         'Origin': 'https://www.facebook.com',
         'User-Agent': ctx.globalOptions.userAgent,
@@ -78,7 +79,7 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
     }
   };
 
-  mqttClient = fbconnect.connect(host, options);
+  mqttClient = new mqtt.Client(_ => websocket(host, options.wsOptions), options);
 
   mqttClient.on('error', function(err) {
     log.error(err);
