@@ -1,6 +1,5 @@
 /* eslint-disable no-redeclare */
 "use strict";
-var fbconnect = require("./mqtt/fbconnect");
 var utils = require("../utils");
 var log = require("npmlog");
 var mqtt = require('mqtt');
