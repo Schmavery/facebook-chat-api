@@ -22,7 +22,7 @@
   "author": "Avery, David, Maude, Benjamin",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^2.9.27",
+    "bluebird": "^3.0.0",
     "cheerio": "^0.22.0",
     "mqtt": "^3.0.0",
     "npmlog": "^1.2.0",
