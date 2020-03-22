@@ -104,7 +104,6 @@ function buildAPI(globalOptions, html, jar) {
     'getUserID',
     'getUserInfo',
     'handleMessageRequest',
-    'listen',
     'listenMqtt',
     'logout',
     'markAsDelivered',
@@ -125,6 +124,7 @@ function buildAPI(globalOptions, html, jar) {
     "getThreadListDeprecated",
     'getThreadHistoryDeprecated',
     'getThreadInfoDeprecated',
+    'listen'
   ];
 
   var defaultFuncs = utils.makeDefaults(html, userID, ctx);
@@ -358,75 +358,14 @@ function loginHelper(appState, email, password, globalOptions, callback) {
         .get("https://www.facebook.com/ajax/presence/reconnect.php", ctx.jar, form)
         .then(utils.saveCookies(ctx.jar));
     })
-    .then(function(_res) {
-      log.info("login", 'Request to pull 1');
-      var form = {
-        channel : 'p_' + ctx.userID,
-        seq : 0,
-        partition : -2,
-        clientid : ctx.clientID,
-        viewer_uid : ctx.userID,
-        uid : ctx.userID,
-        state : 'active',
-        idle : 0,
-        cap : 8,
-        msgs_recv: 0
-      };
+    .then(function() {
       var presence = utils.generatePresence(ctx.userID);
       ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
       ctx.jar.setCookie("presence=" + presence + "; path=/; domain=.messenger.com; secure", "https://www.messenger.com");
       ctx.jar.setCookie("locale=en_US; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
       ctx.jar.setCookie("locale=en_US; path=/; domain=.messenger.com; secure", "https://www.messenger.com");
       ctx.jar.setCookie("a11y=" + utils.generateAccessiblityCookie() + "; path=/; domain=.facebook.com; secure", "https://www.facebook.com");
-
-      return utils
-        .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form, globalOptions)
-        .then(utils.saveCookies(ctx.jar))
-        .then(function(res) {
-          var ret = null;
-          try {
-            ret = JSON.parse(utils.makeParsable(res.body));
-          } catch(e) {
-            throw {error: "Error inside first pull request. Received HTML instead of JSON. Logging in inside a browser might help fix this."};
-          }
-
-          return ret;
-        });
-    })
-    .then(function(resData) {
-      if (resData.t !== 'lb') throw {error: "Bad response from pull 1"};
-
-      var form = {
-        channel : 'p_' + ctx.userID,
-        seq : 0,
-        partition : -2,
-        clientid : ctx.clientID,
-        viewer_uid : ctx.userID,
-        uid : ctx.userID,
-        state : 'active',
-        idle : 0,
-        cap : 8,
-        msgs_recv:0,
-        sticky_token: resData.lb_info.sticky,
-        sticky_pool: resData.lb_info.pool,
-      };
-
-      log.info("login", "Request to pull 2");
-      return utils
-        .get("https://0-edge-chat.facebook.com/pull", ctx.jar, form, globalOptions)
-        .then(utils.saveCookies(ctx.jar));
-    })
-    .then(function() {
-      var form = {
-        'client' : 'mercury',
-        'folders[0]': 'inbox',
-        'last_action_timestamp' : '0'
-      };
-      log.info("login", "Request to thread_sync");
-
-      return defaultFuncs
-        .post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form, globalOptions)
-        .then(utils.saveCookies(ctx.jar));
+      return true;
     });
 
   // given a pageID we log in as a page
