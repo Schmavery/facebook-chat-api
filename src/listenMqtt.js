@@ -6,7 +6,6 @@ var mqtt = require('mqtt');
 var websocket = require('websocket-stream');
 
 var identity = function () {};
-var mqttClient = undefined;
 
 var lastSeqId = 0;
 var syncToken;
@@ -32,7 +31,7 @@ var topics = [
   "/orca_message_notifications",
   "/pp",
   "/webrtc_response",
-]
+];
 
 function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
   var sessionID = Math.floor(Math.random() * 9007199254740991) + 1;
@@ -79,7 +78,9 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
     }
   };
 
-  mqttClient = new mqtt.Client(_ => websocket(host, options.wsOptions), options);
+  ctx.mqttClient = new mqtt.Client(_ => websocket(host, options.wsOptions), options);
+
+  var mqttClient = ctx.mqttClient;
 
   mqttClient.on('error', function(err) {
     log.error(err);
@@ -111,7 +112,7 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
       queue.device_params = null;
     }
 
-    mqttClient.publish(topic, JSON.stringify(queue), {qos: 1, retain: false})
+    mqttClient.publish(topic, JSON.stringify(queue), {qos: 1, retain: false});
   });
 
   mqttClient.on('message', function(topic, message, packet) {
@@ -502,6 +503,10 @@ module.exports = function (defaultFuncs, api, ctx) {
   return function (callback) {
     globalCallback = callback;
 
+    //Reset some stuff
+    lastSeqId = 0;
+    syncToken = undefined;
+
     //Same request as getThreadList
     const form = {
       "av": ctx.globalOptions.pageID,
@@ -544,7 +549,12 @@ module.exports = function (defaultFuncs, api, ctx) {
 
     var stopListening = function () {
       globalCallback = identity;
-      mqttClient.end();
+
+      if(ctx.mqttClient)
+      {
+        ctx.mqttClient.end();
+        ctx.mqttClient = undefined;
+      }
     };
 
     return stopListening;
