@@ -432,7 +432,6 @@ function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
             }
 
             var fetchData = resData[0].o0.data.message;
-
             if (fetchData && fetchData.__typename === "ThreadImageMessage") {
               (!ctx.globalOptions.selfListen &&
                 fetchData.message_sender.id.toString() === ctx.userID) ||
@@ -445,10 +444,10 @@ function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
                   timestamp: fetchData.timestamp_precise,
                   author: fetchData.message_sender.id,
                   image: {
-                    attachmentID: fetchData.image_with_metadata.legacy_attachment_id,
-                    width: fetchData.image_with_metadata.original_dimensions.x,
-                    height: fetchData.image_with_metadata.original_dimensions.y,
-                    url: fetchData.image_with_metadata.preview.uri
+                    attachmentID: fetchData.image_with_metadata && fetchData.image_with_metadata.legacy_attachment_id,
+                    width: fetchData.image_with_metadata && fetchData.image_with_metadata.original_dimensions.x,
+                    height: fetchData.image_with_metadata && fetchData.image_with_metadata.original_dimensions.y,
+                    url: fetchData.image_with_metadata && fetchData.image_with_metadata.preview.uri
                   }
                 }); })();
             }
