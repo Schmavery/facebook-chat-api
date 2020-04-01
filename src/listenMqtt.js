@@ -7,10 +7,8 @@ var websocket = require('websocket-stream');
 
 var identity = function () {};
 
-var lastSeqId = 0;
-var syncToken;
-
 //Don't really know what this does but I think it's for the active state
+//TODO: Move to ctx when implemented
 var chatOn = true;
 var foreground = false;
 
@@ -102,16 +100,16 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
       queue.entity_fbid = ctx.globalOptions.pageID;
     }
 
-    if(syncToken) {
+    if(ctx.syncToken) {
       topic = "/messenger_sync_get_diffs";
-      queue.last_seq_id = lastSeqId;
-      queue.sync_token = syncToken;
+      queue.last_seq_id = ctx.lastSeqId;
+      queue.sync_token = ctx.syncToken;
     } else {
       topic = "/messenger_sync_create_queue";
-      queue.initial_titan_sequence_id = lastSeqId;
+      queue.initial_titan_sequence_id = ctx.lastSeqId;
       queue.device_params = null;
     }
-
+    
     mqttClient.publish(topic, JSON.stringify(queue), {qos: 1, retain: false});
   });
 
@@ -119,12 +117,12 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
     var jsonMessage = JSON.parse(message);
     if(topic === "/t_ms") {
       if(jsonMessage.firstDeltaSeqId && jsonMessage.syncToken) {
-        lastSeqId = jsonMessage.firstDeltaSeqId;
-        syncToken = jsonMessage.syncToken;
+        ctx.lastSeqId = jsonMessage.firstDeltaSeqId;
+        ctx.syncToken = jsonMessage.syncToken;
       }
 
       if(jsonMessage.lastIssuedSeqId) {
-        lastSeqId = parseInt(jsonMessage.lastIssuedSeqId);
+        ctx.lastSeqId = parseInt(jsonMessage.lastIssuedSeqId);
       }
 
       if(jsonMessage.queueEntityId && ctx.globalOptions.pageID &&
@@ -503,8 +501,8 @@ module.exports = function (defaultFuncs, api, ctx) {
     globalCallback = callback;
 
     //Reset some stuff
-    lastSeqId = 0;
-    syncToken = undefined;
+    ctx.lastSeqId = 0;
+    ctx.syncToken = undefined;
 
     //Same request as getThreadList
     const form = {
@@ -536,7 +534,7 @@ module.exports = function (defaultFuncs, api, ctx) {
         }
 
         if (resData[0].o0.data.viewer.message_threads.sync_sequence_id) {
-          lastSeqId = resData[0].o0.data.viewer.message_threads.sync_sequence_id;
+          ctx.lastSeqId = resData[0].o0.data.viewer.message_threads.sync_sequence_id;
           listenMqtt(defaultFuncs, api, ctx, globalCallback);
         }
 
