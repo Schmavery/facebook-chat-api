@@ -6,12 +6,9 @@ var mqtt = require('mqtt');
 var websocket = require('websocket-stream');
 
 var identity = function () {};
-var mqttClient = undefined;
-
-var lastSeqId = 0;
-var syncToken;
 
 //Don't really know what this does but I think it's for the active state
+//TODO: Move to ctx when implemented
 var chatOn = true;
 var foreground = false;
 
@@ -32,7 +29,7 @@ var topics = [
   "/orca_message_notifications",
   "/pp",
   "/webrtc_response",
-]
+];
 
 function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
   var sessionID = Math.floor(Math.random() * 9007199254740991) + 1;
@@ -79,7 +76,9 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
     }
   };
 
-  mqttClient = new mqtt.Client(_ => websocket(host, options.wsOptions), options);
+  ctx.mqttClient = new mqtt.Client(_ => websocket(host, options.wsOptions), options);
+
+  var mqttClient = ctx.mqttClient;
 
   mqttClient.on('error', function(err) {
     log.error(err);
@@ -101,29 +100,29 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
       queue.entity_fbid = ctx.globalOptions.pageID;
     }
 
-    if(syncToken) {
+    if(ctx.syncToken) {
       topic = "/messenger_sync_get_diffs";
-      queue.last_seq_id = lastSeqId;
-      queue.sync_token = syncToken;
+      queue.last_seq_id = ctx.lastSeqId;
+      queue.sync_token = ctx.syncToken;
     } else {
       topic = "/messenger_sync_create_queue";
-      queue.initial_titan_sequence_id = lastSeqId;
+      queue.initial_titan_sequence_id = ctx.lastSeqId;
       queue.device_params = null;
     }
-
-    mqttClient.publish(topic, JSON.stringify(queue), {qos: 1, retain: false})
+    
+    mqttClient.publish(topic, JSON.stringify(queue), {qos: 1, retain: false});
   });
 
   mqttClient.on('message', function(topic, message, packet) {
     var jsonMessage = JSON.parse(message);
     if(topic === "/t_ms") {
       if(jsonMessage.firstDeltaSeqId && jsonMessage.syncToken) {
-        lastSeqId = jsonMessage.firstDeltaSeqId;
-        syncToken = jsonMessage.syncToken;
+        ctx.lastSeqId = jsonMessage.firstDeltaSeqId;
+        ctx.syncToken = jsonMessage.syncToken;
       }
 
       if(jsonMessage.lastIssuedSeqId) {
-        lastSeqId = parseInt(jsonMessage.lastIssuedSeqId);
+        ctx.lastSeqId = parseInt(jsonMessage.lastIssuedSeqId);
       }
 
       if(jsonMessage.queueEntityId && ctx.globalOptions.pageID &&
@@ -431,7 +430,6 @@ function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
             }
 
             var fetchData = resData[0].o0.data.message;
-
             if (fetchData && fetchData.__typename === "ThreadImageMessage") {
               (!ctx.globalOptions.selfListen &&
                 fetchData.message_sender.id.toString() === ctx.userID) ||
@@ -444,10 +442,10 @@ function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
                   timestamp: fetchData.timestamp_precise,
                   author: fetchData.message_sender.id,
                   image: {
-                    attachmentID: fetchData.image_with_metadata.legacy_attachment_id,
-                    width: fetchData.image_with_metadata.original_dimensions.x,
-                    height: fetchData.image_with_metadata.original_dimensions.y,
-                    url: fetchData.image_with_metadata.preview.uri
+                    attachmentID: fetchData.image_with_metadata && fetchData.image_with_metadata.legacy_attachment_id,
+                    width: fetchData.image_with_metadata && fetchData.image_with_metadata.original_dimensions.x,
+                    height: fetchData.image_with_metadata && fetchData.image_with_metadata.original_dimensions.y,
+                    url: fetchData.image_with_metadata && fetchData.image_with_metadata.preview.uri
                   }
                 }); })();
             }
@@ -502,6 +500,10 @@ module.exports = function (defaultFuncs, api, ctx) {
   return function (callback) {
     globalCallback = callback;
 
+    //Reset some stuff
+    ctx.lastSeqId = 0;
+    ctx.syncToken = undefined;
+
     //Same request as getThreadList
     const form = {
       "av": ctx.globalOptions.pageID,
@@ -532,7 +534,7 @@ module.exports = function (defaultFuncs, api, ctx) {
         }
 
         if (resData[0].o0.data.viewer.message_threads.sync_sequence_id) {
-          lastSeqId = resData[0].o0.data.viewer.message_threads.sync_sequence_id;
+          ctx.lastSeqId = resData[0].o0.data.viewer.message_threads.sync_sequence_id;
           listenMqtt(defaultFuncs, api, ctx, globalCallback);
         }
 
@@ -544,7 +546,12 @@ module.exports = function (defaultFuncs, api, ctx) {
 
     var stopListening = function () {
       globalCallback = identity;
-      mqttClient.end();
+
+      if(ctx.mqttClient)
+      {
+        ctx.mqttClient.end();
+        ctx.mqttClient = undefined;
+      }
     };
 
     return stopListening;

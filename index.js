@@ -71,7 +71,10 @@ function buildAPI(globalOptions, html, jar) {
     globalOptions: globalOptions,
     loggedIn: true,
     access_token: 'NONE',
-    clientMutationId: 0
+    clientMutationId: 0,
+    mqttClient: undefined,
+    lastSeqId: 0,
+    syncToken: undefined
   };
 
   var api = {
