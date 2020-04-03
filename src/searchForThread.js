@@ -65,11 +65,14 @@ function formatThreadList(data) {
 
         };
       case "MessengerViewerGroupThread":
+        var imgUri = null;
+        if(p.image != null) imgUri = p.image.uri;
+
         return {
           accountType: p["__typename"],
           userID: utils.formatID(p.id.toString()), // do we need .toString()? when it is not a string? ... group ID ?
           name: p.thread_name,
-          image: p.image.uri,
+          image: imgUri,
           participants: formatParticipantsList(p.all_participants.edges),
           count: p.all_participants.count
 
