@@ -2,38 +2,46 @@
 
 var utils = require("../utils");
 
-module.exports = function(defaultFuncs, api, ctx) {
+function formatThreadList(data) {return data;}
+
+module.exports = function (defaultFuncs, api, ctx) {
   return function searchForThread(name, callback) {
     if (!callback) {
       throw { error: "searchForThread: need callback" };
     }
-
-    var tmpForm = {
-      client: "web_messenger",
-      query: name,
-      offset: 0,
-      limit: 21,
-      index: "fbid"
+    console.log(ctx.globalOptions);
+    var form = {
+      "queries": JSON.stringify({
+        "o0":
+        {
+          "doc_id": "2268911786543136",
+          "query_params": {
+            "query": name,
+            "num_users": 10,
+            "num_groups": 8,
+            "num_pages": 5
+          }
+        }
+      })
     };
 
     defaultFuncs
-      .post(
-        "https://www.facebook.com/ajax/mercury/search_threads.php",
-        ctx.jar,
-        tmpForm
-      )
+      .post("https://www.facebook.com/api/graphqlbatch/", ctx.jar, form)
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-      .then(function(resData) {
-        if (resData.error) {
-          throw resData;
+      .then(function (resData) {
+
+        if (resData[resData.length - 1].error_results > 0) {
+          throw resData[0].o0.errors;
         }
-        if (!resData.payload.mercury_payload.threads) {
-          return callback({ error: "Could not find thread `" + name + "`." });
+
+        if (resData[resData.length - 1].successful_results === 0) {
+          throw {error: "searchForThread: there was no successful_results", res: resData};
         }
-        return callback(
-          null,
-          resData.payload.mercury_payload.threads.map(utils.formatThread)
-        );
+        return callback(null, formatThreadList(resData[0].o0.data.messenger_search.result_modules.nodes));
+      })
+      .catch((err) => {
+        log.error("searchForThread", err);
+        return callback(err);
       });
   };
 };
