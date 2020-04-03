@@ -39,7 +39,7 @@ module.exports = function (defaultFuncs, api, ctx) {
           throw {error: "searchForThread: there was no successful_results", res: resData};
         }
 
-        return callback(null, formatThreadList(resData[0].o0.data.messenger_search.result_modules.nodes.search_results.edges));
+        return callback(null, formatThreadList(resData[0].o0.data.messenger_search.result_modules.nodes[0].search_results.edges)); // well I don't actually know if there could be more nodes, in my tests, only the first one contained useful info 
       })
       .catch((err) => {
         log.error("searchForThread", err);
