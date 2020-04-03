@@ -10,7 +10,7 @@ module.exports = function (defaultFuncs, api, ctx) {
     if (!callback) {
       throw { error: "searchForThread: need callback" };
     }
-    console.log(ctx.globalOptions);
+    
     var form = {
       "queries": JSON.stringify({
         "o0":
@@ -38,6 +38,7 @@ module.exports = function (defaultFuncs, api, ctx) {
         if (resData[resData.length - 1].successful_results === 0) {
           throw {error: "searchForThread: there was no successful_results", res: resData};
         }
+
         return callback(null, formatThreadList(resData[0].o0.data.messenger_search.result_modules.nodes.search_results.edges));
       })
       .catch((err) => {
