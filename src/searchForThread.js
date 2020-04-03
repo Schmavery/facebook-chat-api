@@ -70,8 +70,8 @@ function formatThreadList(data) {
           display_name: elem.display_name, // discovered this, don't seems to be usefull...
           accountType: p["__typename"],
           userID: utils.formatID(p.id.toString()), // do we need .toString()? when it is not a string? ... group ID ?
-          name: p.threadName,
-          image: p.image,
+          name: p.thread_name,
+          image: p.image.uri,
           participants: formatParticipantsList(p.all_participants.edges),
           count: p.all_participants.count
 
