@@ -1,6 +1,7 @@
 "use strict";
 
 var utils = require("../utils");
+const log = require("npmlog");
 
 function formatThreadList(data) {return data;}
 
