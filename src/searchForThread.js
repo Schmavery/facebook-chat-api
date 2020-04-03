@@ -23,7 +23,6 @@ function formatThreadList(data) {
     switch (p["__typename"]) {
       case "User":
         return {
-          display_name: elem.display_name, // discovered this, don't seems to be usefull...
           accountType: p["__typename"],
           userID: utils.formatID(p.id.toString()), // do we need .toString()? when it is not a string?
           name: p.name,
@@ -67,7 +66,6 @@ function formatThreadList(data) {
         };
       case "MessengerViewerGroupThread":
         return {
-          display_name: elem.display_name, // discovered this, don't seems to be usefull...
           accountType: p["__typename"],
           userID: utils.formatID(p.id.toString()), // do we need .toString()? when it is not a string? ... group ID ?
           name: p.thread_name,
