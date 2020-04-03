@@ -91,9 +91,20 @@ function formatThreadList(data) {
 }
 
 module.exports = function (defaultFuncs, api, ctx) {
-  return function searchForThread(name, callback) {
+  return function searchForThread(name, num_users, num_groups, num_pages, callback) {
     if (!callback) {
       throw { error: "searchForThread: need callback" };
+    }
+    
+    // checking parameters
+    if (utils.getType(num_users) !== "Number" || !Number.isInteger(num_users) || num_users <= 0) {
+      throw {error: "searchForThread: num_users must be a positive integer"};
+    }
+    if (utils.getType(num_groups) !== "Number" || !Number.isInteger(num_groups) || num_groups <= 0) {
+      throw {error: "searchForThread: num_groups must be a positive integer"};
+    }
+    if (utils.getType(num_pages) !== "Number" || !Number.isInteger(num_pages) || num_pages <= 0) {
+      throw {error: "searchForThread: num_pages must be a positive integer"};
     }
 
     var form = {
@@ -103,9 +114,9 @@ module.exports = function (defaultFuncs, api, ctx) {
           "doc_id": "2268911786543136",
           "query_params": {
             "query": name,
-            "num_users": 10,
-            "num_groups": 8,
-            "num_pages": 5
+            "num_users": num_users,
+            "num_groups": num_groups,
+            "num_pages": num_pages
           }
         }
       })
@@ -124,8 +135,6 @@ module.exports = function (defaultFuncs, api, ctx) {
           throw { error: "searchForThread: there was no successful_results", res: resData };
         } 
         
-        console.log(resData[0].o0.data.messenger_search.result_modules.nodes[0].search_results.edges); // for debugging purposes TODO : remove it
-
         return callback(null, formatThreadList(resData[0].o0.data.messenger_search.result_modules.nodes[0].search_results.edges)); // well I don't actually know if there could be more nodes, in my tests, only the first one contained useful info 
       })
       .catch((err) => {
