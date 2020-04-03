@@ -37,7 +37,7 @@ module.exports = function (defaultFuncs, api, ctx) {
         if (resData[resData.length - 1].successful_results === 0) {
           throw {error: "searchForThread: there was no successful_results", res: resData};
         }
-        return callback(null, formatThreadList(resData[0].o0.data.messenger_search.result_modules.nodes));
+        return callback(null, formatThreadList(resData[0].o0.data.messenger_search.result_modules.nodes.search_results.edges));
       })
       .catch((err) => {
         log.error("searchForThread", err);
