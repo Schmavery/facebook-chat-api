@@ -97,13 +97,13 @@ module.exports = function (defaultFuncs, api, ctx) {
     }
     
     // checking parameters
-    if (utils.getType(num_users) !== "Number" || !Number.isInteger(num_users) || num_users <= 0) {
+    if (utils.getType(num_users) !== "Number" || !Number.isInteger(num_users) || num_users < 0) {
       throw {error: "searchForThread: num_users must be a positive integer"};
     }
-    if (utils.getType(num_groups) !== "Number" || !Number.isInteger(num_groups) || num_groups <= 0) {
+    if (utils.getType(num_groups) !== "Number" || !Number.isInteger(num_groups) || num_groups < 0) {
       throw {error: "searchForThread: num_groups must be a positive integer"};
     }
-    if (utils.getType(num_pages) !== "Number" || !Number.isInteger(num_pages) || num_pages <= 0) {
+    if (utils.getType(num_pages) !== "Number" || !Number.isInteger(num_pages) || num_pages < 0) {
       throw {error: "searchForThread: num_pages must be a positive integer"};
     }
 
