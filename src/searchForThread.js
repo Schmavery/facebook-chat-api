@@ -27,7 +27,7 @@ function formatThreadList(data) {
           userID: utils.formatID(p.id.toString()), // do we need .toString()? when it is not a string?
           name: p.name,
           url: p.url, // how about making it profileURL
-          profilePicture: p.profile_picture.uri,
+          imageSrc: p.profile_picture.uri,
           username: (p.username || null),
 
           // TODO: maybe better names for these?
@@ -50,7 +50,7 @@ function formatThreadList(data) {
           userID: utils.formatID(p.id.toString()), // or maybe... pageID?
           name: p.name,
           url: p.url,
-          profilePicture: p.profile_picture.uri,
+          imageSrc: p.profile_picture.uri,
           categoryType: p.category_type,
 
           // uhm... better names maybe?
@@ -72,7 +72,7 @@ function formatThreadList(data) {
           accountType: p["__typename"],
           userID: utils.formatID(p.id.toString()), // do we need .toString()? when it is not a string? ... group ID ?
           name: p.thread_name,
-          image: imgUri,
+          imageSrc: imgUri,
           participants: formatParticipantsList(p.all_participants.edges),
           count: p.all_participants.count
 
