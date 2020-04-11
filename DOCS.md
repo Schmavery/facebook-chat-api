@@ -1468,16 +1468,78 @@ __Arguments__
 ---------------------------------------
 
 <a name="searchForThread"></a>
-### api.searchForThread(name, callback)
-
-> This part is outdated.
-> see #396
+### api.searchForThread(name, num_users, num_groups, num_pages, callback)
 
 Takes a chat title (thread name) and returns matching results as a formatted threads array (ordered according to Facebook).
 
 __Arguments__
 * `name`: A messageID string or messageID string array
-* `callback(err, obj)`: A callback called when the query is done (either with an error or a thread object). The object passed in the callback has the following shape: `threadID`, <del>`participants`</del>, `participantIDs`, `formerParticipants`, `name`, `nicknames`, `snippet`, `snippetHasAttachment`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteSettings`, `isCanonicalUser`, `isCanonical`, `canonicalFbid`, `isSubscribed`, `rootMessageThreadingID`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `composerEnabled`, `blockedParticipants`, `lastMessageID`
+* `num_users`: Maximum number of users. *NOTE* : Setting num_users will make facebook decide the number of user to return (max 10)
+* `num_groups`: Maximum number of groups
+* `num_pages`: Maximum number of groups
+* `callback(err, result)`: A callback called when the query is done (either with an error or a thread object). 
+
+__Result__
+
+The object passed in the callback has the following shape: 
+* `accountType`
+* `userID`
+* `name`
+* `threadID`
+* `imageSrc` : The image associated with the element (profile picture, group image, page image)
+
+When `accountType` is "User" or "Page"
+
+* `url` : When page or user : url to the facebook page
+
+When `accountType` is "User"
+
+* `username`
+* `isMemoralised` : true/false
+* `isViewerFriend` : true/false
+* `isViewerCoworker` : true/false
+* `isMessengerUser` : true/false
+* `isVerified` : true/false
+* `viewerAffinity` : a score from 0 to more than 1 indicating how close you are to a person. By default users are sorted by descending viewerAffinity.
+
+When `accountType` is "Page"
+
+* `categoryType` : could be COMPANY, TOPIC_JUST_FOR_FUN, TOPIC_ARTS_ENTERTAINMENT, COMMUNITY, BANDS_MUSICIANS, COMMUNITY_ORGANIZATION, COMEDIAN, PERSONAL_BLOG, ARTIST, POLITICIAN, FOOD_DELIVERY_SERVICE ...
+* `isMessengerUser`
+* `isVerified` : true/false,
+* `CanViewerAddToGroupChat` : true/false
+    
+
+When `accountType` is "MessengerViewerGroupThread"
+
+* `participants` : A portion of the users in the thread  
+* `count` : Participants count
+
+<table>
+	<tr>
+		<th>Account Type</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code>"User"</code><br /></td>
+		<td>User</td>
+	</tr>
+	<tr>
+		<td><code>"MessengerViewerGroupThread"</code></td>
+		<td>Group thread</td>
+	</tr>
+	<tr>
+		<td><code>"Page"</code></td>
+		<td>Page</td>
+	</tr>
+</table>
+
+__Participants__
+* `threadID`
+* `name`
+* `isMessengerOnly`
+* `isViewerCoworker`
+* `isMessengerUser`
 
 ---------------------------------------
 
