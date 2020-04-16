@@ -11,7 +11,8 @@ var allowedProperties = {
   emoji: true,
   emojiSize: true,
   body: true,
-  mentions: true
+  mentions: true,
+  location: true,
 };
 
 module.exports = function(defaultFuncs, api, ctx) {
@@ -210,6 +211,20 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
   }
 
+  function handleLocation(msg, form, callback, cb) {
+    if (msg.location) {
+      if (msg.location.latitude == null || msg.location.longitude == null) {
+        return callback({ error: "location property needs both latitude and longitude" });
+      }
+
+      form["location_attachment[coordinates][latitude]"] = msg.location.latitude;
+      form["location_attachment[coordinates][longitude]"] = msg.location.longitude;
+      form["location_attachment[is_current_location]"] = !!msg.location.current;
+    }
+
+    cb();
+  }
+
   function handleSticker(msg, form, callback, cb) {
     if (msg.sticker) {
       form["sticker_id"] = msg.sticker;
@@ -405,12 +420,14 @@ module.exports = function(defaultFuncs, api, ctx) {
       replied_to_message_id: replyToMessage
     };
 
-    handleSticker(msg, form, callback, () =>
-      handleAttachment(msg, form, callback, () =>
-        handleUrl(msg, form, callback, () =>
-          handleEmoji(msg, form, callback, () =>
-            handleMention(msg, form, callback, () =>
-              send(form, threadID, messageAndOTID, callback)
+    handleLocation(msg, form, callback, () =>
+      handleSticker(msg, form, callback, () =>
+        handleAttachment(msg, form, callback, () =>
+          handleUrl(msg, form, callback, () =>
+            handleEmoji(msg, form, callback, () =>
+              handleMention(msg, form, callback, () =>
+                send(form, threadID, messageAndOTID, callback)
+              )
             )
           )
         )
