@@ -1270,6 +1270,7 @@ Similar to how messages can vary based on their `type`, so too can the `attachme
 | `"animated_image"` | `ID`, `filename`, `previewUrl`, `previewWidth`, `previewHeight`, `url`, `width`, `height` |
 | `"video"` | `ID`, `filename`, `previewUrl`, `previewWidth`, `previewHeight`, `url`, `width`, `height`, `duration`, `videoType` |
 | `"audio"` | `ID`, `filename`, `audioType`, `duration`, `url`, `isVoiceMail` |
+| `"location"` | `ID`, `latitude`, `longitude`, `image`, `width`, `height`, `url`, `address` |
 | `"share"` | `ID`, `url`, `title`, `description`, `source`, `image`, `width`, `height`, `playable`, `duration`, `playableUrl`, `subattachments`, `properties` |
 
 __Example__
