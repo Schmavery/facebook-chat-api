@@ -364,7 +364,7 @@ function formatMessagesGraphQLResponse(data) {
         // Give priority to stickers. They're seen as normal messages but we've
         // been considering them as attachments.
         var maybeStickerAttachment;
-        if (d.sticker) {
+        if (d.sticker && d.sticker.pack) {
           maybeStickerAttachment = [
             {
               type: "sticker",
