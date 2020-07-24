@@ -486,7 +486,9 @@ function _formatAttachment(attachment1, attachment2) {
         ID: blob.id,
         url: blob.url,
 
-        packID: blob.pack.id,
+        packID: blob.pack
+          ? blob.pack.id
+          : null,
         spriteUrl: blob.sprite_image,
         spriteUrl2x: blob.sprite_image_2x,
         width: blob.width,
