@@ -371,7 +371,7 @@ function formatMessagesGraphQLResponse(data) {
               ID: d.sticker.id,
               url: d.sticker.url,
 
-              packID: d.sticker.pack.id,
+              packID: d.sticker.pack ? d.sticker.pack.id : null,
               spriteUrl: d.sticker.sprite_image,
               spriteUrl2x: d.sticker.sprite_image_2x,
               width: d.sticker.width,
