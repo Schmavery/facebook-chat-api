@@ -195,7 +195,7 @@ function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
           (function () { globalCallback(null, fmtMsg); })();
       } else {
         if (
-          v.delta.attachments[i].mercury.attach_type == "photo"
+          v.delta.attachments && (v.delta.attachments[i].mercury.attach_type == "photo")
         ) {
           api.resolvePhotoUrl(
             v.delta.attachments[i].fbid,
