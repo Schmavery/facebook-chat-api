@@ -171,7 +171,8 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
 function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
   if(v.delta.class == "NewMessage") {
     (function resolveAttachmentUrl(i) {
-      if (i == v.delta.attachments.length) {
+      // sometimes, with sticker message in group, delta does not contain 'attachments' property.
+      if (v.delta.attachments && (i == v.delta.attachments.length)) {
         var fmtMsg;
         try {
           fmtMsg = utils.formatDeltaMessage(v);
@@ -194,7 +195,7 @@ function parseDelta(defaultFuncs, api, ctx, globalCallback, v) {
           (function () { globalCallback(null, fmtMsg); })();
       } else {
         if (
-          v.delta.attachments[i].mercury.attach_type == "photo"
+          v.delta.attachments && (v.delta.attachments[i].mercury.attach_type == "photo")
         ) {
           api.resolvePhotoUrl(
             v.delta.attachments[i].fbid,
