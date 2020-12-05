@@ -76,6 +76,7 @@ Result:
 * [`api.getUserInfo`](DOCS.md#getUserInfo)
 * [`api.handleMessageRequest`](DOCS.md#handleMessageRequest)
 * [`api.listen`](DOCS.md#listen)
+* [`api.listenMqtt`](DOCS.md#listenMqtt)
 * [`api.logout`](DOCS.md#logout)
 * [`api.markAsRead`](DOCS.md#markAsRead)
 * [`api.markAsReadAll`](DOCS.md#markAsReadAll)
