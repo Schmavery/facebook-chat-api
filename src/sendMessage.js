@@ -294,7 +294,12 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
 
         const id = mention.id || 0;
-        form["profile_xmd[" + i + "][offset]"] = offset;
+
+        //Adding an emptyChar and setting the offset to 1 instead of 0
+        //fixes the issue #857 (mention not working when tag at offset 0)
+        const emptyChar = '\u200E';
+        form["body"] = emptyChar + msg.body;
+        form["profile_xmd[" + i + "][offset]"] = offset + 1;
         form["profile_xmd[" + i + "][length]"] = tag.length;
         form["profile_xmd[" + i + "][id]"] = id;
         form["profile_xmd[" + i + "][type]"] = "p";
