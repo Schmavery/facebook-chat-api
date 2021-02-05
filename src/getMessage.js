@@ -6,11 +6,11 @@ var log = require("npmlog");
 module.exports = function(defaultFuncs, api, ctx) {
     return function getMessage(threadID, messageID, callback) {
       if (!callback) {
-        throw { error: "getMessage: need callback" };
+        return callback({ error: "getMessage: need callback" });
       }
 
       if (!threadID || !messageID) {
-        throw { error: "getMessage: need threadID and messageID" };
+        return callback({ error: "getMessage: need threadID and messageID" });
       }
   
       const form = {
