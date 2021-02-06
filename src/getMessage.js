@@ -43,9 +43,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
         var fetchData = resData[0].o0.data.message;
         if (fetchData) {
-          (!ctx.globalOptions.selfListen &&
-            fetchData.message_sender.id.toString() === ctx.userID) ||
-            !ctx.loggedIn ?
+          !ctx.loggedIn ?
             undefined :
             (function () { callback(null, {
                 threadID: threadID,
