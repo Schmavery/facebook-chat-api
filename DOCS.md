@@ -17,6 +17,7 @@
 * [`api.getCurrentUserID`](#getCurrentUserID)
 * [`api.getEmojiUrl`](#getEmojiUrl)
 * [`api.getFriendsList`](#getFriendsList)
+* [`api.getMessage`](#getMessage)
 * [`api.getThreadHistory`](#getThreadHistory)
 * [`api.getThreadInfo`](#getThreadInfo)
 * [`api.getThreadList`](#getThreadList)
@@ -544,6 +545,32 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
         console.log(data.length);
     });
 });
+```
+
+---------------------------------------
+
+<a name="getMessage"></a>
+### api.getMessage(threadID, messageID, callback)
+
+Takes a threadID, messageID, and a callback.
+
+__Arguments__
+* `threadID`: A threadID corresponding to the target chat
+* `messageID`: A messageID corresponding to the target message
+* `callback(error, message)`: If error is null, message will contain the target message.
+
+__Example__
+
+```js
+var timestamp = undefined;
+
+function loadNextThreadHistory(api){
+    api.getMessage(threadID, messageID, (err, msg) => {
+        if(err) return console.error(err);
+
+        console.log(msg.body); // Logs the content of the message
+    });
+}
 ```
 
 ---------------------------------------
