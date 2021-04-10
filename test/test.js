@@ -375,6 +375,15 @@ describe('Login:', function() {
     assert(formatted.attachments[0].target.items[0].call_to_actions[0].title === "Google");
   });
 
+  it('should get last notifications from user profile', function (done){
+      api.getLastNotifications((err, info) => {
+        if (err) done(err);
+        assert(info.length > 0);
+        assert(info[0].id != undefined);
+        done();
+      });
+  });
+
   it('should log out', function (done) {
     api.logout(done);
   });
