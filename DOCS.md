@@ -1270,6 +1270,7 @@ Similar to how messages can vary based on their `type`, so too can the `attachme
 | `"animated_image"` | `ID`, `filename`, `previewUrl`, `previewWidth`, `previewHeight`, `url`, `width`, `height` |
 | `"video"` | `ID`, `filename`, `previewUrl`, `previewWidth`, `previewHeight`, `url`, `width`, `height`, `duration`, `videoType` |
 | `"audio"` | `ID`, `filename`, `audioType`, `duration`, `url`, `isVoiceMail` |
+| `"location"` | `ID`, `latitude`, `longitude`, `image`, `width`, `height`, `url`, `address` |
 | `"share"` | `ID`, `url`, `title`, `description`, `source`, `image`, `width`, `height`, `playable`, `duration`, `playableUrl`, `subattachments`, `properties` |
 
 __Example__
@@ -1504,6 +1505,7 @@ Various types of message can be sent:
 * *Mentions:* set field `mentions` to an array of objects. Objects should have the `tag` field set to the text that should be highlighted in the mention. The object should have an `id` field, where the `id` is the user id of the person being mentioned. The instance of `tag` that is highlighted is determined through indexOf, an optional `fromIndex`
 can be passed in to specify the start index to start searching for the `tag` text
 in `body` (default=0). (See below for an example.)
+* *Location:* set field `location` to an object with `latitude` and `longitude` fields. Optionally set field `current` of the `location` object to true to indicate the location is the user’s current location. Otherwise the location will be sent as a pinned location.
 
 Note that a message can only be a regular message (which can be empty) and optionally one of the following: a sticker, an attachment or a url.
 
@@ -1562,6 +1564,21 @@ login({email: "EMAIL", password: "PASSWORD"}, (err, api) => {
             }, message.threadID);
         }
     });
+});
+```
+
+__Example (Location)__
+```js
+const login = require("facebook-chat-api");
+
+login({email: "EMAIL", password: "PASSWORD"}, (err, api) => {
+    if(err) return console.error(err);
+
+    var yourID = "000000000000000";
+    const msg = {
+    	location: { latitude: 48.858093, longitude: 2.294694, current: true },
+  	};
+    api.sendMessage(msg, yourID);
 });
 ```
 

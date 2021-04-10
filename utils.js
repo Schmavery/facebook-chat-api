@@ -4,6 +4,8 @@ var bluebird = require("bluebird");
 var request = bluebird.promisify(require("request").defaults({ jar: true }), {multiArgs: true});
 var stream = require("stream");
 var log = require("npmlog");
+var _url = require("url");
+var _querystring = require("querystring");
 
 function getHeaders(url, options) {
   var headers = {
@@ -265,7 +267,17 @@ function _formatAttachment(attachment1, attachment2) {
     type = "StickerAttachment";
     blob = attachment1.sticker_attachment;
   } else if (!type && attachment1.extensible_attachment) {
-    type = "ExtensibleAttachment";
+    if (
+      attachment1.extensible_attachment.story_attachment &&
+      attachment1.extensible_attachment.story_attachment.target &&
+      attachment1.extensible_attachment.story_attachment.target.__typename &&
+      attachment1.extensible_attachment.story_attachment.target.__typename === "MessageLocation"
+    ) {
+      type = "MessageLocation";
+    } else {
+      type = "ExtensibleAttachment";
+    }
+
     blob = attachment1.extensible_attachment;
   }
   // TODO: Determine whether "sticker", "photo", "file" etc are still used
@@ -505,6 +517,49 @@ function _formatAttachment(attachment1, attachment2) {
         stickerID: blob.id, // @Legacy
         spriteURI: blob.sprite_image, // @Legacy
         spriteURI2x: blob.sprite_image_2x // @Legacy
+      };
+    case "MessageLocation":     
+      var urlAttach = blob.story_attachment.url;
+      var mediaAttach = blob.story_attachment.media;
+
+      var u = _querystring.parse(_url.parse(urlAttach).query).u;
+      var where1 = _querystring.parse(_url.parse(u).query).where1;
+      var address = where1.split(", ");
+      
+      var latitude;
+      var longitude;
+
+      try {
+        latitude = Number.parseFloat(address[0]);
+        longitude = Number.parseFloat(address[1]);
+      } catch (err) {
+        /* empty */
+      }
+
+      var imageUrl;
+      var width;
+      var height;
+
+      if (mediaAttach && mediaAttach.image) {
+        imageUrl = mediaAttach.image.uri;
+        width = mediaAttach.image.width;
+        height = mediaAttach.image.height;
+      }
+
+      return {
+        type: "location",
+        ID: blob.legacy_attachment_id,
+        latitude: latitude,
+        longitude: longitude,
+        image: imageUrl,
+        width: width,
+        height: height,
+        url: u || urlAttach,
+        address: where1,
+
+        facebookUrl: blob.story_attachment.url, // @Legacy
+        target: blob.story_attachment.target, // @Legacy
+        styleList: blob.story_attachment.style_list // @Legacy
       };
     case "ExtensibleAttachment":
       return {
