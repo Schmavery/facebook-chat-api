@@ -366,6 +366,26 @@ describe('Login:', function() {
     });
   });
 
+  it('should get notifications', function (done) {
+    api.getNotifications(function(err, data) {
+      try {
+        checkErr(done)(err);
+        assert(getType(data) === "Array");
+        data.map(v => {
+          assert(getType(v.id) === "String");
+          assert(getType(v.text) === "String");
+          assert(getType(v.html) === "String");
+          assert(getType(v.time) === "Number");
+          assert(getType(v.seen) === "Number");
+          assert(getType(v.read) === "Number");
+        })
+        done();
+      } catch(e){
+        done(e);
+      }
+    });
+  });
+
   it('should parse share attachment correctly', function () {
     var formatted = formatDeltaMessage(shareAttachmentFixture);
     assert(formatted.attachments[0].type === "share");
