@@ -224,7 +224,7 @@ function formatExtensibleAttachment(attachment) {
       animatedImageSize: "", // @Legacy
       facebookUrl: "", // @Legacy
       styleList: "", // @Legacy
-      target: "", // @Legacy
+      target: attachment.story_attachment.target, // @Legacy
       thumbnailUrl:
         attachment.story_attachment.media == null
           ? null
