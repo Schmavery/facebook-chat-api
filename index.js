@@ -115,6 +115,8 @@ function buildAPI(globalOptions, html, jar) {
     'muteThread',
     'removeUserFromGroup',
     'resolvePhotoUrl',
+    'searchContext',
+    'searchForMessages',
     'searchForThread',
     'sendMessage',
     'sendTypingIndicator',
