@@ -10,16 +10,6 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     switch (reaction) {
-      case "\uD83D\uDE0D": //:heart_eyes:
-      case "\uD83D\uDE06": //:laughing:
-      case "\uD83D\uDE2E": //:open_mouth:
-      case "\uD83D\uDE22": //:cry:
-      case "\uD83D\uDE20": //:angry:
-      case "\uD83D\uDC4D": //:thumbsup:
-      case "\uD83D\uDC4E": //:thumbsdown:
-      case "":
-        //valid
-        break;
       case ":heart_eyes:":
       case ":love:":
         reaction = "\uD83D\uDE0D";
@@ -48,7 +38,6 @@ module.exports = function(defaultFuncs, api, ctx) {
         reaction = "\uD83D\uDC4E";
         break;
       default:
-        return callback({ error: "Reaction is not a valid emoji." });
         break;
     }
 

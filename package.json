@@ -1,6 +1,6 @@
 {
   "name": "facebook-chat-api",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Facebook chat API that doesn't rely on XMPP.  Will NOT be deprecated April 30th 2015.",
   "scripts": {
     "test": "mocha",
@@ -22,11 +22,12 @@
   "author": "Avery, David, Maude, Benjamin",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^2.9.27",
+    "bluebird": "^3.0.0",
     "cheerio": "^0.22.0",
     "mqtt": "^3.0.0",
     "npmlog": "^1.2.0",
-    "request": "^2.53.0"
+    "request": "^2.53.0",
+    "websocket-stream": "^5.5.0"
   },
   "engines": {
     "node": ">=4.x"

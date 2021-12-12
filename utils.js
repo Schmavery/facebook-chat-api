@@ -1,7 +1,7 @@
 "use strict";
 
 var bluebird = require("bluebird");
-var request = bluebird.promisify(require("request").defaults({ jar: true }));
+var request = bluebird.promisify(require("request").defaults({ jar: true }), {multiArgs: true});
 var stream = require("stream");
 var log = require("npmlog");
 
@@ -486,7 +486,9 @@ function _formatAttachment(attachment1, attachment2) {
         ID: blob.id,
         url: blob.url,
 
-        packID: blob.pack.id,
+        packID: blob.pack
+          ? blob.pack.id
+          : null,
         spriteUrl: blob.sprite_image,
         spriteUrl2x: blob.sprite_image_2x,
         width: blob.width,
