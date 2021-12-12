@@ -114,7 +114,13 @@ function listenMqtt(defaultFuncs, api, ctx, globalCallback) {
   });
 
   mqttClient.on('message', function(topic, message, packet) {
-    var jsonMessage = JSON.parse(message);
+    let jsonMessage = Buffer.from(message).toString();
+    try {
+      jsonMessage = JSON.parse(jsonMessage);
+    }
+    catch {
+      jsonMessage = {};
+    }
     if(topic === "/t_ms") {
       if(jsonMessage.firstDeltaSeqId && jsonMessage.syncToken) {
         ctx.lastSeqId = jsonMessage.firstDeltaSeqId;
